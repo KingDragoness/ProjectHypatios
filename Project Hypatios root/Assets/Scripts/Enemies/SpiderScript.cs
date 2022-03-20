@@ -68,6 +68,8 @@ public class SpiderScript : Enemy
     private float timerReady = 3f;
     private bool ready = true;
 
+    public float damping = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -151,10 +153,7 @@ public class SpiderScript : Enemy
 
             if (haveSeenPlayer && !isDie)
             {
-
-                //Vector3 targetPlayer = new Vector3(player.position.x, Mathf.Clamp(player.position.y, -15f, 15f), player.position.z);
-
-                transform.LookAt(player.position);
+                ManageSpiderRotation();
 
                 Ray ray = new Ray(eyeLocation.transform.position, player.position - eyeLocation.transform.position);
                 if (Physics.Raycast(ray, out RaycastHit hit, 100f))
@@ -204,6 +203,18 @@ public class SpiderScript : Enemy
         }
      }
 
+    void ManageSpiderRotation()
+    {
+        var lookPos = player.transform.position - transform.position;
+
+        if (Vector3.Distance(player.transform.position, transform.position) >= 6f)
+            lookPos.y = Mathf.Clamp(lookPos.y, -15f, 15f);
+        else
+            lookPos.y = 0f;
+        var rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+    }
+    
     void Attack()
     {
 
