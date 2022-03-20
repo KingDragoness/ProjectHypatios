@@ -105,8 +105,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2419985613021790145}
-  - component: {fileID: 7413586042937862278}
   - component: {fileID: 1707843125}
+  - component: {fileID: 7413586042937862278}
   m_Layer: 0
   m_Name: _ConsoleFPS
   m_TagString: Untagged
@@ -130,23 +130,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7413586042937862278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2419985613021790144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e73fd6ede97a958449ef1d3bb31d191f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MenuUI: {fileID: 0}
-  HUDUI: {fileID: 0}
-  ConsoleUI: {fileID: 0}
-  Player: {fileID: 0}
-  settingsUI: {fileID: 0}
 --- !u!114 &1707843125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +142,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f77e0e15c0567643bbef1a264c5dba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoulPoint: 0
+  TotalRuns: 0
+  LuckOfGod_Level: 0
+  UNIX_Timespan: 0
+  everUsed_Paradox: 0
+  everUsed_WeaponShop: 0
   postProcessVolume: {fileID: 1438636535}
   postProcessVolume_2: {fileID: 1180243759}
+  currentWeaponStat: []
+  paradoxEntities: []
+  otherEverUsed: []
   Prefab_SpawnAmmo: {fileID: 8451620349001071941, guid: 2ee29f38451d34345a0518acef8061f3,
     type: 3}
+  Prefab_SpawnSoul: {fileID: 0}
+  minorMotionBlur: {fileID: 0}
+  DEBUG_ShowTutorial: 0
+--- !u!114 &7413586042937862278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2419985613021790144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73fd6ede97a958449ef1d3bb31d191f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PauseMenu_UI: {fileID: 0}
+  HUD_UI: {fileID: 0}
+  Shop_Weapon_UI: {fileID: 0}
+  Shop_Paradox_UI: {fileID: 0}
+  CutsceneHUD_UI: {fileID: 0}
+  DefaultHUD_UI: {fileID: 0}
+  Console_UI: {fileID: 0}
+  Camera_Cutscene: {fileID: 0}
+  Camera_Main: {fileID: 0}
+  SavingGameIcon_UI: {fileID: 0}
+  Camera_Noclip: {fileID: 0}
+  Player: {fileID: 0}
+  current_UI: 0
+  settingsUI: {fileID: 0}
