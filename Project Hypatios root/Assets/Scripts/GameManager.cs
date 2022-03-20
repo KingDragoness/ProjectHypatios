@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     {
         characterScript characterScript = FindObjectOfType<characterScript>();
 
-        if (characterScript.normalMode)
+        //Restart the level for non-Aldrich levels
+        if (FPSMainScript.instance.currentGamemode == FPSMainScript.CurrentGamemode.Aldrich)
         {
             SceneManager.LoadScene(deadLevelIndex);
         }

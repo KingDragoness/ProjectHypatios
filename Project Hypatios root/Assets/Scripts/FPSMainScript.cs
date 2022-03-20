@@ -11,6 +11,14 @@ using UnityStandardAssets.ImageEffects;
 public class FPSMainScript : MonoBehaviour
 {
 
+    public enum CurrentGamemode
+    {
+        Aldrich,
+        Elena,
+        TutorialMode
+    }
+
+    public CurrentGamemode currentGamemode = CurrentGamemode.Aldrich;
 
     [Header("Saves")]
     public int SoulPoint = 0;
@@ -217,6 +225,15 @@ public class FPSMainScript : MonoBehaviour
 
     public void PlayerDie()
     {
+        //If elena mode do nothing
+        if (currentGamemode == CurrentGamemode.Elena)
+        {
+
+            return;
+        }
+
+        //On Aldrich mode, the player start from beginning
+
         TotalRuns++;
 
         PlayerPrefs.DeleteKey("HIGHSCORE.CHECK");
