@@ -63,6 +63,8 @@ public class FPSMainScript : MonoBehaviour
 
     private void Start()
     {
+
+
         var colorGrading_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<ColorGrading>();
         var bloom_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>();
 

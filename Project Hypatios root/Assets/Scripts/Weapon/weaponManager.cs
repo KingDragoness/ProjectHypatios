@@ -16,7 +16,7 @@ public class weaponManager : MonoBehaviour
     public bool IsOnMeleeAttack = false;
     public int previousWeapon;
     public gunScript gun;
-
+    Camera cam;
 
     public List<WeaponItem> weapons = new List<WeaponItem>();
     private List<gunScript> currentlyHeldGuns = new List<gunScript>();
@@ -61,6 +61,7 @@ public class weaponManager : MonoBehaviour
     #endregion
 
 
+
     private void Awake()
     {
         Instance = this;
@@ -94,7 +95,6 @@ public class weaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         currentlyHeldGuns = this.gameObject.GetComponentsInChildren<gunScript>(true).ToList();
         switchWeapon();
 
@@ -122,10 +122,6 @@ public class weaponManager : MonoBehaviour
 
         //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
 
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            Melee();
-        }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
@@ -178,14 +174,19 @@ public class weaponManager : MonoBehaviour
         }
 
         findEquippedWeapon();
+
+        
     }
 
-    public void Melee()
+    public void unequipWeapon()
     {
-        meleeWeapon.Play();
+        foreach (var weapon in CurrentlyHeldGuns)
+        {
+            weapon.gameObject.SetActive(false);
+        }
     }
 
-    void switchWeapon()
+    public void switchWeapon()
     {
         int i = 0;
 
