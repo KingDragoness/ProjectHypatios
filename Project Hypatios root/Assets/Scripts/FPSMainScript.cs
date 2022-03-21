@@ -230,7 +230,7 @@ public class FPSMainScript : MonoBehaviour
         //If elena mode do nothing
         if (currentGamemode == CurrentGamemode.Elena)
         {
-
+            instance.BufferSaveData();
             return;
         }
 
@@ -384,7 +384,46 @@ public class FPSMainScript : MonoBehaviour
 
     }
 
+    //Load player cutscene char select
     public void Menu_StartPlayGame()
+    {
+        Application.LoadLevel(3);
+
+    }
+
+    public void Menu_ResumeGame()
+    {
+        string pathLoad = "";
+        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+
+        pathLoad = GameSavePath + "/defaultSave.save";
+
+        try
+        {
+            savedata = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathLoad), settings);
+
+            Application.LoadLevel(savedata.Game_LastLevelPlayed);
+            LoadFromSaveFile = true;
+
+        }
+        catch
+        {
+            throw new Exception("LOAD GAME FAILED!");
+        }
+    }
+
+    public void Menu_StartElenaStory()
+    {
+
+    }
+
+    public void Menu_StartAldrich()
+    {
+        Application.LoadLevel(4);
+
+    }
+
+    private void Legacy_StartPlayGame()
     {
         string pathLoad = "";
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };

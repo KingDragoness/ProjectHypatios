@@ -257,7 +257,7 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (Application.loadedLevel >= 3)
+        if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode)
         {
             //FPSMainScript.instance.SaveGame(targetLevel: Application.loadedLevel);
             FPSMainScript.instance.BufferSaveData();
