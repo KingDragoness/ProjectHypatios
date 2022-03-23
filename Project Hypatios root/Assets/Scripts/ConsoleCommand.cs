@@ -383,9 +383,9 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            weaponManager weaponManager = FindObjectOfType<weaponManager>();
+            WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
 
-            foreach (var weapon in weaponManager.CurrentlyHeldGuns)
+            foreach (var weapon in weaponManager.CurrentlyHeldWeapons)
             {
                 weapon.curAmmo = 9999;
                 weapon.totalAmmo = 9999;
@@ -404,7 +404,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            weaponManager weaponManager = FindObjectOfType<weaponManager>();
+            WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
 
             int i = 0;
 

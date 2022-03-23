@@ -3,30 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
-public class gunScript : MonoBehaviour
+public class GunScript : BaseWeaponScript
 {
-    public Animator anim;
-    public string weaponName;
+    [Title("Gun Section")]
 
     Camera cam;
 
     public bool canScope;
     public bool isAutomatic;
-    public LayerMask layerMask;
-    [Header ("Weapon Status")]
-    public float damage;
-    public float variableAdditionalDamage = 4f;
-    [SerializeField]
-    public int totalAmmo;
-    [SerializeField]
-    public int magazineSize;
-    public int curAmmo;
-    [Range (0f, .2f)]
-    public float spread;
-    public float recoilX;
-    public float recoilY;
-    public float recoilZ;
+
     public float bulletPerSecond;
     public float repulsionForce = 1;
 
@@ -54,10 +41,8 @@ public class gunScript : MonoBehaviour
 
     [Space]
 
-    public weaponManager weaponSystem;
     Recoil gunRecoil;
 
-    public Image crosshairHit;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +52,7 @@ public class gunScript : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //curAmmo = magazineSize;
         anim = GetComponent<Animator>();
-        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<weaponManager>();
+        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
         gunRecoil = weaponSystem.gunRecoil;
     }
 
@@ -79,12 +64,10 @@ public class gunScript : MonoBehaviour
             return;
         }
 
-        anim = weaponSystem.anim;
-
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Holster"))
         {
             HandleReloadInput();
-            ShootingInput();
+            FireInput();
             Scoping();
         }
         
@@ -134,7 +117,7 @@ public class gunScript : MonoBehaviour
         }
     }
 
-    void ShootingInput()
+    public override void FireInput()
     {
         if (Input.GetButton("Fire1") && curAmmo > 0 && isAutomatic && !isReloading)
         {
@@ -146,7 +129,7 @@ public class gunScript : MonoBehaviour
 
             if (Time.time >= nextAttackTime)
             {
-                Shoot();
+                FireWeapon();
                 nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
                 curAmmo--;
             }
@@ -166,7 +149,7 @@ public class gunScript : MonoBehaviour
             if (Time.time >= nextAttackTime)
             {
                 anim.SetTrigger("shooting");
-                Shoot();
+                FireWeapon();
                 nextAttackTime = Time.time + 1f / bulletPerSecond;
                 curAmmo--;
             }
@@ -195,7 +178,8 @@ public class gunScript : MonoBehaviour
 
         anim.SetBool("isScoping", isScoping);
     }
-    void Shoot()
+
+    public override void FireWeapon()
     {
         gunRecoil.RecoilFire();
 

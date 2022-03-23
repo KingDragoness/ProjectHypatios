@@ -86,7 +86,7 @@ public class cameraScript : MonoBehaviour
     void FixedUpdate()
     {
         float modifiedSensitivity = mouseSensitivity;
-        gunScript Gun = weaponManager.Instance.gun;
+        GunScript Gun = WeaponManager.Instance.currentGunHeld;
 
 
         if (Gun != null)

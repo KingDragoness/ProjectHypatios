@@ -62,7 +62,7 @@ public class health : MonoBehaviour
         }
 
         //postProcess.sharedProfile.TryGet<DepthOfField>(out dof);
-        anim = character.anim;
+        anim = character.Anim;
         slow.ReturnTime();
     }
 

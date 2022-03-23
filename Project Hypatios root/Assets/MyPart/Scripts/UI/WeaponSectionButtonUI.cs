@@ -72,7 +72,7 @@ public class WeaponSectionButtonUI : MonoBehaviour
         int currentLevel = 0;
         string limitLevel = "5";
         var statThisWeapon = FPSMainScript.instance.GetWeaponSave(weaponID);
-        var weaponItem = weaponManager.Instance.GetWeaponItemData(weaponID);
+        var weaponItem = WeaponManager.Instance.GetWeaponItemData(weaponID);
 
         if (statThisWeapon == null)
         {

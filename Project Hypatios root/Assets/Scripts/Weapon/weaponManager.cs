@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using FPSGame;
 
-public class weaponManager : MonoBehaviour
+public class WeaponManager : MonoBehaviour
 {
 
     public int selectedWeapon = 0;
@@ -12,35 +12,43 @@ public class weaponManager : MonoBehaviour
     public GameObject weaponNumToSwap;
     public GameObject weaponToSwap;
     public ModularWeapon meleeWeapon;
-    public Animator anim;
     public bool IsOnMeleeAttack = false;
     public int previousWeapon;
-    public gunScript gun;
+    public GunScript currentGunHeld;
+    public BaseWeaponScript currentWeaponHeld;
     Camera cam;
 
     public List<WeaponItem> weapons = new List<WeaponItem>();
-    private List<gunScript> currentlyHeldGuns = new List<gunScript>();
+    [SerializeField] private List<BaseWeaponScript> currentlyHeldWeapons = new List<BaseWeaponScript>();
 
-    public static weaponManager Instance;
+    public static WeaponManager Instance;
 
     public Recoil gunRecoil;
 
-    public List<gunScript> CurrentlyHeldGuns { get => currentlyHeldGuns;}
+    public List<BaseWeaponScript> CurrentlyHeldWeapons { get => currentlyHeldWeapons;}
+
+    public Animator anim
+    {
+        get
+        {
+            return currentWeaponHeld.anim;
+        }
+    }
 
     #region Weapon
 
-    public gunScript GetGunScript(string name)
+    public GunScript GetGunScript(string name)
     {
-        return CurrentlyHeldGuns.Find(x => x.weaponName == name);
+        return CurrentlyHeldWeapons.Find(x => x.weaponName == name) as GunScript;
     }
 
-    public gunScript GetRandomGun()
+    public GunScript GetRandomGun()
     {
-        int size = CurrentlyHeldGuns.Count - 1;
-        return CurrentlyHeldGuns[Random.Range(0, size)];
+        int size = CurrentlyHeldWeapons.Count - 1;
+        return CurrentlyHeldWeapons[Random.Range(0, size)] as GunScript;
     }
 
-    public WeaponItem GetWeaponItemData(gunScript gun)
+    public WeaponItem GetWeaponItemData(GunScript gun)
     {
         return weapons.Find(x => x.nameWeapon == gun.weaponName);
     }
@@ -50,7 +58,7 @@ public class weaponManager : MonoBehaviour
         return weapons.Find(x => x.nameWeapon == s);
     }
 
-    public void RefillAmmo(gunScript gunScript, int amount)
+    public void RefillAmmo(GunScript gunScript, int amount)
     {
         gunScript.totalAmmo += amount;
         soundManagerScript.instance.Play("reward");
@@ -67,9 +75,23 @@ public class weaponManager : MonoBehaviour
         Instance = this;
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        switchWeapon();
+
+        WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == currentGunHeld.weaponName);
+        MainGameHUDScript hudScript = MainGameHUDScript.Instance;
+
+        hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
+
+        SetWeaponSettings(currentGunHeld);
+
+
+    }
+
     public void LoadGame_InitializeGameSetup()
     {
-        currentlyHeldGuns = this.gameObject.GetComponentsInChildren<gunScript>(true).ToList();
         var weaponDatas = FPSMainScript.savedata.Game_WeaponStats;
 
         foreach(var weaponDat in weaponDatas)
@@ -92,32 +114,27 @@ public class weaponManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentlyHeldGuns = this.gameObject.GetComponentsInChildren<gunScript>(true).ToList();
-        switchWeapon();
-
-        WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == gun.weaponName);
-        MainGameHUDScript hudScript = MainGameHUDScript.Instance;
-
-        hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
-
-        SetWeaponSettings(gun);
-
-
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (gun == null && CurrentlyHeldGuns.Count <= 0)
+        if (currentWeaponHeld == null && CurrentlyHeldWeapons.Count <= 0)
         {
             return;
         }
 
-        MainGameHUDScript.Instance.currentAmmo.text = "" + gun.curAmmo;
-        MainGameHUDScript.Instance.maximumAmmo.text = "" + gun.totalAmmo;
+        if (currentGunHeld != null && currentGunHeld == currentWeaponHeld)
+        {
+            MainGameHUDScript.Instance.currentAmmo.text = "" + currentGunHeld.curAmmo;
+            MainGameHUDScript.Instance.maximumAmmo.text = "" + currentGunHeld.totalAmmo;
+        }
+        
+        if (currentWeaponHeld.isAmmoUnlimited)
+        {
+            MainGameHUDScript.Instance.currentAmmo.text = "∞";
+            MainGameHUDScript.Instance.maximumAmmo.text = "∞";
+        }
+
         previousWeapon = selectedWeapon;
 
         //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
@@ -166,10 +183,13 @@ public class weaponManager : MonoBehaviour
 
         if (previousWeapon != selectedWeapon)
         {
-            gun.isReloading = false;
-            gun.curReloadTime = gun.reloadTime;
-            gun.isScoping = false;
-            
+            if (currentGunHeld != null)
+            {
+                currentGunHeld.isReloading = false;
+                currentGunHeld.curReloadTime = currentGunHeld.reloadTime;
+                currentGunHeld.isScoping = false;
+            }
+
             switchWeapon();
         }
 
@@ -180,7 +200,7 @@ public class weaponManager : MonoBehaviour
 
     public void unequipWeapon()
     {
-        foreach (var weapon in CurrentlyHeldGuns)
+        foreach (var weapon in CurrentlyHeldWeapons)
         {
             weapon.gameObject.SetActive(false);
         }
@@ -190,7 +210,9 @@ public class weaponManager : MonoBehaviour
     {
         int i = 0;
 
-        foreach (var weapon in CurrentlyHeldGuns)
+        currentlyHeldWeapons.RemoveAll(x => x == null);
+
+        foreach (var weapon in CurrentlyHeldWeapons)
         {
             if (i == selectedWeapon)
             {
@@ -200,11 +222,18 @@ public class weaponManager : MonoBehaviour
                 hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
                 hudScript.SwapCrosshair(weaponItem.overrideCrosshair_Sprite);
                 weapon.gameObject.SetActive(true);
-                anim = weapon.GetComponent<Animator>();
+                weapon.anim = weapon.GetComponent<Animator>();
                 weapon.crosshairHit = hudScript.crosshairHit;
 
-                gun = weapon;
-                SetWeaponSettings(gun);
+                var gunScript = weapon as GunScript;
+
+                currentWeaponHeld = weapon;
+
+                if (gunScript != null)
+                {
+                    currentGunHeld = gunScript;
+                    SetWeaponSettings(currentGunHeld);
+                }
             }
             else
             {
@@ -216,23 +245,24 @@ public class weaponManager : MonoBehaviour
     }
 
 
-    public gunScript AddWeapon(string weaponID, bool shouldSwitch = true)
+    public GunScript AddWeapon(string weaponID, bool shouldSwitch = true)
     {
         var weaponTarget = weapons.Find(x => x.nameWeapon == weaponID);
 
         var gun = Instantiate(weaponTarget.prefab, transform);
         selectedWeapon = transform.childCount - 1;
+        Debug.Log(selectedWeapon);
 
-        var weapon_ = gun.GetComponentInChildren<gunScript>();
-        CurrentlyHeldGuns.Add(weapon_);
-        
+        var weapon_ = gun.GetComponentInChildren<GunScript>();
+        CurrentlyHeldWeapons.Add(weapon_);
+
         if (shouldSwitch) switchWeapon();
 
         SetWeaponSettings(weapon_);
         return weapon_;
     }
 
-    public void SetWeaponSettings(gunScript gunScript)
+    public void SetWeaponSettings(GunScript gunScript)
     {
         FPSMainScript.instance.NewWeaponStat(gunScript);
         var weaponStat = FPSMainScript.instance.GetWeaponSave(gunScript.weaponName);

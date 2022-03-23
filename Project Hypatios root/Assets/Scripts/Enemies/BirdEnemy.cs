@@ -154,11 +154,14 @@ public class BirdEnemy : Enemy
         }
 
         hasSeen = true;
-        DamageOutputterUI.instance.DisplayText(damage);
 
         if (curHealth <= 0f)
         {
             Die();
+        }
+        else
+        {
+            DamageOutputterUI.instance.DisplayText(damage);
         }
     }
 

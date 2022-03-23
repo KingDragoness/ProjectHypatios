@@ -13,12 +13,12 @@ public class ChargeStationUI : MonoBehaviour
     public Text tooltip_Text;
     public List<WeaponSectionButtonUI> allWeaponSections = new List<WeaponSectionButtonUI>();
 
-    private weaponManager weaponManager;
+    private WeaponManager weaponManager;
     private bool StartExecuted = false;
 
     private void Awake()
     {
-        weaponManager = FindObjectOfType<weaponManager>();
+        weaponManager = FindObjectOfType<WeaponManager>();
     }
 
     private void Start()
@@ -78,7 +78,7 @@ public class ChargeStationUI : MonoBehaviour
             }
         }
 
-        foreach (var weapon in weaponManager.Instance.CurrentlyHeldGuns)
+        foreach (var weapon in WeaponManager.Instance.CurrentlyHeldWeapons)
         {
             print($"weapon {weapon.weaponName}");
 
@@ -120,13 +120,13 @@ public class ChargeStationUI : MonoBehaviour
             //}
             #endregion
 
-            weaponManager.SetWeaponSettings(weaponManager.gun);
+            weaponManager.SetWeaponSettings(weaponManager.currentGunHeld);
         }
     }
 
     public void BuyThis(WeaponSectionButtonUI weaponSection)
     {
-        var gunScript = weaponManager.Instance.GetGunScript(weaponSection.weaponID);
+        var gunScript = WeaponManager.Instance.GetGunScript(weaponSection.weaponID);
 
         if (gunScript != null)
         {
@@ -144,7 +144,7 @@ public class ChargeStationUI : MonoBehaviour
         }
 
         FPSMainScript.instance.SoulPoint -= weaponSection.BuyPrice;
-        var gunScript1 = weaponManager.Instance.AddWeapon(weaponSection.weaponID);
+        var gunScript1 = WeaponManager.Instance.AddWeapon(weaponSection.weaponID);
         gunScript1.totalAmmo = 0;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();

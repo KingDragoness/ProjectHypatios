@@ -17,12 +17,12 @@ public class MeleeScript : MonoBehaviour
     public LayerMask layerMask;
     public bool IsOnMeleeAttack = false;
 
-    weaponManager WeaponManager;
+    WeaponManager WeaponManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        WeaponManager = weaponManager.Instance;
+        WeaponManager = WeaponManager.Instance;
         cam = Camera.main;
         meleeAnim = GetComponent<Animator>();
         meleeTime = meleeFrame / 30f;
@@ -37,7 +37,7 @@ public class MeleeScript : MonoBehaviour
             IsOnMeleeAttack = true;
             curMeleeTime = meleeTime;
             weaponBeforeMelee = WeaponManager.selectedWeapon;
-            WeaponManager.selectedWeapon = 4;
+            WeaponManager.selectedWeapon = -1;
         }
 
         if (IsOnMeleeAttack)

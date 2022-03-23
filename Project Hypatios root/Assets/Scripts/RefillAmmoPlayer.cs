@@ -7,14 +7,14 @@ public class RefillAmmoPlayer : MonoBehaviour
     GameObject player;
     public float speed;
     public float distanceToCollect;
-    weaponManager weaponManager;
+    WeaponManager weaponManager;
     float curHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        weaponManager = player.GetComponentInChildren<weaponManager>();
+        weaponManager = player.GetComponentInChildren<WeaponManager>();
     }
 
     // Update is called once per frame

@@ -189,7 +189,9 @@ public class HyperchadEnemy : Enemy
 
         health -= damageProcessed;
 
-        DamageOutputterUI.instance.DisplayText(damageProcessed);
+        if (health > 0f)
+            DamageOutputterUI.instance.DisplayText(damageProcessed);
+
         base.Attacked(damageProcessed, repulsionForce);
     }
 

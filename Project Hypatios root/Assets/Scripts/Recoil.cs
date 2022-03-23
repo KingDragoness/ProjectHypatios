@@ -18,8 +18,8 @@ public class Recoil : MonoBehaviour
     public float recoilY;
     public float recoilZ;
 
-    public gunScript gun;
-    public weaponManager weaponSystem;
+    public GunScript gun;
+    public WeaponManager weaponSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +38,7 @@ public class Recoil : MonoBehaviour
         targetRot = Vector3.Lerp(targetRot, Vector3.zero, returnSpeed * Time.deltaTime);
         curRot = Vector3.Slerp(curRot, targetRot, snappiness * Time.deltaTime);
         transform.localRotation = Quaternion.Euler(curRot);
-        gun = weaponSystem.gun;
+        gun = weaponSystem.currentGunHeld;
 
         if (gun != null)
         {

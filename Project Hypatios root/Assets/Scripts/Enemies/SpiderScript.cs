@@ -294,11 +294,14 @@ public class SpiderScript : Enemy
             transform.position += Vector3.back * 0.05f * repulsionForce;
         }
 
-        DamageOutputterUI.instance.DisplayText(damage);
 
         if (curHealth <= 0f)
         {
             Die();
+        }
+        else
+        {
+            DamageOutputterUI.instance.DisplayText(damage);
         }
     }
 

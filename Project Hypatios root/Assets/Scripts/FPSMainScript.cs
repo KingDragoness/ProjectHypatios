@@ -99,7 +99,7 @@ public class FPSMainScript : MonoBehaviour
         return currentWeaponStat.Find(x => x.weaponID == ID);
     }
 
-    public void NewWeaponStat(gunScript gunScript)
+    public void NewWeaponStat(GunScript gunScript)
     {
         HypatiosSave.WeaponDataSave weaponData = currentWeaponStat.Find(x => x.weaponID == gunScript.weaponName);
 
@@ -178,7 +178,7 @@ public class FPSMainScript : MonoBehaviour
     {
 
         var characterScript = FindObjectOfType<characterScript>();
-        var weaponManager = FindObjectOfType<weaponManager>();
+        var weaponManager = FindObjectOfType<WeaponManager>();
 
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
@@ -307,7 +307,7 @@ public class FPSMainScript : MonoBehaviour
     {
         HypatiosSave hypatiosSave = new HypatiosSave();
         var characterScript = FindObjectOfType<characterScript>();
-        var weaponManager = FindObjectOfType<weaponManager>();
+        var weaponManager = FindObjectOfType<WeaponManager>();
 
         if (targetLevel == -1)
         {

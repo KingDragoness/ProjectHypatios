@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class characterScript : MonoBehaviour
 {
@@ -68,11 +69,12 @@ public class characterScript : MonoBehaviour
     public GameObject[] itemOnField;
     public float distanceToPickUp = 2f;
     public GameObject closestItem;
-    public weaponManager weaponSystem;
+    public WeaponManager weaponSystem;
 
     //Animation
-    public Animator anim;
-    public gunScript gun;
+    [ShowInInspector] [ReadOnly] private Animator anim;
+    [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
+    public Animator Anim { get => anim; }
 
     //Scope
     float scopingSpeed = 6f;
@@ -95,8 +97,10 @@ public class characterScript : MonoBehaviour
         soundManager = FindObjectOfType<soundManagerScript>();
         cc = GetComponent<CapsuleCollider>();
 
-        if (gun != null)
-            anim = gun.anim;
+        var currentWeapon = weaponSystem.currentWeaponHeld;
+
+        if (currentWeapon != null)
+            anim = currentWeapon.anim;
     }
 
     private void Update()
@@ -110,6 +114,8 @@ public class characterScript : MonoBehaviour
         if (!heal.isDead)
         {
             if (weaponSystem != null) anim = weaponSystem.anim;
+
+            var gun = weaponSystem.currentGunHeld;
 
             if (gun != null)
             {
@@ -132,17 +138,17 @@ public class characterScript : MonoBehaviour
             slopeDirection = Vector3.ProjectOnPlane(dir, slopeHit.normal);
 
 
-            if (anim != null)
+            if (Anim != null)
             {
                 if (!isGrounded && !WallRun.isWallRunning)
                 {
                     inAir = true;
-                    anim.SetBool("inAir", true);
+                    Anim.SetBool("inAir", true);
                 }
                 else if (WallRun.isWallRunning)
                 {
                     inAir = false;
-                    anim.SetBool("inAir", false);
+                    Anim.SetBool("inAir", false);
 
                     FPSMainScript.instance.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
                 }
@@ -150,7 +156,7 @@ public class characterScript : MonoBehaviour
                 {
                     inAir = false;
                     soundManager.Play("falling");
-                    anim.SetBool("inAir", false);
+                    Anim.SetBool("inAir", false);
                 }
             }
         }
@@ -163,6 +169,7 @@ public class characterScript : MonoBehaviour
     }
 
     bool testDashReady = false;
+
 
     void FixedUpdate()
     {
@@ -301,21 +308,23 @@ public class characterScript : MonoBehaviour
             }
         }
 
+        var gun = weaponSystem.currentGunHeld;
+
         if (gun != null)
         {
             if (dir.magnitude > 0f || WallRun.isWallRunning)
             {
-                anim.SetBool("isRunning", true);
+                Anim.SetBool("isRunning", true);
                 FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
             }
             else
             {
-                anim.SetBool("isRunning", false);
+                Anim.SetBool("isRunning", false);
             }
 
             if (isCrouching)
             {
-                anim.SetBool("isRunning", false);
+                Anim.SetBool("isRunning", false);
             }
         }
     }
@@ -331,7 +340,7 @@ public class characterScript : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
                 soundManager.Play("jumping");
-                anim.SetTrigger("jumping");
+                Anim.SetTrigger("jumping");
             }
             else if (!isGrounded && !WallRun.isWallRunning)
             {
@@ -345,7 +354,7 @@ public class characterScript : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
                 soundManager.Play("jumping");
-                anim.SetTrigger("jumping");
+                Anim.SetTrigger("jumping");
             }
         }
         

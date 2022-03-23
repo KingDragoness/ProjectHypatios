@@ -7,7 +7,7 @@ public class wallRun : MonoBehaviour
     public Animator anim;
     public Rigidbody rb;
     [SerializeField] Transform body;
-    public weaponManager weapon;
+    public WeaponManager weapon;
 
     public characterScript character;
 
@@ -103,7 +103,7 @@ public class wallRun : MonoBehaviour
         checkWall();
         isScoping = false;
 
-        gunScript Gun = weaponManager.Instance.gun;
+        GunScript Gun = WeaponManager.Instance.currentGunHeld;
 
         if (Gun != null)
         {
