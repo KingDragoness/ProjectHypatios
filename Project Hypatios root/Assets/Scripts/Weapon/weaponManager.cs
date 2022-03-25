@@ -80,13 +80,15 @@ public class WeaponManager : MonoBehaviour
     {
         switchWeapon();
 
-        WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == currentGunHeld.weaponName);
         MainGameHUDScript hudScript = MainGameHUDScript.Instance;
 
+        WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == currentWeaponHeld.weaponName);
         hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
 
-        SetWeaponSettings(currentGunHeld);
-
+        if (currentGunHeld != null)
+        {
+            SetWeaponSettings(currentGunHeld);
+        }
 
     }
 

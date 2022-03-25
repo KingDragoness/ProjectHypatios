@@ -260,7 +260,7 @@ public class MainUI : MonoBehaviour
         if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode)
         {
             //FPSMainScript.instance.SaveGame(targetLevel: Application.loadedLevel);
-            FPSMainScript.instance.BufferSaveData();
+            if (FPSMainScript.CheckSaveFileExist()) FPSMainScript.instance.BufferSaveData();
         }
 
         Application.LoadLevel(Application.loadedLevel);

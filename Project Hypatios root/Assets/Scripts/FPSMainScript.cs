@@ -384,6 +384,36 @@ public class FPSMainScript : MonoBehaviour
 
     }
 
+    public static bool CheckSaveFileExist()
+    {
+        string pathLoad = "";
+        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+
+        pathLoad = FPSMainScript.GameSavePath + "/defaultSave.save";
+
+        try
+        {
+            var tempSave = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathLoad), settings);
+
+            if (tempSave == null)
+            {
+                return false;
+
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+        catch
+        {
+            return false;
+
+        }
+
+    }
+
     //Load player cutscene char select
     public void Menu_StartPlayGame()
     {
@@ -414,6 +444,7 @@ public class FPSMainScript : MonoBehaviour
 
     public void Menu_StartElenaStory()
     {
+        Application.LoadLevel(13);
 
     }
 
