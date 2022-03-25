@@ -115,6 +115,8 @@ public class WeaponManager : MonoBehaviour
     }
 
 
+    #region Updates
+
     // Update is called once per frame
     void Update()
     {
@@ -123,63 +125,9 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
-        if (currentGunHeld != null && currentGunHeld == currentWeaponHeld)
-        {
-            MainGameHUDScript.Instance.currentAmmo.text = "" + currentGunHeld.curAmmo;
-            MainGameHUDScript.Instance.maximumAmmo.text = "" + currentGunHeld.totalAmmo;
-        }
-        
-        if (currentWeaponHeld.isAmmoUnlimited)
-        {
-            MainGameHUDScript.Instance.currentAmmo.text = "∞";
-            MainGameHUDScript.Instance.maximumAmmo.text = "∞";
-        }
+        WeaponUI();
 
-        previousWeapon = selectedWeapon;
-
-        //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
-
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            if (selectedWeapon >= transform.childCount - 1)
-            {
-                selectedWeapon = 0;
-            }
-            else
-            {
-                selectedWeapon++;
-            }
-            
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
-            if (selectedWeapon <= 0)
-            {
-                selectedWeapon = transform.childCount - 1;
-            }
-            else
-            {
-                selectedWeapon--;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            selectedWeapon = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >= 2)
-        {
-            selectedWeapon = 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount >= 3)
-        {
-            selectedWeapon = 2;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && transform.childCount >= 4)
-        {
-            selectedWeapon = 3;
-        }
+        InputSwitchWeapon();
 
         if (previousWeapon != selectedWeapon)
         {
@@ -193,10 +141,76 @@ public class WeaponManager : MonoBehaviour
             switchWeapon();
         }
 
-        findEquippedWeapon();
-
-        
+        //-1 is melee
+        if (selectedWeapon != -1) findEquippedWeapon();    
     }
+
+    private void WeaponUI()
+    {
+
+        if (currentGunHeld != null && currentGunHeld == currentWeaponHeld)
+        {
+            MainGameHUDScript.Instance.currentAmmo.text = "" + currentGunHeld.curAmmo;
+            MainGameHUDScript.Instance.maximumAmmo.text = "" + currentGunHeld.totalAmmo;
+        }
+
+        if (currentWeaponHeld.isAmmoUnlimited)
+        {
+            MainGameHUDScript.Instance.currentAmmo.text = "∞";
+            MainGameHUDScript.Instance.maximumAmmo.text = "∞";
+        }
+    }
+
+    private void InputSwitchWeapon()
+    {
+        previousWeapon = selectedWeapon;
+
+        //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
+
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            if (selectedWeapon >= CurrentlyHeldWeapons.Count - 1)
+            {
+                selectedWeapon = 0;
+            }
+            else
+            {
+                selectedWeapon++;
+            }
+
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            if (selectedWeapon <= 0)
+            {
+                selectedWeapon = CurrentlyHeldWeapons.Count - 1;
+            }
+            else
+            {
+                selectedWeapon--;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectedWeapon = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && CurrentlyHeldWeapons.Count >= 2)
+        {
+            selectedWeapon = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && CurrentlyHeldWeapons.Count >= 3)
+        {
+            selectedWeapon = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && CurrentlyHeldWeapons.Count >= 4)
+        {
+            selectedWeapon = 3;
+        }
+    }
+
+#endregion
 
     public void unequipWeapon()
     {
@@ -250,11 +264,10 @@ public class WeaponManager : MonoBehaviour
         var weaponTarget = weapons.Find(x => x.nameWeapon == weaponID);
 
         var gun = Instantiate(weaponTarget.prefab, transform);
-        selectedWeapon = transform.childCount - 1;
-        Debug.Log(selectedWeapon);
 
         var weapon_ = gun.GetComponentInChildren<GunScript>();
         CurrentlyHeldWeapons.Add(weapon_);
+        selectedWeapon = CurrentlyHeldWeapons.Count - 1;
 
         if (shouldSwitch) switchWeapon();
 
