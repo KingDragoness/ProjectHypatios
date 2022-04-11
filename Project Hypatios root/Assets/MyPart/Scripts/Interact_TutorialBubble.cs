@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class Interact_TutorialBubble : MonoBehaviour
 {
     public UnityEvent OnSpeechBubble;
+    public bool shouldEnqueue = true;
     [TextArea(3, 4)]
     public string Dialogue_Content;
     public string Dialogue_SpeakerName;
@@ -62,7 +63,7 @@ public class Interact_TutorialBubble : MonoBehaviour
 
     public  void TriggerMessage()
     {
-        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer);
+        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer, shouldEnqueue);
         OnSpeechBubble?.Invoke();
     }
 

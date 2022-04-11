@@ -11634,9 +11634,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3b2ba01cf8f4af04cacd51900026697b, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e6c0fa3c0d868ef468a73d3a99fd4a71, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.794
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -11892,15 +11892,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b43ddde5a901164aa6db046365096ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSystem: {fileID: 0}
   anim: {fileID: 5714527462288098111}
-  weaponName: Shotgun
-  canScope: 0
-  isAutomatic: 0
   layerMask:
     serializedVersion: 2
     m_Bits: 5393
+  weaponName: Shotgun
+  crosshairHit: {fileID: 0}
   damage: 36
   variableAdditionalDamage: 7
+  isAmmoUnlimited: 0
   totalAmmo: 15
   magazineSize: 10
   curAmmo: 0
@@ -11908,6 +11909,8 @@ MonoBehaviour:
   recoilX: -1
   recoilY: 0.5
   recoilZ: 0
+  canScope: 0
+  isAutomatic: 0
   bulletPerSecond: 2.4
   repulsionForce: 4
   bulletShooter: {fileID: 5714527461487976542}
@@ -11928,8 +11931,6 @@ MonoBehaviour:
   burstAmount: 7
   audioFire: {fileID: 6699618830795811010}
   audioReload: {fileID: 1376940812684998660}
-  weaponSystem: {fileID: 0}
-  crosshairHit: {fileID: 0}
 --- !u!95 &5714527462288098111
 Animator:
   serializedVersion: 3
