@@ -43,17 +43,27 @@ public class GunScript : BaseWeaponScript
 
     Recoil gunRecoil;
 
+    [Space]
+    [Title("Melee Section (Katana)")]
+    public bool isMelee = false;
+    public bool isMeleeing = false;
+    public bool hasHit = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        reloadTime = reloadFrame / 60;
-        curReloadTime = reloadTime;
+        if (!isMelee)
+        {
+            reloadTime = reloadFrame / 60;
+            curReloadTime = reloadTime;
+            gunRecoil = weaponSystem.gunRecoil;
+        }
+        
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //curAmmo = magazineSize;
         anim = GetComponent<Animator>();
         weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
-        gunRecoil = weaponSystem.gunRecoil;
+        
     }
 
     // Update is called once per frame
@@ -64,33 +74,62 @@ public class GunScript : BaseWeaponScript
             return;
         }
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Holster"))
+        if (!isMelee)
         {
-            HandleReloadInput();
-            FireInput();
-            Scoping();
-        }
-        
-        if (isReloading)
-        {
-            curReloadTime -= Time.deltaTime;
-            if (curReloadTime <= 0)
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Holster"))
             {
-                int ammoToFill = magazineSize - curAmmo;
+                HandleReloadInput();
+                FireInput();
+                Scoping();
+            }
 
-                if ((totalAmmo - ammoToFill) <= 0)
+            if (isReloading)
+            {
+                curReloadTime -= Time.deltaTime;
+                if (curReloadTime <= 0)
                 {
-                    ammoToFill = totalAmmo;
+                    int ammoToFill = magazineSize - curAmmo;
+
+                    if ((totalAmmo - ammoToFill) <= 0)
+                    {
+                        ammoToFill = totalAmmo;
+                    }
+
+                    totalAmmo -= ammoToFill;
+                    curAmmo += ammoToFill;
+
+
+                    isReloading = false;
+                    curReloadTime = reloadTime;
                 }
-
-                totalAmmo -= ammoToFill;
-                curAmmo += ammoToFill;
-
-
-                isReloading = false;
-                curReloadTime = reloadTime;
             }
         }
+        else
+        {
+            Melee();
+        }
+        
+    }
+
+    void Melee()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (Time.time >= nextAttackTime)
+            {
+                isMeleeing = false;
+                hasHit = false;
+                KatanaSlash();
+                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+            }
+        }
+    }
+
+    void KatanaSlash()
+    {
+        isMeleeing = true;
+        anim.SetTrigger("melee");
+        Debug.Log("Is Meleeing");
     }
 
     void HandleReloadInput()
