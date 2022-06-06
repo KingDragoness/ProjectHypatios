@@ -113,16 +113,19 @@ public class characterScript : MonoBehaviour
 
         if (!heal.isDead)
         {
-            if (weaponSystem != null) anim = weaponSystem.anim;
-
-            var gun = weaponSystem.currentGunHeld;
-
-            if (gun != null)
+            if (weaponSystem != null)
             {
-                if (gun.isScoping && !gun.isReloading && gun.canScope)
-                    moveSpeed = scopingSpeed;
-                else
-                    moveSpeed = runSpeed;
+                anim = weaponSystem.anim;
+
+                var gun = weaponSystem.currentGunHeld;
+
+                if (gun != null)
+                {
+                    if (gun.isScoping && !gun.isReloading && gun.canScope)
+                        moveSpeed = scopingSpeed;
+                    else
+                        moveSpeed = runSpeed;
+                }
             }
 
             Friction();
@@ -308,23 +311,26 @@ public class characterScript : MonoBehaviour
             }
         }
 
-        var gun = weaponSystem.currentGunHeld;
-
-        if (gun != null)
+        if (weaponSystem != null)
         {
-            if (dir.magnitude > 0f || WallRun.isWallRunning)
-            {
-                Anim.SetBool("isRunning", true);
-                FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
-            }
-            else
-            {
-                Anim.SetBool("isRunning", false);
-            }
+            var gun = weaponSystem.currentGunHeld;
 
-            if (isCrouching)
+            if (gun != null)
             {
-                Anim.SetBool("isRunning", false);
+                if (dir.magnitude > 0f || WallRun.isWallRunning)
+                {
+                    Anim.SetBool("isRunning", true);
+                    FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
+                }
+                else
+                {
+                    Anim.SetBool("isRunning", false);
+                }
+
+                if (isCrouching)
+                {
+                    Anim.SetBool("isRunning", false);
+                }
             }
         }
     }

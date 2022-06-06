@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 
 public class DialogueSubtitleUI : MonoBehaviour
@@ -21,7 +22,7 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     public static DialogueSubtitleUI instance;
 
-    private Queue<DialogueSpeech> dialogueSpeeches = new Queue<DialogueSpeech>();
+    [SerializeField] private Queue<DialogueSpeechCache> dialogueSpeeches = new Queue<DialogueSpeechCache>();
     private float timer = 2f;
     private bool isClosed = true;
 
@@ -55,7 +56,7 @@ public class DialogueSubtitleUI : MonoBehaviour
             if (dialogueSpeeches.Count > 0)
             {
                 dialogueSpeeches.Dequeue();
-                Debug.Log("test dequeue");
+                Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
                 if (dialogueSpeeches.Count > 0) DisplayThisDialogue(dialogueSpeeches.Peek());
             }
             else
@@ -68,32 +69,53 @@ public class DialogueSubtitleUI : MonoBehaviour
     [ContextMenu("Test1")]
     public void Test1()
     {
-        QueueDialogue(DEBUG_Dialogue, DEBUG_SpeakerName, DEBUG_Timer, true);
+        QueueDialogue(DEBUG_Dialogue, DEBUG_SpeakerName, DEBUG_Timer);
     }
 
-    public void QueueDialogue(string dialogue, string speakerName, float timer1)
+    public void OpenTutorialDialogue(string dialogue, string speakerName)
     {
-        DialogueSpeech dialogue1 = new DialogueSpeech(dialogue, speakerName, timer1);
-        OverrideDialogue(dialogue1);
+        dialogueAnimator.SetBool("Close", false);
+        Label_DialogueContent.text = dialogue;
+        Label_SpeakerName.text = speakerName;
+        Image_SpeakerPortrait.sprite = emptySprite;
 
     }
 
-    public void QueueDialogue(string dialogue, string speakerName, float timer1, bool enqueueDialog)
+    public void ExitTutorialDialogue()
     {
-        DialogueSpeech dialogue1 = new DialogueSpeech(dialogue, speakerName, timer1);
-        if (enqueueDialog) EnqueueDialogue(dialogue1); else OverrideDialogue(dialogue1);
-
+        Close();
     }
 
-    public void QueueDialogue(string dialogue, string speakerName, float timer1, bool enqueueDialog, Sprite charPortrait = null, AudioClip audioClip = null)
+    //Full set
+    public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
+        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false)
     {
-        DialogueSpeech dialogue1 = new DialogueSpeech(dialogue, speakerName, timer1, charPortrait, audioClip);
-        if (enqueueDialog) EnqueueDialogue(dialogue1); else OverrideDialogue(dialogue1);
+        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant);
 
+        if (dialogueSpeeches.Count != 0)
+        {
+            if (!dialogueSpeeches.Peek().isImportant && dialogue1.isImportant)
+            {
+                OverrideDialogue(dialogue1);
+            }
+            else if (dialogueSpeeches.Peek().isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
+            {
+                //EnqueueDialogue(dialogue1);
+            }
+            else if (dialogueSpeeches.Peek().isImportant)
+            {
+                EnqueueDialogue(dialogue1);
+            }
+        }
+        else
+        {
+            EnqueueDialogue(dialogue1);
+
+        }
     }
 
 
-    private void DisplayThisDialogue(DialogueSpeech dialogueSpeech)
+    private void DisplayThisDialogue(DialogueSpeechCache dialogueSpeech)
     {
         dialogueAnimator.SetBool("Close", false);
         Label_DialogueContent.text = dialogueSpeech.dialogue;
@@ -116,12 +138,12 @@ public class DialogueSubtitleUI : MonoBehaviour
         }
     }
 
-    private void EnqueueDialogue(DialogueSpeech dialogueSpeech)
+    private void EnqueueDialogue(DialogueSpeechCache dialogueSpeech)
     {
         dialogueSpeeches.Enqueue(dialogueSpeech);
     }
 
-    private void OverrideDialogue(DialogueSpeech dialogueSpeech)
+    private void OverrideDialogue(DialogueSpeechCache dialogueSpeech)
     {
         dialogueSpeeches.Clear();
         dialogueSpeeches.Enqueue(dialogueSpeech);

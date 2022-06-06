@@ -173,6 +173,33 @@ public class FPSMainScript : MonoBehaviour
         }
     }
 
+    public bool Check_ParadoxEvent(string key)
+    {
+        string keyName = "PARADOX.EVENT." + key;
+
+        if (otherEverUsed.Contains(keyName))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void TryAdd_ParadoxEvent(string key)
+    {
+        string keyName = "PARADOX.EVENT." + key;
+        if (Check_EverUsed(keyName))
+        {
+
+        }
+        else
+        {
+            otherEverUsed.Add(keyName);
+        }
+    }
+
     #region Save System
     private void LoadFromSaveBuffer()
     {
@@ -243,7 +270,7 @@ public class FPSMainScript : MonoBehaviour
         HypatiosSave hypatiosSave = PackSaveData();
         hypatiosSave.Player_CurrentHP = 100;
         hypatiosSave.Player_RunSessionUnixTime = 0;
-        hypatiosSave.Game_LastLevelPlayed = 3;
+        hypatiosSave.Game_LastLevelPlayed = 4;
 
         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
@@ -254,7 +281,7 @@ public class FPSMainScript : MonoBehaviour
             weaponStat.removed = true;
         }
 
-        SaveGame(targetLevel: 3, hypatiosSave: hypatiosSave);
+        SaveGame(targetLevel: 4, hypatiosSave: hypatiosSave);
 
         string pathLoad = "";
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };

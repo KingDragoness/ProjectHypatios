@@ -1,21 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Interact_MultiDialoguesTrigger : MonoBehaviour
 {
 
     public List<MultiDialogues_SingleSpeech> allDialogues;
     public List<Transform> ActivatingArea;
+    public UnityEvent OnDialogueTriggered;
 
     public Transform player;
+    public bool AutoScanDialogues = false;
     public bool DEBUG_DrawGizmos = false;
 
     [SerializeField] private bool alreadyTriggered = false;
 
     void Start()
     {
-
+        if (AutoScanDialogues)
+        {
+            allDialogues = GetComponentsInChildren<MultiDialogues_SingleSpeech>().ToList();
+        }
     }
 
 
@@ -32,7 +39,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 continue;
 
             Gizmos.matrix = t.transform.localToWorldMatrix;
-            Gizmos.color = Color.green;
+            Gizmos.color = new Color(0.05f, 0.8f, 0.05f, 0.1f);
             Gizmos.DrawWireCube(Vector3.zero, t.localScale);
         }
 
@@ -76,11 +83,12 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
 
             DialogueSubtitleUI.instance.QueueDialogue(dialog.Dialogue_Content,
                 dialog.dialogSpeaker.name,
-                dialog.Dialogue_Timer, true,
+                dialog.Dialogue_Timer,
                 portrait,
-                dialog.dialogAudioClip);
+                dialog.dialogAudioClip, priorityLevel: 100, isImportant: dialog._isImportant);
         }
 
+        OnDialogueTriggered?.Invoke();
         alreadyTriggered = true;
     }
 

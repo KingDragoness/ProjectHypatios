@@ -255,6 +255,7 @@ public class SpiderScript : Enemy
                     {
                         int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
                         hit.transform.gameObject.GetComponent<health>().takeDamage((int)damage + varDamageResult);
+                        if (spawn == null) spawn = FindObjectOfType<SpawnIndicator>();
                         spawn.Spawn(transform);
                     }
                     

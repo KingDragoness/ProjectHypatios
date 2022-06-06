@@ -1280,15 +1280,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b43ddde5a901164aa6db046365096ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponSystem: {fileID: 0}
   anim: {fileID: 7281002205179884064}
-  weaponName: SMG
-  canScope: 0
-  isAutomatic: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 5393
+  weaponName: SMG
+  crosshairHit: {fileID: 0}
   damage: 40
   variableAdditionalDamage: 20
+  isAmmoUnlimited: 0
   totalAmmo: 150
   magazineSize: 30
   curAmmo: 0
@@ -1296,6 +1297,8 @@ MonoBehaviour:
   recoilX: -1
   recoilY: 0.5
   recoilZ: 0
+  canScope: 0
+  isAutomatic: 1
   bulletPerSecond: 26
   repulsionForce: 1
   bulletShooter: {fileID: 8760496661638497983}
@@ -1316,8 +1319,9 @@ MonoBehaviour:
   burstAmount: 0
   audioFire: {fileID: 6693117990683653921}
   audioReload: {fileID: 2201558277525062256}
-  weaponSystem: {fileID: 0}
-  crosshairHit: {fileID: 0}
+  isMelee: 0
+  isMeleeing: 0
+  hasHit: 0
 --- !u!95 &7281002205179884064
 Animator:
   serializedVersion: 3
@@ -7771,9 +7775,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 624fa50afc498284f8d0969a2be96407, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cb3b8edd068049846921ff89af91c6f5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.218
+  m_Volume: 0.531
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -6,7 +6,6 @@ using UnityEngine.Events;
 public class Interact_TutorialBubble : MonoBehaviour
 {
     public UnityEvent OnSpeechBubble;
-    public bool shouldEnqueue = true;
     [TextArea(3, 4)]
     public string Dialogue_Content;
     public string Dialogue_SpeakerName;
@@ -42,6 +41,8 @@ public class Interact_TutorialBubble : MonoBehaviour
 
     }
 
+    private bool bAlreadyInside = false;
+
     void FixedUpdate()
     {
 
@@ -56,15 +57,24 @@ public class Interact_TutorialBubble : MonoBehaviour
         {
             activate = IsInsideOcclusionBox(t, player.position);
 
-            if (activate)
+            if (activate && !bAlreadyInside)
+            {
                 TriggerMessage();
+            }
+        }
+
+        if (!activate)
+        {
+            bAlreadyInside = false;
         }
     }
 
     public  void TriggerMessage()
     {
-        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer, shouldEnqueue);
+        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer);
         OnSpeechBubble?.Invoke();
+
+        bAlreadyInside = true;
     }
 
     public static bool IsInsideOcclusionBox(Transform box, Vector3 aPoint)

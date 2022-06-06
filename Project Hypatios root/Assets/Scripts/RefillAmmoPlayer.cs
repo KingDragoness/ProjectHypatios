@@ -34,13 +34,17 @@ public class RefillAmmoPlayer : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            var gun = weaponManager.GetRandomGun();
-            var weaponData = weaponManager.GetWeaponItemData(gun);
+            if (weaponManager.playerMode == Player.Aldrich)
+            {
+                var gun = weaponManager.GetRandomGun();
+                var weaponData = weaponManager.GetWeaponItemData(gun);
 
-            float randomTime = Random.Range(0f, 1f);
-            int ammoAmount = Mathf.RoundToInt(weaponData.rewardRate.Evaluate(randomTime));
+                float randomTime = Random.Range(0f, 1f);
+                int ammoAmount = Mathf.RoundToInt(weaponData.rewardRate.Evaluate(randomTime));
 
-            weaponManager.RefillAmmo(gun, ammoAmount);
+                weaponManager.RefillAmmo(gun, ammoAmount);
+            } 
+
             Destroy(gameObject);
         }
     }

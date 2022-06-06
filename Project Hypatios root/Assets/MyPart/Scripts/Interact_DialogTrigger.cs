@@ -17,6 +17,7 @@ public class Interact_DialogTrigger : MonoBehaviour
     public PortraitSpeaker portraitSpeaker;
     public AudioClip dialogAudioClip;
     public float Dialogue_Timer = 4;
+    public bool _isImportant = false;
     [Space]
     public List<Transform> ActivatingArea;
 
@@ -86,7 +87,7 @@ public class Interact_DialogTrigger : MonoBehaviour
 
 
 
-        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, dialogSpeaker.name, Dialogue_Timer, false, portrait, dialogAudioClip);
+        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, dialogSpeaker.name, Dialogue_Timer, portrait, dialogAudioClip, isImportant: _isImportant);
         OnSpeechBubble?.Invoke();
 
         alreadyTriggered = true;

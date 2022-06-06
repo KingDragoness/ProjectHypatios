@@ -4,10 +4,19 @@ using System.Linq;
 using UnityEngine;
 using FPSGame;
 
+public enum Player
+{
+    Aldrich,
+    Elena
+}
+
 public class WeaponManager : MonoBehaviour
 {
 
+
+
     public int selectedWeapon = 0;
+    public Player playerMode = Player.Aldrich;
     public GameObject weaponHolder;
     public GameObject weaponNumToSwap;
     public GameObject weaponToSwap;

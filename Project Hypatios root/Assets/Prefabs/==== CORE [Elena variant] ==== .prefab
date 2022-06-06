@@ -40924,9 +40924,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4008519662556365211}
-  - {fileID: 8571338031117795930}
-  - {fileID: 7969498502010718796}
   - {fileID: 3680386271463366303}
+  - {fileID: 7969498502010718796}
   m_Father: {fileID: 4008519663154177094}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -6.1, z: 0}
@@ -40937,12 +40936,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4008519662749993546}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78e50f0d47d676a47867da9d23507afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectedWeapon: 0
+  playerMode: 1
   weaponHolder: {fileID: 4008519662749993546}
   weaponNumToSwap: {fileID: 0}
   weaponToSwap: {fileID: 0}
@@ -40950,7 +40950,7 @@ MonoBehaviour:
   IsOnMeleeAttack: 0
   previousWeapon: 0
   currentGunHeld: {fileID: 0}
-  currentWeaponHeld: {fileID: 7513481543050159660}
+  currentWeaponHeld: {fileID: 576835021927180777}
   weapons:
   - {fileID: 11400000, guid: 667283279a9b2c843b0b9a9e4060c15c, type: 2}
   - {fileID: 11400000, guid: e3520f2661f6e854e9fd9d0764defa98, type: 2}
@@ -40959,8 +40959,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 682e0230508a23c448d773484f95479d, type: 2}
   - {fileID: 11400000, guid: 02422ef6ace9b0644acb3584a8c1e312, type: 2}
   currentlyHeldWeapons:
-  - {fileID: 7513481543050159660}
-  - {fileID: 6350088138774024116}
+  - {fileID: 576835021927180777}
   gunRecoil: {fileID: 4008519662187878896}
 --- !u!1 &4008519662821895775
 GameObject:
@@ -67663,7 +67662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7571643701529761482
 Transform:
   m_ObjectHideFlags: 0
@@ -67716,7 +67715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab1728fe9daa354db79e3bdce82c6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSystem: {fileID: 0}
+  weaponSystem: {fileID: 4008519662749993548}
   anim: {fileID: 7969498502500037834}
   layerMask:
     serializedVersion: 2
@@ -67733,6 +67732,8 @@ MonoBehaviour:
   recoilX: 0
   recoilY: 0
   recoilZ: 0
+  cooldownAttack: 1
+  isFiring: 0
 --- !u!1 &7152732836149836332
 GameObject:
   m_ObjectHideFlags: 0
@@ -84155,198 +84156,6 @@ Transform:
   m_Father: {fileID: 1559147648230524500}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 40.62965, y: 169.2932, z: 68.57801}
---- !u!1 &9059080992276535520
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8571338031117795930}
-  - component: {fileID: 4709737250686864895}
-  - component: {fileID: 7401857691008465205}
-  - component: {fileID: 9059080992276535521}
-  - component: {fileID: 9059080992276535326}
-  - component: {fileID: 9059080992276535327}
-  - component: {fileID: 9059080992276535324}
-  - component: {fileID: 9059080992276535325}
-  m_Layer: 9
-  m_Name: katana
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8571338031117795930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_LocalRotation: {x: -0, y: 0.05320748, z: -0, w: 0.9985835}
-  m_LocalPosition: {x: -0.08431691, y: -0.2880001, z: -0.04026791}
-  m_LocalScale: {x: 0.02, y: 1, z: 0.03}
-  m_Children: []
-  m_Father: {fileID: 4008519662749993549}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4709737250686864895
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Mesh: {fileID: -5495902117074765545, guid: af7a20cbf1d09424f86482b37b1138d8, type: 3}
---- !u!23 &7401857691008465205
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 670224309865224971, guid: af7a20cbf1d09424f86482b37b1138d8, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!95 &9059080992276535521
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0597def761ae306418fffeb981c7a6ce, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &9059080992276535326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5d70bf3ee5e4b542986f98edd75ff23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tagName: Katana
---- !u!114 &9059080992276535327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b43ddde5a901164aa6db046365096ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponSystem: {fileID: 4008519662749993548}
-  anim: {fileID: 9059080992276535521}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  weaponName: Katana
-  crosshairHit: {fileID: 0}
-  damage: 150
-  variableAdditionalDamage: 4
-  isAmmoUnlimited: 0
-  totalAmmo: 0
-  magazineSize: 0
-  curAmmo: 0
-  spread: 0
-  recoilX: 0
-  recoilY: 0
-  recoilZ: 0
-  canScope: 0
-  isAutomatic: 0
-  bulletPerSecond: 2
-  repulsionForce: 1
-  bulletShooter: {fileID: 0}
-  muzzle1: {fileID: 0}
-  bulletImpact: {fileID: 0}
-  bulletSparks: {fileID: 0}
-  bulletTracer: {fileID: 0}
-  isFiring: 0
-  isReloading: 0
-  reloadFrame: 0
-  reloadTime: 0
-  curReloadTime: 0
-  isScoping: 0
-  isBurst: 0
-  burstAmount: 0
-  audioFire: {fileID: 0}
-  audioReload: {fileID: 0}
-  isMelee: 1
-  isMeleeing: 0
-  hasHit: 0
---- !u!114 &9059080992276535324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41eb7dcb12f7a0140b4d6314ef5385ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &9059080992276535325
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059080992276535520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0000002, y: 2.1352086, z: 2}
-  m_Center: {x: 0, y: 0.8866057, z: 0}
 --- !u!1 &9099228632370081345
 GameObject:
   m_ObjectHideFlags: 0
@@ -84620,20 +84429,45 @@ PrefabInstance:
       propertyPath: targetCopy
       value: 
       objectReference: {fileID: 1323103808493925026}
+    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: weaponSystem
+      value: 
+      objectReference: {fileID: 4008519662749993548}
+    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: cooldownAttack
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: layerMask.m_Bits
+      value: 4097
+      objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234624, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: m_Name
       value: Weapon Katana
       objectReference: {fileID: 0}
-    - target: {fileID: 8452248196169234624, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
@@ -84685,8 +84519,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4756134542984849431, guid: cd7b0422dd44f3643ab61fd67c08e9d9, type: 3}
+    - target: {fileID: 9059080992276535327, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: weaponSystem
+      value: 
+      objectReference: {fileID: 4008519662749993548}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd7b0422dd44f3643ab61fd67c08e9d9, type: 3}
 --- !u!4 &3680386271463366303 stripped
 Transform:
@@ -84694,9 +84532,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5070825734735799900}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6350088138774024116 stripped
+--- !u!114 &576835021927180777 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2197539632933644776, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+  m_CorrespondingSourceObject: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
     type: 3}
   m_PrefabInstance: {fileID: 5070825734735799900}
   m_PrefabAsset: {fileID: 0}

@@ -28,8 +28,17 @@ public class ActivatorRegion : MonoBehaviour
                 continue;
 
             Gizmos.matrix = t.transform.localToWorldMatrix;
-            Gizmos.color = Color.green;
+            Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.5f);
             Gizmos.DrawWireCube(Vector3.zero, t.localScale);
+            Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.04f);
+            Gizmos.DrawCube(Vector3.zero, t.localScale);
+
+            {
+                Vector3 v1 = t.localScale / 2f;
+                Vector3 v2 = -t.localScale / 2f;
+                Gizmos.DrawLine(v1, v2);
+                Gizmos.DrawLine(v2, v1);
+            }
         }
 
     }

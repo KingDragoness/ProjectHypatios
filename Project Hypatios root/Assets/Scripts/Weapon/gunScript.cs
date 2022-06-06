@@ -52,6 +52,8 @@ public class GunScript : BaseWeaponScript
     // Start is called before the first frame update
     void Start()
     {
+        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
+
         if (!isMelee)
         {
             reloadTime = reloadFrame / 60;
@@ -62,7 +64,6 @@ public class GunScript : BaseWeaponScript
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //curAmmo = magazineSize;
         anim = GetComponent<Animator>();
-        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
         
     }
 
