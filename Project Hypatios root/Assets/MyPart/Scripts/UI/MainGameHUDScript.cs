@@ -15,6 +15,7 @@ public class MainGameHUDScript : MonoBehaviour
     public Slider justDamagedHealthSlider;
     public Slider dashSlider;
     public GameObject dashOk;
+    public GameObject interactPrompt;
 
     [Header("Audio")]
     public AudioSource audio_DashReady;
@@ -55,6 +56,27 @@ public class MainGameHUDScript : MonoBehaviour
     {
         soulPoint.text = $"{FPSMainScript.instance.SoulPoint}";
         //justDamagedHealthSlider.value = Mathf.MoveTowards(justDamagedHealthSlider.value, healthSlider.value, drainHealthSpeed * Time.deltaTime);
+
+        bool hidePrompt = true;
+
+        if (InteractableCamera.instance != null)
+        {
+            if (InteractableCamera.instance.currentInteractable != null)
+            {
+                hidePrompt = false;
+            }
+        }
+        
+
+        if (hidePrompt)
+        {
+            interactPrompt.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (!interactPrompt.activeSelf) interactPrompt.gameObject.SetActive(true);
+        }
+
     }
 
     public void PlayDash()

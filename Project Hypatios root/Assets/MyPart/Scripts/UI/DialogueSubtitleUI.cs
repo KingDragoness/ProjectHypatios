@@ -88,29 +88,36 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     //Full set
     public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
-        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false)
+        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false)
     {
         DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant);
 
-        if (dialogueSpeeches.Count != 0)
+        if (shouldOverride == false)
         {
-            if (!dialogueSpeeches.Peek().isImportant && dialogue1.isImportant)
+            if (dialogueSpeeches.Count != 0)
             {
-                OverrideDialogue(dialogue1);
+                if (!dialogueSpeeches.Peek().isImportant && dialogue1.isImportant)
+                {
+                    OverrideDialogue(dialogue1);
+                }
+                else if (dialogueSpeeches.Peek().isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
+                {
+                    //EnqueueDialogue(dialogue1);
+                }
+                else if (dialogueSpeeches.Peek().isImportant)
+                {
+                    EnqueueDialogue(dialogue1);
+                }
             }
-            else if (dialogueSpeeches.Peek().isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
-            {
-                //EnqueueDialogue(dialogue1);
-            }
-            else if (dialogueSpeeches.Peek().isImportant)
+            else
             {
                 EnqueueDialogue(dialogue1);
+
             }
         }
         else
         {
-            EnqueueDialogue(dialogue1);
-
+            OverrideDialogue(dialogue1);
         }
     }
 

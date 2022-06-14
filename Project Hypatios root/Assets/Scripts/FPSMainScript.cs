@@ -257,7 +257,7 @@ public class FPSMainScript : MonoBehaviour
         //If elena mode do nothing
         if (currentGamemode == CurrentGamemode.Elena)
         {
-            instance.BufferSaveData();
+            //instance.BufferSaveData();
             return;
         }
 

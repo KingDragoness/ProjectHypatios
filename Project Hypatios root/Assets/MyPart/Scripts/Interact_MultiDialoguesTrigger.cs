@@ -10,6 +10,8 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
     public List<MultiDialogues_SingleSpeech> allDialogues;
     public List<Transform> ActivatingArea;
     public UnityEvent OnDialogueTriggered;
+    public bool shouldOverride = false;
+    public bool isImportant = true;
 
     public Transform player;
     public bool AutoScanDialogues = false;
@@ -85,7 +87,9 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 dialog.dialogSpeaker.name,
                 dialog.Dialogue_Timer,
                 portrait,
-                dialog.dialogAudioClip, priorityLevel: 100, isImportant: dialog._isImportant);
+                dialog.dialogAudioClip, priorityLevel: 100, 
+                isImportant: isImportant,
+                shouldOverride: shouldOverride);
         }
 
         OnDialogueTriggered?.Invoke();

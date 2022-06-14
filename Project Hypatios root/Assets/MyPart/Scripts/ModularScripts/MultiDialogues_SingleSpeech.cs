@@ -10,6 +10,6 @@ public class MultiDialogues_SingleSpeech : MonoBehaviour
     public DialogSpeaker dialogSpeaker;
     public PortraitSpeaker portraitSpeaker;
     public AudioClip dialogAudioClip;
-    public bool _isImportant;
+    //public bool _isImportant;
     public float Dialogue_Timer = 4;
 }

@@ -257,7 +257,8 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode)
+        if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode
+            && FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
         {
             //FPSMainScript.instance.SaveGame(targetLevel: Application.loadedLevel);
             if (FPSMainScript.CheckSaveFileExist()) FPSMainScript.instance.BufferSaveData();
