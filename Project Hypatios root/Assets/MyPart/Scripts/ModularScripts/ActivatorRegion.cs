@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class ActivatorRegion : MonoBehaviour
 {
@@ -68,6 +69,60 @@ public class ActivatorRegion : MonoBehaviour
             }
         }
     }
+
+    [ContextMenu("Rough bound calculation")]
+    public void CalculateBounds()
+    {
+        Bounds bounds = new Bounds();
+
+        foreach (var go in TargetObjectRegion)
+        {
+            bounds.Encapsulate(GetBounds(go));
+        }
+
+        Vector3 size1 = new Vector3(bounds.size.x/2, bounds.size.y/2, bounds.size.z/2);
+        size1.x = Mathf.Sqrt(size1.x);
+        size1.y = Mathf.Sqrt(size1.y);
+        size1.z = Mathf.Sqrt(size1.z);
+
+        ActivatingArea[0].transform.position = bounds.center;
+        ActivatingArea[0].transform.localScale = size1;
+
+    }
+
+    public static Bounds GetBounds(GameObject obj)
+    {
+        Bounds bounds = new Bounds();
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            //Find first enabled renderer to start encapsulate from it
+
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer.enabled)
+                {
+                    bounds = renderer.bounds;
+                    break;
+                }
+            }
+
+            //Encapsulate for all renderers
+
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer.enabled)
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
+
+            }
+        }
+
+        return bounds;
+    }
+
 
     public static bool IsInsideOcclusionBox(Transform box, Vector3 aPoint)
     {

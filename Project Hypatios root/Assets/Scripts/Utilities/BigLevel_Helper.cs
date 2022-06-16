@@ -20,10 +20,21 @@ public class BigLevel_Helper : MonoBehaviour
         public void EnableThisOnly()
         {
             BigLevel_Helper bigLevel = FindObjectOfType<BigLevel_Helper>();
+            List<Transform> allParentsAssociated = new List<Transform>();
 
             foreach(var levelPart in bigLevel.alllevelParts)
             {
                 levelPart.sceneObject.SetActive(false);
+
+                if (sceneObject.IsParentOf(levelPart.sceneObject))
+                {
+                    allParentsAssociated.Add(levelPart.sceneObject.transform);
+                }
+            }
+
+            foreach (var parent in allParentsAssociated)
+            {
+                parent.gameObject.SetActive(true);
             }
 
             sceneObject.SetActive(true);
@@ -70,12 +81,25 @@ public class BigLevel_Helper : MonoBehaviour
             EnableAll();
     }
 
+    [TabGroup("Quick tools")]
     [Button("Enable All")]
     public void EnableAll()
     { 
         foreach (var levelPart in alllevelParts)
         {
             levelPart.sceneObject.SetActive(true);
+        }
+    }
+
+    [TabGroup("Quick tools")]
+    [Button("Close ATVRegion Gizmos")]
+    public void DisableGizmosATV()
+    {
+        var ActivatorRegions = FindObjectsOfType<ActivatorRegion>();
+
+        foreach (var atvreg in ActivatorRegions)
+        {
+            atvreg.DEBUG_DrawGizmos = false;
         }
     }
 
