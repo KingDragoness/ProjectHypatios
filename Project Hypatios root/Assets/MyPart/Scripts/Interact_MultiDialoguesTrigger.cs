@@ -66,6 +66,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
         }
     }
 
+    [ContextMenu("Trigger Message")]
     public void TriggerMessage()
     {
         if (alreadyTriggered) return;
@@ -87,9 +88,11 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 dialog.dialogSpeaker.name,
                 dialog.Dialogue_Timer,
                 portrait,
-                dialog.dialogAudioClip, priorityLevel: 100, 
+                dialog.dialogAudioClip, priorityLevel: 100,
                 isImportant: isImportant,
-                shouldOverride: shouldOverride);
+                shouldOverride: shouldOverride, 
+                entryEvent: dialog.OnDialogTriggered);
+                
         }
 
         OnDialogueTriggered?.Invoke();

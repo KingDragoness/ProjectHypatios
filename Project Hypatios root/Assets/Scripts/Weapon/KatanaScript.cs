@@ -9,6 +9,8 @@ public class KatanaScript : BaseWeaponScript
     public float cooldownAttack = 1f;
     public float range = 5f;
 
+    [FoldoutGroup("References")] public characterScript characterScript;
+    [FoldoutGroup("References")] public health playerHealth;
     [FoldoutGroup("Audios")] public AudioSource audio_HitSword;
 
     float nextAttackTime = 0f;
@@ -16,6 +18,8 @@ public class KatanaScript : BaseWeaponScript
 
     private void Start()
     {
+        if (characterScript == null) characterScript = FindObjectOfType<characterScript>();
+        if (playerHealth == null) playerHealth = FindObjectOfType<health>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
     }
@@ -27,6 +31,19 @@ public class KatanaScript : BaseWeaponScript
         if (Input.GetButtonDown("Fire1"))
         {
             FireWeapon();
+        }
+
+        if (Input.GetButton("Fire2"))
+        {
+            playerHealth.armorStrength = 2f;
+            characterScript.speedMultiplier = 4f;
+            anim.SetBool("Block", true);
+        }
+        else
+        {
+            playerHealth.armorStrength = 1f;
+            characterScript.speedMultiplier = 8f;
+            anim.SetBool("Block", false);
         }
     }
 

@@ -41424,7 +41424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4008519662953804708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.000000059604645, z: 0.45999908}
+  m_LocalPosition: {x: 0, y: 0.000000059604645, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4008519663154177094}
@@ -41883,6 +41883,7 @@ MonoBehaviour:
   healPerSecond: 3
   healthRegen: 0
   HealthSpeed: 10
+  armorStrength: 1
   isDead: 0
   slow: {fileID: 4008519663279975389}
   deathCamera: {fileID: 6481596784277707100}
@@ -84867,26 +84868,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4008519662749993549}
     m_Modifications:
-    - target: {fileID: 1863242000093623150, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
-      propertyPath: targetCopy
+      propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 1323103808493925026}
+      objectReference: {fileID: 0}
     - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: weaponSystem
       value: 
       objectReference: {fileID: 4008519662749993548}
-    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: cooldownAttack
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: layerMask.m_Bits
-      value: 4097
-      objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234624, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: m_Name
@@ -84895,21 +84886,6 @@ PrefabInstance:
     - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234627, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
@@ -84962,11 +84938,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9059080992276535327, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
-        type: 3}
-      propertyPath: weaponSystem
-      value: 
-      objectReference: {fileID: 4008519662749993548}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd7b0422dd44f3643ab61fd67c08e9d9, type: 3}
 --- !u!4 &3680386271463366303 stripped

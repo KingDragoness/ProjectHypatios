@@ -153,7 +153,8 @@ public class characterScript : MonoBehaviour
                     inAir = false;
                     Anim.SetBool("inAir", false);
 
-                    FPSMainScript.instance.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
+                    if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                        FPSMainScript.instance.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
                 }
                 if (inAir && isGrounded)
                 {
@@ -204,7 +205,8 @@ public class characterScript : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftShift) && timeSinceLastDash > dashCooldown)
             {
-                FPSMainScript.instance.RuntimeTutorialHelp("Dashing", "While holding LEFT SHIFT, you can dash by hold WASD keys to dash either left, right, back or forward.", "FirstDash");
+                if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                    FPSMainScript.instance.RuntimeTutorialHelp("Dashing", "While holding LEFT SHIFT, you can dash by hold WASD keys to dash either left, right, back or forward.", "FirstDash");
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
             }
@@ -320,7 +322,9 @@ public class characterScript : MonoBehaviour
                 if (dir.magnitude > 0f || WallRun.isWallRunning)
                 {
                     Anim.SetBool("isRunning", true);
-                    FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
+
+                    if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                        FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
                 }
                 else
                 {

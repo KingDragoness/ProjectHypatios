@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class DialogueSpeechCache
@@ -12,9 +13,10 @@ public class DialogueSpeechCache
     public int priority = 0;
     public Sprite charPortrait = null;
     public AudioClip audioClip = null;
+    public UnityEvent dialogEvent;
 
     public DialogueSpeechCache(string dialogue, string speakerName, float timer1, Sprite charPortrait = null, AudioClip audioClip = null, int priority = 0
-        , bool _isImportant = false)
+        , bool _isImportant = false, UnityEvent _dialogEvent = null)
     {
         this.dialogue = dialogue;
         this.speakerName = speakerName;
@@ -23,5 +25,6 @@ public class DialogueSpeechCache
         this.audioClip = audioClip;
         this.isImportant = _isImportant;
         this.priority = priority;
+        this.dialogEvent = _dialogEvent;
     }
 }

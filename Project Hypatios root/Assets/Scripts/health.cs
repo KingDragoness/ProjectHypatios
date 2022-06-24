@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using Sirenix.OdinInspector;
 
 public class health : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class health : MonoBehaviour
     public float healPerSecond;
     public float healthRegen = 0f;
     public float HealthSpeed = 4;
+    [InfoBox("Only for Elena")]
+    [FoldoutGroup("Elena Section")] public float armorStrength = 1;
     float healthAfterHeal = 0f;
     public bool isDead;
     public SlowMotion slow;
@@ -86,7 +89,8 @@ public class health : MonoBehaviour
 
         if ((targetHealth / maxHealth) < 0.2f)
         {
-            FPSMainScript.instance.RuntimeTutorialHelp("Your health is about low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
+            if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                FPSMainScript.instance.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
         }
 
         if (curHealth <= 0f)
@@ -171,7 +175,7 @@ public class health : MonoBehaviour
         {
             healthAfterHeal -= damage;
         }
-        targetHealth -= damage;
+        targetHealth -= (damage/ armorStrength);
 
         if (dof.focalLength.value < 68f)
         {

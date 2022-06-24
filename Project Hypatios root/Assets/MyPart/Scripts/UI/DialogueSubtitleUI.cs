@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
@@ -88,9 +89,9 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     //Full set
     public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
-        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false)
+        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null)
     {
-        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant);
+        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent);
 
         if (shouldOverride == false)
         {
@@ -128,6 +129,7 @@ public class DialogueSubtitleUI : MonoBehaviour
         Label_DialogueContent.text = dialogueSpeech.dialogue;
         Label_SpeakerName.text = dialogueSpeech.speakerName;
         timer = dialogueSpeech.timer1;
+        dialogueSpeech.dialogEvent?.Invoke();
 
         if (dialogueSpeech.charPortrait != null)
         {
