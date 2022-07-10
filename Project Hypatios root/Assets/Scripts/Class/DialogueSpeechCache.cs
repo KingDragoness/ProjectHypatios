@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
+public class CutsceneDialogCache
+{
+    public string dialogue, speakerName;
+    public Sprite charPortrait = null;
+    public AudioClip audioClip = null;
+    public UnityEvent dialogEvent;
+}
+
+[System.Serializable]
 public class DialogueSpeechCache
 {
 

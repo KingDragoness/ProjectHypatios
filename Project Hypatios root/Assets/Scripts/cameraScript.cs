@@ -45,6 +45,11 @@ public class cameraScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private void OnEnable()
+    {
+        transform.localPosition = Vector3.zero;
+    }
+
     public float DEBUG_MAGNITUDE = 5;
     public float DEBUG_DURATION = 1;
 

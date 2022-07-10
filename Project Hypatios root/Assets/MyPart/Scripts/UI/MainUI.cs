@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class MainUI : MonoBehaviour
 {
@@ -15,20 +16,21 @@ public class MainUI : MonoBehaviour
         FreecamMode
     }
 
-    public GameObject PauseMenu_UI;
-    public GameObject HUD_UI;
-    public GameObject Shop_Weapon_UI;
-    public GameObject Shop_Paradox_UI;
-    public GameObject CutsceneHUD_UI;
-    public GameObject DefaultHUD_UI;
-    public GameObject Console_UI;
-    public GameObject Camera_Cutscene;
-    public GameObject Camera_Main;
-    public GameObject SavingGameIcon_UI;
-    public NoclipCamera Camera_Noclip;
-    public GameObject Player;
+    [FoldoutGroup("References")] public GameObject PauseMenu_UI;
+    [FoldoutGroup("References")] public GameObject HUD_UI;
+    [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
+    [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
+    [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
+    [FoldoutGroup("References")] public GameObject DefaultHUD_UI;
+    [FoldoutGroup("References")] public GameObject Console_UI;
+    [FoldoutGroup("References")] public GameObject Camera_Cutscene;
+    [FoldoutGroup("References")] public GameObject Camera_Main;
+    [FoldoutGroup("References")] public GameObject SavingGameIcon_UI;
+    [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
+    [FoldoutGroup("References")] public SettingsUI settingsUI;
+    [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
+    [FoldoutGroup("References")] public GameObject Player;
     public UIMode current_UI = UIMode.Default;
-    public SettingsUI settingsUI;
     private bool paused = false;
 
     public static MainUI Instance;
