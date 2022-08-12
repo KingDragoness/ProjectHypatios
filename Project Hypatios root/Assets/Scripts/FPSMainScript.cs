@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.ImageEffects;
+using DevLocker.Utils;
 
 public class FPSMainScript : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class FPSMainScript : MonoBehaviour
     }
 
     public CurrentGamemode currentGamemode = CurrentGamemode.Aldrich;
+    [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
+    [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
 
     [Header("Saves")]
     public int SoulPoint = 0;
@@ -197,6 +200,19 @@ public class FPSMainScript : MonoBehaviour
         else
         {
             otherEverUsed.Add(keyName);
+        }
+    }
+
+
+    public void Clear_ParadoxEvent(string key)
+    {
+        string keyName = "PARADOX.EVENT." + key;
+        if (Check_EverUsed(keyName))
+        {
+            otherEverUsed.Remove(keyName);
+        }
+        else
+        {
         }
     }
 
@@ -471,13 +487,15 @@ public class FPSMainScript : MonoBehaviour
 
     public void Menu_StartElenaStory()
     {
-        Application.LoadLevel(13);
+        int index = elenaScene.Index;
+        Application.LoadLevel(index);
 
     }
 
     public void Menu_StartAldrich()
     {
-        Application.LoadLevel(4);
+        int index = aldrichScene.Index;
+        Application.LoadLevel(index);
 
     }
 

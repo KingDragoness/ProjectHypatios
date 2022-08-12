@@ -15,4 +15,10 @@ public class Paradox_TriggerEvent : MonoBehaviour
             FPSMainScript.instance.TryAdd_ParadoxEvent(eventKeyName);
         }
     }
+
+    [ContextMenu("Clear Event")]
+    public void ClearEvent()
+    {
+        FPSMainScript.instance.Clear_ParadoxEvent(eventKeyName);
+    }
 }

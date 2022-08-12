@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using DevLocker.Utils;
+using UnityEngine.SceneManagement;
 
 public class SceneTransitionTrigger : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class SceneTransitionTrigger : MonoBehaviour
     }
 
     public TransitionType type = TransitionType.Specific;
-    [HideIf("type", TransitionType.Additive)] public int targetLevel = 0;
+    [HideIf("type", TransitionType.Additive)] public SceneReference scene;
     [ShowIf("type", TransitionType.Additive)] public int additiveAmount = 1;
 
     private bool isLoading = false;
@@ -30,10 +32,14 @@ public class SceneTransitionTrigger : MonoBehaviour
     private IEnumerator LoadLevel()
     {
         int target = 0;
+
+        if (scene == null) yield break;
+
         isLoading = true;
         if (type == TransitionType.Specific)
         {
-            target = targetLevel;
+            target = scene.Index;
+            Debug.Log($"{scene.SceneName} = ({scene.Index})");
         }
         else
         {
