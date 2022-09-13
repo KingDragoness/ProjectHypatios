@@ -137,7 +137,7 @@ public class BirdEnemy : Enemy
         }
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1f)
+    public override void Attacked(DamageToken token)
     {
         curHealth -= damage;
 
@@ -146,11 +146,11 @@ public class BirdEnemy : Enemy
 
         if (rb != null)
         {
-            rb.AddRelativeForce(Vector3.forward * -1 * 100 * repulsionForce);
+            rb.AddRelativeForce(Vector3.forward * -1 * 100 * token.repulsionForce);
         }
         else
         {
-            transform.position += Vector3.back * 0.05f * repulsionForce;
+            transform.position += Vector3.back * 0.05f * token.repulsionForce;
         }
 
         hasSeen = true;

@@ -47,11 +47,11 @@ public class ChameleonMobius : Enemy
 
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
-        health -= damage;
-        base.Attacked(damage, repulsionForce);
-        DamageOutputterUI.instance.DisplayText(damage);
+        health -= token.damage;
+        base.Attacked(token);
+        DamageOutputterUI.instance.DisplayText(token.damage);
 
         if (health < 0 && !hasDied)
         {

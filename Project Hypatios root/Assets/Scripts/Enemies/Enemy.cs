@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
         onKilled?.Invoke(mySelf);
     }
 
-    public virtual void Attacked(float damage, float repulsionForce = 1f)
+    public virtual void Attacked(DamageToken token)
     {
 
     }

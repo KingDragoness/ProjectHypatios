@@ -279,7 +279,7 @@ public class ConsoleCommand : MonoBehaviour
         catch (System.Exception e)
         {
             SendConsoleMessage("Invalid argument! loadlevel [<color=#00cc99dd>int</color> levelIndex]");
-            Debug.LogError(e.StackTrace);
+            Debug.LogError(e.Message);
         }
     }
 
@@ -434,7 +434,7 @@ public class ConsoleCommand : MonoBehaviour
             
             foreach(var enemy in enemies)
             {
-                enemy.Attacked(9999999, 1);
+                enemy.Attacked(null);
             }
 
         }

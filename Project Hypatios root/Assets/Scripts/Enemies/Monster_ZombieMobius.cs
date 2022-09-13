@@ -43,11 +43,11 @@ public class Monster_ZombieMobius : Enemy
         }
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
-        hitpoint -= damage;
-        base.Attacked(damage, repulsionForce);
-        DamageOutputterUI.instance.DisplayText(damage);
+        hitpoint -= token.damage;
+        base.Attacked(token);
+        DamageOutputterUI.instance.DisplayText(token.damage);
 
     }
     public void SetTarget(Transform target1 = null)

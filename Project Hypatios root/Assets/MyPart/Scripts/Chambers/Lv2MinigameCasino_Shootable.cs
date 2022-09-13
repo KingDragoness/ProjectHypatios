@@ -67,10 +67,10 @@ public class Lv2MinigameCasino_Shootable : Enemy
 
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
-        HP -= damage;
-        DamageOutputterUI.instance.DisplayText(damage);
+        HP -= token.damage;
+        DamageOutputterUI.instance.DisplayText(token.damage);
         ProcessDamage();
     }
 

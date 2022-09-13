@@ -66,12 +66,12 @@ public class MechizMonsterRobot : Enemy
         prefabMissile1.gameObject.SetActive(true);
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
-        hitpoint -= damage;
-        DamageOutputterUI.instance.DisplayText(damage);
+        hitpoint -= token.damage;
+        DamageOutputterUI.instance.DisplayText(token.damage);
 
-        base.Attacked(damage, repulsionForce);
+        base.Attacked(token);
     }
 
     private void Update()

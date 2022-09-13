@@ -26,10 +26,10 @@ public class RandomSpawnArea : MonoBehaviour
 
         Gizmos.matrix = ActivatingArea.transform.localToWorldMatrix;
         var colorGreen = Color.green;
-        colorGreen.a = 0.02f;
+        colorGreen.a = 0.08f;
         Gizmos.color = colorGreen;
         Gizmos.DrawCube(Vector3.zero, ActivatingArea.localScale);
-        colorGreen.a = 0.4f;
+        colorGreen.a = 0.6f;
         Gizmos.DrawWireCube(Vector3.zero, ActivatingArea.localScale);
         Gizmos.DrawIcon(transform.position, "RandomSpawnArea.png");
     }

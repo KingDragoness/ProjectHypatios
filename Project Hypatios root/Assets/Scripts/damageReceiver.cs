@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class DamageToken
+{
+    public enum DamageOrigin
+    {
+        Player,
+        Enemy,
+        Environment
+    }
+
+    public float damage = 1;
+    public float repulsionForce = 1;
+    public DamageOrigin origin = DamageOrigin.Player;
+}
+
 public class damageReceiver : MonoBehaviour
 {
     public Enemy enemyScript;
@@ -13,9 +28,10 @@ public class damageReceiver : MonoBehaviour
     [Space]
     public UnityEvent OnHit;
 
-    public void Attacked(float damage, float repulsionForce = 1)
+    public void Attacked(DamageToken token)
     {
-        if (enemyScript != null) enemyScript.Attacked(damage * multiplier, repulsionForce);
+        token.damage *= multiplier;
+        if (enemyScript != null) enemyScript.Attacked(token);
 
         if (isCriticalHit)
         {

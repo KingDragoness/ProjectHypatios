@@ -127,7 +127,7 @@ public class B0MBScript : Enemy
         }  
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
         haveSeenPlayer = true;
         DamageOutputterUI.instance.DisplayText(damage);

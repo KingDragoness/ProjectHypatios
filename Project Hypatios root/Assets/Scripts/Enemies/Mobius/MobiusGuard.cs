@@ -83,15 +83,15 @@ public class MobiusGuard : Enemy
         CheckICanSeePlayer();
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
         timer_Stunned = stunDamageTime;
         aiState = AIState.UnderAttacked;
         animator.SetTrigger("Damaged");
 
-        hitpoint -= damage;
-        base.Attacked(damage, repulsionForce);
-        DamageOutputterUI.instance.DisplayText(damage);
+        hitpoint -= token.damage;
+        base.Attacked(token);
+        DamageOutputterUI.instance.DisplayText(token.damage);
     }
 
     #region State

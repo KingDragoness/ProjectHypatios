@@ -73,8 +73,10 @@ public class KatanaScript : BaseWeaponScript
 
     public void DamageEnemy(damageReceiver damageReceiver)
     {
-        float variableDamage = Random.Range(0, variableAdditionalDamage);
-        damageReceiver.Attacked(damage + variableDamage, 0.1f);
+        var token = new DamageToken();
+        token.damage = damage + Random.Range(0, variableAdditionalDamage);
+        token.repulsionForce = 0.1f;
+        damageReceiver.Attacked(token);
         if (audio_HitSword) audio_HitSword.Play();
     }
 

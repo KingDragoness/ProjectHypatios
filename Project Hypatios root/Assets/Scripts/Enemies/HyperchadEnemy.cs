@@ -166,7 +166,7 @@ public class HyperchadEnemy : Enemy
     }
 
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
         if (currentStance == MoveStances.Unactivated)
         {
@@ -192,7 +192,7 @@ public class HyperchadEnemy : Enemy
         if (health > 0f)
             DamageOutputterUI.instance.DisplayText(damageProcessed);
 
-        base.Attacked(damageProcessed, repulsionForce);
+        base.Attacked(token);
     }
 
     private void AI_Decision()

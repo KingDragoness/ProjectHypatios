@@ -47,10 +47,12 @@ public class ParadoxLevelScript : MonoBehaviour
         {
             entity = paradoxEntity;
             collectionEntity.Add(entity);
+            Debug.Log($"{entity.ID} is null");
         }
         else
         {
             paradoxEntity = entity;
+            Debug.Log($"{entity.ID} {entity.value}");
         }
 
     }

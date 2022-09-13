@@ -228,6 +228,8 @@ public class GunScript : BaseWeaponScript
             audioFire.Play();
         }
 
+        var damageToken = new DamageToken();
+
         if (!isBurst)
         {
             if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
@@ -242,7 +244,7 @@ public class GunScript : BaseWeaponScript
             float spreadX = Random.Range(-spread, spread);
             float spreadY = Random.Range(-spread, spread);
             Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
-
+           
 
             if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
             {
@@ -251,7 +253,8 @@ public class GunScript : BaseWeaponScript
 
                 if (damageReceiver != null)
                 {
-                    damageReceiver.Attacked(damage + variableDamage, repulsionForce);
+                    damageToken.damage = damage + variableDamage; damageToken.repulsionForce = repulsionForce;
+                    damageReceiver.Attacked(damageToken);
                     StartCoroutine(SetCrosshairHitActive());
                 }
 
@@ -302,7 +305,8 @@ public class GunScript : BaseWeaponScript
 
                     if (damageReceiver != null)
                     {
-                        damageReceiver.Attacked(damage + variableDamage, repulsionForce);
+                        damageToken.damage = damage + variableDamage; damageToken.repulsionForce = repulsionForce;
+                        damageReceiver.Attacked(damageToken);
                         StartCoroutine(SetCrosshairHitActive());
                     }
 

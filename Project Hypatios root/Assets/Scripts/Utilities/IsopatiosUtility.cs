@@ -31,6 +31,12 @@ public static class IsopatiosUtility
         return JsonConvert.DeserializeObject<T>(serialized);
     }
 
+    public static T NextOf<T>(this IList<T> list, T item)
+    {
+        var indexOf = list.IndexOf(item);
+        return list[indexOf == list.Count - 1 ? 0 : indexOf + 1];
+    }
+
     public static T PickRandom<T>(this IEnumerable<T> source)
     {
         return source.PickRandom(1).Single();

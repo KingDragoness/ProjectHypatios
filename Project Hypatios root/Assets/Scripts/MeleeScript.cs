@@ -89,7 +89,9 @@ public class MeleeScript : MonoBehaviour
 
             if (damageReceiver != null)
             {
-                damageReceiver.Attacked(Random.Range(meleeDamage - 3, meleeDamage + 3));
+                var token = new DamageToken();
+                token.damage = Random.Range(meleeDamage - 3, meleeDamage + 3);
+                damageReceiver.Attacked(token);
             }
         }
     }

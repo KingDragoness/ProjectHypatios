@@ -41,12 +41,12 @@ public class MechizDroneMonster : Enemy
         rb = GetComponent<Rigidbody>();
     }
 
-    public override void Attacked(float damage, float repulsionForce = 1)
+    public override void Attacked(DamageToken token)
     {
-        hitpoint -= damage;
-        DamageOutputterUI.instance.DisplayText(damage);
+        hitpoint -= token.damage;
+        DamageOutputterUI.instance.DisplayText(token.damage);
         animator_faceHurt.SetTrigger("Hurt");
-        base.Attacked(damage, repulsionForce);
+        base.Attacked(token);
     }
 
     private bool isDead = false;
