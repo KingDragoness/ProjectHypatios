@@ -21,4 +21,10 @@ public class Enemy : MonoBehaviour
 
     }
 
+    //Currently only implemented in level 7
+    public virtual void OnCreated()
+    {
+
+    }
+
 }

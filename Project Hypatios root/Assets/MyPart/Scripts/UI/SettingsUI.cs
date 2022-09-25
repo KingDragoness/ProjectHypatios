@@ -4,27 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
+using Sirenix.OdinInspector;
 
 public class SettingsUI : MonoBehaviour
 {
 
-    public List<Button> qualityLevels = new List<Button>();
-    public Text value_SFX;
-    public Slider slider_SFX;
-    public Text value_Music;
-    public Slider slider_Music;
-    public Text value_MouseSensitivity;
-    public Slider slider_MouseSensitivity;
-    public Text value_Brightness;
-    public Slider slider_Brightness;
-    public Toggle toggle_VSync;
-    public Toggle toggle_MotionBlur;
+    [FoldoutGroup("Video")] public List<Button> qualityLevels = new List<Button>();
+    [FoldoutGroup("Sounds")] public Text value_SFX;
+    [FoldoutGroup("Sounds")] public Slider slider_SFX;
+    [FoldoutGroup("Sounds")] public Text value_Music;
+    [FoldoutGroup("Sounds")] public Slider slider_Music;
+    [FoldoutGroup("Gameplay")] public Text value_MouseSensitivity;
+    [FoldoutGroup("Gameplay")] public Slider slider_MouseSensitivity;
+    [FoldoutGroup("Gameplay")] public Text value_Brightness;
+    [FoldoutGroup("Gameplay")] public Slider slider_Brightness;
+    [FoldoutGroup("Video")] public Toggle toggle_VSync;
+    [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
+    [FoldoutGroup("Video")] public Text value_FPSCap;
+    [FoldoutGroup("Video")] public Slider slider_FPSCap;
+    [FoldoutGroup("Video")] public Dropdown dropdown_Resolution;
     public InputField inputfield_Name;
 
     [Space]
 
-    public AudioMixer mixerSFX;
-    public AudioMixer mixerMusic;
+    [FoldoutGroup("Sounds")] public AudioMixer mixerSFX;
+    [FoldoutGroup("Sounds")] public AudioMixer mixerMusic;
 
     [Space]
     public int currentLevel = 0;
@@ -35,15 +39,33 @@ public class SettingsUI : MonoBehaviour
     public static float BRIGHTNESS = 0.5f; //-1 - 1 -> 0 - 1
     public static int VSYNC = 0;
     public static int MOTIONBLUR = 0;
+    public static int MAXIMUM_FRAMERATE = 201;
+    public static int RESOLUTION = -1;
+
     public static string MY_NAME = "Aldrich";
 
     private ColorGrading colorGrading;
     private AmbientOcclusion AO;
     private MotionBlur motionBlur;
     private FloatParameter floatParam_Brightness;
+    private Resolution[] resolutions;
 
     private void Start()
     {
+        var validRes = Screen.resolutions;
+        resolutions = validRes;
+
+        {
+            dropdown_Resolution.options.Clear();
+
+            foreach (var res in resolutions)
+            {
+                Dropdown.OptionData optionData = new Dropdown.OptionData();
+                optionData.text = $"{res.width}, {res.height}";
+                dropdown_Resolution.options.Add(optionData);
+            }
+        }
+
         AO = FPSMainScript.instance.postProcessVolume.profile.GetSetting<AmbientOcclusion>();
         motionBlur = FPSMainScript.instance.postProcessVolume.profile.GetSetting<MotionBlur>();
 
@@ -54,49 +76,13 @@ public class SettingsUI : MonoBehaviour
             floatParam_Brightness = colorGrading.postExposure;
         }
 
-        {
-            if (PlayerPrefs.HasKey("SETTINGS.MY_NAME"))
-            {
-                MY_NAME = PlayerPrefs.GetString("SETTINGS.MY_NAME");
-            }
-            else
-            {
-                MY_NAME = "Aldrich";
-            }
-        }
-
-
-        {
-            if (PlayerPrefs.HasKey("SETTINGS.BRIGHTNESS"))
-            {
-                BRIGHTNESS = PlayerPrefs.GetFloat("SETTINGS.BRIGHTNESS");
-            }
-            else
-            {
-                BRIGHTNESS = 0.5f;
-            }
-        }
-
-        {
-            if (PlayerPrefs.HasKey("SETTINGS.MOUSE_SENSITIVITY"))
-            {
-                MOUSE_SENSITIVITY = PlayerPrefs.GetFloat("SETTINGS.MOUSE_SENSITIVITY");
-            }
-            else
-            {
-                MOUSE_SENSITIVITY = 10f;
-            }
-
-            if (PlayerPrefs.HasKey("SETTINGS.MOTIONBLUR"))
-            {
-                MOTIONBLUR = PlayerPrefs.GetInt("SETTINGS.MOTIONBLUR");
-            }
-            else
-            {
-                MOTIONBLUR = 1;
-            }
-        }
-
+    
+        MY_NAME = LoadPrefKeyString("SETTINGS.MY_NAME", "Aldrich");
+        BRIGHTNESS = LoadPrefKeyFloat("SETTINGS.BRIGHTNESS", 0.5f);
+        MAXIMUM_FRAMERATE = LoadPrefKeyInt("SETTINGS.MAXIMUM_FRAMERATE", 201);
+        RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
+        MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
+        MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
         SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); //PlayerPrefs.GetFloat("");
         MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1); //PlayerPrefs.GetFloat("SETTINGS.MUSIC_VOLUME");
         VSYNC = PlayerPrefs.GetInt("SETTINGS.VSYNC");
@@ -105,13 +91,51 @@ public class SettingsUI : MonoBehaviour
         slider_Music.SetValueWithoutNotify(MUSIC_VOLUME);
         slider_MouseSensitivity.SetValueWithoutNotify(MOUSE_SENSITIVITY);
         slider_Brightness.SetValueWithoutNotify(BRIGHTNESS);
+        slider_FPSCap.SetValueWithoutNotify(MAXIMUM_FRAMERATE);
         toggle_VSync.SetIsOnWithoutNotify(IntToBool(VSYNC));
         toggle_MotionBlur.SetIsOnWithoutNotify(IntToBool(MOTIONBLUR));
+        dropdown_Resolution.SetValueWithoutNotify(RESOLUTION);
         inputfield_Name.SetTextWithoutNotify(MY_NAME);
 
         currentLevel = QualitySettings.GetQualityLevel();
         RefreshUI();
 
+    }
+
+    #region KeyPrefs
+    private string LoadPrefKeyString(string Keyname, string defaultValue)
+    {
+        if (PlayerPrefs.HasKey(Keyname))
+        {
+            return PlayerPrefs.GetString(Keyname);
+        }
+        else
+        {
+            return defaultValue;
+        }
+    }
+    private float LoadPrefKeyFloat(string Keyname, float defaultValue)
+    {
+        if (PlayerPrefs.HasKey(Keyname))
+        {
+            return PlayerPrefs.GetFloat(Keyname);
+        }
+        else
+        {
+            return defaultValue;
+        }
+    }
+
+    private int LoadPrefKeyInt(string Keyname, int defaultValue)
+    {
+        if (PlayerPrefs.HasKey(Keyname))
+        {
+            return PlayerPrefs.GetInt(Keyname);
+        }
+        else
+        {
+            return defaultValue;
+        }
     }
 
     private float AssignValuePref(string KeyName, float defaultValue)
@@ -137,6 +161,7 @@ public class SettingsUI : MonoBehaviour
             return false;
         }
     }
+    #endregion
 
     public void Tutorial()
     {
@@ -151,9 +176,13 @@ public class SettingsUI : MonoBehaviour
     public void SetSomething()
     {
         MY_NAME = inputfield_Name.text;
+        MAXIMUM_FRAMERATE = Mathf.RoundToInt(slider_FPSCap.value);
+        RESOLUTION = Mathf.RoundToInt(dropdown_Resolution.value);
         PlayerPrefs.SetString("SETTINGS.MY_NAME", MY_NAME);
+        PlayerPrefs.SetInt("SETTINGS.MAXIMUM_FRAMERATE", MAXIMUM_FRAMERATE);
+        PlayerPrefs.SetInt("SETTINGS.RESOLUTION", RESOLUTION);
         PlayerPrefs.Save();
-        //RefreshUI();
+        RefreshUI();
 
     }
 
@@ -287,27 +316,32 @@ public class SettingsUI : MonoBehaviour
 
         }
 
+        if (AO != null)
+        {
+            if (currentLevel == 0)
+            {
+                AO.active = false;
+                motionBlur.active = false;
+            }
+            else
+            {
+                AO.active = true;
+                motionBlur.active = true;
+            }
+        }
 
-        if (currentLevel == 0)
+        if (motionBlur != null)
         {
-            AO.active = false;
-            motionBlur.active = false;
-        }
-        else
-        {
-            AO.active = true;
-            motionBlur.active = true;
-        }
-
-        if (MOTIONBLUR == 0)
-        {
-            motionBlur.active = false;
-            if (FPSMainScript.instance.minorMotionBlur != null) FPSMainScript.instance.minorMotionBlur.enabled = false;
-        }
-        else
-        {
-            motionBlur.active = true;
-            if (FPSMainScript.instance.minorMotionBlur != null) FPSMainScript.instance.minorMotionBlur.enabled = true;
+            if (MOTIONBLUR == 0)
+            {
+                motionBlur.active = false;
+                if (FPSMainScript.instance.minorMotionBlur != null) FPSMainScript.instance.minorMotionBlur.enabled = false;
+            }
+            else
+            {
+                motionBlur.active = true;
+                if (FPSMainScript.instance.minorMotionBlur != null) FPSMainScript.instance.minorMotionBlur.enabled = true;
+            }
         }
 
         float displayBrightness = (BRIGHTNESS + 1) / 2;
@@ -317,8 +351,26 @@ public class SettingsUI : MonoBehaviour
         value_MouseSensitivity.text = (Mathf.Round(MOUSE_SENSITIVITY * 10)/10).ToString();
         value_Brightness.text = (Mathf.Round(displayBrightness * 10)/10).ToString();
 
+        if (MAXIMUM_FRAMERATE < 201)
+        value_FPSCap.text = (Mathf.Round(MAXIMUM_FRAMERATE)).ToString();
+        else value_FPSCap.text = "∞".ToString();
+
         mixerSFX.SetFloat("Master", Mathf.Log10(SFX_VOLUME) * 20);
         mixerMusic.SetFloat("Master", Mathf.Log10(MUSIC_VOLUME) * 20);
+
+        if (MAXIMUM_FRAMERATE >= 201)
+        {
+            Application.targetFrameRate = -1;
+        }
+        else
+        {
+            Application.targetFrameRate = MAXIMUM_FRAMERATE;
+        }
+
+        if (RESOLUTION != -1)
+        {
+            Screen.SetResolution(resolutions[RESOLUTION].width, resolutions[RESOLUTION].height, Screen.fullScreen);
+        }
 
         if (VSYNC == 0)
         {

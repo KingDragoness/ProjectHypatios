@@ -64,6 +64,20 @@ public class RandomSpawnArea : MonoBehaviour
         return result;
     }
 
+    public bool IsInsideOcclusionBox(Vector3 aPoint)
+    {
+        Vector3 localPos = ActivatingArea.InverseTransformPoint(aPoint);
+
+        if (Mathf.Abs(localPos.x) < (ActivatingArea.localScale.x / 2) && Mathf.Abs(localPos.y) < (ActivatingArea.localScale.y / 2) && Mathf.Abs(localPos.z) < (ActivatingArea.localScale.z / 2))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public static bool IsInsideOcclusionBox(Transform box, Vector3 aPoint)
     {
         Vector3 localPos = box.InverseTransformPoint(aPoint);
