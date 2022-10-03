@@ -7,7 +7,7 @@
 		_DissolveMap ("Dissolve Map", 2D) = "white" {}
 		_DissolveAmount ("DissolveAmount", Range(0,1)) = 0
 		_DissolveColor ("DissolveColor", Color) = (1,1,1,1)
-		_DissolveEmission ("DissolveEmission", Range(0,1)) = 1
+		_DissolveEmission ("DissolveEmission", Range(0,16)) = 1
 		_DissolveWidth ("DissolveWidth", Range(0,0.1)) = 0.05
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
@@ -51,7 +51,7 @@
 
 			if(mask.r < _DissolveAmount + _DissolveWidth) {
 				o.Albedo = _DissolveColor;
-				o.Emission = _DissolveColor * _DissolveEmission;
+				o.Emission = _DissolveColor * _DissolveEmission * 10;
 			}
 			
 			o.Metallic = _Metallic;

@@ -263,88 +263,130 @@ MonoBehaviour:
   sounds:
   - name: running
     clip: {fileID: 8300000, guid: 8e13ddabbe577c247a551d913ecf35f8, type: 3}
+    sourceAmount: 0
     volume: 0.757
     pitch: 1
     loop: 1
-    source: {fileID: 0}
+    sources: []
   - name: jumping
     clip: {fileID: 8300000, guid: d57ac06c033d03e48aa0fcab913a7b77, type: 3}
+    sourceAmount: 0
     volume: 0.331
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: falling
     clip: {fileID: 8300000, guid: 7f6d34a141bd1cc41940cd3e178a7d6b, type: 3}
+    sourceAmount: 0
     volume: 0.246
     pitch: 1.1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: dash
     clip: {fileID: 8300000, guid: 10aaac8f2e2b2224cbb4526d0530b3c2, type: 3}
+    sourceAmount: 0
     volume: 0.649
     pitch: 1.51
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: ui.hover
     clip: {fileID: 8300000, guid: e9dc2e7de1a27994cb391f85b80a568f, type: 3}
+    sourceAmount: 0
     volume: 0.7
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: ui.click
     clip: {fileID: 8300000, guid: 39bb2016d4ed1374c93107348c5af494, type: 3}
+    sourceAmount: 0
     volume: 0.647
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hit.metal.1
     clip: {fileID: 8300000, guid: c392590b999df8e4697ad60b3d9c406e, type: 3}
+    sourceAmount: 0
     volume: 0.638
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hit.metal.2
     clip: {fileID: 8300000, guid: 31f538a64389c0a4da053e9719cf5912, type: 3}
+    sourceAmount: 0
     volume: 0.66
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: reward
     clip: {fileID: 8300000, guid: f4b70b4cab456214fbbfe7ac33720024, type: 3}
+    sourceAmount: 0
     volume: 0.793
     pitch: 1.93
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hurt.0
     clip: {fileID: 8300000, guid: b0bd7056027f3a14cb0e162727be20f0, type: 3}
+    sourceAmount: 0
     volume: 0.616
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hurt.1
     clip: {fileID: 8300000, guid: 5358598dea5db484d9cd032d3fc237b8, type: 3}
+    sourceAmount: 0
     volume: 0.609
     pitch: 2.48
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: soul
     clip: {fileID: 8300000, guid: 56973876a719c9a42963ffe82499463d, type: 3}
+    sourceAmount: 0
     volume: 0.7
     pitch: 0.72
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: Die
     clip: {fileID: 8300000, guid: be8eb4515bd67e6458d1c63b4b00a8cd, type: 3}
+    sourceAmount: 0
     volume: 0.596
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: bingo
     clip: {fileID: 8300000, guid: 30c26e59101775e48ab98df89e596e75, type: 3}
+    sourceAmount: 1
     volume: 0.827
     pitch: 1.63
     loop: 0
-    source: {fileID: 0}
+    sources: []
+  - name: flybullet.0
+    clip: {fileID: 8300000, guid: aaf731de0dac2da40a5754e182a64818, type: 3}
+    sourceAmount: 4
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    sources: []
+  - name: flybullet.1
+    clip: {fileID: 8300000, guid: b75496dbceecdb44c8ce2057d919970e, type: 3}
+    sourceAmount: 4
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    sources: []
+  - name: hitmetal.0
+    clip: {fileID: 8300000, guid: 09eb126b7269ae7409a5890c342f3727, type: 3}
+    sourceAmount: 5
+    volume: 0.83
+    pitch: 1
+    loop: 0
+    sources: []
+  - name: hitmetal.1
+    clip: {fileID: 8300000, guid: afcd43782559d334f9228038578e977c, type: 3}
+    sourceAmount: 5
+    volume: 0.82
+    pitch: 1
+    loop: 0
+    sources: []
   baseSFXMixer: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a, type: 2}
 --- !u!1 &718992307534564297
 GameObject:
@@ -1135,7 +1177,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 56599
+    m_Bits: 1105175
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1169,7 +1211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLimitedIntroMode: 0
   wallRunScript: {fileID: 7949520240911515504}
-  mouseSensitivity: 9.918631
+  mouseSensitivity: 12.20529
   playerBody: {fileID: 7949520240911515503}
   x: 0
   y: 0
@@ -1785,7 +1827,7 @@ MonoBehaviour:
   minHeight: 1
   wallRunJumpForce: 7.5
   isWallRunning: 0
-  baseWallRunGravity: -0.01
+  baseWallRunGravity: -8.9
   cam: {fileID: 7949520239517099801}
   FPScam: {fileID: 7949520240802492660}
   aimFov: 19

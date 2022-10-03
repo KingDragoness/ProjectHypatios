@@ -50,7 +50,7 @@ public class FW_AI_SensorEnemy : MonoBehaviour
 
             if (Physics.Raycast(s1.position, dir, out hit, limitRange, layerMask))
             {
-                if (hit.collider.gameObject.IsParentOf(t.gameObject))
+                if (hit.collider.gameObject.IsParentOf(t.gameObject) | hit.collider.gameObject == t.gameObject)
                 {
                     Debug.DrawRay(s1.position, dir * hit.distance, Color.blue);
                     return true;

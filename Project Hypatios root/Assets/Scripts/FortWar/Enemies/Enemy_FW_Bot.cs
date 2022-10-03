@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
-public enum FW_Alliance
-{
-    INVADER,
-    DEFENDER
-}
+
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FW_Targetable))]
@@ -20,10 +17,14 @@ public abstract class Enemy_FW_Bot : Enemy
     public FortWar_AIModule currentModule;
     public FW_Targetable myUnit;
 
+    [FoldoutGroup("Base")] public float currentHitpoint = 263;
+    [FoldoutGroup("Base")] public UnityEvent OnBotKilled;
+    [FoldoutGroup("Base")] public UnityEvent OnPlayerKill;
+    [FoldoutGroup("Base")] public GameObject botCorpse;
     [FoldoutGroup("AI System")] public Transform target;
 
     private NavMeshAgent _agent;
-    private Chamber_Level7 _chamberScript;
+    protected Chamber_Level7 _chamberScript;
 
     public NavMeshAgent Agent { get => _agent; }
 
@@ -54,6 +55,7 @@ public abstract class Enemy_FW_Bot : Enemy
     public virtual void Update()
     {
         if (Time.realtimeSinceStartup < 2f) return;
+        if (_chamberScript.currentStage != Chamber_Level7.Stage.Ongoing) return;
         if (currentModule != null) currentModule.Run();
 
         {
@@ -76,6 +78,37 @@ public abstract class Enemy_FW_Bot : Enemy
         }
     }
 
-  
+    public override void Attacked(DamageToken token)
+    {
+        currentHitpoint -= token.damage;
+        if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
+
+        if (currentHitpoint < 0)
+        {
+            Die();
+
+            if (token.origin == DamageToken.DamageOrigin.Player)
+            {
+                OnPlayerKill?.Invoke();
+            }
+        }
+
+        base.Attacked(token);
+
+    }
+
+    public virtual void Die()
+    {
+        _chamberScript.DeregisterUnit(myUnit);
+
+        if (botCorpse)
+        {
+            var corpse1 = Instantiate(botCorpse, transform.position, transform.rotation);
+            corpse1.gameObject.SetActive(true);
+        }
+        Destroy(gameObject);
+    }
+
+
 
 }

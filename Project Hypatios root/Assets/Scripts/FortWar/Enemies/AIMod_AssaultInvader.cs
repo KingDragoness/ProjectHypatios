@@ -18,6 +18,11 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
     public State currentState = State.CHASE;
     public float repositionRange = 3f;
+    [FoldoutGroup("Weapons")] public GameObject weapon_DebugFlashFire;
+    [FoldoutGroup("Weapons")] public GameObject weapon_OriginFire;
+    [FoldoutGroup("Weapons")] public LayerMask weapon_WeaponLayer;
+    [FoldoutGroup("Weapons")] public float laser_Damage = 20;
+    [FoldoutGroup("Weapons")] public GameObject damageSpark;
 
     #region INPUTS 
 
@@ -55,7 +60,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
     private void ResumeMovement()
     {
-
+        BotScript.Agent.stoppingDistance = 1f;
         BotScript.Agent.updateRotation = true;
     }
 
@@ -76,19 +81,117 @@ public class AIMod_AssaultInvader : FortWar_AIModule
         return finalPosition;
     }
 
+    private float cooldownAttack = 0.12f;
+
+    #region Attack Enemy
     public void State_Fire()
     {
         LockMovement();
 
-        Vector3 dir = BotScript.GetCurrentTarget().position - transform.position;
+        if (BotScript.GetCurrentTarget() == null)
+        {
+            return;
+        }
+
+        Vector3 posTarget = BotScript.GetCurrentTarget().position;
+
+        Vector3 dir = posTarget - transform.position;
         dir.y = 0;
         Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
         BotScript.transform.rotation = rotation;
+
+
+        if (cooldownAttack > 0)
+        {
+            cooldownAttack -= Time.deltaTime;
+        }
+        else
+        {
+            float chanceHoldFire = Random.Range(0f, 1f);
+            float dist = Vector3.Distance(posTarget, transform.position);
+
+            float a = Mathf.Clamp((dist/100f), 0f, 0.5f);
+            chanceHoldFire -= a;
+            chanceHoldFire = Mathf.Clamp(chanceHoldFire, 0, 1f);
+
+            if (chanceHoldFire < 0.4)
+                FireWeapon();
+            
+            cooldownAttack = 0.12f;
+        }
     }
+
+    private void FireWeapon()
+    {
+        weapon_DebugFlashFire.gameObject.SetActive(true);
+        //raycast enemy
+
+        Vector3 targetPos = BotScript.GetCurrentTarget().position; targetPos.y += 0.5f;
+        { //inaccuracy
+            targetPos.x += Random.Range(-1, 1f);
+            targetPos.z += Random.Range(-1, 1f);
+        }
+
+        Vector3 dir = targetPos - weapon_OriginFire.transform.position;
+
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(weapon_OriginFire.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
+        {
+            var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
+            var health = hit.collider.gameObject.GetComponent<health>();
+
+            //laser_lineRendr.SetPosition(0, laser_PointerOrigin.transform.position);
+            //laser_lineRendr.SetPosition(1, hit.point);
+            //laser_PointerTarget.transform.position = hit.point;
+
+            if (damageReceiver != null)
+                LaserAttack(damageReceiver);
+
+            if (health != null)
+            {
+                float chance = Random.Range(0f, 1f);
+
+                if (chance < 0.5f) LaserAttack(health);
+            }
+
+            SparkFX(hit.point);
+            Debug.DrawRay(weapon_OriginFire.transform.position, dir * hit.distance, Color.green);
+        }
+    }
+
+    private void SparkFX(Vector3 pos)
+    {
+        var damageSpark1 = Instantiate(damageSpark);
+        damageSpark1.transform.position = pos;
+        damageSpark1.gameObject.SetActive(true);
+    }
+
+    private void LaserAttack(damageReceiver damageReceiver)
+    {
+        var token = new DamageToken();
+        token.damage = laser_Damage;
+        token.origin = DamageToken.DamageOrigin.Enemy;
+        damageReceiver.Attacked(token);
+
+    }
+
+    private void LaserAttack(health health)
+    {
+        health.takeDamage(Mathf.RoundToInt(laser_Damage));
+    }
+
+    #endregion
 
     public void State_Chase()
     {
         ResumeMovement();
+
+        if (BotScript.GetCurrentTarget() == null)
+        {
+            return;
+        }
 
         BotScript.Agent.destination = BotScript.GetCurrentTarget().position;
     }

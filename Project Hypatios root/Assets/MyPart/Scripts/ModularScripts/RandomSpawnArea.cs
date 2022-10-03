@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class RandomSpawnArea : MonoBehaviour
 {
@@ -11,6 +12,21 @@ public class RandomSpawnArea : MonoBehaviour
     void Start()
     {
 
+    }
+
+    [Button("Toggle RandomSpawnArea")]
+
+    private void CloseAllRandomSpawnGizmos()
+    {
+        var allRandomspawns = FindObjectsOfType<RandomSpawnArea>();
+
+        foreach(var spawn in allRandomspawns)
+        {
+            if (DEBUG_DrawGizmos == true)
+                spawn.DEBUG_DrawGizmos = false;
+            else
+                spawn.DEBUG_DrawGizmos = true;
+        }
     }
 
     private void OnDrawGizmos()

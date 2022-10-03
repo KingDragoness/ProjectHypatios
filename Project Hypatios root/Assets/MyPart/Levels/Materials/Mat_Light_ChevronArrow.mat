@@ -9,14 +9,14 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Light_ChevronArrow
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHATEST_ON _EMISSION _RECEIVE_SHADOWS_OFF _SPECULARHIGHLIGHTS_OFF
+  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION _RECEIVE_SHADOWS_OFF _SPECULARHIGHLIGHTS_OFF
     _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
   - DepthOnly
@@ -101,7 +101,7 @@ Material:
     - _Cutoff: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EnableExternalAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
@@ -109,7 +109,7 @@ Material:
     - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _Metallic: 0
-    - _Mode: 1
+    - _Mode: 2
     - _OcclusionStrength: 1
     - _Opacity: 1
     - _Parallax: 0.02
@@ -122,7 +122,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
     - _SpecularHighlights: 0
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _Surface: 1
     - _UVSec: 0
     - _UseColorMap: 1
@@ -132,10 +132,10 @@ Material:
     - _UseOpacityMap: 0
     - _UseRoughnessMap: 0
     - _WorkflowMode: 1
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.46666667}
     - _EmissionColor: {r: 0, g: 2.38039, b: 2.43305, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}

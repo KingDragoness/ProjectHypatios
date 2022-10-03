@@ -88,6 +88,30 @@ public static class IsopatiosUtility
         return default(T);
     }
 
+    public static List<GameObject> AllChilds(this GameObject root)
+    {
+        List<GameObject> result = new List<GameObject>();
+        if (root.transform.childCount > 0)
+        {
+            foreach (Transform VARIABLE in root.transform)
+            {
+                Searcher(result, VARIABLE.gameObject);
+            }
+        }
+        return result;
+    }
+
+    private static void Searcher(List<GameObject> list, GameObject root)
+    {
+        list.Add(root);
+        if (root.transform.childCount > 0)
+        {
+            foreach (Transform VARIABLE in root.transform)
+            {
+                Searcher(list, VARIABLE.gameObject);
+            }
+        }
+    }
 
     public static bool IsIndexExist<T>(this List<T> list, int index)
     {

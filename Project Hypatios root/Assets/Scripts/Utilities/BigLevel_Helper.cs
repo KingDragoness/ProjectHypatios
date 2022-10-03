@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class BigLevel_Helper : MonoBehaviour
 {
@@ -72,6 +75,7 @@ public class BigLevel_Helper : MonoBehaviour
 
     [TableList]
     public List<LevelPart> alllevelParts = new List<LevelPart>();
+    public List<GameObject> allNavigationStaticGOs = new List<GameObject>();
     [Space]
     public bool enableAllByStart = false;
 
@@ -79,6 +83,26 @@ public class BigLevel_Helper : MonoBehaviour
     {
         if (enableAllByStart)
             EnableAll();
+    }
+
+    [Button("Set navigation statics")]
+    public void SetNavigationStatics()
+    {
+    #if UNITY_EDITOR
+
+        foreach (var go in allNavigationStaticGOs)
+        {
+            var listGOs = go.AllChilds();
+
+            foreach(var go1 in listGOs)
+            {
+                StaticEditorFlags flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration;
+                GameObjectUtility.SetStaticEditorFlags(go1, flag);
+
+            }
+        }
+    #endif
+
     }
 
     [TabGroup("Quick tools")]
