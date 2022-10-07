@@ -15,6 +15,8 @@ public class FW_SpawnerBot : MonoBehaviour
     {
         int i = 0;
 
+        if (alliance == FW_Alliance.DEFENDER) return;
+
         while (i < Chamber_Level7.MAXIMUM_PLAYER_TEAM - 1)
         {
             SpawnUnit();
@@ -46,19 +48,25 @@ public class FW_SpawnerBot : MonoBehaviour
         }
     }
 
-    private float timerSpawn = 1f;
+    private float _timerSpawn = 3f;
+    private float _timeToSpawn = 3f;
+
+    public void SetTimerSpawn(float time = 4f)
+    {
+        _timeToSpawn = time;
+    }
 
     private void PrepareSpawn()
     {
  
-        if (timerSpawn > 0)
+        if (_timerSpawn > 0)
         {
-            timerSpawn -= Time.deltaTime;
+            _timerSpawn -= Time.deltaTime;
         }
         else
         {
             SpawnUnit();
-            timerSpawn = 2f;
+            _timerSpawn = _timeToSpawn;
         }
     }
 

@@ -32,6 +32,11 @@ public class MeleeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.F) && !IsOnMeleeAttack)
         {
             IsOnMeleeAttack = true;
@@ -85,7 +90,7 @@ public class MeleeScript : MonoBehaviour
         if (Physics.Raycast(cam.transform.position, raycastDir, out hit, meleeRange, layerMask, QueryTriggerInteraction.Ignore))
         {
             Debug.Log(hit.transform.name);
-            var damageReceiver = hit.transform.gameObject.GetComponentInChildren<damageReceiver>();
+            var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();
 
             if (damageReceiver != null)
             {

@@ -49,10 +49,10 @@ public class Chamber_Level6 : MonoBehaviour
 
     [FoldoutGroup("Setup")] public Chamber6_Ingredient prefab_Ingredient;
     [FoldoutGroup("Setup")] public Chamber6_Customer prefab_Customer;
-    [FoldoutGroup("Setup")] public AntiZartEnemy prefab_AntiZart;
+    [FoldoutGroup("Setup")] public Enemy prefab_Spider;
     [FoldoutGroup("Setup")] public Transform parentIngredient;
     [FoldoutGroup("Setup")] public Transform spawnCustomer;
-    [FoldoutGroup("Setup")] public Transform spawnAntiZart;
+    [FoldoutGroup("Setup")] public RandomSpawnArea spawnArea;
     [FoldoutGroup("Setup")] public Material[] materialSetup;
     [FoldoutGroup("Setup")] public Chamber6_Piring mainPiring;
     [FoldoutGroup("Setup")] public Chamber6_Piring servingPiring;
@@ -71,7 +71,7 @@ public class Chamber_Level6 : MonoBehaviour
 
     [ReadOnly] public List<Chamber6_Piring> piringList = new List<Chamber6_Piring>();
     [ReadOnly] public List<Chamber6_Customer> allCustomers = new List<Chamber6_Customer>();
-    [ReadOnly] private AntiZartEnemy currentAntiZart;
+    [ReadOnly] private List<Enemy> enemies = new List<Enemy>();
 
     private static Chamber_Level6 instance;
 
@@ -87,9 +87,24 @@ public class Chamber_Level6 : MonoBehaviour
     void Start()
     {
         mainPiring.gameObject.SetActive(false);
+        Enemy.onKilled += Enemy_onKilled;
         piringList.Add(mainPiring);
         chamberText.textMesh.text = "0";
         Initialization();
+    }
+
+    private void OnDestroy()
+    {
+        Enemy.onKilled -= Enemy_onKilled;
+    }
+
+    private void Enemy_onKilled(Enemy mySelf)
+    {
+        if (enemies.Contains(mySelf))
+        {
+            enemies.Remove(mySelf);
+            enemies.RemoveAll(x => x == null);
+        }
     }
 
     private void Initialization()
@@ -159,56 +174,59 @@ public class Chamber_Level6 : MonoBehaviour
                 float chance = Random.Range(0f, 1f);
                 bool spawn = false;
 
-                if (remainingCustomers > 21)
+                //customer spawns
                 {
-                    if (allCustomers.Count <= 0)
+                    if (remainingCustomers > 21)
                     {
-                        spawn = true;
+                        if (allCustomers.Count <= 0)
+                        {
+                            spawn = true;
+                        }
+                        else if (chance > 0.4f && allCustomers.Count <= 3)
+                        {
+                            spawn = true;
+                        }
                     }
-                    else if (chance > 0.4f && allCustomers.Count <= 3)
+                    else if (remainingCustomers > 11)
                     {
-                        spawn = true;
+                        if (allCustomers.Count <= 0)
+                        {
+                            spawn = true;
+                        }
+                        else if (chance > 0.6f && allCustomers.Count <= 3)
+                        {
+                            spawn = true;
+                        }
+                        else if (chance > 0.3f && allCustomers.Count <= 6)
+                        {
+                            spawn = true;
+                        }
                     }
-                }
-                else if (remainingCustomers > 11)
-                {
-                    if (allCustomers.Count <= 0)
+                    else if (remainingCustomers > 0)
                     {
-                        spawn = true;
+                        if (allCustomers.Count <= 0)
+                        {
+                            spawn = true;
+                        }
+                        else if (chance > 0.6f && allCustomers.Count <= 4)
+                        {
+                            spawn = true;
+                        }
+                        else if (chance > 0.4f && allCustomers.Count <= 9)
+                        {
+                            spawn = true;
+                        }
                     }
-                    else if (chance > 0.6f && allCustomers.Count <= 3)
+
+                    if (spawn)
                     {
-                        spawn = true;
-                    }
-                    else if (chance > 0.3f && allCustomers.Count <= 6)
-                    {
-                        spawn = true;
-                    }
-                }
-                else if (remainingCustomers > 0)
-                {
-                    if (allCustomers.Count <= 0)
-                    {
-                        spawn = true;
-                    }
-                    else if (chance > 0.6f && allCustomers.Count <= 4)
-                    {
-                        spawn = true;
-                    }
-                    else if (chance > 0.4f && allCustomers.Count <= 9)
-                    {
-                        spawn = true;
+                        SpawnCustomer();
                     }
                 }
 
-                if (spawn)
+                if (remainingCustomers < 26 && enemies.Count < 10)
                 {
-                    SpawnCustomer();
-                }
-
-                if (currentAntiZart == null && remainingCustomers < 18)
-                {
-                    AttemptSpawnAntiZart();
+                    AttemptSpawnSpider();
                 }
 
                 _cooldownSpawnBots = 2f + Random.Range(0f, 2f);
@@ -224,7 +242,7 @@ public class Chamber_Level6 : MonoBehaviour
         }
     }
 
-    private void AttemptSpawnAntiZart()
+    private void AttemptSpawnSpider()
     {
         float chance = Random.Range(0, 1f);
         float spawnLimitChance = 0.05f;
@@ -240,7 +258,7 @@ public class Chamber_Level6 : MonoBehaviour
 
         if (chance < spawnLimitChance)
         {
-            SpawnAntiZart();
+            SpawnSpider();
         }
     }
 
@@ -248,14 +266,14 @@ public class Chamber_Level6 : MonoBehaviour
 
     #region Actions
 
-    public void SpawnAntiZart()
+    public void SpawnSpider()
     {
-        Vector3 spawnPos = spawnAntiZart.transform.position;
-        spawnPos.x += Random.Range(-10, 10f); spawnPos.z += Random.Range(-10, 10f);
-        var antiZart = Instantiate(prefab_AntiZart);
-        antiZart.gameObject.SetActive(true);
-        antiZart.transform.position = spawnPos;
-        currentAntiZart = antiZart;
+        Vector3 spawnPos = spawnArea.GetAnyPositionInsideBox();
+        var spider1 = Instantiate(prefab_Spider);
+        spider1.gameObject.SetActive(true);
+        spider1.transform.position = spawnPos;
+        enemies.Add(spider1);
+        enemies.RemoveAll(x => x == null);
     }
 
     public void AmbilPiring()

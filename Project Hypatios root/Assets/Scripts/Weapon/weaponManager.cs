@@ -53,7 +53,7 @@ public class WeaponManager : MonoBehaviour
 
     public GunScript GetRandomGun()
     {
-        int size = CurrentlyHeldWeapons.Count - 1;
+        int size = CurrentlyHeldWeapons.Count;
         return CurrentlyHeldWeapons[Random.Range(0, size)] as GunScript;
     }
 
@@ -174,6 +174,11 @@ public class WeaponManager : MonoBehaviour
 
     private void InputSwitchWeapon()
     {
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
         previousWeapon = selectedWeapon;
 
         //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();

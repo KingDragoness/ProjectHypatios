@@ -130,7 +130,7 @@ public class B0MBScript : Enemy
     public override void Attacked(DamageToken token)
     {
         haveSeenPlayer = true;
-        DamageOutputterUI.instance.DisplayText(damage);
+        DamageOutputterUI.instance.DisplayText(token.damage);
         curHealth -= damage;
     }
 

@@ -81,7 +81,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
         return finalPosition;
     }
 
-    private float cooldownAttack = 0.12f;
+    private float cooldownAttack = 0.15f;
 
     #region Attack Enemy
     public void State_Fire()
@@ -117,7 +117,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
             if (chanceHoldFire < 0.4)
                 FireWeapon();
             
-            cooldownAttack = 0.12f;
+            cooldownAttack = 0.15f;
         }
     }
 

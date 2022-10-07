@@ -16,6 +16,7 @@ public class MainGameHUDScript : MonoBehaviour
     public Slider dashSlider;
     public GameObject dashOk;
     public GameObject interactPrompt;
+    public Text interactText;
 
     [Header("Audio")]
     public AudioSource audio_DashReady;
@@ -74,7 +75,19 @@ public class MainGameHUDScript : MonoBehaviour
         }
         else
         {
-            if (!interactPrompt.activeSelf) interactPrompt.gameObject.SetActive(true);
+            if (!interactPrompt.activeSelf)
+            {
+                interactPrompt.gameObject.SetActive(true);
+                try {
+                    var descript = InteractableCamera.instance.currentInteractable.GetDescription();
+                    interactText.text = $"[E] - {descript}";
+
+                }
+                catch
+                {
+                    interactText.text = "[E] - Interact";
+                }
+            }
         }
 
     }

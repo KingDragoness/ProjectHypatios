@@ -106,6 +106,11 @@ public class Level5Chamber : MonoBehaviour
         Enemy.onKilled += Enemy_onKilled;
     }
 
+    private void OnDestroy()
+    {
+        Enemy.onKilled -= Enemy_onKilled;
+    }
+
     public void StartChamber()
     {
         if (HasStarted)

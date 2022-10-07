@@ -302,7 +302,7 @@ public class SpiderScript : Enemy
         }
         else
         {
-            DamageOutputterUI.instance.DisplayText(damage);
+            DamageOutputterUI.instance.DisplayText(token.damage);
         }
     }
 

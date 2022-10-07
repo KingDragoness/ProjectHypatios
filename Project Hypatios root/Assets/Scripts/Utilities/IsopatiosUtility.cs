@@ -88,6 +88,32 @@ public static class IsopatiosUtility
         return default(T);
     }
 
+    public static T GetComponentThenParent<T>(this GameObject origin)
+    {
+        T component = origin.GetComponent<T>();
+
+        if (component != null) return component;
+        else component = origin.GetComponentInParent<T>();
+
+        if (component != null) return component;
+
+        return default(T);
+    }
+
+
+    public static T GetComponentThenChild<T>(this GameObject origin)
+    {
+        T component = origin.GetComponent<T>();
+
+        if (component != null) return component;
+        else component = origin.GetComponentInChildren<T>();
+
+        if (component != null) return component;
+
+        return default(T);
+    }
+
+
     public static List<GameObject> AllChilds(this GameObject root)
     {
         List<GameObject> result = new List<GameObject>();

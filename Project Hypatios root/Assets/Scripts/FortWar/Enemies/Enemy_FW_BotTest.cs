@@ -147,6 +147,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
 
     private void RefreshAI()
     {
+        float distToPlayer = Mod_FollowPlayer.DistancePlayer;
         var botsInSight = sensor.GetBotsInSight(myUnit.AllianceEnemy()).ToList();
         bool anyBotsInSight = false; if (botsInSight.Count > 0) anyBotsInSight = true;
         bool isTargetBlocked = false;
@@ -179,11 +180,17 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
             _timeSinceEnemyLastSeen--;
         }
 
+
         if (anyBotsInSight == false && _timeSinceEnemyLastSeen < 0f)
         {
             SetDefaultState();
         }
 
+
+        if (isFollowingPlayer && distToPlayer > Mod_FollowPlayer.MustFollowRange && myUnit.Alliance == FW_Alliance.INVADER)
+        {
+            currentState = State.FollowPlayer;
+        }
     }
 
 

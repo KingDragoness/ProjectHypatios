@@ -30,6 +30,11 @@ public class StageChamberScript : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Enemy.onKilled -= Enemy_onKilled;
+    }
+
     private void Enemy_onKilled(Enemy enemy)
     {
         enemiesToClear.Remove(enemy);

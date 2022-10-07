@@ -61,7 +61,7 @@ public class KatanaScript : BaseWeaponScript
 
         if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, layerMask, QueryTriggerInteraction.Ignore))
         {
-            var damageReceiver = hit.transform.gameObject.GetComponentInChildren<damageReceiver>();
+            var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();
 
             if (damageReceiver != null)
             {

@@ -36,6 +36,6 @@ public class Interact_PointInterestInvestigate : InteractableObject
 
     public override string GetDescription()
     {
-        return "";
+        return "Inspect";
     }
 }

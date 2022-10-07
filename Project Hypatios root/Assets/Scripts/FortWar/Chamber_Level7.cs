@@ -54,6 +54,8 @@ public class Chamber_Level7 : MonoBehaviour
 
     private void Update()
     {
+        allUnits.RemoveAll(x => x == null);
+
         if (debug_Canvas.activeSelf)
             UpdateDebugScreen();
 

@@ -11,7 +11,7 @@ public class Chamber3_FernHerb : InteractableObject
 
     public override string GetDescription()
     {
-        return "";
+        return "Grab Herb";
     }
 
     public override void Interact()

@@ -11,11 +11,15 @@ public class soundManagerScript : MonoBehaviour
 
     public static soundManagerScript instance;
 
+    private GameObject soundContainer;
+
     private void Awake()
     {
         instance = this;
+        soundContainer = new GameObject("SoundContainer");
+        soundContainer.transform.position = Vector3.zero;
 
-        foreach(Sound s in sounds)
+        foreach (Sound s in sounds)
         {
             CreateNewSound(s);
         }
@@ -44,12 +48,12 @@ public class soundManagerScript : MonoBehaviour
             newSource.outputAudioMixerGroup = baseSFXMixer;
             newSource.playOnAwake = false;
             go1.gameObject.name = $"{s.clip.name}";
-            go1.transform.SetParent(this.transform);
+            go1.transform.SetParent(soundContainer.transform);
 
         }
 
         go.gameObject.name = $"{s.clip.name}";
-        go.transform.SetParent(this.transform);
+        go.transform.SetParent(soundContainer.transform);
     }
 
     public void Temp_NewSound(AudioClip _clip, string _name = "horay", int _sourceAmount = 1, float _volume = 1, float _pitch = 1)

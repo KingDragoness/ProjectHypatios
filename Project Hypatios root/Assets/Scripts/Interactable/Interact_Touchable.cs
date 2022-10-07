@@ -8,6 +8,7 @@ public class Interact_Touchable : InteractableObject
 
     public UnityEvent OnInteractEvent;
     public AudioSource interactSound;
+    public string interactDescription = "Interact";
 
     public override void Interact()
     {
@@ -17,7 +18,7 @@ public class Interact_Touchable : InteractableObject
 
     public override string GetDescription()
     {
-        return "";
+        return interactDescription;
     }
 }
 

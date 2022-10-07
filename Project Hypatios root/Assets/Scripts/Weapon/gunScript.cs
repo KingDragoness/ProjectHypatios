@@ -248,11 +248,12 @@ public class GunScript : BaseWeaponScript
 
             if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
             {
-                var damageReceiver = hit.transform.gameObject.GetComponentInChildren<damageReceiver>();
+                var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();
                 float variableDamage = Random.Range(0, variableAdditionalDamage);
 
                 if (damageReceiver != null)
                 {
+                   // Debug.Log($"{hit.transform.gameObject.name} : {damageReceiver.transform.gameObject.name}");
                     damageToken.damage = damage + variableDamage; damageToken.repulsionForce = repulsionForce;
                     damageReceiver.Attacked(damageToken);
                     StartCoroutine(SetCrosshairHitActive());
@@ -300,7 +301,7 @@ public class GunScript : BaseWeaponScript
 
                 if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
                 {
-                    var damageReceiver = hit.transform.gameObject.GetComponentInChildren<damageReceiver>();
+                    var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();
                     float variableDamage = Random.Range(0, variableAdditionalDamage);
 
                     if (damageReceiver != null)

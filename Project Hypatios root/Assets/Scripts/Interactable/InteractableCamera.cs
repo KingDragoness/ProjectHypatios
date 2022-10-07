@@ -14,7 +14,7 @@ public class InteractableCamera : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         bool noInteract = true;
         RaycastHit hit;
@@ -41,6 +41,11 @@ public class InteractableCamera : MonoBehaviour
             currentInteractable = null;
         }
 
+  
+    }
+
+    private void Update()
+    {
         if (currentInteractable != null)
         {
             if (Input.GetKeyUp(KeyCode.E))
@@ -48,11 +53,6 @@ public class InteractableCamera : MonoBehaviour
                 currentInteractable.Interact();
             }
         }
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
 }

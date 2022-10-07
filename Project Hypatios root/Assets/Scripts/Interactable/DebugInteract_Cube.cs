@@ -9,7 +9,7 @@ public class DebugInteract_Cube : InteractableObject
 
     public override string GetDescription()
     {
-        return "";
+        return "Test";
     }
 
     public override void Interact()

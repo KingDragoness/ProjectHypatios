@@ -18,6 +18,7 @@ public class characterScript : MonoBehaviour
     public bool normalMode = true;
     public bool disableInput = false;
     public bool tutorialMode = false;
+    public bool isNoGravity = false;
 
     [Space]
     [Header("Movement States")]
@@ -113,6 +114,8 @@ public class characterScript : MonoBehaviour
 
         if (!heal.isDead)
         {
+            if (isNoGravity == true) { rb.useGravity = false; }
+
             if (weaponSystem != null)
             {
                 anim = weaponSystem.anim;
@@ -213,7 +216,7 @@ public class characterScript : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
@@ -321,7 +324,7 @@ public class characterScript : MonoBehaviour
             {
                 if (dir.magnitude > 0f || WallRun.isWallRunning)
                 {
-                    Anim.SetBool("isRunning", true);
+                    if (isNoGravity == false) Anim.SetBool("isRunning", true);
 
                     if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
                         FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
@@ -367,7 +370,24 @@ public class characterScript : MonoBehaviour
                 Anim.SetTrigger("jumping");
             }
         }
-        
+
+        if (isNoGravity)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.AddForce(transform.up * jumpHeight * 0.1f, ForceMode.Impulse);
+            }
+
+            if (isCheatMode)
+            {
+                if (!isGrounded && !WallRun.isWallRunning)
+                {
+                    rb.AddForce(-transform.up * fallSpeed, ForceMode.Acceleration);
+                }
+            }
+        }
+
     }
 
     bool onSlope()
@@ -411,13 +431,14 @@ public class characterScript : MonoBehaviour
                 dashDirection = -transform.right;
             }
         }
-        rb.useGravity = false;
+
+        if (isNoGravity == false) rb.useGravity = false;
         rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
         soundManager.Play("dash");
         dashManager.manageDash();
         yield return new WaitForSeconds(dashDuration);
 
         rb.velocity = dir * moveSpeed;
-        rb.useGravity = true;
+        if (isNoGravity == false) rb.useGravity = true;
     }
 }

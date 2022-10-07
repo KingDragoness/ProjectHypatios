@@ -10,7 +10,7 @@ public class Chamber6_GrabPlateServing : InteractableObject
 
     public override string GetDescription()
     {
-        return "Grab";
+        return "Take Plate";
     }
 
     public override void Interact()

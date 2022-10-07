@@ -5,11 +5,18 @@ using UnityEngine;
 public class AIMod_FollowPlayer : FortWar_AIModule
 {
 
+    public float MustFollowRange = 10f;
+
     private characterScript player;
 
     private void Start()
     {
         player = FindObjectOfType<characterScript>();
+    }
+
+    public float DistancePlayer
+    {
+        get { return Vector3.Distance(transform.position, player.transform.position); }
     }
 
     public override void Run()

@@ -31,6 +31,7 @@ public class damageReceiver : MonoBehaviour
     public void Attacked(DamageToken token)
     {
         token.damage *= multiplier;
+
         if (enemyScript != null) enemyScript.Attacked(token);
 
         if (isCriticalHit)
@@ -38,6 +39,7 @@ public class damageReceiver : MonoBehaviour
             soundManagerScript.instance.Play("bingo");
         }
 
+        //Debug.Log(gameObject.name);
         if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
             FPSMainScript.instance.RuntimeTutorialHelp("ENEMY", "Ammo conservation is critical. Shooting enemy at weak spots can deal additional damage. Try to hit them at weak spots!", "FirstEnemyHit");
 

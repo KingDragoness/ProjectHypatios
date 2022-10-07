@@ -431,10 +431,14 @@ public class ConsoleCommand : MonoBehaviour
         try
         {
             Enemy[] enemies = FindObjectsOfType<Enemy>();
-            
+            DamageToken token = new DamageToken();
+            token.damage = 99999;
+            token.origin = DamageToken.DamageOrigin.Environment;
+            token.repulsionForce = 1f;
+
             foreach(var enemy in enemies)
             {
-                enemy.Attacked(null);
+                enemy.Attacked(token);
             }
 
         }
