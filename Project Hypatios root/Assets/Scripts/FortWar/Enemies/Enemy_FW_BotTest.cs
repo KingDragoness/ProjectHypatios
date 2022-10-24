@@ -32,6 +32,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
     [FoldoutGroup("BotTest")] public State currentState = State.CaptureCP;
     [FoldoutGroup("BotTest")] public Role currentRole = Role.Capturer;
     [FoldoutGroup("BotTest")] public bool isFollowingPlayer = false;
+    [FoldoutGroup("BotTest")] public bool DEBUG_Print = false;
 
     [FoldoutGroup("Sensors")] public FW_AI_SensorEnemy sensor;
     [FoldoutGroup("Visuals")] public Transform v_target_Head;
@@ -49,7 +50,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
         base.Start();
         float chance = Random.Range(0f, 1f);
 
-        if (chance < 0.3f)
+        if (chance < 0.1f)
         {
             currentRole = Role.Defend;
         }
@@ -61,10 +62,10 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
 
     public override void Update()
     {
+        base.Update();
         ConditionalChecks();
         StateSet();
         UpdateVisuals();
-        base.Update();
     }
 
     public void FollowPlayer()
@@ -136,6 +137,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
         {
             currentModule = Mod_FollowPlayer;
         }
+
     }
 
     private void ConditionalChecks()
@@ -160,7 +162,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
        
         if (anyBotsInSight)
         {
-            _timeSinceEnemyLastSeen = 50;
+            _timeSinceEnemyLastSeen = 25;
             target = botsInSight[0].transform;
 
             if (isTargetBlocked == false)
@@ -196,6 +198,8 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
 
     private void SetDefaultState()
     {
+        var prevState = currentState;
+
         if (myUnit.Alliance == FW_Alliance.INVADER)
         {
             if (isFollowingPlayer == false)
@@ -225,6 +229,16 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
         {
             //Mod_DefendCP.IsStrategicPointFound();
             currentState = State.DefendCP;
+        }
+
+        if (currentState != prevState)
+        {
+            StateSet();
+
+            foreach (var module in allAIModules)
+            {
+                module.OnChangedState(currentModule);
+            }
         }
     }
 }

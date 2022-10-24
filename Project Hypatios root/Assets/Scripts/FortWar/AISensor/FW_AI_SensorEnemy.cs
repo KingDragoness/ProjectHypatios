@@ -19,10 +19,13 @@ public class FW_AI_SensorEnemy : MonoBehaviour
     public FW_Targetable[] GetBotsInSight(FW_Alliance enemyForce)
     {
         List<FW_Targetable> allBots = new List<FW_Targetable>();
+        var ListAllUnits = _chamberScript.RetrieveAllUnitsOfType(enemyForce);
 
-        foreach(var enemy in _chamberScript.RetrieveAllUnitsOfType(enemyForce))
+        foreach (var enemy in ListAllUnits)
         {
-            if (CheckTargetVisibleOnSight(enemy.transform))
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if (CheckTargetVisibleOnSight(enemy.transform) && dist < limitRange)
                 allBots.Add(enemy);
         }
 
@@ -52,12 +55,12 @@ public class FW_AI_SensorEnemy : MonoBehaviour
             {
                 if (hit.collider.gameObject.IsParentOf(t.gameObject) | hit.collider.gameObject == t.gameObject)
                 {
-                    Debug.DrawRay(s1.position, dir * hit.distance, Color.blue);
+                    //Debug.DrawRay(s1.position, dir * hit.distance, Color.blue);
                     return true;
                 }
                 else
                 {
-                    Debug.DrawRay(s1.position, dir * hit.distance, Color.white);
+                    //Debug.DrawRay(s1.position, dir * hit.distance, Color.white);
 
                 }
             }

@@ -54,6 +54,7 @@ public abstract class Enemy_FW_Bot : Enemy
 
     public virtual void Update()
     {
+        if (Time.timeScale == 0) return;
         if (Time.realtimeSinceStartup < 2f) return;
         if (_chamberScript.currentStage != Chamber_Level7.Stage.Ongoing) return;
         if (currentModule != null) currentModule.Run();
@@ -65,7 +66,7 @@ public abstract class Enemy_FW_Bot : Enemy
             {
                 _tick++;
                 onAITick?.Invoke();
-                _tickTimer = TICK_MAX;
+                _tickTimer = TICK_MAX + Random.Range(0,0.1f);
             }
         }
     }

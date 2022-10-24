@@ -8,6 +8,7 @@ public class AIMod_InvaderStrategicDefend : FortWar_AIModule
 
     [ReadOnly] public FW_StrategicPoint currentStrategicPoint;
 
+    [SerializeField]
     private bool cspExists = false;
     private Vector3 targetDefendPoint;
 
@@ -31,6 +32,19 @@ public class AIMod_InvaderStrategicDefend : FortWar_AIModule
 
         return targeted;
     }
+    public override void OnChangedState(FortWar_AIModule currentModule)
+    {
+        if (currentModule == this)
+        {
+
+        }
+    }
+
+    public FW_ControlPoint GetMyCP()
+    {
+        return Chamber_Level7.instance.GetCurrentCP();
+    }
+
     public bool IsStrategicPointFound()
     {
         var st1 = GetStrategicPoint();
@@ -57,16 +71,16 @@ public class AIMod_InvaderStrategicDefend : FortWar_AIModule
             {
                 currentStrategicPoint = GetStrategicPoint();
             }
-            if (currentStrategicPoint == null) 
-            {
-                cspExists = false;
-                return; 
-            }
         }
 
-        if (cspExists == false)
+        if (currentStrategicPoint == null)
         {
-            targetDefendPoint = currentStrategicPoint.randomSpawnArea.GetAnyPositionInsideBox();
+            if (cspExists) targetDefendPoint = GetMyCP().areaCP.GetAnyPositionInsideBox();
+            Vector3 targetCP1 = targetDefendPoint;
+            BotScript.Agent.destination = targetCP1;
+            cspExists = false;
+
+            return;
         }
 
 

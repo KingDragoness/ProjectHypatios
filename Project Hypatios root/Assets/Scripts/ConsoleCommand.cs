@@ -109,7 +109,7 @@ public class ConsoleCommand : MonoBehaviour
                 ScreenSize(args);
                 break;
 
-            case "ncs":
+            case "nospeed":
                 NoClipSpeed(args);
                 break;
 
@@ -215,7 +215,7 @@ public class ConsoleCommand : MonoBehaviour
         }
         catch
         {
-            SendConsoleMessage("Invalid argument! ncs [<color=#00cc99dd>int</color> speed]");
+            SendConsoleMessage("Invalid argument! nospeed [<color=#00cc99dd>int</color> speed]");
         }
     }
 
@@ -467,7 +467,7 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 helps.Add("'cc' to use extra commands");
-                helps.Add("'ncs' to set freecam speed. 'ui 4' to use noclip.");
+                helps.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
                 helps.Add("'nextlevel' to go next level while retaining items");
                 helps.Add("'god' to toggle god mode");
                 helps.Add("'res' to restore health & dash");

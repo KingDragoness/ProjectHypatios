@@ -66,6 +66,11 @@ public class Chamber_Level7 : MonoBehaviour
         }
     }
 
+    public FW_ControlPoint GetCurrentCP()
+    {
+        return controlPoint.Find(x => x.isCaptured == false);
+    }
+
     public bool AddFollower(Enemy_FW_BotTest bot)
     {
         if (botFollowers.Count <= 4)
@@ -130,7 +135,7 @@ public class Chamber_Level7 : MonoBehaviour
     public void RegisterUnit(FW_Targetable bot)
     {
         allUnits.Add(bot);
-        bot.transform.SetParent(containerUnits);
+        if (bot.UnitType != FW_Targetable.Type.Player) bot.transform.SetParent(containerUnits);
     }
     public void DeregisterUnit(FW_Targetable bot)
     {

@@ -9,5 +9,6 @@ public abstract class FortWar_AIModule : MonoBehaviour
     public Enemy_FW_Bot BotScript;
 
     public abstract void Run();
+    public abstract void OnChangedState(FortWar_AIModule currentModule);
 
 }

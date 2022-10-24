@@ -15,12 +15,16 @@ public class KatanaScript : BaseWeaponScript
 
     float nextAttackTime = 0f;
     Camera cam;
+    Recoil gunRecoil;
 
     private void Start()
     {
+        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
+
         if (characterScript == null) characterScript = FindObjectOfType<characterScript>();
         if (playerHealth == null) playerHealth = FindObjectOfType<health>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        gunRecoil = weaponSystem.gunRecoil;
 
     }
 
@@ -53,6 +57,8 @@ public class KatanaScript : BaseWeaponScript
         {
             return;
         }
+
+        gunRecoil.RecoilFire();
 
         Vector3 raycastDir = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
         RaycastHit hit;

@@ -81,4 +81,12 @@ public class AIMod_DefenderDefend : FortWar_AIModule
         currentStrategicPoint.Unassign();
         currentStrategicPoint = null;
     }
+
+    public override void OnChangedState(FortWar_AIModule currentModule)
+    {
+        if (currentModule == this)
+        {
+
+        }
+    }
 }

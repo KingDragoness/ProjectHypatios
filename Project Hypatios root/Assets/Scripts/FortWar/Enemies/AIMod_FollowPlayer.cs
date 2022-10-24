@@ -30,4 +30,12 @@ public class AIMod_FollowPlayer : FortWar_AIModule
         BotScript.Agent.destination = target;
     }
 
+    public override void OnChangedState(FortWar_AIModule currentModule)
+    {
+        if (currentModule == this)
+        {
+
+        }
+    }
+
 }

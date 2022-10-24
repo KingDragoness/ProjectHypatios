@@ -183,6 +183,10 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     }
 
     #endregion
+    private FW_ControlPoint GetFirstUncapturedCP()
+    {
+        return Chamber_Level7.instance.GetCurrentCP();
+    }
 
     public void State_Chase()
     {
@@ -190,10 +194,14 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
         if (BotScript.GetCurrentTarget() == null)
         {
+            var targetPosition = GetFirstUncapturedCP().transform.position;
+            BotScript.Agent.SetDestination(targetPosition);
+
             return;
         }
 
-        BotScript.Agent.destination = BotScript.GetCurrentTarget().position;
+        BotScript.Agent.SetDestination(BotScript.GetCurrentTarget().position);
+
     }
 
     public void State_Retreat()
@@ -207,7 +215,15 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     {
         ResumeMovement();
 
-        BotScript.Agent.destination = SampleReposition();
+        BotScript.Agent.SetDestination(SampleReposition());
 
+    }
+
+    public override void OnChangedState(FortWar_AIModule currentModule)
+    {
+        if (currentModule == this)
+        {
+
+        }
     }
 }

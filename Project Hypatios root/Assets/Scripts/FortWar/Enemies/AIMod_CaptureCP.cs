@@ -7,23 +7,29 @@ using System.Linq;
 public class AIMod_CaptureCP : FortWar_AIModule
 {
 
+    public Vector3 targetPosition = new Vector3();
+
     private FW_ControlPoint GetFirstUncapturedCP()
     {
-        return Chamber_Level7.instance.controlPoint.Find(x => x.isCaptured == false);
+        return Chamber_Level7.instance.GetCurrentCP();
     }
 
     public override void Run()
     {
-        if (BotScript.Agent.isStopped == true)
-            BotScript.Agent.Resume();
+        targetPosition = GetFirstUncapturedCP().transform.position;
         BotScript.Agent.updateRotation = true;
         BotScript.Agent.stoppingDistance = 2f;
+        BotScript.Agent.SetDestination(targetPosition);
 
-        //test
-        Vector3 targetCP = GetFirstUncapturedCP().transform.position;
-        BotScript.Agent.destination = targetCP;
     }
 
-   
+    public override void OnChangedState(FortWar_AIModule currentModule)
+    {
+        if (currentModule == this)
+        {
+
+
+        }
+    }
 
 }

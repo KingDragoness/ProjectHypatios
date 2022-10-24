@@ -12043,6 +12043,9 @@ MonoBehaviour:
   slider_Brightness: {fileID: 405971658015753926}
   toggle_VSync: {fileID: 1274577805993947938}
   toggle_MotionBlur: {fileID: 8445247327829177626}
+  value_FPSCap: {fileID: 0}
+  slider_FPSCap: {fileID: 0}
+  dropdown_Resolution: {fileID: 0}
   inputfield_Name: {fileID: 1123620999418216706}
   mixerSFX: {fileID: 24100000, guid: c9667246a44b5134fb4f529fe2dfb43a, type: 2}
   mixerMusic: {fileID: 24100000, guid: dcd409e3b5dd0fa42967d569c68aff5f, type: 2}
@@ -23444,6 +23447,7 @@ MonoBehaviour:
   dashSlider: {fileID: 5866824291988751168}
   dashOk: {fileID: 4106917143073275888}
   interactPrompt: {fileID: 3049599381990062723}
+  interactText: {fileID: 0}
   audio_DashReady: {fileID: 3541624369249244231}
   audio_CrosshairClick: {fileID: 3541624367437152574}
   audio_Error: {fileID: 3541624367885956730}
@@ -40547,6 +40551,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGamemode: 1
+  elenaScene:
+    m_SceneAsset: {fileID: 0}
+    m_IsDirty: 0
+    m_ScenePath: 
+    m_index: 0
+  aldrichScene:
+    m_SceneAsset: {fileID: 0}
+    m_IsDirty: 0
+    m_ScenePath: 
+    m_index: 0
   SoulPoint: 0
   TotalRuns: 0
   LuckOfGod_Level: 0
@@ -41083,7 +41097,7 @@ MonoBehaviour:
   recoilX: 0
   recoilY: 0
   recoilZ: 0
-  gun: {fileID: 0}
+  weapon: {fileID: 0}
   weaponSystem: {fileID: 4008519662749993548}
 --- !u!1 &4008519662288572183
 GameObject:
@@ -41834,6 +41848,7 @@ MonoBehaviour:
   normalMode: 1
   disableInput: 0
   tutorialMode: 0
+  isNoGravity: 0
   crouchSpeed: 3
   collider_heightDefault: 2
   collider_heightCrouching: 1.5
@@ -62673,88 +62688,102 @@ MonoBehaviour:
   sounds:
   - name: running
     clip: {fileID: 8300000, guid: 8e13ddabbe577c247a551d913ecf35f8, type: 3}
+    sourceAmount: 0
     volume: 0.757
     pitch: 1
     loop: 1
-    source: {fileID: 0}
+    sources: []
   - name: jumping
     clip: {fileID: 8300000, guid: d57ac06c033d03e48aa0fcab913a7b77, type: 3}
+    sourceAmount: 0
     volume: 0.331
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: falling
     clip: {fileID: 8300000, guid: 7f6d34a141bd1cc41940cd3e178a7d6b, type: 3}
+    sourceAmount: 0
     volume: 0.246
     pitch: 1.1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: dash
     clip: {fileID: 8300000, guid: 10aaac8f2e2b2224cbb4526d0530b3c2, type: 3}
+    sourceAmount: 0
     volume: 0.649
     pitch: 1.51
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: ui.hover
     clip: {fileID: 8300000, guid: e9dc2e7de1a27994cb391f85b80a568f, type: 3}
+    sourceAmount: 0
     volume: 0.7
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: ui.click
     clip: {fileID: 8300000, guid: 39bb2016d4ed1374c93107348c5af494, type: 3}
+    sourceAmount: 0
     volume: 0.647
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hit.metal.1
     clip: {fileID: 8300000, guid: c392590b999df8e4697ad60b3d9c406e, type: 3}
+    sourceAmount: 0
     volume: 0.638
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hit.metal.2
     clip: {fileID: 8300000, guid: 31f538a64389c0a4da053e9719cf5912, type: 3}
+    sourceAmount: 0
     volume: 0.66
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: reward
     clip: {fileID: 8300000, guid: f4b70b4cab456214fbbfe7ac33720024, type: 3}
+    sourceAmount: 0
     volume: 0.793
     pitch: 1.93
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hurt.0
     clip: {fileID: 8300000, guid: b0bd7056027f3a14cb0e162727be20f0, type: 3}
+    sourceAmount: 0
     volume: 0.616
     pitch: 1
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: hurt.1
     clip: {fileID: 8300000, guid: 5358598dea5db484d9cd032d3fc237b8, type: 3}
+    sourceAmount: 0
     volume: 0.609
     pitch: 2.48
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: soul
     clip: {fileID: 8300000, guid: 56973876a719c9a42963ffe82499463d, type: 3}
+    sourceAmount: 0
     volume: 0.7
     pitch: 0.72
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: Die
     clip: {fileID: 8300000, guid: a4306f62ad5528d49a90ecdc1771dc22, type: 3}
+    sourceAmount: 0
     volume: 0.596
     pitch: 0.47
     loop: 0
-    source: {fileID: 0}
+    sources: []
   - name: bingo
     clip: {fileID: 8300000, guid: 30c26e59101775e48ab98df89e596e75, type: 3}
+    sourceAmount: 0
     volume: 0.827
     pitch: 1.63
     loop: 0
-    source: {fileID: 0}
+    sources: []
   baseSFXMixer: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a, type: 2}
 --- !u!1 &6375231119855422690
 GameObject:
@@ -84870,6 +84899,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4008519662749993549}
     m_Modifications:
+    - target: {fileID: 3664569918837025417, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4372668636003596995, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5647062337365954485, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: playerHealth
@@ -84880,6 +84919,11 @@ PrefabInstance:
       propertyPath: weaponSystem
       value: 
       objectReference: {fileID: 4008519662749993548}
+    - target: {fileID: 7401857691008465205, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8452248196169234624, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
         type: 3}
       propertyPath: m_Name
@@ -84939,6 +84983,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870403692769916794, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9059080992276535520, guid: cd7b0422dd44f3643ab61fd67c08e9d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd7b0422dd44f3643ab61fd67c08e9d9, type: 3}
@@ -85020,12 +85074,12 @@ PrefabInstance:
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
@@ -85035,32 +85089,32 @@ PrefabInstance:
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1600
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 900
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
@@ -85075,7 +85129,7 @@ PrefabInstance:
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
@@ -85100,12 +85154,12 @@ PrefabInstance:
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000022888184
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000022888184
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2700317778453154892, guid: 825a5d8f50363784cb7a169645093460,
         type: 3}

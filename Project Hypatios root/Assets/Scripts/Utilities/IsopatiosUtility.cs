@@ -88,6 +88,23 @@ public static class IsopatiosUtility
         return default(T);
     }
 
+    public static Transform[] GetAllParents(this GameObject origin)
+    {
+        List<Transform> parents = new List<Transform>();
+        Transform t = origin.transform;
+
+        while (t.parent != null)
+        {
+            t = t.parent;
+
+            parents.Add(t);
+        }
+
+
+        return parents.ToArray();
+    }
+
+
     public static T GetComponentThenParent<T>(this GameObject origin)
     {
         T component = origin.GetComponent<T>();
