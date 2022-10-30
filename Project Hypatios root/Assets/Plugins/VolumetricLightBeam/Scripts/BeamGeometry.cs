@@ -7,6 +7,10 @@
 #define VLB_SRP_SUPPORT // Comment this to disable SRP support
 #endif
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 using UnityEngine;
 using System.Collections;
 
@@ -129,6 +133,11 @@ namespace VLB
             // Handle copy / paste the LightBeam in Editor
             if (!m_Master)
                 DestroyImmediate(gameObject);
+
+#if UNITY_EDITOR
+            var sv = SceneVisibilityManager.instance;
+            sv.DisablePicking(gameObject, false);
+#endif
         }
 
         void OnDestroy()
@@ -206,6 +215,8 @@ namespace VLB
 
 #if UNITY_EDITOR
             UnityEditor.GameObjectUtility.SetStaticEditorFlags(gameObject, master.GetStaticEditorFlagsForSubObjects());
+            var sv = SceneVisibilityManager.instance;
+            sv.DisablePicking(gameObject, false);
             gameObject.SetSameSceneVisibilityStatesThan(master.gameObject);
 #endif
 

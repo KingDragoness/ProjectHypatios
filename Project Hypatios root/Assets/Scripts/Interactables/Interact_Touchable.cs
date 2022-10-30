@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class Interact_Touchable : InteractableObject
 {
@@ -10,6 +11,7 @@ public class Interact_Touchable : InteractableObject
     public AudioSource interactSound;
     public string interactDescription = "Interact";
 
+    [Button("Interact")]
     public override void Interact()
     {
         OnInteractEvent?.Invoke();

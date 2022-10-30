@@ -85,7 +85,7 @@ public class BigLevel_Helper : MonoBehaviour
             EnableAll();
     }
 
-    [Button("Set navigation statics")]
+    [Button("Set statics")]
     public void SetNavigationStatics()
     {
     #if UNITY_EDITOR
@@ -96,11 +96,22 @@ public class BigLevel_Helper : MonoBehaviour
 
             foreach(var go1 in listGOs)
             {
-                StaticEditorFlags flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration;
+                StaticEditorFlags flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.OccluderStatic;
                 GameObjectUtility.SetStaticEditorFlags(go1, flag);
 
             }
         }
+    #endif
+
+    }
+
+    [Button("Bake Occlusion")]
+    public void BakeOcclusion()
+    {
+#if UNITY_EDITOR
+        EnableAll();
+
+        StaticOcclusionCulling.GenerateInBackground();
     #endif
 
     }

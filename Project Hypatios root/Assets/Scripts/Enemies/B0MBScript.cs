@@ -131,7 +131,7 @@ public class B0MBScript : Enemy
     {
         haveSeenPlayer = true;
         DamageOutputterUI.instance.DisplayText(token.damage);
-        curHealth -= damage;
+        curHealth -= token.damage;
     }
 
 

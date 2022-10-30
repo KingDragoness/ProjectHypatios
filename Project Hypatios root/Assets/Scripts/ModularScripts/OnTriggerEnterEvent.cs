@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
+
 public class OnTriggerEnterEvent : MonoBehaviour
 {
     public UnityEvent triggerEvents;
@@ -17,6 +19,12 @@ public class OnTriggerEnterEvent : MonoBehaviour
         {
             objectToCompare = FindObjectOfType<characterScript>().gameObject;
         }
+    }
+
+    [Button("Trigger")]
+    public void TriggerManual()
+    {
+        triggerEvents?.Invoke();
     }
 
     void OnTriggerEnter(Collider other)

@@ -139,7 +139,7 @@ public class BirdEnemy : Enemy
 
     public override void Attacked(DamageToken token)
     {
-        curHealth -= damage;
+        curHealth -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();

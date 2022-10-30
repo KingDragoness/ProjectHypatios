@@ -23,6 +23,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     [FoldoutGroup("Weapons")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapons")] public float laser_Damage = 20;
     [FoldoutGroup("Weapons")] public GameObject damageSpark;
+    protected SpawnIndicator spawn;
 
     #region INPUTS 
 
@@ -179,6 +180,8 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
     private void LaserAttack(health health)
     {
+        if (spawn == null) spawn = FindObjectOfType<SpawnIndicator>();
+        spawn.Spawn(transform);
         health.takeDamage(Mathf.RoundToInt(laser_Damage));
     }
 

@@ -344,7 +344,7 @@ public class characterScript : MonoBehaviour
 
     void Jumping()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, player);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
         if (!isCheatMode)
         {

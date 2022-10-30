@@ -173,7 +173,7 @@ public class HyperchadEnemy : Enemy
             //ActivateEnemy();
         }
 
-        float damageProcessed = damage;
+        float damageProcessed = token.damage;
 
         if (isOnFinalForm)
         {

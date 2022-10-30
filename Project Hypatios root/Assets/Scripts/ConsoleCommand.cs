@@ -165,7 +165,7 @@ public class ConsoleCommand : MonoBehaviour
         }
         catch
         {
-            SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
+            //SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
         }
     }
 
