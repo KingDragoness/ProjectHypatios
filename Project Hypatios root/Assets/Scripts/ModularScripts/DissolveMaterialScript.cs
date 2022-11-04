@@ -5,7 +5,7 @@ using UnityEngine;
 public class DissolveMaterialScript : MonoBehaviour
 {
 
-    public List<MeshRenderer> targetRenderers = new List<MeshRenderer>();
+    public List<Renderer> targetRenderers = new List<Renderer>();
     public float dissolveSpeed = 10;
 
     private List<Material> dissolveMaterials = new List<Material>();

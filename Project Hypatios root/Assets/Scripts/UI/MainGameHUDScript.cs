@@ -78,15 +78,18 @@ public class MainGameHUDScript : MonoBehaviour
             if (!interactPrompt.activeSelf)
             {
                 interactPrompt.gameObject.SetActive(true);
-                try {
-                    var descript = InteractableCamera.instance.currentInteractable.GetDescription();
-                    interactText.text = $"[E] - {descript}";
+  
+            }
 
-                }
-                catch
-                {
-                    interactText.text = "[E] - Interact";
-                }
+            try
+            {
+                var descript = InteractableCamera.instance.currentInteractable.GetDescription();
+                interactText.text = $"[E] - {descript}";
+
+            }
+            catch
+            {
+                interactText.text = "[E] - Interact";
             }
         }
 
