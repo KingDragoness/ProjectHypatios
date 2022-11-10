@@ -39,6 +39,9 @@ public class Chamber6_Customer : Enemy
     private float cooldownEscape = 10f;
     private bool alreadyEat = false;
     private bool isSitting = false;
+    private bool orderAlreadyTaken = false;
+    private float distance = 1;
+    public bool AlreadyEat { get => alreadyEat;}
 
     private void Start()
     {
@@ -57,10 +60,18 @@ public class Chamber6_Customer : Enemy
 
     public void Update()
     {
+        distance = Vector3.Distance(transform.position, target.position);
         cooldown -= Time.deltaTime;
 
         if (mode != AIMode.Escape)
+        {
             agent.SetDestination(target.position);
+
+            if (distance > 1.5f)
+                agent.autoBraking = false;
+            else
+                agent.autoBraking = true;
+        }
 
         if (cooldown < 0f)
         {
@@ -80,7 +91,7 @@ public class Chamber6_Customer : Enemy
 
             if (cooldownEscape < 0f)
             {
-                if (!alreadyEat)
+                if (!AlreadyEat)
                     mode = AIMode.GetFood;
                 else
                     mode = AIMode.ReturnBay;
@@ -142,6 +153,11 @@ public class Chamber6_Customer : Enemy
             KillCustomer();
         }
 
+        if (orderAlreadyTaken)
+        {
+            mode = AIMode.ReturnBay;
+        }
+
         base.Attacked(token);
     }
 
@@ -149,6 +165,7 @@ public class Chamber6_Customer : Enemy
     #endregion
 
     float cooldownOptimizeEscape = 0.1f;
+
 
     private void Escaping()
     {
@@ -244,8 +261,10 @@ public class Chamber6_Customer : Enemy
 
     private void DetectNearbyPlates()
     {
-        foreach(var piring in chamberScript.piringList)
+        for(int x = chamberScript.piringList.Count() - 1; x >= 0; x--)
         {
+            var piring = chamberScript.piringList[x];
+
             if (piring == null)
             {
                 chamberScript.RefreshList();
@@ -283,6 +302,8 @@ public class Chamber6_Customer : Enemy
         myPiring.waypointScript.enabled = false;
         myPiring.transform.SetParent(piringPlace.transform);
         myPiring.transform.position = piringPlace.transform.position;
+        myPiring.ChangeOwnership(this.transform);
+        orderAlreadyTaken = true;
         mode = AIMode.Eating;
         DialogueSubtitleUI.instance.QueueDialogue($"Beep! Order #{(tableSeat + 1).ToString("00")} has been taken.", "Zart Bot", 3f);
         UpdateAI();
@@ -339,7 +360,7 @@ public class Chamber6_Customer : Enemy
         }
     }
 
-    private bool CheckPlateValid(Chamber6_Piring piring)
+    public bool CheckPlateValid(Chamber6_Piring piring)
     {
         bool valid = false;
 

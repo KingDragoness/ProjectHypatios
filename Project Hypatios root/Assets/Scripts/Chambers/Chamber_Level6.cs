@@ -50,6 +50,8 @@ public class Chamber_Level6 : MonoBehaviour
     [FoldoutGroup("Setup")] public Chamber6_Ingredient prefab_Ingredient;
     [FoldoutGroup("Setup")] public Chamber6_Customer prefab_Customer;
     [FoldoutGroup("Setup")] public Enemy prefab_Spider;
+    [FoldoutGroup("Setup")] public Enemy prefab_Decabot;
+    [FoldoutGroup("Setup")] public Enemy prefab_Seaver;
     [FoldoutGroup("Setup")] public Transform parentIngredient;
     [FoldoutGroup("Setup")] public Transform spawnCustomer;
     [FoldoutGroup("Setup")] public RandomSpawnArea spawnArea;
@@ -161,6 +163,8 @@ public class Chamber_Level6 : MonoBehaviour
 
     # region Update
 
+    private bool everSpawnSeaver = false;
+
     public void OngoingMode()
     {
         chamberText.textMesh.text = remainingCustomers.ToString();
@@ -229,6 +233,11 @@ public class Chamber_Level6 : MonoBehaviour
                     AttemptSpawnSpider();
                 }
 
+                if (everSpawnSeaver == false && remainingCustomers <= 2)
+                {
+                    SpawnSeaver();
+                }
+
                 _cooldownSpawnBots = 2f + Random.Range(0f, 2f);
             }
         }
@@ -258,7 +267,17 @@ public class Chamber_Level6 : MonoBehaviour
 
         if (chance < spawnLimitChance)
         {
-            SpawnSpider();
+            float chance1 = Random.Range(0, 1f);
+
+            if (chance1 > 0.15f)
+                SpawnSpider();
+            else
+            {
+                if (CountDecabot() <= 1)
+                    SpawnDecabot();
+                else
+                    SpawnSpider();
+            }
         }
     }
 
@@ -266,15 +285,74 @@ public class Chamber_Level6 : MonoBehaviour
 
     #region Actions
 
+    public int CountDecabot()
+    {
+        int count = 0;
+
+        foreach(var enemy in enemies)
+        {
+            if (enemy is DecabotEnemy)
+                count++;
+        }
+
+        return count;
+    }
+
+    public int CountSeaver()
+    {
+        int count = 0;
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy is SeaverEnemy)
+                count++;
+        }
+
+        return count;
+    }
+
+
+    [FoldoutGroup("Debug")]
+    [Button("Spawn Spider")]
     public void SpawnSpider()
     {
         Vector3 spawnPos = spawnArea.GetAnyPositionInsideBox();
         var spider1 = Instantiate(prefab_Spider);
         spider1.gameObject.SetActive(true);
         spider1.transform.position = spawnPos;
+        spider1.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(spawnPos);
         enemies.Add(spider1);
         enemies.RemoveAll(x => x == null);
     }
+
+    [FoldoutGroup("Debug")]
+    [Button("Spawn Decabot")]
+    public void SpawnDecabot()
+    {
+        Vector3 spawnPos = spawnArea.GetAnyPositionInsideBox();
+        var spider1 = Instantiate(prefab_Decabot);
+        spider1.gameObject.SetActive(true);
+        spider1.transform.position = spawnPos;
+        spider1.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(spawnPos);
+        enemies.Add(spider1);
+        enemies.RemoveAll(x => x == null);
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Spawn Seaver")]
+    public void SpawnSeaver()
+    {
+        Vector3 spawnPos = spawnArea.GetAnyPositionInsideBox();
+        var spider1 = Instantiate(prefab_Seaver);
+        spider1.gameObject.SetActive(true);
+        spider1.transform.position = spawnPos;
+        spider1.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(spawnPos);
+        enemies.Add(spider1);
+        enemies.RemoveAll(x => x == null);
+        everSpawnSeaver = true;
+    }
+
+
 
     public void AmbilPiring()
     {

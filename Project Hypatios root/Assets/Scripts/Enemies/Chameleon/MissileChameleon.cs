@@ -28,6 +28,8 @@ public class MissileChameleon : Enemy
 
     public override void Attacked(DamageToken token)
     {
+        if (token.origin == DamageToken.DamageOrigin.Enemy) return;
+
         health -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);

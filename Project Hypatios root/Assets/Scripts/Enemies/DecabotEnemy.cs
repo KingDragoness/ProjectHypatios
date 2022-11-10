@@ -17,16 +17,12 @@ public class DecabotEnemy : Enemy
     [ProgressBar(0, "maxHitpoint")]
     public float hitpoint = 900;
     public float maxHitpoint = 900;
-    
-    [FoldoutGroup("Weapons")] public float damage = 15;
-    [FoldoutGroup("Weapons")] public float variableDamage = 1;
-    [FoldoutGroup("Weapons")] public float spawnChance_Ammo = 0.17f;
-    [FoldoutGroup("Weapons")] public GameObject eyeLocation;
+
+    [FoldoutGroup("Weapons")] public MissileChameleon missilePrefab;
+    [FoldoutGroup("Weapons")] public WeaponTurret[] weaponTurret;
     [FoldoutGroup("Weapons")] public float attackRange = 30f;
     [FoldoutGroup("Weapons")] public float attackTime = .2f;
     [FoldoutGroup("Weapons")] public float attackRecharge = .2f;
-    [FoldoutGroup("Weapons")] public WeaponTurret[] weaponTurret;
-    [FoldoutGroup("Prefabs")] public GameObject laser;
     [FoldoutGroup("Prefabs")] public GameObject corpse;
 
 
@@ -35,6 +31,7 @@ public class DecabotEnemy : Enemy
     [FoldoutGroup("Audios")] public AudioSource audio_Dead;
 
     [FoldoutGroup("Movements")] public float damping = 2f;
+    [FoldoutGroup("Movements")] public GameObject[] eyeLocations;
 
 
     [SerializeField] private SpawnHeal spawnHeal;
@@ -85,7 +82,7 @@ public class DecabotEnemy : Enemy
         {
             Die();
         }
-        else
+        else if (token.origin == DamageToken.DamageOrigin.Player)
         {
             DamageOutputterUI.instance.DisplayText(token.damage);
         }
@@ -94,9 +91,10 @@ public class DecabotEnemy : Enemy
     private void Die()
     {
         Destroy(gameObject);
-        corpse.gameObject.SetActive(true);
-        corpse.transform.position = transform.position;
-        corpse.transform.rotation = transform.rotation;
+        var corpse1 = Instantiate(corpse, transform.position, transform.rotation);
+        corpse1.gameObject.SetActive(true);
+        corpse1.transform.position = transform.position;
+        corpse1.transform.rotation = transform.rotation;
     }
 
     private void Update()
@@ -118,6 +116,8 @@ public class DecabotEnemy : Enemy
         {
 
             isAttacking = false;
+            isWalking = true;
+
             foreach (var turret1 in weaponTurret)
             {
                 var em = turret1.laserCharging.emission;
@@ -125,26 +125,24 @@ public class DecabotEnemy : Enemy
             }
             count = 0;
             isCharging = false;
+            //FindPosition();
         }
         else
         {
-
             isAttacking = true;
             isWalking = false;
+            Attack();
         }
 
         if (isAttacking && !isDie)
         {
-            FindPosition();
-            Attack();
         }
     }
 
 
     void FindPosition()
     {
-        isWalking = true;
-        isAttacking = false;
+
         if (isWalking)
             enemyAI.SetDestination(player.position);
     }
@@ -152,27 +150,54 @@ public class DecabotEnemy : Enemy
     private void Movement()
     {
         ManageSpiderRotation();
+        bool _canlookPlayer = false;
 
-        Ray ray = new Ray(eyeLocation.transform.position, player.position - eyeLocation.transform.position);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        foreach (var eyeLocation in eyeLocations)
         {
-            if (hit.transform.tag == "Player")
+            Ray ray = new Ray(eyeLocation.transform.position, player.position - eyeLocation.transform.position);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
             {
-                canLookAtPlayer = true;
-            }
-            else
-            {
-                canLookAtPlayer = false;
+                if (hit.transform.tag == "Player")
+                {
+                    _canlookPlayer = true;
+                    break;
+                }
+                else
+                {
+                }
+
+                //at least its near the player
+                float dist = Vector3.Distance(hit.point, player.position);
+
+                if (dist < 1.5f)
+                {
+                    _canlookPlayer = true;
+                    break;
+                }
+
             }
         }
 
+         canLookAtPlayer = _canlookPlayer;
+
         if (!canLookAtPlayer)
         {
+            enemyAI.updateRotation = true;
+
             FindPosition();
         }
         else
         {
-            enemyAI.SetDestination(transform.position);
+            enemyAI.updateRotation = false;
+
+            Vector3 posTarget = player.transform.position;
+
+            Vector3 dir = posTarget - transform.position;
+            dir.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+            transform.rotation = rotation;
+
+            //enemyAI.SetDestination(transform.position);
         }
 
     }
@@ -190,6 +215,17 @@ public class DecabotEnemy : Enemy
     }
 
     int index1 = 0;
+
+
+    [Button("Fire missile")]
+    public void FireMissile(Transform outOrigin)
+    {
+        GameObject prefabMissile = Instantiate(missilePrefab.gameObject, outOrigin.position, outOrigin.rotation);
+        prefabMissile.gameObject.SetActive(true);
+        audio_Fire.Play();
+        hasShot = true;
+    }
+
 
     void Attack()
     {
@@ -224,32 +260,24 @@ public class DecabotEnemy : Enemy
 
             var turret1 = weaponTurret[index1];
 
-            {
-                var points = new Vector3[2];
-                points[0] = turret1.origin.transform.position;
-                GameObject laserLine = Instantiate(laser, turret1.origin.transform.position, Quaternion.identity);
-                points[1] = targetPos;
-                var lr = laserLine.GetComponent<LineRenderer>();
-                lr.SetPositions(points);
-                audio_Fire.Play();
-            }
-            hasShot = true;
+
 
             Ray ray = new Ray(turret1.origin.transform.position, targetPos - turret1.origin.transform.position);
             if (Physics.SphereCast(ray, .2f, out RaycastHit hit, 100f))
             {
                 if (hit.transform.tag == "Player")
                 {
-                    int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
-                    hit.transform.gameObject.GetComponent<health>().takeDamage((int)damage + varDamageResult);
-                    if (spawn == null) spawn = FindObjectOfType<SpawnIndicator>();
-                    spawn.Spawn(transform);
+                    FireMissile(turret1.origin);
+
                 }
-
-                var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
-
-                if (damageReceiver != null)
-                    LaserAttack(damageReceiver);
+                else
+                {
+                    continue;
+                }
+            }
+            else if (isAttacking)
+            {
+                FireMissile(turret1.origin);
             }
 
             nextAttackTime = Time.time + attackTime;
@@ -258,15 +286,6 @@ public class DecabotEnemy : Enemy
         }
 
         isCharging = false;
-
-    }
-
-    private void LaserAttack(damageReceiver damageReceiver)
-    {
-        var token = new DamageToken();
-        token.damage = damage + 10f + Random.Range(-variableDamage,damage);
-        token.origin = DamageToken.DamageOrigin.Enemy;
-        damageReceiver.Attacked(token);
 
     }
 

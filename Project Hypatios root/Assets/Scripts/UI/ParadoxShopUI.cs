@@ -244,37 +244,41 @@ public class ParadoxShopUI : MonoBehaviour
         }
 
         allParadoxUIs.Clear();
-        shopOwner.RefreshAllParadoxes();
 
-        foreach (var levelScript in shopOwner.paradoxLevelScripts)
+        if (shopOwner != null)
         {
-            var newButton = Instantiate(buttonParadoxTemplate, content);
-            newButton.gameObject.SetActive(true);
-            var rt = newButton.GetComponent<RectTransform>();
-            rt.localScale = Vector3.one;
-            rt.localPosition = Vector3.zero;
+            shopOwner.RefreshAllParadoxes();
 
-            newButton.paradoxName_Text.text = levelScript.paradoxName;
-            newButton.paradoxPrice_Text.text = $"{levelScript.soulPrice} Souls";
-            newButton.attachedParadox = levelScript;
+            foreach (var levelScript in shopOwner.paradoxLevelScripts)
+            {
+                var newButton = Instantiate(buttonParadoxTemplate, content);
+                newButton.gameObject.SetActive(true);
+                var rt = newButton.GetComponent<RectTransform>();
+                rt.localScale = Vector3.one;
+                rt.localPosition = Vector3.zero;
 
-            if (newButton.attachedParadox.paradoxEntity.value == newButton.attachedParadox.buyTargetValue)
-            {
-                newButton.buttonBuy.interactable = false;
-            }
-            else
-            {
-                if (FPSMainScript.instance.SoulPoint < newButton.attachedParadox.soulPrice)
+                newButton.paradoxName_Text.text = levelScript.paradoxName;
+                newButton.paradoxPrice_Text.text = $"{levelScript.soulPrice} Souls";
+                newButton.attachedParadox = levelScript;
+
+                if (newButton.attachedParadox.paradoxEntity.value == newButton.attachedParadox.buyTargetValue)
                 {
                     newButton.buttonBuy.interactable = false;
                 }
                 else
                 {
-                    newButton.buttonBuy.interactable = true;
+                    if (FPSMainScript.instance.SoulPoint < newButton.attachedParadox.soulPrice)
+                    {
+                        newButton.buttonBuy.interactable = false;
+                    }
+                    else
+                    {
+                        newButton.buttonBuy.interactable = true;
+                    }
                 }
-            }
 
-            allParadoxUIs.Add(newButton);
+                allParadoxUIs.Add(newButton);
+            }
         }
     }
 

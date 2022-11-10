@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.AI;
 #endif
 
 public class BigLevel_Helper : MonoBehaviour
@@ -79,12 +80,16 @@ public class BigLevel_Helper : MonoBehaviour
     [Space]
     public bool enableAllByStart = false;
 
+    [FoldoutGroup("Navigations")]
+    public LayerMask navmeshExcludeLayer;
+
     private void Start()
     {
         if (enableAllByStart)
             EnableAll();
     }
 
+    [FoldoutGroup("Quick tools")]
     [Button("Set statics")]
     public void SetNavigationStatics()
     {
@@ -96,6 +101,8 @@ public class BigLevel_Helper : MonoBehaviour
 
             foreach(var go1 in listGOs)
             {
+                if (navmeshExcludeLayer.Contains(go1.layer)) continue;
+
                 StaticEditorFlags flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.OccluderStatic;
                 GameObjectUtility.SetStaticEditorFlags(go1, flag);
 
@@ -105,6 +112,19 @@ public class BigLevel_Helper : MonoBehaviour
 
     }
 
+    [FoldoutGroup("Navigations")]
+    [Button("Bake Navmesh")]
+    public void BakeNavmesh()
+    {
+#if UNITY_EDITOR
+        EnableAll();
+
+        NavMeshBuilder.BuildNavMesh();
+#endif
+
+    }
+
+    [FoldoutGroup("Quick tools")]
     [Button("Bake Occlusion")]
     public void BakeOcclusion()
     {
@@ -116,7 +136,7 @@ public class BigLevel_Helper : MonoBehaviour
 
     }
 
-    [TabGroup("Quick tools")]
+    [FoldoutGroup("Quick tools")]
     [Button("Enable All")]
     public void EnableAll()
     { 
@@ -126,7 +146,7 @@ public class BigLevel_Helper : MonoBehaviour
         }
     }
 
-    [TabGroup("Quick tools")]
+    [FoldoutGroup("Quick tools")]
     [Button("Close ATVRegion Gizmos")]
     public void DisableGizmosATV()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class KillZone : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class KillZone : MonoBehaviour
     public float DamagePerSecond = 10;
     public float DamageSpeedOverride = 20;
     public bool DEBUG_DrawGizmos = false;
+    [FoldoutGroup("Enemies")] public LayerMask sphereLayerMask;
+    [FoldoutGroup("Enemies")] public float sphereRadius = 5f;
+    [FoldoutGroup("Enemies")]
+    [Tooltip("Only for explosions.")] public bool alsoDamageEnemy = false;
+    [FoldoutGroup("Enemies")] public bool useEnemyKillzone = true;
 
     private health PlayerHealth;
     private float cooldown = 1f;
@@ -17,6 +23,7 @@ public class KillZone : MonoBehaviour
     void Start()
     {
         PlayerHealth = FindObjectOfType<health>();
+        if (alsoDamageEnemy) DamageEnemy();
     }
 
     private void OnDrawGizmos()
@@ -26,6 +33,11 @@ public class KillZone : MonoBehaviour
         {
             return;
         }
+
+        Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.5f);
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
+        Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.04f);
+        Gizmos.DrawSphere(transform.position, sphereRadius);
 
         foreach (Transform t in ActivatingArea)
         {
@@ -44,6 +56,7 @@ public class KillZone : MonoBehaviour
                 Gizmos.DrawLine(v1, v2);
                 Gizmos.DrawLine(v2, v1);
             }
+
         }
 
     }
@@ -84,6 +97,25 @@ public class KillZone : MonoBehaviour
     {
         PlayerHealth.takeDamage(Mathf.RoundToInt(DamagePerSecond/2), DamageSpeedOverride);
         SpawnIndicator.instance.Spawn(transform);
+
+    }
+
+    public void DamageEnemy()
+    {
+        Vector3 center = transform.position;
+
+        var hitColliders = Physics.OverlapSphere(center, sphereRadius, sphereLayerMask);
+        foreach (var collider in hitColliders)
+        {
+            var damage = collider.GetComponent<damageReceiver>();
+            if (damage != null)
+            {
+                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond;
+
+                damage.Attacked(token);
+            }
+
+        }
     }
 
     public static bool IsInsideOcclusionBox(Transform box, Vector3 aPoint)

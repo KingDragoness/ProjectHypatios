@@ -34,7 +34,7 @@ public class damageReceiver : MonoBehaviour
 
         if (enemyScript != null) enemyScript.Attacked(token);
 
-        if (isCriticalHit)
+        if (isCriticalHit && token.origin == DamageToken.DamageOrigin.Player)
         {
             soundManagerScript.instance.Play("bingo");
         }

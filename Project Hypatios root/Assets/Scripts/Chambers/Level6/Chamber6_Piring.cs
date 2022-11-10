@@ -8,6 +8,8 @@ public class Chamber6_Piring : MonoBehaviour
     public List<Chamber_Level6.Ingredient> ingredients = new List<Chamber_Level6.Ingredient>();
     public AudioSource audio_piring;
     public WaypointsFree.WaypointsTraveler waypointScript;
+    public delegate void onTransferPlate(Transform owner);
+    public event onTransferPlate OnTransferPlate;
 
     public GameObject[] recipeVisuals;
 
@@ -19,6 +21,11 @@ public class Chamber6_Piring : MonoBehaviour
     public bool HasIngredient(Chamber_Level6.Ingredient ingredient)
     {
         return ingredients.Contains(ingredient);
+    }
+
+    public void ChangeOwnership(Transform owner)
+    {
+        OnTransferPlate?.Invoke(owner);
     }
 
     [ContextMenu("Refresh Visuals")]

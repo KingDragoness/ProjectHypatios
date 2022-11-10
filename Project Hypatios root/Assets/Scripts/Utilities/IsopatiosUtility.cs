@@ -71,6 +71,11 @@ public static class IsopatiosUtility
         return Enum.GetValues(typeof(T)).Cast<T>();
     }
 
+    public static bool Contains(this LayerMask mask, int layer)
+    {
+        return mask == (mask | (1 << layer));
+    }
+
     public static T GetComponentInParent<T>(this GameObject origin)
     {
         Transform t = origin.transform;

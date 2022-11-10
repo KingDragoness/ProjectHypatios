@@ -22,6 +22,12 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
     void Start()
     {
         if (AutoScanDialogues)
+            ScanDialogues();
+    }
+
+    [ContextMenu("Scan Dialogues")]
+    public void ScanDialogues()
+    {
         {
             allDialogues = GetComponentsInChildren<MultiDialogues_SingleSpeech>().ToList();
         }

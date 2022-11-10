@@ -8,6 +8,7 @@ public class ActivatorRegion : MonoBehaviour
     public List<Transform> ActivatingArea;
     public List<GameObject> TargetObjectRegion = new List<GameObject>();
     public Transform player;
+    public bool allowWhenParadoxMode = false;
     public bool DEBUG_DrawGizmos = false;
 
     void Start()
@@ -66,6 +67,17 @@ public class ActivatorRegion : MonoBehaviour
             if (go.activeSelf != activate)
             {
                 go.SetActive(activate);
+            }
+        }
+
+        if (allowWhenParadoxMode)
+        {
+            if (MainUI.Instance.current_UI == MainUI.UIMode.Paradox)
+            {
+                foreach (GameObject go in TargetObjectRegion)
+                {
+                    go.SetActive(true);
+                }
             }
         }
     }
