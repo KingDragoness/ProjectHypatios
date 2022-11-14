@@ -62,8 +62,8 @@ public class ConsoleCommand : MonoBehaviour
     {
 
         bool success = false;
-            
-        if (onExecuteCommand != null) onExecuteCommand.Invoke(commandInput, args);
+
+        if (onExecuteCommand != null) { success = onExecuteCommand.Invoke(commandInput, args); }
 
         switch (commandInput)
         {
@@ -143,7 +143,9 @@ public class ConsoleCommand : MonoBehaviour
 
             default:
                 if (!success)
-                    SendConsoleMessage("Command is invalid.");
+                {
+                    SendConsoleMessage("Command is invalid unless maybe a level command is executed.");
+                }
                 break;
 
             #endregion

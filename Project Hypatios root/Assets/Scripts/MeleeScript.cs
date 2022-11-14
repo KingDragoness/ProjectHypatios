@@ -97,6 +97,7 @@ public class MeleeScript : MonoBehaviour
                 var token = new DamageToken();
                 token.damage = Random.Range(meleeDamage - 3, meleeDamage + 3);
                 damageReceiver.Attacked(token);
+                MainGameHUDScript.Instance.audio_CrosshairClick.Play();
             }
         }
     }

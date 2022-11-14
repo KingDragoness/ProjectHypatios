@@ -5,6 +5,8 @@ using UnityEngine;
 public class StupidDamageHitbox : MonoBehaviour
 {
 
+    [Tooltip("For Enemy attacks")]
+    public Enemy originEnemy;
     public int damage = 10;
     public DamageToken.DamageOrigin originDamage = DamageToken.DamageOrigin.Enemy;
 
@@ -27,7 +29,7 @@ public class StupidDamageHitbox : MonoBehaviour
 
         if (damageReceiver != null)
         {
-            var token = new DamageToken(); token.origin = originDamage; token.damage = damage;
+            var token = new DamageToken(); token.origin = originDamage; token.damage = damage; if (originEnemy != null) token.originEnemy = originEnemy;
 
             damageReceiver.Attacked(token);
         }

@@ -14,6 +14,7 @@ public class health : MonoBehaviour
     public float healPerSecond;
     public float healthRegen = 0f;
     public float HealthSpeed = 4;
+    public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
     [FoldoutGroup("Elena Section")] public float armorStrength = 1;
     float healthAfterHeal = 0f;
@@ -159,7 +160,7 @@ public class health : MonoBehaviour
         targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth);
         soundManagerScript.instance.PlayOneShot("reward");
     }
-    public void takeDamage(int damage, float speed = 11)
+    public void takeDamage(int damage, float speed = 11, float shakinessFactor = 1)
     {
         if (character.isCheatMode)
         {
@@ -186,6 +187,12 @@ public class health : MonoBehaviour
                 dof.focalLength.value = 68f;
             }
         }
+
+        var recoil = FindObjectOfType<Recoil>();
+        var recoilAmount = 1f * Mathf.Clamp(damage/10, 1, 10);
+        var camRecoil = new Vector3(camRecoilDamage.x * recoilAmount, camRecoilDamage.y * recoilAmount, camRecoilDamage.z * recoilAmount);
+
+        recoil.CustomRecoil(camRecoil, shakinessFactor);
 
         float random = Random.Range(0f, 1f);
 

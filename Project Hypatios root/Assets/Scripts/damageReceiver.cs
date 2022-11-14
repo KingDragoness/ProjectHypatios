@@ -15,6 +15,8 @@ public class DamageToken
 
     public float damage = 1;
     public float repulsionForce = 1;
+    public float shakinessFactor = 0.5f;
+    public Enemy originEnemy;
     public DamageOrigin origin = DamageOrigin.Player;
 }
 

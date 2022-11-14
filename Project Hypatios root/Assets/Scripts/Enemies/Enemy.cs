@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 
 //Base class for all enemies
 
 public class Enemy : MonoBehaviour
 {
+
+    [FoldoutGroup("Base")] public bool isDamagableBySameType = false;
+
     public delegate void OnEnemyKilled(Enemy mySelf);
 
     public static event OnEnemyKilled onKilled;

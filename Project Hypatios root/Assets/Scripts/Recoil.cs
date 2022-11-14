@@ -53,4 +53,9 @@ public class Recoil : MonoBehaviour
         targetRot += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 
+    public void CustomRecoil(Vector3 rot, float multiplier = 1)
+    {
+        targetRot += new Vector3(rot.x, Random.Range(-rot.y, rot.y), Random.Range(-rot.z, rot.z)) * multiplier;
+    }
+
 }

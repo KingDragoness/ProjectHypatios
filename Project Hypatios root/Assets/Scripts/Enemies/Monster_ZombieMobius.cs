@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
 public class Monster_ZombieMobius : Enemy
 {
 
     public List<AnimatorOverrideController> variantControllers;
+    public UnityEvent OnAttack;
+    public UnityEvent OnAttackDone;
+    public UnityEvent OnDead;
     public float hitpoint = 245;
     public Animator animator;
     public float speed = 10;
     public float distanceToAttack = 5f;
     public GameObject hitbox;
+    public GameObject visualAttack;
     public Transform target;
     public Transform playerTarget;
+    [FoldoutGroup("Animations")] public float cooldownAttack = 1.95f;
+    [FoldoutGroup("Animations")] public float hitboxStart = .2f;
+    [FoldoutGroup("Animations")] public float hitboxLasts = .3f;
 
     private bool isAttacking = false;
     private bool isDead = false;
@@ -45,6 +53,9 @@ public class Monster_ZombieMobius : Enemy
 
     public override void Attacked(DamageToken token)
     {
+        if (token.originEnemy == this) return;
+        if (isDamagableBySameType == false && token.originEnemy is Monster_ZombieMobius) return;
+
         hitpoint -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
@@ -62,6 +73,8 @@ public class Monster_ZombieMobius : Enemy
         }
     }
 
+    private float distanceToPlayer = 0;
+
     private void Update()
     {
         if (hitpoint < 0)
@@ -74,31 +87,50 @@ public class Monster_ZombieMobius : Enemy
         {
             animator.SetBool("Dead", true);
             Destroy(gameObject, 5f);
+            OnDead?.Invoke();
         }
 
         else
         {
-            if (!isAttacking)
+            if (isAttacking == false)
             {
+                NavMeshAgent.updateRotation = true;
                 NavMeshAgent.SetDestination(target.position);
             }
             else
             {
+
                 durationAttack -= Time.deltaTime;
+                HandleRotation();
 
                 if (durationAttack < 0)
                 {
                     animator.ResetTrigger("Attack");
                     isAttacking = false;
+                    OnAttackDone?.Invoke();
+                    visualAttack.gameObject.SetActive(false);
                 }
             }
 
-            if (Vector3.Distance(transform.position, target.position) < distanceToAttack)
+            distanceToPlayer = Vector3.Distance(transform.position, target.position);
+
+            if (distanceToPlayer < distanceToAttack && !isAttacking)
             {
-                Attack1();
-                //AIDecision();
+                AttackPlayer();
             }
         }
+    }
+
+    private void HandleRotation()
+    {
+        NavMeshAgent.updateRotation = false;
+
+        Vector3 posTarget = target.transform.position;
+
+        Vector3 dir = posTarget - transform.position;
+        dir.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+        transform.rotation = rotation;
     }
 
     private void AIDecision()
@@ -106,21 +138,30 @@ public class Monster_ZombieMobius : Enemy
 
     }
 
+    private IEnumerator couroutineAttack;
+
     [Button("Attack")]
-    public void Attack1()
+    public void AttackPlayer()
     {
+        animator.ResetTrigger("Attack");
         animator.SetTrigger("Attack");
-        if (gameObject.activeSelf)
-            StartCoroutine(SampahTimerAttack());
-        durationAttack = 2f;
+        OnAttack?.Invoke();
+        if (couroutineAttack != null) StopCoroutine(couroutineAttack);
+        couroutineAttack = SampahTimerAttack();
+        StartCoroutine(couroutineAttack);
+
+        durationAttack = cooldownAttack;
         isAttacking = true;
     }
 
     public IEnumerator SampahTimerAttack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(hitboxStart);
+        visualAttack.gameObject.SetActive(true);
         hitbox.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(hitboxLasts);
         hitbox.gameObject.SetActive(false);
+        yield return new WaitForSeconds(cooldownAttack - hitboxStart - hitboxLasts);
+
     }
 }

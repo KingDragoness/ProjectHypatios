@@ -9,6 +9,7 @@ public class KillZone : MonoBehaviour
     public List<Transform> ActivatingArea;
     public float DamagePerSecond = 10;
     public float DamageSpeedOverride = 20;
+    public float DamageShakinessFactor = 0.1f;
     public bool DEBUG_DrawGizmos = false;
     [FoldoutGroup("Enemies")] public LayerMask sphereLayerMask;
     [FoldoutGroup("Enemies")] public float sphereRadius = 5f;
@@ -95,7 +96,7 @@ public class KillZone : MonoBehaviour
 
     public void DamagePlayer()
     {
-        PlayerHealth.takeDamage(Mathf.RoundToInt(DamagePerSecond/2), DamageSpeedOverride);
+        PlayerHealth.takeDamage(Mathf.RoundToInt(DamagePerSecond/2), DamageSpeedOverride, DamageShakinessFactor);
         SpawnIndicator.instance.Spawn(transform);
 
     }

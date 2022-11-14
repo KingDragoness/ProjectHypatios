@@ -219,6 +219,8 @@ public class GunScript : BaseWeaponScript
         anim.SetBool("isScoping", isScoping);
     }
 
+    IEnumerator shotgunCoroutine;
+
     public override void FireWeapon()
     {
         gunRecoil.RecoilFire();
@@ -285,8 +287,9 @@ public class GunScript : BaseWeaponScript
         }
         else
         {
-            StopCoroutine(PlaySoundBurst());
-            StartCoroutine(PlaySoundBurst());
+            if (shotgunCoroutine != null) StopCoroutine(shotgunCoroutine);
+            shotgunCoroutine = PlaySoundBurst();
+            StartCoroutine(shotgunCoroutine);
 
             muzzle1.Emit(1);
             var points = new Vector3[2];
@@ -347,10 +350,10 @@ public class GunScript : BaseWeaponScript
                 yield return null;
             }
 
-            yield return new WaitForSeconds(0.05f);
-            audioFire.PlayOneShot(audioFire.clip);
-            yield return new WaitForSeconds(0.05f);
-            audioFire.PlayOneShot(audioFire.clip);
+            //yield return new WaitForSeconds(0.05f);
+            audioFire.Play();
+            //yield return new WaitForSeconds(0.05f);
+            //audioFire.PlayOneShot(audioFire.clip);
 
         }
     }   
