@@ -77,6 +77,10 @@ public class ConsoleCommand : MonoBehaviour
                 GiveAmmos(args);
                 break;
 
+            case "levelnames":
+                LevelNames(args);
+                break;
+
             case "goto":
                 GoTo(args);
                 break;
@@ -154,6 +158,22 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    private void LevelNames(string[] args)
+    {
+        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            scenes[i] = System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+        }
+
+        int index1 = 0;
+        foreach (var string1 in scenes)
+        {
+            SendConsoleMessage($"{index1} | {string1}");
+            index1++;
+        }
+    }
 
 
 
@@ -471,6 +491,7 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("'cc' to use extra commands");
                 helps.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
                 helps.Add("'nextlevel' to go next level while retaining items");
+                helps.Add("'levelnames' gets every level exists in the current build.");
                 helps.Add("'god' to toggle god mode");
                 helps.Add("'res' to restore health & dash");
                 helps.Add("'soul' to get soul");

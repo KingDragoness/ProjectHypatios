@@ -133,7 +133,7 @@ public class EastriaGuardTest : Enemy
                 if (Audio_FireShockwave != null)
                 {
                     Audio_FireShockwave.Play();
-                    Audio_FireShockwave.pitch = Random.Range(0.9f, 1.1f);
+                    //Audio_FireShockwave.pitch = Random.Range(0.9f, 1.1f);
                 }
                 fireOrigin.LookAt(player.transform);
                 StartCoroutine(FireWeapon());

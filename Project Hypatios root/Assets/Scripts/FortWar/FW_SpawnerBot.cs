@@ -8,6 +8,7 @@ public class FW_SpawnerBot : MonoBehaviour
     public FW_Alliance alliance = FW_Alliance.DEFENDER;
     public Chamber_Level7 chamberScript;
     public Transform spawnPoint;
+    public bool DEBUG_DrawGizmos = false;
 
     int numUnit = 0;
 
@@ -22,6 +23,32 @@ public class FW_SpawnerBot : MonoBehaviour
             SpawnUnit();
             i++;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+
+        if (DEBUG_DrawGizmos == false)
+        {
+            return;
+        }
+
+        var t = this.transform;
+ 
+
+        Gizmos.matrix = t.transform.localToWorldMatrix;
+        Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.5f);
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(10,0.1f, 10));
+        Gizmos.color = new Color(0.1f, 0.8f, 0.1f, 0.04f);
+        Gizmos.DrawCube(Vector3.zero, new Vector3(10, 0.1f, 10));
+
+        {
+            Vector3 v1 = t.localScale / 2f;
+            Vector3 v2 = -t.localScale / 2f;
+            Gizmos.DrawLine(v1, v2);
+            Gizmos.DrawLine(v2, v1);
+        }
+
     }
 
     private void Update()
@@ -47,6 +74,7 @@ public class FW_SpawnerBot : MonoBehaviour
             }
         }
     }
+
 
     private float _timerSpawn = 3f;
     private float _timeToSpawn = 3f;
