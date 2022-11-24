@@ -6,9 +6,9 @@ public class ReflectionProbeUpdator : MonoBehaviour
 {
 
     public ReflectionProbe reflectionProbe;
+    public float CooldownUpdateProbe = 0.6f;
 
 
-    private float COOLDOWN_UPDATE_PROBE = 0.5f;
     private float timer = 0.1f;
 
     void Update()
@@ -21,7 +21,7 @@ public class ReflectionProbeUpdator : MonoBehaviour
         else
         {
             reflectionProbe.RenderProbe();
-            timer = COOLDOWN_UPDATE_PROBE;
+            timer = CooldownUpdateProbe;
         }
     }
 }

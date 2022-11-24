@@ -46,6 +46,7 @@ public class SettingsUI : MonoBehaviour
 
     private ColorGrading colorGrading;
     private AmbientOcclusion AO;
+    private ScreenSpaceReflections realtimeReflections;
     private MotionBlur motionBlur;
     private FloatParameter floatParam_Brightness;
     private Resolution[] resolutions;
@@ -68,6 +69,7 @@ public class SettingsUI : MonoBehaviour
 
         AO = FPSMainScript.instance.postProcessVolume.profile.GetSetting<AmbientOcclusion>();
         motionBlur = FPSMainScript.instance.postProcessVolume.profile.GetSetting<MotionBlur>();
+        realtimeReflections = FPSMainScript.instance.postProcessVolume.profile.GetSetting<ScreenSpaceReflections>();
 
         {
             var colorGrading_ = FPSMainScript.instance.postProcessVolume_2.profile.GetSetting<ColorGrading>();
@@ -321,12 +323,10 @@ public class SettingsUI : MonoBehaviour
             if (currentLevel == 0)
             {
                 AO.active = false;
-                motionBlur.active = false;
             }
             else
             {
                 AO.active = true;
-                motionBlur.active = true;
             }
         }
 
@@ -341,6 +341,18 @@ public class SettingsUI : MonoBehaviour
             {
                 motionBlur.active = true;
                 if (FPSMainScript.instance.minorMotionBlur != null) FPSMainScript.instance.minorMotionBlur.enabled = true;
+            }
+        }
+
+        if (realtimeReflections != null)
+        {
+            if (currentLevel != 2)
+            {
+                realtimeReflections.active = false;
+            }
+            else
+            {
+                realtimeReflections.active = true;
             }
         }
 

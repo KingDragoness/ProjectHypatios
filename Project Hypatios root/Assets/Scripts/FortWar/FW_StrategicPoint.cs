@@ -36,6 +36,18 @@ public class FW_StrategicPoint : MonoBehaviour
 
     public bool IsOccupied { get { return currentBot;} }
 
+
+    [Button("Toggle RandomSpawnArea")]
+
+    private void ToggleRandomSpawn()
+    {
+        if (randomSpawnArea.DEBUG_DrawGizmos == true)
+            randomSpawnArea.DEBUG_DrawGizmos = false;
+        else
+            randomSpawnArea.DEBUG_DrawGizmos = true;
+    }
+
+
     public bool IsClearedPoint()
     {
         var cp = Chamber_Level7.instance.controlPoint.Find(x => x.CPNumber == controlPoint);
