@@ -49,9 +49,9 @@ public class Chamber_Level6 : MonoBehaviour
 
     [FoldoutGroup("Setup")] public Chamber6_Ingredient prefab_Ingredient;
     [FoldoutGroup("Setup")] public Chamber6_Customer prefab_Customer;
-    [FoldoutGroup("Setup")] public Enemy prefab_Spider;
-    [FoldoutGroup("Setup")] public Enemy prefab_Decabot;
-    [FoldoutGroup("Setup")] public Enemy prefab_Seaver;
+    [FoldoutGroup("Setup")] public EnemyScript prefab_Spider;
+    [FoldoutGroup("Setup")] public EnemyScript prefab_Decabot;
+    [FoldoutGroup("Setup")] public EnemyScript prefab_Seaver;
     [FoldoutGroup("Setup")] public Transform parentIngredient;
     [FoldoutGroup("Setup")] public Transform spawnCustomer;
     [FoldoutGroup("Setup")] public RandomSpawnArea spawnArea;
@@ -73,7 +73,7 @@ public class Chamber_Level6 : MonoBehaviour
 
     [ReadOnly] public List<Chamber6_Piring> piringList = new List<Chamber6_Piring>();
     [ReadOnly] public List<Chamber6_Customer> allCustomers = new List<Chamber6_Customer>();
-    [ReadOnly] private List<Enemy> enemies = new List<Enemy>();
+    [ReadOnly] private List<EnemyScript> enemies = new List<EnemyScript>();
 
     private static Chamber_Level6 instance;
 
@@ -89,7 +89,7 @@ public class Chamber_Level6 : MonoBehaviour
     void Start()
     {
         mainPiring.gameObject.SetActive(false);
-        Enemy.onKilled += Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied += Enemy_onKilled;
         piringList.Add(mainPiring);
         chamberText.textMesh.text = "0";
         Initialization();
@@ -97,10 +97,10 @@ public class Chamber_Level6 : MonoBehaviour
 
     private void OnDestroy()
     {
-        Enemy.onKilled -= Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied -= Enemy_onKilled;
     }
 
-    private void Enemy_onKilled(Enemy mySelf)
+    private void Enemy_onKilled(EnemyScript mySelf)
     {
         if (enemies.Contains(mySelf))
         {

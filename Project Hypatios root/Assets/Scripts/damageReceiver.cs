@@ -16,13 +16,13 @@ public class DamageToken
     public float damage = 1;
     public float repulsionForce = 1;
     public float shakinessFactor = 0.5f;
-    public Enemy originEnemy;
+    public EnemyScript originEnemy;
     public DamageOrigin origin = DamageOrigin.Player;
 }
 
 public class damageReceiver : MonoBehaviour
 {
-    public Enemy enemyScript;
+    public EnemyScript enemyScript;
     public bool isCriticalHit = false;
     [Tooltip("> 1 for weak spots. < 1 for resistant spots.")]
     public float multiplier = 1f;

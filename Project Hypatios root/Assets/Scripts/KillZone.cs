@@ -17,13 +17,13 @@ public class KillZone : MonoBehaviour
     [Tooltip("Only for explosions.")] public bool alsoDamageEnemy = false;
     [FoldoutGroup("Enemies")] public bool useEnemyKillzone = true;
 
-    private health PlayerHealth;
+    private PlayerHealth PlayerHealth;
     private float cooldown = 1f;
     private const float COOLDOWN_DAMAGE = 0.5f;
 
     void Start()
     {
-        PlayerHealth = FindObjectOfType<health>();
+        PlayerHealth = FindObjectOfType<PlayerHealth>();
         if (alsoDamageEnemy) DamageEnemy();
     }
 
@@ -97,7 +97,7 @@ public class KillZone : MonoBehaviour
     public void DamagePlayer()
     {
         PlayerHealth.takeDamage(Mathf.RoundToInt(DamagePerSecond/2), DamageSpeedOverride, DamageShakinessFactor);
-        SpawnIndicator.instance.Spawn(transform);
+        Hypatios.UI.SpawnIndicator.Spawn(transform);
 
     }
 

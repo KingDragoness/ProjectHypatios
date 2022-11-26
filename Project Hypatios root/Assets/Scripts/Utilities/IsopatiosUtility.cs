@@ -123,6 +123,7 @@ public static class IsopatiosUtility
     }
 
 
+
     public static T GetComponentThenChild<T>(this GameObject origin)
     {
         T component = origin.GetComponent<T>();
@@ -161,7 +162,15 @@ public static class IsopatiosUtility
         }
     }
 
-    public static bool IsIndexExist<T>(this List<T> list, int index)
+    public static void DisableObjectTimer(this GameObject gameObject, float time = 5f)
+    {
+        var deactivator = gameObject.GetComponent<TimedObjectDeactivator>();
+        if (deactivator == null) deactivator = gameObject.AddComponent<TimedObjectDeactivator>();
+        deactivator.allowRestart = true;
+        deactivator.timer = time;
+    }
+
+public static bool IsIndexExist<T>(this List<T> list, int index)
     {
 
         if (index < 0)

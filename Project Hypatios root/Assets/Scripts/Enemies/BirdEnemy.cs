@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BirdEnemy : Enemy
+public class BirdEnemy : EnemyScript
 {
 
     public enum StateAI
@@ -181,7 +181,7 @@ public class BirdEnemy : Enemy
 
         if (afterDeathTime >= 5f)
         {
-            IAmDead(this);
+            OnDied?.Invoke();
             Destroy(gameObject);
         }
     }

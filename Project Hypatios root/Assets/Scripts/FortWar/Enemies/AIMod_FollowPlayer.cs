@@ -7,11 +7,11 @@ public class AIMod_FollowPlayer : FortWar_AIModule
 
     public float MustFollowRange = 10f;
 
-    private characterScript player;
+    private CharacterScript player;
 
     private void Start()
     {
-        player = FindObjectOfType<characterScript>();
+        player = FindObjectOfType<CharacterScript>();
     }
 
     public float DistancePlayer

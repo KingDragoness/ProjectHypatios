@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class ChameleonMobius : Enemy
+public class ChameleonMobius : EnemyScript
 {
 
     public float health = 1103;
@@ -43,7 +43,7 @@ public class ChameleonMobius : Enemy
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        target = FindObjectOfType<characterScript>().transform;
+        target = Hypatios.Player.transform;
 
     }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
-public class characterScript : MonoBehaviour
+public class CharacterScript : MonoBehaviour
 {
 
     dashParticleManager dashManager;
@@ -70,7 +70,7 @@ public class characterScript : MonoBehaviour
     public GameObject[] itemOnField;
     public float distanceToPickUp = 2f;
     public GameObject closestItem;
-    public WeaponManager weaponSystem;
+    public WeaponManager Weapon;
 
     //Animation
     [ShowInInspector] [ReadOnly] private Animator anim;
@@ -81,7 +81,7 @@ public class characterScript : MonoBehaviour
     float scopingSpeed = 6f;
 
     //Health
-    public health heal;
+    public PlayerHealth Health;
     private CapsuleCollider cc;
     
 
@@ -98,7 +98,7 @@ public class characterScript : MonoBehaviour
         soundManager = FindObjectOfType<soundManagerScript>();
         cc = GetComponent<CapsuleCollider>();
 
-        var currentWeapon = weaponSystem.currentWeaponHeld;
+        var currentWeapon = Weapon.currentWeaponHeld;
 
         if (currentWeapon != null)
             anim = currentWeapon.anim;
@@ -112,15 +112,15 @@ public class characterScript : MonoBehaviour
             return;
         }
 
-        if (!heal.isDead)
+        if (!Health.isDead)
         {
             if (isNoGravity == true) { rb.useGravity = false; }
 
-            if (weaponSystem != null)
+            if (Weapon != null)
             {
-                anim = weaponSystem.anim;
+                anim = Weapon.anim;
 
-                var gun = weaponSystem.currentGunHeld;
+                var gun = Weapon.currentGunHeld;
 
                 if (gun != null)
                 {
@@ -316,9 +316,9 @@ public class characterScript : MonoBehaviour
             }
         }
 
-        if (weaponSystem != null)
+        if (Weapon != null)
         {
-            var gun = weaponSystem.currentGunHeld;
+            var gun = Weapon.currentGunHeld;
 
             if (gun != null)
             {

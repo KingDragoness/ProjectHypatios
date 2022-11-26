@@ -267,14 +267,26 @@ public class GunScript : BaseWeaponScript
                 if (hit.transform.gameObject.layer != 13 &&
                         hit.transform.gameObject.layer != 12)
                 {
-                    GameObject bulletHole = Instantiate(bulletImpact, hit.point + hit.normal * .0001f, Quaternion.LookRotation(hit.normal));
-                    bulletHole.transform.SetParent(hit.collider.gameObject.transform);
+                    GameObject bulletHole = Hypatios.ObjectPool.SummonObject(bulletImpact, 10, IncludeActive: true);
+                    if (bulletHole != null)
+                    {
+                        bulletHole.transform.position = hit.point + hit.normal * .0001f;
+                        bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+                        //bulletHole.DisableObjectTimer(2f);
+                        bulletHole.transform.SetParent(hit.collider.gameObject.transform);
+                    }
 
-                    Destroy(bulletHole, 4f);
                 }
 
-                GameObject bulletSpark_ = Instantiate(bulletSparks, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(bulletSpark_, 4f);
+                GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(bulletSparks, 10, IncludeActive: true);
+                if (bulletSpark_ != null)
+                {
+                    bulletSpark_.transform.position = hit.point;
+                    bulletSpark_.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    bulletSpark_.DisableObjectTimer(2f);
+                }
+                //Instantiate(bulletSparks, hit.point, Quaternion.LookRotation(hit.normal));
+                //Destroy(bulletSpark_, 4f);
 
             }
             else
@@ -321,14 +333,24 @@ public class GunScript : BaseWeaponScript
                     if (hit.transform.gameObject.layer != 13 &&
                         hit.transform.gameObject.layer != 12)
                     {
-                        GameObject bulletHole = Instantiate(bulletImpact, hit.point + hit.normal * .0001f, Quaternion.LookRotation(hit.normal));
-                        bulletHole.transform.SetParent(hit.collider.gameObject.transform);
+                        GameObject bulletHole = Hypatios.ObjectPool.SummonObject(bulletImpact, 10, IncludeActive: true);
+                        if (bulletHole != null)
+                        {
+                            bulletHole.transform.position = hit.point + hit.normal * .0001f;
+                            bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+                            bulletHole.transform.SetParent(hit.collider.gameObject.transform);
+                        }
 
-                        Destroy(bulletHole, 4f);
                     }
 
-                    GameObject bulletSpark_ = Instantiate(bulletSparks, hit.point, Quaternion.LookRotation(hit.normal));
-                    Destroy(bulletSpark_, 4f);
+                    GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(bulletSparks, 10, IncludeActive: true);
+                    if (bulletSpark_ != null)
+                    {
+                        bulletSpark_.transform.position = hit.point;
+                        bulletSpark_.transform.rotation = Quaternion.LookRotation(hit.normal);
+                        bulletSpark_.DisableObjectTimer(2f);
+                    }
+
                 }
                 else
                 {

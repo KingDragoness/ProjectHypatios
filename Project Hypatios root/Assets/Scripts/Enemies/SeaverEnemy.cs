@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.AI;
 using System.Linq;
 
-public class SeaverEnemy : Enemy
+public class SeaverEnemy : EnemyScript
 {
 
     [ProgressBar(0, "maxHitpoint")]
@@ -27,7 +27,7 @@ public class SeaverEnemy : Enemy
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        if (player == null) player = FindObjectOfType<characterScript>().transform;
+        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
     }
 
 

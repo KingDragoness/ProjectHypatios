@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.AI;
 using System.Linq;
 
-public class SeaverScarab : Enemy
+public class SeaverScarab : EnemyScript
 {
     public float hitpoint = 25;
     public GameObject explosion;
@@ -17,7 +17,7 @@ public class SeaverScarab : Enemy
 
     private void Start()
     {
-        if (player == null) player = FindObjectOfType<characterScript>().transform;
+        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
     }
 
     [ReadOnly] [SerializeField] bool playerCanBeReached = false;

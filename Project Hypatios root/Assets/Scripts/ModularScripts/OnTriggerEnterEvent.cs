@@ -17,7 +17,7 @@ public class OnTriggerEnterEvent : MonoBehaviour
     {
         if (usePlayer)
         {
-            objectToCompare = FindObjectOfType<characterScript>().gameObject;
+            objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
         }
     }
 

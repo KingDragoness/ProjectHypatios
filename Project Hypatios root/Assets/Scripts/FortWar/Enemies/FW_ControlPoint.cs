@@ -24,11 +24,11 @@ public class FW_ControlPoint : MonoBehaviour
     public float captureProgress = 0f;
 
     private int _currentInvadersInArea = 0;
-    private characterScript characterScript;
+    private CharacterScript characterScript;
 
     private void Start()
     {
-        characterScript = FindObjectOfType<characterScript>();
+        characterScript = FindObjectOfType<CharacterScript>();
     }
 
     public int CurrentInvadersInArea

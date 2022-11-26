@@ -5,7 +5,7 @@ using UnityEngine;
 public class Chamber_Level2 : MonoBehaviour
 {
 
-    public List<Enemy> enemyToSpawn;
+    public List<EnemyScript> enemyToSpawn;
     public int leftEnemy = 15;
     public Transform spawnTransform;
     public float range = 10;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AntiCamping_Level2 : MonoBehaviour
 {
     public Transform spawnArea;
-    public Enemy bomb;
+    public EnemyScript bomb;
     public StageChamberScript chamberScript;
     public TriggerRegion triggerRegion;
     public float limitTime = 23f;

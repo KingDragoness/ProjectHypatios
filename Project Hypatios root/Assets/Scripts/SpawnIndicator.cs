@@ -8,11 +8,10 @@ public class SpawnIndicator : MonoBehaviour
     public Transform holder;
     public DamageIndicator2 spawn;
 
-    public static SpawnIndicator instance;
 
     private void Awake()
     {
-        instance = this;
+
     }
 
     public void Spawn(Transform target)

@@ -102,8 +102,8 @@ public class SpotlightSniper : MonoBehaviour
             if (hit.transform.tag == "Player")
             {
                 int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
-                hit.transform.gameObject.GetComponent<health>().takeDamage((int)damage + varDamageResult);
-                SpawnIndicator.instance.Spawn(transform);
+                hit.transform.gameObject.GetComponent<PlayerHealth>().takeDamage((int)damage + varDamageResult);
+                Hypatios.UI.SpawnIndicator.Spawn(transform);
 
             }
 

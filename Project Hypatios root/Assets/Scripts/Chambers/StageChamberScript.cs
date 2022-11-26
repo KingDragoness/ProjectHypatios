@@ -10,7 +10,7 @@ public class StageChamberScript : MonoBehaviour
     public ChamberText chamberText;
     public GameObject sign_LevelStateCleared;
     public GameObject sign_LevelStateUnclear;
-    public List<Enemy> enemiesToClear;
+    public List<EnemyScript> enemiesToClear;
     public UnityEvent OnChamberCompleted;
     public AudioSource chamberAudioAnnouncement;
     public Animator anim;
@@ -20,7 +20,7 @@ public class StageChamberScript : MonoBehaviour
 
     private void Start()
     {
-        Enemy.onKilled += Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied += Enemy_onKilled;
 
         var anim_ = GetComponent<Animator>();
 
@@ -32,15 +32,15 @@ public class StageChamberScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        Enemy.onKilled -= Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied -= Enemy_onKilled;
     }
 
-    private void Enemy_onKilled(Enemy enemy)
+    private void Enemy_onKilled(EnemyScript enemy)
     {
         enemiesToClear.Remove(enemy);
     }
 
-    public void AddEnemy(Enemy enemy)
+    public void AddEnemy(EnemyScript enemy)
     {
         enemiesToClear.Add(enemy);
     }

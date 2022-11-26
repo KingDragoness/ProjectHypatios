@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class Monster_ZombieMobius : Enemy
+public class Monster_ZombieMobius : EnemyScript
 {
 
     public List<AnimatorOverrideController> variantControllers;
@@ -54,7 +54,7 @@ public class Monster_ZombieMobius : Enemy
     public override void Attacked(DamageToken token)
     {
         if (token.originEnemy == this) return;
-        if (isDamagableBySameType == false && token.originEnemy is Monster_ZombieMobius) return;
+        if (Stats.IsDamagableBySameType == false && token.originEnemy is Monster_ZombieMobius) return;
 
         hitpoint -= token.damage;
         base.Attacked(token);

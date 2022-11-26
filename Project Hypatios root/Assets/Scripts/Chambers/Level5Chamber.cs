@@ -75,7 +75,7 @@ public class Level5Chamber : MonoBehaviour
     public GameObject sign_LevelStateCleared;
     public GameObject sign_LevelStateUnclear;
     public Animator exitDoorAnim;
-    public List<Enemy> enemiesToClear;
+    public List<EnemyScript> enemiesToClear;
     public UnityEvent OnChamberCompleted;
     public UnityEvent OnChamberStarted;
     public UnityEvent OnAnswerWrong;
@@ -83,7 +83,7 @@ public class Level5Chamber : MonoBehaviour
 
     [Space]
     [Header("Enemy Spawns")]
-    public Enemy spiderEnemy;
+    public EnemyScript spiderEnemy;
     public Transform spawnTransform;
     public float range = 10;
     public int limitEnemy = 6;
@@ -103,12 +103,12 @@ public class Level5Chamber : MonoBehaviour
 
     private void Start()
     {
-        Enemy.onKilled += Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied += Enemy_onKilled;
     }
 
     private void OnDestroy()
     {
-        Enemy.onKilled -= Enemy_onKilled;
+        Hypatios.Enemy.OnEnemyDied -= Enemy_onKilled;
     }
 
     public void StartChamber()
@@ -127,12 +127,12 @@ public class Level5Chamber : MonoBehaviour
         OnChamberStarted?.Invoke();
     }
 
-    private void Enemy_onKilled(Enemy enemy)
+    private void Enemy_onKilled(EnemyScript enemy)
     {
         enemiesToClear.Remove(enemy);
     }
 
-    public void AddEnemy(Enemy enemy)
+    public void AddEnemy(EnemyScript enemy)
     {
         enemiesToClear.Add(enemy);
     }

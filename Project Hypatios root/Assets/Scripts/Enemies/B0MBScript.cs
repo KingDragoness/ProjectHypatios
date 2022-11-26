@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class B0MBScript : Enemy
+public class B0MBScript : EnemyScript
 {
     public cameraScript cam;
     public GameObject body;
@@ -165,7 +165,7 @@ public class B0MBScript : Enemy
                     obj.AddExplosionForce(explosionForce, transform.position, explosionRadius);
                 }
 
-                health character = c.GetComponent<health>();
+                PlayerHealth character = c.GetComponent<PlayerHealth>();
                 if (character != null)
                 {
                     if (distance < highDistance)
@@ -188,7 +188,7 @@ public class B0MBScript : Enemy
 
             }
 
-            IAmDead(this);
+            OnDied?.Invoke();
             Destroy(gameObject);
         }
     }

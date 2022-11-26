@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileChameleon : Enemy
+public class MissileChameleon : EnemyScript
 {
 
     public float health = 55;
@@ -22,7 +22,7 @@ public class MissileChameleon : Enemy
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        target = FindObjectOfType<characterScript>().transform;
+        target = Hypatios.Player.transform;
         rb.AddForce(transform.forward * initialVelocityForce * rb.mass);
     }
 

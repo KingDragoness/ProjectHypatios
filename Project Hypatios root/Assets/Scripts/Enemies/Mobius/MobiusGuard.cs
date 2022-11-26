@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class MobiusGuard : Enemy
+public class MobiusGuard : EnemyScript
 {
 
     public enum AIState
@@ -49,7 +49,7 @@ public class MobiusGuard : Enemy
 
     private void Start()
     {
-        if (targetPlayer == null) targetPlayer = FindObjectOfType<characterScript>().transform;
+        if (targetPlayer == null) targetPlayer = FindObjectOfType<CharacterScript>().transform;
         mobiusLookWeaponLimit.player = targetPlayer;
         strafingTargetPos = transform.position;
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -345,11 +345,11 @@ public class MobiusGuard : Enemy
         flashWeapon.gameObject.SetActive(true);
         Destroy(spark.gameObject, 3f);
 
-        characterScript charScript = hit.collider.GetComponent<characterScript>();
+        CharacterScript charScript = hit.collider.GetComponent<CharacterScript>();
 
         if (charScript != null)
         {
-            charScript.heal.takeDamage(damage_WeaponFire, 25f);
+            charScript.Health.takeDamage(damage_WeaponFire, 25f);
         }
 
         audio_Flyby.clip = audioClipsAudioFlyby[Random.Range(0, audioClipsAudioFlyby.Count)];

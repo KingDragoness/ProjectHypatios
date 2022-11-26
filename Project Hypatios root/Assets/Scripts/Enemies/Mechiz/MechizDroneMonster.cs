@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class MechizDroneMonster : Enemy
+public class MechizDroneMonster : EnemyScript
 {
 
     public enum State

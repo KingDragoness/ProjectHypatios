@@ -101,7 +101,7 @@ public class ParadoxShopUI : MonoBehaviour
     public void UpgradePerk(ParadoxUpgradeButtonUI button)
     {
         int price = 0;
-        var heal = FindObjectOfType<characterScript>().heal;
+        var heal = FindObjectOfType<CharacterScript>().Health;
         int lv_Luck = FPSMainScript.instance.LuckOfGod_Level;
 
         if (button.perkType == PlayerPerks.HealthMax)
@@ -158,7 +158,7 @@ public class ParadoxShopUI : MonoBehaviour
     {
         string s = "";
         int price = 0;
-        var heal = FindObjectOfType<characterScript>().heal;
+        var heal = FindObjectOfType<CharacterScript>().Health;
 
         if (button.perkType == PlayerPerks.HealthMax)
         {

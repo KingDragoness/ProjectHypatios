@@ -23,7 +23,6 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     [FoldoutGroup("Weapons")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapons")] public float laser_Damage = 20;
     [FoldoutGroup("Weapons")] public GameObject damageSpark;
-    protected SpawnIndicator spawn;
 
     #region INPUTS 
 
@@ -141,7 +140,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
         if (Physics.Raycast(weapon_OriginFire.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
         {
             var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
-            var health = hit.collider.gameObject.GetComponent<health>();
+            var health = hit.collider.gameObject.GetComponent<PlayerHealth>();
 
             //laser_lineRendr.SetPosition(0, laser_PointerOrigin.transform.position);
             //laser_lineRendr.SetPosition(1, hit.point);
@@ -157,16 +156,20 @@ public class AIMod_AssaultInvader : FortWar_AIModule
                 if (chance < 0.5f) LaserAttack(health);
             }
 
-            SparkFX(hit.point);
+            SparkFX(hit.point, hit.normal);
             Debug.DrawRay(weapon_OriginFire.transform.position, dir * hit.distance, Color.green);
         }
     }
 
-    private void SparkFX(Vector3 pos)
+    private void SparkFX(Vector3 pos, Vector3 normal)
     {
-        var damageSpark1 = Instantiate(damageSpark);
-        damageSpark1.transform.position = pos;
-        damageSpark1.gameObject.SetActive(true);
+        GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(damageSpark, 20, 30);
+        if (bulletSpark_ != null)
+        {
+            bulletSpark_.transform.position = pos;
+            bulletSpark_.transform.rotation = Quaternion.LookRotation(normal);
+            bulletSpark_.DisableObjectTimer(1f);
+        }
     }
 
     private void LaserAttack(damageReceiver damageReceiver)
@@ -178,10 +181,10 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
     }
 
-    private void LaserAttack(health health)
+    private void LaserAttack(PlayerHealth health)
     {
-        if (spawn == null) spawn = FindObjectOfType<SpawnIndicator>();
-        spawn.Spawn(transform);
+        Hypatios.UI.SpawnIndicator.Spawn(transform);
+
         health.takeDamage(Mathf.RoundToInt(laser_Damage));
     }
 

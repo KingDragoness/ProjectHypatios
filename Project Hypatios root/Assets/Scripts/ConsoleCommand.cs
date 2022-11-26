@@ -216,9 +216,9 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            var character = FindObjectOfType<characterScript>();
-            character.heal.curHealth = -1;
-            character.heal.targetHealth = -1;
+            var character = Hypatios.Player;
+            character.Health.curHealth = -1;
+            character.Health.targetHealth = -1;
         }
         catch
         {
@@ -369,7 +369,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            characterScript characterScript = FindObjectOfType<characterScript>();
+            CharacterScript characterScript = Hypatios.Player;
             characterScript.isCheatMode = !characterScript.isCheatMode;
             SendConsoleMessage($"Cheat Mode: {characterScript.isCheatMode}");
 
@@ -387,9 +387,9 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            characterScript characterScript = FindObjectOfType<characterScript>();
-            characterScript.heal.targetHealth = characterScript.heal.maxHealth;
-            characterScript.heal.curHealth = characterScript.heal.maxHealth;
+            CharacterScript characterScript = Hypatios.Player;
+            characterScript.Health.targetHealth = characterScript.Health.maxHealth;
+            characterScript.Health.curHealth = characterScript.Health.maxHealth;
             characterScript.timeSinceLastDash = 10f;
 
         }
@@ -405,7 +405,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
+            WeaponManager weaponManager = Hypatios.Player.Weapon;
 
             foreach (var weapon in weaponManager.CurrentlyHeldWeapons)
             {
@@ -426,7 +426,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
+            WeaponManager weaponManager = Hypatios.Player.Weapon;
 
             int i = 0;
 
@@ -452,7 +452,7 @@ public class ConsoleCommand : MonoBehaviour
     {
         try
         {
-            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
             DamageToken token = new DamageToken();
             token.damage = 99999;
             token.origin = DamageToken.DamageOrigin.Environment;

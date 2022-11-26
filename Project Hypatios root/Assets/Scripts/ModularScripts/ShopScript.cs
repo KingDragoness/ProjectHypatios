@@ -7,7 +7,7 @@ public class ShopScript : MonoBehaviour
     private void Start()
     {
         OnTriggerEnterEvent enterEvent = GetComponent<OnTriggerEnterEvent>();
-        enterEvent.objectToCompare = FindObjectOfType<characterScript>().gameObject;
+        enterEvent.objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
     }
 
     public void OpenShop()

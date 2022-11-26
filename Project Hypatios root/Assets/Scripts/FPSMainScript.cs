@@ -220,7 +220,7 @@ public class FPSMainScript : MonoBehaviour
     private void LoadFromSaveBuffer()
     {
 
-        var characterScript = FindObjectOfType<characterScript>();
+        var characterScript = FindObjectOfType<CharacterScript>();
         var weaponManager = FindObjectOfType<WeaponManager>();
 
         TotalRuns = savedata.Game_TotalRuns;
@@ -228,10 +228,10 @@ public class FPSMainScript : MonoBehaviour
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
         LuckOfGod_Level = savedata.Game_Upgrade_LuckOfGod;
-        characterScript.heal.targetHealth = savedata.Player_CurrentHP;
-        characterScript.heal.curHealth = savedata.Player_CurrentHP;
-        characterScript.heal.maxHealth = savedata.Game_Upgrade_MaxHP;
-        characterScript.heal.healthRegen = savedata.Game_Upgrade_RegenHP;
+        characterScript.Health.targetHealth = savedata.Player_CurrentHP;
+        characterScript.Health.curHealth = savedata.Player_CurrentHP;
+        characterScript.Health.maxHealth = savedata.Game_Upgrade_MaxHP;
+        characterScript.Health.healthRegen = savedata.Game_Upgrade_RegenHP;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -243,16 +243,16 @@ public class FPSMainScript : MonoBehaviour
 
     public void LoadGameFromKilled()
     {
-        var characterScript = FindObjectOfType<characterScript>();
+        var characterScript = FindObjectOfType<CharacterScript>();
 
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
         LuckOfGod_Level = savedata.Game_Upgrade_LuckOfGod;
-        characterScript.heal.maxHealth = savedata.Game_Upgrade_MaxHP;
-        characterScript.heal.targetHealth = characterScript.heal.maxHealth;
-        characterScript.heal.healthRegen = savedata.Game_Upgrade_RegenHP;
+        characterScript.Health.maxHealth = savedata.Game_Upgrade_MaxHP;
+        characterScript.Health.targetHealth = characterScript.Health.maxHealth;
+        characterScript.Health.healthRegen = savedata.Game_Upgrade_RegenHP;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -349,7 +349,7 @@ public class FPSMainScript : MonoBehaviour
     private HypatiosSave PackSaveData(int targetLevel = -1)
     {
         HypatiosSave hypatiosSave = new HypatiosSave();
-        var characterScript = FindObjectOfType<characterScript>();
+        var characterScript = FindObjectOfType<CharacterScript>();
         var weaponManager = FindObjectOfType<WeaponManager>();
 
         if (targetLevel == -1)
@@ -364,9 +364,9 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
-        hypatiosSave.Player_CurrentHP = characterScript.heal.curHealth;
-        hypatiosSave.Game_Upgrade_MaxHP = characterScript.heal.maxHealth;
-        hypatiosSave.Game_Upgrade_RegenHP = characterScript.heal.healthRegen;
+        hypatiosSave.Player_CurrentHP = characterScript.Health.curHealth;
+        hypatiosSave.Game_Upgrade_MaxHP = characterScript.Health.maxHealth;
+        hypatiosSave.Game_Upgrade_RegenHP = characterScript.Health.healthRegen;
         hypatiosSave.Game_Upgrade_LuckOfGod = LuckOfGod_Level;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;

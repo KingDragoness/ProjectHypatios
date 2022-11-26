@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class SpiderScript : Enemy
+public class SpiderScript : EnemyScript
 {
 
     public bool onSpawnShouldReady = true;
@@ -63,7 +63,6 @@ public class SpiderScript : Enemy
     public SpawnHeal spawnHeal;
     public SpawnAmmo spawnAmmo;
 
-    public SpawnIndicator spawn;
 
     private float timerReady = 3f;
     private bool ready = true;
@@ -86,7 +85,6 @@ public class SpiderScript : Enemy
         }
         spawnHeal = GetComponent<SpawnHeal>();
         spawnAmmo = GetComponent<SpawnAmmo>();
-        spawn = FindObjectOfType<SpawnIndicator>();
 
         if (onSpawnShouldReady)
         {
@@ -254,11 +252,11 @@ public class SpiderScript : Enemy
                     if (hit.transform.tag == "Player")
                     {
                         int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
-                        hit.transform.gameObject.GetComponent<health>().takeDamage((int)damage + varDamageResult);
-                        if (spawn == null) spawn = FindObjectOfType<SpawnIndicator>();
-                        spawn.Spawn(transform);
+                        hit.transform.gameObject.GetComponent<PlayerHealth>().takeDamage((int)damage + varDamageResult);
+                        Hypatios.UI.SpawnIndicator.Spawn(transform);
+
                     }
-                    
+
                 }
                 audio_Fire.Play();
                 nextAttackTime = Time.time + attackRecharge;
@@ -372,7 +370,7 @@ public class SpiderScript : Enemy
         }
         if (dissolve >= 1f)
         {
-            IAmDead(this);
+            OnDied?.Invoke();
             Destroy(gameObject);
         }
         

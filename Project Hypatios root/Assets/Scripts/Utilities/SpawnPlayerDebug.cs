@@ -9,7 +9,7 @@ public class SpawnPlayerDebug : MonoBehaviour
     [Button("Spawn")]
     public void SpawnPlayer()
     {
-        var player = FindObjectOfType<characterScript>();
+        var player = FindObjectOfType<CharacterScript>();
         player.transform.position = transform.position;
     }
 

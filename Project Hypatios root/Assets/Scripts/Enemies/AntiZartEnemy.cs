@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class AntiZartEnemy : Enemy
+public class AntiZartEnemy : EnemyScript
 {
     public enum Mode
     {
@@ -154,7 +154,7 @@ public class AntiZartEnemy : Enemy
         if (Physics.Raycast(laser_PointerOrigin.position, laser_PointerOrigin.forward, out hit, 100f, layermask))
         {
             var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
-            var health = hit.collider.gameObject.GetComponent<health>();
+            var health = hit.collider.gameObject.GetComponent<PlayerHealth>();
 
             laser_lineRendr.SetPosition(0, laser_PointerOrigin.transform.position);
             laser_lineRendr.SetPosition(1, hit.point);
@@ -195,7 +195,7 @@ public class AntiZartEnemy : Enemy
     }
 
 
-    private void LaserAttack(health health)
+    private void LaserAttack(PlayerHealth health)
     {
         health.takeDamage(Mathf.RoundToInt(laser_Damage));
         var damageSpark1 = Instantiate(damageSpark);

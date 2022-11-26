@@ -10,7 +10,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(FW_Targetable))]
 
-public abstract class Enemy_FW_Bot : Enemy
+public abstract class Enemy_FW_Bot : EnemyScript
 {
 
     public List<FortWar_AIModule> allAIModules = new List<FortWar_AIModule>();
@@ -23,7 +23,7 @@ public abstract class Enemy_FW_Bot : Enemy
     [FoldoutGroup("Base")] public GameObject botCorpse;
     [FoldoutGroup("AI System")] public Transform target;
 
-    private NavMeshAgent _agent;
+    [SerializeField] private NavMeshAgent _agent;
     protected Chamber_Level7 _chamberScript;
 
     public NavMeshAgent Agent { get => _agent; }
@@ -36,14 +36,16 @@ public abstract class Enemy_FW_Bot : Enemy
     private int _tick = 0;
     private const float TICK_MAX = 0.1f;
 
-    public virtual void Awake()
+
+    private void OnValidate()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _chamberScript = Chamber_Level7.instance;
     }
 
     public virtual void Start()
     {
+        _agent = GetComponent<NavMeshAgent>();
+        _chamberScript = Chamber_Level7.instance;
         _chamberScript.RegisterUnit(myUnit);
     }
 

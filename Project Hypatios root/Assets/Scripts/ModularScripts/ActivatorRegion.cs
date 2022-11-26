@@ -13,7 +13,7 @@ public class ActivatorRegion : MonoBehaviour
 
     void Start()
     {
-        if (player == null) player = FindObjectOfType<characterScript>().transform;
+        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
     }
 
     private void OnDrawGizmos()

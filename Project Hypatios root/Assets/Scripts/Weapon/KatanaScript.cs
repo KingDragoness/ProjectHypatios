@@ -9,8 +9,8 @@ public class KatanaScript : BaseWeaponScript
     public float cooldownAttack = 1f;
     public float range = 5f;
 
-    [FoldoutGroup("References")] public characterScript characterScript;
-    [FoldoutGroup("References")] public health playerHealth;
+    [FoldoutGroup("References")] public CharacterScript characterScript;
+    [FoldoutGroup("References")] public PlayerHealth playerHealth;
     [FoldoutGroup("Audios")] public AudioSource audio_HitSword;
 
     float nextAttackTime = 0f;
@@ -19,11 +19,11 @@ public class KatanaScript : BaseWeaponScript
 
     private void Start()
     {
-        weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
+        weaponSystem = Hypatios.Player.Weapon;
+        if (characterScript == null) characterScript = Hypatios.Player;
+        if (playerHealth == null) playerHealth = Hypatios.Player.Health;
+        cam = Hypatios.MainCamera;
 
-        if (characterScript == null) characterScript = FindObjectOfType<characterScript>();
-        if (playerHealth == null) playerHealth = FindObjectOfType<health>();
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         gunRecoil = weaponSystem.gunRecoil;
 
     }

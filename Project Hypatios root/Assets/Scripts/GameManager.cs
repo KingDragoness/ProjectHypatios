@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        characterScript characterScript = FindObjectOfType<characterScript>();
+        CharacterScript characterScript = FindObjectOfType<CharacterScript>();
 
         //Restart the level for non-Aldrich levels
         if (FPSMainScript.instance.currentGamemode == FPSMainScript.CurrentGamemode.Aldrich)

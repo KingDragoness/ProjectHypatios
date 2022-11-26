@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lv2MinigameCasino_Shootable : Enemy
+public class Lv2MinigameCasino_Shootable : EnemyScript
 {
 
     public enum Type

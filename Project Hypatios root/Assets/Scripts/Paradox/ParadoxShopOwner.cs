@@ -39,7 +39,7 @@ public class ParadoxShopOwner : MonoBehaviour
 
         if (triggerEvent != null)
         {
-            triggerEvent.objectToCompare = FindObjectOfType<characterScript>().gameObject;
+            triggerEvent.objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
         }
     }
 
@@ -72,7 +72,7 @@ public class ParadoxShopOwner : MonoBehaviour
 
         if (b1)
         {
-            var player = FindObjectOfType<characterScript>();
+            var player = FindObjectOfType<CharacterScript>();
             player.transform.position = tpPlayerHere.transform.position;
             b1 = false;
         }

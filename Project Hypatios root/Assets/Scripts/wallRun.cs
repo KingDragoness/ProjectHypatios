@@ -9,7 +9,7 @@ public class wallRun : MonoBehaviour
     [SerializeField] Transform body;
     public WeaponManager weapon;
 
-    public characterScript character;
+    public CharacterScript character;
 
     public float maxWallDistance = 1f;
     public float minHeight = 1f;

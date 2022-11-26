@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-public class GhostEnemy : Enemy
+public class GhostEnemy : EnemyScript
 {
     public Transform player;
     public float playerVelocityThreshold = 5;

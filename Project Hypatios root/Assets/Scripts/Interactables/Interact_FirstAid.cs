@@ -14,8 +14,8 @@ public class Interact_FirstAid : MonoBehaviour
     {
         //if (hasHealed) return;
 
-        characterScript characterScript = FindObjectOfType<characterScript>();
-        characterScript.heal.targetHealth = characterScript.heal.curHealth + Mathf.RoundToInt(healAmount);
+        CharacterScript characterScript = FindObjectOfType<CharacterScript>();
+        characterScript.Health.targetHealth = characterScript.Health.curHealth + Mathf.RoundToInt(healAmount);
         audio_FirstAid.Play();
 
         hasHealed = true;

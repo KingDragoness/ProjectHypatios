@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Serialization;
 using Sirenix.OdinInspector;
 
 public class MainUI : MonoBehaviour
@@ -12,12 +13,14 @@ public class MainUI : MonoBehaviour
         Default,
         Weapon,
         Paradox,
+        Crafting,
+        Shop,
         Cinematic,
         FreecamMode
     }
 
-    [FoldoutGroup("References")] public GameObject PauseMenu_UI;
-    [FoldoutGroup("References")] public GameObject HUD_UI;
+    [FoldoutGroup("References")] public GameObject PauseMenu;
+    [FoldoutGroup("References")] public GameObject HUD;
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
     [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
@@ -30,6 +33,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public SettingsUI settingsUI;
     [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
     [FoldoutGroup("References")] public GameObject Player;
+    [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
     public UIMode current_UI = UIMode.Default;
     private bool paused = false;
 
@@ -39,17 +43,11 @@ public class MainUI : MonoBehaviour
     private CanvasGroup cg_defaultHUD;
     private CanvasGroup cg_Paradox;
 
-    private characterScript Player_;
     private bool tempoPause = false;
 
     private void Awake()
     {
         Instance = this;
-
-        Player_ = FindObjectOfType<characterScript>();
-
-        if (Player_ != null)
-            Player = Player_.gameObject;
 
         cg_Shop = Shop_Weapon_UI.GetComponent<CanvasGroup>();
         cg_defaultHUD = DefaultHUD_UI.GetComponent<CanvasGroup>();
@@ -88,9 +86,31 @@ public class MainUI : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            paused = !paused;
-            tempoPause = false;
-            RefreshPauseState();
+            bool allowToggle = false;
+
+            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode)
+                && Hypatios.Player.Health.isDead == false)
+            {
+                allowToggle = true;
+            }
+            else
+            {
+                if (!paused)
+                {
+                    current_UI = UIMode.Default;
+                }
+                else
+                {
+                    allowToggle = true;
+                }
+            }
+
+            if (allowToggle)
+            {
+                paused = !paused;
+                tempoPause = false;
+                RefreshPauseState();
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.BackQuote))
@@ -120,7 +140,7 @@ public class MainUI : MonoBehaviour
                 CutsceneHUD_UI.gameObject.SetActive(false);
                 DefaultHUD_UI.gameObject.SetActive(true);
 
-                if (Player_.heal.isDead == false)
+                if (Hypatios.Player.Health.isDead == false)
                     Time.timeScale = 1;
             }
 
@@ -136,10 +156,10 @@ public class MainUI : MonoBehaviour
                 Camera_Cutscene.gameObject.SetActive(true);
                 Camera_Main.gameObject.SetActive(false);
                 Shop_Paradox_UI.gameObject.SetActive(true);
-                Player_.disableInput = true;
-                Player_.enabled = false;
-                Player_.rb.isKinematic = true;
-                Player_.heal.enabled = false;
+                Hypatios.Player.disableInput = true;
+                Hypatios.Player.enabled = false;
+                Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Health.enabled = false;
                 soundManagerScript.instance.Pause("running");
 
                 if (ParadoxShopOwner.Instance != null)
@@ -147,14 +167,14 @@ public class MainUI : MonoBehaviour
                     ParadoxShopOwner.Instance.EnableStateParadox();
                 }
             }
-            else if (Player_.heal.isDead == false)
+            else if (Hypatios.Player.Health.isDead == false)
             {
                 Camera_Cutscene.gameObject.SetActive(false);
                 Camera_Main.gameObject.SetActive(true);
-                Player_.disableInput = false;
-                Player_.enabled = true;
-                Player_.rb.isKinematic = false;
-                Player_.heal.enabled = true;
+                Hypatios.Player.disableInput = false;
+                Hypatios.Player.enabled = true;
+                Hypatios.Player.rb.isKinematic = false;
+                Hypatios.Player.Health.enabled = true;
 
                 if (ParadoxShopOwner.Instance != null)
                 {
@@ -167,9 +187,9 @@ public class MainUI : MonoBehaviour
                 Camera_Cutscene.gameObject.SetActive(true);
                 Camera_Main.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(true);
-                Player_.enabled = false;
-                Player_.rb.isKinematic = true;
-                Player_.heal.enabled = false;
+                Hypatios.Player.enabled = false;
+                Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Health.enabled = false;
                 soundManagerScript.instance.Pause("running");
 
             }
@@ -178,10 +198,10 @@ public class MainUI : MonoBehaviour
             {
                 Camera_Noclip.gameObject.SetActive(true);
                 Camera_Main.gameObject.SetActive(false);
-                Player_.disableInput = true;
-                Player_.enabled = false;
-                Player_.rb.isKinematic = true;
-                Player_.heal.enabled = false;
+                Hypatios.Player.disableInput = true;
+                Hypatios.Player.enabled = false;
+                Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Health.enabled = false;
                 soundManagerScript.instance.Pause("running");
 
                 if (b_OnActivateNoClipMode == false)
@@ -220,21 +240,21 @@ public class MainUI : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            PauseMenu_UI.gameObject.SetActive(false);
+            PauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;
             //Player.gameObject.SetActive(true);
-            HUD_UI.gameObject.SetActive(true);
+            HUD.gameObject.SetActive(true);
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            PauseMenu_UI.gameObject.SetActive(true);
+            PauseMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
 
             //Player.gameObject.SetActive(false);
-            HUD_UI.gameObject.SetActive(false);
+            HUD.gameObject.SetActive(false);
 
 
         }

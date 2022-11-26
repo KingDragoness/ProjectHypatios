@@ -8,14 +8,14 @@ public class HealPlayer : MonoBehaviour
     GameObject player;
     public float speed;
     public float distanceToCollect;
-    health playerHealth;
+    PlayerHealth playerHealth;
     float curHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerHealth = player.GetComponent<health>();
+        playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame

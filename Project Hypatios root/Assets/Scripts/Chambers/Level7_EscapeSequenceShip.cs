@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level7_EscapeSequenceShip : MonoBehaviour
 {
 
-    public characterScript playerScript;
+    public CharacterScript playerScript;
 
     void Start()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class MechizMonsterRobot : Enemy
+public class MechizMonsterRobot : EnemyScript
 {
 
     public enum AttackPattern

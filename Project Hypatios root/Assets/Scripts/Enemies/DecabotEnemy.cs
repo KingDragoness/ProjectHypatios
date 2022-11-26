@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.AI;
 using System.Linq;
 
-public class DecabotEnemy : Enemy
+public class DecabotEnemy : EnemyScript
 {
     [System.Serializable]
     public class WeaponTurret
@@ -36,7 +36,6 @@ public class DecabotEnemy : Enemy
 
     [SerializeField] private SpawnHeal spawnHeal;
     [SerializeField] private SpawnAmmo spawnAmmo;
-    [SerializeField] private SpawnIndicator spawn;
     private Transform player;
     private NavMeshAgent enemyAI;
     private bool canLookAtPlayer = false;
@@ -57,7 +56,6 @@ public class DecabotEnemy : Enemy
         enemyAI = GetComponent<NavMeshAgent>();
         spawnHeal = GetComponent<SpawnHeal>();
         spawnAmmo = GetComponent<SpawnAmmo>();
-        spawn = FindObjectOfType<SpawnIndicator>();
 
     }
 

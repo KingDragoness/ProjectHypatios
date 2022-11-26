@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class EastriaGuardTest : Enemy
+public class EastriaGuardTest : EnemyScript
 {
     public enum AttackPattern
     {
@@ -38,7 +38,7 @@ public class EastriaGuardTest : Enemy
     private bool isSeeingPlayer = false;
     private Rigidbody m_Rigidbody;
 
-    private void Awake()
+    private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
     }

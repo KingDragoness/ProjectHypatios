@@ -16,11 +16,11 @@ public class HitAndDamageProjectile : MonoBehaviour
     public float DamageSpeedOverride = 10;
     public float timerDead = 6f;
     public Rigidbody rigidbody;
-    private health PlayerHealth;
+    private PlayerHealth PlayerHealth;
 
     void Start()
     {
-        PlayerHealth = FindObjectOfType<health>();
+        PlayerHealth = FindObjectOfType<PlayerHealth>();
         Destroy(this.gameObject, timerDead);
     }
 
@@ -58,6 +58,6 @@ public class HitAndDamageProjectile : MonoBehaviour
     public void DamagePlayer()
     {
         PlayerHealth.takeDamage(Mathf.RoundToInt(Damage), DamageSpeedOverride);
-        SpawnIndicator.instance.Spawn(transform);
+        Hypatios.UI.SpawnIndicator.Spawn(transform);
     }
 }

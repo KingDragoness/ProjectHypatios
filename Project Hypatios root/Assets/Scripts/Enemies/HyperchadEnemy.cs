@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class HyperchadEnemy : Enemy
+public class HyperchadEnemy : EnemyScript
 {
     
     public enum MoveStances
@@ -108,7 +108,7 @@ public class HyperchadEnemy : Enemy
     {
         if (playerTarget == null)
         {
-            playerTarget = FindObjectOfType<characterScript>().transform;
+            playerTarget = FindObjectOfType<CharacterScript>().transform;
         }
         rb = GetComponent<Rigidbody>();
     }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-public class Chamber6_Customer : Enemy
+public class Chamber6_Customer : EnemyScript
 {
 
     public enum AIMode

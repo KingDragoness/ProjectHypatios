@@ -6,7 +6,7 @@ public class StupidDamageHitbox : MonoBehaviour
 {
 
     [Tooltip("For Enemy attacks")]
-    public Enemy originEnemy;
+    public EnemyScript originEnemy;
     public int damage = 10;
     public DamageToken.DamageOrigin originDamage = DamageToken.DamageOrigin.Enemy;
 
@@ -17,13 +17,13 @@ public class StupidDamageHitbox : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            health h = other.gameObject.GetComponent<health>();
+            PlayerHealth h = other.gameObject.GetComponent<PlayerHealth>();
 
             if (h != null)
             {
                 h.takeDamage(damage);
-                var spawn = FindObjectOfType<SpawnIndicator>();
-                spawn.Spawn(transform);
+                Hypatios.UI.SpawnIndicator.Spawn(transform);
+
             }
         }
 
