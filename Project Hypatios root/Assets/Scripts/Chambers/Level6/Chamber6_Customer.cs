@@ -29,7 +29,6 @@ public class Chamber6_Customer : EnemyScript
     [FoldoutGroup("Setup")] public AnimatorOverrideController[] animOverides;
     [FoldoutGroup("Setup")] public Chamber_Level6.Order order;
     [FoldoutGroup("Setup")] public Chamber_Level6 chamberScript;
-    public float hitpoint = 150;
     public int tableSeat = 0;
 
     private float cooldown = 0.08f;
@@ -143,12 +142,12 @@ public class Chamber6_Customer : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
         cooldownEscape = 10f;
         mode = AIMode.Escape;
 
-        if (hitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             KillCustomer();
         }

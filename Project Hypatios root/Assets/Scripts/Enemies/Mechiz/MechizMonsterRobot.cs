@@ -14,9 +14,6 @@ public class MechizMonsterRobot : EnemyScript
     }
     
 
-    [ProgressBar(0, "maxHitpoint")]
-    public float hitpoint = 21000;
-    public float maxHitpoint = 21000;
 
     [FoldoutGroup("AI")] public AttackPattern attackPattern;
 
@@ -68,7 +65,7 @@ public class MechizMonsterRobot : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
 
         base.Attacked(token);
@@ -239,7 +236,7 @@ public class MechizMonsterRobot : EnemyScript
 
     private void FlyingMode()
     {
-        float percentageHP = hitpoint / maxHitpoint;
+        float percentageHP = Stats.CurrentHitpoint / Stats.MaxHitpoint.Value;
         float distance = Vector3.Distance(transform.position, target.position);
         Vector3 targetPos = target.position;
         float speed = 1 * flyingSpeed;

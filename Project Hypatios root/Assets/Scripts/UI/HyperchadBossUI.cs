@@ -17,8 +17,8 @@ public class HyperchadBossUI : MonoBehaviour
 
     private void Update()
     {
-        hitpointSlider.value = hyperchadEnemy.health;
-        hitpointSlider.maxValue = hyperchadEnemy.maxHealth;
+        hitpointSlider.value = hyperchadEnemy.Stats.CurrentHitpoint;
+        hitpointSlider.maxValue = hyperchadEnemy.Stats.MaxHitpoint.Value;
     }
 
 }

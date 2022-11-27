@@ -6,7 +6,7 @@ public class SoundBulletFly : MonoBehaviour
 {
 
 
-    private void Start()
+    private void OnEnable()
     {
         float chance1 = Random.Range(0f, 1f);
 

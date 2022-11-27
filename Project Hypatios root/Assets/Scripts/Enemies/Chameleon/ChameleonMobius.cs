@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 public class ChameleonMobius : EnemyScript
 {
 
-    public float health = 1103;
     public Transform target;
     public float rotateSpeed = 10;
     public float moveSpeed = 100;
@@ -49,11 +48,11 @@ public class ChameleonMobius : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        health -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
 
-        if (health < 0 && !hasDied)
+        if (Stats.CurrentHitpoint < 0 && !hasDied)
         {
             rb.useGravity = true;
             rb.isKinematic = false;

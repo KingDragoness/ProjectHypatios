@@ -7,7 +7,6 @@ using System.Linq;
 
 public class SeaverScarab : EnemyScript
 {
-    public float hitpoint = 25;
     public GameObject explosion;
     public float minimumDistance = 1.5f;
     public float deathTimer = 5f;
@@ -29,11 +28,11 @@ public class SeaverScarab : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
 
         base.Attacked(token);
 
-        if (hitpoint <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Explode();
         }

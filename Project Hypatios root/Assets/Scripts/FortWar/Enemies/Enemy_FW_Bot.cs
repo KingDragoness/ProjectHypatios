@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using Sirenix.OdinInspector;
 using UnityEngine.Events;
-
+using Sirenix.OdinInspector;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -17,7 +17,6 @@ public abstract class Enemy_FW_Bot : EnemyScript
     public FortWar_AIModule currentModule;
     public FW_Targetable myUnit;
 
-    [FoldoutGroup("Base")] public float currentHitpoint = 263;
     [FoldoutGroup("Base")] public UnityEvent OnBotKilled;
     [FoldoutGroup("Base")] public UnityEvent OnPlayerKill;
     [FoldoutGroup("Base")] public GameObject botCorpse;
@@ -73,6 +72,11 @@ public abstract class Enemy_FW_Bot : EnemyScript
         }
     }
 
+    public async void AI_Tick()
+    {
+
+    }
+
     public virtual void FixedUpdate()
     {
         {
@@ -83,10 +87,10 @@ public abstract class Enemy_FW_Bot : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        currentHitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
 
-        if (currentHitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             Die();
 

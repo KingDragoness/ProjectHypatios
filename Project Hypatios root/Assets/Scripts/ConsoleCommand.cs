@@ -69,6 +69,10 @@ public class ConsoleCommand : MonoBehaviour
         {
 
             #region Commands
+            case "wstat":
+                Debug_ObjectStat(args);
+                break;
+
             case "cc":
                 CommandCheat(args);
                 break;
@@ -327,6 +331,43 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    private void Debug_ObjectStat(string[] args)
+    {
+        try
+        {
+            bool validArgument = true;
+            if (args.Length != 0)
+            {
+                validArgument = false;
+
+                if (args[0] == "lockenemy")
+                {
+                    Hypatios.DebugObjectStat.LockEnemy = !Hypatios.DebugObjectStat.LockEnemy;
+                    SendConsoleMessage($" {Hypatios.DebugObjectStat.LockEnemy}");
+                }
+                else
+                {
+                    throw new System.Exception("");
+                }
+            }
+            else
+            {
+                validArgument = true;
+            }
+
+            if (validArgument == true)
+            {
+                bool b = Hypatios.DebugObjectStat.gameObject.activeSelf;
+                Hypatios.DebugObjectStat.gameObject.SetActive(!b);
+            }
+        }
+        catch (Exception e)
+        {
+            SendConsoleMessage("Invalid argument! Use 'help wstat' to see more world stat commands!");
+            Debug.LogError(e.Message);
+        }
+    }
+
 
     protected void Soul(string[] args)
     {
@@ -489,6 +530,7 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 helps.Add("'cc' to use extra commands");
+                helps.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
                 helps.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
                 helps.Add("'nextlevel' to go next level while retaining items");
                 helps.Add("'levelnames' gets every level exists in the current build.");
@@ -498,6 +540,14 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("'ui' to change UI mode 0/1/2");
                 helps.Add("'giveammos' to give ammos");
                 helps.Add("'setfps' to set game's FPS");
+                helps.Add(" ");
+            }
+            else if (args[0] == "wstat")
+            {
+                helps.Add(" =============== HELP [WORLD STAT commnads] =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                helps.Add("'wstat lockenemy' to lock on targeted enemy.");
                 helps.Add(" ");
             }
             else

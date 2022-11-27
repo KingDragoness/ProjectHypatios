@@ -139,22 +139,11 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
         if (Physics.Raycast(weapon_OriginFire.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
         {
-            var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
-            var health = hit.collider.gameObject.GetComponent<PlayerHealth>();
-
-            //laser_lineRendr.SetPosition(0, laser_PointerOrigin.transform.position);
-            //laser_lineRendr.SetPosition(1, hit.point);
-            //laser_PointerTarget.transform.position = hit.point;
-
-            if (damageReceiver != null)
-                LaserAttack(damageReceiver);
-
-            if (health != null)
-            {
-                float chance = Random.Range(0f, 1f);
-
-                if (chance < 0.5f) LaserAttack(health);
-            }
+            var token = new DamageToken();
+            token.damage = laser_Damage;
+            if (BotScript.Stats.MainAlliance != Alliance.Player) token.origin = DamageToken.DamageOrigin.Enemy; else token.origin = DamageToken.DamageOrigin.Ally;
+            token.originEnemy = BotScript;
+            UniversalDamage.TryDamage(token, hit.transform, BotScript.transform);
 
             SparkFX(hit.point, hit.normal);
             Debug.DrawRay(weapon_OriginFire.transform.position, dir * hit.distance, Color.green);
@@ -172,21 +161,6 @@ public class AIMod_AssaultInvader : FortWar_AIModule
         }
     }
 
-    private void LaserAttack(damageReceiver damageReceiver)
-    {
-        var token = new DamageToken();
-        token.damage = laser_Damage;
-        token.origin = DamageToken.DamageOrigin.Enemy;
-        damageReceiver.Attacked(token);
-
-    }
-
-    private void LaserAttack(PlayerHealth health)
-    {
-        Hypatios.UI.SpawnIndicator.Spawn(transform);
-
-        health.takeDamage(Mathf.RoundToInt(laser_Damage));
-    }
 
     #endregion
     private FW_ControlPoint GetFirstUncapturedCP()

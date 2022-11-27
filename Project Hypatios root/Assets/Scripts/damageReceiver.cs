@@ -10,14 +10,54 @@ public class DamageToken
     {
         Player,
         Enemy,
-        Environment
+        Environment,
+        Ally
     }
 
     public float damage = 1;
     public float repulsionForce = 1;
     public float shakinessFactor = 0.5f;
+    public float healthSpeed = 10f;
     public EnemyScript originEnemy;
     public DamageOrigin origin = DamageOrigin.Player;
+}
+
+public class UniversalDamage
+{
+    public static void TryDamage(DamageToken token, Transform hit, Transform origin)
+    {
+        var damageReceiver = hit.gameObject.GetComponent<damageReceiver>();
+        var health = hit.gameObject.GetComponent<PlayerHealth>();
+
+        if (damageReceiver != null)
+        {
+            damageReceiver.Attacked(token);
+        }
+
+        if (health != null)
+        {
+            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Brutal)
+            {
+                token.damage *= 1.6f; token.healthSpeed *= 1.5f;
+            }
+            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Normal)
+            {
+                token.damage *= 0.8f; token.healthSpeed *= 0.9f;
+            }
+            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Casual)
+            {
+                token.damage *= 0.6f; token.healthSpeed *= 0.8f;
+            }
+            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Peaceful)
+            {
+                token.damage *= 0f; token.healthSpeed *= 0.7f;
+            }
+
+            Hypatios.UI.SpawnIndicator.Spawn(origin);
+            health.takeDamage(Mathf.RoundToInt(token.damage), token.healthSpeed, token.shakinessFactor);
+
+        }
+    }
 }
 
 public class damageReceiver : MonoBehaviour

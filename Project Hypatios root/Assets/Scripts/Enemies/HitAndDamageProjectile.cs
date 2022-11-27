@@ -16,21 +16,20 @@ public class HitAndDamageProjectile : MonoBehaviour
     public float DamageSpeedOverride = 10;
     public float timerDead = 6f;
     public Rigidbody rigidbody;
-    private PlayerHealth PlayerHealth;
 
     void Start()
     {
-        PlayerHealth = FindObjectOfType<PlayerHealth>();
         Destroy(this.gameObject, timerDead);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            DamagePlayer();
-            Destroy(this.gameObject);
-        }
+        DamageToken token = new DamageToken();
+        token.damage = Damage;
+        token.origin = DamageToken.DamageOrigin.Environment;
+        token.healthSpeed = DamageSpeedOverride;
+
+        UniversalDamage.TryDamage(token, other.transform, transform);
 
 
     }
@@ -55,9 +54,5 @@ public class HitAndDamageProjectile : MonoBehaviour
         }
     }
 
-    public void DamagePlayer()
-    {
-        PlayerHealth.takeDamage(Mathf.RoundToInt(Damage), DamageSpeedOverride);
-        Hypatios.UI.SpawnIndicator.Spawn(transform);
-    }
+  
 }

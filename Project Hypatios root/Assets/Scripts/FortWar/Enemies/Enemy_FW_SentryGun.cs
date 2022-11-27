@@ -13,7 +13,6 @@ public class Enemy_FW_SentryGun : EnemyScript
 {
     public FW_Targetable myUnit;
 
-    [FoldoutGroup("Base")] public float currentHitpoint = 263;
     [FoldoutGroup("Base")] public UnityEvent OnBotKilled;
     [FoldoutGroup("Base")] public UnityEvent OnPlayerKill;
     [FoldoutGroup("Base")] public UnityEvent On50HP;
@@ -35,7 +34,6 @@ public class Enemy_FW_SentryGun : EnemyScript
     private float _tickTimer = 0.1f;
     private int _tick = 0;
     private const float TICK_MAX = 0.1f;
-    private float _healthMax = 10;
 
     private Chamber_Level7 _chamberScript;
 
@@ -44,7 +42,6 @@ public class Enemy_FW_SentryGun : EnemyScript
     {
         _chamberScript = Chamber_Level7.instance;
         _chamberScript.RegisterUnit(myUnit);
-        _healthMax = currentHitpoint;
     }
     public Transform GetCurrentTarget()
     {
@@ -171,22 +168,12 @@ public class Enemy_FW_SentryGun : EnemyScript
 
         if (Physics.Raycast(origin.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
         {
-            var damageReceiver = hit.collider.gameObject.GetComponent<damageReceiver>();
-            var health = hit.collider.gameObject.GetComponent<PlayerHealth>();
+            var token = new DamageToken();
+            token.damage = weapon_Damage;
+            if (Stats.MainAlliance != Alliance.Player) token.origin = DamageToken.DamageOrigin.Enemy; else token.origin = DamageToken.DamageOrigin.Ally;
+            token.originEnemy = this;
+            UniversalDamage.TryDamage(token, hit.transform, transform);
 
-            //laser_lineRendr.SetPosition(0, laser_PointerOrigin.transform.position);
-            //laser_lineRendr.SetPosition(1, hit.point);
-            //laser_PointerTarget.transform.position = hit.point;
-
-            if (damageReceiver != null)
-                LaserAttack(damageReceiver);
-
-            if (health != null)
-            {
-                float chance = Random.Range(0f, 1f);
-
-                if (chance < 0.5f) LaserAttack(health);
-            }
 
             SparkFX(hit.point, hit.normal);
             Debug.DrawRay(origin.transform.position, dir * hit.distance, Color.blue);
@@ -203,19 +190,7 @@ public class Enemy_FW_SentryGun : EnemyScript
         }
     }
 
-    private void LaserAttack(damageReceiver damageReceiver)
-    {
-        var token = new DamageToken();
-        token.damage = weapon_Damage;
-        token.origin = DamageToken.DamageOrigin.Enemy;
-        damageReceiver.Attacked(token);
 
-    }
-
-    private void LaserAttack(PlayerHealth health)
-    {
-        health.takeDamage(Mathf.RoundToInt(weapon_Damage));
-    }
 
     #endregion
 
@@ -224,10 +199,10 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        currentHitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
 
-        float percentage = currentHitpoint / _healthMax;
+        float percentage = Stats.CurrentHitpoint / Stats.MaxHitpoint.Value;
 
         float chance = Random.Range(0f, 1f);
 
@@ -249,7 +224,7 @@ public class Enemy_FW_SentryGun : EnemyScript
         }
 
 
-        if (currentHitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             Die();
 

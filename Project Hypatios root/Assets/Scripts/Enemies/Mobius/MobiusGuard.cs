@@ -17,7 +17,6 @@ public class MobiusGuard : EnemyScript
         UnderAttacked
     }
 
-    public float hitpoint = 177;
     public UnityEvent OnDiedEvent;
 
     [FoldoutGroup("Parameter AI")] public AIState aiState;
@@ -58,7 +57,7 @@ public class MobiusGuard : EnemyScript
     private void Update()
     {
 
-        if (hitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             if (!hasDied)
             {
@@ -67,7 +66,7 @@ public class MobiusGuard : EnemyScript
                 spawnHeal.SpawnHealCapsule(1);
             }
             hasDied = true;
-            hitpoint = 0;
+            Stats.CurrentHitpoint = 0;
         }
 
         if (hasDied)
@@ -89,7 +88,7 @@ public class MobiusGuard : EnemyScript
         aiState = AIState.UnderAttacked;
         animator.SetTrigger("Damaged");
 
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
     }
@@ -339,18 +338,19 @@ public class MobiusGuard : EnemyScript
             return;
         }
 
+        DamageToken token = new DamageToken();
+        token.damage = damage_WeaponFire;
+        token.origin = DamageToken.DamageOrigin.Enemy;
+        token.originEnemy = this;
+        token.healthSpeed = 25f;
+
         var spark = Instantiate(sparkBullet);
         spark.transform.position = hit.point;
         spark.transform.rotation = Quaternion.LookRotation(hit.normal);
         flashWeapon.gameObject.SetActive(true);
         Destroy(spark.gameObject, 3f);
 
-        CharacterScript charScript = hit.collider.GetComponent<CharacterScript>();
-
-        if (charScript != null)
-        {
-            charScript.Health.takeDamage(damage_WeaponFire, 25f);
-        }
+        UniversalDamage.TryDamage(token, hit.transform, transform) ;
 
         audio_Flyby.clip = audioClipsAudioFlyby[Random.Range(0, audioClipsAudioFlyby.Count)];
         audio_Flyby.Play();

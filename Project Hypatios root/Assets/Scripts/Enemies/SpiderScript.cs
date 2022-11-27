@@ -3,48 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using Sirenix.OdinInspector;
 
 public class SpiderScript : EnemyScript
 {
 
-    public bool onSpawnShouldReady = true;
 
-    [Space]
-    public float maxHealth;
-    public float curHealth;
-    public float damage;
-    public float variableDamage = 1;
-    public float spawnChance_Ammo = 0.17f;
 
-    Transform player;
     NavMeshAgent enemyAI;
     Vector3 targetPos;
 
     bool isAttacking = false;
     bool isWalking = false;
 
-    public ParticleSystem laserCharging;
-    public GameObject laser;
-    public GameObject eyeLocation;
-    public ParticleSystem deadPS;
-    public GameObject dissolveEffect;
-    public GameObject body;
-    public AudioSource audio_AboutAttack;
-    public AudioSource audio_Fire;
-    public AudioSource audio_Dead;
+    [FoldoutGroup("References")] public ParticleSystem laserCharging;
+    [FoldoutGroup("References")] public ParticleSystemRenderer laserChargingRenderer;
+    [FoldoutGroup("References")] public GameObject laser;
+    [FoldoutGroup("References")] public GameObject blueLaser;
+    [FoldoutGroup("References")] public GameObject normalEffectMode;
+    [FoldoutGroup("References")] public GameObject playerEffectMode;
+    [FoldoutGroup("References")] public GameObject eyeLocation;
+    [FoldoutGroup("References")] public ParticleSystem deadPS;
+    [FoldoutGroup("References")] public GameObject dissolveEffect;
+    [FoldoutGroup("References")] public GameObject body;
+    [FoldoutGroup("References")] public AudioSource audio_AboutAttack;
+    [FoldoutGroup("References")] public AudioSource audio_Fire;
+    [FoldoutGroup("References")] public AudioSource audio_Dead;
+    [FoldoutGroup("References")] public List<Material> spiderMat;
 
     [Space]
-    public float attackRange = 30f;
-    public float attackTime;
-    public float attackRecharge;
-    public float lockBeforeAttackTime;
+    [FoldoutGroup("Stats")] [ColorUsage(false, true)] public Color PlayerColor;
+    [FoldoutGroup("Stats")] [ColorUsage(false, true)] public Color NormalColor;
+    [FoldoutGroup("Stats")] public float attackRange = 30f;
+    [FoldoutGroup("Stats")] public float attackTime;
+    [FoldoutGroup("Stats")] public float attackRecharge;
+    [FoldoutGroup("Stats")] public float lockBeforeAttackTime;
+    [FoldoutGroup("Stats")] public float dieHeight;
+    [FoldoutGroup("Stats")] public bool haveSeenPlayer = false;
+    [FoldoutGroup("Stats")] public bool onSpawnShouldReady = true;
+    [FoldoutGroup("Stats")] public float spawnChance_Ammo = 0.17f;
+    [FoldoutGroup("Stats")] public float damping = 2f;
+
     float curLockTime = 0f;
     float nextAttackTime = 0f;
     float count = 0f;
     float colorSet = 1f;
     float dissolve = -1f;
 
-    bool canLookAtPlayer = false;
+    [ShowInInspector] [ReadOnly] bool canLookAtTarget = false;
     bool isCharging = false;
     bool hasShot = false;
     bool hasTargetted = false;
@@ -52,33 +58,26 @@ public class SpiderScript : EnemyScript
     bool hasInstanced = false;
     Vector3 colorVector;
     bool isDie = false;
-    public float dieHeight;
     float afterDeathTime = 0f;
     bool dissolved = false;
-    public List<Material> spiderMat;
-    public bool haveSeenPlayer = false;
-
-    public LayerMask playerMask;
 
     public SpawnHeal spawnHeal;
     public SpawnAmmo spawnAmmo;
 
-
+    [ShowInInspector] [ReadOnly] private Entity currentTarget;
     private float timerReady = 3f;
     private bool ready = true;
 
-    public float damping = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         colorSet = 1f;
-        curHealth = maxHealth;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         enemyAI = GetComponent<NavMeshAgent>();
         colorVector = new Vector3(1f, 1f, 1f);
         spiderMat = body.GetComponent<Renderer>().materials.ToList();
-        if (spiderMat.Count >= 2) spiderMat[2].SetVector("_ColorSet", colorVector);
+        //if (spiderMat.Count >= 2) spiderMat[2].SetVector("_ColorSet", colorVector);
         foreach (Material m in spiderMat)
         {
             m.SetFloat("_dissolve", dissolve);
@@ -132,80 +131,133 @@ public class SpiderScript : EnemyScript
         }
         else
         {
+            if (Mathf.RoundToInt(Time.time) % 5 == 0)
+                ScanForEnemies();
 
             enemyAI.updateRotation = false;
-            float distance = Vector3.Distance(transform.position, player.position);
-            Debug.DrawLine(transform.position, player.position);
-            if (!isDie && distance < attackRange)
-            {
-                if (Physics.Raycast(transform.position, player.position - transform.position, out RaycastHit hit, distance))
-                {
-                    if (hit.transform.tag == "Player")
-                    {
-                        haveSeenPlayer = true;
-                        Debug.DrawLine(transform.position, player.position - transform.position);
-                    }
 
-                }
-            }
+            if (currentTarget != null) ProcessAI();
+            else ScanForEnemies();
 
-            if (haveSeenPlayer && !isDie)
-            {
-                ManageSpiderRotation();
-
-                Ray ray = new Ray(eyeLocation.transform.position, player.position - eyeLocation.transform.position);
-                if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-                {
-                    if (hit.transform.tag == "Player")
-                    {
-                        canLookAtPlayer = true;
-                    }
-                    else
-                    {
-                        canLookAtPlayer = false;
-                    }
-                }
-
-
-                if (!canLookAtPlayer)
-                {
-                    audio_AboutAttack.pitch = 1;
-                    audio_AboutAttack.volume = 0.3f;
-                    FindPosition();
-                    isAttacking = false;
-                    var em = laserCharging.emission;
-                    em.enabled = false;
-                    count = 0;
-                    isCharging = false;
-                }
-                else
-                {
-                    audio_AboutAttack.pitch = 0.3f;
-                    audio_AboutAttack.volume = 0.2f;
-                    enemyAI.SetDestination(transform.position);
-                    isAttacking = true;
-                    isWalking = false;
-                }
-
-                if (isAttacking && !isDie)
-                {
-                    FindPosition();
-                    Attack();
-                }
-            }
+            UpdateVisuals();
         }
 
-        if (curHealth <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
      }
 
+    private void UpdateVisuals()
+    {
+        if (Stats.MainAlliance == Alliance.Player)
+        {
+            if (!playerEffectMode.gameObject.activeSelf)
+            {
+                laserChargingRenderer.material.SetColor("_EmissionColor", PlayerColor);
+                spiderMat[2].SetVector("_EmissionColor", PlayerColor);
+                playerEffectMode.gameObject.SetActive(true);
+            }
+
+            if (normalEffectMode.gameObject.activeSelf)
+                normalEffectMode.gameObject.SetActive(false);
+
+        }
+
+        if (Stats.MainAlliance != Alliance.Player)
+        {
+            if (!normalEffectMode.gameObject.activeSelf)
+            {
+                laserChargingRenderer.material.SetColor("_EmissionColor", NormalColor);
+                spiderMat[2].SetVector("_EmissionColor", NormalColor);
+                normalEffectMode.gameObject.SetActive(true);
+            }
+
+            if (playerEffectMode.gameObject.activeSelf)
+                playerEffectMode.gameObject.SetActive(false);
+        }
+    }
+
+    private void ProcessAI()
+    {
+        var posOffsetLook = currentTarget.OffsetedBoundPosition;
+        float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
+        Debug.DrawLine(transform.position, posOffsetLook);
+
+        if (!isDie && distance < attackRange)
+        {
+
+            if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance))
+            {
+                if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
+                {
+                    haveSeenPlayer = true;
+                    Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
+                }
+
+            }
+        }
+
+        if (haveSeenPlayer && !isDie)
+        {
+            ManageSpiderRotation();
+
+
+            Ray ray = new Ray(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            {
+                if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
+                {
+                    canLookAtTarget = true;
+                }
+                else
+                {
+                    canLookAtTarget = false;
+                }
+            }
+
+
+            if (!canLookAtTarget)
+            {
+                audio_AboutAttack.pitch = 1;
+                audio_AboutAttack.volume = 0.3f;
+                FindPosition();
+                isAttacking = false;
+                var em = laserCharging.emission;
+                em.enabled = false;
+                count = 0;
+                isCharging = false;
+            }
+            else
+            {
+                audio_AboutAttack.pitch = 0.3f;
+                audio_AboutAttack.volume = 0.2f;
+                enemyAI.SetDestination(transform.position);
+                isAttacking = true;
+                isWalking = false;
+            }
+
+            if (isAttacking && !isDie)
+            {
+                FindPosition();
+                Attack();
+            }
+        }
+    }
+
+    [FoldoutGroup("Debug")] [Button("Enforce scan target")]
+    private void ScanForEnemies()
+    {
+        float distPlayer = Vector3.Distance(Hypatios.Player.transform.position, transform.position);
+        float f_valueChoosingPlayerAllies = Mathf.Clamp(distPlayer * 0.03f, 0.3f, 0.9f); //distance is 20 then 0.6, distance is 33 then 1 (limit)
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position, chanceSelectAlly: f_valueChoosingPlayerAllies);
+    }
+
     void ManageSpiderRotation()
     {
-        var lookPos = player.transform.position - transform.position;
+        var lookPos = currentTarget.transform.position - transform.position;
 
-        if (Vector3.Distance(player.transform.position, transform.position) >= 6f)
+        if (Vector3.Distance(currentTarget.transform.position, transform.position) >= 6f)
             lookPos.y = Mathf.Clamp(lookPos.y, -15f, 15f);
         else
             lookPos.y = 0f;
@@ -230,7 +282,7 @@ public class SpiderScript : EnemyScript
 
             if (count <= attackTime - .15f)
             {
-                targetPos = player.position;
+                targetPos = currentTarget.transform.position;
             }
 
             if (count >= attackTime)
@@ -240,7 +292,9 @@ public class SpiderScript : EnemyScript
                 var points = new Vector3[2];
                 points[0] = eyeLocation.transform.position;
 
-                GameObject laserLine = Instantiate(laser, eyeLocation.transform.position, Quaternion.identity);
+                var currentLaser = laser;
+                if (Stats.MainAlliance == Alliance.Player) currentLaser = blueLaser;
+                GameObject laserLine = Instantiate(currentLaser, eyeLocation.transform.position, Quaternion.identity);
                 points[1] = targetPos;
                 var lr = laserLine.GetComponent<LineRenderer>();
                 lr.SetPositions(points);
@@ -249,13 +303,14 @@ public class SpiderScript : EnemyScript
                 Ray ray = new Ray(eyeLocation.transform.position, targetPos - eyeLocation.transform.position);
                 if (Physics.SphereCast(ray, .2f, out RaycastHit hit, 100f))
                 {
-                    if (hit.transform.tag == "Player")
-                    {
-                        int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
-                        hit.transform.gameObject.GetComponent<PlayerHealth>().takeDamage((int)damage + varDamageResult);
-                        Hypatios.UI.SpawnIndicator.Spawn(transform);
+                    DamageToken token = new DamageToken();
+                    token.damage = Stats.BaseDamage.Value + Random.Range(0, Stats.VariableDamage.Value);
+                    token.originEnemy = this;
+                    if (Stats.MainAlliance != Alliance.Player) token.origin = DamageToken.DamageOrigin.Enemy; else token.origin = DamageToken.DamageOrigin.Ally;
+                    token.healthSpeed = 10f;
+                    token.shakinessFactor = 1f;
 
-                    }
+                    UniversalDamage.TryDamage(token, hit.transform, transform);
 
                 }
                 audio_Fire.Play();
@@ -273,13 +328,13 @@ public class SpiderScript : EnemyScript
         isWalking = true;
         isAttacking = false;
         if (isWalking)
-            enemyAI.SetDestination(player.position);
+            enemyAI.SetDestination(currentTarget.transform.position);
     }
 
     public override void Attacked(DamageToken token)
     {
         haveSeenPlayer = true;
-        curHealth -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -294,13 +349,13 @@ public class SpiderScript : EnemyScript
         }
 
 
-        if (curHealth <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
         else
         {
-            DamageOutputterUI.instance.DisplayText(token.damage);
+            if (token.origin == DamageToken.DamageOrigin.Player | token.origin == DamageToken.DamageOrigin.Ally) DamageOutputterUI.instance.DisplayText(token.damage);
         }
     }
 
@@ -343,7 +398,7 @@ public class SpiderScript : EnemyScript
         }
 
         colorVector = new Vector3(colorSet, colorSet, colorSet);
-        if (spiderMat.Count >= 2) spiderMat[2].SetVector("_ColorVector", colorVector);
+        //if (spiderMat.Count >= 2) spiderMat[2].SetVector("_ColorVector", colorVector);
 
         if (!hasInstanced)
         {

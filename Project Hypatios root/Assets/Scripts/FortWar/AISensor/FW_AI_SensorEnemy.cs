@@ -42,7 +42,7 @@ public class FW_AI_SensorEnemy : MonoBehaviour
 
     private bool CheckTargetVisibleOnSight(Transform t)
     {
-        foreach(var s1 in sensors)
+        foreach (var s1 in sensors)
         {
             if (s1 == null) continue;
 

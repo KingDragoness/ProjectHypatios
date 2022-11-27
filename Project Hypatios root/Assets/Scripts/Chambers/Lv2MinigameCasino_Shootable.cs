@@ -11,7 +11,6 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
         Civilian
     }
 
-    public float HP = 100;
     public float speed = 4;
     public float delay = 1;
     public Type type = Type.Terrorist;
@@ -69,14 +68,14 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        HP -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
         ProcessDamage();
     }
 
     private void ProcessDamage()
     {
-        if (HP <= 0)
+        if (Stats.CurrentHitpoint <= 0)
         {
             Drop();
             if (type == Type.Terrorist)

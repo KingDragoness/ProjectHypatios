@@ -5,14 +5,13 @@ using Sirenix.OdinInspector;
 
 
 
-public class EnemyScript : MonoBehaviour
+public abstract class EnemyScript : Entity
 {
 
     [FoldoutGroup("Base")] [HideInEditorMode] [ShowInInspector] private EnemyStats _stats;
     [FoldoutGroup("Base")] [HideInPlayMode] [SerializeField] [InlineEditor] private BaseEnemyStats _baseStat;
-
     public EnemyStats Stats { get => _stats; }
-
+    public string EnemyName { get => _baseStat.name; }
 
     public System.Action OnDied;
 
@@ -20,6 +19,7 @@ public class EnemyScript : MonoBehaviour
     {
         Hypatios.Enemy.RegisterEnemy(this);
         _stats = _baseStat.Stats.Clone();
+        _stats.Initialize();
         OnDied += Died;
 
     }
@@ -27,6 +27,7 @@ public class EnemyScript : MonoBehaviour
     {
         Hypatios.Enemy.DeregisterEnemy(this);
     }
+
 
     private void Died()
     {

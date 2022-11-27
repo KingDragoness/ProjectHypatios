@@ -5,7 +5,6 @@ using UnityEngine;
 public class MissileChameleon : EnemyScript
 {
 
-    public float health = 55;
     public float rotateSpeed = 100;
     public float moveSpeed = 100;
     public float collisionLimitVelocity = 6f;
@@ -30,11 +29,11 @@ public class MissileChameleon : EnemyScript
     {
         if (token.origin == DamageToken.DamageOrigin.Enemy) return;
 
-        health -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
 
-        if (health < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             Dead(true);
         }

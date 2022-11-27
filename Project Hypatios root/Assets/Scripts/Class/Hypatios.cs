@@ -10,14 +10,15 @@ public class Hypatios : MonoBehaviour
     public enum GameDifficulty
     {
         Peaceful = 0, //AI deals absolutely no damage or not shooting
-        Console = 1, //dumbed down enemy AI, optimized for console player
+        Casual = 1, //dumbed down enemy AI, optimized for console player
         Normal = 10, //for casual first-person
         Hard = 20, //for those who has experience in FPS (default difficulty)
         Brutal = 30, //for FPS expert, enemy can deal very high damage & chance of crits
     }
 
     #region Systems
-    private GameDifficulty _GameDifficulty;
+    [SerializeField] private GameDifficulty _gameDifficulty = GameDifficulty.Hard;
+    public static GameDifficulty Difficulty { get => Instance._gameDifficulty; }
 
     #endregion
 
@@ -39,12 +40,16 @@ public class Hypatios : MonoBehaviour
     [SerializeField]
     private EnemyContainer _enemyContainer;
 
-    public static FPSMainScript MainScript { get => Instance._fpsMainScript; }
+    [SerializeField]
+    private Debug_ObjectStat _debugObjectStat;
+
+    public static FPSMainScript Game { get => Instance._fpsMainScript; }
     public static CharacterScript Player { get => Instance._characterScript; }
     public static MainUI UI { get => Instance._ui; }
     public static Camera MainCamera { get => Instance._mainCamera; }
     public static DynamicObjectPool ObjectPool { get => Instance._dynamicObjectPool; }
     public static EnemyContainer Enemy { get => Instance._enemyContainer; }
+    public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
 
     public static Hypatios Instance;
 

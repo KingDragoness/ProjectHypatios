@@ -12,7 +12,6 @@ public class Monster_ZombieMobius : EnemyScript
     public UnityEvent OnAttack;
     public UnityEvent OnAttackDone;
     public UnityEvent OnDead;
-    public float hitpoint = 245;
     public Animator animator;
     public float speed = 10;
     public float distanceToAttack = 5f;
@@ -56,7 +55,7 @@ public class Monster_ZombieMobius : EnemyScript
         if (token.originEnemy == this) return;
         if (Stats.IsDamagableBySameType == false && token.originEnemy is Monster_ZombieMobius) return;
 
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
 
@@ -77,7 +76,7 @@ public class Monster_ZombieMobius : EnemyScript
 
     private void Update()
     {
-        if (hitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             if (!isDead) SpawnHeal.SpawnHealCapsule(2);
             isDead = true;

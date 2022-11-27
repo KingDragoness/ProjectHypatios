@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using System.Linq;
+using Sirenix.OdinInspector;
 
 public class B0MBScript : EnemyScript
 {
@@ -11,8 +13,6 @@ public class B0MBScript : EnemyScript
 
     public float chaseDistance;
     public float distanceToExplode;
-    public float curHealth;
-    public float maxHealth;
     public float damage;
     public float moveSpeed;
     public float chaseSpeed;
@@ -33,8 +33,8 @@ public class B0MBScript : EnemyScript
 
     [Space]
     NavMeshAgent enemyAI;
-    GameObject player;
-    Vector3 playerPos;
+    Entity currentTarget;
+    Vector3 currentPos;
 
     public float attackRange;
     float distance;
@@ -61,9 +61,8 @@ public class B0MBScript : EnemyScript
         chaseSpeed = moveSpeed + 3f;
         anim = transform.GetChild(0).gameObject.GetComponent<Animator>();
         enemyAI = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         enemyAI.speed = moveSpeed;
-        curHealth = maxHealth;
         bombMat = body.GetComponent<Renderer>().materials.ToList();
         foreach (Material m in bombMat)
         {
@@ -78,20 +77,33 @@ public class B0MBScript : EnemyScript
 
     // Update is called once per frame
     void Update()
-    {      
-        playerPos = player.transform.position;
-        distance = Vector3.Distance(transform.position, playerPos);
-       
+    {
 
-        if (distance <= attackRange && Physics.Raycast(transform.position, playerPos - transform.position, out RaycastHit hit, attackRange))
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (currentTarget != null) ProcessAI();
+        else ScanForEnemies();
+
+
+    }
+
+    private void ProcessAI()
+    {
+        currentPos = currentTarget.transform.position;
+        distance = Vector3.Distance(transform.position, currentPos);
+        var posOffsetLook = currentTarget.OffsetedBoundPosition;
+
+
+        if (distance <= attackRange && Physics.Raycast(transform.position, posOffsetLook - transform.position, out RaycastHit hit, attackRange))
         {
-            if (hit.transform.tag == "Player")
+            if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
             {
                 haveSeenPlayer = true;
-            }    
+            }
         }
 
-        
+
 
         if (haveSeenPlayer)
         {
@@ -107,13 +119,13 @@ public class B0MBScript : EnemyScript
             if (Audio_Chasing.isPlaying == false)
                 Audio_Chasing.Play();
 
-            enemyAI.SetDestination(playerPos);
+            enemyAI.SetDestination(currentPos);
 
             if (distance < chaseDistance)
             {
                 moveSpeed = chaseSpeed;
             }
-            if (distance < distanceToExplode || curHealth <= 0f)
+            if (distance < distanceToExplode || Stats.CurrentHitpoint <= 0f)
             {
                 gonnaExplode = true;
             }
@@ -124,14 +136,22 @@ public class B0MBScript : EnemyScript
             }
 
             Audio_Chasing.pitch = 1.1f;
-        }  
+        }
     }
+
+    [FoldoutGroup("Debug")]
+    [Button("Enforce scan target")]
+    private void ScanForEnemies()
+    {
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position);
+    }
+
 
     public override void Attacked(DamageToken token)
     {
         haveSeenPlayer = true;
         DamageOutputterUI.instance.DisplayText(token.damage);
-        curHealth -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
     }
 
 
@@ -143,6 +163,11 @@ public class B0MBScript : EnemyScript
 
         if (Audio_Death.isPlaying == false)
             Audio_Death.Play();
+
+        DamageToken token = new DamageToken();
+        token.damage = damage;
+        token.origin = DamageToken.DamageOrigin.Enemy;
+        token.originEnemy = this;
 
         if (colorChange >= -.5f)
         {
@@ -166,25 +191,23 @@ public class B0MBScript : EnemyScript
                 }
 
                 PlayerHealth character = c.GetComponent<PlayerHealth>();
-                if (character != null)
+                if (distance < highDistance)
                 {
-                    if (distance < highDistance)
-                    {
-                        damage = highDamage;
-                        cam.ShakeCam(.45f, 0.3f);
-                    }
-                    else if (distance < midDistance)
-                    {
-                        damage = midDamage;
-                        cam.ShakeCam(.3f, 0.15f);
-                    }
-                    else if (distance < lowDistance)
-                    {
-                        damage = lowDamage;
-                        cam.ShakeCam(.3f, 0.05f);
-                    }
-                    character.takeDamage((int)damage);
+                    token.damage = highDamage;
+                    if (character != null) cam.ShakeCam(.45f, 0.3f);
                 }
+                else if (distance < midDistance)
+                {
+                    token.damage = midDamage;
+                    if (character != null) cam.ShakeCam(.3f, 0.15f);
+                }
+                else if (distance < lowDistance)
+                {
+                    token.damage = lowDamage;
+                    if (character != null) cam.ShakeCam(.3f, 0.05f);
+                }
+
+                UniversalDamage.TryDamage(token, c.transform, transform);
 
             }
 

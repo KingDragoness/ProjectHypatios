@@ -17,14 +17,12 @@ public class StupidDamageHitbox : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerHealth h = other.gameObject.GetComponent<PlayerHealth>();
+            DamageToken token = new DamageToken();
+            token.damage = damage;
+            token.origin = originDamage;
+            token.originEnemy = originEnemy;
 
-            if (h != null)
-            {
-                h.takeDamage(damage);
-                Hypatios.UI.SpawnIndicator.Spawn(transform);
-
-            }
+            UniversalDamage.TryDamage(token, other.transform, transform);
         }
 
         if (damageReceiver != null)

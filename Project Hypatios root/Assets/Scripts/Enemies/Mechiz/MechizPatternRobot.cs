@@ -40,7 +40,7 @@ public class MechizPatternRobot : MonoBehaviour
 
     private void Update()
     {
-        float percentageHP = mechizRobot.hitpoint / mechizRobot.maxHitpoint;
+        float percentageHP = mechizRobot.Stats.CurrentHitpoint / mechizRobot.Stats.MaxHitpoint.Value;
 
         if (percentageHP < 0.6f)
         {

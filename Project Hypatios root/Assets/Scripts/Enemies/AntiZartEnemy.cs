@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
+//Cut content
 public class AntiZartEnemy : EnemyScript
 {
     public enum Mode
@@ -26,19 +27,18 @@ public class AntiZartEnemy : EnemyScript
     public GameObject explosion;
     public float rotateSpeed = 26;
     public float speedVertical = 5f;
-    public float hitpoint = 150;
 
     private bool isDead = false;
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
 
         if (mode == Mode.ZartChamber)
             mode = Mode.Default;
 
-        if (hitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             ZartDead();
         }
@@ -197,7 +197,7 @@ public class AntiZartEnemy : EnemyScript
 
     private void LaserAttack(PlayerHealth health)
     {
-        health.takeDamage(Mathf.RoundToInt(laser_Damage));
+        //health.takeDamage(Mathf.RoundToInt(laser_Damage));
         var damageSpark1 = Instantiate(damageSpark);
         damageSpark1.transform.position = health.transform.position;
         damageSpark1.gameObject.SetActive(true);

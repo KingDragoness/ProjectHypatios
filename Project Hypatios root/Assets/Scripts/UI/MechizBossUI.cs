@@ -16,7 +16,7 @@ public class MechizBossUI : MonoBehaviour
 
     private void Update()
     {
-        hitpointSlider.value = mechizRobot.hitpoint;
-        hitpointSlider.maxValue = mechizRobot.maxHitpoint;
+        hitpointSlider.value = mechizRobot.Stats.CurrentHitpoint;
+        hitpointSlider.maxValue = mechizRobot.Stats.MaxHitpoint.Value;
     }
 }

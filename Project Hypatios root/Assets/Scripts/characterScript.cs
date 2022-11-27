@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
-public class CharacterScript : MonoBehaviour
+public class CharacterScript : Entity
 {
 
     dashParticleManager dashManager;

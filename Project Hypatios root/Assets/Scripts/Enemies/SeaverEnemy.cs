@@ -8,9 +8,6 @@ using System.Linq;
 public class SeaverEnemy : EnemyScript
 {
 
-    [ProgressBar(0, "maxHitpoint")]
-    public float hitpoint = 900;
-    public float maxHitpoint = 900;
 
     public Transform spawnScarab;
     public Animator anim;
@@ -33,7 +30,7 @@ public class SeaverEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -48,7 +45,7 @@ public class SeaverEnemy : EnemyScript
         }
 
 
-        if (hitpoint <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
@@ -84,9 +81,9 @@ public class SeaverEnemy : EnemyScript
             float chance = Random.Range(0f, 1f);
             float hitpointLowChance = 0;
 
-            if (hitpoint < (maxHitpoint/2f))
+            if (Stats.CurrentHitpoint < (Stats.MaxHitpoint.Value / 2f))
                 hitpointLowChance += 0.1f;
-            if (hitpoint < (maxHitpoint / 4f))
+            if (Stats.CurrentHitpoint < (Stats.MaxHitpoint.Value / 4f))
                 hitpointLowChance += 0.1f;
 
             if (chance < (0.4f + hitpointLowChance))

@@ -34,9 +34,9 @@ public class Chamber_Boss : MonoBehaviour
     {
         if (hasEnteredBattle)
         {
-            bool isHealthHalf = (hyperchadEnemy.health / hyperchadEnemy.maxHealth) < 0.5f ? true : false;
-            bool isHealthQuarter = (hyperchadEnemy.health / hyperchadEnemy.maxHealth) < 0.3f ? true : false;
-            bool isDead = (hyperchadEnemy.health) <= 0f ? true : false;
+            bool isHealthHalf = (hyperchadEnemy.Stats.CurrentHitpoint / hyperchadEnemy.Stats.MaxHitpoint.Value) < 0.5f ? true : false;
+            bool isHealthQuarter = (hyperchadEnemy.Stats.CurrentHitpoint / hyperchadEnemy.Stats.MaxHitpoint.Value) < 0.3f ? true : false;
+            bool isDead = (hyperchadEnemy.Stats.CurrentHitpoint) <= 0f ? true : false;
 
             if (catwalkEpic.transform.position.y > -100)
             {

@@ -14,10 +14,6 @@ public class DecabotEnemy : EnemyScript
         public ParticleSystem laserCharging;
     }
 
-    [ProgressBar(0, "maxHitpoint")]
-    public float hitpoint = 900;
-    public float maxHitpoint = 900;
-
     [FoldoutGroup("Weapons")] public MissileChameleon missilePrefab;
     [FoldoutGroup("Weapons")] public WeaponTurret[] weaponTurret;
     [FoldoutGroup("Weapons")] public float attackRange = 30f;
@@ -51,7 +47,6 @@ public class DecabotEnemy : EnemyScript
 
     private void Start()
     {
-        hitpoint = maxHitpoint;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyAI = GetComponent<NavMeshAgent>();
         spawnHeal = GetComponent<SpawnHeal>();
@@ -61,7 +56,7 @@ public class DecabotEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -76,7 +71,7 @@ public class DecabotEnemy : EnemyScript
         }
 
 
-        if (hitpoint <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
@@ -97,7 +92,7 @@ public class DecabotEnemy : EnemyScript
 
     private void Update()
     {
-        if (hitpoint <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }

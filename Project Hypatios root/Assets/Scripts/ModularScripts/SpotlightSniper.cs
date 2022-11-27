@@ -97,15 +97,13 @@ public class SpotlightSniper : MonoBehaviour
         muzzle1.gameObject.SetActive(true);
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            //Debug.Log("Hit: " + hit.transform.name);
+            int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
 
-            if (hit.transform.tag == "Player")
-            {
-                int varDamageResult = Mathf.RoundToInt(Random.Range(-variableDamage, variableDamage));
-                hit.transform.gameObject.GetComponent<PlayerHealth>().takeDamage((int)damage + varDamageResult);
-                Hypatios.UI.SpawnIndicator.Spawn(transform);
+            DamageToken token = new DamageToken();
+            token.damage = (int)damage + varDamageResult;
+            token.origin = DamageToken.DamageOrigin.Enemy;
+            token.healthSpeed = 25f;
 
-            }
 
             points[1] = hit.point;
             if (hit.transform.gameObject.layer != 12)

@@ -35,8 +35,6 @@ public class HyperchadEnemy : EnemyScript
 
     [Space]
     [Header("Properties")]
-    public float health = 14000;
-    public float maxHealth = 14000;
     public bool allowAIDecision = true;
 
     [Space]
@@ -116,11 +114,11 @@ public class HyperchadEnemy : EnemyScript
 
     void Update()
     {
-        if (health <= 0)
+        if (Stats.CurrentHitpoint <= 0)
         {
             if (isDead == false) BossDied();
             isDead = true;
-            health = 0;
+            Stats.CurrentHitpoint = 0;
             currentStance = MoveStances.PrepareDie;
             return;
         }
@@ -187,9 +185,9 @@ public class HyperchadEnemy : EnemyScript
             damageProcessed *= 0.6f;
         }
 
-        health -= damageProcessed;
+        Stats.CurrentHitpoint -= damageProcessed;
 
-        if (health > 0f)
+        if (Stats.CurrentHitpoint > 0f)
             DamageOutputterUI.instance.DisplayText(damageProcessed);
 
         base.Attacked(token);
@@ -205,8 +203,8 @@ public class HyperchadEnemy : EnemyScript
             //random select
             currentCooldownDecision = 0;
 
-            bool isHealthHalf = (health / maxHealth) < 0.5f ? true : false;
-            bool isHealthQuarter = (health / maxHealth) < 0.26f ? true : false;
+            bool isHealthHalf = (Stats.CurrentHitpoint / Stats.MaxHitpoint.Value) < 0.5f ? true : false;
+            bool isHealthQuarter = (Stats.CurrentHitpoint / Stats.MaxHitpoint.Value) < 0.26f ? true : false;
 
             if (chance == 1)
             {
@@ -592,7 +590,7 @@ public class HyperchadEnemy : EnemyScript
     //debug
     public void Cheat_KillBoss()
     {
-        health = 0f;
+        Stats.CurrentHitpoint = 0f;
     }
 
     #region Effects and Visuals

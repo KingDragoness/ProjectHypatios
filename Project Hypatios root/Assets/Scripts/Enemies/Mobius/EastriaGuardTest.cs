@@ -12,9 +12,7 @@ public class EastriaGuardTest : EnemyScript
     }
 
 
-    [ProgressBar(0, "maxHitpoint")]
-    public float hitpoint = 1700;
-    public float maxHitpoint = 1700;
+
     public AttackPattern mode = AttackPattern.Idle;
 
     [FoldoutGroup("Prefabs")] public GameObject corpsePrefab;
@@ -46,7 +44,7 @@ public class EastriaGuardTest : EnemyScript
     public override void Attacked(DamageToken token)
     {
         SeePlayer();
-        hitpoint -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
 
         base.Attacked(token);
@@ -76,7 +74,7 @@ public class EastriaGuardTest : EnemyScript
         PlayerDetection();
         if (hasSeenPlayer) RunAI();  
 
-        if (hitpoint < 0)
+        if (Stats.CurrentHitpoint < 0)
         {
             Die();
         }

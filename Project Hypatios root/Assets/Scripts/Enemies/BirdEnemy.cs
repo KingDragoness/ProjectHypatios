@@ -20,8 +20,6 @@ public class BirdEnemy : EnemyScript
     public float maxAttackRange = 30;
     public float acquisationRange = 65;
     [Space]
-    public float maxHealth;
-    public float curHealth;
     public float damage;
     public float variableDamage = 1;
     public float spawnChance_Ammo = 0.21f;
@@ -48,13 +46,11 @@ public class BirdEnemy : EnemyScript
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spawnAmmo = GetComponent<SpawnAmmo>();
-
-        curHealth = maxHealth;
     }
 
     private void Update()
     {
-        if (curHealth <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             dummyAI.enabled = false;
             Die();
@@ -139,7 +135,7 @@ public class BirdEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        curHealth -= token.damage;
+        Stats.CurrentHitpoint -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -155,7 +151,7 @@ public class BirdEnemy : EnemyScript
 
         hasSeen = true;
 
-        if (curHealth <= 0f)
+        if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }

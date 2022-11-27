@@ -38,10 +38,17 @@ public class FW_ControlPoint : MonoBehaviour
 
     private void Update()
     {
+        float time = Mathf.FloorToInt(Time.time*10);
+
+        if (time % 2 == 0)
+        {
+            return;
+        }
+
         var listInvaders = Chamber_Level7.instance.AllUnits.Where(x => x.Alliance == FW_Alliance.INVADER);
         List<Transform> allUnits = new List<Transform>();
 
-        foreach(var unit in listInvaders)
+        foreach (var unit in listInvaders)
         {
             allUnits.Add(unit.transform);
         }
@@ -50,7 +57,7 @@ public class FW_ControlPoint : MonoBehaviour
 
         int i = 0;
 
-        foreach(var invader in allUnits)
+        foreach (var invader in allUnits)
         {
             if (areaCP.IsInsideOcclusionBox(invader.transform.position))
             {
