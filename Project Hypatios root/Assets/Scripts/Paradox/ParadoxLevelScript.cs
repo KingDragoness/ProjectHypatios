@@ -40,7 +40,7 @@ public class ParadoxLevelScript : MonoBehaviour
 
     private void RegisterThis()
     {
-        var collectionEntity = FPSMainScript.instance.paradoxEntities;
+        var collectionEntity = Hypatios.Game.paradoxEntities;
         var entity = collectionEntity.Find(x => x.ID == paradoxEntity.ID);
 
         if (entity == null)

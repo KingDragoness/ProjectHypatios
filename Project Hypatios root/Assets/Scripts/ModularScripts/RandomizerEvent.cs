@@ -16,12 +16,12 @@ public class RandomizerEvent : MonoBehaviour
 
     private void Start()
     {
-        int seed = FPSMainScript.instance.TotalRuns + SystemInfo.graphicsDeviceID;
+        int seed = Hypatios.Game.TotalRuns + SystemInfo.graphicsDeviceID;
         var RandomSys = new System.Random(seed);
         float random = (RandomSys.Next(0, 100)) / 100f;
         Debug.Log($"seed: {seed} [{random}]");
 
-        if (FPSMainScript.instance.TotalRuns == 0)
+        if (Hypatios.Game.TotalRuns == 0)
         {
             OnFailed?.Invoke();
             return;

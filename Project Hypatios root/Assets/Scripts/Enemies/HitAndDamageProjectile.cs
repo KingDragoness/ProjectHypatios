@@ -8,6 +8,7 @@ public class HitAndDamageProjectile : MonoBehaviour
 {
 
     public bool killByImpact = false;
+    public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
 
     public GameObject prefabSpawnOnImpact;
@@ -28,6 +29,7 @@ public class HitAndDamageProjectile : MonoBehaviour
         token.damage = Damage;
         token.origin = DamageToken.DamageOrigin.Environment;
         token.healthSpeed = DamageSpeedOverride;
+        token.originEnemy = enemyOrigin;
 
         UniversalDamage.TryDamage(token, other.transform, transform);
 

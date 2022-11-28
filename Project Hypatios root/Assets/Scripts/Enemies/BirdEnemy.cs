@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class BirdEnemy : EnemyScript
 {
@@ -19,6 +20,7 @@ public class BirdEnemy : EnemyScript
     public float fireRate = 1.2f;
     public float maxAttackRange = 30;
     public float acquisationRange = 65;
+    public float rotationSpeed = 7.5f;
     [Space]
     public float damage;
     public float variableDamage = 1;
@@ -34,7 +36,6 @@ public class BirdEnemy : EnemyScript
     public GameObject birdCorpse;
     public GameObject aliveState;
 
-    private Transform player;
     private bool isDead = false;
     private bool hasSeen = false;
 
@@ -44,7 +45,7 @@ public class BirdEnemy : EnemyScript
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         spawnAmmo = GetComponent<SpawnAmmo>();
     }
 
@@ -57,10 +58,17 @@ public class BirdEnemy : EnemyScript
         }
         else
         {
+            if (Mathf.RoundToInt(Time.time) % 5 == 0)
+                ScanForEnemies();
+
             AliveState();
             EvaluateMyLife();
         }
+
+
     }
+
+ 
 
     private float timerFire = 0;
     private float evaluateChoiceTimer = 5;
@@ -71,7 +79,7 @@ public class BirdEnemy : EnemyScript
 
         if (evaluateChoiceTimer > 4)
         {
-            float dist = Vector3.Distance(transform.position, player.transform.position);
+            float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
             audio_Idle.Play();
 
             if (hasSeen)
@@ -100,21 +108,26 @@ public class BirdEnemy : EnemyScript
 
     public void AliveState()
     {
+        if (currentTarget == null) return;
+
         if (stateAI == StateAI.Pursue)
         {
-            dummyAI.Player = player.transform;
-            head.transform.LookAt(player);
-            dummyAI.enabled = true;
+            head.transform.LookAt(currentTarget.transform);
+            dummyAI.disableBehavior = false;
+            dummyAI.Rigidbody.isKinematic = false;
             animator.SetBool("Attack", false);
         }
         else if (stateAI == StateAI.Attack)
         {
-            dummyAI.enabled = false;
+            dummyAI.disableBehavior = true;
+            dummyAI.Rigidbody.isKinematic = true;
             animator.SetBool("Attack", true);
-            head.transform.LookAt(player);
+            head.transform.LookAt(currentTarget.transform);
 
-            Vector3 offset = player.transform.position + new Vector3(0, 3, 0);
-            transform.LookAt(offset);
+            Vector3 relativePos = currentTarget.transform.position - transform.position;
+
+            Quaternion toRotation = Quaternion.LookRotation(relativePos);
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
             timerFire += Time.deltaTime;
 
@@ -123,18 +136,21 @@ public class BirdEnemy : EnemyScript
                 audio_BirdAttack.PlayOneShot(audio_BirdAttack.clip);
                 var projectile1 = throwProjectileEnemy.FireProjectile();
                 projectile1.Damage = damage + Random.Range(0, variableDamage);
+                projectile1.enemyOrigin = this;
                 timerFire = 0;
             }
         }
         else if (stateAI == StateAI.Idle)
         {
-            dummyAI.enabled = false;
-            head.transform.LookAt(player);
+            dummyAI.Rigidbody.isKinematic = false;
+            dummyAI.disableBehavior = false;
+            head.transform.LookAt(currentTarget.transform);
         }
     }
 
     public override void Attacked(DamageToken token)
     {
+        if (token.originEnemy == this) return;
         Stats.CurrentHitpoint -= token.damage;
 
 
@@ -161,7 +177,7 @@ public class BirdEnemy : EnemyScript
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         if (isDead == false)
         {

@@ -102,6 +102,9 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
 
     }
 
-
+    public override void Die()
+    {
+        throw new System.NotImplementedException();
+    }
 
 }

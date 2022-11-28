@@ -156,8 +156,8 @@ public class CharacterScript : Entity
                     inAir = false;
                     Anim.SetBool("inAir", false);
 
-                    if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                        FPSMainScript.instance.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
+                    if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                        Hypatios.Game.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
                 }
                 if (inAir && isGrounded)
                 {
@@ -208,8 +208,8 @@ public class CharacterScript : Entity
         {
             if (Input.GetKey(KeyCode.LeftShift) && timeSinceLastDash > dashCooldown)
             {
-                if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                    FPSMainScript.instance.RuntimeTutorialHelp("Dashing", "While holding LEFT SHIFT, you can dash by hold WASD keys to dash either left, right, back or forward.", "FirstDash");
+                if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                    Hypatios.Game.RuntimeTutorialHelp("Dashing", "While holding LEFT SHIFT, you can dash by hold WASD keys to dash either left, right, back or forward.", "FirstDash");
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
             }
@@ -326,8 +326,8 @@ public class CharacterScript : Entity
                 {
                     if (isNoGravity == false) Anim.SetBool("isRunning", true);
 
-                    if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                        FPSMainScript.instance.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
+                    if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                        Hypatios.Game.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
                 }
                 else
                 {

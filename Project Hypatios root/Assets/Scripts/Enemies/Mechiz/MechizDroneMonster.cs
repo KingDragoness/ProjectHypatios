@@ -49,13 +49,12 @@ public class MechizDroneMonster : EnemyScript
         base.Attacked(token);
     }
 
-    private bool isDead = false;
 
     private void Update()
     {
         if (hitpoint < 0)
         {
-            DeadState();
+            Die();
             return;
         }
 
@@ -83,19 +82,20 @@ public class MechizDroneMonster : EnemyScript
         }
     }
 
-    private void DeadState()
+    public override void Die()
     {
-        if (!isDead)
+        if (!Stats.IsDead)
         {
             Destroy(gameObject, 5f);
             face.gameObject.SetActive(false);
             smoke.gameObject.SetActive(true);
             audio_Dead.Play();
             OnKilledEvent?.Invoke();
+            OnDied?.Invoke();
             rb.useGravity = true;
         }
 
-        isDead = true;
+        Stats.IsDead = true;
     }
 
     #region AI Update

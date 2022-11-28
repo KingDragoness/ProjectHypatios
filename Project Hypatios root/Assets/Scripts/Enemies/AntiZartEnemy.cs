@@ -47,6 +47,10 @@ public class AntiZartEnemy : EnemyScript
         base.Attacked(token);
     }
 
+    public override void Die()
+    {
+        throw new System.NotImplementedException();
+    }
     private void ZartDead()
     {
         if (isDead) return;

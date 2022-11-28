@@ -44,7 +44,6 @@ public class FPSMainScript : MonoBehaviour
     [Space]
     public bool DEBUG_ShowTutorial = false;
 
-    public static FPSMainScript instance;
     public static bool LoadFromSaveFile = false;
     public static int Player_RunSessionUnixTime;
 
@@ -56,7 +55,6 @@ public class FPSMainScript : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
 
         if (LoadFromSaveFile)
             LoadFromSaveBuffer();
@@ -66,29 +64,13 @@ public class FPSMainScript : MonoBehaviour
 
     private void Start()
     {
-
-
-        var colorGrading_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<ColorGrading>();
-        var bloom_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>();
+        var colorGrading_ = Hypatios.Game.postProcessVolume.profile.GetSetting<ColorGrading>();
+        var bloom_ = Hypatios.Game.postProcessVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.Bloom>();
 
         colorGrading_.active = false;
         bloom_.active = false;
 
-
-        {
-            if (PlayerPrefs.HasKey("SETTINGS.MY_NAME"))
-            {
-                SettingsUI.MY_NAME = PlayerPrefs.GetString("SETTINGS.MY_NAME");
-            }
-            else
-            {
-                SettingsUI.MY_NAME = "Aldrich";
-            }
-        }
-
-        MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(SettingsUI.MY_NAME);
-
-
+        MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
     }
 
     private void BuildSaveFolder()
@@ -144,11 +126,11 @@ public class FPSMainScript : MonoBehaviour
             return;
         }
 
-        if (FPSMainScript.instance.Check_EverUsed(key) == false)
+        if (Hypatios.Game.Check_EverUsed(key) == false)
         {
             MainGameHUDScript.Instance.ShowPromptUI(about, description, false);
             MainUI.Instance.SetTempoPause(true);
-            FPSMainScript.instance.TryAdd_EverUsed(key);
+            Hypatios.Game.TryAdd_EverUsed(key);
         }
     }
 
@@ -262,7 +244,7 @@ public class FPSMainScript : MonoBehaviour
 
     public void Death_NoSaturation()
     {
-        var colorGrading_ = FPSMainScript.instance.postProcessVolume_2.profile.GetSetting<ColorGrading>();
+        var colorGrading_ = Hypatios.Game.postProcessVolume_2.profile.GetSetting<ColorGrading>();
         var saturation = colorGrading_.saturation;
 
         saturation.value = -90;

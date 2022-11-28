@@ -12,19 +12,25 @@ public class SeaverScarab : EnemyScript
     public float deathTimer = 5f;
     public NavMeshAgent agent;
 
-    private Transform player;
+
+    [ReadOnly] [SerializeField] bool playerCanBeReached = false;
 
     private void Start()
     {
-        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
-    }
 
-    [ReadOnly] [SerializeField] bool playerCanBeReached = false;
+    }
 
     private void Update()
     {
         AttackMode();
     }
+
+    public void OverrideTarget(Entity t, Alliance currentAlliance)
+    {
+        currentTarget = t;
+        Stats.MainAlliance = currentAlliance;
+    }
+
 
     public override void Attacked(DamageToken token)
     {
@@ -34,7 +40,7 @@ public class SeaverScarab : EnemyScript
 
         if (Stats.CurrentHitpoint <= 0f)
         {
-            Explode();
+            Die();
         }
         else if (token.origin == DamageToken.DamageOrigin.Player)
         {
@@ -48,26 +54,26 @@ public class SeaverScarab : EnemyScript
 
         if (deathTimer < 0)
         {
-            Explode();
+            Die();
         }
 
-        if (player == null) return;
+        if (currentTarget == null) return;
 
-        float dist = Vector3.Distance(transform.position, player.transform.position);
+        float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
 
         if (playerCanBeReached)
-            agent.SetDestination(player.transform.position);
+            agent.SetDestination(currentTarget.transform.position);
         else
         {
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(player.transform.position, out hit, 5.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(currentTarget.transform.position, out hit, 5.0f, NavMesh.AllAreas))
             {
                 Vector3 result = hit.position;
                 agent.SetDestination(hit.position);
                 Debug.Log($"Target: {result}");
             }
 
-            if (NavMesh.FindClosestEdge(player.transform.position, out hit, NavMesh.AllAreas))
+            if (NavMesh.FindClosestEdge(currentTarget.transform.position, out hit, NavMesh.AllAreas))
             {
                 Debug.Log("Found closest edge at: " + hit.position);
                 agent.SetDestination(hit.position);
@@ -79,7 +85,7 @@ public class SeaverScarab : EnemyScript
 
                 if (chanceKillSelf < 0.01f)
                 {
-                    Explode();
+                    Die();
 
                 }
 
@@ -94,7 +100,7 @@ public class SeaverScarab : EnemyScript
 
         if (dist < minimumDistance)
         {
-            Explode();
+            Die();
         }
     }
 
@@ -102,7 +108,7 @@ public class SeaverScarab : EnemyScript
     {
         NavMeshPath navMeshPath = new NavMeshPath();
 
-        if (agent.CalculatePath(player.transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
+        if (agent.CalculatePath(currentTarget.transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
         {
             playerCanBeReached = true;
 
@@ -114,7 +120,7 @@ public class SeaverScarab : EnemyScript
 
     }
 
-    private void Explode()
+    public override void Die()
     {
         var explosion1 = Instantiate(explosion, transform.position, transform.rotation);
 

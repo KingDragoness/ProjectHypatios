@@ -32,7 +32,7 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
 
             foreach (var eventKey in eventKeyName)
             {
-                if (FPSMainScript.instance.Check_ParadoxEvent(eventKey))
+                if (Hypatios.Game.Check_ParadoxEvent(eventKey))
                 {
                     keyExist = true;
                 }
@@ -44,7 +44,7 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
 
             foreach (var eventKey in eventKeyName)
             {
-                if (!FPSMainScript.instance.Check_ParadoxEvent(eventKey))
+                if (!Hypatios.Game.Check_ParadoxEvent(eventKey))
                 {
                     keyExist = false;
                 }

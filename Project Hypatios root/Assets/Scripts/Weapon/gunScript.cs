@@ -234,8 +234,8 @@ public class GunScript : BaseWeaponScript
 
         if (!isBurst)
         {
-            if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                FPSMainScript.instance.RuntimeTutorialHelp("SHOOTING", "You can shoot using LMB. Scope using RMB when you obtained a rifle.", "FirstShoot");
+            if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                Hypatios.Game.RuntimeTutorialHelp("SHOOTING", "You can shoot using LMB. Scope using RMB when you obtained a rifle.", "FirstShoot");
 
 
             muzzle1.Emit(1);

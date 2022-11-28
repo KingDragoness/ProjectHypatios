@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class MissileChameleon : EnemyScript
 {
@@ -15,14 +16,18 @@ public class MissileChameleon : EnemyScript
     public GameObject explosionHarmlessPrefab;
     public Rigidbody rb;
 
-    private Transform target;
-
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        target = Hypatios.Player.transform;
+        if (currentTarget == null) currentTarget = Hypatios.Player;
         rb.AddForce(transform.forward * initialVelocityForce * rb.mass);
+    }
+
+    public void OverrideTarget(Entity t, Alliance currentAlliance)
+    {
+        currentTarget = t;
+        Stats.MainAlliance = currentAlliance;
     }
 
     public override void Attacked(DamageToken token)
@@ -42,14 +47,14 @@ public class MissileChameleon : EnemyScript
 
     private void Update()
     {
-        var q = Quaternion.LookRotation(target.position - transform.position);
+        var q = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
 
         rb.AddForce(transform.forward * moveSpeed * rb.mass * Time.deltaTime);
 
         timer -= Time.deltaTime;
 
-        if (timer < 0)
+        if (timer < 0 | currentTarget == null)
         {
             Dead(true);
         }
@@ -64,10 +69,14 @@ public class MissileChameleon : EnemyScript
         {
             explosion = explosionHarmlessPrefab.gameObject;
         }
-
         GameObject prefab1 = Instantiate(explosion, transform.position, Quaternion.identity);
         prefab1.gameObject.SetActive(true);
-        
+
+        Die();
+    }
+
+    public override void Die()
+    {
         Destroy(gameObject);
     }
 

@@ -56,7 +56,7 @@ public class EnemyContainer : MonoBehaviour
 
             if (chance < chanceSelectAlly && CountMyEnemies(alliance) > 0) 
             {           
-                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy); 
+                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile); 
 
                 return enemy;
             }
@@ -67,7 +67,7 @@ public class EnemyContainer : MonoBehaviour
         }
         else
         {
-            var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy);
+            var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
             return enemy;
 
         }

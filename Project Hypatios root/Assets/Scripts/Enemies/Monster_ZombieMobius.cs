@@ -24,7 +24,6 @@ public class Monster_ZombieMobius : EnemyScript
     [FoldoutGroup("Animations")] public float hitboxLasts = .3f;
 
     private bool isAttacking = false;
-    private bool isDead = false;
 
     private float durationAttack = 4f;
     private NavMeshAgent NavMeshAgent;
@@ -78,16 +77,10 @@ public class Monster_ZombieMobius : EnemyScript
     {
         if (Stats.CurrentHitpoint < 0)
         {
-            if (!isDead) SpawnHeal.SpawnHealCapsule(2);
-            isDead = true;
+            if (Stats.IsDead == false) Die();
+            Stats.IsDead = true;
         }
 
-        if (isDead)
-        {
-            animator.SetBool("Dead", true);
-            Destroy(gameObject, 5f);
-            OnDead?.Invoke();
-        }
 
         else
         {
@@ -118,6 +111,15 @@ public class Monster_ZombieMobius : EnemyScript
                 AttackPlayer();
             }
         }
+    }
+
+    public override void Die()
+    {
+        SpawnHeal.SpawnHealCapsule(2);
+        animator.SetBool("Dead", true);
+        Destroy(gameObject, 5f);
+        OnDead?.Invoke();
+        OnDied?.Invoke();
     }
 
     private void HandleRotation()

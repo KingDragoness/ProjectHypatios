@@ -104,7 +104,7 @@ public abstract class Enemy_FW_Bot : EnemyScript
 
     }
 
-    public virtual void Die()
+    public override void Die()
     {
         _chamberScript.DeregisterUnit(myUnit);
 
@@ -113,6 +113,7 @@ public abstract class Enemy_FW_Bot : EnemyScript
             var corpse1 = Instantiate(botCorpse, transform.position, transform.rotation);
             corpse1.gameObject.SetActive(true);
         }
+        OnDied?.Invoke();
         Destroy(gameObject);
     }
 

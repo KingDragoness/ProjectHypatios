@@ -8,17 +8,17 @@ public class Paradox_TriggerEvent : MonoBehaviour
 
     public void TriggerEvent()
     {
-        bool keyExist = FPSMainScript.instance.Check_EverUsed(eventKeyName);
+        bool keyExist = Hypatios.Game.Check_EverUsed(eventKeyName);
 
         if (!keyExist)
         {
-            FPSMainScript.instance.TryAdd_ParadoxEvent(eventKeyName);
+            Hypatios.Game.TryAdd_ParadoxEvent(eventKeyName);
         }
     }
 
     [ContextMenu("Clear Event")]
     public void ClearEvent()
     {
-        FPSMainScript.instance.Clear_ParadoxEvent(eventKeyName);
+        Hypatios.Game.Clear_ParadoxEvent(eventKeyName);
     }
 }

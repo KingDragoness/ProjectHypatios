@@ -316,4 +316,9 @@ public class MechizMonsterRobot : EnemyScript
             target = patternRobot.GetRandomFlyingPos();
         }
     }
+
+    public override void Die()
+    {
+        throw new System.NotImplementedException();
+    }
 }

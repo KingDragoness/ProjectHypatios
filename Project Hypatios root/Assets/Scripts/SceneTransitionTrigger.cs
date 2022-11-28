@@ -46,9 +46,9 @@ public class SceneTransitionTrigger : MonoBehaviour
             target = Application.loadedLevel + additiveAmount;
         }
 
-        FPSMainScript.instance.SaveGame(targetLevel: target);
+        Hypatios.Game.SaveGame(targetLevel: target);
         yield return new WaitForSeconds(2.2f);
-        FPSMainScript.instance.BufferSaveData();
+        Hypatios.Game.BufferSaveData();
 
 
 

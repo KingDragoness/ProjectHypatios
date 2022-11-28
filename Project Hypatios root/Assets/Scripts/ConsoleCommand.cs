@@ -73,6 +73,10 @@ public class ConsoleCommand : MonoBehaviour
                 Debug_ObjectStat(args);
                 break;
 
+            case "enemy":
+                EnemyCommand(args);
+                break;
+
             case "cc":
                 CommandCheat(args);
                 break;
@@ -162,22 +166,6 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
-    private void LevelNames(string[] args)
-    {
-        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
-        string[] scenes = new string[sceneCount];
-        for (int i = 0; i < sceneCount; i++)
-        {
-            scenes[i] = System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
-        }
-
-        int index1 = 0;
-        foreach (var string1 in scenes)
-        {
-            SendConsoleMessage($"{index1} | {string1}");
-            index1++;
-        }
-    }
 
 
 
@@ -187,7 +175,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            FPSMainScript.instance.CommandCheat(args[0]);
+            Hypatios.Game.CommandCheat(args[0]);
         }
         catch
         {
@@ -251,7 +239,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            FPSMainScript.instance.SaveGame();
+            Hypatios.Game.SaveGame();
         }
         catch
         {
@@ -263,7 +251,7 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
-            FPSMainScript.instance.LoadGame();
+            Hypatios.Game.LoadGame();
         }
         catch
         {
@@ -295,8 +283,8 @@ public class ConsoleCommand : MonoBehaviour
             int levelName = 0;
             int.TryParse(args[0], out levelName);
 
-            FPSMainScript.instance.SaveGame(targetLevel: levelName);
-            FPSMainScript.instance.BufferSaveData();
+            Hypatios.Game.SaveGame(targetLevel: levelName);
+            Hypatios.Game.BufferSaveData();
 
             Application.LoadLevel(levelName);
             Time.timeScale = 1;
@@ -317,8 +305,8 @@ public class ConsoleCommand : MonoBehaviour
             int target = 0;
             target = Application.loadedLevel + 1;
 
-            FPSMainScript.instance.SaveGame(targetLevel: target);
-            FPSMainScript.instance.BufferSaveData();
+            Hypatios.Game.SaveGame(targetLevel: target);
+            Hypatios.Game.BufferSaveData();
 
             Application.LoadLevel(target);
 
@@ -331,6 +319,68 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    private void EnemyCommand(string[] args)
+    {
+        try
+        {
+            bool validArgument = true;
+            if (args.Length != 0)
+            {
+                validArgument = false;
+
+                if (args[0] == "hack")
+                {
+                    Hypatios.DebugObjectStat.Enemy_ChangeAllianceToPlayer();
+                }
+                else if (args[0] == "reset")
+                {
+                    Hypatios.DebugObjectStat.Enemy_ResetStat();
+                }
+                else if (args[0] == "warp")
+                {
+                    Hypatios.DebugObjectStat.Enemy_WarpToGizmoCrosshair();
+                }
+                else
+                {
+                    throw new System.Exception("");
+                }
+            }
+            else
+            {
+                validArgument = true;
+            }
+
+            if (validArgument == true)
+            {
+                SendConsoleMessage("No argument! Use 'help enemy' to see more enemy commands!");
+
+            }
+        }
+        catch (Exception e)
+        {
+            SendConsoleMessage("Invalid argument! Use 'help enemy' to see more enemy commands!");
+            Debug.LogError(e.Message);
+        } 
+    }
+
+    private void LevelNames(string[] args)
+    {
+        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            scenes[i] = System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+        }
+
+        int index1 = 0;
+        foreach (var string1 in scenes)
+        {
+            SendConsoleMessage($"{index1} | {string1}");
+            index1++;
+        }
+    }
+
+
     private void Debug_ObjectStat(string[] args)
     {
         try
@@ -340,7 +390,7 @@ public class ConsoleCommand : MonoBehaviour
             {
                 validArgument = false;
 
-                if (args[0] == "lockenemy")
+                if (args[0] == "lock")
                 {
                     Hypatios.DebugObjectStat.LockEnemy = !Hypatios.DebugObjectStat.LockEnemy;
                     SendConsoleMessage($" {Hypatios.DebugObjectStat.LockEnemy}");
@@ -376,7 +426,7 @@ public class ConsoleCommand : MonoBehaviour
             int soul = 0;
             int.TryParse(args[0], out soul);
 
-            FPSMainScript.instance.SoulPoint += soul;
+            Hypatios.Game.SoulPoint += soul;
         }
         catch
         {
@@ -547,7 +597,16 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add(" =============== HELP [WORLD STAT commnads] =============== ");
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
-                helps.Add("'wstat lockenemy' to lock on targeted enemy.");
+                helps.Add("'wstat lock' to lock on targeted enemy.");
+                helps.Add(" ");
+            }
+            else if (args[0] == "enemy")
+            {
+                helps.Add(" =============== HELP [WORLD STAT commnads] =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                helps.Add("'enemy hack' to gain control of the enemy.");
+                helps.Add("'enemy reset' to reset enemy's status.");
                 helps.Add(" ");
             }
             else

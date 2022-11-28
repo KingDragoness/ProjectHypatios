@@ -22,7 +22,6 @@ public class SpiderScript : EnemyScript
     [FoldoutGroup("References")] public GameObject blueLaser;
     [FoldoutGroup("References")] public GameObject normalEffectMode;
     [FoldoutGroup("References")] public GameObject playerEffectMode;
-    [FoldoutGroup("References")] public GameObject eyeLocation;
     [FoldoutGroup("References")] public ParticleSystem deadPS;
     [FoldoutGroup("References")] public GameObject dissolveEffect;
     [FoldoutGroup("References")] public GameObject body;
@@ -39,7 +38,6 @@ public class SpiderScript : EnemyScript
     [FoldoutGroup("Stats")] public float attackRecharge;
     [FoldoutGroup("Stats")] public float lockBeforeAttackTime;
     [FoldoutGroup("Stats")] public float dieHeight;
-    [FoldoutGroup("Stats")] public bool haveSeenPlayer = false;
     [FoldoutGroup("Stats")] public bool onSpawnShouldReady = true;
     [FoldoutGroup("Stats")] public float spawnChance_Ammo = 0.17f;
     [FoldoutGroup("Stats")] public float damping = 2f;
@@ -50,7 +48,6 @@ public class SpiderScript : EnemyScript
     float colorSet = 1f;
     float dissolve = -1f;
 
-    [ShowInInspector] [ReadOnly] bool canLookAtTarget = false;
     bool isCharging = false;
     bool hasShot = false;
     bool hasTargetted = false;
@@ -64,7 +61,6 @@ public class SpiderScript : EnemyScript
     public SpawnHeal spawnHeal;
     public SpawnAmmo spawnAmmo;
 
-    [ShowInInspector] [ReadOnly] private Entity currentTarget;
     private float timerReady = 3f;
     private bool ready = true;
 
@@ -155,7 +151,7 @@ public class SpiderScript : EnemyScript
             if (!playerEffectMode.gameObject.activeSelf)
             {
                 laserChargingRenderer.material.SetColor("_EmissionColor", PlayerColor);
-                spiderMat[2].SetVector("_EmissionColor", PlayerColor);
+                if (spiderMat.Count > 2) spiderMat[2].SetVector("_EmissionColor", PlayerColor);
                 playerEffectMode.gameObject.SetActive(true);
             }
 
@@ -169,7 +165,7 @@ public class SpiderScript : EnemyScript
             if (!normalEffectMode.gameObject.activeSelf)
             {
                 laserChargingRenderer.material.SetColor("_EmissionColor", NormalColor);
-                spiderMat[2].SetVector("_EmissionColor", NormalColor);
+                if (spiderMat.Count > 2) spiderMat[2].SetVector("_EmissionColor", NormalColor);
                 normalEffectMode.gameObject.SetActive(true);
             }
 
@@ -180,42 +176,16 @@ public class SpiderScript : EnemyScript
 
     private void ProcessAI()
     {
-        var posOffsetLook = currentTarget.OffsetedBoundPosition;
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
-        Debug.DrawLine(transform.position, posOffsetLook);
 
         if (!isDie && distance < attackRange)
         {
-
-            if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance))
-            {
-                if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
-                {
-                    haveSeenPlayer = true;
-                    Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
-                }
-
-            }
+            AI_Detection();
         }
 
-        if (haveSeenPlayer && !isDie)
+        if (hasSeenPlayer && !isDie)
         {
             ManageSpiderRotation();
-
-
-            Ray ray = new Ray(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
-            {
-                if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
-                {
-                    canLookAtTarget = true;
-                }
-                else
-                {
-                    canLookAtTarget = false;
-                }
-            }
-
 
             if (!canLookAtTarget)
             {
@@ -243,14 +213,6 @@ public class SpiderScript : EnemyScript
                 Attack();
             }
         }
-    }
-
-    [FoldoutGroup("Debug")] [Button("Enforce scan target")]
-    private void ScanForEnemies()
-    {
-        float distPlayer = Vector3.Distance(Hypatios.Player.transform.position, transform.position);
-        float f_valueChoosingPlayerAllies = Mathf.Clamp(distPlayer * 0.03f, 0.3f, 0.9f); //distance is 20 then 0.6, distance is 33 then 1 (limit)
-        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position, chanceSelectAlly: f_valueChoosingPlayerAllies);
     }
 
     void ManageSpiderRotation()
@@ -333,7 +295,7 @@ public class SpiderScript : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        haveSeenPlayer = true;
+        hasSeenPlayer = true;
         Stats.CurrentHitpoint -= token.damage;
 
 
@@ -359,7 +321,7 @@ public class SpiderScript : EnemyScript
         }
     }
 
-    void Die()
+    public override void Die()
     {
         isAttacking = false;
         Destroy(laserCharging);

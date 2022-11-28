@@ -41,6 +41,6 @@ public class SoulCapsulePlayer : MonoBehaviour
     public void AddSoul()
     {
         soundManagerScript.instance.PlayOneShot("soul");
-        FPSMainScript.instance.SoulPoint += soulAmount;
+        Hypatios.Game.SoulPoint += soulAmount;
     }
 }

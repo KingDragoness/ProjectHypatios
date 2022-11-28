@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Sirenix.OdinInspector;
 
 public class Debug_ObjectStat : MonoBehaviour
@@ -8,6 +9,7 @@ public class Debug_ObjectStat : MonoBehaviour
 
     public Transform crosshairGizmos;
     public Transform boundingBox;
+    public GameObject walkableGizmo;
     public GUISkin skin;
     public GUISkin skin1;
 
@@ -21,6 +23,7 @@ public class Debug_ObjectStat : MonoBehaviour
     private bool isCrosshairHitSomething = false;
 
     [ShowInInspector] [ReadOnly] private EnemyScript currentEnemy;
+    [ShowInInspector] [ReadOnly] private InteractableObject currentInteract;
 
 
     private void Start()
@@ -78,6 +81,26 @@ public class Debug_ObjectStat : MonoBehaviour
                 GUI.Box(new Rect((Screen.width) - EnemyWindowOffset.x, (Screen.height / 2) - EnemyWindowOffset.y + perLineYSize + 1, EnemyWindowSize.x, EnemyWindowSize.y), s2
                  , skin.box);
             }
+
+            if (currentInteract != null)
+            {
+                Color color1 = Color.white; color1.a = 0.8f;
+                GUI.color = color1;
+                string s1 = $"{currentInteract.gameObject.name}";
+                string s2 = $"";
+
+                {
+                    //s2 += $"({currentEnemy.Stats.MainAlliance}, {currentEnemy.Stats.UnitType})";
+                    //s2 += $"\n HP: ({ Mathf.Round(currentEnemy.Stats.CurrentHitpoint)}/{ currentEnemy.Stats.MaxHitpoint.Value})";
+                    //s2 += $"\n IQ: ({currentEnemy.Stats.Intelligence.Value})";
+                }
+
+                GUI.Box(new Rect((Screen.width) - EnemyWindowOffset.x, (Screen.height / 2) - EnemyWindowOffset.y, EnemyWindowSize.x, perLineYSize), s1
+                    , skin1.box);
+
+                GUI.Box(new Rect((Screen.width) - EnemyWindowOffset.x, (Screen.height / 2) - EnemyWindowOffset.y + perLineYSize + 1, EnemyWindowSize.x, EnemyWindowSize.y), s2
+                 , skin.box);
+            }
         }
     }
 
@@ -92,13 +115,25 @@ public class Debug_ObjectStat : MonoBehaviour
         {
             var go = hit.collider.gameObject;
             var enemyGO = go.GetComponentInParent<EnemyScript>();
+            var interactObj = go.GetComponentInParent<InteractableObject>();
+
             crosshairGizmos.transform.position = hit.point;
             crosshairGizmos.transform.rotation = Quaternion.LookRotation(hit.normal);
             isCrosshairHitSomething = true;
 
+            var walkable = CheckPointWalkable(crosshairGizmos.transform.position + new Vector3(0,0.1f,0f));
+
+            if (walkable)
+            {
+                walkableGizmo.gameObject.SetActive(true);
+            }
+            else walkableGizmo.gameObject.SetActive(false);
+
             if (enemyGO != null) { if (!LockEnemy) currentEnemy = enemyGO; } 
             else if (!LockEnemy) currentEnemy = null;
 
+            if (interactObj != null) { currentInteract = interactObj; }
+            else currentInteract = null;
 
         }
         else
@@ -107,5 +142,56 @@ public class Debug_ObjectStat : MonoBehaviour
             isCrosshairHitSomething = false;
         }
     }
+
+    bool CheckPointWalkable(Vector3 pos)
+    {
+        Vector3 randomPoint = pos;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 0.4f, NavMesh.AllAreas))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    #region Enemy Commands
+
+    public void Enemy_ChangeAllianceToPlayer()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Hack();
+    }
+
+    public void Enemy_WarpToGizmoCrosshair()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Warp(crosshairGizmos.transform.position);
+    }
+
+    public void Enemy_ResetStat()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Revert();
+
+    }
+
+    #endregion
 
 }

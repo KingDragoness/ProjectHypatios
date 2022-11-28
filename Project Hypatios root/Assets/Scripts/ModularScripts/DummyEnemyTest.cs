@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DummyEnemyTest : MonoBehaviour
 {
-    public Transform Player;
     public int MoveSpeed = 4;
     public int MaxDist = 10;
     public int MinDist = 5;
+    public bool disableBehavior = false;
 
     private Rigidbody rb;
+
+    public Rigidbody Rigidbody { get => rb; }
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +22,13 @@ public class DummyEnemyTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 offset = Player.transform.position + new Vector3(0, 3, 0);
+        if (disableBehavior) return;
+
+        Vector3 offset = Hypatios.Player.transform.position + new Vector3(0, 3, 0);
 
         transform.LookAt(offset);
 
-        if (Vector3.Distance(transform.position, Player.position) >= MinDist)
+        if (Vector3.Distance(transform.position, Hypatios.Player.transform.position) >= MinDist)
         {
 
             if (rb == null)
@@ -36,7 +40,7 @@ public class DummyEnemyTest : MonoBehaviour
                 rb.AddForce(transform.forward * MoveSpeed * 100 * Time.deltaTime) ;
             }
 
-            if (Vector3.Distance(transform.position, Player.position) <= MaxDist)
+            if (Vector3.Distance(transform.position, Hypatios.Player.transform.position) <= MaxDist)
             {
                 //Here Call any function U want Like Shoot at here or something
             }

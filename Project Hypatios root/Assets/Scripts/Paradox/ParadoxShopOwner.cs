@@ -25,7 +25,7 @@ public class ParadoxShopOwner : MonoBehaviour
 
     private void Start()
     {
-        if (!DEBUG_AlwaysOn && FPSMainScript.instance.TotalRuns < 1)
+        if (!DEBUG_AlwaysOn && Hypatios.Game.TotalRuns < 1)
         {
             gameObject.SetActive(false);
         }

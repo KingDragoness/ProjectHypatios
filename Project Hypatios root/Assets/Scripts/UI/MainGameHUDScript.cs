@@ -55,7 +55,7 @@ public class MainGameHUDScript : MonoBehaviour
 
     private void Update()
     {
-        soulPoint.text = $"{FPSMainScript.instance.SoulPoint}";
+        soulPoint.text = $"{Hypatios.Game.SoulPoint}";
         //justDamagedHealthSlider.value = Mathf.MoveTowards(justDamagedHealthSlider.value, healthSlider.value, drainHealthSpeed * Time.deltaTime);
 
         bool hidePrompt = true;

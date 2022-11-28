@@ -91,6 +91,8 @@ public class KillZone : MonoBehaviour
             {
                 DamagePlayer();
             }
+
+            if (useEnemyKillzone) DamageEnemy();
         }
     }
 
@@ -113,7 +115,7 @@ public class KillZone : MonoBehaviour
             {
                 var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond;
 
-                damage.Attacked(token);
+                UniversalDamage.TryDamage(token, collider.transform, this.transform);
             }
 
         }

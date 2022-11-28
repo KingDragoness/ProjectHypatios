@@ -71,7 +71,7 @@ public class WeaponSectionButtonUI : MonoBehaviour
          UpgradeWeaponType upgradeType = upgradeButtonUI.upgradeType;
         int currentLevel = 0;
         string limitLevel = "5";
-        var statThisWeapon = FPSMainScript.instance.GetWeaponSave(weaponID);
+        var statThisWeapon = Hypatios.Game.GetWeaponSave(weaponID);
         var weaponItem = WeaponManager.Instance.GetWeaponItemData(weaponID);
 
         if (statThisWeapon == null)
@@ -107,7 +107,7 @@ public class WeaponSectionButtonUI : MonoBehaviour
 
         int soulCost = GetCostPrice(currentLevel, weaponID, upgradeType);
 
-        if (FPSMainScript.instance.SoulPoint < soulCost)
+        if (Hypatios.Game.SoulPoint < soulCost)
         {
             ChargeStationUI.ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -134,7 +134,7 @@ public class WeaponSectionButtonUI : MonoBehaviour
 
         }
 
-        FPSMainScript.instance.SoulPoint -= soulCost;
+        Hypatios.Game.SoulPoint -= soulCost;
         ChargeStationUI.ShowTooltip($"Upgrade successful: {upgradeType} : [{currentLevel}/5]");
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         ChargeStationUI.RefreshUI();

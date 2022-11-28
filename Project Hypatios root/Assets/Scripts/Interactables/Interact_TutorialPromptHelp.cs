@@ -13,7 +13,7 @@ public class Interact_TutorialPromptHelp : MonoBehaviour
 
     public void TriggerHelp()
     {
-        FPSMainScript.instance.RuntimeTutorialHelp(about, content, key);
+        Hypatios.Game.RuntimeTutorialHelp(about, content, key);
     }
 
 }

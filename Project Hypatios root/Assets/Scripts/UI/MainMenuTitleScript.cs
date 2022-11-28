@@ -55,7 +55,7 @@ public class MainMenuTitleScript : MonoBehaviour
         }
         else
         {
-            FPSMainScript.instance.Menu_StartPlayGame();
+            Hypatios.Game.Menu_StartPlayGame();
         }
     }
 

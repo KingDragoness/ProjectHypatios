@@ -11,7 +11,7 @@ public class ClockTimerDisplay : MonoBehaviour
 
     private void Update()
     {
-        var dateTime = UnixTimeStampToDateTime(FPSMainScript.instance.UNIX_Timespan + unixTimeStart);
+        var dateTime = UnixTimeStampToDateTime(Hypatios.Game.UNIX_Timespan + unixTimeStart);
 
         clockTimeText.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";
     }

@@ -30,7 +30,7 @@ public class Chamber3_MarketplaceScript : MonoBehaviour
 
     public void SetDialogueGeneric()
     {
-        FPSMainScript.instance.SoulPoint += 50;
+        Hypatios.Game.SoulPoint += 50;
         trigger_NotFoundYet.gameObject.SetActive(false);
         trigger_Found.gameObject.SetActive(false);
         trigger_Generic.gameObject.SetActive(true);

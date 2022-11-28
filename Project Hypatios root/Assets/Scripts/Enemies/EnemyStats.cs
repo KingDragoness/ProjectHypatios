@@ -37,6 +37,7 @@ public class EnemyStats
 
     [Header("Runtime Only")]
     [ReadOnly] public float CurrentHitpoint;
+    [ReadOnly] public bool IsDead = false;
 
     public void Initialize()
     {

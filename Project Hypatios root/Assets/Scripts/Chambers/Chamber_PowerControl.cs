@@ -17,7 +17,7 @@ public class Chamber_PowerControl : MonoBehaviour
 
         var name = PlayerPrefs.GetString("SETTINGS.MY_NAME");
 
-        HighScores.UploadScore(name, -Mathf.RoundToInt(FPSMainScript.instance.UNIX_Timespan));
+        HighScores.UploadScore(name, -Mathf.RoundToInt(Hypatios.Game.UNIX_Timespan));
         PlayerPrefs.SetString("HIGHSCORE.CHECK", "meh");
     }
 

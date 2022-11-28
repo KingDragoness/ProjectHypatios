@@ -57,7 +57,6 @@ public class MainUI : MonoBehaviour
 
     private void Start()
     {
-        settingsUI.RefreshForceSettings();
         Screen.fullScreen = true;
 
     }
@@ -279,11 +278,11 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode
-            && FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+        if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode
+            && Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
         {
-            //FPSMainScript.instance.SaveGame(targetLevel: Application.loadedLevel);
-            if (FPSMainScript.CheckSaveFileExist()) FPSMainScript.instance.BufferSaveData();
+            //Hypatios.Game.SaveGame(targetLevel: Application.loadedLevel);
+            if (FPSMainScript.CheckSaveFileExist()) Hypatios.Game.BufferSaveData();
         }
 
         Application.LoadLevel(Application.loadedLevel);

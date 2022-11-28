@@ -82,8 +82,8 @@ public class damageReceiver : MonoBehaviour
         }
 
         //Debug.Log(gameObject.name);
-        if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-            FPSMainScript.instance.RuntimeTutorialHelp("ENEMY", "Ammo conservation is critical. Shooting enemy at weak spots can deal additional damage. Try to hit them at weak spots!", "FirstEnemyHit");
+        if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+            Hypatios.Game.RuntimeTutorialHelp("ENEMY", "Ammo conservation is critical. Shooting enemy at weak spots can deal additional damage. Try to hit them at weak spots!", "FirstEnemyHit");
 
         OnHit?.Invoke();
     }

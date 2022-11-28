@@ -98,7 +98,6 @@ public class HyperchadEnemy : EnemyScript
     private float currentCooldownDecision = 10f;
     private bool hasTriggeredFinalForm = false;
     private bool isOnFinalForm = false;
-    private bool isDead = false;
 
     private Rigidbody rb;
 
@@ -116,10 +115,7 @@ public class HyperchadEnemy : EnemyScript
     {
         if (Stats.CurrentHitpoint <= 0)
         {
-            if (isDead == false) BossDied();
-            isDead = true;
-            Stats.CurrentHitpoint = 0;
-            currentStance = MoveStances.PrepareDie;
+            Die();
             return;
         }
 
@@ -132,6 +128,14 @@ public class HyperchadEnemy : EnemyScript
             AI_Decision();
         }
 
+    }
+
+    public override void Die()
+    {
+        if (Stats.IsDead == false) BossDied();
+        Stats.IsDead = true;
+        Stats.CurrentHitpoint = 0;
+        currentStance = MoveStances.PrepareDie;
     }
 
     private void FixedUpdate()

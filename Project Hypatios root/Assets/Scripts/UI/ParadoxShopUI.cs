@@ -52,10 +52,10 @@ public class ParadoxShopUI : MonoBehaviour
         Unpreview();
         titlePrev_Text.text = "Paradox Shopkeeper";
 
-        if (FPSMainScript.instance.everUsed_Paradox == false)
+        if (Hypatios.Game.everUsed_Paradox == false)
         {
             MainGameHUDScript.Instance.ShowPromptUI("PARADOX SHOP", helperString, false);
-            FPSMainScript.instance.everUsed_Paradox = true;
+            Hypatios.Game.everUsed_Paradox = true;
         }
 
         if (boss != null)
@@ -80,7 +80,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         ShowTooltip(" ");
         shopOwner = ParadoxShopOwner.Instance;
-        soulPoint_Text.text = FPSMainScript.instance.SoulPoint.ToString();
+        soulPoint_Text.text = Hypatios.Game.SoulPoint.ToString();
         RefreshButtons();
         RefreshPerkButtons();
     }
@@ -102,7 +102,7 @@ public class ParadoxShopUI : MonoBehaviour
     {
         int price = 0;
         var heal = FindObjectOfType<CharacterScript>().Health;
-        int lv_Luck = FPSMainScript.instance.LuckOfGod_Level;
+        int lv_Luck = Hypatios.Game.LuckOfGod_Level;
 
         if (button.perkType == PlayerPerks.HealthMax)
         {
@@ -125,7 +125,7 @@ public class ParadoxShopUI : MonoBehaviour
             }
         }
 
-        if (FPSMainScript.instance.SoulPoint < price)
+        if (Hypatios.Game.SoulPoint < price)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -134,7 +134,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         }
 
-        FPSMainScript.instance.SoulPoint -= price;
+        Hypatios.Game.SoulPoint -= price;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
 
         if (button.perkType == PlayerPerks.HealthMax)
@@ -147,7 +147,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
-            FPSMainScript.instance.LuckOfGod_Level++;
+            Hypatios.Game.LuckOfGod_Level++;
         }
 
         RefreshUI();
@@ -185,7 +185,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
-            int lv_Luck = FPSMainScript.instance.LuckOfGod_Level;
+            int lv_Luck = Hypatios.Game.LuckOfGod_Level;
             price = PlayerPerk.GetPrice_LuckOfGod(lv_Luck);
             s = $"[LV {lv_Luck + 1}/6]" +
             $" [Soul: {price}]";
@@ -199,7 +199,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (button.perkType == PlayerPerks.LuckGod)
         {
-            descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(FPSMainScript.instance.LuckOfGod_Level)} {s} ";
+            descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(Hypatios.Game.LuckOfGod_Level)} {s} ";
         }
 
 
@@ -267,7 +267,7 @@ public class ParadoxShopUI : MonoBehaviour
                 }
                 else
                 {
-                    if (FPSMainScript.instance.SoulPoint < newButton.attachedParadox.soulPrice)
+                    if (Hypatios.Game.SoulPoint < newButton.attachedParadox.soulPrice)
                     {
                         newButton.buttonBuy.interactable = false;
                     }
@@ -337,7 +337,7 @@ public class ParadoxShopUI : MonoBehaviour
 
     public void AttemptBuy(ParadoxSectionButtonUI button)
     {
-        if (FPSMainScript.instance.SoulPoint < button.attachedParadox.soulPrice)
+        if (Hypatios.Game.SoulPoint < button.attachedParadox.soulPrice)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -346,7 +346,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
 
         button.attachedParadox.paradoxEntity.value = button.attachedParadox.buyTargetValue;
-        FPSMainScript.instance.SoulPoint -= button.attachedParadox.soulPrice;
+        Hypatios.Game.SoulPoint -= button.attachedParadox.soulPrice;
 
         RefreshUI();
 

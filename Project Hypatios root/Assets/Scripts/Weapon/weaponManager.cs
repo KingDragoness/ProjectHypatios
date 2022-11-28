@@ -293,8 +293,8 @@ public class WeaponManager : MonoBehaviour
 
     public void SetWeaponSettings(GunScript gunScript)
     {
-        FPSMainScript.instance.NewWeaponStat(gunScript);
-        var weaponStat = FPSMainScript.instance.GetWeaponSave(gunScript.weaponName);
+        Hypatios.Game.NewWeaponStat(gunScript);
+        var weaponStat = Hypatios.Game.GetWeaponSave(gunScript.weaponName);
 
         var weapon1 = GetWeaponItemData(gunScript);
         weaponStat.removed = false;

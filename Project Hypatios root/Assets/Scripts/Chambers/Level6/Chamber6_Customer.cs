@@ -34,7 +34,6 @@ public class Chamber6_Customer : EnemyScript
     private float cooldown = 0.08f;
     private Chamber6_Piring myPiring;
     private int random1;
-    private bool isDead = false;
     private float cooldownEscape = 10f;
     private bool alreadyEat = false;
     private bool isSitting = false;
@@ -310,10 +309,16 @@ public class Chamber6_Customer : EnemyScript
 
     private void KillCustomer()
     {
-        if (isDead)
+        if (Stats.IsDead )
             return;
+        Die();
 
-        isDead = true;
+    }
+
+    public override void Die()
+    {
+        OnDied?.Invoke();
+        Stats.IsDead = true;
         DialogueSubtitleUI.instance.QueueDialogue($"Error! A customer has been killed!", "Zart Bot", 3f);
         MainGameHUDScript.Instance.audio_Error.Play();
         chamberScript.allCustomers.Remove(this);
@@ -324,6 +329,7 @@ public class Chamber6_Customer : EnemyScript
         chamberScript.OnCustomerLeaving?.Invoke();
         chamberScript.remainingCustomers++;
         chamberScript.RefreshList();
+
         Destroy(gameObject);
     }
 

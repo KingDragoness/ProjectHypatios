@@ -23,7 +23,7 @@ public class UpgradeButtonUI : MonoBehaviour
 
         int currentLevel = 0;
         string limitLevel = "5";
-        var statThisWeapon = FPSMainScript.instance.GetWeaponSave(parentUI.weaponID);
+        var statThisWeapon = Hypatios.Game.GetWeaponSave(parentUI.weaponID);
         var weaponItem = WeaponManager.Instance.GetWeaponItemData(parentUI.weaponID);
 
         if (statThisWeapon == null)

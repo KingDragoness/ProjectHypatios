@@ -14,7 +14,7 @@ public class Paradox_EnablerObject_Run : MonoBehaviour
 
     private void Start()
     {
-        currentRun = FPSMainScript.instance.TotalRuns;
+        currentRun = Hypatios.Game.TotalRuns;
 
         if (activateMinRange == activateMaxRange)
         {

@@ -45,13 +45,13 @@ public class PlayerHealth : MonoBehaviour
         //targetHealth = curHealth;
 
         {
-            var dof_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<DepthOfField>();
+            var dof_ = Hypatios.Game.postProcessVolume.profile.GetSetting<DepthOfField>();
             dof = dof_;
             dof.focalLength.value = 1f;
         }
 
         {
-            var vignette_ = FPSMainScript.instance.postProcessVolume.profile.GetSetting<Vignette>();
+            var vignette_ = Hypatios.Game.postProcessVolume.profile.GetSetting<Vignette>();
             vignette = vignette_;
 
             {
@@ -90,8 +90,8 @@ public class PlayerHealth : MonoBehaviour
 
         if ((targetHealth / maxHealth) < 0.2f)
         {
-            if (FPSMainScript.instance.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                FPSMainScript.instance.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
+            if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+                Hypatios.Game.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
         }
 
         if (curHealth <= 0f)
@@ -235,10 +235,10 @@ public class PlayerHealth : MonoBehaviour
         if (!die)
         {
 
-            if (character.tutorialMode == false) FPSMainScript.instance.PlayerDie();
+            if (character.tutorialMode == false) Hypatios.Game.PlayerDie();
             deathCamera.gameObject.SetActive(true);
             cameraScript.instance.gameObject.SetActive(false);
-            FPSMainScript.instance.Death_NoSaturation();
+            Hypatios.Game.Death_NoSaturation();
             MainGameHUDScript.Instance.gameObject.SetActive(false);
 
             soundManagerScript.instance.Play("Die");

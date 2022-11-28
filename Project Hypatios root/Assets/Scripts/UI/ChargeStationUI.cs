@@ -28,10 +28,10 @@ public class ChargeStationUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (FPSMainScript.instance.everUsed_WeaponShop == false)
+        if (Hypatios.Game.everUsed_WeaponShop == false)
         {
             MainGameHUDScript.Instance.ShowPromptUI("CHARGE STATION", helperString, false) ;
-            FPSMainScript.instance.everUsed_WeaponShop = true;
+            Hypatios.Game.everUsed_WeaponShop = true;
         }
 
         RefreshUI();
@@ -46,7 +46,7 @@ public class ChargeStationUI : MonoBehaviour
     {
         ShowTooltip(" ");
 
-        soulPoint_Text.text = FPSMainScript.instance.SoulPoint.ToString();
+        soulPoint_Text.text = Hypatios.Game.SoulPoint.ToString();
 
         foreach (var WeaponSection in allWeaponSections)
         {
@@ -54,7 +54,7 @@ public class ChargeStationUI : MonoBehaviour
             WeaponSection.buyAmmo_Button.interactable = false;
             WeaponSection.buyWeapon_Button.interactable = true;
 
-            var statThisWeapon = FPSMainScript.instance.GetWeaponSave(WeaponSection.weaponID);
+            var statThisWeapon = Hypatios.Game.GetWeaponSave(WeaponSection.weaponID);
 
             if (statThisWeapon == null)
             {
@@ -95,7 +95,7 @@ public class ChargeStationUI : MonoBehaviour
                 continue;
             }
 
-            var statThisWeapon = FPSMainScript.instance.GetWeaponSave(weapon.weaponName);
+            var statThisWeapon = Hypatios.Game.GetWeaponSave(weapon.weaponName);
 
 
             WeaponSection.buyWeapon_Button.interactable = false;
@@ -135,7 +135,7 @@ public class ChargeStationUI : MonoBehaviour
             return;
         }
 
-        if (FPSMainScript.instance.SoulPoint < weaponSection.BuyPrice)
+        if (Hypatios.Game.SoulPoint < weaponSection.BuyPrice)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -143,7 +143,7 @@ public class ChargeStationUI : MonoBehaviour
             return;
         }
 
-        FPSMainScript.instance.SoulPoint -= weaponSection.BuyPrice;
+        Hypatios.Game.SoulPoint -= weaponSection.BuyPrice;
         var gunScript1 = WeaponManager.Instance.AddWeapon(weaponSection.weaponID);
         gunScript1.totalAmmo = 0;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
@@ -152,7 +152,7 @@ public class ChargeStationUI : MonoBehaviour
 
     public void BuyThisAmmo(WeaponSectionButtonUI weaponSection)
     {
-        if (FPSMainScript.instance.SoulPoint < weaponSection.PurchaseAmmoPrice)
+        if (Hypatios.Game.SoulPoint < weaponSection.PurchaseAmmoPrice)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -163,7 +163,7 @@ public class ChargeStationUI : MonoBehaviour
 
         var weaponTarget = weaponManager.GetGunScript(weaponSection.weaponID);
         weaponTarget.totalAmmo += weaponSection.PurchaseAmmoAmount;
-        FPSMainScript.instance.SoulPoint -= weaponSection.PurchaseAmmoPrice;
+        Hypatios.Game.SoulPoint -= weaponSection.PurchaseAmmoPrice;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
  

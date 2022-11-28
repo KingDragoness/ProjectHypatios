@@ -13,7 +13,7 @@ public class Interact_PointInterestInvestigate : InteractableObject
     private void Start()
     {
         string keyName1 = $"{chamberName}.{eventKeyName}";
-        bool keyExist = FPSMainScript.instance.Check_EverUsed(keyName1);
+        bool keyExist = Hypatios.Game.Check_EverUsed(keyName1);
 
         if (keyExist)
         {
@@ -24,11 +24,11 @@ public class Interact_PointInterestInvestigate : InteractableObject
     public override void Interact()
     {
         string keyName1 = $"{chamberName}.{eventKeyName}";
-        bool keyExist = FPSMainScript.instance.Check_EverUsed(keyName1);
+        bool keyExist = Hypatios.Game.Check_EverUsed(keyName1);
 
         if (!keyExist)
         {
-            FPSMainScript.instance.TryAdd_ParadoxEvent(keyName1);
+            Hypatios.Game.TryAdd_ParadoxEvent(keyName1);
             gameObject.SetActive(false);
             OnInteractEvent?.Invoke();
         }

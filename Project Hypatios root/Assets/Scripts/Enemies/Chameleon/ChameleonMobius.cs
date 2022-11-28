@@ -7,7 +7,6 @@ using Sirenix.OdinInspector;
 public class ChameleonMobius : EnemyScript
 {
 
-    public Transform target;
     public float rotateSpeed = 10;
     public float moveSpeed = 100;
     public float hoverSpeed = 50;
@@ -22,12 +21,14 @@ public class ChameleonMobius : EnemyScript
     public MissileChameleon missilePrefab;
     public Transform outWeaponMissile;
     public AudioSource audio_FireMissile;
+
     [Button("Fire missile")]
     public void FireMissile()
     {
         GameObject prefabMissile = Instantiate(missilePrefab.gameObject, outWeaponMissile.position, Quaternion.identity);
         prefabMissile.gameObject.SetActive(true);
-
+        var missile = prefabMissile.GetComponent<MissileChameleon>();
+        missile.OverrideTarget(currentTarget, Stats.MainAlliance);
     }
     public float missileCooldownCycle = 2f;
 
@@ -37,12 +38,11 @@ public class ChameleonMobius : EnemyScript
 
     private float _missileCooldownTimer = 2f;
     private Rigidbody rb;
-    private bool hasDied = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        target = Hypatios.Player.transform;
+        currentTarget = Hypatios.Player;
 
     }
 
@@ -52,33 +52,44 @@ public class ChameleonMobius : EnemyScript
         base.Attacked(token);
         DamageOutputterUI.instance.DisplayText(token.damage);
 
-        if (Stats.CurrentHitpoint < 0 && !hasDied)
+        if (Stats.CurrentHitpoint < 0 && !Stats.IsDead)
         {
-            rb.useGravity = true;
-            rb.isKinematic = false;
-            Destroy(gameObject, 10f);
-            OnKilledEvent?.Invoke();
-            audio_DieBot.Play();
-            aliveChameleon.gameObject.SetActive(false);
-            corpseChameleon.gameObject.SetActive(true);
-            Destroy(corpseChameleon, 10f);
-            corpseChameleon.transform.SetParent(null);
-            hasDied = true;
+            Die();
         }
 
+    }
+
+    public override void Die()
+    {
+        rb.useGravity = true;
+        rb.isKinematic = false;
+        Destroy(gameObject, 10f);
+        OnKilledEvent?.Invoke();
+        OnDied?.Invoke();
+        audio_DieBot.Play();
+        aliveChameleon.gameObject.SetActive(false);
+        corpseChameleon.gameObject.SetActive(true);
+        Destroy(corpseChameleon, 10f);
+        corpseChameleon.transform.SetParent(null);
     }
 
 
     private void Update()
     {
-        if (hasDied) return;
 
-        var q = Quaternion.LookRotation(target.position - transform.position);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
 
-        ProcessMovement();
-        ProcessAnimation();
-        ProcessWeapon();
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (currentTarget != null)
+        {
+            var q = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
+
+            ProcessMovement();
+            ProcessAnimation();
+            ProcessWeapon();
+        }
     }
 
     private void ProcessWeapon()
@@ -105,7 +116,7 @@ public class ChameleonMobius : EnemyScript
 
     private void ProcessMovement()
     {
-        Vector3 relativePos = transform.InverseTransformPoint(target.position);
+        Vector3 relativePos = transform.InverseTransformPoint(currentTarget.transform.position);
 
         if (relativePos.z > 0)
         {

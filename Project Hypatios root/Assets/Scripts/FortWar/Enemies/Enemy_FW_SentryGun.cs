@@ -238,7 +238,7 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     }
 
-    private void Die()
+    public override void Die()
     {
         _chamberScript.DeregisterUnit(myUnit);
 
@@ -247,6 +247,7 @@ public class Enemy_FW_SentryGun : EnemyScript
             var corpse1 = Instantiate(botCorpse, transform.position, transform.rotation);
             corpse1.gameObject.SetActive(true);
         }
+        OnDied?.Invoke();
         Destroy(gameObject);
     }
 

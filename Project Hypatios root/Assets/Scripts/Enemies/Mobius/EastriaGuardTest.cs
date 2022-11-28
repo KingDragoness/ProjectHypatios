@@ -19,6 +19,7 @@ public class EastriaGuardTest : EnemyScript
     [FoldoutGroup("Prefabs")] public GameObject projectilePrefab;
     [FoldoutGroup("References")] public Transform[] rigOrigin;
     [FoldoutGroup("References")] public Transform fireOrigin;
+    [FoldoutGroup("References")] public FollowObject followObject;
     [FoldoutGroup("AI")] public float attackRange = 20f;
     [FoldoutGroup("AI")] public float followPlayerRange = 40f;
     [FoldoutGroup("AI")] public float attackCooldown = 2f;
@@ -29,21 +30,19 @@ public class EastriaGuardTest : EnemyScript
     [FoldoutGroup("Sounds")] public AudioSource Audio_FireShockwave;
     [FoldoutGroup("Sounds")] public AudioSource Audio_Voice_ContactInbound;
 
-    public Transform player;
     public float speed;
 
-    [FoldoutGroup("AI")] public bool hasSeenPlayer = false;
-    private bool isSeeingPlayer = false;
     private Rigidbody m_Rigidbody;
 
     private void Start()
     {
+        OnPlayerDetected += SeenPlayer;
         m_Rigidbody = GetComponent<Rigidbody>();
     }
 
     public override void Attacked(DamageToken token)
     {
-        SeePlayer();
+        SeenPlayer();
         Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
 
@@ -57,22 +56,29 @@ public class EastriaGuardTest : EnemyScript
 
     private void Update()
     {
-        // direction towards target
-        float distance = Vector3.Distance(transform.position, player.position);
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
 
-        if (distance < followPlayerRange)
+        if (currentTarget != null)
         {
-            Vector3 relativePos = player.position - (transform.position + new Vector3(0, 1.1f, 0));
-            Vector3 dirToPlayer = relativePos;
-            Quaternion toRotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, speed * Time.deltaTime);
+            followObject.target = currentTarget.transform;
+            // direction towards target
+            float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
 
-            m_Rigidbody.AddForce(dirToPlayer * ForwardThrustForce * Time.deltaTime);
-            m_Rigidbody.AddForce(Vector3.up * VerticalThrustForce * Time.deltaTime);
+            if (distance < followPlayerRange)
+            {
+                Vector3 relativePos = currentTarget.transform.position - (transform.position + new Vector3(0, 1.1f, 0));
+                Vector3 dirToPlayer = relativePos;
+                Quaternion toRotation = Quaternion.LookRotation(relativePos);
+                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, speed * Time.deltaTime);
+
+                m_Rigidbody.AddForce(dirToPlayer * ForwardThrustForce * Time.deltaTime);
+                m_Rigidbody.AddForce(Vector3.up * VerticalThrustForce * Time.deltaTime);
+            }
+
+            AI_Detection();
+            if (hasSeenPlayer) RunAI();
         }
-
-        PlayerDetection();
-        if (hasSeenPlayer) RunAI();  
 
         if (Stats.CurrentHitpoint < 0)
         {
@@ -80,31 +86,9 @@ public class EastriaGuardTest : EnemyScript
         }
     }
 
-    private void PlayerDetection()
-    {
-        float distance = Vector3.Distance(transform.position, player.position);
-        bool _currentlySeePlayer = false;
 
-        Vector3 originLook = transform.position; originLook.y += 1f;
 
-        Debug.DrawLine(transform.position, player.position);
-        if (distance < attackRange)
-        {
-            if (Physics.Raycast(originLook, player.position - originLook, out RaycastHit hit, distance))
-            {
-                if (hit.transform.tag == "Player")
-                {
-                    SeePlayer();
-                    _currentlySeePlayer = true;
-                }
-
-            }
-        }
-
-        isSeeingPlayer = _currentlySeePlayer;
-    }
-
-    private void SeePlayer()
+    private void SeenPlayer()
     {
         if (hasSeenPlayer == false)
         {
@@ -133,7 +117,7 @@ public class EastriaGuardTest : EnemyScript
                     Audio_FireShockwave.Play();
                     //Audio_FireShockwave.pitch = Random.Range(0.9f, 1.1f);
                 }
-                fireOrigin.LookAt(player.transform);
+                fireOrigin.LookAt(currentTarget.transform.transform);
                 StartCoroutine(FireWeapon());
                 _cooldownAttack = attackCooldown + Random.Range(0f, 0.1f);
             }
@@ -158,7 +142,7 @@ public class EastriaGuardTest : EnemyScript
         Destroy(shock1.gameObject, 3f);
     }
 
-    private void Die()
+    public override void Die()
     {
         var corpse1 = Instantiate(corpsePrefab);
         corpse1.transform.position = transform.position;
@@ -166,6 +150,7 @@ public class EastriaGuardTest : EnemyScript
         corpse1.gameObject.SetActive(true);
         CopyTransformRagdoll ragdollScript = corpse1.GetComponent<CopyTransformRagdoll>();
         ragdollScript.CopyRotationPosition(rigOrigin);
+        OnDied?.Invoke();
 
         Destroy(this.gameObject);
     }

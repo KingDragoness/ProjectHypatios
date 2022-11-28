@@ -41,7 +41,7 @@ public class Level1_IntroScript : MonoBehaviour
     {
         if (FPSMainScript.savedata != null)
         {
-            FPSMainScript.instance.LoadGameFromKilled();
+            Hypatios.Game.LoadGameFromKilled();
         }
     }
 
@@ -55,7 +55,7 @@ public class Level1_IntroScript : MonoBehaviour
         UI_FadeIn.gameObject.SetActive(false);
         //UI_FadeOut.gameObject.SetActive(true);
 
-        if (FPSMainScript.instance.TotalRuns == 0 && Application.isEditor == false)
+        if (Hypatios.Game.TotalRuns == 0 && Application.isEditor == false)
         {
             videoPlayer.gameObject.SetActive(true);
             cineBrain.gameObject.SetActive(false);
@@ -96,7 +96,7 @@ public class Level1_IntroScript : MonoBehaviour
         OnIntroEnded?.Invoke();
         hasStarted = true;
 
-        if (FPSMainScript.instance.TotalRuns == 0)
+        if (Hypatios.Game.TotalRuns == 0)
         {
             triggererName.gameObject.SetActive(true);
         }
@@ -111,7 +111,7 @@ public class Level1_IntroScript : MonoBehaviour
 
     public void EnterPlayerName()
     {
-        if (FPSMainScript.instance.TotalRuns == 0) 
+        if (Hypatios.Game.TotalRuns == 0) 
         { 
             MainGameHUDScript.Instance.ShowPromptUI("", "Enter your name:", true);
             MainUI.Instance.SetTempoPause(true);

@@ -19,14 +19,14 @@ public class PlayerPerk
 
         float chance = Random.Range(0f, 1f);
 
-        if (FPSMainScript.instance.LuckOfGod_Level == 1)
+        if (Hypatios.Game.LuckOfGod_Level == 1)
         {
             if (chance < 0.4f)
             {
                 soulAmount += 1;
             }
         }
-        else if (FPSMainScript.instance.LuckOfGod_Level == 2)
+        else if (Hypatios.Game.LuckOfGod_Level == 2)
         {
             if (chance < 0.6f)
             {
@@ -37,7 +37,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (FPSMainScript.instance.LuckOfGod_Level == 3)
+        else if (Hypatios.Game.LuckOfGod_Level == 3)
         {
             soulAmount += 1;
 
@@ -50,7 +50,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (FPSMainScript.instance.LuckOfGod_Level == 4)
+        else if (Hypatios.Game.LuckOfGod_Level == 4)
         {
             soulAmount += 2;
 
@@ -63,7 +63,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (FPSMainScript.instance.LuckOfGod_Level == 5)
+        else if (Hypatios.Game.LuckOfGod_Level == 5)
         {
             soulAmount += 3;
 

@@ -59,13 +59,8 @@ public class MobiusGuard : EnemyScript
 
         if (Stats.CurrentHitpoint < 0)
         {
-            if (!hasDied)
-            {
-                OnDiedEvent?.Invoke();
-                Destroy(gameObject, 5f);
-                spawnHeal.SpawnHealCapsule(1);
-            }
-            hasDied = true;
+            if (Stats.IsDead == false) Die();
+            Stats.IsDead = true;
             Stats.CurrentHitpoint = 0;
         }
 
@@ -80,6 +75,14 @@ public class MobiusGuard : EnemyScript
         AnimationStateUpdate();
         Attack();
         CheckICanSeePlayer();
+    }
+
+    public override void Die()
+    {
+        OnDiedEvent?.Invoke();
+        OnDied?.Invoke();
+        Destroy(gameObject, 5f);
+        spawnHeal.SpawnHealCapsule(1);
     }
 
     public override void Attacked(DamageToken token)

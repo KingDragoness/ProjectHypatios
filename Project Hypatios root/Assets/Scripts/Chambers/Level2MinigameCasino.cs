@@ -88,7 +88,7 @@ public class Level2MinigameCasino : MonoBehaviour
         }
 
         DialogueSubtitleUI.instance.QueueDialogue($"Shoot Em' Up has ended! You have been rewarded: {collectedSoul} souls", "SYSTEM", 10f);
-        FPSMainScript.instance.SoulPoint += collectedSoul;
+        Hypatios.Game.SoulPoint += collectedSoul;
         hasStartedGame = false;
         score = 0;
         f_timerSpawnShootable = 0;

@@ -81,8 +81,9 @@ public class DecabotEnemy : EnemyScript
         }
     }
 
-    private void Die()
+    public override void Die()
     {
+        OnDied?.Invoke();
         Destroy(gameObject);
         var corpse1 = Instantiate(corpse, transform.position, transform.rotation);
         corpse1.gameObject.SetActive(true);

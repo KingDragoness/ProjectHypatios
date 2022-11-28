@@ -33,7 +33,6 @@ public class B0MBScript : EnemyScript
 
     [Space]
     NavMeshAgent enemyAI;
-    Entity currentTarget;
     Vector3 currentPos;
 
     public float attackRange;
@@ -92,17 +91,12 @@ public class B0MBScript : EnemyScript
     {
         currentPos = currentTarget.transform.position;
         distance = Vector3.Distance(transform.position, currentPos);
-        var posOffsetLook = currentTarget.OffsetedBoundPosition;
 
 
-        if (distance <= attackRange && Physics.Raycast(transform.position, posOffsetLook - transform.position, out RaycastHit hit, attackRange))
+        if (!Stats.IsDead && distance < attackRange)
         {
-            if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
-            {
-                haveSeenPlayer = true;
-            }
+            AI_Detection();
         }
-
 
 
         if (haveSeenPlayer)
@@ -132,19 +126,14 @@ public class B0MBScript : EnemyScript
 
             if (gonnaExplode)
             {
-                Explode();
+                Die();
             }
 
             Audio_Chasing.pitch = 1.1f;
         }
     }
 
-    [FoldoutGroup("Debug")]
-    [Button("Enforce scan target")]
-    private void ScanForEnemies()
-    {
-        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position);
-    }
+ 
 
 
     public override void Attacked(DamageToken token)
@@ -155,7 +144,8 @@ public class B0MBScript : EnemyScript
     }
 
 
-    void Explode()
+
+    public override void Die()
     {
         anim.SetBool("gonnaExplode", true);
         enemyAI.SetDestination(transform.position);

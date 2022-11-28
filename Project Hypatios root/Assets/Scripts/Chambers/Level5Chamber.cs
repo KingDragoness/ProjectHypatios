@@ -189,7 +189,7 @@ public class Level5Chamber : MonoBehaviour
             NewSoal();
             jawabanBenarAudio.Play();
             DialogueSubtitleUI.instance.QueueDialogue("Correct! 7 soul rewarded... Onto the next question...", "ANNOUNCER", 5f);
-            FPSMainScript.instance.SoulPoint += 7;
+            Hypatios.Game.SoulPoint += 7;
             OnAnswerCorrect?.Invoke();
 
         }

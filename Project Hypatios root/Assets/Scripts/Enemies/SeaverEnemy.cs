@@ -19,12 +19,10 @@ public class SeaverEnemy : EnemyScript
     private NavMeshAgent agent;
     private float cooldownAttack = 5f;
     private float _timerAttack = 5f;
-    private Transform player;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
     }
 
 
@@ -57,19 +55,28 @@ public class SeaverEnemy : EnemyScript
         base.Attacked(token);
     }
 
-    private void Die()
+    public override void Die()
     {
         Destroy(gameObject);
         var corpse1 = Instantiate(corpse);
         corpse1.gameObject.SetActive(true);
         corpse1.transform.position = transform.position;
         corpse1.transform.rotation = transform.rotation;
+        OnDied?.Invoke();
+
     }
 
     private void Update()
     {
-        Attack();
-        Movement();
+
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (currentTarget != null)
+        {
+            Attack();
+            Movement();
+        }
     }
 
     private void Attack()
@@ -97,7 +104,7 @@ public class SeaverEnemy : EnemyScript
 
     private void Movement()
     {
-        agent.SetDestination(player.transform.position);
+        agent.SetDestination(currentTarget.transform.position);
 
         if (agent.velocity.magnitude > velocityAnimationMinimum)
         {
@@ -117,6 +124,8 @@ public class SeaverEnemy : EnemyScript
         var scarab1 = Instantiate(scarabPrefab, spawnScarab.position, spawnScarab.rotation);
         audio_Fire.Play();
         scarab1.SetActive(true);
+        var scarabScript = scarab1.GetComponent<SeaverScarab>();
+        scarabScript.OverrideTarget(currentTarget, Stats.MainAlliance);
     }
 
 }
