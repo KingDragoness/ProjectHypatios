@@ -67,12 +67,12 @@ public class Hypatios : MonoBehaviour
         internal void InitializeAtStart()
         {
             QUALITY_LEVEL = QualitySettings.GetQualityLevel();
+            QualitySettings.SetQualityLevel(Hypatios.Settings.QUALITY_LEVEL);
             RefreshSettings();
         }
 
         public void RefreshSettings()
         {
-            QualitySettings.SetQualityLevel(Hypatios.Settings.QUALITY_LEVEL);
 
             if (MAXIMUM_FRAMERATE >= 201)
                 Application.targetFrameRate = -1; else Application.targetFrameRate = MAXIMUM_FRAMERATE;
@@ -84,7 +84,7 @@ public class Hypatios : MonoBehaviour
                 QualitySettings.vSyncCount = 0; else QualitySettings.vSyncCount = 1;
 
             if (colorGrading != null)
-                { colorGrading.gamma.value.w = (BRIGHTNESS / 2f); floatParam_Brightness.value = (BRIGHTNESS / 2f); }
+            { colorGrading.gamma.value.w = (BRIGHTNESS / 2f); floatParam_Brightness.value = (BRIGHTNESS / 2f); }
 
             if (MainCameraScript != null)
                 MainCameraScript.mouseSensitivity = MOUSE_SENSITIVITY;
@@ -177,6 +177,7 @@ public class Hypatios : MonoBehaviour
         }
         #endregion
     }
+
 
     public enum GameDifficulty
     {

@@ -21,7 +21,7 @@ public class KillZone : MonoBehaviour
     private float cooldown = 1f;
     private const float COOLDOWN_DAMAGE = 0.5f;
 
-    void Start()
+    void OnEnable()
     {
         PlayerHealth = FindObjectOfType<PlayerHealth>();
         if (alsoDamageEnemy) DamageEnemy();

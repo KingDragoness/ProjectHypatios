@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public enum CategoryParticleEffect
+{
+    Uncategorized,
+    BulletSparks,
+    BulletSparksEnemy,
+    BulletImpact,
+    ExplosionHarmless = 20,
+    ExplosionPlayer,
+    ExplosionAll,
+    FireEffect = 30,
+    PoisonEffect
+}
+
 public class DynamicObjectPool : MonoBehaviour
 {
    
@@ -12,6 +25,8 @@ public class DynamicObjectPool : MonoBehaviour
         [SerializeField] private GameObject _prefab;
         [SerializeField, Min(1)] private int _startCount;
         [SerializeField, Range(1,1000)] private int _hardCount;
+        [SerializeField] private CategoryParticleEffect _category;
+
         private List<GameObject> _allPooledObjects = new List<GameObject>();
 
         public static PoolContainer CreatePoolContainer(GameObject prefab, int startCount, int hardCount)
@@ -84,6 +99,7 @@ public class DynamicObjectPool : MonoBehaviour
         }
 
         public GameObject Prefab { get => _prefab; }
+        public CategoryParticleEffect Category { get => _category;}
     }
 
     [SerializeField] private List<PoolContainer> _pools = new List<PoolContainer>();
@@ -118,6 +134,16 @@ public class DynamicObjectPool : MonoBehaviour
 
         return instance;
     }
+
+    public GameObject SummonParticle(CategoryParticleEffect particle, bool IncludeActive = false)
+    {
+        var targetPool = _pools.Find(x => x.Category == particle);
+        var instance = targetPool.Reuse(IncludeActive);
+        if (instance) instance.transform.SetParent(this.transform);
+
+        return instance;
+    }
+
 
 
     private bool IsPoolAlreadyRegistered(GameObject prefab)

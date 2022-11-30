@@ -12,8 +12,6 @@ public class MissileChameleon : EnemyScript
     public float initialVelocityForce = 1000;
     public float timer = 10;
 
-    public GameObject explosionPrefab;
-    public GameObject explosionHarmlessPrefab;
     public Rigidbody rb;
 
 
@@ -63,14 +61,13 @@ public class MissileChameleon : EnemyScript
 
     private void Dead(bool harmless = false)
     {
-        GameObject explosion = explosionPrefab.gameObject;
-
+        GameObject explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false);
         if (harmless)
-        {
-            explosion = explosionHarmlessPrefab.gameObject;
-        }
-        GameObject prefab1 = Instantiate(explosion, transform.position, Quaternion.identity);
-        prefab1.gameObject.SetActive(true);
+            explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionHarmless, false);
+
+        explosion.transform.position = transform.position;
+        explosion.transform.rotation = Quaternion.identity;
+        explosion.gameObject.SetActive(true);
 
         Die();
     }

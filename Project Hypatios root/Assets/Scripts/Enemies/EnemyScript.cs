@@ -10,8 +10,11 @@ public abstract class EnemyScript : Entity
 
     [FoldoutGroup("Base")] [HideInEditorMode] [ShowInInspector] private EnemyStats _stats;
     [FoldoutGroup("Base")] [HideInPlayMode] [SerializeField] [InlineEditor] private BaseEnemyStats _baseStat;
+
+
     public EnemyStats Stats { get => _stats; }
     public string EnemyName { get => _baseStat.name; }
+
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal Entity currentTarget;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool hasSeenPlayer = false;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool canLookAtTarget = false;
@@ -34,12 +37,25 @@ public abstract class EnemyScript : Entity
         Hypatios.Enemy.DeregisterEnemy(this);
     }
 
+
+    #region Status
+
+
+    [FoldoutGroup("Debug")]
+    [Button("Hack")]
+    /// <summary>
+    /// Turn enemy's faction to Player.
+    /// </summary>
     public virtual void Hack()
     {
         Stats.MainAlliance = Alliance.Player;
         ScanForEnemies();
     }
 
+    /// <summary>
+    /// Warp enemy to world position.
+    /// </summary>
+    /// <param name="targetPos"></param>
     public virtual void Warp(Vector3 targetPos)
     {
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -64,6 +80,10 @@ public abstract class EnemyScript : Entity
         Stats.IsDead = true;
     }
 
+    #endregion
+
+    #region AI
+
     [FoldoutGroup("Debug")]
     [Button("Enforce scan target")]
     public virtual void ScanForEnemies()
@@ -75,7 +95,7 @@ public abstract class EnemyScript : Entity
 
     public virtual void AI_Detection()
     {
-        var posOffsetLook = currentTarget.OffsetedBoundPosition;
+        var posOffsetLook = currentTarget.OffsetedBoundWorldPosition;
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
         Debug.DrawLine(transform.position, posOffsetLook);
         canLookAtTarget = false;
@@ -97,6 +117,8 @@ public abstract class EnemyScript : Entity
             }
         }
     }
+
+    #endregion
 
 
     public virtual void Attacked(DamageToken token)

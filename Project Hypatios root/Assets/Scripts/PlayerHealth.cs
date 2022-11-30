@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using Sirenix.OdinInspector;
+using Kryz.CharacterStats;
 
 public class PlayerHealth : MonoBehaviour
 {
 
-    [SerializeField] public float maxHealth = 100f;
+    public CharacterStat maxHealth = new CharacterStat(100);
+    public CharacterStat healthRegen = new CharacterStat(0);
     public float curHealth;
     public float targetHealth;
-    public float healPerSecond;
-    public float healthRegen = 0f;
     public float HealthSpeed = 4;
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
@@ -88,7 +88,7 @@ public class PlayerHealth : MonoBehaviour
             isDead = true;
         }
 
-        if ((targetHealth / maxHealth) < 0.2f)
+        if ((targetHealth / maxHealth.Value) < 0.2f)
         {
             if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
                 Hypatios.Game.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
@@ -121,8 +121,8 @@ public class PlayerHealth : MonoBehaviour
         }
 
         //regen
-        if (isDead == false)
-            targetHealth += Time.deltaTime * healthRegen;
+        if (isDead == false && targetHealth > 1f)
+            targetHealth += Time.deltaTime * healthRegen.Value;
 
         if (targetHealth < curHealth)
         {
@@ -135,8 +135,8 @@ public class PlayerHealth : MonoBehaviour
             sliderHealthSpeed.value = targetHealth;
         }
 
-        sliderHealth.maxValue = maxHealth;
-        sliderHealthSpeed.maxValue = maxHealth;
+        sliderHealth.maxValue = maxHealth.Value;
+        sliderHealthSpeed.maxValue = maxHealth.Value;
 
         //if (Input.GetKeyDown(KeyCode.J))
         //{
@@ -147,9 +147,9 @@ public class PlayerHealth : MonoBehaviour
         {
             targetHealth = -99;
         }
-        else if (targetHealth > maxHealth)
+        else if (targetHealth > maxHealth.Value)
         {
-            targetHealth = maxHealth;
+            targetHealth = maxHealth.Value;
         }
 
        
@@ -157,7 +157,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int healNum)
     {
-        targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth);
+        targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth.Value);
         soundManagerScript.instance.PlayOneShot("reward");
     }
     public void takeDamage(int damage, float speed = 11, float shakinessFactor = 1)

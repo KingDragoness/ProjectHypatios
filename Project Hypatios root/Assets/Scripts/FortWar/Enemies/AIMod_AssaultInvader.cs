@@ -22,7 +22,6 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     [FoldoutGroup("Weapons")] public GameObject weapon_OriginFire;
     [FoldoutGroup("Weapons")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapons")] public float laser_Damage = 20;
-    [FoldoutGroup("Weapons")] public GameObject damageSpark;
 
     #region INPUTS 
 
@@ -152,7 +151,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
     private void SparkFX(Vector3 pos, Vector3 normal)
     {
-        GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(damageSpark, 20, 30);
+        GameObject bulletSpark_ = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
         if (bulletSpark_ != null)
         {
             bulletSpark_.transform.position = pos;

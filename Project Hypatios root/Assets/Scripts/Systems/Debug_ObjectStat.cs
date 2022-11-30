@@ -37,6 +37,11 @@ public class Debug_ObjectStat : MonoBehaviour
         if (currentEnemy != null) GizmoEnemy(); else NoGizmoEnemy();
     }
 
+    public bool CheckThereIsEnemyOnCrosshair()
+    {
+        return currentEnemy == null ? false : true;
+    }
+
     private void NoGizmoEnemy()
     {
         boundingBox.gameObject.SetActive(false);
@@ -141,6 +146,8 @@ public class Debug_ObjectStat : MonoBehaviour
             crosshairGizmos.transform.position = new Vector3(-999, -999, -999);
             isCrosshairHitSomething = false;
         }
+
+        if (currentEnemy == null) LockEnemy = false;
     }
 
     bool CheckPointWalkable(Vector3 pos)

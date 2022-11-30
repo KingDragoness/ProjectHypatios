@@ -22,24 +22,29 @@ public class FPSMainScript : MonoBehaviour
     public CurrentGamemode currentGamemode = CurrentGamemode.Aldrich;
     [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
+    [FoldoutGroup("References")] public PostProcessVolume postProcessVolume; //DOF, Motion blur, AO, Vignette
+    [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
+    [FoldoutGroup("References")] public GameObject Prefab_SpawnAmmo;
+    [FoldoutGroup("References")] public GameObject Prefab_SpawnSoul;
+    [FoldoutGroup("References")] public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
 
     [Header("Saves")]
     public int SoulPoint = 0;
     public int TotalRuns = 0;
-    public int LuckOfGod_Level = 0;
     public float UNIX_Timespan = 0;
     public bool everUsed_Paradox = false;
     public bool everUsed_WeaponShop = false;
-    public PostProcessVolume postProcessVolume; //DOF, Motion blur, AO, Vignette
-    public PostProcessVolume postProcessVolume_2; //Color grading, bloom
+    public int Perk_LV_MaxHitpointUpgrade = 0;
+    public int Perk_LV_RegenHitpointUpgrade = 0;
+    public int Perk_LV_Soulbonus = 0;
+    public int Perk_LV_ShortcutDiscount = 0;
+    public int Perk_LV_KnockbackRecoil = 0;
+    public int Perk_LV_DashCooldown = 0;
+    public int Perk_LV_IncreaseMeleeDamage = 0;
+
     public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
     public List<string> otherEverUsed = new List<string>();
-
-    [Space]
-    public GameObject Prefab_SpawnAmmo;
-    public GameObject Prefab_SpawnSoul;
-    public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
 
     [Space]
     public bool DEBUG_ShowTutorial = false;
@@ -50,7 +55,7 @@ public class FPSMainScript : MonoBehaviour
     public static readonly string GameSavePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/Hypatios/Saves";
 
 
-    public static HypatiosSave savedata;
+    public static HypatiosSave savedata; //cached
 
 
     private void Awake()
@@ -119,6 +124,8 @@ public class FPSMainScript : MonoBehaviour
         UNIX_Timespan += Time.deltaTime;
     }
 
+    #region Paradox and tips
+
     public void RuntimeTutorialHelp(string about, string description, string key)
     {
         if (Application.isEditor && DEBUG_ShowTutorial == false)
@@ -133,6 +140,7 @@ public class FPSMainScript : MonoBehaviour
             Hypatios.Game.TryAdd_EverUsed(key);
         }
     }
+
 
     public bool Check_EverUsed(string key)
     {
@@ -198,6 +206,8 @@ public class FPSMainScript : MonoBehaviour
         }
     }
 
+    #endregion
+
     #region Save System
     private void LoadFromSaveBuffer()
     {
@@ -205,19 +215,28 @@ public class FPSMainScript : MonoBehaviour
         var characterScript = FindObjectOfType<CharacterScript>();
         var weaponManager = FindObjectOfType<WeaponManager>();
 
+
+        {
+            Perk_LV_MaxHitpointUpgrade = savedata.Perk_LV_MaxHitpointUpgrade;
+            Perk_LV_RegenHitpointUpgrade = savedata.Perk_LV_RegenHitpointUpgrade;
+            Perk_LV_Soulbonus = savedata.Perk_LV_Soulbonus;
+            Perk_LV_ShortcutDiscount = savedata.Perk_LV_ShortcutDiscount;
+            Perk_LV_KnockbackRecoil = savedata.Perk_LV_KnockbackRecoil;
+            Perk_LV_DashCooldown = savedata.Perk_LV_DashCooldown;
+            Perk_LV_IncreaseMeleeDamage = savedata.Perk_LV_IncreaseMeleeDamage;
+        }
+
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
-        LuckOfGod_Level = savedata.Game_Upgrade_LuckOfGod;
         characterScript.Health.targetHealth = savedata.Player_CurrentHP;
         characterScript.Health.curHealth = savedata.Player_CurrentHP;
-        characterScript.Health.maxHealth = savedata.Game_Upgrade_MaxHP;
-        characterScript.Health.healthRegen = savedata.Game_Upgrade_RegenHP;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
+        Hypatios.Player.Initialize();
         weaponManager.LoadGame_InitializeGameSetup();
 
         LoadFromSaveFile = false;
@@ -227,19 +246,80 @@ public class FPSMainScript : MonoBehaviour
     {
         var characterScript = FindObjectOfType<CharacterScript>();
 
+        {
+            Perk_LV_Soulbonus = savedata.Perk_LV_Soulbonus;
+        }
+
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
-        LuckOfGod_Level = savedata.Game_Upgrade_LuckOfGod;
-        characterScript.Health.maxHealth = savedata.Game_Upgrade_MaxHP;
-        characterScript.Health.targetHealth = characterScript.Health.maxHealth;
-        characterScript.Health.healthRegen = savedata.Game_Upgrade_RegenHP;
+        characterScript.Health.targetHealth = characterScript.Health.maxHealth.Value;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
 
+    }
+
+    private HypatiosSave PackSaveData(int targetLevel = -1)
+    {
+        HypatiosSave hypatiosSave = new HypatiosSave();
+        var characterScript = FindObjectOfType<CharacterScript>();
+        var weaponManager = FindObjectOfType<WeaponManager>();
+
+        if (targetLevel == -1)
+        {
+            hypatiosSave.Game_LastLevelPlayed = Application.loadedLevel;
+        }
+        else
+        {
+            hypatiosSave.Game_LastLevelPlayed = targetLevel;
+        }
+
+        hypatiosSave.Game_TotalRuns = TotalRuns;
+        hypatiosSave.Game_TotalSouls = SoulPoint;
+        hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+        hypatiosSave.Player_CurrentHP = characterScript.Health.curHealth;
+        hypatiosSave.Game_WeaponStats = currentWeaponStat;
+        hypatiosSave.Game_ParadoxEntities = paradoxEntities;
+        hypatiosSave.everUsed_Paradox = everUsed_Paradox;
+        hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
+        hypatiosSave.otherEverUsed = otherEverUsed;
+
+        {
+            hypatiosSave.Perk_LV_MaxHitpointUpgrade = Perk_LV_MaxHitpointUpgrade;
+            hypatiosSave.Perk_LV_RegenHitpointUpgrade = Perk_LV_RegenHitpointUpgrade;
+            hypatiosSave.Perk_LV_Soulbonus = Perk_LV_Soulbonus;
+            hypatiosSave.Perk_LV_ShortcutDiscount = Perk_LV_ShortcutDiscount;
+            hypatiosSave.Perk_LV_KnockbackRecoil = Perk_LV_KnockbackRecoil;
+            hypatiosSave.Perk_LV_DashCooldown = Perk_LV_DashCooldown;
+            hypatiosSave.Perk_LV_IncreaseMeleeDamage = Perk_LV_IncreaseMeleeDamage;
+        }
+
+        foreach (var weaponDataResource in weaponManager.weapons)
+        {
+            HypatiosSave.WeaponDataSave weaponDataSave = GetWeaponSave(weaponDataResource.nameWeapon);
+
+            if (weaponDataSave == null)
+            {
+                continue;
+            }
+
+            var gunScript = weaponManager.GetGunScript(weaponDataResource.nameWeapon);
+
+            if (gunScript == null)
+            {
+                continue;
+            }
+
+            weaponDataSave.currentAmmo = gunScript.curAmmo;
+            weaponDataSave.totalAmmo = gunScript.totalAmmo;
+            weaponDataSave.weaponID = gunScript.weaponName;
+
+        }
+
+        return hypatiosSave;
     }
 
     public void Death_NoSaturation()
@@ -328,58 +408,6 @@ public class FPSMainScript : MonoBehaviour
 
     }
 
-    private HypatiosSave PackSaveData(int targetLevel = -1)
-    {
-        HypatiosSave hypatiosSave = new HypatiosSave();
-        var characterScript = FindObjectOfType<CharacterScript>();
-        var weaponManager = FindObjectOfType<WeaponManager>();
-
-        if (targetLevel == -1)
-        {
-            hypatiosSave.Game_LastLevelPlayed = Application.loadedLevel;
-        }
-        else
-        {
-            hypatiosSave.Game_LastLevelPlayed = targetLevel;
-        }
-
-        hypatiosSave.Game_TotalRuns = TotalRuns;
-        hypatiosSave.Game_TotalSouls = SoulPoint;
-        hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
-        hypatiosSave.Player_CurrentHP = characterScript.Health.curHealth;
-        hypatiosSave.Game_Upgrade_MaxHP = characterScript.Health.maxHealth;
-        hypatiosSave.Game_Upgrade_RegenHP = characterScript.Health.healthRegen;
-        hypatiosSave.Game_Upgrade_LuckOfGod = LuckOfGod_Level;
-        hypatiosSave.Game_WeaponStats = currentWeaponStat;
-        hypatiosSave.Game_ParadoxEntities = paradoxEntities;
-        hypatiosSave.everUsed_Paradox = everUsed_Paradox;
-        hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
-        hypatiosSave.otherEverUsed = otherEverUsed;
-
-        foreach (var weaponDataResource in weaponManager.weapons)
-        {
-            HypatiosSave.WeaponDataSave weaponDataSave = GetWeaponSave(weaponDataResource.nameWeapon);
-
-            if (weaponDataSave == null)
-            {
-                continue;
-            }
-
-            var gunScript = weaponManager.GetGunScript(weaponDataResource.nameWeapon);
-
-            if (gunScript == null)
-            {
-                continue;
-            }
-
-            weaponDataSave.currentAmmo = gunScript.curAmmo;
-            weaponDataSave.totalAmmo = gunScript.totalAmmo;
-            weaponDataSave.weaponID = gunScript.weaponName;
-
-        }
-
-        return hypatiosSave;
-    }
 
     public void BufferSaveData(string path = "")
     {

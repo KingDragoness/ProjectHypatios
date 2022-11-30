@@ -393,7 +393,8 @@ public class ConsoleCommand : MonoBehaviour
                 if (args[0] == "lock")
                 {
                     Hypatios.DebugObjectStat.LockEnemy = !Hypatios.DebugObjectStat.LockEnemy;
-                    SendConsoleMessage($" {Hypatios.DebugObjectStat.LockEnemy}");
+                    if (Hypatios.DebugObjectStat.CheckThereIsEnemyOnCrosshair()) SendConsoleMessage($" {Hypatios.DebugObjectStat.LockEnemy}");
+                    else SendConsoleMessage($"No enemy detected.");
                 }
                 else
                 {
@@ -479,8 +480,8 @@ public class ConsoleCommand : MonoBehaviour
         try
         {
             CharacterScript characterScript = Hypatios.Player;
-            characterScript.Health.targetHealth = characterScript.Health.maxHealth;
-            characterScript.Health.curHealth = characterScript.Health.maxHealth;
+            characterScript.Health.targetHealth = characterScript.Health.maxHealth.Value;
+            characterScript.Health.curHealth = characterScript.Health.maxHealth.Value;
             characterScript.timeSinceLastDash = 10f;
 
         }
@@ -566,31 +567,70 @@ public class ConsoleCommand : MonoBehaviour
     protected void Help(string[] args)
     {
         List<string> helps = new List<string>();
-        bool showFirstPageHelp = false;
+        helps.Add(" ");
+        int entryPerPage = 10;
+        List<string> helpCommands = new List<string>();
+        {
+            helpCommands.Add("'cc' to use extra commands");
+            helpCommands.Add("'giveammos' to give ammos");
+            helpCommands.Add("'givemeallweapons' to unlock all weapons");
+            helpCommands.Add("'god' to toggle god mode");
+            helpCommands.Add("'help level' to see level commands if exist");
+            helpCommands.Add("'help status' to look every status effect in the game");
+            helpCommands.Add("'killall' to all enemies");
+            helpCommands.Add("'killme' to commit suicide");
+            helpCommands.Add("'levelnames' gets every level exists in the current build.");
+            helpCommands.Add("'loadfile' to load save file");
+            helpCommands.Add("'loadlevel' to load level. Resets progress!");
+            helpCommands.Add("'nextlevel' to go next level while retaining items");
+            helpCommands.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
+            helpCommands.Add("'res' to restore health & dash");
+            helpCommands.Add("'savefile' to save file");
+            helpCommands.Add("'screensize' to set screen size");
+            helpCommands.Add("'setfps' to set game's FPS");
+            helpCommands.Add("'soul' to get soul");
+            helpCommands.Add("'ui' to change UI mode 0/1/2");
+            helpCommands.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
+        }
 
+        int currentEntry = 0;
+
+        if (args.Length == 0)
+        {
+            int totalEntry = Mathf.FloorToInt(helpCommands.Count / entryPerPage);
+            helps.Add($" =============== HELP [{currentEntry}/{totalEntry-1}] =============== ");
+            helps.Add("Press ENTER to execute command");
+            helps.Add("Press ~ key to toggle console");
+
+            for (int s = currentEntry * entryPerPage; s < (currentEntry + 1) * entryPerPage; s++)
+            {
+                if (s > helpCommands.Count) break;
+
+                helps.Add($"{helpCommands[s]}");
+
+            }
+        }
+        else if (int.TryParse(args[0], out currentEntry))
+        {
+            int totalEntry = Mathf.FloorToInt(helpCommands.Count / entryPerPage);
+            helps.Add($" =============== HELP [{currentEntry}/{totalEntry-1}] =============== ");
+            helps.Add("Press ENTER to execute command");
+            helps.Add("Press ~ key to toggle console");
+
+            for(int s = currentEntry * entryPerPage; s < (currentEntry+1) * entryPerPage; s++)
+            {
+                if (s > helpCommands.Count) break;
+
+                helps.Add($"{helpCommands[s]}");
+
+            }
+        }
+        else
         if (args.Length != 0)
         {
             if (args[0] == "level")
             {
                 return;
-            }
-            else if (args[0] == "1")
-            {
-                helps.Add(" =============== HELP [1/1] =============== ");
-                helps.Add("Press ENTER to execute command");
-                helps.Add("Press ~ key to toggle console");
-                helps.Add("'cc' to use extra commands");
-                helps.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
-                helps.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
-                helps.Add("'nextlevel' to go next level while retaining items");
-                helps.Add("'levelnames' gets every level exists in the current build.");
-                helps.Add("'god' to toggle god mode");
-                helps.Add("'res' to restore health & dash");
-                helps.Add("'soul' to get soul");
-                helps.Add("'ui' to change UI mode 0/1/2");
-                helps.Add("'giveammos' to give ammos");
-                helps.Add("'setfps' to set game's FPS");
-                helps.Add(" ");
             }
             else if (args[0] == "wstat")
             {
@@ -602,39 +642,26 @@ public class ConsoleCommand : MonoBehaviour
             }
             else if (args[0] == "enemy")
             {
-                helps.Add(" =============== HELP [WORLD STAT commnads] =============== ");
+                helps.Add(" =============== HELP [ENEMIES commnads] =============== ");
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 helps.Add("'enemy hack' to gain control of the enemy.");
                 helps.Add("'enemy reset' to reset enemy's status.");
                 helps.Add(" ");
             }
-            else
+            else if (args[0] == "status")
             {
-                showFirstPageHelp = true;
+                helps.Add(" =============== HELP [EVERY STATUS EFFECTS] =============== ");
+                foreach (string name in Enum.GetNames(typeof(StatusEffectCategory)))
+                {
+                    helps.Add(name);
+                }
+
+                helps.Add(" ");
             }
-        }
-        else
-        {
-            showFirstPageHelp = true;
 
         }
 
-        if (showFirstPageHelp)
-        {
-            helps.Add(" =============== HELP [0/1] =============== ");
-            helps.Add("Press ENTER to execute command");
-            helps.Add("Press ~ key to toggle console");
-            helps.Add("'loadlevel' to load level. Resets progress!");
-            helps.Add("'savefile' to save file");
-            helps.Add("'loadfile' to load save file");
-            helps.Add("'givemeallweapons' to unlock all weapons");
-            helps.Add("'help level' to see level commands if exist");
-            helps.Add("'killme' to commit suicide");
-            helps.Add("'killall' to all enemies");
-            helps.Add("'screensize' to set screen size");
-            helps.Add(" ");
-        }
 
         foreach (var helpString in helps)
         {

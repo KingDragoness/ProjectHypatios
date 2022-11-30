@@ -42,7 +42,6 @@ public class B0MBScript : EnemyScript
     float afterDeathTime = -1.5f;
     public ParticleSystem aura;
     public ParticleSystem spawnParticle;
-    public ParticleSystem explosion;
     Animator anim;
     bool hasInstanced = false;
     bool gonnaExplode = false;
@@ -170,7 +169,7 @@ public class B0MBScript : EnemyScript
         }
         else
         {
-            Instantiate(explosion, transform.position, transform.rotation);
+            var explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false);
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (Collider c in colliders)
             {

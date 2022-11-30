@@ -30,6 +30,7 @@ public class EnemyStats
     [BoxGroup("Stats")] [Tooltip("Recommended values: 0 - 150 (IQ)")] public CharacterStat Intelligence;
     [BoxGroup("Stats")] public CharacterStat Luck;
     [BoxGroup("Stats")] public CharacterStat MaxHitpoint;
+    [BoxGroup("Stats")] public CharacterStat MovementBonus;
     public Alliance MainAlliance = Alliance.Mobius;
     public UnitType UnitType;
     public bool IsDamagableBySameType = false;
@@ -38,6 +39,10 @@ public class EnemyStats
     [Header("Runtime Only")]
     [ReadOnly] public float CurrentHitpoint;
     [ReadOnly] public bool IsDead = false;
+    [ReadOnly] public float Fire = -1; //Timer until status run out
+    [ReadOnly] public float Poison = -1; 
+    [ReadOnly] public float Paralyze = -1; 
+
 
     public void Initialize()
     {

@@ -9,7 +9,6 @@ public class KatanaScript : BaseWeaponScript
     public float cooldownAttack = 1f;
     public float range = 5f;
 
-    [FoldoutGroup("References")] public CharacterScript characterScript;
     [FoldoutGroup("References")] public PlayerHealth playerHealth;
     [FoldoutGroup("Audios")] public AudioSource audio_HitSword;
 
@@ -20,13 +19,14 @@ public class KatanaScript : BaseWeaponScript
     private void Start()
     {
         weaponSystem = Hypatios.Player.Weapon;
-        if (characterScript == null) characterScript = Hypatios.Player;
         if (playerHealth == null) playerHealth = Hypatios.Player.Health;
         cam = Hypatios.MainCamera;
 
         gunRecoil = weaponSystem.gunRecoil;
 
     }
+
+    bool b = false;
 
     private void Update()
     {
@@ -40,14 +40,17 @@ public class KatanaScript : BaseWeaponScript
         if (Input.GetButton("Fire2"))
         {
             playerHealth.armorStrength = 2f;
-            characterScript.speedMultiplier = 4f;
+            if (!b) Hypatios.Player.CreatePersistentStatusEffect(StatusEffectCategory.MovementBonus, -0.5f, gameObject); 
             anim.SetBool("Block", true);
+            b = true;
         }
         else
         {
             playerHealth.armorStrength = 1f;
-            characterScript.speedMultiplier = 8f;
+            if (b) Hypatios.Player.RemoveAllEffectsBySource(gameObject);
+            //characterScript.speedMultiplier.Value = 8f;
             anim.SetBool("Block", false);
+            b = false;
         }
     }
 

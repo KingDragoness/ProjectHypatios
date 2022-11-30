@@ -22,7 +22,7 @@ public class HealPlayer : MonoBehaviour
     void Update()
     {
         curHealth = playerHealth.targetHealth;
-        if (Vector3.Distance(transform.position, player.transform.position) < distanceToCollect && curHealth < playerHealth.maxHealth)
+        if (Vector3.Distance(transform.position, player.transform.position) < distanceToCollect && curHealth < playerHealth.maxHealth.Value)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
@@ -32,7 +32,7 @@ public class HealPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && curHealth < playerHealth.maxHealth && !playerHealth.isDead)
+        if (other.tag == "Player" && curHealth < playerHealth.maxHealth.Value && !playerHealth.isDead)
         {
             playerHealth.Heal(Random.Range(1, 5));
             Destroy(gameObject);

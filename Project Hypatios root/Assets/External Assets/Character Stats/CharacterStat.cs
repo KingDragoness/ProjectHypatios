@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Sirenix.OdinInspector;
 
 namespace Kryz.CharacterStats
 {
 	[Serializable]
 	public class CharacterStat
 	{
-		public float BaseValue;
+		[HorizontalGroup("1")] public float BaseValue;
 
 		protected bool isDirty = true;
 		protected float lastBaseValue;
 
-		protected float _value;
+		[HorizontalGroup("1")] [HideInEditorMode] [ShowInInspector] [ReadOnly] protected float _value;
 		public virtual float Value {
 			get {
 				if(isDirty || lastBaseValue != BaseValue) {

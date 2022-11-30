@@ -4,21 +4,54 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Kryz.CharacterStats;
+
+
+[System.Serializable]
+public class PlayerStat
+{
+
+    [BoxGroup("Stats")] public CharacterStat DamageBonus;
+    [BoxGroup("Stats")] public CharacterStat Luck = new CharacterStat(10); //unused, maybe for later
+    [BoxGroup("Stats")] public CharacterStat MaxHitpoint;
+    [BoxGroup("Stats")] public CharacterStat MovementBonus; //percentage only
+    [BoxGroup("Stats")] public CharacterStat RegenHPBonus; //percentage only
+    [BoxGroup("Stats")] public CharacterStat KnockbackResistance; //percentage only
+    [BoxGroup("Stats")] public CharacterStat SoulBonus; //flat
+    [BoxGroup("Stats")] public CharacterStat DashCooldown; //percentage only
+    [BoxGroup("Stats")] public CharacterStat ShortcutDiscount; //flat
+    [BoxGroup("Stats")] public CharacterStat BossDamageBonus; //percentage only
+    [BoxGroup("Stats")] public CharacterStat BonusDamagePistol; //percentage only
+    [BoxGroup("Stats")] public CharacterStat BonusDamageShotgun; //percentage only
+    [BoxGroup("Stats")] public CharacterStat BonusDamageMelee; //percentage only
+    [BoxGroup("Stats")] public CharacterStat BonusDamageRifle; //percentage only
+    [BoxGroup("Stats")] public CharacterStat BonusDamageExotics; //percentage only
+
+    [Header("Runtime Only")]
+    [ReadOnly] public float Fire = -1; 
+    [ReadOnly] public float Poison = -1;
+    [ReadOnly] public float Paralyze = -1;
+
+}
+
 
 public class CharacterScript : Entity
 {
 
-    dashParticleManager dashManager;
+    [FoldoutGroup("Base")] [HideInEditorMode] [ShowInInspector] private PlayerStat _stats;
+    public PlayerStat Stats { get => _stats; }
+
+    private dashParticleManager dashManager;
     public Rigidbody rb;
-    float playerHeight = 2f;
-    wallRun WallRun;
+    private float playerHeight = 2f;
+    private wallRun WallRun;
 
     [Header("Special FPS Mode")]
-    public bool isLimitedIntroMode = false;
-    public bool normalMode = true;
-    public bool disableInput = false;
-    public bool tutorialMode = false;
-    public bool isNoGravity = false;
+    [FoldoutGroup("Modes")] public bool isLimitedIntroMode = false;
+    [FoldoutGroup("Modes")] public bool normalMode = true;
+    [FoldoutGroup("Modes")] public bool disableInput = false;
+    [FoldoutGroup("Modes")] public bool tutorialMode = false;
+    [FoldoutGroup("Modes")] public bool isNoGravity = false;
 
     [Space]
     [Header("Movement States")]
@@ -31,46 +64,46 @@ public class CharacterScript : Entity
 
     [Space]
     //Moving
-    public float speedMultiplier = 10f;
+    public CharacterStat speedMultiplier = new CharacterStat(8);
     public float runSpeed = 12f;
     public float moveSpeed;
-    public Vector3 dir;
-    float xMovement, yMovement;
-    public float groundDrag = 6f;
+    [FoldoutGroup("Physics")] public Vector3 dir;
+    [FoldoutGroup("Physics")] float xMovement, yMovement;
+    [FoldoutGroup("Physics")] public float groundDrag = 6f;
 
     //Jumping
-    public float gravity = -18.3f;
-    public Transform groundCheck;
-    public float groundDistance = .4f;
-    public LayerMask player;
-    public float jumpHeight;   
-    public float jumpDrag = 1f;
-    public float jumpSpeedMultiplier = 0.4f;
-    public float fallSpeed = 2f;
-    bool inAir = false;
-    public bool isGrounded;
-    public bool isCrouching = false;
+    [FoldoutGroup("Physics")] public float gravity = -18.3f;
+    [FoldoutGroup("Physics")] public Transform groundCheck;
+    [FoldoutGroup("Physics")] public float groundDistance = .4f;
+    [FoldoutGroup("Physics")] public LayerMask player;
+    [FoldoutGroup("Physics")] public float jumpHeight;
+    [FoldoutGroup("Physics")] public float jumpDrag = 1f;
+    [FoldoutGroup("Physics")] public float jumpSpeedMultiplier = 0.4f;
+    [FoldoutGroup("Physics")] public float fallSpeed = 2f;
+    [FoldoutGroup("Physics")] bool inAir = false;
+    [FoldoutGroup("Physics")] public bool isGrounded;
+    [FoldoutGroup("Physics")] public bool isCrouching = false;
 
     //Slope & Stair Detection
-    RaycastHit slopeHit;
-    Vector3 slopeDirection;
+    [FoldoutGroup("Physics")] RaycastHit slopeHit;
+    [FoldoutGroup("Physics")] Vector3 slopeDirection;
 
     //Dashing
-    Vector3 dashDirection;
-    public float dashForce = 5f;
-    public float dashDuration = .5f;
-    public float timeSinceLastDash;
-    public float dashCooldown = 3f;
+    [FoldoutGroup("Dashing")] Vector3 dashDirection;
+    [FoldoutGroup("Dashing")] public float dashForce = 5f;
+    [FoldoutGroup("Dashing")] public float dashDuration = .5f;
+    [FoldoutGroup("Dashing")] public float timeSinceLastDash;
+    [FoldoutGroup("Dashing")] public float dashCooldown = 3f;
 
     //Audio
     soundManagerScript soundManager;
     bool runningAudioPlaying = false;
 
     //Pick Up Items
-    public GameObject[] itemOnField;
-    public float distanceToPickUp = 2f;
-    public GameObject closestItem;
-    public WeaponManager Weapon;
+    [FoldoutGroup("Interactions")] public GameObject[] itemOnField;
+    [FoldoutGroup("Interactions")] public float distanceToPickUp = 2f;
+    [FoldoutGroup("Interactions")] public GameObject closestItem;
+    [FoldoutGroup("Interactions")] public WeaponManager Weapon;
 
     //Animation
     [ShowInInspector] [ReadOnly] private Animator anim;
@@ -86,6 +119,51 @@ public class CharacterScript : Entity
     
 
     public bool isCheatMode;
+
+    public void Initialize()
+    {
+        ReloadStatEffects();
+
+        //load and create perks here
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Reload All Stat Effects")]
+    public void ReloadStatEffects()
+    {
+        var source = Hypatios.Game.gameObject;
+
+        RemoveAllEffectsBySource(source);
+        PerkInitialize(StatusEffectCategory.MaxHitpointBonus);
+        PerkInitialize(StatusEffectCategory.RegenHPBonus);
+    }
+
+    private void PerkInitialize(StatusEffectCategory category)
+    {
+        float value = 0;
+
+        if (category == StatusEffectCategory.MaxHitpointBonus)
+        {
+            value = PlayerPerk.GetValue_MaxHPUpgrade(Hypatios.Game.Perk_LV_MaxHitpointUpgrade);
+        }
+        else if (category == StatusEffectCategory.RegenHPBonus)
+        {
+            value = PlayerPerk.GetValue_RegenHPUpgrade(Hypatios.Game.Perk_LV_RegenHitpointUpgrade);
+        }
+
+        //value += Hypatios.Game.CustomTemporaryPerk (for single run bonus perks)
+
+        var source = Hypatios.Game.gameObject;
+        var effectObject = GetGenericEffect(category, source);
+
+        if (effectObject == null)
+            CreatePersistentStatusEffect(category, value, source);
+        else
+        {
+            effectObject.Value = value;
+            effectObject.ApplyEffect();
+        }
+    }
 
     void Start()
     {   
@@ -285,15 +363,15 @@ public class CharacterScript : Entity
 
         if (isGrounded && !onSlope())
         {
-            rb.AddForce(dir.normalized * speed * speedMultiplier);
+            rb.AddForce(dir.normalized * speed * speedMultiplier.Value);
         }
         else if (!isGrounded)
         {
-            rb.AddForce(dir.normalized * speed * speedMultiplier * jumpSpeedMultiplier, ForceMode.Acceleration);
+            rb.AddForce(dir.normalized * speed * speedMultiplier.Value * jumpSpeedMultiplier, ForceMode.Acceleration);
         }
         else if (isGrounded && onSlope())
         {
-            rb.AddForce(slopeDirection.normalized * speed * speedMultiplier, ForceMode.Acceleration);
+            rb.AddForce(slopeDirection.normalized * speed * speedMultiplier.Value, ForceMode.Acceleration);
         }
 
         if (isLimitedIntroMode == false)

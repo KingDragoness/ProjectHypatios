@@ -9,21 +9,21 @@ public class Monster_ZombieMobius : EnemyScript
 {
 
     public List<AnimatorOverrideController> variantControllers;
-    public UnityEvent OnAttack;
-    public UnityEvent OnAttackDone;
-    public UnityEvent OnDead;
+    [FoldoutGroup("Events")] public UnityEvent OnAttack;
+    [FoldoutGroup("Events")] public UnityEvent OnAttackDone;
+    [FoldoutGroup("Events")] public UnityEvent OnDead;
     public Animator animator;
     public float speed = 10;
     public float distanceToAttack = 5f;
     public GameObject hitbox;
     public GameObject visualAttack;
-    public Transform target;
-    public Transform playerTarget;
+
     [FoldoutGroup("Animations")] public float cooldownAttack = 1.95f;
     [FoldoutGroup("Animations")] public float hitboxStart = .2f;
     [FoldoutGroup("Animations")] public float hitboxLasts = .3f;
 
     private bool isAttacking = false;
+    private Transform target;
 
     private float durationAttack = 4f;
     private NavMeshAgent NavMeshAgent;
@@ -31,6 +31,8 @@ public class Monster_ZombieMobius : EnemyScript
 
     private void Start()
     {
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
+        target = currentTarget.transform;
         NavMeshAgent = GetComponent<NavMeshAgent>();
         SpawnHeal = GetComponent<SpawnHeal>();
         NavMeshAgent.speed = speed + Random.Range(-1, 2f);
@@ -63,10 +65,10 @@ public class Monster_ZombieMobius : EnemyScript
     {
         if (target1 == null)
         {
-            target = playerTarget;
+            target = currentTarget.transform;
         }
         else
-        {
+        {   
             target = target1;
         }
     }
@@ -79,37 +81,42 @@ public class Monster_ZombieMobius : EnemyScript
         {
             if (Stats.IsDead == false) Die();
             Stats.IsDead = true;
+            return;
         }
 
 
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (currentTarget == null) return;
+
+        target = currentTarget.transform;
+
+        if (isAttacking == false)
+        {
+            NavMeshAgent.updateRotation = true;
+            NavMeshAgent.SetDestination(target.position);
+        }
         else
         {
-            if (isAttacking == false)
+
+            durationAttack -= Time.deltaTime;
+            HandleRotation();
+
+            if (durationAttack < 0)
             {
-                NavMeshAgent.updateRotation = true;
-                NavMeshAgent.SetDestination(target.position);
+                animator.ResetTrigger("Attack");
+                isAttacking = false;
+                OnAttackDone?.Invoke();
+                visualAttack.gameObject.SetActive(false);
             }
-            else
-            {
+        }
 
-                durationAttack -= Time.deltaTime;
-                HandleRotation();
+        distanceToPlayer = Vector3.Distance(transform.position, target.position);
 
-                if (durationAttack < 0)
-                {
-                    animator.ResetTrigger("Attack");
-                    isAttacking = false;
-                    OnAttackDone?.Invoke();
-                    visualAttack.gameObject.SetActive(false);
-                }
-            }
-
-            distanceToPlayer = Vector3.Distance(transform.position, target.position);
-
-            if (distanceToPlayer < distanceToAttack && !isAttacking)
-            {
-                AttackPlayer();
-            }
+        if (distanceToPlayer < distanceToAttack && !isAttacking)
+        {
+            AttackPlayer();
         }
     }
 

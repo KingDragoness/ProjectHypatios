@@ -8,7 +8,7 @@ public class MeleeScript : MonoBehaviour
     Camera cam;
     public float meleeDamage;
     public float meleeRange;
-    float meleeFrame = 18f;
+    float meleeFrame = 15f;
     float meleeTime;
     float curMeleeTime;
     int weaponBeforeMelee;

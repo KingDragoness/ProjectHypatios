@@ -93,6 +93,7 @@ public class ParadoxShopUI : MonoBehaviour
     }
 
 
+    //Removed feature, moved to grim reaper's 
     #region Upgrade
 
     const float PER_UPGRADE_MAX_HP = 9;
@@ -102,15 +103,15 @@ public class ParadoxShopUI : MonoBehaviour
     {
         int price = 0;
         var heal = FindObjectOfType<CharacterScript>().Health;
-        int lv_Luck = Hypatios.Game.LuckOfGod_Level;
+        int lv_Luck = Hypatios.Game.Perk_LV_Soulbonus;
 
         if (button.perkType == PlayerPerks.HealthMax)
         {
-            price = PlayerPerk.GetPrice_MaxHP(heal.maxHealth, heal.maxHealth + PER_UPGRADE_MAX_HP);
+            //price = PlayerPerk.GetPrice_MaxHP(heal.maxHealth, heal.maxHealth + PER_UPGRADE_MAX_HP);
         }
         else if (button.perkType == PlayerPerks.HealthRegen)
         {
-            price = PlayerPerk.GetPrice_RegenHP(heal.healthRegen, heal.healthRegen + PER_UPGRADE_REGEN_HP);
+            //price = PlayerPerk.GetPrice_RegenHP(heal.healthRegen, heal.healthRegen + PER_UPGRADE_REGEN_HP);
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
@@ -139,15 +140,15 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (button.perkType == PlayerPerks.HealthMax)
         {
-            heal.maxHealth = heal.maxHealth + PER_UPGRADE_MAX_HP;
+            //heal.maxHealth = heal.maxHealth + PER_UPGRADE_MAX_HP;
         }
         else if (button.perkType == PlayerPerks.HealthRegen)
         {
-            heal.healthRegen = heal.healthRegen + PER_UPGRADE_REGEN_HP;
+            //heal.healthRegen = heal.healthRegen + PER_UPGRADE_REGEN_HP;
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
-            Hypatios.Game.LuckOfGod_Level++;
+            //Hypatios.Game.LuckOfGod_Level++;
         }
 
         RefreshUI();
@@ -162,7 +163,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (button.perkType == PlayerPerks.HealthMax)
         {
-            float maxHP = heal.maxHealth;
+            float maxHP = 0; // heal.maxHealth;
             float result = maxHP + PER_UPGRADE_MAX_HP;
 
             price = PlayerPerk.GetPrice_MaxHP(maxHP, result);
@@ -174,7 +175,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
         else if (button.perkType == PlayerPerks.HealthRegen)
         {
-            float regen = heal.healthRegen;
+            float regen = 0; // heal.healthRegen;
             float result = regen + PER_UPGRADE_REGEN_HP;
 
             price = PlayerPerk.GetPrice_RegenHP(regen, result);
@@ -185,7 +186,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
-            int lv_Luck = Hypatios.Game.LuckOfGod_Level;
+            int lv_Luck = Hypatios.Game.Perk_LV_Soulbonus;
             price = PlayerPerk.GetPrice_LuckOfGod(lv_Luck);
             s = $"[LV {lv_Luck + 1}/6]" +
             $" [Soul: {price}]";
@@ -199,7 +200,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (button.perkType == PlayerPerks.LuckGod)
         {
-            descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(Hypatios.Game.LuckOfGod_Level)} {s} ";
+            descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(Hypatios.Game.Perk_LV_Soulbonus)} {s} ";
         }
 
 

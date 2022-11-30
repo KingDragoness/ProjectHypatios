@@ -24,7 +24,6 @@ public class Enemy_FW_SentryGun : EnemyScript
     [FoldoutGroup("Weapon")] public Transform[] allTurretOrigin;
     [FoldoutGroup("Weapon")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapon")] public float weapon_Damage = 20;
-    [FoldoutGroup("Weapon")] public GameObject damageSpark;
     [FoldoutGroup("Weapon")] public AudioSource audio_Fire;
 
     public delegate void OnAITick();
@@ -181,7 +180,7 @@ public class Enemy_FW_SentryGun : EnemyScript
     }
     private void SparkFX(Vector3 pos, Vector3 normal)
     {
-        GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(damageSpark, 20, 30);
+        GameObject bulletSpark_ = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
         if (bulletSpark_ != null)
         {
             bulletSpark_.transform.position = pos;

@@ -10,6 +10,8 @@ public class SoundBulletFly : MonoBehaviour
     {
         float chance1 = Random.Range(0f, 1f);
 
+        if (Time.timeSinceLevelLoad < 1) return;
+
         if (chance1 > 0.5f)
             soundManagerScript.instance.Play3D("flybullet.0", transform.position);
         else
