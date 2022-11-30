@@ -241,9 +241,11 @@ public class ConsoleCommand : MonoBehaviour
         {
             Hypatios.Game.SaveGame();
         }
-        catch
+        catch (Exception e)
         {
             SendConsoleMessage("Invalid argument! savefile");
+            Debug.LogError(e.Message);
+            Debug.LogError(e.StackTrace);
         }
     }
     protected void LoadFile(string[] args)
@@ -332,6 +334,10 @@ public class ConsoleCommand : MonoBehaviour
                 {
                     Hypatios.DebugObjectStat.Enemy_ChangeAllianceToPlayer();
                 }
+                else if (args[0] == "frenzy")
+                {
+                    Hypatios.DebugObjectStat.Enemy_Frenzy();
+                }
                 else if (args[0] == "reset")
                 {
                     Hypatios.DebugObjectStat.Enemy_ResetStat();
@@ -339,6 +345,14 @@ public class ConsoleCommand : MonoBehaviour
                 else if (args[0] == "warp")
                 {
                     Hypatios.DebugObjectStat.Enemy_WarpToGizmoCrosshair();
+                }
+                else if (args[0] == "burn")
+                {
+                    Hypatios.DebugObjectStat.Enemy_Burn();
+                }
+                else if (args[0] == "poison")
+                {
+                    Hypatios.DebugObjectStat.Enemy_Poison();
                 }
                 else
                 {
@@ -646,7 +660,11 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 helps.Add("'enemy hack' to gain control of the enemy.");
+                helps.Add("'enemy frenzy' to frenzied an enemy.");
+                helps.Add("'enemy burn' to burn the enemy.");
+                helps.Add("'enemy poison' to poison the enemy.");
                 helps.Add("'enemy reset' to reset enemy's status.");
+                helps.Add("'enemy warp' to warp enemy to gizmo position.");
                 helps.Add(" ");
             }
             else if (args[0] == "status")

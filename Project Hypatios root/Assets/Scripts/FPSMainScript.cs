@@ -215,7 +215,7 @@ public class FPSMainScript : MonoBehaviour
         var characterScript = FindObjectOfType<CharacterScript>();
         var weaponManager = FindObjectOfType<WeaponManager>();
 
-
+        //perks
         {
             Perk_LV_MaxHitpointUpgrade = savedata.Perk_LV_MaxHitpointUpgrade;
             Perk_LV_RegenHitpointUpgrade = savedata.Perk_LV_RegenHitpointUpgrade;
@@ -246,10 +246,16 @@ public class FPSMainScript : MonoBehaviour
     {
         var characterScript = FindObjectOfType<CharacterScript>();
 
+        //perks
         {
+            Perk_LV_MaxHitpointUpgrade = savedata.Perk_LV_MaxHitpointUpgrade;
+            Perk_LV_RegenHitpointUpgrade = savedata.Perk_LV_RegenHitpointUpgrade;
             Perk_LV_Soulbonus = savedata.Perk_LV_Soulbonus;
+            Perk_LV_ShortcutDiscount = savedata.Perk_LV_ShortcutDiscount;
+            Perk_LV_KnockbackRecoil = savedata.Perk_LV_KnockbackRecoil;
+            Perk_LV_DashCooldown = savedata.Perk_LV_DashCooldown;
+            Perk_LV_IncreaseMeleeDamage = savedata.Perk_LV_IncreaseMeleeDamage;
         }
-
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
@@ -287,6 +293,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
         hypatiosSave.otherEverUsed = otherEverUsed;
 
+        //perks
         {
             hypatiosSave.Perk_LV_MaxHitpointUpgrade = Perk_LV_MaxHitpointUpgrade;
             hypatiosSave.Perk_LV_RegenHitpointUpgrade = Perk_LV_RegenHitpointUpgrade;

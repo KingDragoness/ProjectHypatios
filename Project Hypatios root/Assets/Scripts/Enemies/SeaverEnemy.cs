@@ -68,6 +68,8 @@ public class SeaverEnemy : EnemyScript
 
     private void Update()
     {
+        if (isAIEnabled == false) return;
+
 
         if (Mathf.RoundToInt(Time.time) % 5 == 0)
             ScanForEnemies();
@@ -90,10 +92,10 @@ public class SeaverEnemy : EnemyScript
 
             if (Stats.CurrentHitpoint < (Stats.MaxHitpoint.Value / 2f))
                 hitpointLowChance += 0.1f;
-            if (Stats.CurrentHitpoint < (Stats.MaxHitpoint.Value / 4f))
-                hitpointLowChance += 0.1f;
+            if (Stats.CurrentHitpoint < (Stats.MaxHitpoint.Value / 3f))
+                hitpointLowChance += 0.2f;
 
-            if (chance < (0.4f + hitpointLowChance))
+            if (chance + hitpointLowChance < 0.4f)
             {
                 SpawnScarab();
             }

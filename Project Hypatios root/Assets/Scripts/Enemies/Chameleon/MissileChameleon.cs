@@ -45,6 +45,10 @@ public class MissileChameleon : EnemyScript
 
     private void Update()
     {
+        if (isAIEnabled == false) return;
+
+        if (currentTarget == null){ Dead(true); return; }
+
         var q = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
 
@@ -61,13 +65,18 @@ public class MissileChameleon : EnemyScript
 
     private void Dead(bool harmless = false)
     {
+        if (Stats.IsDead) return;
         GameObject explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false);
         if (harmless)
             explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionHarmless, false);
 
-        explosion.transform.position = transform.position;
-        explosion.transform.rotation = Quaternion.identity;
-        explosion.gameObject.SetActive(true);
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = Quaternion.identity;
+            explosion.gameObject.SetActive(true);
+            explosion.DisableObjectTimer(5f);
+        }
 
         Die();
     }
@@ -75,6 +84,7 @@ public class MissileChameleon : EnemyScript
     public override void Die()
     {
         Destroy(gameObject);
+        Stats.IsDead = true;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -11,6 +11,7 @@ public class KillZone : MonoBehaviour
     public float DamageSpeedOverride = 20;
     public float DamageShakinessFactor = 0.1f;
     public bool DEBUG_DrawGizmos = false;
+    [FoldoutGroup("Enemies")] public EnemyScript originEnemy;
     [FoldoutGroup("Enemies")] public LayerMask sphereLayerMask;
     [FoldoutGroup("Enemies")] public float sphereRadius = 5f;
     [FoldoutGroup("Enemies")]
@@ -25,6 +26,8 @@ public class KillZone : MonoBehaviour
     {
         PlayerHealth = FindObjectOfType<PlayerHealth>();
         if (alsoDamageEnemy) DamageEnemy();
+
+        //Debug.Log("test1");
     }
 
     private void OnDrawGizmos()
@@ -103,6 +106,9 @@ public class KillZone : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Unreliable garbage
+    /// </summary>
     public void DamageEnemy()
     {
         Vector3 center = transform.position;
@@ -111,9 +117,11 @@ public class KillZone : MonoBehaviour
         foreach (var collider in hitColliders)
         {
             var damage = collider.GetComponent<damageReceiver>();
+            //Debug.Log(collider.gameObject.name);
             if (damage != null)
             {
-                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond;
+               // Debug.Log(damage.gameObject.name);
+                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond; token.originEnemy = originEnemy;
 
                 UniversalDamage.TryDamage(token, collider.transform, this.transform);
             }

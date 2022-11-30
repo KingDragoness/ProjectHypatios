@@ -21,6 +21,8 @@ public class GhostEnemy : EnemyScript
 
     private void Update()
     {
+        if (isAIEnabled == false) return;
+
         if (lastPos != player.position)
         {
             velocity = player.position - lastPos;

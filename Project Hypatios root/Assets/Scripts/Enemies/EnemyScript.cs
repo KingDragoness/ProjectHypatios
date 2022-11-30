@@ -18,6 +18,7 @@ public abstract class EnemyScript : Entity
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal Entity currentTarget;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool hasSeenPlayer = false;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool canLookAtTarget = false;
+    [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] internal bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] internal Transform eyeLocation;
 
     public System.Action OnDied;
@@ -40,6 +41,19 @@ public abstract class EnemyScript : Entity
 
     #region Status
 
+    [FoldoutGroup("Debug")]
+    [Button("Paralyze")]
+    /// <summary>
+    /// Disables enemy's AI.
+    /// </summary>
+    public virtual void Paralyze() { isAIEnabled = false; }
+
+    [FoldoutGroup("Debug")]
+    [Button("Deparalyze")]
+    /// <summary>
+    /// Disables enemy's AI.
+    /// </summary>
+    public virtual void Deparalyze() { isAIEnabled = true; }
 
     [FoldoutGroup("Debug")]
     [Button("Hack")]
@@ -51,6 +65,18 @@ public abstract class EnemyScript : Entity
         Stats.MainAlliance = Alliance.Player;
         ScanForEnemies();
     }
+
+    [FoldoutGroup("Debug")]
+    [Button("Frenzy")]
+    /// <summary>
+    /// Turn enemy's faction to Player.
+    /// </summary>
+    public virtual void Frenzy()
+    {
+        Stats.MainAlliance = Alliance.Rogue;
+        ScanForEnemies();
+    }
+
 
     /// <summary>
     /// Warp enemy to world position.
@@ -78,6 +104,23 @@ public abstract class EnemyScript : Entity
     {
         Hypatios.Enemy.OnEnemyDied?.Invoke(this);
         Stats.IsDead = true;
+    }
+
+    #endregion
+
+    #region Check Status
+
+    public bool IsOnFire()
+    {
+        return AllStatusInEffect.Find(x => x.statusCategoryType == StatusEffectCategory.Fire);
+    }
+    public bool IsPoisoned()
+    {
+        return AllStatusInEffect.Find(x => x.statusCategoryType == StatusEffectCategory.Poison);
+    }
+    public bool IsParalyzed()
+    {
+        return !isAIEnabled;
     }
 
     #endregion

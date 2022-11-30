@@ -12,6 +12,7 @@ public enum CategoryParticleEffect
     ExplosionHarmless = 20,
     ExplosionPlayer,
     ExplosionAll,
+    ExplosionSeaver,
     FireEffect = 30,
     PoisonEffect
 }
@@ -130,17 +131,27 @@ public class DynamicObjectPool : MonoBehaviour
 
         var targetPool = _pools.Find(x => x.Prefab == prefab);
         var instance = targetPool.Reuse(IncludeActive);
-        if (instance) instance.transform.SetParent(this.transform);
-
+        if (instance)
+        {
+            instance.transform.SetParent(this.transform);
+            var objPool = instance.GetComponent<ObjectPool>();
+            if (objPool != null) objPool.OnReuseObject();
+        }
         return instance;
     }
 
-    public GameObject SummonParticle(CategoryParticleEffect particle, bool IncludeActive = false)
+    public GameObject SummonParticle(CategoryParticleEffect particle, bool IncludeActive = false, Vector3 _pos = new Vector3(), Quaternion _rot = new Quaternion())
     {
         var targetPool = _pools.Find(x => x.Category == particle);
         var instance = targetPool.Reuse(IncludeActive);
-        if (instance) instance.transform.SetParent(this.transform);
-
+        if (instance)
+        {
+            instance.transform.SetParent(this.transform);
+            instance.transform.position = _pos;
+            instance.transform.rotation = _rot;
+            var objPool = instance.GetComponent<ObjectPool>();
+            if (objPool != null) { objPool.OnReuseObject(); }
+        }
         return instance;
     }
 

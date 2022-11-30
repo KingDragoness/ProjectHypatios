@@ -109,6 +109,7 @@ public class CharacterScript : Entity
     [ShowInInspector] [ReadOnly] private Animator anim;
     [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
     public Animator Anim { get => anim; }
+    private float airTime = 0;
 
     //Scope
     float scopingSpeed = 6f;
@@ -131,9 +132,7 @@ public class CharacterScript : Entity
     [Button("Reload All Stat Effects")]
     public void ReloadStatEffects()
     {
-        var source = Hypatios.Game.gameObject;
-
-        RemoveAllEffectsBySource(source);
+        RemoveAllEffectsBySource("PermanentPerk");
         PerkInitialize(StatusEffectCategory.MaxHitpointBonus);
         PerkInitialize(StatusEffectCategory.RegenHPBonus);
     }
@@ -153,11 +152,10 @@ public class CharacterScript : Entity
 
         //value += Hypatios.Game.CustomTemporaryPerk (for single run bonus perks)
 
-        var source = Hypatios.Game.gameObject;
-        var effectObject = GetGenericEffect(category, source);
+        var effectObject = GetGenericEffect(category, "PermanentPerk");
 
         if (effectObject == null)
-            CreatePersistentStatusEffect(category, value, source);
+            CreatePersistentStatusEffect(category, value, "PermanentPerk");
         else
         {
             effectObject.Value = value;
@@ -227,6 +225,7 @@ public class CharacterScript : Entity
                 if (!isGrounded && !WallRun.isWallRunning)
                 {
                     inAir = true;
+                    airTime += Time.deltaTime;
                     Anim.SetBool("inAir", true);
                 }
                 else if (WallRun.isWallRunning)
@@ -240,8 +239,16 @@ public class CharacterScript : Entity
                 if (inAir && isGrounded)
                 {
                     inAir = false;
-                    soundManager.Play("falling");
+                    if (airTime > 0.3f) soundManager.Play("falling");
                     Anim.SetBool("inAir", false);
+
+                    {
+                        float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 3);
+                        var recoil = FindObjectOfType<Recoil>();
+                        recoil.CustomRecoil(new Vector3(5, -5f, 5f), multiplierAir);
+                    }
+                    airTime = 0;
+
                 }
             }
         }

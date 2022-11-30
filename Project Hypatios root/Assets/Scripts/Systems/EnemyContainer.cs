@@ -65,7 +65,13 @@ public class EnemyContainer : MonoBehaviour
                 return Hypatios.Player;
             }
         }
-        else
+       
+        else if (alliance == Alliance.Rogue)
+        {
+            var enemy = tempList_NearestEnemy.Find(x => x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
+            return enemy;
+        }
+        else 
         {
             var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
             return enemy;

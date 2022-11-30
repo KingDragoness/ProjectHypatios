@@ -4831,7 +4831,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8418426a07957c5439092705cf2bb802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originEnemy: {fileID: 0}
   damage: 2
+  originDamage: 1
 --- !u!1 &523517059
 GameObject:
   m_ObjectHideFlags: 0
@@ -10029,7 +10031,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8418426a07957c5439092705cf2bb802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originEnemy: {fileID: 0}
   damage: 2
+  originDamage: 1
 --- !u!1 &2198563967760310749
 GameObject:
   m_ObjectHideFlags: 0
@@ -10431,7 +10435,7 @@ GameObject:
   m_Icon: {fileID: 2800000, guid: c90633d9c85b5e04195a79ff4f99e1a9, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3848530690564508541
 Transform:
   m_ObjectHideFlags: 0
@@ -10464,6 +10468,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668ed1313de0bc748b95b24fb1c07d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundingBox:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 1, y: 1, z: 1}
+  _baseStat: {fileID: 0}
+  isAIEnabled: 1
+  eyeLocation: {fileID: 0}
   aiState: 1
   OnKilledEvent:
     m_PersistentCalls:

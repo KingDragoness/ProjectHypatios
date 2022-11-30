@@ -49,6 +49,8 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     private void Update()
     {
+        if (isAIEnabled == false) return;
+
         UpdateTick();
         UpdateVisuals();
     }

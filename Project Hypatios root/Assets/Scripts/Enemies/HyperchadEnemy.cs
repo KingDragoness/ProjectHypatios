@@ -119,6 +119,8 @@ public class HyperchadEnemy : EnemyScript
             return;
         }
 
+        if (isAIEnabled == false) return;
+
         if (allowAIDecision && currentStance != MoveStances.Unactivated && !hasTriggeredFinalForm)
         {
             AI_Decision();
@@ -140,6 +142,7 @@ public class HyperchadEnemy : EnemyScript
 
     private void FixedUpdate()
     {
+        if (isAIEnabled == false) return;
 
         if (currentStance == MoveStances.Normal)
         {

@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionProbe: {fileID: 5596942720176272377}
+  CooldownUpdateProbe: 0.6
 --- !u!1 &5596942720913862244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,6 +1672,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 255c1ea0b467e9a49b827ac4a5338bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundingBox:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   isLimitedIntroMode: 0
   normalMode: 1
@@ -1683,7 +1687,8 @@ MonoBehaviour:
   camera_heightDefault: 0.83
   camera_heightCrouching: 0.45
   cameraHolder: {fileID: 7949520239754399166}
-  speedMultiplier: 8
+  speedMultiplier:
+    BaseValue: 8
   runSpeed: 12
   moveSpeed: 10
   dir: {x: 0, y: 0, z: 0}
@@ -1707,8 +1712,8 @@ MonoBehaviour:
   itemOnField: []
   distanceToPickUp: 4
   closestItem: {fileID: 0}
-  weaponSystem: {fileID: 7949520239326633724}
-  heal: {fileID: 7949520240911515509}
+  Weapon: {fileID: 0}
+  Health: {fileID: 0}
   isCheatMode: 0
 --- !u!114 &7949520240911515509
 MonoBehaviour:
@@ -1722,12 +1727,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bd538dae1a38649ba9b826673e5aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth:
+    BaseValue: 100
+  healthRegen:
+    BaseValue: 0
   curHealth: 100
   targetHealth: 100
-  healPerSecond: 3
-  healthRegen: 0
   HealthSpeed: 10
+  camRecoilDamage: {x: 3, y: 3, z: 3}
   armorStrength: 1
   isDead: 0
   slow: {fileID: 7949520240911515501}
@@ -2260,7 +2267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 650123421, guid: 7804335756402464bafeceae8d080cca, type: 3}
       propertyPath: meleeDamage
-      value: 100
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 6046205153661625648, guid: 7804335756402464bafeceae8d080cca,
         type: 3}

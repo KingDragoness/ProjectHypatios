@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1038569194701555286}
   - component: {fileID: 1038569194701555281}
   - component: {fileID: 7598201454352259107}
+  - component: {fileID: 4949694714875152164}
   m_Layer: 0
   m_Name: ExplosionWithDamage(AlsoEnemy)
   m_TagString: Untagged
@@ -4938,6 +4939,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4949694714875152164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1038569194701555283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60cd5483ca06ec4aa44dfcfdd7890cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8967663406571862387}
+        m_MethodName: DamageEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1038569195795502178
 GameObject:
   m_ObjectHideFlags: 0
@@ -24466,10 +24493,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatingArea: []
-  DamagePerSecond: 23
+  DamagePerSecond: 30
   DamageSpeedOverride: 50
   DamageShakinessFactor: 0.1
   DEBUG_DrawGizmos: 1
+  originEnemy: {fileID: 0}
   sphereLayerMask:
     serializedVersion: 2
     m_Bits: 4097
@@ -24487,7 +24515,7 @@ GameObject:
   - component: {fileID: 8985278649959581428}
   - component: {fileID: 8985278649959581429}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: KillzoneNormal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24524,6 +24552,7 @@ MonoBehaviour:
   DamageSpeedOverride: 50
   DamageShakinessFactor: 0.1
   DEBUG_DrawGizmos: 0
+  originEnemy: {fileID: 0}
   sphereLayerMask:
     serializedVersion: 2
     m_Bits: 0

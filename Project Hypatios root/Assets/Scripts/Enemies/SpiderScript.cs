@@ -125,7 +125,7 @@ public class SpiderScript : EnemyScript
             }
 
         }
-        else
+        else if (isAIEnabled)
         {
             if (Mathf.RoundToInt(Time.time) % 5 == 0)
                 ScanForEnemies();
@@ -244,22 +244,20 @@ public class SpiderScript : EnemyScript
 
             if (count <= attackTime - .15f)
             {
-                targetPos = currentTarget.transform.position;
+                targetPos = currentTarget.OffsetedBoundWorldPosition;
             }
 
             if (count >= attackTime)
             {
                 
                 hasTargetted = false;
+
                 var points = new Vector3[2];
                 points[0] = eyeLocation.transform.position;
-
                 var currentLaser = laser;
-                if (Stats.MainAlliance == Alliance.Player) currentLaser = blueLaser;
                 GameObject laserLine = Instantiate(currentLaser, eyeLocation.transform.position, Quaternion.identity);
-                points[1] = targetPos;
-                var lr = laserLine.GetComponent<LineRenderer>();
-                lr.SetPositions(points);
+                if (Stats.MainAlliance == Alliance.Player) currentLaser = blueLaser;
+
                 hasShot = true;
 
                 Ray ray = new Ray(eyeLocation.transform.position, targetPos - eyeLocation.transform.position);
@@ -274,7 +272,18 @@ public class SpiderScript : EnemyScript
 
                     UniversalDamage.TryDamage(token, hit.transform, transform);
 
+                    {                 
+                        points[1] = hit.point;
+                    }
                 }
+                else
+                {
+                    points[1] = eyeLocation.forward * 100f;
+                }
+
+                var lr = laserLine.GetComponent<LineRenderer>();
+                lr.SetPositions(points);
+
                 audio_Fire.Play();
                 nextAttackTime = Time.time + attackRecharge;
                 isCharging = false;

@@ -58,6 +58,7 @@ public class MechizDroneMonster : EnemyScript
             return;
         }
 
+        if (isAIEnabled == false) return;
         UpdateAIState();
         ErrorCheckState();
     }

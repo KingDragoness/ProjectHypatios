@@ -58,6 +58,8 @@ public class Chamber6_Customer : EnemyScript
 
     public void Update()
     {
+        if (isAIEnabled == false) return;
+
         distance = Vector3.Distance(transform.position, target.position);
         cooldown -= Time.deltaTime;
 

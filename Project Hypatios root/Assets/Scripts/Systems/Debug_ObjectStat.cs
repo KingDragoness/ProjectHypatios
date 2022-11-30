@@ -75,9 +75,16 @@ public class Debug_ObjectStat : MonoBehaviour
                 string s2 = $"";
 
                 {
+                    string sStatus = "";
+                    if (currentEnemy.IsOnFire()) sStatus += "Burn,";
+                    if (currentEnemy.IsParalyzed()) sStatus += "NoAI,";
+                    if (currentEnemy.IsPoisoned()) sStatus += "Poisoned,";
+
                     s2 += $"({currentEnemy.Stats.MainAlliance}, {currentEnemy.Stats.UnitType})";
-                    s2 += $"\n HP: ({ Mathf.Round(currentEnemy.Stats.CurrentHitpoint)}/{ currentEnemy.Stats.MaxHitpoint.Value})";
-                    s2 += $"\n IQ: ({currentEnemy.Stats.Intelligence.Value})";
+                    s2 += $"\n HP: { Mathf.Round(currentEnemy.Stats.CurrentHitpoint)}/{ currentEnemy.Stats.MaxHitpoint.Value}";
+                    s2 += $"\n IQ: {currentEnemy.Stats.Intelligence.Value}";
+                    s2 += $"\n {sStatus}";
+
                 }
 
                 GUI.Box(new Rect((Screen.width) - EnemyWindowOffset.x, (Screen.height / 2) - EnemyWindowOffset.y, EnemyWindowSize.x, perLineYSize), s1
@@ -175,6 +182,41 @@ public class Debug_ObjectStat : MonoBehaviour
 
         currentEnemy.Hack();
     }
+
+    public void Enemy_Frenzy()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Frenzy();
+    }
+
+    public void Enemy_Burn()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Burn();
+    }
+
+    public void Enemy_Poison()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Poison();
+    }
+
+
 
     public void Enemy_WarpToGizmoCrosshair()
     {

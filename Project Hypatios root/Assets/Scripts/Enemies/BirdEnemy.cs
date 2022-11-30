@@ -58,6 +58,8 @@ public class BirdEnemy : EnemyScript
         }
         else
         {
+            if (isAIEnabled == false) return;
+
             if (Mathf.RoundToInt(Time.time) % 5 == 0)
                 ScanForEnemies();
 

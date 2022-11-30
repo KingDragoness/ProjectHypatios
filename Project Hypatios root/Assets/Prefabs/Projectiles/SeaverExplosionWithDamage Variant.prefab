@@ -1,5 +1,90 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3304653066068441749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140569137589849102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1ce77fea8cc5e468329299e3a8eb4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1952251683110212525}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8013850226078839404}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6855649961662709586}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4176444720301918707}
+        m_MethodName: DamageEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &9197894297916588032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140569137589849102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60cd5483ca06ec4aa44dfcfdd7890cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4176444720301918707}
+        m_MethodName: DamageEnemy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3163509466376345804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,7 +5011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0.23
   destroy: 0
-  allowRestart: 0
+  allowRestart: 1
   DEBUG_isDisabledByDefault: 0
 --- !u!1 &4218154248411286510
 GameObject:
@@ -4974,12 +5059,15 @@ MonoBehaviour:
   ActivatingArea: []
   DamagePerSecond: 122
   DamageSpeedOverride: 50
+  DamageShakinessFactor: 0.1
   DEBUG_DrawGizmos: 1
+  originEnemy: {fileID: 0}
   sphereLayerMask:
     serializedVersion: 2
     m_Bits: 4097
-  sphereRadius: 3
+  sphereRadius: 4
   alsoDamageEnemy: 1
+  useEnemyKillzone: 1
 --- !u!1 &8013850226078839404
 GameObject:
   m_ObjectHideFlags: 0
@@ -5087,7 +5175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0.2
   destroy: 0
-  allowRestart: 0
+  allowRestart: 1
   DEBUG_isDisabledByDefault: 0
 --- !u!1001 &3154458973574118885
 PrefabInstance:
@@ -5096,6 +5184,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 593453260125771848, guid: a5147283e82ab27439afc6aa1c59baa6,
+        type: 3}
+      propertyPath: allowRestart
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5250782054479868392, guid: a5147283e82ab27439afc6aa1c59baa6,
         type: 3}
       propertyPath: m_RootOrder
@@ -5163,9 +5256,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5147283e82ab27439afc6aa1c59baa6, type: 3}
+--- !u!1 &7140569137589849102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5250782054479868395, guid: a5147283e82ab27439afc6aa1c59baa6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3154458973574118885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7140569137589849101 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5250782054479868392, guid: a5147283e82ab27439afc6aa1c59baa6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3154458973574118885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6855649961662709586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8422517351173243575, guid: a5147283e82ab27439afc6aa1c59baa6,
     type: 3}
   m_PrefabInstance: {fileID: 3154458973574118885}
   m_PrefabAsset: {fileID: 0}

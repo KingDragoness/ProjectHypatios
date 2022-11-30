@@ -72,6 +72,8 @@ public class AntiZartEnemy : EnemyScript
     // Update is called once per frame
     void Update()
     {
+        if (isAIEnabled == false) return;
+
         if (mode == Mode.Default)
         {
             AI_ZartDefault();

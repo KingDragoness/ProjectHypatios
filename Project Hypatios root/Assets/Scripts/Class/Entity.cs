@@ -94,14 +94,14 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory);
     }
 
-    private BaseStatusEffect GetStatusEffect(StatusEffectCategory _statusCategory, GameObject _source)
+    private BaseStatusEffect GetStatusEffect(StatusEffectCategory _statusCategory, string _source)
     {
-        return _allStatusInEffect.Find(x => x.source == _source);
+        return _allStatusInEffect.Find(x => x.SourceID == _source);
     }
 
-    private bool CheckDuplicates(StatusEffectCategory _statusCategory, GameObject _source)
+    private bool CheckDuplicates(StatusEffectCategory _statusCategory, string _source)
     {
-        return _allStatusInEffect.Find(x => x.source == _source && x.statusCategoryType == _statusCategory);
+        return _allStatusInEffect.Find(x => x.SourceID == _source && x.statusCategoryType == _statusCategory);
     }
 
     private bool CheckDuplicateBySimilarEffect(StatusEffectCategory _statusCategory)
@@ -109,14 +109,14 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory);
     }
 
-    private bool CheckDuplicateBySimilarSource(GameObject _source)
+    private bool CheckDuplicateBySimilarSource(string _source)
     {
-        return _allStatusInEffect.Find(x => x.source == _source);
+        return _allStatusInEffect.Find(x => x.SourceID == _source);
     }
 
-    public GenericStatus GetGenericEffect(StatusEffectCategory _statusCategory, GameObject _source)
+    public GenericStatus GetGenericEffect(StatusEffectCategory _statusCategory, string _source)
     {
-        return _allStatusInEffect.Find(x => x.source == _source && x.statusCategoryType == _statusCategory) as GenericStatus;
+        return _allStatusInEffect.Find(x => x.SourceID == _source && x.statusCategoryType == _statusCategory) as GenericStatus;
     }
 
 
@@ -124,14 +124,17 @@ public abstract class Entity : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="_source">Source must same as the one created from CreateStatusEffect</param>
-    public void RemoveAllEffectsBySource(GameObject _source)
+    public void RemoveAllEffectsBySource(string _source)
     {
         _allStatusInEffect.RemoveAll(x => x == null);
-        var allEffects = _allStatusInEffect.FindAll(x => x.source == _source);
+        var allEffects = _allStatusInEffect.FindAll(x => x.SourceID == _source);
 
         foreach (var effect in allEffects)
+        {
+            _allStatusInEffect.Remove(effect);
             Destroy(effect.gameObject);
-
+        
+        }
         _allStatusInEffect.RemoveAll(x => x == null);
     }
 
@@ -141,7 +144,7 @@ public abstract class Entity : MonoBehaviour
     private GenericStatus CreateGenericStatusEffect(StatusEffectCategory _statusCategory,
         float _value,
         float _effectTimer = 1f,
-        GameObject _source = null)
+        string _source = "Generic")
     {
         //if (CheckDuplicateBySimilarEffect(_statusCategory) == true) return;
 
@@ -161,7 +164,7 @@ public abstract class Entity : MonoBehaviour
     /// <param name="_value"></param>
     /// <param name="_source">Must assign source! Or else it'll will duplicate for infinity.</param>
     /// <param name="allowDuplicate"></param>
-    public GenericStatus CreatePersistentStatusEffect(StatusEffectCategory _statusCategory, float _value, GameObject _source, bool allowDuplicate = false)
+    public GenericStatus CreatePersistentStatusEffect(StatusEffectCategory _statusCategory, float _value, string _source, bool allowDuplicate = false)
     {
         if (allowDuplicate == false && CheckDuplicates(_statusCategory, _source))
             return GetStatusEffect(_statusCategory, _source) as GenericStatus;
@@ -177,7 +180,7 @@ public abstract class Entity : MonoBehaviour
     /// <param name="_timer"></param>
     /// <param name="_source"></param>
     /// <param name="allowDuplicate"></param>
-    public GenericStatus CreateTimerStatusEffect(StatusEffectCategory _statusCategory, float _value, float _timer = 1, GameObject _source = null, bool allowDuplicate = false)
+    public GenericStatus CreateTimerStatusEffect(StatusEffectCategory _statusCategory, float _value, float _timer = 1, string _source = "Generic", bool allowDuplicate = false)
     {
         if (allowDuplicate == false && CheckDuplicateBySimilarSource(_source))
             return GetStatusEffect(_statusCategory) as GenericStatus;

@@ -7,7 +7,6 @@ using System.Linq;
 
 public class SeaverScarab : EnemyScript
 {
-    public GameObject explosion;
     public float minimumDistance = 1.5f;
     public float deathTimer = 5f;
     public NavMeshAgent agent;
@@ -35,7 +34,7 @@ public class SeaverScarab : EnemyScript
     public override void Attacked(DamageToken token)
     {
         Stats.CurrentHitpoint -= token.damage;
-
+        if (token.originEnemy == this) return;
         base.Attacked(token);
 
         if (Stats.CurrentHitpoint <= 0f)
@@ -52,11 +51,12 @@ public class SeaverScarab : EnemyScript
     {
         deathTimer -= Time.deltaTime;
 
-        if (deathTimer < 0)
+        if (deathTimer < 0 && Stats.IsDead == false)
         {
             Die();
         }
-
+        if (isAIEnabled == false) return;
+        if (Stats.IsDead == true) return;
         if (currentTarget == null) return;
 
         float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
@@ -70,12 +70,10 @@ public class SeaverScarab : EnemyScript
             {
                 Vector3 result = hit.position;
                 agent.SetDestination(hit.position);
-                Debug.Log($"Target: {result}");
             }
 
             if (NavMesh.FindClosestEdge(currentTarget.transform.position, out hit, NavMesh.AllAreas))
             {
-                Debug.Log("Found closest edge at: " + hit.position);
                 agent.SetDestination(hit.position);
             }
 
@@ -93,7 +91,7 @@ public class SeaverScarab : EnemyScript
         }
 
 
-        if ((Mathf.RoundToInt(Time.time * 10) % 2) == 0)
+        if ((Mathf.RoundToInt(Time.time * 5) % 2) == 0)
         {
             CheckCalculate();
         }
@@ -122,8 +120,15 @@ public class SeaverScarab : EnemyScript
 
     public override void Die()
     {
-        var explosion1 = Instantiate(explosion, transform.position, transform.rotation);
+        if (Stats.IsDead) return;
+        Stats.IsDead = true; //stack overflow crash!
 
+        var explosion1 = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionSeaver, true, transform.position, transform.rotation);
+        explosion1.transform.position = transform.position;
+        explosion1.transform.rotation = transform.rotation; //Instantiate(explosion, transform.position, transform.rotation);
+        var killzoneComp = explosion1.GetComponentInChildren<KillZone>();
+        killzoneComp.originEnemy = this;
+        killzoneComp.DamageEnemy(); //There's no other fucking option
         explosion1.gameObject.SetActive(true);
         Destroy(gameObject);
     }

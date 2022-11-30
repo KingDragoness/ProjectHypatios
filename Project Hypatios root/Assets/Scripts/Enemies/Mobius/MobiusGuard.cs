@@ -27,12 +27,13 @@ public class MobiusGuard : EnemyScript
 
     [FoldoutGroup("References")] public Animator animator;
     [FoldoutGroup("References")] public SpawnHeal spawnHeal;
-    [FoldoutGroup("References")] public Transform targetPlayer;
     [FoldoutGroup("References")] public Transform outEye;
+    [FoldoutGroup("References")] public Transform originWeapon;
     [FoldoutGroup("References")] public Transform outWeaponTransform;
     [FoldoutGroup("References")] public MobiusLookWeaponLimit mobiusLookWeaponLimit;
     [FoldoutGroup("Weapon")] public GameObject sparkBullet;
     [FoldoutGroup("Weapon")] public GameObject flashWeapon;
+    [FoldoutGroup("Weapon")] public GameObject tracerLaser;
     [FoldoutGroup("Weapon")] public LayerMask layermaskWeapon;
     [FoldoutGroup("Weapon")] public AudioSource audio_FireGun;
     [FoldoutGroup("Weapon")] public AudioSource audio_Flyby;
@@ -44,12 +45,11 @@ public class MobiusGuard : EnemyScript
     private float timer_Stunned = 1.1f;
     private NavMeshAgent navMeshAgent;
     private bool ableSeePlayer = false;
-    private bool hasDied = false;
+    [ReadOnly] [SerializeField] bool playerCanBeReached = false;
 
     private void Start()
     {
-        if (targetPlayer == null) targetPlayer = FindObjectOfType<CharacterScript>().transform;
-        mobiusLookWeaponLimit.player = targetPlayer;
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         strafingTargetPos = transform.position;
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -64,18 +64,28 @@ public class MobiusGuard : EnemyScript
             Stats.CurrentHitpoint = 0;
         }
 
-        if (hasDied)
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (Time.timeScale == 0) return;
+
+        if (Stats.IsDead)
         {
             animator.SetBool("Dead", true);
             animator.ResetTrigger("Damaged");
             return;
         }
 
+        if (isAIEnabled == false) return;
+        if (currentTarget == null) return;
+        mobiusLookWeaponLimit.player = currentTarget.transform;
+
         UpdateEnemyState();
         AnimationStateUpdate();
         Attack();
         CheckICanSeePlayer();
     }
+
 
     public override void Die()
     {
@@ -169,14 +179,22 @@ public class MobiusGuard : EnemyScript
 
     private void State_StandAttack()
     {
-        navMeshAgent.speed = speed_StandAttack;
-        navMeshAgent.SetDestination(targetPlayer.position);
+        //navMeshAgent.speed = speed_StandAttack;
+        //navMeshAgent.SetDestination(currentTarget.transform.position);
+        navMeshAgent.updateRotation = false;
+        Vector3 posTarget = currentTarget.transform.position;
+
+        Vector3 dir = posTarget - transform.position;
+        dir.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+        transform.rotation = rotation;
+
 
         cooldown_CheckMove += Time.deltaTime;
 
         if (cooldown_CheckMove > 0.2f)
         {
-            Vector3 cameraRelative = transform.InverseTransformPoint(targetPlayer.position);
+            Vector3 cameraRelative = transform.InverseTransformPoint(currentTarget.transform.position);
 
             if (cameraRelative.z > 1.5f)
             {
@@ -202,14 +220,34 @@ public class MobiusGuard : EnemyScript
     private void State_Chase()
     {
         navMeshAgent.speed = speed_Strafing;
-        navMeshAgent.SetDestination(targetPlayer.position);
 
+        if (playerCanBeReached)
+        {
+            navMeshAgent.SetDestination(currentTarget.transform.position);
+            navMeshAgent.updateRotation = true;
+        }
+        else
+        {
+            navMeshAgent.updateRotation = false;
+            Vector3 posTarget = currentTarget.transform.position;
+
+            Vector3 dir = posTarget - transform.position;
+            dir.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+            transform.rotation = rotation;
+
+        }
+
+        if ((Mathf.RoundToInt(Time.time * 5) % 2) == 0)
+        {
+            CheckCalculate();
+        }
 
         cooldown_CheckMove += Time.deltaTime;
 
         if (cooldown_CheckMove > 1f)
         {
-            Vector3 cameraRelative = transform.InverseTransformPoint(targetPlayer.position);
+            Vector3 cameraRelative = transform.InverseTransformPoint(currentTarget.transform.position);
 
             if (cameraRelative.z > 0 && ableSeePlayer)
             {
@@ -221,6 +259,22 @@ public class MobiusGuard : EnemyScript
             }
 
             cooldown_CheckMove = 0;
+        }
+
+    }
+
+    private void CheckCalculate()
+    {
+        NavMeshPath navMeshPath = new NavMeshPath();
+
+        if (navMeshAgent.CalculatePath(currentTarget.transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
+        {
+            playerCanBeReached = true;
+
+        }
+        else
+        {
+            playerCanBeReached = false;
         }
 
     }
@@ -255,7 +309,7 @@ public class MobiusGuard : EnemyScript
     private void CheckICanSeePlayer()
     {
         RaycastHit hit1;
-        Vector3 targetDir = targetPlayer.position - outEye.position;
+        Vector3 targetDir = currentTarget.transform.position - outEye.position;
         targetDir.Normalize();
 
         bool PlayerSee = false;
@@ -264,11 +318,11 @@ public class MobiusGuard : EnemyScript
         {
             Debug.DrawRay(outEye.position, targetDir * hit1.distance, Color.red);
 
-            if (hit1.transform.gameObject.IsParentOf(targetPlayer.gameObject))
+            if (hit1.transform.gameObject.IsParentOf(currentTarget.transform.gameObject))
             {
                 PlayerSee = true;
             }
-            else if (hit1.transform.gameObject == targetPlayer.gameObject)
+            else if (hit1.transform.gameObject == currentTarget.transform.gameObject)
             {
                 PlayerSee = true;
             }
@@ -295,11 +349,11 @@ public class MobiusGuard : EnemyScript
             isHittingSomething = true;
             Debug.DrawRay(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
 
-            if (hit.transform.gameObject.IsParentOf(targetPlayer.gameObject))
+            if (hit.transform.gameObject.IsParentOf(currentTarget.transform.gameObject))
             {
                 isHittingPlayer = true;
             }
-            else if (hit.transform.gameObject == targetPlayer.gameObject)
+            else if (hit.transform.gameObject == currentTarget.transform.gameObject)
             {
                 isHittingPlayer = true;
             }
@@ -317,7 +371,7 @@ public class MobiusGuard : EnemyScript
             else
             {
                 float chanceFire = Random.Range(0f, 1f);
-                float hitDist = Vector3.Distance(hit.point, targetPlayer.position);
+                float hitDist = Vector3.Distance(hit.point, currentTarget.transform.position);
 
                 //chanceFire = chanceFire + Mathf.Clamp(-hitDist * 0.1f, 0f, 1f);
 
@@ -347,11 +401,10 @@ public class MobiusGuard : EnemyScript
         token.originEnemy = this;
         token.healthSpeed = 25f;
 
-        var spark = Instantiate(sparkBullet);
+        var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
         spark.transform.position = hit.point;
         spark.transform.rotation = Quaternion.LookRotation(hit.normal);
         flashWeapon.gameObject.SetActive(true);
-        Destroy(spark.gameObject, 3f);
 
         UniversalDamage.TryDamage(token, hit.transform, transform) ;
 
@@ -360,6 +413,20 @@ public class MobiusGuard : EnemyScript
         audio_FireGun.pitch = Random.Range(1.1f, 1.4f);
         audio_FireGun.Play();
         cooldown_FireAttack = 0f;
+
+        {
+
+            var points = new Vector3[2];
+            points[0] = originWeapon.transform.position;
+            var currentLaser = tracerLaser;
+            GameObject laserLine = Instantiate(currentLaser, originWeapon.transform.position, Quaternion.identity);
+
+            {
+                points[1] = hit.point;
+                var lr = laserLine.GetComponent<LineRenderer>();
+                lr.SetPositions(points);
+            }
+        }
     }
 
 

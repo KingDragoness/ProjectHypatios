@@ -32,7 +32,6 @@ public class DecabotEnemy : EnemyScript
 
     [SerializeField] private SpawnHeal spawnHeal;
     [SerializeField] private SpawnAmmo spawnAmmo;
-    private Transform player;
     private NavMeshAgent enemyAI;
     private bool canLookAtPlayer = false;
     private bool isCharging = false;
@@ -47,7 +46,7 @@ public class DecabotEnemy : EnemyScript
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         enemyAI = GetComponent<NavMeshAgent>();
         spawnHeal = GetComponent<SpawnHeal>();
         spawnAmmo = GetComponent<SpawnAmmo>();
@@ -97,9 +96,16 @@ public class DecabotEnemy : EnemyScript
         {
             Die();
         }
+        if (isAIEnabled == false) return;
 
-        Movement();
-        Weapons();
+        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+            ScanForEnemies();
+
+        if (currentTarget != null)
+        {
+            Movement();
+            Weapons();
+        }
     }
 
     private void Weapons()
@@ -138,7 +144,7 @@ public class DecabotEnemy : EnemyScript
     {
 
         if (isWalking)
-            enemyAI.SetDestination(player.position);
+            enemyAI.SetDestination(currentTarget.transform.position);
     }
 
     private void Movement()
@@ -148,7 +154,7 @@ public class DecabotEnemy : EnemyScript
 
         foreach (var eyeLocation in eyeLocations)
         {
-            Ray ray = new Ray(eyeLocation.transform.position, player.position - eyeLocation.transform.position);
+            Ray ray = new Ray(eyeLocation.transform.position, currentTarget.transform.position - eyeLocation.transform.position);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f))
             {
                 if (hit.transform.tag == "Player")
@@ -161,7 +167,7 @@ public class DecabotEnemy : EnemyScript
                 }
 
                 //at least its near the player
-                float dist = Vector3.Distance(hit.point, player.position);
+                float dist = Vector3.Distance(hit.point, currentTarget.transform.position);
 
                 if (dist < 1.5f)
                 {
@@ -184,7 +190,7 @@ public class DecabotEnemy : EnemyScript
         {
             enemyAI.updateRotation = false;
 
-            Vector3 posTarget = player.transform.position;
+            Vector3 posTarget = currentTarget.transform.position;
 
             Vector3 dir = posTarget - transform.position;
             dir.y = 0;
@@ -198,9 +204,9 @@ public class DecabotEnemy : EnemyScript
 
     void ManageSpiderRotation()
     {
-        var lookPos = player.transform.position - transform.position;
+        var lookPos = currentTarget.transform.position - transform.position;
 
-        if (Vector3.Distance(player.transform.position, transform.position) >= 6f)
+        if (Vector3.Distance(currentTarget.transform.position, transform.position) >= 6f)
             lookPos.y = Mathf.Clamp(lookPos.y, -15f, 15f);
         else
             lookPos.y = 0f;
@@ -216,6 +222,8 @@ public class DecabotEnemy : EnemyScript
     {
         GameObject prefabMissile = Instantiate(missilePrefab.gameObject, outOrigin.position, outOrigin.rotation);
         prefabMissile.gameObject.SetActive(true);
+        var missile = prefabMissile.GetComponent<MissileChameleon>();
+        missile.OverrideTarget(currentTarget, Stats.MainAlliance);
         audio_Fire.Play();
         hasShot = true;
     }
@@ -249,25 +257,17 @@ public class DecabotEnemy : EnemyScript
                 break;
             }
 
-            targetPos = player.position;
+            targetPos = currentTarget.transform.position;
 
 
             var turret1 = weaponTurret[index1];
 
 
+            AI_Detection();
 
-            Ray ray = new Ray(turret1.origin.transform.position, targetPos - turret1.origin.transform.position);
-            if (Physics.SphereCast(ray, .2f, out RaycastHit hit, 100f))
+            if (canLookAtTarget)
             {
-                if (hit.transform.tag == "Player")
-                {
-                    FireMissile(turret1.origin);
-
-                }
-                else
-                {
-                    continue;
-                }
+                FireMissile(turret1.origin);
             }
             else if (isAttacking)
             {

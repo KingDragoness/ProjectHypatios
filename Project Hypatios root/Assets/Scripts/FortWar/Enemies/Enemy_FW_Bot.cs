@@ -57,6 +57,7 @@ public abstract class Enemy_FW_Bot : EnemyScript
     {
         if (Time.timeScale == 0) return;
         if (Time.realtimeSinceStartup < 2f) return;
+        if (isAIEnabled == false) return;
         if (_chamberScript.currentStage != Chamber_Level7.Stage.Ongoing) return;
         if (currentModule != null) currentModule.Run();
 

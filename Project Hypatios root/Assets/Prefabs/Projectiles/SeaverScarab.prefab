@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3757621384591762167}
   - component: {fileID: 3757621384591762168}
   - component: {fileID: 3757621384591762164}
+  - component: {fileID: 3624554934414280097}
   m_Layer: 0
   m_Name: SeaverScarab
   m_TagString: Untagged
@@ -132,14 +133,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78aa856dd99df1e4591562b729c58978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundingBox:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
   _baseStat: {fileID: 11400000, guid: 0ffb45bcd5e16c048b0eafce9ca5c5a4, type: 2}
-  hitpoint: 25
+  isAIEnabled: 1
+  eyeLocation: {fileID: 0}
   explosion: {fileID: 7140569137589849102, guid: 0b23a87dc37ae464fa624abd36fe26a3,
     type: 3}
   minimumDistance: 1.5
   deathTimer: 11
   agent: {fileID: 3757621384591762168}
   playerCanBeReached: 0
+--- !u!114 &3624554934414280097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757621384591762170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10795a6f401ac144da68e40c368dc98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyScript: {fileID: 3757621384591762164}
+  isCriticalHit: 0
+  multiplier: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3757621384885167741
 GameObject:
   m_ObjectHideFlags: 0

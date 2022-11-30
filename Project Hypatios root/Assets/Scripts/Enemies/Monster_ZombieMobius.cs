@@ -84,6 +84,7 @@ public class Monster_ZombieMobius : EnemyScript
             return;
         }
 
+        if (isAIEnabled == false) return;
 
         if (Mathf.RoundToInt(Time.time) % 5 == 0)
             ScanForEnemies();

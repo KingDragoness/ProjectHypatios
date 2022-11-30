@@ -8,6 +8,8 @@ public class MeleeScript : MonoBehaviour
     Camera cam;
     public float meleeDamage;
     public float meleeRange;
+    public AudioSource audio_HitAttacked;
+    public AudioSource audio_Swing;
     float meleeFrame = 15f;
     float meleeTime;
     float curMeleeTime;
@@ -86,6 +88,7 @@ public class MeleeScript : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 raycastDir = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
+        audio_Swing.Play();
 
         if (Physics.Raycast(cam.transform.position, raycastDir, out hit, meleeRange, layerMask, QueryTriggerInteraction.Ignore))
         {
@@ -97,6 +100,7 @@ public class MeleeScript : MonoBehaviour
                 var token = new DamageToken();
                 token.damage = Random.Range(meleeDamage - 3, meleeDamage + 3);
                 damageReceiver.Attacked(token);
+                audio_HitAttacked.Play();
                 MainGameHUDScript.Instance.audio_CrosshairClick.Play();
             }
         }

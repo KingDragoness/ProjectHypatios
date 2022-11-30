@@ -62,6 +62,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
 
     public override void Update()
     {
+        if (isAIEnabled == false) return;
         base.Update();
         ConditionalChecks();
         StateSet();

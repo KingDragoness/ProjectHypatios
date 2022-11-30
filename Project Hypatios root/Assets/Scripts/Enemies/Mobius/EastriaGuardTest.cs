@@ -56,10 +56,11 @@ public class EastriaGuardTest : EnemyScript
 
     private void Update()
     {
+
         if (Mathf.RoundToInt(Time.time) % 5 == 0)
             ScanForEnemies();
 
-        if (currentTarget != null)
+        if (currentTarget != null && !isAIEnabled)
         {
             followObject.target = currentTarget.transform;
             // direction towards target

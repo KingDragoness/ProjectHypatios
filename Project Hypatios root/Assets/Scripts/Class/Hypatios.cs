@@ -230,6 +230,7 @@ public class Hypatios : MonoBehaviour
     public static EnemyContainer Enemy { get => Instance._enemyContainer; }
     public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
+    public static float Time { get => Game.UNIX_Timespan; }
 
     public static Hypatios Instance;
 

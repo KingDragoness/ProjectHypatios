@@ -41,19 +41,20 @@ public enum StatusEffectCategory
 
 public abstract class BaseStatusEffect : MonoBehaviour
 {
-   [ShowInInspector] [ReadOnly] public Entity target;
+    [ShowInInspector] [ReadOnly] public Entity target;
+    public float EffectTimer = 5f;
     public StatusEffectCategory statusCategoryType;
     public float Value = 0.1f;
-    public float EffectTimer = 5f;
-    public GameObject source; //avoid duplicates, tracking source
-   
+    public string SourceID = "PermanentPerk";
+
+
     public abstract void ApplyEffect();
-    
+
     internal void GenericApplyEffect()
     {
         var enemyScript = target as EnemyScript;
         var playerScript = target as CharacterScript;
- 
+
 
         if (playerScript)
         {
@@ -74,8 +75,8 @@ public abstract class BaseStatusEffect : MonoBehaviour
             if (statusCategoryType == StatusEffectCategory.MaxHitpointBonus)
                 enemyScript.Stats.MaxHitpoint.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
-           // if (statusCategoryType == StatusEffectCategory.RegenHPBonus), not implemented
-                
+            // if (statusCategoryType == StatusEffectCategory.RegenHPBonus), not implemented
+
         }
     }
     private void RemoveEffects()
@@ -98,6 +99,7 @@ public abstract class BaseStatusEffect : MonoBehaviour
         {
             playerScript.speedMultiplier.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
+            playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
 
         }
     }
