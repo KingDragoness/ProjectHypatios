@@ -277,7 +277,7 @@ MonoBehaviour:
     sources: []
   - name: falling
     clip: {fileID: 8300000, guid: 7f6d34a141bd1cc41940cd3e178a7d6b, type: 3}
-    sourceAmount: 0
+    sourceAmount: 1
     volume: 0.246
     pitch: 1.1
     loop: 0
@@ -298,14 +298,14 @@ MonoBehaviour:
     sources: []
   - name: ui.click
     clip: {fileID: 8300000, guid: 39bb2016d4ed1374c93107348c5af494, type: 3}
-    sourceAmount: 0
+    sourceAmount: 1
     volume: 0.647
     pitch: 1
     loop: 0
     sources: []
   - name: hit.metal.1
     clip: {fileID: 8300000, guid: c392590b999df8e4697ad60b3d9c406e, type: 3}
-    sourceAmount: 0
+    sourceAmount: 1
     volume: 0.638
     pitch: 1
     loop: 0
@@ -618,13 +618,13 @@ ReflectionProbe:
   m_Type: 0
   m_Mode: 1
   m_RefreshMode: 2
-  m_TimeSlicingMode: 0
+  m_TimeSlicingMode: 1
   m_Resolution: 64
   m_UpdateFrequency: 0
   m_BoxSize: {x: 22, y: 22, z: 22}
   m_BoxOffset: {x: 0, y: 0, z: 0}
-  m_NearClip: 0.3
-  m_FarClip: 33
+  m_NearClip: 0.4
+  m_FarClip: 35
   m_ShadowDistance: 32
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.054957278, g: 0.08127892, b: 0.122641504, a: 0}
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionProbe: {fileID: 5596942720176272377}
-  CooldownUpdateProbe: 0.6
+  CooldownUpdateProbe: 0.66
 --- !u!1 &5596942720913862244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 02422ef6ace9b0644acb3584a8c1e312, type: 2}
   currentlyHeldWeapons:
   - {fileID: 7949520240113609644}
-  gunRecoil: {fileID: 7949520239754399040}
+  Recoil: {fileID: 7949520239754399040}
 --- !u!1 &7949520239381494511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1087,8 @@ GameObject:
   - component: {fileID: 5596942720275226418}
   - component: {fileID: 1521529842}
   - component: {fileID: 2002117729863807488}
+  - component: {fileID: 3811745836912344442}
+  - component: {fileID: 7465989359209606511}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1175,10 +1177,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLimitedIntroMode: 0
   wallRunScript: {fileID: 7949520240911515504}
-  mouseSensitivity: 12.20529
+  mouseSensitivity: 9.993941
   playerBody: {fileID: 7949520240911515503}
-  x: 0
-  y: 0
+  x: -0.3997577
+  y: 2.798303
   maxPointingDistance: 4
   weaponMask:
     serializedVersion: 2
@@ -1304,6 +1306,260 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentInteractable: {fileID: 0}
+--- !u!114 &3811745836912344442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949520239517099796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e3d446f7ff644b70a8daaa5525fcf56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDirty: 0
+  _preset: 1000
+  _profile: {fileID: 11400000, guid: 7a42f3586fdf8244e9e9ff18c654c747, type: 2}
+  _profileSync: 1
+  _useFogVolumes: 0
+  _debugPass: 0
+  _showInSceneView: 1
+  _transparencyBlendMode: 0
+  _transparencyBlendPower: 1
+  _transparencyLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _lightingModel: 0
+  _enableMultipleCameras: 0
+  _computeDepth: 0
+  _computeDepthScope: 0
+  _transparencyCutOff: 0.1
+  _renderBeforeTransparent: 0
+  _sun: {fileID: 0}
+  _timeBetweenTextureUpdates: 0.2
+  _sunCopyColor: 1
+  _density: 0.3
+  _noiseStrength: 0.22
+  _noiseFinalMultiplier: 1
+  _noiseSparse: 0
+  _distance: 25
+  _maxFogLength: 1000
+  _maxFogLengthFallOff: 0
+  _distanceFallOff: 0.7
+  _height: 8
+  _heightFallOff: 0.6
+  _deepObscurance: 1
+  _baselineHeight: 0
+  _baselineRelativeToCamera: 1
+  _baselineRelativeToCameraDelay: 0
+  _noiseScale: 1.59
+  _alpha: 0.4
+  _color: {r: 0.372864, g: 0.49208814, b: 0.5377358, a: 1}
+  _specularColor: {r: 1, g: 1, b: 0.8, a: 1}
+  _specularThreshold: 0.6
+  _specularIntensity: 0
+  _lightDirection: {x: -1, y: 0, z: -1}
+  _lightIntensity: 0
+  _lightColor: {r: 1, g: 1, b: 1, a: 1}
+  _updateTextureSpread: 1
+  _speed: 0.05
+  _windDirection: {x: 1, y: 0, z: 0}
+  _useRealTime: 0
+  _skyColor: {r: 0.89, g: 0.89, b: 0.89, a: 0.9}
+  _skyHaze: 144
+  _skySpeed: 0.3
+  _skyNoiseStrength: 0.7
+  _skyAlpha: 0
+  _skyDepth: 0.999
+  _character: {fileID: 0}
+  _fogVoidTopology: 0
+  _fogVoidFallOff: 1
+  _fogVoidRadius: 0
+  _fogVoidPosition: {x: 0, y: 0, z: 0}
+  _fogVoidDepth: 0
+  _fogVoidHeight: 0
+  _fogVoidInverted: 0
+  _fogAreaShowGizmos: 1
+  _fogAreaCenter: {fileID: 0}
+  _fogAreaFallOff: 1
+  _fogAreaFollowMode: 0
+  _fogAreaTopology: 1
+  _fogAreaRadius: 0
+  _fogAreaPosition: {x: 0, y: 0, z: 0}
+  _fogAreaDepth: 0
+  _fogAreaHeight: 0
+  _fogAreaSortingMode: 0
+  _fogAreaRenderOrder: 1
+  pointLightParams:
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  - light: {fileID: 0}
+    lightParams: {fileID: 0}
+    range: 0
+    rangeMultiplier: 1
+    intensity: 1
+    intensityMultiplier: 1
+    position: {x: 0, y: 0, z: 0}
+    color: {r: 1, g: 1, b: 0, a: 1}
+  pointLightDataMigrated: 1
+  _pointLights:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _pointLightRanges:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  _pointLightIntensities:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  _pointLightIntensitiesMultiplier:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  _pointLightPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  _pointLightColors:
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  - {r: 1, g: 1, b: 0, a: 1}
+  _pointLightTrackingAuto: 0
+  _pointLightTrackingPivot: {fileID: 7949520239517099800}
+  _pointLightTrackingCount: 0
+  _pointLightTrackingCheckInterval: 1
+  _pointLightTrackingNewLightsCheckInterval: 3
+  _pointLightInscattering: 1
+  _pointLightIntensity: 1
+  _pointLightInsideAtten: 0
+  _downsampling: 3
+  _forceComposition: 0
+  _edgeImprove: 1
+  _edgeThreshold: 0.0022
+  _stepping: 8
+  _steppingNear: 0
+  _dithering: 1
+  _ditherStrength: 1
+  _jitterStrength: 0.5
+  _lightScatteringEnabled: 0
+  _lightScatteringDiffusion: 0.7
+  _lightScatteringSpread: 0.686
+  _lightScatteringSamples: 16
+  _lightScatteringWeight: 1.9
+  _lightScatteringIllumination: 18
+  _lightScatteringDecay: 0.986
+  _lightScatteringExposure: 0
+  _lightScatteringJittering: 0.5
+  _lightScatteringBlurDownscale: 1
+  _fogBlur: 0
+  _fogBlurDepth: 0.05
+  _sunShadows: 0
+  _sunShadowsLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _sunShadowsStrength: 0.5
+  _sunShadowsBias: 0.1
+  _sunShadowsJitterStrength: 0.1
+  _sunShadowsResolution: 2
+  _sunShadowsMaxDistance: 200
+  _sunShadowsBakeMode: 1
+  _sunShadowsRefreshInterval: 0
+  _sunShadowsCancellation: 0
+  _turbulenceStrength: 0
+  _useXYPlane: 0
+  _useSinglePassStereoRenderingMatrix: 0
+  _spsrBehaviour: 0
+  _reduceFlickerBigWorlds: 0
+  _enableMask: 0
+  _maskLayer:
+    serializedVersion: 2
+    m_Bits: 8388608
+  _maskDownsampling: 1
+  fogRenderer: {fileID: 3811745836912344442}
+  _fogOfWarEnabled: 0
+  _fogOfWarCenter: {x: 0, y: 0, z: 0}
+  _fogOfWarSize: {x: 1024, y: 0, z: 1024}
+  _fogOfWarTextureSize: 256
+  _fogOfWarRestoreDelay: 0
+  _fogOfWarRestoreDuration: 2
+  _fogOfWarSmoothness: 1
+  _maskEditorEnabled: 0
+  _maskBrushMode: 1
+  _maskBrushWidth: 20
+  _maskBrushFuzziness: 0.5
+  _maskBrushOpacity: 0.15
+  _fogOfWarTexture: {fileID: 0}
+--- !u!114 &7465989359209606511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949520239517099796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2838e0cbd5a124a0ab52bbe6b14c5ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7949520239754399166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350a9b6db3e592e4797b2695aa9edc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackResistance:
+    BaseValue: 1
   snappiness: 7.5
   returnSpeed: 6
   recoilX: 0
@@ -1635,7 +1893,7 @@ GameObject:
   m_Layer: 13
   m_Name: Player (Aldrich)
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: da545229eea36164d8b8cba2f75a1143, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1674,7 +1932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boundingBox:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 1, y: 2, z: 1}
   rb: {fileID: 0}
   isLimitedIntroMode: 0
   normalMode: 1
@@ -1712,8 +1970,17 @@ MonoBehaviour:
   itemOnField: []
   distanceToPickUp: 4
   closestItem: {fileID: 0}
-  Weapon: {fileID: 0}
-  Health: {fileID: 0}
+  Weapon: {fileID: 7949520239326633724}
+  PerkData:
+    Perk_LV_MaxHitpointUpgrade: 0
+    Perk_LV_RegenHitpointUpgrade: 0
+    Perk_LV_Soulbonus: 0
+    Perk_LV_ShortcutDiscount: 0
+    Perk_LV_KnockbackRecoil: 0
+    Perk_LV_DashCooldown: 0
+    Perk_LV_IncreaseMeleeDamage: 0
+    Temp_CustomPerk: []
+  Health: {fileID: 7949520240911515509}
   isCheatMode: 0
 --- !u!114 &7949520240911515509
 MonoBehaviour:
@@ -1734,7 +2001,7 @@ MonoBehaviour:
   curHealth: 100
   targetHealth: 100
   HealthSpeed: 10
-  camRecoilDamage: {x: 3, y: 3, z: 3}
+  camRecoilDamage: {x: 7, y: 6, z: -8}
   armorStrength: 1
   isDead: 0
   slow: {fileID: 7949520240911515501}
@@ -1951,7 +2218,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7949520240911515500}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -2236,12 +2503,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17d8fbaca20731c42a15b0f72cc19d99, type: 3}
---- !u!4 &7949520239117538603 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8846842660660748319, guid: 17d8fbaca20731c42a15b0f72cc19d99,
-    type: 3}
-  m_PrefabInstance: {fileID: 1482830024340256052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7949520240113609644 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8846842659674414744, guid: 17d8fbaca20731c42a15b0f72cc19d99,
@@ -2254,6 +2515,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b43ddde5a901164aa6db046365096ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7949520239117538603 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8846842660660748319, guid: 17d8fbaca20731c42a15b0f72cc19d99,
+    type: 3}
+  m_PrefabInstance: {fileID: 1482830024340256052}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5596942721445807048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2329,17 +2596,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9106097817837165822, guid: 7804335756402464bafeceae8d080cca,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7804335756402464bafeceae8d080cca, type: 3}
---- !u!4 &5453817403685824018 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 433348079043028442, guid: 7804335756402464bafeceae8d080cca,
-    type: 3}
-  m_PrefabInstance: {fileID: 5596942721445807048}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1517689853120035906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6387158845224091530, guid: 7804335756402464bafeceae8d080cca,
+    type: 3}
+  m_PrefabInstance: {fileID: 5596942721445807048}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5453817403685824018 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 433348079043028442, guid: 7804335756402464bafeceae8d080cca,
     type: 3}
   m_PrefabInstance: {fileID: 5596942721445807048}
   m_PrefabAsset: {fileID: 0}

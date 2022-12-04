@@ -25,6 +25,32 @@ public static class StringExtensions
 }
 public static class IsopatiosUtility
 {
+    public static int Choose(int[] probs)
+    {
+
+        int total = 0;
+
+        foreach (int elem in probs)
+        {
+            total += elem;
+        }
+
+        float randomPoint = UnityEngine.Random.value * total;
+
+        for (int i = 0; i < probs.Length; i++)
+        {
+            if (randomPoint < probs[i])
+            {
+                return i;
+            }
+            else
+            {
+                randomPoint -= probs[i];
+            }
+        }
+        return probs.Length - 1;
+    }
+
     public static T Clone<T>(this T source)
     {
         var serialized = JsonConvert.SerializeObject(source);

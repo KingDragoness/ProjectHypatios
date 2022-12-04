@@ -58,7 +58,7 @@ public class GunScript : BaseWeaponScript
         {
             reloadTime = reloadFrame / 60;
             curReloadTime = reloadTime;
-            gunRecoil = weaponSystem.gunRecoil;
+            gunRecoil = weaponSystem.Recoil;
         }
         
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -234,9 +234,6 @@ public class GunScript : BaseWeaponScript
 
         if (!isBurst)
         {
-            if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                Hypatios.Game.RuntimeTutorialHelp("SHOOTING", "You can shoot using LMB. Scope using RMB when you obtained a rifle.", "FirstShoot");
-
 
             muzzle1.Emit(1);
             var points = new Vector3[2];

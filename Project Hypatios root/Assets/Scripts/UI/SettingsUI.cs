@@ -119,7 +119,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
             PlayerPrefs.SetInt("SETTINGS.VSYNC", Hypatios.Settings.VSYNC);
             PlayerPrefs.SetFloat("SETTINGS.MOUSE_SENSITIVITY", Hypatios.Settings.MOUSE_SENSITIVITY);
-
+            PlayerPrefs.SetInt("SETTINGS.QUALITY_LEVEL", Hypatios.Settings.QUALITY_LEVEL);
 
         }
 

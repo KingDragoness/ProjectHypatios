@@ -66,6 +66,14 @@ public abstract class BaseStatusEffect : MonoBehaviour
 
             if (statusCategoryType == StatusEffectCategory.RegenHPBonus)
                 playerScript.Health.healthRegen.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
+            if (statusCategoryType == StatusEffectCategory.KnockbackResistance)
+                playerScript.Weapon.Recoil.knockbackResistance.AddModifier(new StatModifier(-Value, StatModType.PercentMult, this.gameObject));
+
+            if (statusCategoryType == StatusEffectCategory.BonusDamageMelee)
+                playerScript.BonusDamageMelee.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
+            var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
         }
         else if (enemyScript)
         {
@@ -98,8 +106,10 @@ public abstract class BaseStatusEffect : MonoBehaviour
         if (playerScript != null)
         {
             playerScript.speedMultiplier.RemoveAllModifiersFromSource(gameObject);
+            playerScript.BonusDamageMelee.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
+            playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
 
         }
     }

@@ -46,7 +46,22 @@ public abstract class EnemyScript : Entity
     /// <summary>
     /// Disables enemy's AI.
     /// </summary>
-    public virtual void Paralyze() { isAIEnabled = false; }
+    public virtual void Paralyze() 
+    {
+        if (isAIEnabled == true)
+        {
+            var ParalyzeParticle = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ParalyzeEffect, false);
+            var particleFX = ParalyzeParticle.GetComponent<ParticleFXResizer>();
+            var pos = OffsetedBoundWorldPosition;
+            pos.y += OffsetedBoundScale.y;
+            ParalyzeParticle.transform.position = pos;
+            ParalyzeParticle.transform.localEulerAngles = Vector3.zero;
+            particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
+            ParalyzeParticle.transform.SetParent(transform);
+        }
+
+        isAIEnabled = false; 
+    }
 
     [FoldoutGroup("Debug")]
     [Button("Deparalyze")]

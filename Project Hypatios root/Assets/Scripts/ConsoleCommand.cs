@@ -350,6 +350,14 @@ public class ConsoleCommand : MonoBehaviour
                 {
                     Hypatios.DebugObjectStat.Enemy_Burn();
                 }
+                else if (args[0] == "heal")
+                {
+                    Hypatios.DebugObjectStat.Enemy_InstantHeal();
+                }
+                else if (args[0] == "paralyze")
+                {
+                    Hypatios.DebugObjectStat.Enemy_ParalyzeToggle();
+                }
                 else if (args[0] == "poison")
                 {
                     Hypatios.DebugObjectStat.Enemy_Poison();
@@ -374,7 +382,8 @@ public class ConsoleCommand : MonoBehaviour
         {
             SendConsoleMessage("Invalid argument! Use 'help enemy' to see more enemy commands!");
             Debug.LogError(e.Message);
-        } 
+            Debug.LogError(e.StackTrace);
+        }
     }
 
     private void LevelNames(string[] args)
@@ -663,6 +672,8 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("'enemy frenzy' to frenzied an enemy.");
                 helps.Add("'enemy burn' to burn the enemy.");
                 helps.Add("'enemy poison' to poison the enemy.");
+                helps.Add("'enemy heal' to restore enemy's health.");
+                helps.Add("'enemy paralyze' to toggle enemy paralyze/deparalyze.");
                 helps.Add("'enemy reset' to reset enemy's status.");
                 helps.Add("'enemy warp' to warp enemy to gizmo position.");
                 helps.Add(" ");

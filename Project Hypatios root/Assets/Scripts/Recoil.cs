@@ -1,12 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kryz.CharacterStats;
 
 public class Recoil : MonoBehaviour
 {
 
+    public enum RecoilType
+    {
+        MovementLand,
+        TakeDamage,
+        FireWeapon
+    }
+
     private Vector3 curRot;
     private Vector3 targetRot;
+    public CharacterStat knockbackResistance = new CharacterStat(1);
 
     [SerializeField]
     private float snappiness;
@@ -50,12 +59,19 @@ public class Recoil : MonoBehaviour
 
     public void RecoilFire()
     {
-        targetRot += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        var recoilRange = new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        recoilRange *= knockbackResistance.Value;
+        targetRot += recoilRange;
     }
 
-    public void CustomRecoil(Vector3 rot, float multiplier = 1)
+    public void CustomRecoil(Vector3 rot, float multiplier = 1, RecoilType type = RecoilType.MovementLand)
     {
-        targetRot += new Vector3(rot.x, Random.Range(-rot.y, rot.y), Random.Range(-rot.z, rot.z)) * multiplier;
+        var recoilRange = new Vector3(rot.x, Random.Range(-rot.y, rot.y), Random.Range(-rot.z, rot.z)) * multiplier;
+        if (type == RecoilType.TakeDamage)
+        {
+            recoilRange *= knockbackResistance.Value;
+        }
+        targetRot += recoilRange;
     }
 
 }

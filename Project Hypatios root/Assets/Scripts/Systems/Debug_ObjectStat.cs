@@ -205,6 +205,33 @@ public class Debug_ObjectStat : MonoBehaviour
         currentEnemy.Burn();
     }
 
+    public void Enemy_InstantHeal()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        currentEnemy.Stats.CurrentHitpoint = currentEnemy.Stats.MaxHitpoint.Value;
+    }
+
+    public void Enemy_ParalyzeToggle()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        if (currentEnemy.IsParalyzed())
+            currentEnemy.Deparalyze();
+        else
+            currentEnemy.Paralyze();
+    }
+
+
+
     public void Enemy_Poison()
     {
         if (currentEnemy == null)

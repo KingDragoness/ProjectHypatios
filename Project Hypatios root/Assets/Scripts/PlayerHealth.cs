@@ -188,11 +188,10 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
-        var recoil = FindObjectOfType<Recoil>();
         var recoilAmount = 1f * Mathf.Clamp(damage/10, 1, 10);
         var camRecoil = new Vector3(camRecoilDamage.x * recoilAmount, camRecoilDamage.y * recoilAmount, camRecoilDamage.z * recoilAmount);
 
-        recoil.CustomRecoil(camRecoil, shakinessFactor);
+        Hypatios.Player.Weapon.Recoil.CustomRecoil(camRecoil, shakinessFactor, Recoil.RecoilType.TakeDamage);
 
         float random = Random.Range(0f, 1f);
 

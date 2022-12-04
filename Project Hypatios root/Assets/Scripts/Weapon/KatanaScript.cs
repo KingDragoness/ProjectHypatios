@@ -22,7 +22,7 @@ public class KatanaScript : BaseWeaponScript
         if (playerHealth == null) playerHealth = Hypatios.Player.Health;
         cam = Hypatios.MainCamera;
 
-        gunRecoil = weaponSystem.gunRecoil;
+        gunRecoil = weaponSystem.Recoil;
 
     }
 

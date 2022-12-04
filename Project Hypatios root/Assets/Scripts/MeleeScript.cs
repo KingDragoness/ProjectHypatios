@@ -59,7 +59,7 @@ public class MeleeScript : MonoBehaviour
         WeaponManager.unequipWeapon();
         curMeleeTime -= Time.deltaTime;
 
-        Debug.Log("Meleeing");
+        //Debug.Log("Meleeing");
         if (!hasMeleed)
         {
             int rand = Random.Range(0, 2);
@@ -99,6 +99,7 @@ public class MeleeScript : MonoBehaviour
             {
                 var token = new DamageToken();
                 token.damage = Random.Range(meleeDamage - 3, meleeDamage + 3);
+                if (Hypatios.Player.BonusDamageMelee.Value != 0) token.damage *= Hypatios.Player.BonusDamageMelee.Value;
                 damageReceiver.Attacked(token);
                 audio_HitAttacked.Play();
                 MainGameHUDScript.Instance.audio_CrosshairClick.Play();

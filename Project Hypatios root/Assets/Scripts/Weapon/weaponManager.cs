@@ -32,7 +32,7 @@ public class WeaponManager : MonoBehaviour
 
     public static WeaponManager Instance;
 
-    public Recoil gunRecoil;
+    public Recoil Recoil;
 
     public List<BaseWeaponScript> CurrentlyHeldWeapons { get => currentlyHeldWeapons;}
 

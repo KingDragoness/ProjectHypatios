@@ -14,27 +14,76 @@ public enum PlayerPerks
 [System.Serializable]
 public class PerkCustomEffect
 {
-    public StatusEffectCategory statusCategoryType;
+    public StatusEffectCategory statusCategoryType = StatusEffectCategory.Nothing;
     public float Value = 0.1f;
-    public float EffectTimer = 5f;
+
+    public void Generate()
+    {
+        Value = BasePerk.GenerateValueForCustomPerk(statusCategoryType);
+    }
 }
 
 public class PlayerPerk
 {
 
-    public const int MAX_LV_MaxHPUpgrade = 999;
-    public const int MAX_LV_RegenHPUpgrade = 10;
     public const int MAX_LV_SoulBonus = 5;
     public const int MAX_LV_ShortcutDiscount = 5;
     public const int MAX_LV_KnockbackResistance = 5;
     public const int MAX_LV_DashCooldown = 5;
     public const int MAX_LV_MeleeDamageBonus = 5;
 
+    public static BasePerk GetBasePerk(StatusEffectCategory type)
+    {
+        return Hypatios.Game.AllBasePerks.Find(x => x.category == type);
+    }
+
+    public static BasePerk RandomPickBasePerk()
+    {
+        var ListPerk = new List<BasePerk>();
+        foreach (var entry in Hypatios.Game.AllBasePerks) ListPerk.Add(entry);
+        ListPerk.RemoveAll(fx => fx.CheckLevelMaxed());
+
+        int[] allProbability = new int [ListPerk.Count];
+
+        int x = 0;
+        foreach(var entry in ListPerk)
+        {
+            allProbability[x] = Mathf.RoundToInt(entry.Commonness);
+            x++;
+        }
+
+        int pickedIndex = IsopatiosUtility.Choose(allProbability);
+        return ListPerk[pickedIndex];
+
+    }
+
+    public static BasePerk RandomPickBaseTempPerk()
+    {
+        var ListPerk = new List<BasePerk>();
+        foreach (var entry in Hypatios.Game.AllBasePerks) ListPerk.Add(entry);
+        ListPerk.RemoveAll(c => c.CheckLevelMaxed() && c.TemporaryPerkOverLimit == false);
+        ListPerk.RemoveAll(d => d.category == StatusEffectCategory.SoulBonus); 
+
+        int[] allProbability = new int[ListPerk.Count];
+
+        int x = 0;
+        foreach (var entry in ListPerk)
+        {
+            allProbability[x] = Mathf.RoundToInt(entry.Commonness);
+            x++;
+        }
+
+        int pickedIndex = IsopatiosUtility.Choose(allProbability);
+        return ListPerk[pickedIndex];
+
+    }
+
+
     public static float GetValue_MaxHPUpgrade(int level)
     {
         if (level == 0) return 0;
 
-        float bonusHP = level * 7;
+        float bonusHP = level * 5;
         return bonusHP;
     }
 
@@ -42,24 +91,50 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusRegen = level * 0.16f;
+        float bonusRegen = level * 0.08f;
         return bonusRegen;
     }
+
+    public static float GetValue_BonusMeleeDamage(int level)
+    {
+        if (level == 0) return 0;
+
+        float bonusMelee = level * 0.03f;
+        return bonusMelee;
+    }
+
+    public static float GetValue_KnockbackResistUpgrade(int level)
+    {
+        if (level == 0) return 0;
+
+        float bonusResistKnock = 1 - (level * 0.15f);
+        return bonusResistKnock;
+    }
+
+    public static float GetValue_Dashcooldown(int level)
+    {
+        if (level == 0) return 3;
+
+        float cooldown = 3 - (level * 0.25f);
+        return cooldown;
+    }
+
 
     public static int GetBonusSouls()
     {
         int soulAmount = 0;
 
         float chance = Random.Range(0f, 1f);
+        var soulLevel = Hypatios.Player.GetNetSoulBonusPerk();
 
-        if (Hypatios.Game.Perk_LV_Soulbonus == 1)
+        if (soulLevel == 1)
         {
             if (chance < 0.4f)
             {
                 soulAmount += 1;
             }
         }
-        else if (Hypatios.Game.Perk_LV_Soulbonus == 2)
+        else if (soulLevel == 2)
         {
             if (chance < 0.6f)
             {
@@ -70,7 +145,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (Hypatios.Game.Perk_LV_Soulbonus == 3)
+        else if (soulLevel == 3)
         {
             soulAmount += 1;
 
@@ -83,7 +158,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (Hypatios.Game.Perk_LV_Soulbonus == 4)
+        else if (soulLevel == 4)
         {
             soulAmount += 2;
 
@@ -96,7 +171,7 @@ public class PlayerPerk
                 soulAmount += 1;
             }
         }
-        else if (Hypatios.Game.Perk_LV_Soulbonus == 5)
+        else if (soulLevel == 5)
         {
             soulAmount += 3;
 
@@ -112,6 +187,7 @@ public class PlayerPerk
 
         return soulAmount;
     }
+
 
     #region Legacy
     public static int GetPrice_MaxHP(float currentHP, float targetHP)
@@ -171,23 +247,23 @@ public class PlayerPerk
 
         if (level == 0)
         {
-            s = "[RECOMMENDED] 40% chance for +1 soul.";
+            s = "40% chance for +1 soul.";
         }
         else if (level == 1)
         {
-            s = "[RECOMMENDED] 40% chance for +1 soul, 20% chance for +2 souls.";
+            s = "40% chance for +1 soul, 20% chance for +2 souls.";
         }
         else if (level == 2)
         {
-            s = "[RECOMMENDED] +1 souls by default. 30% chance for +2 souls, 10% chance for +3 souls.";
+            s = "+1 souls by default. 30% chance for +2 souls, 10% chance for +3 souls.";
         }
         else if (level == 3)
         {
-            s = "[RECOMMENDED] +2 souls by default. 30% chance for +3 souls, 10% chance for +4 souls.";
+            s = "+2 souls by default. 30% chance for +3 souls, 10% chance for +4 souls.";
         }
         else if (level == 4)
         {
-            s = "[RECOMMENDED] +3 souls by default. 40% chance for +4 souls, 10% chance for +5 souls.";
+            s = "+3 souls by default. 40% chance for +4 souls, 10% chance for +5 souls.";
         }
 
         return s;

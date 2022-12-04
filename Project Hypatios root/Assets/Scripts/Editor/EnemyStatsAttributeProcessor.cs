@@ -28,27 +28,6 @@ public class EnemyStatsAttributeProcessor : OdinAttributeProcessor<EnemyStats>
     }
 }
 
-public class PlayerStatAttributeProcessor : OdinAttributeProcessor<PlayerStat>
-{
-    public override void ProcessSelfAttributes(InspectorProperty property, List<Attribute> attributes)
-    {
-        // attributes.Add(new InfoBoxAttribute("Dynamically added attributes!"));
-        attributes.Add(new HideReferenceObjectPickerAttribute());
-        attributes.Add(new InlinePropertyAttribute());
-        attributes.Add(new HideLabelAttribute());
-    }
-
-    public override void ProcessChildMemberAttributes(
-        InspectorProperty parentProperty,
-        MemberInfo member,
-        List<Attribute> attributes)
-    {
-        attributes.Add(new SpaceAttribute(1f));
-        // These attributes will be added to all of the child elements.
-        //attributes.Add(new LabelWidthAttribute(20));
-    }
-}
-
 
 public class CharacterStatAttributeProcessor : OdinAttributeProcessor<CharacterStat>
 {

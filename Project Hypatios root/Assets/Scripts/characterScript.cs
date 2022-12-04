@@ -7,39 +7,14 @@ using Sirenix.OdinInspector;
 using Kryz.CharacterStats;
 
 
-[System.Serializable]
-public class PlayerStat
-{
-
-    [BoxGroup("Stats")] public CharacterStat DamageBonus;
-    [BoxGroup("Stats")] public CharacterStat Luck = new CharacterStat(10); //unused, maybe for later
-    [BoxGroup("Stats")] public CharacterStat MaxHitpoint;
-    [BoxGroup("Stats")] public CharacterStat MovementBonus; //percentage only
-    [BoxGroup("Stats")] public CharacterStat RegenHPBonus; //percentage only
-    [BoxGroup("Stats")] public CharacterStat KnockbackResistance; //percentage only
-    [BoxGroup("Stats")] public CharacterStat SoulBonus; //flat
-    [BoxGroup("Stats")] public CharacterStat DashCooldown; //percentage only
-    [BoxGroup("Stats")] public CharacterStat ShortcutDiscount; //flat
-    [BoxGroup("Stats")] public CharacterStat BossDamageBonus; //percentage only
-    [BoxGroup("Stats")] public CharacterStat BonusDamagePistol; //percentage only
-    [BoxGroup("Stats")] public CharacterStat BonusDamageShotgun; //percentage only
-    [BoxGroup("Stats")] public CharacterStat BonusDamageMelee; //percentage only
-    [BoxGroup("Stats")] public CharacterStat BonusDamageRifle; //percentage only
-    [BoxGroup("Stats")] public CharacterStat BonusDamageExotics; //percentage only
-
-    [Header("Runtime Only")]
-    [ReadOnly] public float Fire = -1; 
-    [ReadOnly] public float Poison = -1;
-    [ReadOnly] public float Paralyze = -1;
-
-}
 
 
 public class CharacterScript : Entity
 {
 
-    [FoldoutGroup("Base")] [HideInEditorMode] [ShowInInspector] private PlayerStat _stats;
-    public PlayerStat Stats { get => _stats; }
+
+    [FoldoutGroup("Stats")] public CharacterStat BonusDamageMelee; //percentage only
+
 
     private dashParticleManager dashManager;
     public Rigidbody rb;
@@ -93,7 +68,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Dashing")] public float dashForce = 5f;
     [FoldoutGroup("Dashing")] public float dashDuration = .5f;
     [FoldoutGroup("Dashing")] public float timeSinceLastDash;
-    [FoldoutGroup("Dashing")] public float dashCooldown = 3f;
+    [FoldoutGroup("Dashing")] public CharacterStat dashCooldown = new CharacterStat(3);
 
     //Audio
     soundManagerScript soundManager;
@@ -108,6 +83,8 @@ public class CharacterScript : Entity
     //Animation
     [ShowInInspector] [ReadOnly] private Animator anim;
     [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
+    public HypatiosSave.PerkDataSave PerkData = new HypatiosSave.PerkDataSave();
+
     public Animator Anim { get => anim; }
     private float airTime = 0;
 
@@ -128,13 +105,46 @@ public class CharacterScript : Entity
         //load and create perks here
     }
 
+    #region Perks
     [FoldoutGroup("Debug")]
     [Button("Reload All Stat Effects")]
     public void ReloadStatEffects()
     {
         RemoveAllEffectsBySource("PermanentPerk");
+        CustomPerkLoad();
         PerkInitialize(StatusEffectCategory.MaxHitpointBonus);
         PerkInitialize(StatusEffectCategory.RegenHPBonus);
+        PerkInitialize(StatusEffectCategory.KnockbackResistance);
+        PerkInitialize(StatusEffectCategory.BonusDamageMelee);
+        dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
+    }
+
+    public int GetNetSoulBonusPerk()
+    {
+        var basePerkClass = PlayerPerk.GetBasePerk(StatusEffectCategory.SoulBonus);
+        int netPerk = PerkData.Perk_LV_Soulbonus;
+
+        if (netPerk > basePerkClass.MAX_LEVEL)
+            netPerk = basePerkClass.MAX_LEVEL;
+
+        return netPerk;
+    }
+
+    private void CustomPerkLoad()
+    {
+        foreach (var customPerk in PerkData.Temp_CustomPerk)
+        {
+            var category = customPerk.statusCategoryType;
+            var effectObject = GetGenericEffect(category, "TempPerk");
+
+            if (effectObject == null)
+                CreatePersistentStatusEffect(category, customPerk.Value, "TempPerk");
+            else
+            {
+                effectObject.Value = customPerk.Value;
+                effectObject.ApplyEffect();
+            }
+        }
     }
 
     private void PerkInitialize(StatusEffectCategory category)
@@ -143,11 +153,19 @@ public class CharacterScript : Entity
 
         if (category == StatusEffectCategory.MaxHitpointBonus)
         {
-            value = PlayerPerk.GetValue_MaxHPUpgrade(Hypatios.Game.Perk_LV_MaxHitpointUpgrade);
+            value = PlayerPerk.GetValue_MaxHPUpgrade(PerkData.Perk_LV_MaxHitpointUpgrade);
         }
         else if (category == StatusEffectCategory.RegenHPBonus)
         {
-            value = PlayerPerk.GetValue_RegenHPUpgrade(Hypatios.Game.Perk_LV_RegenHitpointUpgrade);
+            value = PlayerPerk.GetValue_RegenHPUpgrade(PerkData.Perk_LV_RegenHitpointUpgrade);
+        }
+        else if (category == StatusEffectCategory.KnockbackResistance)
+        {
+            value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
+        }
+        else if (category == StatusEffectCategory.BonusDamageMelee)
+        {
+            value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
         }
 
         //value += Hypatios.Game.CustomTemporaryPerk (for single run bonus perks)
@@ -162,6 +180,7 @@ public class CharacterScript : Entity
             effectObject.ApplyEffect();
         }
     }
+    #endregion
 
     void Start()
     {   
@@ -170,7 +189,7 @@ public class CharacterScript : Entity
         rb = GetComponent<Rigidbody>();
         dashManager = GetComponent<dashParticleManager>();
         rb.freezeRotation = true;
-        timeSinceLastDash = dashCooldown;
+        timeSinceLastDash = dashCooldown.Value;
         soundManager = FindObjectOfType<soundManagerScript>();
         cc = GetComponent<CapsuleCollider>();
 
@@ -214,7 +233,7 @@ public class CharacterScript : Entity
                 Jumping();
 
             timeSinceLastDash += Time.deltaTime;
-            float timeAfterDash = Mathf.Clamp(timeSinceLastDash / dashCooldown, 0f, dashCooldown);
+            float timeAfterDash = Mathf.Clamp(timeSinceLastDash / dashCooldown.Value, 0f, dashCooldown.Value);
             MainGameHUDScript.Instance.dashSlider.value = timeAfterDash;
 
             slopeDirection = Vector3.ProjectOnPlane(dir, slopeHit.normal);
@@ -233,8 +252,6 @@ public class CharacterScript : Entity
                     inAir = false;
                     Anim.SetBool("inAir", false);
 
-                    if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                        Hypatios.Game.RuntimeTutorialHelp("Wallrunning", "Simply hold W while steering the player forward to prevent from falling. Player can jump then dash to reach hard-to-reach platform.", "FirstWallRun");
                 }
                 if (inAir && isGrounded)
                 {
@@ -244,8 +261,7 @@ public class CharacterScript : Entity
 
                     {
                         float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 3);
-                        var recoil = FindObjectOfType<Recoil>();
-                        recoil.CustomRecoil(new Vector3(5, -5f, 5f), multiplierAir);
+                        Weapon.Recoil.CustomRecoil(new Vector3(5, -5f, 5f), multiplierAir);
                     }
                     airTime = 0;
 
@@ -272,7 +288,7 @@ public class CharacterScript : Entity
             return;
         }
 
-        if (timeSinceLastDash > dashCooldown)
+        if (timeSinceLastDash > dashCooldown.Value)
         {
             MainGameHUDScript.Instance.dashOk.gameObject.SetActive(true);
 
@@ -291,10 +307,9 @@ public class CharacterScript : Entity
 
         if (isCheatMode == false)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && timeSinceLastDash > dashCooldown)
+            if (Input.GetKey(KeyCode.LeftShift) && timeSinceLastDash > dashCooldown.Value)
             {
-                if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                    Hypatios.Game.RuntimeTutorialHelp("Dashing", "While holding LEFT SHIFT, you can dash by hold WASD keys to dash either left, right, back or forward.", "FirstDash");
+
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
             }
@@ -411,8 +426,7 @@ public class CharacterScript : Entity
                 {
                     if (isNoGravity == false) Anim.SetBool("isRunning", true);
 
-                    if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                        Hypatios.Game.RuntimeTutorialHelp("Moving the Player", "Use your mouse to move your camera. WASD to move the player while SPACE to jump. LEFT CTRL to crouch.", "FirstMove");
+                 
                 }
                 else
                 {

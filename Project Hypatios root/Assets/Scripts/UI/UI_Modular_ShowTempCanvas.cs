@@ -6,6 +6,7 @@ public class UI_Modular_ShowTempCanvas : MonoBehaviour
 {
 
     public CanvasGroup cg;
+    public bool isReverse = false;
     public float opacitySpeed = 5;
 
     private float _showTime = 1f;
@@ -18,19 +19,40 @@ public class UI_Modular_ShowTempCanvas : MonoBehaviour
 
     private void Update()
     {
-        if (_showTime > 0)
+        if (isReverse == false)
         {
-            _showTime -= Time.deltaTime;
-
-            if (cg.alpha < 1)
+            if (_showTime > 0)
             {
-                cg.alpha += Time.deltaTime * opacitySpeed * 0.1f;
+                _showTime -= Time.deltaTime;
+
+                if (cg.alpha < 1)
+                {
+                    cg.alpha += Time.deltaTime * opacitySpeed * 0.1f;
+                }
+            }
+            else if (cg.alpha > 0)
+            {
+                //hide
+                cg.alpha -= Time.deltaTime * opacitySpeed * 0.1f;
             }
         }
-        else if (cg.alpha > 0)
+        else
         {
-            //hide
-            cg.alpha -= Time.deltaTime * opacitySpeed * 0.1f;
+            //Debug.Log("test1");
+            if (_showTime > 0)
+            {
+                _showTime -= Time.deltaTime;
+
+                if (cg.alpha > 0)
+                {
+                    cg.alpha -= Time.deltaTime * opacitySpeed * 0.1f;
+                }
+            }
+            else if (cg.alpha < 1)
+            {
+                //hide
+                cg.alpha += Time.deltaTime * opacitySpeed * 0.1f;
+            }
         }
     }
 

@@ -27,6 +27,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Prefab_SpawnAmmo;
     [FoldoutGroup("References")] public GameObject Prefab_SpawnSoul;
     [FoldoutGroup("References")] public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
+    [FoldoutGroup("References")] public List<BasePerk> AllBasePerks;
 
     [Header("Saves")]
     public int SoulPoint = 0;
@@ -34,13 +35,6 @@ public class FPSMainScript : MonoBehaviour
     public float UNIX_Timespan = 0;
     public bool everUsed_Paradox = false;
     public bool everUsed_WeaponShop = false;
-    public int Perk_LV_MaxHitpointUpgrade = 0;
-    public int Perk_LV_RegenHitpointUpgrade = 0;
-    public int Perk_LV_Soulbonus = 0;
-    public int Perk_LV_ShortcutDiscount = 0;
-    public int Perk_LV_KnockbackRecoil = 0;
-    public int Perk_LV_DashCooldown = 0;
-    public int Perk_LV_IncreaseMeleeDamage = 0;
 
     public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
@@ -212,55 +206,45 @@ public class FPSMainScript : MonoBehaviour
     private void LoadFromSaveBuffer()
     {
 
-        var characterScript = FindObjectOfType<CharacterScript>();
-        var weaponManager = FindObjectOfType<WeaponManager>();
+        var Player = Hypatios.Player;
+        var Weapons = FindObjectOfType<WeaponManager>();
 
         //perks
         {
-            Perk_LV_MaxHitpointUpgrade = savedata.Perk_LV_MaxHitpointUpgrade;
-            Perk_LV_RegenHitpointUpgrade = savedata.Perk_LV_RegenHitpointUpgrade;
-            Perk_LV_Soulbonus = savedata.Perk_LV_Soulbonus;
-            Perk_LV_ShortcutDiscount = savedata.Perk_LV_ShortcutDiscount;
-            Perk_LV_KnockbackRecoil = savedata.Perk_LV_KnockbackRecoil;
-            Perk_LV_DashCooldown = savedata.Perk_LV_DashCooldown;
-            Perk_LV_IncreaseMeleeDamage = savedata.Perk_LV_IncreaseMeleeDamage;
+            Player.PerkData = savedata.AllPerkDatas;
+
         }
 
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
-        characterScript.Health.targetHealth = savedata.Player_CurrentHP;
-        characterScript.Health.curHealth = savedata.Player_CurrentHP;
+        Player.Health.targetHealth = savedata.Player_CurrentHP;
+        Player.Health.curHealth = savedata.Player_CurrentHP;
+        Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Hypatios.Player.Initialize();
-        weaponManager.LoadGame_InitializeGameSetup();
+        Weapons.LoadGame_InitializeGameSetup();
 
         LoadFromSaveFile = false;
     }
 
     public void LoadGameFromKilled()
     {
-        var characterScript = FindObjectOfType<CharacterScript>();
+        var Player = FindObjectOfType<CharacterScript>();
 
         //perks
-        {
-            Perk_LV_MaxHitpointUpgrade = savedata.Perk_LV_MaxHitpointUpgrade;
-            Perk_LV_RegenHitpointUpgrade = savedata.Perk_LV_RegenHitpointUpgrade;
-            Perk_LV_Soulbonus = savedata.Perk_LV_Soulbonus;
-            Perk_LV_ShortcutDiscount = savedata.Perk_LV_ShortcutDiscount;
-            Perk_LV_KnockbackRecoil = savedata.Perk_LV_KnockbackRecoil;
-            Perk_LV_DashCooldown = savedata.Perk_LV_DashCooldown;
-            Perk_LV_IncreaseMeleeDamage = savedata.Perk_LV_IncreaseMeleeDamage;
-        }
+        Player.PerkData = savedata.AllPerkDatas;
+
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
-        characterScript.Health.targetHealth = characterScript.Health.maxHealth.Value;
+        Player.Health.targetHealth = Player.Health.maxHealth.Value;
+        Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -271,7 +255,7 @@ public class FPSMainScript : MonoBehaviour
     private HypatiosSave PackSaveData(int targetLevel = -1)
     {
         HypatiosSave hypatiosSave = new HypatiosSave();
-        var characterScript = FindObjectOfType<CharacterScript>();
+        var Player = FindObjectOfType<CharacterScript>();
         var weaponManager = FindObjectOfType<WeaponManager>();
 
         if (targetLevel == -1)
@@ -286,23 +270,15 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
-        hypatiosSave.Player_CurrentHP = characterScript.Health.curHealth;
+        hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
+        hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
         hypatiosSave.otherEverUsed = otherEverUsed;
+        hypatiosSave.AllPerkDatas = Player.PerkData;
 
-        //perks
-        {
-            hypatiosSave.Perk_LV_MaxHitpointUpgrade = Perk_LV_MaxHitpointUpgrade;
-            hypatiosSave.Perk_LV_RegenHitpointUpgrade = Perk_LV_RegenHitpointUpgrade;
-            hypatiosSave.Perk_LV_Soulbonus = Perk_LV_Soulbonus;
-            hypatiosSave.Perk_LV_ShortcutDiscount = Perk_LV_ShortcutDiscount;
-            hypatiosSave.Perk_LV_KnockbackRecoil = Perk_LV_KnockbackRecoil;
-            hypatiosSave.Perk_LV_DashCooldown = Perk_LV_DashCooldown;
-            hypatiosSave.Perk_LV_IncreaseMeleeDamage = Perk_LV_IncreaseMeleeDamage;
-        }
 
         foreach (var weaponDataResource in weaponManager.weapons)
         {
@@ -356,8 +332,9 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_CurrentHP = 100;
         hypatiosSave.Player_RunSessionUnixTime = 0;
         hypatiosSave.Game_LastLevelPlayed = 4;
+        hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
 
-        Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
         foreach (var weaponStat in hypatiosSave.Game_WeaponStats)
         {
@@ -557,6 +534,29 @@ public class FPSMainScript : MonoBehaviour
             Application.LoadLevel(savedata.Game_LastLevelPlayed);
             LoadFromSaveFile = true;
 
+        }
+        catch
+        {
+            Debug.LogError("Failed load!");
+            ConsoleCommand.Instance.SendConsoleMessage("Save file cannot be loaded!");
+        }
+
+
+    }
+
+    public static void CacheLoadSave(string path = "")
+    {
+        string pathLoad = "";
+        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+
+        if (path == "")
+        {
+            pathLoad = GameSavePath + "/defaultSave.save";
+        }
+
+        try
+        {
+            savedata = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathLoad), settings);
         }
         catch
         {

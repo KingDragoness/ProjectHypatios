@@ -52,8 +52,9 @@ public class Hypatios : MonoBehaviour
             RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
             MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
-            SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); //PlayerPrefs.GetFloat("");
-            MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1); //PlayerPrefs.GetFloat("SETTINGS.MUSIC_VOLUME");
+            SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); 
+            MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1);
+            QUALITY_LEVEL = LoadPrefKeyInt("SETTINGS.QUALITY_LEVEL", 1); 
             VSYNC = PlayerPrefs.GetInt("SETTINGS.VSYNC");
 
             {
@@ -66,8 +67,7 @@ public class Hypatios : MonoBehaviour
 
         internal void InitializeAtStart()
         {
-            QUALITY_LEVEL = QualitySettings.GetQualityLevel();
-            QualitySettings.SetQualityLevel(Hypatios.Settings.QUALITY_LEVEL);
+            QualitySettings.SetQualityLevel(QUALITY_LEVEL);
             RefreshSettings();
         }
 

@@ -103,7 +103,7 @@ public class ParadoxShopUI : MonoBehaviour
     {
         int price = 0;
         var heal = FindObjectOfType<CharacterScript>().Health;
-        int lv_Luck = Hypatios.Game.Perk_LV_Soulbonus;
+        int lv_Luck = 1;// Hypatios.Game.Perk_LV_Soulbonus;
 
         if (button.perkType == PlayerPerks.HealthMax)
         {
@@ -186,7 +186,7 @@ public class ParadoxShopUI : MonoBehaviour
         }
         else if (button.perkType == PlayerPerks.LuckGod)
         {
-            int lv_Luck = Hypatios.Game.Perk_LV_Soulbonus;
+            int lv_Luck = 1; // Hypatios.Game.Perk_LV_Soulbonus;
             price = PlayerPerk.GetPrice_LuckOfGod(lv_Luck);
             s = $"[LV {lv_Luck + 1}/6]" +
             $" [Soul: {price}]";
@@ -200,7 +200,7 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (button.perkType == PlayerPerks.LuckGod)
         {
-            descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(Hypatios.Game.Perk_LV_Soulbonus)} {s} ";
+            //descriptionPrev_Text.text = $"{PlayerPerk.GetDescription_LuckOfGod(Hypatios.Game.Perk_LV_Soulbonus)} {s} ";
         }
 
 
