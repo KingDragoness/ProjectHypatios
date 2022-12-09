@@ -30,6 +30,7 @@ public class MobiusGuard : EnemyScript
     [FoldoutGroup("References")] public Transform outEye;
     [FoldoutGroup("References")] public Transform originWeapon;
     [FoldoutGroup("References")] public Transform outWeaponTransform;
+    [FoldoutGroup("References")] public FollowObject followTargetIK;
     [FoldoutGroup("References")] public MobiusLookWeaponLimit mobiusLookWeaponLimit;
     [FoldoutGroup("Weapon")] public GameObject sparkBullet;
     [FoldoutGroup("Weapon")] public GameObject flashWeapon;
@@ -78,6 +79,7 @@ public class MobiusGuard : EnemyScript
 
         if (isAIEnabled == false) return;
         if (currentTarget == null) return;
+        followTargetIK.target = currentTarget.transform;
         mobiusLookWeaponLimit.player = currentTarget.transform;
 
         UpdateEnemyState();

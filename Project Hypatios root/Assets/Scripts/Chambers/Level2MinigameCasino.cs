@@ -38,7 +38,7 @@ public class Level2MinigameCasino : MonoBehaviour
             f_timerCasino += Time.deltaTime;
             f_timerSpawnShootable += Time.deltaTime;
             text_score.text = score.ToString();
-            text_roundTimer.text = $"[{Mathf.FloorToInt(f_timerCasino)}/{casinoTimerLimit}]s".ToString();
+            text_roundTimer.text = $"{Mathf.Round(f_timerCasino*10)/10f}/{casinoTimerLimit}s".ToString();
             OnGameStarted?.Invoke();
 
             if (f_timerCasino < casinoTimerLimit - 1)

@@ -60,7 +60,7 @@ public class EastriaGuardTest : EnemyScript
         if (Mathf.RoundToInt(Time.time) % 5 == 0)
             ScanForEnemies();
 
-        if (currentTarget != null && !isAIEnabled)
+        if (currentTarget != null && isAIEnabled)
         {
             followObject.target = currentTarget.transform;
             // direction towards target
@@ -107,6 +107,9 @@ public class EastriaGuardTest : EnemyScript
 
     private void RunAI()
     {
+        mode = AttackPattern.Attack;
+
+
         if (mode == AttackPattern.Attack)
         {
             _cooldownAttack -= Time.deltaTime;

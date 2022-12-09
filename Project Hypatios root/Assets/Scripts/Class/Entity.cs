@@ -52,6 +52,8 @@ public abstract class Entity : MonoBehaviour
         }
 
         var FireParticle = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.FireEffect, false);
+
+        if (FireParticle == null) return;
         var particleFX = FireParticle.GetComponent<ParticleFXResizer>();
         FireParticle.transform.position = OffsetedBoundWorldPosition;
         FireParticle.transform.localEulerAngles = Vector3.zero;
@@ -119,6 +121,10 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.SourceID == _source && x.statusCategoryType == _statusCategory) as GenericStatus;
     }
 
+    public bool IsStatusEffect(StatusEffectCategory _statusCategory)
+    {
+        return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory) != null;
+    }
 
     /// <summary>
     /// 

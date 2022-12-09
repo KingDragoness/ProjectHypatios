@@ -18,6 +18,7 @@ public class DamageToken
     public float repulsionForce = 1;
     public float shakinessFactor = 0.5f;
     public float healthSpeed = 10f;
+    public bool isBurn = false;
     public EnemyScript originEnemy;
     public DamageOrigin origin = DamageOrigin.Player;
 }
@@ -56,6 +57,8 @@ public class UniversalDamage
             Hypatios.UI.SpawnIndicator.Spawn(origin);
             health.takeDamage(Mathf.RoundToInt(token.damage), token.healthSpeed, token.shakinessFactor);
 
+           
+            if (token.isBurn && !health.character.IsStatusEffect(StatusEffectCategory.Fire)) health.character.Burn();
         }
     }
 }
@@ -74,7 +77,11 @@ public class damageReceiver : MonoBehaviour
     {
         token.damage *= multiplier;
 
-        if (enemyScript != null) enemyScript.Attacked(token);
+        if (enemyScript != null)
+        {
+            enemyScript.Attacked(token);
+            if (token.isBurn && !enemyScript.IsStatusEffect(StatusEffectCategory.Fire) && token.originEnemy != enemyScript) enemyScript.Burn();
+        }
 
         if (isCriticalHit && token.origin == DamageToken.DamageOrigin.Player)
         {

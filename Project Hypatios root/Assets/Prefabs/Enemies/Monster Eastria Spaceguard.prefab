@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131296390}
   m_LocalRotation: {x: -0.728486, y: -0.37277582, z: -0.38523912, w: 0.426541}
-  m_LocalPosition: {x: 0.3343817, y: 1.3485124, z: -0.55244255}
+  m_LocalPosition: {x: 0.427, y: 1.712, z: -0.697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8858990205226475666}
@@ -887,6 +887,7 @@ Transform:
   m_Children:
   - {fileID: 5128536588051052874}
   - {fileID: 533211137156039258}
+  - {fileID: 9134219893045585641}
   m_Father: {fileID: 7847380350302035989}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1609,6 +1610,36 @@ Transform:
   - {fileID: 1037279703185228387}
   m_Father: {fileID: 6264831087092761768}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4338695063728517811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9134219893045585641}
+  m_Layer: 12
+  m_Name: EyeView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9134219893045585641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4338695063728517811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.042, z: 0.757}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5057881055914757223}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4363585245441822370
 GameObject:
@@ -3484,7 +3515,8 @@ MonoBehaviour:
     m_Center: {x: 0, y: 2, z: 0}
     m_Extent: {x: 1, y: 4, z: 1}
   _baseStat: {fileID: 11400000, guid: 76ff9574454c07e4683f44d244f8a094, type: 2}
-  eyeLocation: {fileID: 5057881055914757223}
+  isAIEnabled: 1
+  eyeLocation: {fileID: 9134219893045585641}
   mode: 1
   corpsePrefab: {fileID: 6158455802483865231, guid: 53faefad09ebb4a4c97eeab5af512bc0,
     type: 3}

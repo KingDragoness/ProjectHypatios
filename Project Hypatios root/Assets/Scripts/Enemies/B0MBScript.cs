@@ -50,7 +50,6 @@ public class B0MBScript : EnemyScript
 
     public List<Material> bombMat;
     GameObject[] bomb;
-    public bool haveSeenPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -93,20 +92,20 @@ public class B0MBScript : EnemyScript
         distance = Vector3.Distance(transform.position, currentPos);
 
 
-        if (!Stats.IsDead && distance < attackRange)
+        if (!Stats.IsDead && distance < 50f)
         {
             AI_Detection();
         }
 
 
-        if (haveSeenPlayer)
+        if (hasSeenPlayer)
         {
             bomb = GameObject.FindGameObjectsWithTag("bomb");
             foreach (GameObject b in bomb)
             {
                 if (Vector3.Distance(transform.position, b.transform.position) < attackRange)
                 {
-                    b.GetComponent<B0MBScript>().haveSeenPlayer = true;
+                    b.GetComponent<B0MBScript>().hasSeenPlayer = true;
                 }
             }
 
@@ -138,7 +137,7 @@ public class B0MBScript : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        haveSeenPlayer = true;
+        hasSeenPlayer = true;
         DamageOutputterUI.instance.DisplayText(token.damage);
         Stats.CurrentHitpoint -= token.damage;
     }
@@ -171,6 +170,7 @@ public class B0MBScript : EnemyScript
         else
         {
             var explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false);
+            explosion.transform.position = transform.position;
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach (Collider c in colliders)
             {

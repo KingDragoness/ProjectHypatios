@@ -16,7 +16,7 @@ public abstract class EnemyScript : Entity
     public string EnemyName { get => _baseStat.name; }
 
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal Entity currentTarget;
-    [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool hasSeenPlayer = false;
+    [FoldoutGroup("AI")] [ShowInInspector] public bool hasSeenPlayer = false;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool canLookAtTarget = false;
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] internal bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] internal Transform eyeLocation;

@@ -8,8 +8,10 @@ public class HitAndDamageProjectile : MonoBehaviour
 {
 
     public bool killByImpact = false;
+    public bool isBurn = false;
     public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
+    public float preventKillAboveTimer = 0f;
 
     public GameObject prefabSpawnOnImpact;
 
@@ -30,10 +32,16 @@ public class HitAndDamageProjectile : MonoBehaviour
         token.origin = DamageToken.DamageOrigin.Environment;
         token.healthSpeed = DamageSpeedOverride;
         token.originEnemy = enemyOrigin;
+        token.isBurn = isBurn;
 
         UniversalDamage.TryDamage(token, other.transform, transform);
 
 
+    }
+
+    private void Update()
+    {
+        timerDead -= Time.deltaTime;
     }
 
     public void SpawnSomething()
@@ -46,7 +54,11 @@ public class HitAndDamageProjectile : MonoBehaviour
     {
         if (killByImpact)
         {
-            if (collision.gameObject.CompareTag("Enemy"))
+
+            if (timerDead > preventKillAboveTimer)
+                return;
+
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 return;
             }

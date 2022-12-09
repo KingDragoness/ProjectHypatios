@@ -132,6 +132,14 @@ public class HyperchadEnemy : EnemyScript
 
     }
 
+    [FoldoutGroup("Debug")]
+    [Button("Enemy set mode to attack")]
+    public void SetEnemyAttack()
+    {
+        currentStance = MoveStances.Attack;
+        currentCooldownDecision = -100f;
+    }
+
     public override void Die()
     {
         if (Stats.IsDead == false) BossDied();
@@ -178,13 +186,18 @@ public class HyperchadEnemy : EnemyScript
             //ActivateEnemy();
         }
 
+        if (token.originEnemy == this)
+        {
+            return;
+        }
+
         float damageProcessed = token.damage;
 
         if (isOnFinalForm)
         {
             float dist = Vector3.Distance(playerTarget.position, this.transform.position);
 
-            if (currentStance == MoveStances.Normal && dist < 10)
+            if (currentStance == MoveStances.Normal && dist < 16)
             {
                 currentStance = MoveStances.Attack;
             }
@@ -390,7 +403,7 @@ public class HyperchadEnemy : EnemyScript
                 posSpawn = out_Projectile[1].position;
             }
 
-            Vector3 randomPos = transform.position;
+            Vector3 randomPos = posSpawn;
             randomPos = OffsetRandomizeVector3(randomPos, 1f);
             randomPos.y = transform.position.y;
             Vector3 dir = (playerTarget.position - randomPos).normalized;
@@ -398,6 +411,7 @@ public class HyperchadEnemy : EnemyScript
             var projectile1 = throwProjectileEnemy.FireProjectile(dir);
             projectile1.Damage = damage + Random.Range(0, variableDamage);
             projectile1.transform.position = posSpawn;
+            projectile1.gameObject.SetActive(true);
             Visual_Attack_Fire();
             audio_FireLaser.PlayOneShot(audio_FireLaser.clip);
 
