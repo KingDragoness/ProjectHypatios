@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class StageChamberScript : MonoBehaviour
 {
+
+
 
     public ChamberText chamberText;
     public GameObject sign_LevelStateCleared;
@@ -60,6 +63,8 @@ public class StageChamberScript : MonoBehaviour
 
     }
 
+    [FoldoutGroup("Debug")]
+    [Button("Complete Chamber")]
     private void ClearedChamber()
     {
         anim.SetBool("IsOpened", true);

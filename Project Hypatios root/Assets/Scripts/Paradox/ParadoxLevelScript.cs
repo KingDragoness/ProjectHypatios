@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class ParadoxLevelScript : MonoBehaviour
 {
 
+    public bool isRequireTrivia = false;
+    [ShowIf("isRequireTrivia", true)]
+    public Trivia triviaRequired;
     public ParadoxEntity paradoxEntity;
     [Space]
     public GameObject virtualCamera;
@@ -36,6 +40,11 @@ public class ParadoxLevelScript : MonoBehaviour
         {
             return paradoxEntity.value;
         }
+    }
+
+    public bool IsTriviaFulfilled()
+    {
+        return Hypatios.Game.Check_TriviaCompleted(triviaRequired);
     }
 
     private void RegisterThis()

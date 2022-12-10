@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using Sirenix.OdinInspector;
-using System;
+using System.Linq;
+
 
 public class Hypatios : MonoBehaviour
 {
@@ -193,6 +194,15 @@ public class Hypatios : MonoBehaviour
     public static GameDifficulty Difficulty { get => Instance._gameDifficulty; }
 
     #endregion
+
+    [FoldoutGroup("Trivias")] public List<Trivia> allTrivias = new List<Trivia>();
+    [FoldoutGroup("Trivias")] [Button("TriviaRefresh")]
+    public void TriviaRefresh()
+    {
+        var _trivias = Resources.FindObjectsOfTypeAll<Trivia>().ToList();
+        _trivias.RemoveAll(x => x.disableTrivia == true);
+        allTrivias = _trivias;
+    }
 
     [SerializeField]
     private FPSMainScript _fpsMainScript;

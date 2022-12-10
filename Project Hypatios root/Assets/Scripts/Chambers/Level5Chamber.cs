@@ -144,7 +144,7 @@ public class Level5Chamber : MonoBehaviour
             return;
         }
 
-        if (sisaSoal <= 0 && !Cleared && enemiesToClear.Count <= 0)
+        if (sisaSoal <= 0 && !Cleared)
         {
             ClearedChamber();
         }

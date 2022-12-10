@@ -24,6 +24,10 @@ public class MainGameHUDScript : MonoBehaviour
     public AudioSource audio_Error;
     public AudioSource audio_PurchaseReward;
 
+    [Header("Trivias")]
+    public UI_Modular_TypewriterText typewriter_Trivia;
+    public GameObject triviaUI;
+
     [Header("Prompt UI")]
     public Text promptUIText;
     public Text promptUITitleText;

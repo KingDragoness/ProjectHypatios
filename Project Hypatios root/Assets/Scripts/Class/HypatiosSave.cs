@@ -21,6 +21,7 @@ public class HypatiosSave
     public bool everUsed_WeaponShop = false;
     public List<string> otherEverUsed = new List<string>();
     public List<ParadoxEntity> Game_ParadoxEntities = new List<ParadoxEntity>();
+    public List<TriviaSave> Game_Trivias = new List<TriviaSave>();
 
     [Space]
     #endregion
@@ -43,6 +44,14 @@ public class HypatiosSave
         public int Perk_LV_DashCooldown = 0;
         public int Perk_LV_IncreaseMeleeDamage = 0;
         public List<PerkCustomEffect> Temp_CustomPerk = new List<PerkCustomEffect>();
+
+    }
+
+    [System.Serializable]
+    public class TriviaSave
+    {
+        public string ID = "Chamber1.Completed";
+        public bool isCompleted = false;
 
     }
 

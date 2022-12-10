@@ -38,6 +38,7 @@ public class FPSMainScript : MonoBehaviour
 
     public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
+    public List<HypatiosSave.TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
     public List<string> otherEverUsed = new List<string>();
 
     [Space]
@@ -135,6 +136,38 @@ public class FPSMainScript : MonoBehaviour
         }
     }
 
+    public bool Check_TriviaCompleted(Trivia triviaTarget)
+    {
+        var triviaEntry = Game_Trivias.Find(x => x.ID == triviaTarget.ID);
+
+        if (triviaEntry != null)
+        {
+            if (triviaEntry.isCompleted)
+                return true;
+
+            return false;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void TriviaComplete(Trivia triviaTarget)
+    {
+        var triviaEntry1 = Game_Trivias.Find(x => x.ID == triviaTarget.ID);
+        if (triviaEntry1 != null) return;
+
+        var triviaEntry = new HypatiosSave.TriviaSave();
+        triviaEntry.ID = triviaTarget.ID;
+        triviaEntry.isCompleted = true;
+        MainGameHUDScript.Instance.triviaUI.gameObject.SetActive(true);
+        MainGameHUDScript.Instance.typewriter_Trivia.TypeThisDialogue($">TRIVIA ADDED:\n{triviaTarget.Title} Completed.");
+        OnTriviaTriggered.OnActionTriviaTrigger?.Invoke(triviaTarget);
+
+        Game_Trivias.Add(triviaEntry);
+    }
+
 
     public bool Check_EverUsed(string key)
     {
@@ -226,6 +259,7 @@ public class FPSMainScript : MonoBehaviour
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
+        Game_Trivias = savedata.Game_Trivias;
         Hypatios.Player.Initialize();
         Weapons.LoadGame_InitializeGameSetup();
 
@@ -249,7 +283,7 @@ public class FPSMainScript : MonoBehaviour
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
-
+        Game_Trivias = savedata.Game_Trivias;
     }
 
     private HypatiosSave PackSaveData(int targetLevel = -1)
@@ -273,6 +307,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
+        hypatiosSave.Game_Trivias = Game_Trivias;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;

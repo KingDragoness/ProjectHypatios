@@ -250,7 +250,10 @@ public class ParadoxShopUI : MonoBehaviour
         {
             shopOwner.RefreshAllParadoxes();
 
-            foreach (var levelScript in shopOwner.paradoxLevelScripts)
+            var filteredParadoxes = shopOwner.paradoxLevelScripts;
+            filteredParadoxes.RemoveAll(x => x.isRequireTrivia == true && x.IsTriviaFulfilled() == false);
+
+            foreach (var levelScript in filteredParadoxes)
             {
                 var newButton = Instantiate(buttonParadoxTemplate, content);
                 newButton.gameObject.SetActive(true);
