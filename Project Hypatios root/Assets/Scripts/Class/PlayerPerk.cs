@@ -101,9 +101,9 @@ public class PlayerPerk
 
     public static float GetValue_KnockbackResistUpgrade(int level)
     {
-        if (level == 0) return 1;
+        if (level == 0) return 0;
 
-        float bonusResistKnock = 1 - (level * 0.15f);
+        float bonusResistKnock = (level * 0.15f);
         return bonusResistKnock;
     }
 

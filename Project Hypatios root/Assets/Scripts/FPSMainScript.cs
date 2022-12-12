@@ -261,6 +261,7 @@ public class FPSMainScript : MonoBehaviour
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        Player.Inventory = savedata.Player_Inventory;
         Hypatios.Player.Initialize();
         Weapons.LoadGame_InitializeGameSetup();
 
@@ -285,6 +286,7 @@ public class FPSMainScript : MonoBehaviour
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        //Player.Inventory = savedata.Player_Inventory;
     }
 
     private HypatiosSave PackSaveData(int targetLevel = -1)
@@ -309,6 +311,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
         hypatiosSave.Game_Trivias = Game_Trivias;
+        hypatiosSave.Player_Inventory = Player.Inventory;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
@@ -369,6 +372,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_RunSessionUnixTime = 0;
         hypatiosSave.Game_LastLevelPlayed = 4;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
+        hypatiosSave.Player_Inventory = new InventoryData();
 
          Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 

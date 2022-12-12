@@ -15,7 +15,7 @@ public class Recoil : MonoBehaviour
 
     private Vector3 curRot;
     private Vector3 targetRot;
-    public CharacterStat knockbackResistance = new CharacterStat(1);
+    public CharacterStat knockbackResistance;
 
     [SerializeField]
     private float snappiness;

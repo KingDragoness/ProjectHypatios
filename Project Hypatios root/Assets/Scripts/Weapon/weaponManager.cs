@@ -74,6 +74,27 @@ public class WeaponManager : MonoBehaviour
         MainGameHUDScript.Instance.ShowAmmo(gunScript.weaponName, amount);
     }
 
+    public GunScript AddWeapon(string weaponID, bool shouldSwitch = true)
+    {
+        var weaponTarget = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == weaponID);
+
+        if (weaponTarget == null | GetGunScript(weaponID) != null)
+        {
+            Debug.LogError("Weapon already exist.");
+            return null;
+        }
+
+        var gun = Instantiate(weaponTarget.prefab, transform);
+
+        var weapon_ = gun.GetComponentInChildren<GunScript>();
+        CurrentlyHeldWeapons.Add(weapon_);
+        selectedWeapon = CurrentlyHeldWeapons.Count - 1;
+
+        if (shouldSwitch) switchWeapon();
+
+        SetWeaponSettings(weapon_);
+        return weapon_;
+    }
 
     #endregion
 
@@ -117,6 +138,11 @@ public class WeaponManager : MonoBehaviour
             if (gun1 == null)
             {
                 gun1 = AddWeapon(weaponDat.weaponID, false);
+            }
+
+            if (gun1 == null)
+            {
+                continue;
             }
 
             gun1.totalAmmo = weaponDat.totalAmmo;
@@ -275,21 +301,6 @@ public class WeaponManager : MonoBehaviour
     }
 
 
-    public GunScript AddWeapon(string weaponID, bool shouldSwitch = true)
-    {
-        var weaponTarget = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == weaponID);
-
-        var gun = Instantiate(weaponTarget.prefab, transform);
-
-        var weapon_ = gun.GetComponentInChildren<GunScript>();
-        CurrentlyHeldWeapons.Add(weapon_);
-        selectedWeapon = CurrentlyHeldWeapons.Count - 1;
-
-        if (shouldSwitch) switchWeapon();
-
-        SetWeaponSettings(weapon_);
-        return weapon_;
-    }
 
     public void SetWeaponSettings(GunScript gunScript)
     {

@@ -84,10 +84,10 @@ public class BasePerk : ScriptableObject
     public void Description_KnockbackUpgrade(float Value)
     {
         PerkID = "KnockbackUpgrade";
-        MAX_LEVEL = 5;
+        MAX_LEVEL = 10;
         category = StatusEffectCategory.KnockbackResistance;
         ReaperDialogue = $"\"Decreases gun recoil effect and damage shake effect.\"";
-        DescriptionPerk = "-15% decreases recoil effect";
+        DescriptionPerk = "Decreases recoil effect by -0.15 ";
         TemporaryPerkOverLimit = false;
         Commonness = 10;
         TitlePerk = "[KNOCKBACK RESISTANCE UPGRADE]";
@@ -155,7 +155,7 @@ public class BasePerk : ScriptableObject
         else if (category == StatusEffectCategory.RegenHPBonus)
             return $"+{Value} HP per second. Only lasts 1 run.";
         else if (category == StatusEffectCategory.KnockbackResistance)
-            return $"-{Value*100}% decreases recoil effect. Only lasts 1 run.";
+            return $"Decreases recoil effect by -{Value*100}. Only lasts 1 run.";
         else if (category == StatusEffectCategory.DashCooldown)
             return $"-0.2 seconds dash cooldown. Only lasts 1 run.";
         else if (category == StatusEffectCategory.BonusDamageMelee)
@@ -187,7 +187,7 @@ public class BasePerk : ScriptableObject
             Value = 1;
         else if (category == StatusEffectCategory.KnockbackResistance)
         {
-            Value = Random.Range(0.1f, 0.3f);
+            Value = Random.Range(0.25f, 0.5f);
             Value = Mathf.Round(Value * 100) / 100;
         }
         else if (category == StatusEffectCategory.DashCooldown)

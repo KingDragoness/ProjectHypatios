@@ -49,7 +49,7 @@ public class CharStatButton : MonoBehaviour
         else if (category == StatusEffectCategory.KnockbackResistance)
         {
             value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
-            s = $"x{value}";
+            s = $"-{value}";
         }
         else if (category == StatusEffectCategory.BonusDamageMelee)
         {

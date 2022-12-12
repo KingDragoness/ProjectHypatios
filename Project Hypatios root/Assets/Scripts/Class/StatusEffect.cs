@@ -68,7 +68,7 @@ public abstract class BaseStatusEffect : MonoBehaviour
                 playerScript.Health.healthRegen.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
             if (statusCategoryType == StatusEffectCategory.KnockbackResistance)
-                playerScript.Weapon.Recoil.knockbackResistance.AddModifier(new StatModifier(-Value, StatModType.PercentMult, this.gameObject));
+                playerScript.Weapon.Recoil.knockbackResistance.AddModifier(new StatModifier(-Value, StatModType.Flat, this.gameObject));
 
             if (statusCategoryType == StatusEffectCategory.BonusDamageMelee)
                 playerScript.BonusDamageMelee.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));

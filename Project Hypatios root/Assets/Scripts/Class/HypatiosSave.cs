@@ -1,11 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using ItemDataSave = HypatiosSave.ItemDataSave;
+
+
+[System.Serializable]
+public class InventoryData
+{
+    public List<ItemDataSave> allItemDatas = new List<ItemDataSave>();
+
+    //search
+    public ItemDataSave SearchByID(string ID)
+    {
+        return allItemDatas.Find(x => x.ID == ID);
+    }
+
+    [Button("Add Item")] //normal
+    public void AddItem(ItemInventory itemInventory, int count = 1)
+    {
+        ItemDataSave itemDataSave = null;
+
+        if (SearchByID(itemInventory.GetID()) != null)
+        {
+            itemDataSave = SearchByID(itemInventory.GetID());
+            itemDataSave.count += count;
+
+        }
+        else
+        {
+            itemDataSave = new ItemDataSave();
+            itemDataSave.ID = itemInventory.GetID();
+            itemDataSave.category = itemInventory.category;
+            itemDataSave.count = count;
+            allItemDatas.Add(itemDataSave);
+        }
+    }
+}
 
 
 [System.Serializable]
 public class HypatiosSave
 {
+
+
     #region Persistent
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;
@@ -30,8 +68,17 @@ public class HypatiosSave
     public float Player_CurrentHP = 100;
     public int Player_RunSessionUnixTime = 0;
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
+    public InventoryData Player_Inventory;
 
 
+    [System.Serializable]
+    public class ItemDataSave
+    {
+        public string ID = "";
+        public int count = 0;
+        public ItemInventory.Category category;
+        public WeaponDataSave weaponData; //only for weapon
+    }
 
     [System.Serializable]
     public class PerkDataSave
@@ -64,7 +111,7 @@ public class HypatiosSave
         public int level_Damage = 0;
         public int level_MagazineSize = 0;
         public int level_Cooldown = 0;
-        public bool removed = false;
+        public bool removed = false; //also for not equipping
     }
     #endregion
 }

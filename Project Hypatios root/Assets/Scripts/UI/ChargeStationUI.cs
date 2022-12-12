@@ -145,6 +145,11 @@ public class ChargeStationUI : MonoBehaviour
 
         Hypatios.Game.SoulPoint -= weaponSection.BuyPrice;
         var gunScript1 = WeaponManager.Instance.AddWeapon(weaponSection.weaponID);
+        if (gunScript1 == null)
+        {
+            return;
+        }
+
         gunScript1.totalAmmo = 0;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();

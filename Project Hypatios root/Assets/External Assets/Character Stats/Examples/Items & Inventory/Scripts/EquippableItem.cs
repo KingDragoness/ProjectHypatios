@@ -14,7 +14,7 @@ namespace Kryz.CharacterStats.Examples
 		Accessory2,
 	}
 
-	[CreateAssetMenu]
+	[CreateAssetMenu(menuName = "Kryz")]
 	public class EquippableItem : Item
 	{
 		public int StrengthBonus;

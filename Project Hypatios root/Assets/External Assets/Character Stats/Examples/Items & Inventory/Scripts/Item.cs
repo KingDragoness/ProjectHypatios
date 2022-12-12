@@ -2,7 +2,7 @@
 
 namespace Kryz.CharacterStats.Examples
 {
-	[CreateAssetMenu]
+	[CreateAssetMenu(menuName = "Kryz")]
 	public class Item : ScriptableObject
 	{
 		public string ItemName;

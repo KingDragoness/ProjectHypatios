@@ -84,6 +84,7 @@ public class CharacterScript : Entity
     [ShowInInspector] [ReadOnly] private Animator anim;
     [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
     public HypatiosSave.PerkDataSave PerkData;
+    public InventoryData Inventory;
 
     [HideInInspector] public Animator Anim { get => anim; }
     private float airTime = 0;

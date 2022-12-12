@@ -13,7 +13,13 @@ public class AddWeaponScript : MonoBehaviour
         if (other.tag == "Player" && !b)
         {
             GameObject weaponHolder = GameObject.FindGameObjectWithTag("GunHolder");
-            weaponHolder.GetComponent<WeaponManager>().AddWeapon(weaponID);
+            var gunscript1 = weaponHolder.GetComponent<WeaponManager>().AddWeapon(weaponID);
+
+            if (gunscript1 == null)
+            {
+                return;
+            }
+
             Destroy(gameObject);
             b = true;
         }
