@@ -112,6 +112,12 @@ public abstract class BaseStatusEffect : MonoBehaviour
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
 
         }
+
+        if (target != null)
+        {
+            target.AllStatusInEffect.RemoveAll(x => x == null);
+            target.AllStatusInEffect.Remove(this);
+        }
     }
 
     private void OnDestroy()

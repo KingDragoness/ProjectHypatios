@@ -541,11 +541,13 @@ public class ConsoleCommand : MonoBehaviour
 
         try
         {
+            SendConsoleMessage("'givemeallweapons' is no longer supported. Don't use this command if you don't want your game become bugged.");
+            SendConsoleMessage("Use 'ui 1' and 'soul 999' to access weapon easily.");
             WeaponManager weaponManager = Hypatios.Player.Weapon;
 
             int i = 0;
 
-            foreach (var weapon in weaponManager.weapons)
+            foreach (var weapon in Hypatios.Assets.Weapons)
             {
                 if (i != 0)
                 {

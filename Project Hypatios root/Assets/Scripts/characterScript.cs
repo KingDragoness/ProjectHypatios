@@ -130,6 +130,32 @@ public class CharacterScript : Entity
         return netPerk;
     }
 
+    public float GetCharFinalValue(StatusEffectCategory category)
+    {
+        if (category == StatusEffectCategory.MaxHitpointBonus)
+        {
+            return Health.maxHealth.Value;
+        }
+        else if (category == StatusEffectCategory.RegenHPBonus)
+        {
+            return Health.healthRegen.Value;
+        }
+        else if (category == StatusEffectCategory.KnockbackResistance)
+        {
+            return Weapon.Recoil.knockbackResistance.Value;
+        }
+        else if (category == StatusEffectCategory.BonusDamageMelee)
+        {
+            return BonusDamageMelee.Value;
+        }
+        else if (category == StatusEffectCategory.DashCooldown)
+        {
+            return dashCooldown.Value;
+        }
+
+        return 0;
+    }
+
     private void CustomPerkLoad()
     {
         foreach (var customPerk in PerkData.Temp_CustomPerk)

@@ -13,7 +13,6 @@ public abstract class BaseWeaponScript : MonoBehaviour
     public string weaponName;
     public Image crosshairHit;
 
-    [Header("Weapon Status")]
     [FoldoutGroup("Weapon Stat")] public float damage;
     [FoldoutGroup("Weapon Stat")] public float variableAdditionalDamage = 4f;
     [FoldoutGroup("Weapon Stat")] public bool isAmmoUnlimited = false;

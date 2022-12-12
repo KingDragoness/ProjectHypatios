@@ -61,6 +61,20 @@ public class MainUI : MonoBehaviour
 
     }
 
+    public static float CalculateRatioX()
+    {
+        float x = Screen.width;
+        x /= 900f;
+        return x;
+    }
+
+    public static float CalculateRatioY()
+    {
+        float y = Screen.height;
+        y /= 900f;
+        return y;
+    }
+
     public void GamePause(bool doPause = false)
     {
         paused = !paused;

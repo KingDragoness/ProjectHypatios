@@ -195,20 +195,15 @@ public class Hypatios : MonoBehaviour
 
     #endregion
 
-    [FoldoutGroup("Trivias")] public List<Trivia> allTrivias = new List<Trivia>();
-    [FoldoutGroup("Trivias")] [Button("TriviaRefresh")]
-    public void TriviaRefresh()
-    {
-        var _trivias = Resources.FindObjectsOfTypeAll<Trivia>().ToList();
-        _trivias.RemoveAll(x => x.disableTrivia == true);
-        allTrivias = _trivias;
-    }
 
     [SerializeField]
     private FPSMainScript _fpsMainScript;
 
     [SerializeField]
     private CharacterScript _characterScript;
+
+    [SerializeField]
+    private AssetStorageDatabase _assetStorage;
 
     [SerializeField]
     private MainUI _ui;
@@ -233,6 +228,7 @@ public class Hypatios : MonoBehaviour
 
     public static FPSMainScript Game { get => Instance._fpsMainScript; }
     public static CharacterScript Player { get => Instance._characterScript; }
+    public static AssetStorageDatabase Assets { get => Instance._assetStorage; }
     public static MainUI UI { get => Instance._ui; }
     public static Camera MainCamera { get => Instance._mainCamera; }
     public static cameraScript MainCameraScript { get => Instance._mainCameraScript; }

@@ -114,8 +114,8 @@ public class BasePerk : ScriptableObject
         PerkID = "MeleeDamageUpgrade";
         MAX_LEVEL = 10;
         category = StatusEffectCategory.BonusDamageMelee;
-        ReaperDialogue = $"\"Increases melee damage by +3%.\"";
-        DescriptionPerk = "+3% increases melee damage";
+        ReaperDialogue = $"\"Increases melee damage by +4%.\"";
+        DescriptionPerk = "+4% increases melee damage";
         TemporaryPerkOverLimit = true;
         Commonness = 25;
         TitlePerk = "[MELEE DAMAGE UPGRADE]";

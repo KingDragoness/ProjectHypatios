@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Sirenix.OdinInspector;
+using UnityEngine.Profiling;
 
 public class Debug_ObjectStat : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class Debug_ObjectStat : MonoBehaviour
     public Transform boundingBox;
     public GameObject walkableGizmo;
     public GUISkin skin;
-    public GUISkin skin1;
+    public GUISkin skin1; //right handed header
+    public GUISkin skin2; //left handed
 
     [FoldoutGroup("Utility")] public bool LockEnemy = false;
 
@@ -92,6 +94,17 @@ public class Debug_ObjectStat : MonoBehaviour
 
                 GUI.Box(new Rect((Screen.width) - EnemyWindowOffset.x, (Screen.height / 2) - EnemyWindowOffset.y + perLineYSize + 1, EnemyWindowSize.x, EnemyWindowSize.y), s2
                  , skin.box);
+            }
+
+            {
+                GUI.color = Color.white;
+                string s1 = "";
+                s1 += $"Unity {Application.unityVersion} 64bit\n";
+                s1 += $"Reserved: {Profiler.GetTotalReservedMemoryLong() / 1000000} MB\n";
+                s1 += $"Allocated: {Profiler.GetTotalAllocatedMemoryLong() / 1000000} MB\n";
+                s1 += $"VRam: {Profiler.GetAllocatedMemoryForGraphicsDriver() / 1000000} MB / {SystemInfo.graphicsMemorySize} MB";
+
+                GUI.Box(new Rect(0, 10, 300f, 80f), s1, skin2.box);
             }
 
             if (currentInteract != null)

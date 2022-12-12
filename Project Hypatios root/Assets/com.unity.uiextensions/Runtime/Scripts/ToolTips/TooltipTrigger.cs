@@ -9,6 +9,10 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Extensions/Tooltip/Tooltip Trigger")]
     public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
+
+        [Tooltip("If null then it'll use instance.")]
+        public ToolTip currentToolTip;
+
         [TextAreaAttribute]
         public string text;
 
@@ -30,12 +34,26 @@ namespace UnityEngine.UI.Extensions
 
         public Vector3 offset;
 
+        private ToolTip toolTipToUse;
 
         void Start() {
             //attempt to check if our canvas is overlay or not and check our "is overlay" accordingly
             Canvas ourCanvas = GetComponentInParent<Canvas>();
             if (ourCanvas && ourCanvas.renderMode == RenderMode.ScreenSpaceOverlay) {
                 isChildOfOverlayCanvas = true;
+            }
+        }
+
+
+        private void OnEnable()
+        {
+            if (currentToolTip == null)
+            {
+                toolTipToUse = ToolTip.Instance;
+            }
+            else
+            {
+                toolTipToUse = currentToolTip;
             }
         }
 
@@ -46,8 +64,8 @@ namespace UnityEngine.UI.Extensions
         {
             get
             {
-                return (isChildOfOverlayCanvas && ToolTip.Instance.guiMode == RenderMode.ScreenSpaceCamera) ||
-                    (!isChildOfOverlayCanvas && ToolTip.Instance.guiMode == RenderMode.ScreenSpaceOverlay);
+                return (isChildOfOverlayCanvas && toolTipToUse.guiMode == RenderMode.ScreenSpaceCamera) ||
+                    (!isChildOfOverlayCanvas && toolTipToUse.guiMode == RenderMode.ScreenSpaceOverlay);
             }
         }
 
@@ -63,8 +81,8 @@ namespace UnityEngine.UI.Extensions
                     StartCoroutine(HoveredMouseFollowingLoop());
                     break;
                 case TooltipPositioningType.transformPosition:
-                    StartHover((WorldToScreenIsRequired ? 
-                        ToolTip.Instance.GuiCamera.WorldToScreenPoint(transform.position) :
+                    StartHover((WorldToScreenIsRequired ?
+                        toolTipToUse.GuiCamera.WorldToScreenPoint(transform.position) :
                         transform.position) + offset, true);
                     break;
             }
@@ -79,8 +97,8 @@ namespace UnityEngine.UI.Extensions
 
         public void OnSelect(BaseEventData eventData)
         {
-            StartHover((WorldToScreenIsRequired ? 
-                ToolTip.Instance.GuiCamera.WorldToScreenPoint(transform.position) :
+            StartHover((WorldToScreenIsRequired ?
+                toolTipToUse.GuiCamera.WorldToScreenPoint(transform.position) :
                         transform.position) + offset, true);
         }
 
@@ -96,13 +114,13 @@ namespace UnityEngine.UI.Extensions
 
         void StartHover(Vector3 position, bool shouldCanvasUpdate = false)
         {
-            ToolTip.Instance.SetTooltip(text, position, shouldCanvasUpdate);
+            toolTipToUse.SetTooltip(text, position, shouldCanvasUpdate);
         }
 
         void StopHover()
         {
             hovered = false;
-            ToolTip.Instance.HideTooltip();
+            toolTipToUse.HideTooltip();
         }
     }
 }

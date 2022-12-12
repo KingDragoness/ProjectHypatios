@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -27,7 +28,6 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Prefab_SpawnAmmo;
     [FoldoutGroup("References")] public GameObject Prefab_SpawnSoul;
     [FoldoutGroup("References")] public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
-    [FoldoutGroup("References")] public List<BasePerk> AllBasePerks;
 
     [Header("Saves")]
     public int SoulPoint = 0;
@@ -72,6 +72,7 @@ public class FPSMainScript : MonoBehaviour
 
         MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
     }
+
 
     private void BuildSaveFolder()
     {
@@ -315,7 +316,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.AllPerkDatas = Player.PerkData;
 
 
-        foreach (var weaponDataResource in weaponManager.weapons)
+        foreach (var weaponDataResource in Hypatios.Assets.Weapons)
         {
             HypatiosSave.WeaponDataSave weaponDataSave = GetWeaponSave(weaponDataResource.nameWeapon);
 

@@ -104,6 +104,7 @@ public class SpotlightSniper : MonoBehaviour
             token.origin = DamageToken.DamageOrigin.Enemy;
             token.healthSpeed = 25f;
 
+            UniversalDamage.TryDamage(token, hit.transform, transform);
 
             points[1] = hit.point;
             if (hit.transform.gameObject.layer != 12)

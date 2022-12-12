@@ -10,6 +10,8 @@ public enum Player
     Elena
 }
 
+
+
 public class WeaponManager : MonoBehaviour
 {
 
@@ -20,14 +22,12 @@ public class WeaponManager : MonoBehaviour
     public GameObject weaponHolder;
     public GameObject weaponNumToSwap;
     public GameObject weaponToSwap;
-    public ModularWeapon meleeWeapon;
     public bool IsOnMeleeAttack = false;
     public int previousWeapon;
     public GunScript currentGunHeld;
     public BaseWeaponScript currentWeaponHeld;
     Camera cam;
 
-    public List<WeaponItem> weapons = new List<WeaponItem>();
     [SerializeField] private List<BaseWeaponScript> currentlyHeldWeapons = new List<BaseWeaponScript>();
 
     public static WeaponManager Instance;
@@ -59,12 +59,12 @@ public class WeaponManager : MonoBehaviour
 
     public WeaponItem GetWeaponItemData(GunScript gun)
     {
-        return weapons.Find(x => x.nameWeapon == gun.weaponName);
+        return Hypatios.Assets.Weapons.Find(x => x.nameWeapon == gun.weaponName);
     }
 
     public WeaponItem GetWeaponItemData(string s)
     {
-        return weapons.Find(x => x.nameWeapon == s);
+        return Hypatios.Assets.Weapons.Find(x => x.nameWeapon == s);
     }
 
     public void RefillAmmo(GunScript gunScript, int amount)
@@ -91,7 +91,7 @@ public class WeaponManager : MonoBehaviour
 
         MainGameHUDScript hudScript = MainGameHUDScript.Instance;
 
-        WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == currentWeaponHeld.weaponName);
+        WeaponItem weaponItem = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == currentWeaponHeld.weaponName);
         hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
 
         if (currentGunHeld != null)
@@ -247,7 +247,7 @@ public class WeaponManager : MonoBehaviour
             if (i == selectedWeapon)
             {
                 MainGameHUDScript hudScript = MainGameHUDScript.Instance;
-                WeaponItem weaponItem = weapons.Find(x => x.nameWeapon == weapon.weaponName);
+                WeaponItem weaponItem = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == weapon.weaponName);
 
                 hudScript.weaponUI.sprite = weaponItem.weaponIcon; //hudScript.weaponSprite[i];
                 hudScript.SwapCrosshair(weaponItem.overrideCrosshair_Sprite);
@@ -277,7 +277,7 @@ public class WeaponManager : MonoBehaviour
 
     public GunScript AddWeapon(string weaponID, bool shouldSwitch = true)
     {
-        var weaponTarget = weapons.Find(x => x.nameWeapon == weaponID);
+        var weaponTarget = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == weaponID);
 
         var gun = Instantiate(weaponTarget.prefab, transform);
 

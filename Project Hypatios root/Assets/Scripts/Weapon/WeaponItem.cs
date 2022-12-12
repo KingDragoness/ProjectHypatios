@@ -16,16 +16,20 @@ public class WeaponItem : ScriptableObject
     
     public enum Category
     {
-        Pistol,
+        Melee = -1,
+        Pistol = 0,
         Shotgun,
         SMG,
-        Rifle
+        Rifle,
+        Katana = 1000,
+        ThrowingKnife
     }
 
     [System.Serializable]
     public class Upgradeable
     {
-
+        //effects
+        public string name = "SuperiorReceiver";
     }
 
     public string nameWeapon = "Pistol";

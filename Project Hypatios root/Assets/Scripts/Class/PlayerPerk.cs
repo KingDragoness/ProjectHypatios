@@ -26,21 +26,17 @@ public class PerkCustomEffect
 public class PlayerPerk
 {
 
-    public const int MAX_LV_SoulBonus = 5;
-    public const int MAX_LV_ShortcutDiscount = 5;
-    public const int MAX_LV_KnockbackResistance = 5;
-    public const int MAX_LV_DashCooldown = 5;
-    public const int MAX_LV_MeleeDamageBonus = 5;
+
 
     public static BasePerk GetBasePerk(StatusEffectCategory type)
     {
-        return Hypatios.Game.AllBasePerks.Find(x => x.category == type);
+        return Hypatios.Assets.AllBasePerks.Find(x => x.category == type);
     }
 
     public static BasePerk RandomPickBasePerk()
     {
         var ListPerk = new List<BasePerk>();
-        foreach (var entry in Hypatios.Game.AllBasePerks) ListPerk.Add(entry);
+        foreach (var entry in Hypatios.Assets.AllBasePerks) ListPerk.Add(entry);
         ListPerk.RemoveAll(fx => fx.CheckLevelMaxed());
 
         int[] allProbability = new int [ListPerk.Count];
@@ -60,7 +56,7 @@ public class PlayerPerk
     public static BasePerk RandomPickBaseTempPerk()
     {
         var ListPerk = new List<BasePerk>();
-        foreach (var entry in Hypatios.Game.AllBasePerks) ListPerk.Add(entry);
+        foreach (var entry in Hypatios.Assets.AllBasePerks) ListPerk.Add(entry);
         ListPerk.RemoveAll(c => c.CheckLevelMaxed() && c.TemporaryPerkOverLimit == false);
         ListPerk.RemoveAll(d => d.category == StatusEffectCategory.SoulBonus); 
 
@@ -99,13 +95,13 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusMelee = level * 0.03f;
+        float bonusMelee = level * 0.04f;
         return bonusMelee;
     }
 
     public static float GetValue_KnockbackResistUpgrade(int level)
     {
-        if (level == 0) return 0;
+        if (level == 0) return 1;
 
         float bonusResistKnock = 1 - (level * 0.15f);
         return bonusResistKnock;

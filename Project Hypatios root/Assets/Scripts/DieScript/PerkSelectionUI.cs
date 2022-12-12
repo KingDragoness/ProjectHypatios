@@ -39,7 +39,7 @@ public class PerkSelectionUI : MonoBehaviour
             basePerkNames.Add(basePerk1.name);
         }
 
-        foreach(var basePerk in Hypatios.Game.AllBasePerks)
+        foreach(var basePerk in Hypatios.Assets.AllBasePerks)
         {
             var NewList = new List<string>();
             foreach (var entry in basePerkNames) NewList.Add(entry);
