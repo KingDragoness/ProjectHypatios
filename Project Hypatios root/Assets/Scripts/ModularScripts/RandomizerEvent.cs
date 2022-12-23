@@ -16,18 +16,15 @@ public class RandomizerEvent : MonoBehaviour
 
     private void Start()
     {
-        int seed = Hypatios.Game.TotalRuns + SystemInfo.graphicsDeviceID;
-        var RandomSys = new System.Random(seed);
-        float random = (RandomSys.Next(0, 100)) / 100f;
-        Debug.Log($"seed: {seed} [{random}]");
+        var random = Hypatios.GetRandomChance();
+        var seed = Hypatios.GetSeed();
+
 
         if (Hypatios.Game.TotalRuns == 0)
         {
             OnFailed?.Invoke();
             return;
         }
-
-
 
         if (random < chanceSpawn)
         {

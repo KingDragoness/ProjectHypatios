@@ -31,6 +31,8 @@ public class PlayerRPGUI : MonoBehaviour
     private List<InventoryItemButton> _allInventoryButtons = new List<InventoryItemButton>();
     private Canvas pauseCanvas;
 
+    private InventoryItemButton currentItemButton;
+
     private void OnEnable()
     {
         RefreshUI();
@@ -93,8 +95,74 @@ public class PlayerRPGUI : MonoBehaviour
 
     private void Update()
     {
+        HandleDiscardItem();
+
+    }
+
+    private void HandleDiscardItem()
+    {
+        if (currentItemButton == null)
+            return;
+
+        if (Input.GetKeyUp(KeyCode.X) == false)
+            return;
+
+        var button = currentItemButton;
+        var itemData = button.GetItemData();
+        var itemCLass = button.GetItemInventory();
+
+        if (itemCLass.category == ItemInventory.Category.Weapon)
+        {
+            Hypatios.Player.Weapon.TransferAmmo_PrepareDelete(itemData);
+        }
+
+        Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
+
+        RefreshUI();
+
+        perkTooltipScript.gameObject.SetActive(false);
+        itemTooltipScript.gameObject.SetActive(false);
+        currentItemButton = null;
+    }
+
+    public void UseItem(InventoryItemButton button)
+    {
+        var itemCLass = button.GetItemInventory();
+        var itemData = button.GetItemData();
 
 
+        if (itemCLass.category == ItemInventory.Category.Weapon)
+        {
+            if (Hypatios.Player.Weapon.GetGunScript(itemCLass.attachedWeapon.nameWeapon) == null
+                && Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count <= 3)
+            {
+                Hypatios.Game.currentWeaponStat.Add(itemData.weaponData);
+                Hypatios.Player.Weapon.TransferAllInventoryAmmoToOneItemData(ref itemData);
+                Hypatios.Player.Weapon.RefreshWeaponLoadout(itemData.ID);
+                Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
+            }
+            else
+            {
+                Debug.LogError("Cannot use same weapon/tto many weapons equipped");
+                return;
+            }
+
+        }
+
+        {
+            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>();
+            foreach (var weaponSlot in weaponSlots)
+            {
+                weaponSlot.RefreshUI();
+            }
+        }
+
+
+        RefreshUI();
+
+
+        perkTooltipScript.gameObject.SetActive(false);
+        itemTooltipScript.gameObject.SetActive(false);
     }
 
     #region Highlight/dehighlight
@@ -102,6 +170,31 @@ public class PlayerRPGUI : MonoBehaviour
     {
         if (button.equipIndex == 0) return; //don't ever deequip the first weapon!
 
+        var gunScript = Hypatios.Player.Weapon.CurrentlyHeldWeapons[button.equipIndex];
+        var saveData = Hypatios.Game.currentWeaponStat.Find(x => x.weaponID == gunScript.weaponName);
+        var itemClass = Hypatios.Assets.GetItemByWeapon(saveData.weaponID);
+        var itemData = Hypatios.Player.Inventory.AddItem(itemClass);
+
+        itemData.weaponData = saveData;
+        //itemData.weaponData.currentAmmo = gunScript.curAmmo;
+        itemData.weaponData.totalAmmo = gunScript.totalAmmo + gunScript.curAmmo;
+
+        Hypatios.Player.Weapon.RemoveWeapon(gunScript as GunScript); //transfer to weapon and create item from scratch
+
+       {
+            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>();
+            foreach(var weaponSlot in weaponSlots)
+            {
+                weaponSlot.RefreshUI();
+            }
+        }
+
+        {
+        }
+
+        RefreshUI();
+        perkTooltipScript.gameObject.SetActive(false);
+        itemTooltipScript.gameObject.SetActive(false);
 
     }
 
@@ -116,34 +209,49 @@ public class PlayerRPGUI : MonoBehaviour
         {
             var weaponClass = itemClass.attachedWeapon;
             var weaponSave = itemDat.weaponData;
+            var weaponStat = weaponClass.GetFinalStat(weaponSave.allAttachments);
+            int totalAmmoOfType = Hypatios.Player.Weapon.GetTotalAmmoOfWeapon(weaponClass.nameWeapon);
+            string s_allAttachments = "";
+            bool isSimilarWeaponEquipped = false;
+
+            if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) != null) isSimilarWeaponEquipped = true;
+
+
+                foreach (var attachment in weaponSave.allAttachments)
+            {
+                s_allAttachments += $"{weaponClass.GetAttachmentName(attachment)}, ";
+            }
+
 
             sLeft += $"Damage\n";
             sLeft += $"Fire rate\n";
             sLeft += $"Mag size\n";
             sLeft += $"Ammo Left\n";
-            sLeft += $"\n<1/2/3/4 to equip slot>\n";
+            if (!isSimilarWeaponEquipped) sLeft += $"\n<LMB to equip weapon> <X to discard>\n"; else sLeft += $"\n<X to discard>\n";
+            sLeft += $"\n<size=14>{s_allAttachments}</size>";
 
-            sRight += $"{weaponClass.levels_Damage[weaponSave.level_Damage]}\n";
-            sRight += $"{weaponClass.levels_Cooldown[weaponSave.level_Cooldown]} per sec\n";
-            sRight += $"{weaponClass.levels_MagazineSize[weaponSave.level_MagazineSize]}\n";
-            sRight += $"{weaponSave.totalAmmo}\n";
+            sRight += $"{weaponStat.damage}\n";
+            sRight += $"{weaponStat.cooldown} per sec\n";
+            sRight += $"{weaponStat.magazineSize}\n";
+            sRight += $"{totalAmmoOfType}\n";
 
         }
         else
         {
             sLeft += $"{itemClass.GetDisplayText()}\n";
             sLeft += $"\n{itemClass.Description}\n";
+            sLeft += $"\n<X to discard>\n";
             sRight += $"({itemDat.count})\n";
         }
 
         itemTooltip_LeftHandedLabel.text = sLeft;
         itemTooltip_RightHandedLabel.text = sRight;
-
+        currentItemButton = button;
     }
 
     public void DehighlightItem()
     {
-
+        currentItemButton = null;
     }
 
     public void HighlightWeaponSlot(WeaponSlotButton slotButton)
@@ -155,10 +263,24 @@ public class PlayerRPGUI : MonoBehaviour
         }
 
         var Weapon = Hypatios.Player.Weapon.CurrentlyHeldWeapons[slotButton.equipIndex];
+        var weaponSave = Hypatios.Game.GetWeaponSave(Weapon.weaponName);
         var WeaponClass = Hypatios.Assets.GetWeapon(Weapon.weaponName);
+        string s_allAttachments = "";
+        string sLeft = "";
+        string sRight = "";
 
-        perkTooltip_LeftHandedLabel.text = $"Magazine/Total Ammo";
-        perkTooltip_RightHandedLabel.text = $"{Weapon.curAmmo}/{Weapon.totalAmmo}";
+        foreach (var attachment in weaponSave.allAttachments)
+        {
+            s_allAttachments += $"{WeaponClass.GetAttachmentName(attachment)}, ";
+        }
+
+        sLeft += $"Magazine/Total Ammo";
+        if (weaponSave.allAttachments.Count != 0) sLeft += $"\n<size=14>{s_allAttachments}</size>";
+        sRight += $"{Weapon.curAmmo}/{Weapon.totalAmmo}";
+        if (weaponSave.allAttachments.Count != 0) sRight += "\n";
+
+        perkTooltip_LeftHandedLabel.text = sLeft;
+        perkTooltip_RightHandedLabel.text = sRight;
 
     }
 

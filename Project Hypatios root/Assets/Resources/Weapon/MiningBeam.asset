@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: MiningBeam
+  m_EditorClassIdentifier: 
+  nameWeapon: MiningBeam
+  moveSpeed: 1
+  prefab: {fileID: 6728140930994960089, guid: 52d0e0bb62b178045989b67ea06224eb, type: 3}
+  weaponIcon: {fileID: 21300000, guid: 02c4cf94aa266cd4f9bb06003aee2f95, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
+    type: 3}
+  attachments: []
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 2
+  isCraftable: 1
+  defaultDamage: 2
+  defaultMagazineSize: 100
+  defaultCooldown: 60
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 60
+      inSlope: 19.596167
+      outSlope: 19.596167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07171792
+    - serializedVersion: 3
+      time: 0.9986572
+      value: 144
+      inSlope: 16.308975
+      outSlope: 16.308975
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.059459478
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

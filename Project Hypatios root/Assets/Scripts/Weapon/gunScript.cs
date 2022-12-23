@@ -7,47 +7,43 @@ using Sirenix.OdinInspector;
 
 public class GunScript : BaseWeaponScript
 {
-    [Title("Gun Section")]
 
-    Camera cam;
 
-    public bool canScope;
-    public bool isAutomatic;
 
-    public float bulletPerSecond;
     public float repulsionForce = 1;
-
-    public Transform bulletShooter;
-    float nextAttackTime = 0f;
-    public ParticleSystem muzzle1;
-    Ray ray;
-    public GameObject bulletImpact;
-    public GameObject bulletSparks;
-    public GameObject bulletTracer;
     public bool isFiring;
     public bool isReloading = false;
+    public bool canScope;
+    public bool isAutomatic;
     public float reloadFrame;
-    public float reloadTime;
     public float curReloadTime;
-    float scopingReload;
     public bool isScoping = false;
     public bool isBurst = false;
     public float burstAmount;
 
-    [Space]
+    internal float reloadTime;
+    internal float scopingReload;
+    internal float nextAttackTime = 0f;
+    internal RaycastHit currentHit;
 
-    public AudioSource audioFire;
-    public AudioSource audioReload;
 
-    [Space]
+    [FoldoutGroup("References")] public Transform bulletShooter;
+    [FoldoutGroup("References")] public ParticleSystem muzzle1;
+    [FoldoutGroup("References")] public GameObject bulletImpact;
+    [FoldoutGroup("References")] public GameObject bulletSparks;
+    [FoldoutGroup("References")] public GameObject bulletTracer;
 
-    Recoil gunRecoil;
+    [FoldoutGroup("Audios")] public AudioSource audioFire;
+    [FoldoutGroup("Audios")] public AudioSource audioReload;
 
-    [Space]
-    [Title("Melee Section (Katana)")]
-    public bool isMelee = false;
-    public bool isMeleeing = false;
-    public bool hasHit = false;
+    [FoldoutGroup("Katana")] public bool isMelee = false;
+    [FoldoutGroup("Katana")] public bool isMeleeing = false;
+    [FoldoutGroup("Katana")] public bool hasHit = false;
+    public float ReloadTime { get => reloadTime; }
+
+    internal Camera cam;
+    internal Ray ray;
+    internal Recoil gunRecoil;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +53,7 @@ public class GunScript : BaseWeaponScript
         if (!isMelee)
         {
             reloadTime = reloadFrame / 60;
-            curReloadTime = reloadTime;
+            curReloadTime = ReloadTime;
             gunRecoil = weaponSystem.Recoil;
         }
         
@@ -68,7 +64,7 @@ public class GunScript : BaseWeaponScript
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (Time.timeScale <= 0)
         {
@@ -101,7 +97,7 @@ public class GunScript : BaseWeaponScript
 
 
                     isReloading = false;
-                    curReloadTime = reloadTime;
+                    curReloadTime = ReloadTime;
                 }
             }
         }
@@ -221,6 +217,7 @@ public class GunScript : BaseWeaponScript
 
     IEnumerator shotgunCoroutine;
 
+
     public override void FireWeapon()
     {
         gunRecoil.RecoilFire();
@@ -285,6 +282,7 @@ public class GunScript : BaseWeaponScript
                 //Instantiate(bulletSparks, hit.point, Quaternion.LookRotation(hit.normal));
                 //Destroy(bulletSpark_, 4f);
 
+                currentHit = hit;
             }
             else
             {
@@ -348,6 +346,7 @@ public class GunScript : BaseWeaponScript
                         bulletSpark_.DisableObjectTimer(2f);
                     }
 
+                    currentHit = hit;
                 }
                 else
                 {

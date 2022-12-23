@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using FPSGame;
+using Sirenix.OdinInspector;
 
 public enum Player
 {
@@ -45,6 +45,11 @@ public class WeaponManager : MonoBehaviour
     }
 
     #region Weapon
+    public BaseWeaponScript GetWeaponScript(string name)
+    {
+        return CurrentlyHeldWeapons.Find(x => x.weaponName == name);
+    }
+
 
     public GunScript GetGunScript(string name)
     {
@@ -57,16 +62,6 @@ public class WeaponManager : MonoBehaviour
         return CurrentlyHeldWeapons[Random.Range(0, size)] as GunScript;
     }
 
-    public WeaponItem GetWeaponItemData(GunScript gun)
-    {
-        return Hypatios.Assets.Weapons.Find(x => x.nameWeapon == gun.weaponName);
-    }
-
-    public WeaponItem GetWeaponItemData(string s)
-    {
-        return Hypatios.Assets.Weapons.Find(x => x.nameWeapon == s);
-    }
-
     public void RefillAmmo(GunScript gunScript, int amount)
     {
         gunScript.totalAmmo += amount;
@@ -74,7 +69,7 @@ public class WeaponManager : MonoBehaviour
         MainGameHUDScript.Instance.ShowAmmo(gunScript.weaponName, amount);
     }
 
-    public GunScript AddWeapon(string weaponID, bool shouldSwitch = true)
+    public BaseWeaponScript AddWeapon(string weaponID, bool shouldSwitch = true)
     {
         var weaponTarget = Hypatios.Assets.Weapons.Find(x => x.nameWeapon == weaponID);
 
@@ -88,12 +83,29 @@ public class WeaponManager : MonoBehaviour
 
         var weapon_ = gun.GetComponentInChildren<GunScript>();
         CurrentlyHeldWeapons.Add(weapon_);
-        selectedWeapon = CurrentlyHeldWeapons.Count - 1;
 
-        if (shouldSwitch) switchWeapon();
-
+        if (shouldSwitch)
+        {
+            selectedWeapon = CurrentlyHeldWeapons.Count - 1;
+            switchWeapon();
+        }
         SetWeaponSettings(weapon_);
         return weapon_;
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Remove Weapon")]
+    public void RemoveWeapon(BaseWeaponScript targetWeapon)
+    {
+        var weaponDat = Hypatios.Game.currentWeaponStat.Find(x => x.weaponID == targetWeapon.weaponName);
+        //weaponDat.removed = true;
+        Hypatios.Game.currentWeaponStat.Remove(weaponDat);
+
+        Destroy(targetWeapon.gameObject);
+        if (targetWeapon.transform.parent != this.gameObject) Destroy(targetWeapon.transform.parent.gameObject);
+        CurrentlyHeldWeapons.Remove(targetWeapon);
+        selectedWeapon = 0;
+        switchWeapon();
     }
 
     #endregion
@@ -128,7 +140,7 @@ public class WeaponManager : MonoBehaviour
 
         foreach(var weaponDat in weaponDatas)
         {
-            var gun1 = GetGunScript(weaponDat.weaponID);
+            var gun1 = GetWeaponScript(weaponDat.weaponID);
 
             if (weaponDat.removed)
             {
@@ -147,6 +159,40 @@ public class WeaponManager : MonoBehaviour
 
             gun1.totalAmmo = weaponDat.totalAmmo;
             gun1.curAmmo = weaponDat.currentAmmo;
+
+        }
+    }
+
+    public void RefreshWeaponLoadout(string onlyRefreshID)
+    {
+        var weaponDatas = Hypatios.Game.currentWeaponStat;
+
+        foreach (var weaponDat in weaponDatas)
+        {
+            var gun1 = GetWeaponScript(weaponDat.weaponID);
+
+            if (weaponDat.removed)
+            {
+                continue;
+            }
+
+            if (gun1 == null)
+            {
+                gun1 = AddWeapon(weaponDat.weaponID, false);
+            }
+
+            if (gun1 == null)
+            {
+                continue;
+            }
+            else if (gun1.weaponName == onlyRefreshID)
+            {
+                gun1.totalAmmo = weaponDat.totalAmmo;
+                gun1.curAmmo = weaponDat.currentAmmo;
+                //transfer ammos
+                selectedWeapon = 0;
+                switchWeapon();
+            }
 
         }
     }
@@ -171,7 +217,7 @@ public class WeaponManager : MonoBehaviour
             if (currentGunHeld != null)
             {
                 currentGunHeld.isReloading = false;
-                currentGunHeld.curReloadTime = currentGunHeld.reloadTime;
+                currentGunHeld.curReloadTime = currentGunHeld.ReloadTime;
                 currentGunHeld.isScoping = false;
             }
 
@@ -290,6 +336,8 @@ public class WeaponManager : MonoBehaviour
                     currentGunHeld = gunScript;
                     SetWeaponSettings(currentGunHeld);
                 }
+
+                TransferAllInventoryAmmoToCurrent();
             }
             else
             {
@@ -300,26 +348,124 @@ public class WeaponManager : MonoBehaviour
         
     }
 
-
-
-    public void SetWeaponSettings(GunScript gunScript)
+    private void TransferAllInventoryAmmoToCurrent()
     {
-        Hypatios.Game.NewWeaponStat(gunScript);
-        var weaponStat = Hypatios.Game.GetWeaponSave(gunScript.weaponName);
-
-        var weapon1 = GetWeaponItemData(gunScript);
-        weaponStat.removed = false;
-
-        if (weaponStat == null)
+        foreach(var itemDat in Hypatios.Player.Inventory.allItemDatas)
         {
-            gunScript.damage = weapon1.defaultDamage;
-            gunScript.magazineSize = weapon1.defaultMagazineSize;
+            var weaponClass = Hypatios.Assets.GetItem(itemDat.ID).attachedWeapon;
+            if (itemDat.weaponData == null) continue;
+            if (currentGunHeld.weaponName == weaponClass.nameWeapon && weaponClass.nameWeapon != "")
+            {
+                currentWeaponHeld.totalAmmo += itemDat.weaponData.totalAmmo;
+                itemDat.weaponData.totalAmmo = 0;
+                continue;
+            }
+
+        }
+    }
+
+    public void TransferAllInventoryAmmoToOneItemData(ref HypatiosSave.ItemDataSave currentItemDat)
+    {
+        foreach (var itemDat in Hypatios.Player.Inventory.allItemDatas)
+        {
+            var weaponClass = Hypatios.Assets.GetItem(itemDat.ID).attachedWeapon;
+            if (itemDat.weaponData == null) continue;
+            if (currentItemDat == itemDat) continue;
+            if (currentItemDat.weaponData.weaponID == itemDat.ID)
+            {
+                currentItemDat.weaponData.totalAmmo += itemDat.weaponData.totalAmmo;
+                itemDat.weaponData.totalAmmo = 0;
+                continue;
+            }
+
+        }
+    }
+
+    public void TransferAmmo_PrepareDelete(HypatiosSave.ItemDataSave weaponDataToBeDeleted)
+    {
+        HypatiosSave.ItemDataSave similarWeaponType_ItemData = null;
+        foreach (var itemDat in Hypatios.Player.Inventory.allItemDatas)
+        {
+            var weaponClass = Hypatios.Assets.GetItem(itemDat.ID).attachedWeapon;
+            if (itemDat.weaponData == null) continue;
+            if (weaponDataToBeDeleted == itemDat) continue;
+            if (weaponDataToBeDeleted.weaponData.weaponID == itemDat.ID)
+            {
+                similarWeaponType_ItemData = itemDat;
+                break;
+            }
+
+        }
+
+        if (similarWeaponType_ItemData != null)
+        {
+            similarWeaponType_ItemData.weaponData.totalAmmo += weaponDataToBeDeleted.weaponData.totalAmmo;
+        }
+    }
+
+    public int GetTotalAmmoOfWeapon(string weaponID)
+    {
+        int total = 0;
+
+        foreach (var itemDat in Hypatios.Player.Inventory.allItemDatas)
+        {
+            var weaponClass = Hypatios.Assets.GetItem(itemDat.ID).attachedWeapon;
+            if (itemDat.weaponData == null) continue;
+            if (weaponID == weaponClass.nameWeapon && weaponClass.nameWeapon != "")
+            {
+                total += itemDat.weaponData.totalAmmo;
+            }
+        }
+
+        //also currently equipped
+        foreach(var currentWeapon in currentlyHeldWeapons)
+        {
+            if (currentWeapon.weaponName == weaponID)
+                total += currentWeapon.totalAmmo;
+        }
+
+        return total;
+    }
+
+
+
+    public void SetWeaponSettings(BaseWeaponScript weaponScript)
+    {
+        Hypatios.Game.NewWeaponStat(weaponScript);
+        var weaponsave = Hypatios.Game.GetWeaponSave(weaponScript.weaponName);
+
+        var weapon1 = Hypatios.Assets.GetWeapon(weaponScript.weaponName);
+        weaponsave.removed = false;
+
+        if (weaponsave == null)
+        {
+            weaponScript.damage = weapon1.defaultDamage;
+            weaponScript.magazineSize = weapon1.defaultMagazineSize;
             return;
         }
 
-        gunScript.damage = weapon1.levels_Damage[weaponStat.level_Damage];
-        gunScript.magazineSize = weapon1.levels_MagazineSize[weaponStat.level_MagazineSize];
-        gunScript.bulletPerSecond = weapon1.levels_Cooldown[weaponStat.level_Cooldown];
+        var weaponStat = weapon1.GetFinalStat(weaponsave.allAttachments);
+
+        weaponScript.damage = weaponStat.damage;
+        weaponScript.bulletPerSecond = weaponStat.cooldown;
+        weaponScript.magazineSize = weaponStat.magazineSize;
+        weaponScript.allAttachments = weaponsave.allAttachments;
+
+        var attachmentVisuals = GetComponentsInChildren<WeaponAttachmentVisuals>();
+
+        foreach (var attach in attachmentVisuals)
+        {
+            attach.visual.gameObject.SetActive(false);
+        }
+
+        foreach (var attachID in weaponScript.allAttachments)
+        {
+            foreach (var attach in attachmentVisuals)
+            {
+                if (attach.ID == attachID)
+                    attach.RefreshVisuals(attachID);
+            }
+        }
     }
 
     void findEquippedWeapon()

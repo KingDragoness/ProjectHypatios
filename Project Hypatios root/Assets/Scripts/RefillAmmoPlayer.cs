@@ -37,7 +37,7 @@ public class RefillAmmoPlayer : MonoBehaviour
             if (weaponManager.playerMode == Player.Aldrich)
             {
                 var gun = weaponManager.GetRandomGun();
-                var weaponData = weaponManager.GetWeaponItemData(gun);
+                var weaponData = Hypatios.Assets.GetWeapon(gun.weaponName);
 
                 float randomTime = Random.Range(0f, 1f);
                 int ammoAmount = Mathf.RoundToInt(weaponData.rewardRate.Evaluate(randomTime));

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 29174897282719339}
   - component: {fileID: 6811281768868185088}
   - component: {fileID: 3550700802941512223}
+  - component: {fileID: 1244500198}
+  - component: {fileID: 1244500197}
   m_Layer: 0
   m_Name: bottle
   m_TagString: Untagged
@@ -79,6 +81,59 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1244500198
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087666053241469639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1855923187887352656, guid: b30783c43072035439e10515122335ee, type: 3}
+--- !u!114 &1244500197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087666053241469639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7142187764437361898}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1244500196}
+        m_MethodName: ExecuteFunction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  interactSound: {fileID: 0}
+  interactDescription: Pick up
 --- !u!1 &4053237073037428653
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7142187764437361899}
+  - component: {fileID: 1244500196}
   m_Layer: 0
   m_Name: BottleSake
   m_TagString: Untagged
@@ -181,7 +237,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7142187764437361898}
-  m_LocalRotation: {x: -0, y: -0.6487235, z: -0, w: 0.76102424}
+  m_LocalRotation: {x: 0, y: -0.6487245, z: 0, w: 0.7610234}
   m_LocalPosition: {x: -5.841999, y: 0.02199936, z: 3.5169983}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -190,3 +246,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -80.89101, z: 0}
+--- !u!114 &1244500196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142187764437361898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569cc78cb32118e4dacdeb7de56451ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 3e067ccc011439644ae084ddf22ac8b6, type: 2}
+  count: 1

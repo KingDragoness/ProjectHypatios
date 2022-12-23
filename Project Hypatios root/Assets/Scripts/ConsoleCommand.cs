@@ -81,6 +81,10 @@ public class ConsoleCommand : MonoBehaviour
                 CommandCheat(args);
                 break;
 
+            case "additem":
+                AddItem(args);
+                break;
+
             case "giveammos":
                 GiveAmmos(args);
                 break;
@@ -153,6 +157,10 @@ public class ConsoleCommand : MonoBehaviour
                 ChangeUIMode(args);
                 break;
 
+            case "weapon":
+                Weapon(args);
+                break;
+
             default:
                 if (!success)
                 {
@@ -166,6 +174,19 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    private void AddItem(string[] args)
+    {
+        try
+        {
+            var item = Hypatios.Assets.GetItem(args[0]);
+            Hypatios.Player.Inventory.AddItem(item);
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! additem [string itemID]");
+        }
+    }
 
 
 
@@ -320,6 +341,87 @@ public class ConsoleCommand : MonoBehaviour
         }
 
     }
+
+
+    private void Weapon(string[] args)
+    {
+        try
+        {
+            bool validArgument = true;
+            if (args.Length != 0)
+            {
+                validArgument = false;
+
+                var currentGun = Hypatios.Player.Weapon.currentGunHeld;
+                var weaponClass = Hypatios.Assets.GetWeapon(currentGun.weaponName);
+                var weaponData = Hypatios.Game.GetWeaponSave(currentGun.weaponName);
+                var weaponStat = weaponClass.GetFinalStat(weaponData.allAttachments);
+
+                if (args[0] == "attach")
+                {
+                    weaponData.allAttachments.Add(args[1]);
+                    SendConsoleMessage($"Added {args[1]} to {weaponClass.nameWeapon}");
+                    SendConsoleMessage($"Reequip weapon to take effect.");
+
+                }
+                else if (args[0] == "rmvall")
+                {
+                    weaponData.allAttachments.Clear();
+                    SendConsoleMessage($"Reequip weapon to take effect.");
+
+                }
+                else if (args[0] == "report")
+                {
+
+
+                    string stat = $"Damage: {weaponStat.damage}, Firerate: {weaponStat.cooldown} per second, Movespeed mult: {weaponStat.movespeedMultiplier}, Accuracy: {weaponStat.accuracy}";
+                    string stat1 = $"Recoil mult: {weaponStat.recoilMultiplier}, Magazine: {weaponStat.magazineSize}";
+                    string stat2 = "Current Attachments = ";
+                    string s1 = "Available Attachments = ";
+
+                    foreach(var attach in weaponData.allAttachments)
+                    {
+                        stat2 += $"{attach}, ";
+                    }
+
+                    foreach (var attach in weaponClass.attachments)
+                    {
+                        s1 += $"{attach.ID}, ";
+                    }
+
+                    SendConsoleMessage($"{stat}");
+                    SendConsoleMessage($"{stat1}");
+                    SendConsoleMessage($"{stat2}");
+                    SendConsoleMessage("");
+                    SendConsoleMessage($"{s1}");
+
+
+                }
+                else
+                {
+                    throw new System.Exception("");
+                }
+            }
+            else
+            {
+                validArgument = true;
+            }
+
+            if (validArgument == true)
+            {
+                SendConsoleMessage("No argument! Use 'help weapon' to see more weapon commands!");
+
+            }
+        }
+        catch (Exception e)
+        {
+            SendConsoleMessage("Invalid argument! Use 'help weapon' to see more weapon commands!");
+            Debug.LogError(e.Message);
+            Debug.LogError(e.StackTrace);
+        }
+    }
+
+
 
     private void EnemyCommand(string[] args)
     {
@@ -678,6 +780,17 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("'enemy paralyze' to toggle enemy paralyze/deparalyze.");
                 helps.Add("'enemy reset' to reset enemy's status.");
                 helps.Add("'enemy warp' to warp enemy to gizmo position.");
+                helps.Add(" ");
+            }
+            else if (args[0] == "weapon")
+            {
+                helps.Add(" =============== HELP [WEAPONS commnads] =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                helps.Add("'weapon attach (string attachmentID)' to add attachments.");
+                helps.Add("'weapon rmvall' to remove all attachments.");
+                helps.Add("'weapon report' to get weapon's stat.");
+            
                 helps.Add(" ");
             }
             else if (args[0] == "status")

@@ -50,4 +50,15 @@ public class AssetStorageDatabase : MonoBehaviour
         return AllItems.Find(x => x.GetID() == ID);
     }
 
+    public ItemInventory GetItemByWeapon(string ID)
+    {
+        foreach(var item in AllItems)
+        {
+            if (item.attachedWeapon == null) continue;
+            if (item.category != ItemInventory.Category.Weapon) continue;
+            if (item.attachedWeapon.nameWeapon == ID) return item;
+        }
+
+        return null;
+    }
 }

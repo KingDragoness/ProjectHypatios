@@ -121,7 +121,7 @@ public class KillZone : MonoBehaviour
             if (damage != null)
             {
                // Debug.Log(damage.gameObject.name);
-                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond; token.originEnemy = originEnemy;
+                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond; token.originEnemy = originEnemy; 
 
                 UniversalDamage.TryDamage(token, collider.transform, this.transform);
             }

@@ -24,6 +24,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
     [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
+    [FoldoutGroup("References")] public GameObject CraftingWeapon_UI;
     [FoldoutGroup("References")] public GameObject DefaultHUD_UI;
     [FoldoutGroup("References")] public GameObject Console_UI;
     [FoldoutGroup("References")] public GameObject Camera_Cutscene;
@@ -150,6 +151,7 @@ public class MainUI : MonoBehaviour
                 Cursor.visible = false;
                 Shop_Weapon_UI.gameObject.SetActive(false);
                 Shop_Paradox_UI.gameObject.SetActive(false);
+                CraftingWeapon_UI.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(false);
                 DefaultHUD_UI.gameObject.SetActive(true);
 
@@ -193,6 +195,29 @@ public class MainUI : MonoBehaviour
                 {
                     ParadoxShopOwner.Instance.DisableStateParadox();
                 }
+            }
+
+
+            if (current_UI == UIMode.Crafting)
+            {
+                Camera_Cutscene.gameObject.SetActive(true);
+                Camera_Main.gameObject.SetActive(false);
+                CraftingWeapon_UI.gameObject.SetActive(true);
+                Hypatios.Player.disableInput = true;
+                Hypatios.Player.enabled = false;
+                Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Health.enabled = false;
+                soundManagerScript.instance.Pause("running");
+
+            }
+            else if (Hypatios.Player.Health.isDead == false)
+            {
+                Camera_Cutscene.gameObject.SetActive(false);
+                Camera_Main.gameObject.SetActive(true);
+                Hypatios.Player.disableInput = false;
+                Hypatios.Player.enabled = true;
+                Hypatios.Player.rb.isKinematic = false;
+                Hypatios.Player.Health.enabled = true;
             }
 
             if (current_UI == UIMode.Cinematic)

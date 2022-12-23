@@ -13,18 +13,40 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   nameWeapon: Rifle
+  moveSpeed: 1
   prefab: {fileID: 2355747187573847083, guid: d987dd2e5eb7c4b4fbd95648e3e104b4, type: 3}
   weaponIcon: {fileID: 21300000, guid: 38ed49429195b31489e07eede73fc0a6, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 901dd0fafe2706e45baa00a21713aa90,
     type: 3}
-  levels_Damage: 1e00000023000000280000002d00000034000000
-  levels_MagazineSize: 190000001c000000200000002300000028000000
-  levels_Cooldown:
-  - 6
-  - 11
-  - 18
-  - 25
-  - 40
+  attachments:
+  - ID: StasiFrame
+    Name: Stasi Frame
+    Description: Deals additional damage and reduces cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 4
+    modifier_cooldown: 5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: ProtocolFrame
+    Name: Protocol Frame
+    Description: Deals superior damage and reduces cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 6
+    modifier_cooldown: 8
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 4
+  isCraftable: 1
   defaultDamage: 30
   defaultMagazineSize: 25
   defaultCooldown: 9

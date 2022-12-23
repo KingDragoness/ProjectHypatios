@@ -16,6 +16,7 @@ public class MainGameHUDScript : MonoBehaviour
     public Slider dashSlider;
     public GameObject dashOk;
     public GameObject interactPrompt;
+    public GameObject interactContainerPrompt;
     public Text interactText;
 
     [Header("Audio")]
@@ -63,15 +64,28 @@ public class MainGameHUDScript : MonoBehaviour
         //justDamagedHealthSlider.value = Mathf.MoveTowards(justDamagedHealthSlider.value, healthSlider.value, drainHealthSpeed * Time.deltaTime);
 
         bool hidePrompt = true;
+        bool containerExists = false;
 
         if (InteractableCamera.instance != null)
         {
             if (InteractableCamera.instance.currentInteractable != null)
             {
                 hidePrompt = false;
+
+                if (InteractableCamera.instance.currentInteractable is Interact_Container)
+                    containerExists = true;
             }
         }
-        
+
+        if (containerExists)
+        {
+            if (!interactContainerPrompt.activeSelf) interactContainerPrompt.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            if (interactContainerPrompt.activeSelf) interactContainerPrompt.gameObject.SetActive(false);
+        }
 
         if (hidePrompt)
         {

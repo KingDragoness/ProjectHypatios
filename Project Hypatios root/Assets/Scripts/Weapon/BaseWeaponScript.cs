@@ -13,6 +13,8 @@ public abstract class BaseWeaponScript : MonoBehaviour
     public string weaponName;
     public Image crosshairHit;
 
+
+    [FoldoutGroup("Weapon Stat")] public List<string> allAttachments = new List<string>();
     [FoldoutGroup("Weapon Stat")] public float damage;
     [FoldoutGroup("Weapon Stat")] public float variableAdditionalDamage = 4f;
     [FoldoutGroup("Weapon Stat")] public bool isAmmoUnlimited = false;
@@ -23,6 +25,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public float recoilX;
     [FoldoutGroup("Weapon Stat")] public float recoilY;
     [FoldoutGroup("Weapon Stat")] public float recoilZ;
+    [FoldoutGroup("Weapon Stat")] public float bulletPerSecond; //AKA fire per second
 
     public virtual void FireWeapon()
     {

@@ -24,7 +24,7 @@ public class UpgradeButtonUI : MonoBehaviour
         int currentLevel = 0;
         string limitLevel = "5";
         var statThisWeapon = Hypatios.Game.GetWeaponSave(parentUI.weaponID);
-        var weaponItem = WeaponManager.Instance.GetWeaponItemData(parentUI.weaponID);
+        var weaponItem = Hypatios.Assets.GetWeapon(parentUI.weaponID);
 
         if (statThisWeapon == null)
         {
@@ -32,27 +32,27 @@ public class UpgradeButtonUI : MonoBehaviour
         }
         else
         {
-            if (upgradeType == UpgradeWeaponType.Damage)
-            {
-                currentLevel = statThisWeapon.level_Damage;
-                var theList = weaponItem.levels_Damage;
-                limitLevel = theList.Count.ToString();
+            //if (upgradeType == UpgradeWeaponType.Damage)
+            //{
+            //    currentLevel = statThisWeapon.level_Damage;
+            //    var theList = weaponItem.levels_Damage;
+            //    limitLevel = theList.Count.ToString();
 
-            }
-            else if (upgradeType == UpgradeWeaponType.Cooldown)
-            {
-                currentLevel = statThisWeapon.level_Cooldown;
-                var theList = weaponItem.levels_Cooldown;
-                limitLevel = theList.Count.ToString();
+            //}
+            //else if (upgradeType == UpgradeWeaponType.Cooldown)
+            //{
+            //    currentLevel = statThisWeapon.level_Cooldown;
+            //    var theList = weaponItem.levels_Cooldown;
+            //    limitLevel = theList.Count.ToString();
 
-            }
-            else if (upgradeType == UpgradeWeaponType.MagazineSize)
-            {
-                currentLevel = statThisWeapon.level_MagazineSize;
-                var theList = weaponItem.levels_MagazineSize;
-                limitLevel = theList.Count.ToString();
+            //}
+            //else if (upgradeType == UpgradeWeaponType.MagazineSize)
+            //{
+            //    currentLevel = statThisWeapon.level_MagazineSize;
+            //    var theList = weaponItem.levels_MagazineSize;
+            //    limitLevel = theList.Count.ToString();
 
-            }
+            //}
         }
 
         MainGameHUDScript.Instance.chargeStationUI.ShowTooltip($"Upgrade component: {parentUI.weaponID} [{weaponTypeString}] [{currentLevel + 1}/{limitLevel}]" +

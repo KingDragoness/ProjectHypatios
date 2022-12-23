@@ -63,18 +63,18 @@ public class ChargeStationUI : MonoBehaviour
 
             foreach (var test1 in WeaponSection.allUpgradeButtons)
             {
-                if (test1.upgradeType == UpgradeWeaponType.Damage)
-                {
-                    test1.levelText.text = (statThisWeapon.level_Damage + 1).ToString();
-                }
-                else if (test1.upgradeType == UpgradeWeaponType.MagazineSize)
-                {
-                    test1.levelText.text = (statThisWeapon.level_MagazineSize + 1).ToString();
-                }
-                else if (test1.upgradeType == UpgradeWeaponType.Cooldown)
-                {
-                    test1.levelText.text = (statThisWeapon.level_Cooldown + 1).ToString();
-                }
+                //if (test1.upgradeType == UpgradeWeaponType.Damage)
+                //{
+                //    test1.levelText.text = (statThisWeapon.level_Damage + 1).ToString();
+                //}
+                //else if (test1.upgradeType == UpgradeWeaponType.MagazineSize)
+                //{
+                //    test1.levelText.text = (statThisWeapon.level_MagazineSize + 1).ToString();
+                //}
+                //else if (test1.upgradeType == UpgradeWeaponType.Cooldown)
+                //{
+                //    test1.levelText.text = (statThisWeapon.level_Cooldown + 1).ToString();
+                //}
             }
         }
 
@@ -150,7 +150,7 @@ public class ChargeStationUI : MonoBehaviour
             return;
         }
 
-        gunScript1.totalAmmo = 0;
+        //gunScript1.totalAmmo = 0;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
     }

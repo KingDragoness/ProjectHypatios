@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using ItemDataSave = HypatiosSave.ItemDataSave;
-
+using System;
 
 [System.Serializable]
 public class InventoryData
@@ -16,12 +16,13 @@ public class InventoryData
         return allItemDatas.Find(x => x.ID == ID);
     }
 
-    [Button("Add Item")] //normal
-    public void AddItem(ItemInventory itemInventory, int count = 1)
+    [Button("Add Item")] //Create new item from scratch
+    public ItemDataSave AddItem(ItemInventory itemInventory, int count = 1)
     {
         ItemDataSave itemDataSave = null;
 
-        if (SearchByID(itemInventory.GetID()) != null)
+
+        if (SearchByID(itemInventory.GetID()) != null && itemInventory.category != ItemInventory.Category.Weapon)
         {
             itemDataSave = SearchByID(itemInventory.GetID());
             itemDataSave.count += count;
@@ -33,8 +34,33 @@ public class InventoryData
             itemDataSave.ID = itemInventory.GetID();
             itemDataSave.category = itemInventory.category;
             itemDataSave.count = count;
+            if (itemDataSave.category == ItemInventory.Category.Weapon) itemDataSave.GenerateWeaponData();
             allItemDatas.Add(itemDataSave);
         }
+
+        return itemDataSave;
+    }
+
+
+    /// <summary>
+    /// Transfer item from this inventory to targeted inventory.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="currentIndex">Selected index of current inventory.</param>
+    public void TransferTo(InventoryData target, int currentIndex)
+    {
+        var itemDat = allItemDatas[currentIndex];
+        var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        if (itemClass.category == ItemInventory.Category.Weapon)
+        {
+            target.allItemDatas.Add(itemDat);
+        }
+        else
+        {
+            target.AddItem(itemClass, itemDat.count);
+        }
+        allItemDatas.Remove(itemDat);
     }
 }
 
@@ -78,7 +104,20 @@ public class HypatiosSave
         public int count = 0;
         public ItemInventory.Category category;
         public WeaponDataSave weaponData; //only for weapon
-    }
+
+        internal void GenerateWeaponData()
+        {
+            var itemClass = Hypatios.Assets.GetItem(ID);
+            var weaponClass = itemClass.attachedWeapon;
+
+            weaponData = new HypatiosSave.WeaponDataSave();
+            weaponData.weaponID = weaponClass.nameWeapon;
+
+            float randomTime = UnityEngine.Random.Range(0f, 1f);
+            int ammoAmount = Mathf.RoundToInt(weaponClass.rewardRate.Evaluate(randomTime)) + 5;
+            weaponData.totalAmmo = ammoAmount;
+        }
+}
 
     [System.Serializable]
     public class PerkDataSave
@@ -106,12 +145,19 @@ public class HypatiosSave
     public class WeaponDataSave
     {
         public string weaponID;
-        public int totalAmmo;
-        public int currentAmmo;
-        public int level_Damage = 0;
-        public int level_MagazineSize = 0;
-        public int level_Cooldown = 0;
+        [LabelText("Ammo")] [HideLabel()] [HorizontalGroup("1")] public int totalAmmo;
+        [HideLabel()] [HorizontalGroup("1")] public int currentAmmo;
         public bool removed = false; //also for not equipping
+        public List<string> allAttachments = new List<string>();
+
+        [ReadOnly] [ShowInInspector] [HideInEditorMode] private WeaponItem attachedWeapon;
+   
+
+        [Button("Add Attachment")]
+        public void AddAttachment(string attachment)
+        {
+
+        }
     }
     #endregion
 }

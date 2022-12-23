@@ -13,6 +13,8 @@ public class Recoil : MonoBehaviour
         FireWeapon
     }
 
+    public Vector3 playerKnockPhysics = new Vector3(0,0,-10);
+    public float hurtKnockMultiplier = 2f;
     private Vector3 curRot;
     private Vector3 targetRot;
     public CharacterStat knockbackResistance;
@@ -60,16 +62,21 @@ public class Recoil : MonoBehaviour
     public void RecoilFire()
     {
         var recoilRange = new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        var magnitude = recoilRange.magnitude;
         recoilRange *= knockbackResistance.Value;
         targetRot += recoilRange;
+        Hypatios.Player.rb.AddRelativeForce(knockbackResistance.Value * playerKnockPhysics * magnitude);
     }
 
     public void CustomRecoil(Vector3 rot, float multiplier = 1, RecoilType type = RecoilType.MovementLand)
     {
         var recoilRange = new Vector3(rot.x, Random.Range(-rot.y, rot.y), Random.Range(-rot.z, rot.z)) * multiplier;
+        var magnitude = recoilRange.magnitude;
+
         if (type == RecoilType.TakeDamage)
         {
             recoilRange *= knockbackResistance.Value;
+            Hypatios.Player.rb.AddRelativeForce(knockbackResistance.Value * playerKnockPhysics * magnitude * hurtKnockMultiplier);
         }
         targetRot += recoilRange;
     }

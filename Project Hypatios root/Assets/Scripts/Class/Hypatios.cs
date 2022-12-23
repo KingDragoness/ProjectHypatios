@@ -252,4 +252,28 @@ public class Hypatios : MonoBehaviour
         Settings1.InitializeAtStart();
     }
 
+    public static int GetSeed()
+    {
+        int i1 = 0;
+
+        if (SystemInfo.deviceName != null)
+        {
+            char f1 = SystemInfo.deviceName[0];
+            i1 = f1 - '0';
+        }
+
+        int seed = Hypatios.Game.TotalRuns + SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
+
+        return seed;
+    }
+
+    public static float GetRandomChance()
+    {
+        int seed = GetSeed();
+        var RandomSys = new System.Random(seed);
+        float random = (RandomSys.Next(0, 100)) / 100f;
+
+        return random;
+    }
+
 }

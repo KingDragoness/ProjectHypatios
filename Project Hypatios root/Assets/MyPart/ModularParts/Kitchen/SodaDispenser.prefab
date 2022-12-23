@@ -32,20 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &4856748935974869206
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5739779164010243480}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5495902117074765545, guid: 6f88705c4e5dd334ea0ce06bd50788a6, type: 3}
 --- !u!1 &4856748936122745090
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +44,7 @@ GameObject:
   - component: {fileID: 4856748936122745102}
   - component: {fileID: 4856748936122745103}
   - component: {fileID: 4856748936122745088}
+  - component: {fileID: 635843578556980139}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -140,6 +127,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &635843578556980139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856748936122745090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05606f6cd40dd904e8e284a1c94b85c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ContainerName: Soda Dispenser
+  lootTable: {fileID: 11400000, guid: 2a0a5e1896ea75b4389e24fa961d3be8, type: 2}
+  inventory:
+    allItemDatas: []
+--- !u!64 &4856748935974869206
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739779164010243480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 6f88705c4e5dd334ea0ce06bd50788a6, type: 3}
 --- !u!1001 &4856748935974869193
 PrefabInstance:
   m_ObjectHideFlags: 0

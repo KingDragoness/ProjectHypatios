@@ -85,9 +85,9 @@ public class FPSMainScript : MonoBehaviour
         return currentWeaponStat.Find(x => x.weaponID == ID);
     }
 
-    public void NewWeaponStat(GunScript gunScript)
+    public void NewWeaponStat(BaseWeaponScript weaponScript)
     {
-        HypatiosSave.WeaponDataSave weaponData = currentWeaponStat.Find(x => x.weaponID == gunScript.weaponName);
+        HypatiosSave.WeaponDataSave weaponData = currentWeaponStat.Find(x => x.weaponID == weaponScript.weaponName);
 
         if (weaponData == null)
         {
@@ -98,7 +98,7 @@ public class FPSMainScript : MonoBehaviour
             return;
         }
 
-        weaponData.weaponID = gunScript.weaponName;
+        weaponData.weaponID = weaponScript.weaponName;
 
         currentWeaponStat.Add(weaponData);
     }
@@ -376,12 +376,7 @@ public class FPSMainScript : MonoBehaviour
 
          Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
-        foreach (var weaponStat in hypatiosSave.Game_WeaponStats)
-        {
-            weaponStat.currentAmmo = 0;
-            weaponStat.totalAmmo = 0;
-            weaponStat.removed = true;
-        }
+        hypatiosSave.Game_WeaponStats.Clear();
 
         SaveGame(targetLevel: 4, hypatiosSave: hypatiosSave);
 

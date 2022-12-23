@@ -34,7 +34,22 @@ public class InventoryItemButton : MonoBehaviour
 
     public void ClickButton()
     {
+        rpgUI.UseItem(this);
+    }
 
+    public ItemInventory GetItemInventory()
+    {
+        var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
+        var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        return itemClass;
+    }
+
+    public HypatiosSave.ItemDataSave GetItemData()
+    {
+        var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
+
+        return itemDat;
     }
 
 }

@@ -13,17 +13,73 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   nameWeapon: Pistol
+  moveSpeed: 1
   prefab: {fileID: 8846842660660748316, guid: 17d8fbaca20731c42a15b0f72cc19d99, type: 3}
   weaponIcon: {fileID: 21300000, guid: adec6183383ea294b85463c2c747f230, type: 3}
   overrideCrosshair_Sprite: {fileID: 0}
-  levels_Damage: 0f0000001200000014000000170000001a000000
-  levels_MagazineSize: 0a0000000c0000000f0000001100000016000000
-  levels_Cooldown:
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
+  attachments:
+  - ID: StandardReceiver
+    Name: Standard Receiver
+    Description: Deals additional damage and reduces cooldown. Worse recoil.
+    slot: 1
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 5
+    modifier_cooldown: 1
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0.11
+    override_magazineSize: 0
+  - ID: AdvancedReceiver
+    Name: Advanced Receiver
+    Description: Deals superior damage and reduces cooldown. Worse recoil.
+    slot: 1
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 9
+    modifier_cooldown: 2
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0.2
+    override_magazineSize: 0
+  - ID: SuperReceiver
+    Name: Super Receiver
+    Description: Deals extraordinary damage and reduces cooldown. Terrible accuracy.
+    slot: 1
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 15
+    modifier_cooldown: 3
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0.3
+    override_magazineSize: 0
+  - ID: BatteryIonCapacitor
+    Name: Ion Capacitor Battery
+    Description: Magazine size to 14.
+    slot: 5
+    order: 250
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 14
+  - ID: BatteryUcilavor
+    Name: Ucilavor Battery
+    Description: Magazine size to 16.
+    slot: 5
+    order: 250
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 16
+  WeaponRequirementCrafting: []
+  isCraftable: 0
   defaultDamage: 15
   defaultMagazineSize: 10
   defaultCooldown: 4

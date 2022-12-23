@@ -72,7 +72,7 @@ public class WeaponSectionButtonUI : MonoBehaviour
         int currentLevel = 0;
         string limitLevel = "5";
         var statThisWeapon = Hypatios.Game.GetWeaponSave(weaponID);
-        var weaponItem = WeaponManager.Instance.GetWeaponItemData(weaponID);
+        var weaponItem = Hypatios.Assets.GetWeapon(weaponID);
 
         if (statThisWeapon == null)
         {
@@ -82,20 +82,20 @@ public class WeaponSectionButtonUI : MonoBehaviour
         }
         else
         {
-            if (upgradeType == UpgradeWeaponType.Damage)
-            {
-                currentLevel = statThisWeapon.level_Damage;
-            }
-            else if (upgradeType == UpgradeWeaponType.Cooldown)
-            {
-                currentLevel = statThisWeapon.level_Cooldown;
+            //if (upgradeType == UpgradeWeaponType.Damage)
+            //{
+            //    currentLevel = statThisWeapon.level_Damage;
+            //}
+            //else if (upgradeType == UpgradeWeaponType.Cooldown)
+            //{
+            //    currentLevel = statThisWeapon.level_Cooldown;
 
-            }
-            else if (upgradeType == UpgradeWeaponType.MagazineSize)
-            {
-                currentLevel = statThisWeapon.level_MagazineSize;
+            //}
+            //else if (upgradeType == UpgradeWeaponType.MagazineSize)
+            //{
+            //    currentLevel = statThisWeapon.level_MagazineSize;
 
-            }
+            //}
         }
 
         if (currentLevel >= 4)
@@ -116,23 +116,23 @@ public class WeaponSectionButtonUI : MonoBehaviour
         }
 
 
-        if (upgradeType == UpgradeWeaponType.Damage)
-        {
-            statThisWeapon.level_Damage++;
-            currentLevel = statThisWeapon.level_Damage;
-        }
-        else if (upgradeType == UpgradeWeaponType.Cooldown)
-        {
-            statThisWeapon.level_Cooldown++;
-            currentLevel = statThisWeapon.level_Cooldown;
+        //if (upgradeType == UpgradeWeaponType.Damage)
+        //{
+        //    statThisWeapon.level_Damage++;
+        //    currentLevel = statThisWeapon.level_Damage;
+        //}
+        //else if (upgradeType == UpgradeWeaponType.Cooldown)
+        //{
+        //    statThisWeapon.level_Cooldown++;
+        //    currentLevel = statThisWeapon.level_Cooldown;
 
-        }
-        else if (upgradeType == UpgradeWeaponType.MagazineSize)
-        {
-            statThisWeapon.level_MagazineSize++;
-            currentLevel = statThisWeapon.level_MagazineSize;
+        //}
+        //else if (upgradeType == UpgradeWeaponType.MagazineSize)
+        //{
+        //    statThisWeapon.level_MagazineSize++;
+        //    currentLevel = statThisWeapon.level_MagazineSize;
 
-        }
+        //}
 
         Hypatios.Game.SoulPoint -= soulCost;
         ChargeStationUI.ShowTooltip($"Upgrade successful: {upgradeType} : [{currentLevel}/5]");

@@ -37,16 +37,17 @@ public class WeaponSlotButton : MonoBehaviour
     public void ClickButton()
     {
         //deequip
-
+        rpgUI.DeequipWeapon(this);
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
 
         for (int x = 0; x < Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count; x++)
         {
             var Weapon = Hypatios.Player.Weapon.CurrentlyHeldWeapons[x];
             var WeaponClass = Hypatios.Assets.GetWeapon(Weapon.weaponName);
+            var itemClass = Hypatios.Assets.GetItemByWeapon(Weapon.weaponName);
 
             if (x != equipIndex)
             {
@@ -58,7 +59,7 @@ public class WeaponSlotButton : MonoBehaviour
             }
             else
             {
-                WeaponName_Label.text = $"{WeaponClass.nameWeapon}";
+                WeaponName_Label.text = $"{itemClass.GetDisplayText()}";
                 WeaponIcon.sprite = WeaponClass.weaponIcon;
                 WeaponIcon.gameObject.SetActive(true);
                 selectable.interactable = true;

@@ -13,6 +13,10 @@ public class AddWeaponScript : MonoBehaviour
         if (other.tag == "Player" && !b)
         {
             GameObject weaponHolder = GameObject.FindGameObjectWithTag("GunHolder");
+
+            if (Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count > 3)
+                return;
+
             var gunscript1 = weaponHolder.GetComponent<WeaponManager>().AddWeapon(weaponID);
 
             if (gunscript1 == null)
