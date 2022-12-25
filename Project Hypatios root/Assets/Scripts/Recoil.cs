@@ -53,9 +53,9 @@ public class Recoil : MonoBehaviour
 
         if (weapon != null)
         {
-            recoilX = weapon.recoilX;
-            recoilY = weapon.recoilY;
-            recoilZ = weapon.recoilZ;
+            recoilX = weapon.recoilX * weapon.recoilMultiplier;
+            recoilY = weapon.recoilY * weapon.recoilMultiplier;
+            recoilZ = weapon.recoilZ * weapon.recoilMultiplier;
         }
     }
 

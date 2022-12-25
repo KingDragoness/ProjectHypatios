@@ -75,6 +75,11 @@ public class ParadoxShopOwner : MonoBehaviour
             var player = FindObjectOfType<CharacterScript>();
             player.transform.position = tpPlayerHere.transform.position;
             b1 = false;
+
+            foreach(var paradoxScript in paradoxLevelScripts)
+            {
+                paradoxScript.virtualCamera.gameObject.SetActive(false);
+            }
         }
 
         b2 = true;

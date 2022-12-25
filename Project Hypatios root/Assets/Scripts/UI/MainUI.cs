@@ -139,12 +139,9 @@ public class MainUI : MonoBehaviour
 
         if (!paused)
         {
-            if (current_UI != UIMode.Default)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                DefaultHUD_UI.gameObject.SetActive(false);
-            }
+
+            bool isIdlePlayer = false;
+
             if (current_UI == UIMode.Default)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -156,103 +153,92 @@ public class MainUI : MonoBehaviour
                 DefaultHUD_UI.gameObject.SetActive(true);
 
                 if (Hypatios.Player.Health.isDead == false)
+                {
                     Time.timeScale = 1;
-            }
-
-            if (current_UI == UIMode.Weapon)
-            {
-                Time.timeScale = 0;
-                Shop_Weapon_UI.gameObject.SetActive(true);
-            }
-
-
-            if (current_UI == UIMode.Paradox)
-            {
-                Camera_Cutscene.gameObject.SetActive(true);
-                Camera_Main.gameObject.SetActive(false);
-                Shop_Paradox_UI.gameObject.SetActive(true);
-                Hypatios.Player.disableInput = true;
-                Hypatios.Player.enabled = false;
-                Hypatios.Player.rb.isKinematic = true;
-                Hypatios.Player.Health.enabled = false;
-                soundManagerScript.instance.Pause("running");
-
-                if (ParadoxShopOwner.Instance != null)
-                {
-                    ParadoxShopOwner.Instance.EnableStateParadox();
                 }
-            }
-            else if (Hypatios.Player.Health.isDead == false)
-            {
-                Camera_Cutscene.gameObject.SetActive(false);
-                Camera_Main.gameObject.SetActive(true);
-                Hypatios.Player.disableInput = false;
-                Hypatios.Player.enabled = true;
-                Hypatios.Player.rb.isKinematic = false;
-                Hypatios.Player.Health.enabled = true;
-
-                if (ParadoxShopOwner.Instance != null)
-                {
-                    ParadoxShopOwner.Instance.DisableStateParadox();
-                }
-            }
-
-
-            if (current_UI == UIMode.Crafting)
-            {
-                Camera_Cutscene.gameObject.SetActive(true);
-                Camera_Main.gameObject.SetActive(false);
-                CraftingWeapon_UI.gameObject.SetActive(true);
-                Hypatios.Player.disableInput = true;
-                Hypatios.Player.enabled = false;
-                Hypatios.Player.rb.isKinematic = true;
-                Hypatios.Player.Health.enabled = false;
-                soundManagerScript.instance.Pause("running");
-
-            }
-            else if (Hypatios.Player.Health.isDead == false)
-            {
-                Camera_Cutscene.gameObject.SetActive(false);
-                Camera_Main.gameObject.SetActive(true);
-                Hypatios.Player.disableInput = false;
-                Hypatios.Player.enabled = true;
-                Hypatios.Player.rb.isKinematic = false;
-                Hypatios.Player.Health.enabled = true;
-            }
-
-            if (current_UI == UIMode.Cinematic)
-            {
-                Camera_Cutscene.gameObject.SetActive(true);
-                Camera_Main.gameObject.SetActive(false);
-                CutsceneHUD_UI.gameObject.SetActive(true);
-                Hypatios.Player.enabled = false;
-                Hypatios.Player.rb.isKinematic = true;
-                Hypatios.Player.Health.enabled = false;
-                soundManagerScript.instance.Pause("running");
-
-            }
-
-            if (current_UI == UIMode.FreecamMode)
-            {
-                Camera_Noclip.gameObject.SetActive(true);
-                Camera_Main.gameObject.SetActive(false);
-                Hypatios.Player.disableInput = true;
-                Hypatios.Player.enabled = false;
-                Hypatios.Player.rb.isKinematic = true;
-                Hypatios.Player.Health.enabled = false;
-                soundManagerScript.instance.Pause("running");
-
-                if (b_OnActivateNoClipMode == false)
-                {
-                    Camera_Noclip.transform.position = Player.transform.position;
-                }
-
-                b_OnActivateNoClipMode = true;
             }
             else
             {
-                Camera_Noclip.gameObject.SetActive(false);
-                b_OnActivateNoClipMode = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                DefaultHUD_UI.gameObject.SetActive(false);
+            }
+
+
+            if (current_UI == UIMode.Crafting | current_UI == UIMode.Paradox | current_UI == UIMode.Weapon | current_UI == UIMode.Shop | current_UI == UIMode.Cinematic
+                | current_UI == UIMode.FreecamMode)
+            {
+                isIdlePlayer = true;
+            }
+
+            if (isIdlePlayer)
+            {
+                Camera_Main.gameObject.SetActive(false);
+                Camera_Cutscene.gameObject.SetActive(true);
+
+                Hypatios.Player.disableInput = true;
+                Hypatios.Player.enabled = false;
+                Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Health.enabled = false;
+                soundManagerScript.instance.Pause("running");
+            }
+            else if (Hypatios.Player.Health.isDead == false)
+            {
+                Camera_Main.gameObject.SetActive(true);
+                Camera_Cutscene.gameObject.SetActive(false);
+                Hypatios.Player.disableInput = false;
+                Hypatios.Player.enabled = true;
+                Hypatios.Player.rb.isKinematic = false;
+                Hypatios.Player.Health.enabled = true;
+            }
+
+            //custom modes
+            {
+                if (current_UI == UIMode.FreecamMode)
+                {
+                    Camera_Noclip.gameObject.SetActive(true);
+
+
+                    if (b_OnActivateNoClipMode == false)
+                    {
+                        Camera_Noclip.transform.position = Player.transform.position;
+                    }
+
+                    b_OnActivateNoClipMode = true;
+                }
+                else
+                {
+                    Camera_Noclip.gameObject.SetActive(false);
+                    b_OnActivateNoClipMode = false;
+                }
+
+                if (current_UI == UIMode.Paradox)
+                {
+                    Shop_Paradox_UI.gameObject.SetActive(true);
+
+                    if (ParadoxShopOwner.Instance != null)
+                        ParadoxShopOwner.Instance.EnableStateParadox();
+                }
+                else
+                {
+                    if (ParadoxShopOwner.Instance != null)
+                        ParadoxShopOwner.Instance.DisableStateParadox();
+                }
+
+                if (current_UI == UIMode.Weapon)
+                {
+                    Shop_Weapon_UI.gameObject.SetActive(true);
+                }
+
+                if (current_UI == UIMode.Crafting)
+                {
+                    CraftingWeapon_UI.gameObject.SetActive(true);
+                }
+
+                if (current_UI == UIMode.Cinematic)
+                {
+                    CutsceneHUD_UI.gameObject.SetActive(true);
+                }
             }
 
             if (tempoPause)

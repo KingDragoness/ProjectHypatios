@@ -89,6 +89,8 @@ public class WeaponManager : MonoBehaviour
             selectedWeapon = CurrentlyHeldWeapons.Count - 1;
             switchWeapon();
         }
+
+        MainGameHUDScript.Instance.ReloadAmmoIcons();
         SetWeaponSettings(weapon_);
         return weapon_;
     }
@@ -104,6 +106,7 @@ public class WeaponManager : MonoBehaviour
         Destroy(targetWeapon.gameObject);
         if (targetWeapon.transform.parent != this.gameObject) Destroy(targetWeapon.transform.parent.gameObject);
         CurrentlyHeldWeapons.Remove(targetWeapon);
+        MainGameHUDScript.Instance.ReloadAmmoIcons();
         selectedWeapon = 0;
         switchWeapon();
     }
@@ -450,6 +453,7 @@ public class WeaponManager : MonoBehaviour
         weaponScript.bulletPerSecond = weaponStat.cooldown;
         weaponScript.magazineSize = weaponStat.magazineSize;
         weaponScript.allAttachments = weaponsave.allAttachments;
+        weaponScript.recoilMultiplier = weaponStat.recoilMultiplier;
 
         var attachmentVisuals = GetComponentsInChildren<WeaponAttachmentVisuals>();
 

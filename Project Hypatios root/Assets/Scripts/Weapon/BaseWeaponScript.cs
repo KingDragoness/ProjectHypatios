@@ -25,6 +25,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public float recoilX;
     [FoldoutGroup("Weapon Stat")] public float recoilY;
     [FoldoutGroup("Weapon Stat")] public float recoilZ;
+    [FoldoutGroup("Weapon Stat")] public float recoilMultiplier = 1f;
     [FoldoutGroup("Weapon Stat")] public float bulletPerSecond; //AKA fire per second
 
     public virtual void FireWeapon()

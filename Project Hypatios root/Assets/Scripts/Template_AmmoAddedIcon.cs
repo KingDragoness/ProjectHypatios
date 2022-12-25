@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Template_AmmoAddedIcon : MonoBehaviour
 {
 
-    public WeaponItem.Category category;
+    public string weaponID;
     public Text labelAmmoCount;
 
     private Animator anim;

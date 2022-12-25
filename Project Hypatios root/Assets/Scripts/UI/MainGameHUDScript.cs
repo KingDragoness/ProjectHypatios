@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class MainGameHUDScript : MonoBehaviour
 {
@@ -38,7 +39,9 @@ public class MainGameHUDScript : MonoBehaviour
     [Space]
 
     [Header("Weapon")]
-    public List<Template_AmmoAddedIcon> AmmoAddedIcons;
+    [ReadOnly] public List<Template_AmmoAddedIcon> AmmoAddedIcons;
+    public Template_AmmoAddedIcon templatePrefab;
+    public Transform parentNewAmmo;
     public Text currentAmmo;
     public Text maximumAmmo;
     public Recoil gunRecoil;
@@ -56,6 +59,11 @@ public class MainGameHUDScript : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void OnEnable()
+    {
+        ReloadAmmoIcons();
     }
 
     private void Update()
@@ -130,34 +138,27 @@ public class MainGameHUDScript : MonoBehaviour
         }
     }
 
-    public void ShowAmmo(string weaponName, int count)
+    public void ReloadAmmoIcons()
     {
-        WeaponItem.Category category = WeaponItem.Category.Pistol;
-
-        switch(weaponName)
+        foreach (var iconAmmo in AmmoAddedIcons)
         {
-            case "Pistol":
-                category = WeaponItem.Category.Pistol;
-                break;
-
-            case "Shotgun":
-                category = WeaponItem.Category.Shotgun;
-                break;
-
-            case "SMG":
-                category = WeaponItem.Category.SMG;
-                break;
-
-            case "Rifle":
-                category = WeaponItem.Category.Rifle;
-                break;
-
-            default:
-
-                break;
+            if (iconAmmo == null) continue;
+            Destroy(iconAmmo.gameObject);
         }
 
-        Template_AmmoAddedIcon targetIcon = AmmoAddedIcons.Find(x => x.category == category);
+        AmmoAddedIcons.Clear();
+
+        foreach (var weapon in Hypatios.Player.Weapon.CurrentlyHeldWeapons)
+        {
+            var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
+            var prefabAmmo = Instantiate(weaponClass.UI_TemplateAmmoAdded, parentNewAmmo);
+            if (prefabAmmo == null) continue;
+            AmmoAddedIcons.Add(prefabAmmo);
+        }
+    }
+    public void ShowAmmo(string weaponName, int count)
+    {
+        Template_AmmoAddedIcon targetIcon = AmmoAddedIcons.Find(x => x.weaponID == weaponName);
         targetIcon.SetAmmoText($"+{count}");
         targetIcon.TriggerAnim();
 

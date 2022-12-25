@@ -7,12 +7,13 @@ public class Interact_Container : InteractableObject
 {
 
     public string ContainerName = "Container";
+    public bool shouldGenerateLoot = true;
     public LootTable lootTable;
     public InventoryData inventory;
 
     private void Start()
     {
-        GenerateLoot();
+        if (shouldGenerateLoot) GenerateLoot();
     }
 
     [Button("Reset loot")]

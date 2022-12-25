@@ -18,7 +18,7 @@ public class ChargeStationUI : MonoBehaviour
 
     private void Awake()
     {
-        weaponManager = FindObjectOfType<WeaponManager>();
+        weaponManager = Hypatios.Player.Weapon;
     }
 
     private void Start()

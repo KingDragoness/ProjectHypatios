@@ -9,6 +9,7 @@ public class HitAndDamageProjectile : MonoBehaviour
 
     public bool killByImpact = false;
     public bool isBurn = false;
+    public bool allowHitEnemy = false;
     public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
     public float preventKillAboveTimer = 0f;
@@ -30,6 +31,7 @@ public class HitAndDamageProjectile : MonoBehaviour
         DamageToken token = new DamageToken();
         token.damage = Damage;
         token.origin = DamageToken.DamageOrigin.Environment;
+        if (allowHitEnemy) token.origin = DamageToken.DamageOrigin.Player;
         token.healthSpeed = DamageSpeedOverride;
         token.originEnemy = enemyOrigin;
         token.isBurn = isBurn;
@@ -58,7 +60,7 @@ public class HitAndDamageProjectile : MonoBehaviour
             if (timerDead > preventKillAboveTimer)
                 return;
 
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if (!allowHitEnemy && collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 return;
             }

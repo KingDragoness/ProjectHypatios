@@ -15,6 +15,8 @@ MonoBehaviour:
   nameWeapon: Rifle
   moveSpeed: 1
   prefab: {fileID: 2355747187573847083, guid: d987dd2e5eb7c4b4fbd95648e3e104b4, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 5989791327783834318, guid: a7767143e46bcea47aa90b3fca47fcd0,
+    type: 3}
   weaponIcon: {fileID: 21300000, guid: 38ed49429195b31489e07eede73fc0a6, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 901dd0fafe2706e45baa00a21713aa90,
     type: 3}
@@ -26,7 +28,7 @@ MonoBehaviour:
     order: 10
     RequirementCrafting: []
     modifier_damage: 4
-    modifier_cooldown: 5
+    modifier_cooldown: 4
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
@@ -38,7 +40,79 @@ MonoBehaviour:
     order: 10
     RequirementCrafting: []
     modifier_damage: 6
-    modifier_cooldown: 8
+    modifier_cooldown: 6
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: SRFrame
+    Name: SRifle Frame
+    Description: Deals additional damage and major cooldown reduction.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 3
+    modifier_cooldown: 10
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: FirmGrip
+    Name: Firm Grip
+    Description: Reduces recoil.
+    slot: 2
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.3
+    override_magazineSize: 0
+  - ID: StableGrip
+    Name: Stabilitator Grip
+    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
+    slot: 2
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.5
+    override_magazineSize: 0
+  - ID: UltronGrip
+    Name: Ultron Grip
+    Description: Extremely decreases recoil, can even suppress high rate of fire.
+    slot: 2
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.72
+    override_magazineSize: 0
+  - ID: ExtenderMag
+    Name: Extender Magazine
+    Description: Increases magazine size to 40.
+    slot: 5
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 40
+  - ID: TacticalFrame
+    Name: Tactical Rapid Frame
+    Description: Inferior damage while greatly decreases cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: -9
+    modifier_cooldown: 24
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0

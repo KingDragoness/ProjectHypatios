@@ -15,10 +15,36 @@ MonoBehaviour:
   nameWeapon: MiningBeam
   moveSpeed: 1
   prefab: {fileID: 6728140930994960089, guid: 52d0e0bb62b178045989b67ea06224eb, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: db9b11ab43fa35a468cfb1dc6968a2a7,
+    type: 3}
   weaponIcon: {fileID: 21300000, guid: 02c4cf94aa266cd4f9bb06003aee2f95, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
     type: 3}
-  attachments: []
+  attachments:
+  - ID: FusionCutter
+    Name: Fusion Cutter
+    Description: Minor increase in damage and cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0.5
+    modifier_cooldown: 1
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: AdvancedLithium
+    Name: Advanced Lithium Pack
+    Description: Increases magazine size to 130.
+    slot: 5
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 130
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
     count: 2
@@ -31,7 +57,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 60
+      value: 50
       inSlope: 19.596167
       outSlope: 19.596167
       tangentMode: 0
@@ -40,7 +66,7 @@ MonoBehaviour:
       outWeight: 0.07171792
     - serializedVersion: 3
       time: 0.9986572
-      value: 144
+      value: 90
       inSlope: 16.308975
       outSlope: 16.308975
       tangentMode: 0

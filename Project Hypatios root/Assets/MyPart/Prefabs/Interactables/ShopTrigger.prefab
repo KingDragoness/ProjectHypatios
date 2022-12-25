@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1669592512216014860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3638945190516142840}
+  m_Layer: 0
+  m_Name: MoveplayerHere
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3638945190516142840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669592512216014860}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3999396904576152529}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3999396904576152558
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +64,7 @@ Transform:
   m_Children:
   - {fileID: 3999396905874353369}
   - {fileID: 3999396905777144247}
+  - {fileID: 3638945190516142840}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -124,7 +155,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  triggerStayEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  triggerExitEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1902232324976607691}
+        m_MethodName: ExitShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   objectToCompare: {fileID: 0}
+  usePlayer: 0
 --- !u!114 &1902232324976607691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61c956513d9b6c4db503483f557f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePlayerHere: {fileID: 3638945190516142840}
 --- !u!1 &3999396904765496522
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,6 +72,8 @@ public class WeaponItem : ScriptableObject
         Shotgun,
         SMG,
         Rifle,
+        MiningBeam,
+        IonBlaster,
         Katana = 1000,
         ThrowingKnife
     }
@@ -80,6 +82,7 @@ public class WeaponItem : ScriptableObject
     public string nameWeapon = "Pistol";
     public float moveSpeed = 1f; //1/100%, normal speed. 0.5/50% for heavy weapons
     public GameObject prefab;
+    public Template_AmmoAddedIcon UI_TemplateAmmoAdded;
     public Sprite weaponIcon;
     public Sprite overrideCrosshair_Sprite;
     public List<Attachment> attachments = new List<Attachment>();
@@ -100,6 +103,7 @@ public class WeaponItem : ScriptableObject
         stat.damage = defaultDamage;
         stat.magazineSize = defaultMagazineSize;
         stat.cooldown = defaultCooldown;
+        stat.recoilMultiplier = 1f;
         var newList = attachments.OrderBy(x => x.order).ToList();
 
  
