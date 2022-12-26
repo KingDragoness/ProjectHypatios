@@ -28,6 +28,12 @@ public class CharStatButton : MonoBehaviour
         PerkInitialize(category1);
     }
 
+    public void ForceRefresh()
+    {
+        PerkInitialize(category1);
+
+    }
+
     private void PerkInitialize(StatusEffectCategory category)
     {
         float value = 0;
@@ -65,6 +71,11 @@ public class CharStatButton : MonoBehaviour
         {
             value = Hypatios.Player.GetNetSoulBonusPerk();
             s = $"Lv {value}/5";
+        }
+        else if (category == StatusEffectCategory.Alcoholism)
+        {
+            value = Mathf.RoundToInt(Hypatios.Player.Health.alcoholMeter);
+            s = $"{value}/100%";
         }
 
         statLabel.text = s;

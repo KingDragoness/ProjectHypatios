@@ -16,7 +16,7 @@ public class SeaverScarab : EnemyScript
 
     private void Start()
     {
-
+        agent.speed /= Hypatios.ExtraAttackSpeedModifier();
     }
 
     private void Update()

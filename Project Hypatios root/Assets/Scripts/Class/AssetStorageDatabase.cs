@@ -21,11 +21,11 @@ public class AssetStorageDatabase : MonoBehaviour
     [Button("Refresh Database")]
     public void RefreshDatabase()
     {
-        var _trivias = Resources.FindObjectsOfTypeAll<Trivia>().ToList();
-        var _statusEffects = Resources.FindObjectsOfTypeAll<BaseStatusEffectObject>().ToList();
-        var _weapons = Resources.FindObjectsOfTypeAll<WeaponItem>().ToList();
-        var _basePerks = Resources.FindObjectsOfTypeAll<BasePerk>().ToList();
-        var _itemInventory = Resources.FindObjectsOfTypeAll<ItemInventory>().ToList();
+        var _trivias = Resources.LoadAll("", typeof(Trivia)).Cast<Trivia>().ToList();
+        var _statusEffects = Resources.LoadAll("", typeof(BaseStatusEffectObject)).Cast<BaseStatusEffectObject>().ToList(); 
+        var _weapons = Resources.LoadAll("", typeof(WeaponItem)).Cast<WeaponItem>().ToList(); 
+        var _basePerks = Resources.LoadAll("", typeof(BasePerk)).Cast<BasePerk>().ToList(); 
+        var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList(); 
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;

@@ -27,6 +27,8 @@ public class WeaponModelDisplay : MonoBehaviour
             display1.weaponDisplay.gameObject.SetActive(false);
         }
 
+        if (currentWeaponDisplay == null) return;
+
         weapon.weaponDisplay.gameObject.SetActive(true);
     }
 

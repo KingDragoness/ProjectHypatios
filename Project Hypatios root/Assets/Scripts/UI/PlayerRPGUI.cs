@@ -91,6 +91,13 @@ public class PlayerRPGUI : MonoBehaviour
             }
 
         }
+
+        var charStatButtons = GetComponentsInChildren<CharStatButton>();
+
+        foreach(var button in charStatButtons)
+        {
+            button.ForceRefresh();
+        }
     }
 
     private void Update()
@@ -146,7 +153,19 @@ public class PlayerRPGUI : MonoBehaviour
                 Debug.LogError("Cannot use same weapon/tto many weapons equipped");
                 return;
             }
+        }
+        else if (itemCLass.category == ItemInventory.Category.Consumables)
+        {
+            soundManagerScript.instance.PlayOneShot("consume");
+            Hypatios.Player.Health.Heal((int)itemCLass.consume_HealAmount);
+            Hypatios.Player.Health.alcoholMeter += itemCLass.consume_AlcoholAmount;
 
+            if (itemCLass.isInstantDashRefill)
+            {
+                Hypatios.Player.timeSinceLastDash = 10f;
+            }
+
+            Hypatios.Player.Inventory.RemoveItem(itemData);
         }
 
         {
@@ -240,7 +259,8 @@ public class PlayerRPGUI : MonoBehaviour
         {
             sLeft += $"{itemClass.GetDisplayText()}\n";
             sLeft += $"\n{itemClass.Description}\n";
-            sLeft += $"\n<X to discard>\n";
+            if (itemClass.category != ItemInventory.Category.Consumables) sLeft += $"\n<X to discard>\n";
+            else sLeft += $"\n<LMB to consume> <X to discard>\n";
             sRight += $"({itemDat.count})\n";
         }
 

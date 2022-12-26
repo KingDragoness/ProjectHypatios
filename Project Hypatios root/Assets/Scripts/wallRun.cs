@@ -103,13 +103,13 @@ public class wallRun : MonoBehaviour
         checkWall();
         isScoping = false;
 
-        GunScript Gun = WeaponManager.Instance.currentGunHeld;
+        GunScript Gun = Hypatios.Player.Weapon.currentGunHeld;
 
         if (Gun != null)
         {
             if (Gun.isScoping)
             {
-                if (Input.GetMouseButton(1) && Gun.canScope)
+                if (Hypatios.Input.Fire2.IsPressed() && Gun.canScope)
                 {
                     isScoping = true;
 
@@ -170,7 +170,7 @@ public class wallRun : MonoBehaviour
 
        
 
-        if (Input.GetButtonDown("Jump"))
+        if (Hypatios.Input.Jump.triggered)
         {
             anim.SetTrigger("jumping");
             if (wallLeft)

@@ -44,11 +44,23 @@ public class InteractableCamera : MonoBehaviour
   
     }
 
+    public bool IsInteractContainer()
+    {
+
+        if (currentInteractable != null)
+        {
+            if (currentInteractable is Interact_Container)
+                return true;
+        }
+
+        return false;
+    }
+
     private void Update()
     {
         if (currentInteractable != null)
         {
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Hypatios.Input.Interact.triggered)
             {
                 currentInteractable.Interact();
             }

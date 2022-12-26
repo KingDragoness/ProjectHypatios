@@ -189,12 +189,27 @@ public class Hypatios : MonoBehaviour
         Brutal = 30, //for FPS expert, enemy can deal very high damage & chance of crits
     }
 
+    //For console casuals
+    public static float ExtraAttackSpeedModifier()
+    {
+        if (Instance._gameDifficulty == GameDifficulty.Casual)
+        {
+            return 1.6f;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
     #region Systems
     [SerializeField] private GameDifficulty _gameDifficulty = GameDifficulty.Hard;
-    public static GameDifficulty Difficulty { get => Instance._gameDifficulty; }
+    public static GameDifficulty Difficulty { get => Instance._gameDifficulty; set => Instance._gameDifficulty = value; }
 
     #endregion
 
+    [SerializeField]
+    private HypatiosControls _actionMap;
 
     [SerializeField]
     private FPSMainScript _fpsMainScript;
@@ -234,8 +249,10 @@ public class Hypatios : MonoBehaviour
     public static cameraScript MainCameraScript { get => Instance._mainCameraScript; }
     public static DynamicObjectPool ObjectPool { get => Instance._dynamicObjectPool; }
     public static EnemyContainer Enemy { get => Instance._enemyContainer; }
+    public static HypatiosControls.DefaultActions Input { get => Instance._actionMap.Default; }
     public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
+
     public static float Time { get => Game.UNIX_Timespan; }
 
     public static Hypatios Instance;
@@ -243,6 +260,8 @@ public class Hypatios : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _actionMap = new HypatiosControls();
+        _actionMap.Enable();
         Settings1.InitializeAtAwake();
         //FindObjectOfType
     }

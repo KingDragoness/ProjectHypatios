@@ -30,8 +30,6 @@ public class WeaponManager : MonoBehaviour
 
     [SerializeField] private List<BaseWeaponScript> currentlyHeldWeapons = new List<BaseWeaponScript>();
 
-    public static WeaponManager Instance;
-
     public Recoil Recoil;
 
     public List<BaseWeaponScript> CurrentlyHeldWeapons { get => currentlyHeldWeapons;}
@@ -117,7 +115,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+
     }
 
     // Start is called before the first frame update
@@ -258,8 +256,10 @@ public class WeaponManager : MonoBehaviour
 
         //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
 
+        var mouseVector = Hypatios.Input.SwitchWeapon.ReadValue<float>();
+        bool isInteractContainer = InteractableCamera.instance.IsInteractContainer();
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (mouseVector > 0f && Hypatios.Input.SwitchWeapon.triggered && !isInteractContainer)
         {
             if (selectedWeapon >= CurrentlyHeldWeapons.Count - 1)
             {
@@ -271,7 +271,7 @@ public class WeaponManager : MonoBehaviour
             }
 
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if (mouseVector < 0f && Hypatios.Input.SwitchWeapon.triggered && !isInteractContainer)
         {
             if (selectedWeapon <= 0)
             {

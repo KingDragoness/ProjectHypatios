@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using System.Linq;
 using Sirenix.OdinInspector;
 using Kryz.CharacterStats;
-
-
 
 
 public class CharacterScript : Entity
@@ -95,7 +94,6 @@ public class CharacterScript : Entity
     //Health
     public PlayerHealth Health;
     private CapsuleCollider cc;
-    
 
     public bool isCheatMode;
 
@@ -117,6 +115,7 @@ public class CharacterScript : Entity
         PerkInitialize(StatusEffectCategory.RegenHPBonus);
         PerkInitialize(StatusEffectCategory.KnockbackResistance);
         PerkInitialize(StatusEffectCategory.BonusDamageMelee);
+        PerkInitialize(StatusEffectCategory.Alcoholism);
         dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
     }
 
@@ -152,6 +151,10 @@ public class CharacterScript : Entity
         else if (category == StatusEffectCategory.DashCooldown)
         {
             return dashCooldown.Value;
+        }
+        else if (category == StatusEffectCategory.Alcoholism)
+        {
+            return Health.alcoholMeter;
         }
 
         return 0;
@@ -194,6 +197,10 @@ public class CharacterScript : Entity
         {
             value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
         }
+        else if (category == StatusEffectCategory.Alcoholism)
+        {
+            value = Health.alcoholMeter;
+        }
 
         //value += Hypatios.Game.CustomTemporaryPerk (for single run bonus perks)
 
@@ -208,6 +215,8 @@ public class CharacterScript : Entity
         }
     }
     #endregion
+
+
 
     void Start()
     {   
@@ -225,6 +234,7 @@ public class CharacterScript : Entity
         if (currentWeapon != null)
             anim = currentWeapon.anim;
     }
+
 
     private void Update()
     {
@@ -334,7 +344,7 @@ public class CharacterScript : Entity
 
         if (isCheatMode == false)
         {
-            if (Input.GetKey(KeyCode.LeftShift) && timeSinceLastDash > dashCooldown.Value)
+            if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldown.Value)
             {
 
                 StartCoroutine(Dash());
@@ -343,7 +353,7 @@ public class CharacterScript : Entity
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Hypatios.Input.Dash.triggered)
             {
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
@@ -358,7 +368,7 @@ public class CharacterScript : Entity
             return;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Hypatios.Input.Crouch.triggered)
         {
             isCrouching = !isCrouching;
         }
@@ -397,8 +407,9 @@ public class CharacterScript : Entity
     {
         if (!disableInput)
         {
-            xMovement = Input.GetAxisRaw("Horizontal");
-            yMovement = Input.GetAxisRaw("Vertical");
+            var moveVector = Hypatios.Input.Move.ReadValue<Vector2>();
+            xMovement = moveVector.x;//Input.GetAxisRaw("Horizontal");
+            yMovement = moveVector.y;//Input.GetAxisRaw("Vertical");
         }
 
         dir = transform.right * xMovement + transform.forward * yMovement;
@@ -474,7 +485,15 @@ public class CharacterScript : Entity
 
         if (!isCheatMode)
         {
-            if (isGrounded && Input.GetButtonDown("Jump"))
+          
+            if (isGrounded && Hypatios.Input.Jump.triggered && Gamepad.current == null)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+                soundManager.Play("jumping");
+                Anim.SetTrigger("jumping");
+            }
+            else if (isGrounded && Hypatios.Input.Jump.triggered && Gamepad.current != null && InteractableCamera.instance.currentInteractable == null)
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
@@ -488,7 +507,7 @@ public class CharacterScript : Entity
         }
         else
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Hypatios.Input.Jump.triggered)
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
@@ -499,7 +518,7 @@ public class CharacterScript : Entity
 
         if (isNoGravity)
         {
-            if (Input.GetButton("Jump"))
+            if (Hypatios.Input.Jump.triggered)
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight * 0.1f, ForceMode.Impulse);

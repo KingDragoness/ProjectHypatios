@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
 using Sirenix.OdinInspector;
+using UnityEngine.InputSystem;
+using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class MainUI : MonoBehaviour
 {
@@ -98,7 +100,7 @@ public class MainUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Hypatios.Input.Pause.triggered)
         {
             bool allowToggle = false;
 
@@ -286,6 +288,29 @@ public class MainUI : MonoBehaviour
         if (tempoPause == false)
         {
             MainGameHUDScript.Instance.promptUIMain.SetActive(false);
+        }
+
+        if (Gamepad.all.Count > 0)
+        {
+            Debug.Log("Gamepad detected, switching difficulty to Casual.");
+            Hypatios.Difficulty = Hypatios.GameDifficulty.Casual;
+
+
+            //cancelled because no gyro in Xbox One controller
+            if (UnityEngine.InputSystem.Gyroscope.current != null)
+            {
+
+                Debug.Log("Gyroscope detected, enabling gyroscope.");
+                InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
+            }
+        }
+        else
+        {
+            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Casual)
+            {
+                Debug.Log("Switching difficulty back to normal.");
+                Hypatios.Difficulty = Hypatios.GameDifficulty.Normal;
+            }
         }
     }
 

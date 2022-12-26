@@ -62,10 +62,15 @@ public class Recoil : MonoBehaviour
     public void RecoilFire()
     {
         var recoilRange = new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
-        var magnitude = recoilRange.magnitude;
+        var magnitude = recoilRange.magnitude * (1f / Hypatios.ExtraAttackSpeedModifier());
         recoilRange *= knockbackResistance.Value;
         targetRot += recoilRange;
         Hypatios.Player.rb.AddRelativeForce(knockbackResistance.Value * playerKnockPhysics * magnitude);
+    }
+
+    public void AddCustomKnockbackForce(Vector3 dir, float multiplier)
+    {
+        Hypatios.Player.rb.AddRelativeForce(knockbackResistance.Value * dir * multiplier * 60f);
     }
 
     public void CustomRecoil(Vector3 rot, float multiplier = 1, RecoilType type = RecoilType.MovementLand)

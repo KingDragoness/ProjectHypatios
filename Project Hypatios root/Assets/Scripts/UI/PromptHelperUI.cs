@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PromptHelperUI : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class PromptHelperUI : MonoBehaviour
     {
         f -= Time.deltaTime;
 
-        if (Input.anyKey && f < 0)
+        if ((Input.anyKey) && f < 0)
         {
             button.onClick.Invoke();
         }

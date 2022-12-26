@@ -17,10 +17,27 @@ public class IonBlasterWeapon : GunScript
 
     private float _currentChargeTime = 0;
     private bool isChargeReady = false;
+    private float justUnpaused = 0.1f; //absolutely retarded fix
+
+    public override void Start()
+    {
+        base.Start();
+    }
+
 
     public override void Update()
     {
+        if (Time.timeScale <= 0)
+        {
+            justUnpaused = 0.1f;
+        }
+
         base.Update();
+   
+
+        cooldownFire -= Time.deltaTime;
+        justUnpaused -= Time.deltaTime;
+
 
         if (isFiring)
         {
@@ -42,7 +59,7 @@ public class IonBlasterWeapon : GunScript
         else
         {
             if (audioLaserLoop.isPlaying) audioLaserLoop.Stop();
-            if (isChargeReady)
+            if (isChargeReady && cooldownFire < 0f)
             {
                 if (curAmmo > 0) LaunchProjectile();
                 isChargeReady = false;
@@ -53,19 +70,28 @@ public class IonBlasterWeapon : GunScript
         }
     }
 
+    private float cooldownFire = 0.1f;
+
     public override void FireInput()
     {
-        if (Input.GetButton("Fire1") && curAmmo > 0 && !isReloading)
+
+
+        if (Hypatios.Input.Fire1.WasReleasedThisFrame() && bulletPerSecond > 5 && curAmmo > 0 && !isReloading && justUnpaused <= 0f)
+        {
+            if (cooldownFire < 0f)
+            {
+                LaunchProjectile();
+            }
+        }
+
+
+        if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && !isReloading)
         {
             if (!isFiring)
             {
                 isFiring = true;
             }
 
-            if (Time.time >= nextAttackTime)
-            {
-                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
-            }
         }
         else
         {
@@ -76,16 +102,13 @@ public class IonBlasterWeapon : GunScript
 
         }
 
-        if (Input.GetButtonUp("Fire1") && bulletPerSecond > 5 && curAmmo > 0 && !isReloading)
-        {
-            LaunchProjectile();
-        }
+    
     }
 
     public void LaunchProjectile()
     {
         gunRecoil.RecoilFire();
-
+        cooldownFire = 1f / bulletPerSecond + 0.05f;
         audioFire.Play();
         throwProjectile.FireProjectile(origin.forward);
         anim.SetTrigger("shooting");

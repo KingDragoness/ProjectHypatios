@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//only buy ammos
+
 public class WeaponSectionButtonUI : MonoBehaviour
 {
 
+    public enum ButtonType
+    {
+        Ammo,
+        Weapon
+    }
 
-
+    public Text weaponName_Label;
     public Text ammoLeft_Text;
-    public Button buyWeapon_Button;
-    public Button buyAmmo_Button;
-    public string weaponID = "Shotgun";
-    public int PurchaseAmmoAmount = 6;
-    public int PurchaseAmmoPrice = 2;
-    public int BuyPrice = 5;
-    public List<UpgradeButtonUI> allUpgradeButtons = new List<UpgradeButtonUI>();
+    public Image weaponIcon;
+    public Image ammoIcon;
+    public Sprite soulSprite;
+    public Button mainButton;
+    public ButtonType buttonType = ButtonType.Ammo;
+    public int index = 0;
 
     private ChargeStationUI ChargeStationUI;
 
@@ -24,119 +30,103 @@ public class WeaponSectionButtonUI : MonoBehaviour
         ChargeStationUI = MainGameHUDScript.Instance.chargeStationUI;
     }
 
-    public void AttemptBuy()
+    public void Highlight()
     {
-        MainGameHUDScript.Instance.chargeStationUI.BuyThis(this);
+        if (buttonType == ButtonType.Ammo)
+        {
+            if (index >= Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count)
+            { return; }
+
+            var weapon = Hypatios.Player.Weapon.CurrentlyHeldWeapons[index];
+            var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
+            var itemClass = Hypatios.Assets.GetItemByWeapon(weapon.weaponName);
+
+            ChargeStationUI.ShowTooltip($"Buy x{weaponClass.buy_AmmoAmount} ammo for {weaponClass.buy_AmmoSoulPrice} souls.");
+        }
+        else
+        {
+            if (index >= ChargeStationUI.CurrentShopScript.storage.allItemDatas.Count)
+            { return; }
+
+            var itemData = ChargeStationUI.CurrentShopScript.storage.allItemDatas[index];
+            var itemClass = Hypatios.Assets.GetItem(itemData.ID);
+            var weaponClass = itemClass.attachedWeapon;
+
+            ChargeStationUI.ShowTooltip($"Buy {itemClass.GetDisplayText()} for {weaponClass.buy_SoulPrice} souls.");
+            ChargeStationUI.CurrentShopScript.currentHighlight = index;
+        }
+    }
+
+    public void Dehighlight()
+    {
+        ChargeStationUI.CurrentShopScript.currentHighlight = -1;
+
     }
 
     public void AttemptBuyAmmo()
     {
-        MainGameHUDScript.Instance.chargeStationUI.BuyThisAmmo(this);
+        ChargeStationUI.BuyThisAmmo(this);
     }
 
-    public int GetCostPrice(int level, string weaponName = "", UpgradeWeaponType upgradeType = UpgradeWeaponType.Damage)
+    public void AttemptBuyWeapon()
     {
-        int x = 0;
+        ChargeStationUI.BuyThis(this);
+    }
 
-        if (weaponName == "Pistol")
+    public void Refresh()
+    {
+        if (buttonType == ButtonType.Ammo)
         {
-            x = ((level+ 1) * 2) + 6;
+            if (index >= Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count)
+            {
+                //set null
+                weaponIcon.sprite = null;
+                mainButton.interactable = false;
+                ammoIcon.sprite = null;
+                weaponName_Label.text = "";
+                ammoLeft_Text.text = $"~";
+            }
+            else
+            {
+                var weapon = Hypatios.Player.Weapon.CurrentlyHeldWeapons[index];
+                var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
+                var itemClass = Hypatios.Assets.GetItemByWeapon(weapon.weaponName);
+
+                weaponIcon.sprite = weaponClass.weaponIcon;
+                mainButton.interactable = true;
+                ammoIcon.sprite = weaponClass.ammoSpriteIcon;
+                weaponName_Label.text = $"{itemClass.GetDisplayText().ToUpper()}";
+                ammoLeft_Text.text = $"x{weapon.totalAmmo}";
+            }
         }
         else
         {
-            x = ((level + 1) * 6) + 5;
-        }
+            if (ChargeStationUI == null)
+                ChargeStationUI = MainGameHUDScript.Instance.chargeStationUI;
 
-        if (upgradeType == UpgradeWeaponType.Damage)
-        {
-            x = Mathf.RoundToInt(x * 1.1f);
-        }
-        else if (upgradeType == UpgradeWeaponType.Cooldown)
-        {
-            x = Mathf.RoundToInt(x * 0.6f);
-        }
-        else if (upgradeType == UpgradeWeaponType.MagazineSize)
-        {
-            x = Mathf.RoundToInt(x * 0.4f);
-        }
+            if (index >= ChargeStationUI.CurrentShopScript.storage.allItemDatas.Count)
+            {
+                //set null
+                weaponIcon.sprite = null;
+                mainButton.interactable = false;
+                ammoIcon.sprite = null;
+                weaponName_Label.text = "";
+                ammoLeft_Text.text = $"~";
+            }
+            else
+            {
+                var itemData = ChargeStationUI.CurrentShopScript.storage.allItemDatas[index];
+                var itemClass = Hypatios.Assets.GetItem(itemData.ID);
+                var weaponClass = itemClass.attachedWeapon;
 
-        return x;
+                weaponIcon.sprite = weaponClass.weaponIcon;
+                mainButton.interactable = true;
+                ammoIcon.sprite = soulSprite;
+                weaponName_Label.text = $"{itemClass.GetDisplayText().ToUpper()}";
+                ammoLeft_Text.text = $"x{weaponClass.buy_SoulPrice}";
+            }
+        }
     }
 
-    //Upgrade soul amount (level x 15 + 5) =
-    //lv 1 (1 x 15 + 5) = 20
 
-    public void AttemptUpgrade(UpgradeButtonUI upgradeButtonUI)
-    {
-         UpgradeWeaponType upgradeType = upgradeButtonUI.upgradeType;
-        int currentLevel = 0;
-        string limitLevel = "5";
-        var statThisWeapon = Hypatios.Game.GetWeaponSave(weaponID);
-        var weaponItem = Hypatios.Assets.GetWeapon(weaponID);
-
-        if (statThisWeapon == null)
-        {
-            ChargeStationUI.ShowTooltip("Cannot upgrade weapon you have never used!");
-            MainGameHUDScript.Instance.audio_Error.Play();
-            return;
-        }
-        else
-        {
-            //if (upgradeType == UpgradeWeaponType.Damage)
-            //{
-            //    currentLevel = statThisWeapon.level_Damage;
-            //}
-            //else if (upgradeType == UpgradeWeaponType.Cooldown)
-            //{
-            //    currentLevel = statThisWeapon.level_Cooldown;
-
-            //}
-            //else if (upgradeType == UpgradeWeaponType.MagazineSize)
-            //{
-            //    currentLevel = statThisWeapon.level_MagazineSize;
-
-            //}
-        }
-
-        if (currentLevel >= 4)
-        {
-            ChargeStationUI.ShowTooltip("Cannot upgrade anymore, maxed out.");
-            MainGameHUDScript.Instance.audio_Error.Play();
-            return;
-        }
-
-        int soulCost = GetCostPrice(currentLevel, weaponID, upgradeType);
-
-        if (Hypatios.Game.SoulPoint < soulCost)
-        {
-            ChargeStationUI.ShowTooltip("Not enough souls!");
-            Debug.Log("Insufficient souls!");
-            MainGameHUDScript.Instance.audio_Error.Play();
-            return;
-        }
-
-
-        //if (upgradeType == UpgradeWeaponType.Damage)
-        //{
-        //    statThisWeapon.level_Damage++;
-        //    currentLevel = statThisWeapon.level_Damage;
-        //}
-        //else if (upgradeType == UpgradeWeaponType.Cooldown)
-        //{
-        //    statThisWeapon.level_Cooldown++;
-        //    currentLevel = statThisWeapon.level_Cooldown;
-
-        //}
-        //else if (upgradeType == UpgradeWeaponType.MagazineSize)
-        //{
-        //    statThisWeapon.level_MagazineSize++;
-        //    currentLevel = statThisWeapon.level_MagazineSize;
-
-        //}
-
-        Hypatios.Game.SoulPoint -= soulCost;
-        ChargeStationUI.ShowTooltip($"Upgrade successful: {upgradeType} : [{currentLevel}/5]");
-        MainGameHUDScript.Instance.audio_PurchaseReward.Play();
-        ChargeStationUI.RefreshUI();
-    }
 }

@@ -57,4 +57,6 @@ public class LootTable : ScriptableObject
         return entries[output];
     }
 
+
+
 }

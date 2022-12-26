@@ -17,13 +17,14 @@ public class ItemInventory : ScriptableObject
         Weapon
     }
 
-    [InfoBox("If DisplayName is empty, it will use ID's")]
-    [SerializeField] private string _displayName = "";
-    [TextArea(3,5)]
-    [SerializeField] private string _description = "";
+    [InfoBox("If DisplayName is empty, it will use ID's")] [SerializeField] private string _displayName = "";
+    [TextArea(3,5)] [SerializeField] private string _description = "";
     public Category category;
-    [ShowIf("category", Category.Weapon)]
-    public WeaponItem attachedWeapon;
+    [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
+    [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;
+    [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
+    [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
+    [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
 
     public string Description { get => _description;  }
 

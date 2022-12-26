@@ -61,7 +61,10 @@ public class InteractContainerUI : MonoBehaviour
         if (currentContainer.inventory.allItemDatas.Count <= 0)
             return;
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        var mouseVector = Hypatios.Input.SwitchWeapon.ReadValue<float>();
+
+
+        if (mouseVector < 0f && Hypatios.Input.SwitchWeapon.triggered)
         {
             if (index >= allQuickLootButtons.Count - 1)
             {
@@ -75,7 +78,7 @@ public class InteractContainerUI : MonoBehaviour
             }
 
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (mouseVector > 0f && Hypatios.Input.SwitchWeapon.triggered)
         {
             if (index <= 0)
             {
@@ -89,7 +92,7 @@ public class InteractContainerUI : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Hypatios.Input.Interact.triggered)
         {
             //grab item
             QuickLoot();
@@ -132,6 +135,10 @@ public class InteractContainerUI : MonoBehaviour
         {
             var newButton = Instantiate(button, parentContainer);
             var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            Debug.Log(itemDat.ID);
+            if (itemClass == null) continue;
+            Debug.Log(itemClass.name);
 
             newButton.gameObject.SetActive(true);
             newButton.nameLabel.text = itemClass.GetDisplayText();

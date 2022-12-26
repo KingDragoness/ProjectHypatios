@@ -24,7 +24,7 @@ public class MeleeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        WeaponManager = WeaponManager.Instance;
+        WeaponManager = Hypatios.Player.Weapon;
         cam = Camera.main;
         meleeAnim = GetComponent<Animator>();
         meleeTime = meleeFrame / 30f;

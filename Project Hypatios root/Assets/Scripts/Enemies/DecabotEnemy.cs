@@ -253,7 +253,7 @@ public class DecabotEnemy : EnemyScript
             if (index1 >= weaponTurret.Length)
             {
                 index1 = 0;
-                nextAttackTime = Time.time + attackRecharge;
+                nextAttackTime = Time.time + attackRecharge * Hypatios.ExtraAttackSpeedModifier();
                 break;
             }
 
@@ -274,7 +274,7 @@ public class DecabotEnemy : EnemyScript
                 FireMissile(turret1.origin);
             }
 
-            nextAttackTime = Time.time + attackTime;
+            nextAttackTime = Time.time + attackTime * Hypatios.ExtraAttackSpeedModifier();
             index1++;
             break;
         }

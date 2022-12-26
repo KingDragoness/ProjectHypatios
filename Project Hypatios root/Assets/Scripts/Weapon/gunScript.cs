@@ -45,8 +45,9 @@ public class GunScript : BaseWeaponScript
     internal Ray ray;
     internal Recoil gunRecoil;
 
+
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
 
@@ -110,7 +111,7 @@ public class GunScript : BaseWeaponScript
 
     void Melee()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Hypatios.Input.Fire1.triggered)
         {
             if (Time.time >= nextAttackTime)
             {
@@ -137,9 +138,9 @@ public class GunScript : BaseWeaponScript
             return;
         }
 
-        if (Input.GetButton("Fire1") && curAmmo == 0 && !isReloading && isAutomatic ||
-            Input.GetButtonDown("Fire1") && curAmmo == 0 && !isReloading && !isAutomatic ||
-            Input.GetKey(KeyCode.R) && curAmmo < magazineSize && !isReloading)
+        if (Hypatios.Input.Fire1.IsPressed() && curAmmo == 0 && !isReloading && isAutomatic ||
+            Hypatios.Input.Fire1.triggered && curAmmo == 0 && !isReloading && !isAutomatic ||
+            Hypatios.Input.Reload.triggered && curAmmo < magazineSize && !isReloading)
         {
 
             anim.SetTrigger("reload");
@@ -155,7 +156,7 @@ public class GunScript : BaseWeaponScript
 
     public override void FireInput()
     {
-        if (Input.GetButton("Fire1") && curAmmo > 0 && isAutomatic && !isReloading)
+        if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && isAutomatic && !isReloading)
         {
             if (!isFiring)
             {
@@ -179,7 +180,7 @@ public class GunScript : BaseWeaponScript
             }
 
         }
-        if (Input.GetButtonDown("Fire1") && curAmmo > 0 && !isAutomatic && !isReloading)
+        if (Hypatios.Input.Fire1.triggered && curAmmo > 0 && !isAutomatic && !isReloading)
         {
 
             if (Time.time >= nextAttackTime)
@@ -202,7 +203,7 @@ public class GunScript : BaseWeaponScript
 
     void Scoping()
     {
-        if (Input.GetMouseButton(1) && canScope)
+        if (Hypatios.Input.Fire2.IsPressed() && canScope)
         {
             isScoping = true;
 

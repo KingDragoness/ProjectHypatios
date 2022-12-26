@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     public float curHealth;
     public float targetHealth;
     public float HealthSpeed = 4;
+    [Range(0f, 100f)] public float alcoholMeter = 0;
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
     [FoldoutGroup("Elena Section")] public float armorStrength = 1;
@@ -92,6 +93,12 @@ public class PlayerHealth : MonoBehaviour
         {
             if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
                 Hypatios.Game.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
+        }
+
+        if (alcoholMeter >= 99f)
+        {
+            curHealth = -1f;
+            targetHealth = -1f;
         }
 
         if (curHealth <= 0f)

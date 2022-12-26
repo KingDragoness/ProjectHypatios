@@ -18,6 +18,7 @@ MonoBehaviour:
   UI_TemplateAmmoAdded: {fileID: 2526106477218704173, guid: 52261761a50c62749991afc8add12095,
     type: 3}
   weaponIcon: {fileID: 21300000, guid: 753b16a8f2431f349b39880d516ceadf, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 65569acb9cf510f4b9563a6a9f749df5, type: 3}
   overrideCrosshair_Sprite: {fileID: 0}
   attachments:
   - ID: StandardReceiver
@@ -32,6 +33,54 @@ MonoBehaviour:
     modifier_percent_accuracy: -0.1
     modifier_percent_recoil: 0
     override_magazineSize: 0
+  - ID: StableGrip
+    Name: Stablitator Grip
+    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
+    slot: 2
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.5
+    override_magazineSize: 0
+  - ID: ExtenderMag
+    Name: Extender Magazine
+    Description: Increases magazine size to 40.
+    slot: 5
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 40
+  - ID: AdvancedFrame
+    Name: Advanced Frame
+    Description: Deals more additional damage and reduces cooldown. Worse accuracy.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 4
+    modifier_cooldown: 2
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: -0.25
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: AxisFrame
+    Name: Axis Rapid Frame
+    Description: Very high rate of fire, inferior damage.
+    slot: 0
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: -8
+    modifier_cooldown: 30
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
     count: 3
@@ -39,6 +88,9 @@ MonoBehaviour:
   defaultDamage: 17
   defaultMagazineSize: 25
   defaultCooldown: 20
+  buy_AmmoAmount: 30
+  buy_AmmoSoulPrice: 2
+  buy_SoulPrice: 10
   rewardRate:
     serializedVersion: 2
     m_Curve:

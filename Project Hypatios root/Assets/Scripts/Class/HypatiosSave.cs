@@ -41,6 +41,16 @@ public class InventoryData
         return itemDataSave;
     }
 
+    public void RemoveItem(ItemDataSave targetData, int count = 1)
+    {
+        targetData.count -= count;
+
+        if (targetData.count <= 0)
+        {
+            allItemDatas.Remove(targetData);
+        }
+    }
+
 
     /// <summary>
     /// Transfer item from this inventory to targeted inventory.
@@ -92,6 +102,7 @@ public class HypatiosSave
 
     #region Single run only
     public float Player_CurrentHP = 100;
+    public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public InventoryData Player_Inventory;

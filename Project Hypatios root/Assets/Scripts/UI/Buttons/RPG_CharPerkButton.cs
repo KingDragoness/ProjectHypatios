@@ -58,6 +58,10 @@ public class RPG_CharPerkButton : MonoBehaviour
         {
             s = $"{value}s";
         }
+        else if (statusEffect == StatusEffectCategory.Alcoholism)
+        {
+            s = $"{value}/100%";
+        }
         else
         {
             s = $"{value}";

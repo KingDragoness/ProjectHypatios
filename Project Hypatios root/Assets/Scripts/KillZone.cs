@@ -11,6 +11,8 @@ public class KillZone : MonoBehaviour
     public float DamageSpeedOverride = 20;
     public float DamageShakinessFactor = 0.1f;
     public bool DEBUG_DrawGizmos = false;
+    public bool isExplosion = false;
+    [ShowIf("isExplosion")] [FoldoutGroup("Enemies")] public Vector3 explosionDir;
     [FoldoutGroup("Enemies")] public EnemyScript originEnemy;
     [FoldoutGroup("Enemies")] public LayerMask sphereLayerMask;
     [FoldoutGroup("Enemies")] public float sphereRadius = 5f;
@@ -104,6 +106,10 @@ public class KillZone : MonoBehaviour
         PlayerHealth.takeDamage(Mathf.RoundToInt(DamagePerSecond/2), DamageSpeedOverride, DamageShakinessFactor);
         Hypatios.UI.SpawnIndicator.Spawn(transform);
 
+        if (isExplosion)
+        {
+            Hypatios.Player.Weapon.Recoil.AddCustomKnockbackForce(explosionDir, 1f);
+        }
     }
 
     /// <summary>

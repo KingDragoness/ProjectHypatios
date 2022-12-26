@@ -84,6 +84,7 @@ public class WeaponItem : ScriptableObject
     public GameObject prefab;
     public Template_AmmoAddedIcon UI_TemplateAmmoAdded;
     public Sprite weaponIcon;
+    public Sprite ammoSpriteIcon;
     public Sprite overrideCrosshair_Sprite;
     public List<Attachment> attachments = new List<Attachment>();
     [ShowIf("isCraftable", false)] public List<Recipe> WeaponRequirementCrafting = new List<Recipe>();
@@ -92,7 +93,9 @@ public class WeaponItem : ScriptableObject
     public int defaultDamage;
     public int defaultMagazineSize;
     public float defaultCooldown;
-
+    [FoldoutGroup("Charge Station")] public int buy_AmmoAmount = 20;
+    [FoldoutGroup("Charge Station")] public int buy_AmmoSoulPrice = 2;
+    [FoldoutGroup("Charge Station")] public int buy_SoulPrice = 2;
     //t: 0 - 1
     //value: 0 - anything beyond 0
     public AnimationCurve rewardRate;

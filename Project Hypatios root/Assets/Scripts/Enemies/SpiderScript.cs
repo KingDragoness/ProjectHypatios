@@ -285,7 +285,7 @@ public class SpiderScript : EnemyScript
                 lr.SetPositions(points);
 
                 audio_Fire.Play();
-                nextAttackTime = Time.time + attackRecharge;
+                nextAttackTime = Time.time + (attackRecharge * Hypatios.ExtraAttackSpeedModifier());
                 isCharging = false;
                 count = 0f;
 

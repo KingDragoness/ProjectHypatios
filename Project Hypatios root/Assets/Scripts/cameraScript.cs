@@ -15,6 +15,7 @@ public class cameraScript : MonoBehaviour
     public Transform playerBody;
     float xRot = 0f;
     public float x, y;
+    public float externalX, externalY;
     public float maxPointingDistance = 1.5f;
     public LayerMask weaponMask;
     GameObject raycastedObject;
@@ -91,22 +92,27 @@ public class cameraScript : MonoBehaviour
     void FixedUpdate()
     {
         float modifiedSensitivity = mouseSensitivity;
-        GunScript Gun = WeaponManager.Instance.currentGunHeld;
+        GunScript Gun = Hypatios.Player.Weapon.currentGunHeld;
 
 
         if (Gun != null)
         {
             if (Gun.isScoping)
             {
-                if (Input.GetMouseButton(1) && Gun.canScope)
+                if (Hypatios.Input.Fire2.IsPressed() && Gun.canScope)
                 {
                     modifiedSensitivity *= 0.25f;
                 }
             }
         }
 
-        x = Input.GetAxis("Mouse X") * 20 * modifiedSensitivity * Time.deltaTime;
-        y = Input.GetAxis("Mouse Y") * 20 * modifiedSensitivity * Time.deltaTime;
+        var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
+
+        x = moveVector.x * 20 * modifiedSensitivity * Time.deltaTime;
+        y = moveVector.y * 20 * modifiedSensitivity * Time.deltaTime;
+
+        x += externalX * Time.deltaTime;
+        y += externalX * Time.deltaTime;
 
         xRot -= y;
         xRot = Mathf.Clamp(xRot, -85f, 85f);

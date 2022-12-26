@@ -22,6 +22,7 @@ public enum StatusEffectCategory
     DashCooldown,
     ShortcutDiscount,
     BossDamageBonus,
+    Alcoholism,
     //Bonus Damage weapons for Player 100-120
     BonusDamagePistol = 100,
     BonusDamageShotgun = 101,

@@ -255,6 +255,7 @@ public class FPSMainScript : MonoBehaviour
         currentWeaponStat = savedata.Game_WeaponStats;
         Player.Health.targetHealth = savedata.Player_CurrentHP;
         Player.Health.curHealth = savedata.Player_CurrentHP;
+        Player.Health.alcoholMeter = savedata.Player_AlchoholMeter;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
@@ -308,6 +309,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
         hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
+        hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
         hypatiosSave.Game_Trivias = Game_Trivias;
@@ -369,6 +371,7 @@ public class FPSMainScript : MonoBehaviour
 
         HypatiosSave hypatiosSave = PackSaveData();
         hypatiosSave.Player_CurrentHP = 100;
+        hypatiosSave.Player_AlchoholMeter = 0f;
         hypatiosSave.Player_RunSessionUnixTime = 0;
         hypatiosSave.Game_LastLevelPlayed = 4;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();

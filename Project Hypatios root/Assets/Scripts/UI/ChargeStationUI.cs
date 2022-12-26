@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class ChargeStationUI : MonoBehaviour
 {
+
 
     [TextArea(3, 5)]
     public string helperString;
 
     public Text soulPoint_Text;
     public Text tooltip_Text;
+    public List<WeaponSectionButtonUI> allAmmoSections = new List<WeaponSectionButtonUI>();
     public List<WeaponSectionButtonUI> allWeaponSections = new List<WeaponSectionButtonUI>();
 
     private WeaponManager weaponManager;
+    private ShopScript currentShopScript;
     private bool StartExecuted = false;
+
+    public ShopScript CurrentShopScript { get => currentShopScript; set => currentShopScript = value; }
 
     private void Awake()
     {
@@ -34,7 +40,42 @@ public class ChargeStationUI : MonoBehaviour
             Hypatios.Game.everUsed_WeaponShop = true;
         }
 
+        if (currentShopScript == null)
+        {
+            currentShopScript = FindObjectOfType<ShopScript>();
+            currentShopScript.OpenShop();
+            currentShopScript.RefreshWeaponModels();
+        }
+
+        ShowTooltip(" ");
         RefreshUI();
+    }
+
+    [FoldoutGroup("Debug")] [Button("Buy slot 1")]
+    public void BuyWeapon1()
+    {
+        BuyThis(allWeaponSections[0]);
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Buy slot 2")]
+    public void BuyWeapon2()
+    {
+        BuyThis(allWeaponSections[1]);
+    }
+
+
+    [FoldoutGroup("Debug")]
+    [Button("Buy slot 3")]
+    public void BuyWeapon3()
+    {
+        BuyThis(allWeaponSections[2]);
+    }
+
+
+    public void SetShopScript(ShopScript _shop)
+    {
+        currentShopScript = _shop;
     }
 
     public void ShowTooltip(string s)
@@ -44,98 +85,53 @@ public class ChargeStationUI : MonoBehaviour
 
     public void RefreshUI()
     {
-        ShowTooltip(" ");
-
         soulPoint_Text.text = Hypatios.Game.SoulPoint.ToString();
+
+        int index = 0;
+        foreach (var WeaponSection in allAmmoSections)
+        {
+
+            WeaponSection.Refresh();
+
+            index++;
+
+        }
 
         foreach (var WeaponSection in allWeaponSections)
         {
-            WeaponSection.ammoLeft_Text.text = $"-";
-            WeaponSection.buyAmmo_Button.interactable = false;
-            WeaponSection.buyWeapon_Button.interactable = true;
 
-            var statThisWeapon = Hypatios.Game.GetWeaponSave(WeaponSection.weaponID);
+            WeaponSection.Refresh();
 
-            if (statThisWeapon == null)
-            {
-                continue;
-            }
+            index++;
 
-            foreach (var test1 in WeaponSection.allUpgradeButtons)
-            {
-                //if (test1.upgradeType == UpgradeWeaponType.Damage)
-                //{
-                //    test1.levelText.text = (statThisWeapon.level_Damage + 1).ToString();
-                //}
-                //else if (test1.upgradeType == UpgradeWeaponType.MagazineSize)
-                //{
-                //    test1.levelText.text = (statThisWeapon.level_MagazineSize + 1).ToString();
-                //}
-                //else if (test1.upgradeType == UpgradeWeaponType.Cooldown)
-                //{
-                //    test1.levelText.text = (statThisWeapon.level_Cooldown + 1).ToString();
-                //}
-            }
         }
 
-        foreach (var weapon in WeaponManager.Instance.CurrentlyHeldWeapons)
-        {
-            print($"weapon {weapon.weaponName}");
-
-            if (weapon == null)
-            {
-                continue;
-            }
-
-            var WeaponSection = allWeaponSections.Find(x => x.weaponID == weapon.weaponName);
-
-            if (WeaponSection == null)
-            {
-                print("section1");
-                continue;
-            }
-
-            var statThisWeapon = Hypatios.Game.GetWeaponSave(weapon.weaponName);
-
-
-            WeaponSection.buyWeapon_Button.interactable = false;
-            WeaponSection.buyAmmo_Button.interactable = true;
-            WeaponSection.ammoLeft_Text.text = $"x{weapon.totalAmmo}";
-
-            #region Upgrades
-            //foreach(var test1 in WeaponSection.allUpgradeButtons)
-            //{
-            //    if (test1.upgradeType == UpgradeWeaponType.Damage)
-            //    {
-            //        test1.levelText.text = (statThisWeapon.level_Damage + 1).ToString();
-            //    }
-            //    else if (test1.upgradeType == UpgradeWeaponType.MagazineSize)
-            //    {
-            //        test1.levelText.text = (statThisWeapon.level_MagazineSize + 1).ToString();
-            //    }
-            //    else if (test1.upgradeType == UpgradeWeaponType.Cooldown)
-            //    {
-            //        test1.levelText.text = (statThisWeapon.level_Cooldown + 1).ToString();
-            //    }
-            //}
-            #endregion
-
-            weaponManager.SetWeaponSettings(weaponManager.currentGunHeld);
-        }
+        currentShopScript.RefreshWeaponModels();
     }
 
     public void BuyThis(WeaponSectionButtonUI weaponSection)
     {
-        var gunScript = WeaponManager.Instance.GetGunScript(weaponSection.weaponID);
+        var itemData = currentShopScript.storage.allItemDatas[weaponSection.index];
+        var itemClass = Hypatios.Assets.GetItem(currentShopScript.storage.allItemDatas[weaponSection.index].ID);
+        var weaponClass = itemClass.attachedWeapon;
+        var gunScript = Hypatios.Player.Weapon.GetGunScript(weaponClass.nameWeapon);
 
         if (gunScript != null)
         {
-            ShowTooltip("Weapon already exists!");
-            Debug.Log("Weapon cannot be bought! Already exist!");
+            ShowTooltip("Weapon already exists! Unequip the weapon first to be able to buy!");
+            MainGameHUDScript.Instance.audio_Error.Play();
             return;
         }
 
-        if (Hypatios.Game.SoulPoint < weaponSection.BuyPrice)
+        if (Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count > 3)
+        {
+            ShowTooltip("Too many weapons in the hotbar! Unequip the weapon first to be able to buy!");
+            MainGameHUDScript.Instance.audio_Error.Play();
+            return;
+        }
+
+
+        if (Hypatios.Game.SoulPoint < weaponClass.buy_SoulPrice)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -143,21 +139,29 @@ public class ChargeStationUI : MonoBehaviour
             return;
         }
 
-        Hypatios.Game.SoulPoint -= weaponSection.BuyPrice;
-        var gunScript1 = WeaponManager.Instance.AddWeapon(weaponSection.weaponID);
+        var gunScript1 = Hypatios.Player.Weapon.AddWeapon(weaponClass.nameWeapon);
         if (gunScript1 == null)
         {
+            Debug.LogError("Something bad happened!");
+            ConsoleCommand.Instance.SendConsoleMessage("Something bad happened!");
             return;
         }
 
         //gunScript1.totalAmmo = 0;
+
+
+        Hypatios.Game.SoulPoint -= weaponClass.buy_SoulPrice;
+        CurrentShopScript.storage.allItemDatas.Remove(itemData);
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
     }
 
     public void BuyThisAmmo(WeaponSectionButtonUI weaponSection)
     {
-        if (Hypatios.Game.SoulPoint < weaponSection.PurchaseAmmoPrice)
+        var weapon = Hypatios.Player.Weapon.CurrentlyHeldWeapons[weaponSection.index];
+        var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
+
+        if (Hypatios.Game.SoulPoint < weaponClass.buy_AmmoSoulPrice)
         {
             ShowTooltip("Not enough souls!");
             Debug.Log("Insufficient souls!");
@@ -166,11 +170,11 @@ public class ChargeStationUI : MonoBehaviour
 
         }
 
-        var weaponTarget = weaponManager.GetGunScript(weaponSection.weaponID);
-        weaponTarget.totalAmmo += weaponSection.PurchaseAmmoAmount;
-        Hypatios.Game.SoulPoint -= weaponSection.PurchaseAmmoPrice;
+        weapon.totalAmmo += weaponClass.buy_AmmoAmount;
+        Hypatios.Game.SoulPoint -= weaponClass.buy_AmmoSoulPrice;
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
- 
+        ShowTooltip($"Bought x{weaponClass.buy_AmmoAmount} ammo for {weaponClass.buy_AmmoSoulPrice} souls! Thank you for purchasing!");
+
     }
 }
