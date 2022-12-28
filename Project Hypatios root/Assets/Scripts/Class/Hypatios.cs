@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
 using Sirenix.OdinInspector;
@@ -263,7 +265,28 @@ public class Hypatios : MonoBehaviour
         _actionMap = new HypatiosControls();
         _actionMap.Enable();
         Settings1.InitializeAtAwake();
-        //FindObjectOfType
+        HackFixForEditorPlayModeDelay();
+    }
+
+    //DA FUCK
+    //https://forum.unity.com/threads/input-freezes-for-several-seconds-shortly-after-repeatedly-entering-play-mode.838333/page-2
+    void HackFixForEditorPlayModeDelay()
+    {
+    #if UNITY_EDITOR
+            // Using reflection, does this: InputSystem.s_SystemObject.exitEditModeTime = 0
+
+            // Get InputSystem.s_SystemObject object
+            FieldInfo systemObjectField = typeof(UnityEngine.InputSystem.InputSystem).GetField("s_SystemObject", BindingFlags.NonPublic | BindingFlags.Static);
+            object systemObject = systemObjectField.GetValue(null);
+
+            // Get InputSystemObject.exitEditModeTime field
+            Assembly inputSystemAssembly = typeof(UnityEngine.InputSystem.InputSystem).Assembly;
+            System.Type inputSystemObjectType = inputSystemAssembly.GetType("UnityEngine.InputSystem.InputSystemObject");
+            FieldInfo exitEditModeTimeField = inputSystemObjectType.GetField("exitEditModeTime", BindingFlags.Public | BindingFlags.Instance);
+
+            // Set exitEditModeTime to zero
+            exitEditModeTimeField.SetValue(systemObject, 0d);
+    #endif
     }
 
     private void Start()

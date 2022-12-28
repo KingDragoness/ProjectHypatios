@@ -53,6 +53,7 @@ public class MainGameHUDScript : MonoBehaviour
     [Space]
 
     public ChargeStationUI chargeStationUI;
+    public CraftingWorkstationUI craftingUI;
 
     public static MainGameHUDScript Instance;
 

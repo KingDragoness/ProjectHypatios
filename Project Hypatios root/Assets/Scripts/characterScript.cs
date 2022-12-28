@@ -363,7 +363,7 @@ public class CharacterScript : Entity
 
     public void HandleCrouchingState()
     {
-        if (isLimitedIntroMode)
+        if (isLimitedIntroMode | isNoGravity)
         {
             return;
         }
@@ -518,10 +518,16 @@ public class CharacterScript : Entity
 
         if (isNoGravity)
         {
-            if (Hypatios.Input.Jump.triggered)
+            if (Hypatios.Input.Jump.IsPressed())
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(transform.up * jumpHeight * 0.1f, ForceMode.Impulse);
+            }
+
+            if (Hypatios.Input.Crouch.IsPressed())
+            {
+                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.AddForce(transform.up * jumpHeight * -0.1f, ForceMode.Impulse);
             }
 
             if (isCheatMode)

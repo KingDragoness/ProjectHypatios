@@ -53,6 +53,24 @@ public class WeaponItem : ScriptableObject
         [FoldoutGroup("Modifiers")] public float modifier_percent_recoil = 1;
         [FoldoutGroup("Modifiers")] public int override_magazineSize = 10;
 
+        public string GetRequirementText()
+        {
+            string s_allRecipes = "";
+            int i = 0;
+            foreach (var recipe in RequirementCrafting)
+            {
+                s_allRecipes += $"({Hypatios.Player.Inventory.Count(recipe.inventory.GetID())}/{recipe.count}) {recipe.inventory.GetDisplayText()}";
+                if (i < RequirementCrafting.Count - 1)
+                {
+                    s_allRecipes += ", ";
+                }
+                
+                i++;
+            }
+
+            return s_allRecipes;
+        }
+
     }
 
     public enum AttachementSlot
@@ -88,7 +106,8 @@ public class WeaponItem : ScriptableObject
     public Sprite overrideCrosshair_Sprite;
     public List<Attachment> attachments = new List<Attachment>();
     [ShowIf("isCraftable", false)] public List<Recipe> WeaponRequirementCrafting = new List<Recipe>();
-
+    [FoldoutGroup("Ammo Crafts")] public List<Recipe> AmmoRequirementCrafting = new List<Recipe>();
+    [FoldoutGroup("Ammo Crafts")] public int craft_AmmoAmount = 20;
     public bool isCraftable = false;
     public int defaultDamage;
     public int defaultMagazineSize;
@@ -126,6 +145,100 @@ public class WeaponItem : ScriptableObject
         return stat;
     }
 
+    public string GetRequirementText()
+    {
+        string s_allRecipes = "";
+        int i = 0;
+        foreach (var recipe in WeaponRequirementCrafting)
+        {
+            s_allRecipes += $"({Hypatios.Player.Inventory.Count(recipe.inventory.GetID())}/{recipe.count}) {recipe.inventory.GetDisplayText()}";
+            if (i < WeaponRequirementCrafting.Count - 1)
+            {
+                s_allRecipes += ", ";
+            }
+
+            i++;
+        }
+
+        return s_allRecipes;
+    }
+
+    public string GetRequirementAmmosText()
+    {
+        string s_allRecipes = "";
+        int i = 0;
+        foreach (var recipe in AmmoRequirementCrafting)
+        {
+            s_allRecipes += $"({Hypatios.Player.Inventory.Count(recipe.inventory.GetID())}/{recipe.count}) {recipe.inventory.GetDisplayText()}";
+            if (i < AmmoRequirementCrafting.Count - 1)
+            {
+                s_allRecipes += ", ";
+            }
+
+            i++;
+        }
+
+        return s_allRecipes;
+    }
+
+    public bool IsAttachmentSlotOccupied(string attachID, List<string> allAttachments)
+    {
+        var attachment = GetAttachmentWeaponMod(attachID);
+
+        foreach(var attach1 in allAttachments)
+        {
+            var weaponMod = GetAttachmentWeaponMod(attach1);
+            if (weaponMod.slot == attachment.slot)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool IsCraftAttachmentRequirementMet(string attachID)
+    {
+        var attachment = GetAttachmentWeaponMod(attachID);
+
+        foreach(var recipe in attachment.RequirementCrafting)
+        {
+            if (Hypatios.Player.Inventory.Count(recipe.inventory.GetID()) < recipe.count)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsRequirementMet()
+    {
+        foreach (var recipe in WeaponRequirementCrafting)
+        {
+            if (Hypatios.Player.Inventory.Count(recipe.inventory.GetID()) < recipe.count)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool IsAmmoRequirementMet()
+    {
+
+        foreach (var recipe in AmmoRequirementCrafting)
+        {
+            if (Hypatios.Player.Inventory.Count(recipe.inventory.GetID()) < recipe.count)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     public string GetAttachmentName(string ID)
     {
         var attach = attachments.Find(x => x.ID == ID);
@@ -134,6 +247,16 @@ public class WeaponItem : ScriptableObject
             return attach.Name;
         else
             return "NULL";
+    }
+
+    public Attachment GetAttachmentWeaponMod(string ID)
+    {
+        var attach = attachments.Find(x => x.ID == ID);
+
+        if (attach != null)
+            return attach;
+        else
+            return null;
     }
 
 }

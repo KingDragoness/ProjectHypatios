@@ -26,7 +26,9 @@ MonoBehaviour:
     Description: Deals additional damage and reduces cooldown. Worse accuracy.
     slot: 1
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     modifier_damage: 2
     modifier_cooldown: 1
     modifier_percent_movespeed: 0
@@ -38,7 +40,11 @@ MonoBehaviour:
     Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
     slot: 2
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+      count: 1
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -50,7 +56,11 @@ MonoBehaviour:
     Description: Increases magazine size to 40.
     slot: 5
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -62,7 +72,11 @@ MonoBehaviour:
     Description: Deals more additional damage and reduces cooldown. Worse accuracy.
     slot: 0
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 1
     modifier_damage: 4
     modifier_cooldown: 2
     modifier_percent_movespeed: 0
@@ -74,7 +88,11 @@ MonoBehaviour:
     Description: Very high rate of fire, inferior damage.
     slot: 0
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 3
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
     modifier_damage: -8
     modifier_cooldown: 30
     modifier_percent_movespeed: 0
@@ -84,6 +102,12 @@ MonoBehaviour:
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
     count: 3
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 3
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  craft_AmmoAmount: 50
   isCraftable: 1
   defaultDamage: 17
   defaultMagazineSize: 25

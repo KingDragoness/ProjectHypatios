@@ -51,6 +51,26 @@ public class InventoryData
         }
     }
 
+    public void RemoveItem(string ID, int count = 1)
+    {
+        ItemDataSave targetData = SearchByID(ID);
+        RemoveItem(targetData, count);
+    }
+
+    public int Count(string ID)
+    {
+        int count = 0;
+
+        var itemData = SearchByID(ID);
+
+        if (itemData != null)
+        {
+            count += itemData.count;
+        }
+
+        return count;
+    }
+
 
     /// <summary>
     /// Transfer item from this inventory to targeted inventory.
@@ -164,10 +184,9 @@ public class HypatiosSave
         [ReadOnly] [ShowInInspector] [HideInEditorMode] private WeaponItem attachedWeapon;
    
 
-        [Button("Add Attachment")]
         public void AddAttachment(string attachment)
         {
-
+            allAttachments.Add(attachment);
         }
     }
     #endregion

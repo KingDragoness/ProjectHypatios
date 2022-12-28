@@ -77,6 +77,10 @@ public class ConsoleCommand : MonoBehaviour
                 EnemyCommand(args);
                 break;
 
+            case "alcohol":
+                Alcohol(args);
+                break;
+
             case "cc":
                 CommandCheat(args);
                 break;
@@ -172,6 +176,24 @@ public class ConsoleCommand : MonoBehaviour
         }
 
 
+    }
+
+    private void Alcohol(string[] args)
+    {
+        try
+        {
+            float alcohol = 0;
+            float.TryParse(args[0], out alcohol);
+
+            Hypatios.Player.Health.alcoholMeter += alcohol;
+            SendConsoleMessage($"Alcohol: {Hypatios.Player.Health.alcoholMeter}%");
+
+        }
+        catch (System.Exception e)
+        {
+            SendConsoleMessage("Invalid argument! alcohol [<color=#00cc99dd>float</color> levelIndex]");
+            Debug.LogError(e.Message);
+        }
     }
 
     private void AddItem(string[] args)
@@ -698,6 +720,8 @@ public class ConsoleCommand : MonoBehaviour
         int entryPerPage = 10;
         List<string> helpCommands = new List<string>();
         {
+            helpCommands.Add("'alcohol' to add alcohol meter");
+            helpCommands.Add("'additem' to add items");
             helpCommands.Add("'cc' to use extra commands");
             helpCommands.Add("'giveammos' to give ammos");
             helpCommands.Add("'givemeallweapons' to unlock all weapons");

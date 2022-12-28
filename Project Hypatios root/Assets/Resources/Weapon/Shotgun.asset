@@ -21,10 +21,50 @@ MonoBehaviour:
   ammoSpriteIcon: {fileID: 21300000, guid: 6bbd7a5400a409e44afbd67f9ee00af9, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 5a7513afcdc7df240b4b283c948ce541,
     type: 3}
-  attachments: []
+  attachments:
+  - ID: PulseReceiver
+    Name: Pulse Receiver
+    Description: Deals additional damage and reduces cooldown. Worse recoil.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 1
+    modifier_damage: 8
+    modifier_cooldown: 2.5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0.2
+    override_magazineSize: 0
+  - ID: MegaReceiver
+    Name: Megasis Receiver
+    Description: Deals superior damage and reduces cooldown. Terrible recoil.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 3
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
+    modifier_damage: 24
+    modifier_cooldown: 2.5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0.45
+    override_magazineSize: 0
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
     count: 4
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 1
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 3
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  craft_AmmoAmount: 16
   isCraftable: 1
   defaultDamage: 55
   defaultMagazineSize: 4

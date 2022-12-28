@@ -32,4 +32,10 @@ public class WeaponModelDisplay : MonoBehaviour
         weapon.weaponDisplay.gameObject.SetActive(true);
     }
 
+    public void ActivateWeapon()
+    {
+        ActivateWeapon(displays.Find(x => x.weaponItem == currentWeaponDisplay));
+
+    }
+
 }

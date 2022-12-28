@@ -31,7 +31,7 @@ public class AlcoholEffect : MonoBehaviour
         {
             motionblur.enabled = true;
             lowPassFilter.enabled = true;
-            lowPassFilter.cutoffFrequency = 450f;
+            lowPassFilter.cutoffFrequency = 900f;
             postFX_75Meter.gameObject.SetActive(true);
             heightScale = Meter75_DizzyCam;
             xScale = xScale_75;
@@ -40,7 +40,7 @@ public class AlcoholEffect : MonoBehaviour
         {
             motionblur.enabled = true;
             lowPassFilter.enabled = true;
-            lowPassFilter.cutoffFrequency = 900f;
+            lowPassFilter.cutoffFrequency = 2000f;
             postFX_75Meter.gameObject.SetActive(true);
             heightScale = Meter50_DizzyCam;
             xScale = xScale_50;
@@ -50,8 +50,9 @@ public class AlcoholEffect : MonoBehaviour
         {
             motionblur.enabled = true;
             lowPassFilter.enabled = true;
-            lowPassFilter.cutoffFrequency = 1500f;
-            postFX_75Meter.gameObject.SetActive(false);
+            lowPassFilter.cutoffFrequency = 4500f;
+            postFX_75Meter.gameObject.SetActive(true);
+            postFX_75Meter.weight -= 0.2f;
             heightScale = Meter25_DizzyCam;
             xScale = xScale_25;
 
