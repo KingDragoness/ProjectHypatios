@@ -218,6 +218,25 @@ public class GunScript : BaseWeaponScript
 
     IEnumerator shotgunCoroutine;
 
+    public RaycastHit GetHit()
+    {
+        RaycastHit hit;
+        float spreadX = Random.Range(-spread, spread);
+        float spreadY = Random.Range(-spread, spread);
+        Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
+
+
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+        {
+        }
+        else
+        {
+            hit.point = raycastDir * 1000f;
+        }
+
+        return hit;
+
+    }
 
     public override void FireWeapon()
     {

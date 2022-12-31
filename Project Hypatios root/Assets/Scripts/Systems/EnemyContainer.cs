@@ -50,13 +50,41 @@ public class EnemyContainer : MonoBehaviour
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
 
+        return FindEnemyEntity(alliance, chanceSelectAlly);
+    }
+
+    /// <summary>
+    /// Checking enemies by screen's distance.
+    /// </summary>
+    /// <param name="alliance">Finder's alliance.</param>
+    /// <param name="camTransform">Camera's transform.</param>
+    /// <param name="chanceSelectAlly">Recommended value 0.1-1</param>
+    /// <returns></returns>
+    public Entity FindEnemyEntityFromScreen(Alliance alliance, Camera cam, float chanceSelectAlly = 0.3f)
+    {
+        tempList_NearestEnemy.Clear();
+        foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
+        tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x =>
+        {
+            Vector3 screenPos = cam.WorldToScreenPoint(x.transform.position);
+            float dist = Vector3.Distance(new Vector3(Screen.width/2f, Screen.height/2f, screenPos.z), screenPos);
+            return dist;
+        }).ToList();
+
+        return FindEnemyEntity(alliance, chanceSelectAlly);
+    }
+
+
+    private Entity FindEnemyEntity(Alliance alliance, float chanceSelectAlly = 0.3f)
+    {
+
         if (alliance != Alliance.Player)
         {
             float chance = Random.Range(-0f, 1f);
 
-            if (chance < chanceSelectAlly && CountMyEnemies(alliance) > 0) 
-            {           
-                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile); 
+            if (chance < chanceSelectAlly && CountMyEnemies(alliance) > 0)
+            {
+                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
 
                 return enemy;
             }
@@ -65,13 +93,13 @@ public class EnemyContainer : MonoBehaviour
                 return Hypatios.Player;
             }
         }
-       
+
         else if (alliance == Alliance.Rogue)
         {
             var enemy = tempList_NearestEnemy.Find(x => x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
             return enemy;
         }
-        else 
+        else
         {
             var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
             return enemy;

@@ -255,6 +255,9 @@ public class Hypatios : MonoBehaviour
     public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
 
+    private static int _unixTimeStart = 1640087660;
+    public static int UnixTimeStart { get => _unixTimeStart;  }
+
     public static float Time { get => Game.UNIX_Timespan; }
 
     public static Hypatios Instance;

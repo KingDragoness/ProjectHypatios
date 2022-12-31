@@ -89,6 +89,11 @@ public class ConsoleCommand : MonoBehaviour
                 AddItem(args);
                 break;
 
+            case "mats":
+                FreeMaterials(args);
+                break;
+
+
             case "giveammos":
                 GiveAmmos(args);
                 break;
@@ -200,13 +205,57 @@ public class ConsoleCommand : MonoBehaviour
     {
         try
         {
-            var item = Hypatios.Assets.GetItem(args[0]);
-            Hypatios.Player.Inventory.AddItem(item);
+            int count = 0;
 
+            var item = Hypatios.Assets.GetItem(args[0]);
+
+            if (args.Length > 1)
+            {
+                if (int.TryParse(args[1], out count))
+                {
+                    Hypatios.Player.Inventory.AddItem(item, count);
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                Hypatios.Player.Inventory.AddItem(item);
+            }
         }
         catch
         {
-            SendConsoleMessage("Invalid argument! additem [string itemID]");
+            SendConsoleMessage("Invalid argument! additem [string itemID] [<color=#00cc99dd>int</color> count]");
+        }
+    }
+
+
+    private void FreeMaterials(string[] args)
+    {
+        try
+        {
+            List<string> materials = new List<string>();
+            materials.Add("Material_CommonMetal");
+            materials.Add("Material_ExoticMetal");
+            materials.Add("Material_Microchips");
+            materials.Add("Material_NuclearMaterial");
+            materials.Add("Material_RareMetal");
+
+
+            foreach (var mat in materials)
+            {
+                string[] args1 = new string[2];
+                args1[0] = $"{mat}";
+                args1[1] = $"100";
+                AddItem(args1);
+            }
+        }
+        catch (System.Exception e)
+        {
+            SendConsoleMessage("Invalid argument! mats");
+            Debug.LogError(e.Message);
         }
     }
 
@@ -381,6 +430,10 @@ public class ConsoleCommand : MonoBehaviour
 
                 if (args[0] == "attach")
                 {
+                    if (weaponClass.GetAttachmentWeaponMod(args[1]) == null)
+                    {
+                        throw new Exception($"Null attachment! {args[1]}");
+                    }
                     weaponData.allAttachments.Add(args[1]);
                     SendConsoleMessage($"Added {args[1]} to {weaponClass.nameWeapon}");
                     SendConsoleMessage($"Reequip weapon to take effect.");
@@ -733,6 +786,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'levelnames' gets every level exists in the current build.");
             helpCommands.Add("'loadfile' to load save file");
             helpCommands.Add("'loadlevel' to load level. Resets progress!");
+            helpCommands.Add("'mats' to give free materials");
             helpCommands.Add("'nextlevel' to go next level while retaining items");
             helpCommands.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
             helpCommands.Add("'res' to restore health & dash");
@@ -745,17 +799,19 @@ public class ConsoleCommand : MonoBehaviour
         }
 
         int currentEntry = 0;
+        float count1 = helpCommands.Count;
+        float entry1 = entryPerPage;
+        int totalEntry = Mathf.CeilToInt(count1 / entry1);
 
         if (args.Length == 0)
         {
-            int totalEntry = Mathf.FloorToInt(helpCommands.Count / entryPerPage);
             helps.Add($" =============== HELP [{currentEntry}/{totalEntry-1}] =============== ");
             helps.Add("Press ENTER to execute command");
             helps.Add("Press ~ key to toggle console");
 
             for (int s = currentEntry * entryPerPage; s < (currentEntry + 1) * entryPerPage; s++)
             {
-                if (s > helpCommands.Count) break;
+                if (s >= helpCommands.Count) break;
 
                 helps.Add($"{helpCommands[s]}");
 
@@ -763,14 +819,13 @@ public class ConsoleCommand : MonoBehaviour
         }
         else if (int.TryParse(args[0], out currentEntry))
         {
-            int totalEntry = Mathf.FloorToInt(helpCommands.Count / entryPerPage);
             helps.Add($" =============== HELP [{currentEntry}/{totalEntry-1}] =============== ");
             helps.Add("Press ENTER to execute command");
             helps.Add("Press ~ key to toggle console");
 
             for(int s = currentEntry * entryPerPage; s < (currentEntry+1) * entryPerPage; s++)
             {
-                if (s > helpCommands.Count) break;
+                if (s >= helpCommands.Count) break;
 
                 helps.Add($"{helpCommands[s]}");
 

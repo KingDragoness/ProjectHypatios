@@ -26,6 +26,7 @@ public class PlayerRPGUI : MonoBehaviour
     public Transform parentPerks;
     public Text hp_Label;
     public Slider hp_Slider;
+    public Text time_label;
 
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
     private List<InventoryItemButton> _allInventoryButtons = new List<InventoryItemButton>();
@@ -56,6 +57,9 @@ public class PlayerRPGUI : MonoBehaviour
         hp_Label.text = HP;
         hp_Slider.value = Hypatios.Player.Health.curHealth;
         hp_Slider.maxValue = Hypatios.Player.Health.maxHealth.Value;
+
+        var dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(Hypatios.Game.UNIX_Timespan + Hypatios.UnixTimeStart);
+        time_label.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";
 
         //Refresh perks
         {

@@ -303,6 +303,7 @@ public class Chamber6_Customer : EnemyScript
         myPiring.transform.SetParent(piringPlace.transform);
         myPiring.transform.position = piringPlace.transform.position;
         myPiring.ChangeOwnership(this.transform);
+        chamberScript.customerServed++;
         orderAlreadyTaken = true;
         mode = AIMode.Eating;
         DialogueSubtitleUI.instance.QueueDialogue($"Beep! Order #{(tableSeat + 1).ToString("00")} has been taken.", "Zart Bot", 3f);

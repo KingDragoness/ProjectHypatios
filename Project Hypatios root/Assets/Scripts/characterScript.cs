@@ -521,13 +521,13 @@ public class CharacterScript : Entity
             if (Hypatios.Input.Jump.IsPressed())
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight * 0.1f, ForceMode.Impulse);
+                rb.AddForce(transform.up * jumpHeight * 0.15f, ForceMode.Impulse);
             }
 
             if (Hypatios.Input.Crouch.IsPressed())
             {
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight * -0.1f, ForceMode.Impulse);
+                rb.AddForce(transform.up * jumpHeight * -0.25f, ForceMode.Impulse);
             }
 
             if (isCheatMode)

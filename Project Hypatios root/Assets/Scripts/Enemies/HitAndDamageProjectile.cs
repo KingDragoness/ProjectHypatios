@@ -10,6 +10,7 @@ public class HitAndDamageProjectile : MonoBehaviour
     public bool killByImpact = false;
     public bool isBurn = false;
     public bool allowHitEnemy = false;
+    public bool isAllowIndicator = false;
     public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
     public float preventKillAboveTimer = 0f;
@@ -28,6 +29,14 @@ public class HitAndDamageProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        AttemptDamage(other);
+
+    }
+
+
+    private void AttemptDamage(Collider other)
+    {
         DamageToken token = new DamageToken();
         token.damage = Damage;
         token.origin = DamageToken.DamageOrigin.Environment;
@@ -35,10 +44,9 @@ public class HitAndDamageProjectile : MonoBehaviour
         token.healthSpeed = DamageSpeedOverride;
         token.originEnemy = enemyOrigin;
         token.isBurn = isBurn;
+        if (isAllowIndicator) token.allowPlayerIndicator = true;
 
         UniversalDamage.TryDamage(token, other.transform, transform);
-
-
     }
 
     private void Update()
@@ -66,6 +74,8 @@ public class HitAndDamageProjectile : MonoBehaviour
             }
 
             OnHitImpact?.Invoke();
+            AttemptDamage(collision.collider);
+
             Destroy(this.gameObject);
         }
     }

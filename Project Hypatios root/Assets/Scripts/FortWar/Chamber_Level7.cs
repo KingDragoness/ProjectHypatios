@@ -66,6 +66,12 @@ public class Chamber_Level7 : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 0 = final base
+    /// 1 = cp1
+    /// 2 = cp2
+    /// </summary>
+    /// <returns></returns>
     public FW_ControlPoint GetCurrentCP()
     {
         return controlPoint.Find(x => x.isCaptured == false);

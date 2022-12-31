@@ -65,7 +65,8 @@ public class Chamber_Level6 : MonoBehaviour
     [FoldoutGroup("Audio")] public AudioSource Audio_foodDelivered;
     [FoldoutGroup("Audio")] public AudioSource Audio_newCustomer;
 
-    public int remainingCustomers = 24;    
+    public int remainingCustomers = 24;
+    public int customerServed = 0;
     public Gamemode currentGamemode = Gamemode.NotPlay;
     public UnityEvent OnCustomerLeaving;
     public UnityEvent OnChamberCompleted;
@@ -410,7 +411,17 @@ public class Chamber_Level6 : MonoBehaviour
         {
             chamberAudioAnnouncement.Play();
             OnChamberCompleted?.Invoke();
-            DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
+            int collectedSoul = customerServed;
+
+            for (int i = 0; i < customerServed; i++)
+            {
+                collectedSoul += PlayerPerk.GetBonusSouls();
+            }
+
+            collectedSoul += customerServed * 10;
+
+            Hypatios.Game.SoulPoint += collectedSoul;
+            DialogueSubtitleUI.instance.QueueDialogue($"Attention to all facility users: Chamber completed. Soul rewarded: {collectedSoul}", "ANNOUNCER", 14f);
         }
     }
 

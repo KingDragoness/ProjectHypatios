@@ -19,6 +19,7 @@ public class DamageToken
     public float shakinessFactor = 0.5f;
     public float healthSpeed = 10f;
     public bool isBurn = false;
+    public bool allowPlayerIndicator = false;
     public EnemyScript originEnemy;
     public DamageOrigin origin = DamageOrigin.Player;
 }
@@ -33,6 +34,11 @@ public class UniversalDamage
         if (damageReceiver != null)
         {
             damageReceiver.Attacked(token);
+
+            if (token.allowPlayerIndicator)
+            {
+                Hypatios.Player.Weapon.ActivateCrosshairHit();
+            }
         }
 
         if (health != null)

@@ -84,6 +84,8 @@ public class FW_ControlPoint : MonoBehaviour
         if (_currentInvadersInArea == 2) _captureSpeed = _speed2;
         if (_currentInvadersInArea == 3) _captureSpeed = _speed3;
         if (_currentInvadersInArea == 4) _captureSpeed = _speed4;
+        if (_currentInvadersInArea >= 5) _captureSpeed = 0.15f;
+        if (_currentInvadersInArea >= 8) _captureSpeed = 0.5f;
 
         if (_currentInvadersInArea > 0)
         {

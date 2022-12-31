@@ -351,6 +351,28 @@ public class WeaponManager : MonoBehaviour
         
     }
 
+    private IEnumerator CrosshairCoroutine;
+
+    public void ActivateCrosshairHit()
+    {
+        if (CrosshairCoroutine !=null)
+        {
+            StopCoroutine(SetCrosshairHitActive());
+        }
+        CrosshairCoroutine = SetCrosshairHitActive();
+        StartCoroutine(CrosshairCoroutine);
+    }
+
+    private IEnumerator SetCrosshairHitActive()
+    {
+        MainGameHUDScript hudScript = MainGameHUDScript.Instance;
+
+        hudScript.crosshairHit.gameObject.SetActive(true);
+        MainGameHUDScript.Instance.audio_CrosshairClick.Play();
+        yield return new WaitForSeconds(.2f);
+        hudScript.crosshairHit.gameObject.SetActive(false);
+    }
+
     private void TransferAllInventoryAmmoToCurrent()
     {
         foreach(var itemDat in Hypatios.Player.Inventory.allItemDatas)

@@ -9,6 +9,7 @@ public enum CategoryParticleEffect
     BulletSparks,
     BulletSparksEnemy,
     BulletImpact,
+    BulletDustTracer,
     ExplosionHarmless = 20,
     ExplosionPlayer,
     ExplosionAll,
