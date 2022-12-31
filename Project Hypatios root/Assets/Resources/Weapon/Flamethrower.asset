@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: Flamethrower
+  m_EditorClassIdentifier: 
+  nameWeapon: Flamethrower
+  moveSpeed: 1
+  prefab: {fileID: 6076635612679117897, guid: 1e7eea7fa552bdd489506235ff1962e5, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 0bd21e9036a852e4aabdc259acf138bc,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: ef0b636e5d843d94896bbca9bceaba8b, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: f1ad3a46f26b354449a0536bf30dd2d9, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
+    type: 3}
+  attachments: []
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 4
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 2
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 2
+  craft_AmmoAmount: 80
+  isCraftable: 1
+  defaultDamage: 7
+  defaultMagazineSize: 80
+  defaultCooldown: 120
+  buy_AmmoAmount: 80
+  buy_AmmoSoulPrice: 14
+  buy_SoulPrice: 80
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 66
+      inSlope: 19.596167
+      outSlope: 19.596167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07171792
+    - serializedVersion: 3
+      time: 0.9986572
+      value: 120
+      inSlope: 77.26185
+      outSlope: 77.26185
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04589575
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

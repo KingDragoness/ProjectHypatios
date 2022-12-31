@@ -14,8 +14,10 @@ public class KillZone : MonoBehaviour
     public bool isExplosion = false;
     [ShowIf("isExplosion")] [FoldoutGroup("Enemies")] public Vector3 explosionDir;
     [FoldoutGroup("Enemies")] public EnemyScript originEnemy;
+    [FoldoutGroup("Enemies")] public DamageToken.DamageOrigin origin = DamageToken.DamageOrigin.Enemy;
     [FoldoutGroup("Enemies")] public LayerMask sphereLayerMask;
     [FoldoutGroup("Enemies")] public float sphereRadius = 5f;
+    [FoldoutGroup("Enemies")] public bool isBurn = false;
     [FoldoutGroup("Enemies")]
     [Tooltip("Only for explosions.")] public bool alsoDamageEnemy = false;
     [FoldoutGroup("Enemies")] public bool useEnemyKillzone = true;
@@ -127,7 +129,8 @@ public class KillZone : MonoBehaviour
             if (damage != null)
             {
                // Debug.Log(damage.gameObject.name);
-                var token = new DamageToken(); token.origin = DamageToken.DamageOrigin.Enemy; token.damage = DamagePerSecond; token.originEnemy = originEnemy; 
+                var token = new DamageToken(); token.origin = origin; token.damage = DamagePerSecond; token.originEnemy = originEnemy;
+                token.isBurn = isBurn;
 
                 UniversalDamage.TryDamage(token, collider.transform, this.transform);
             }
