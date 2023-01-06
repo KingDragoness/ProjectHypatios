@@ -201,7 +201,10 @@ public class Enemy_FW_SentryGun : EnemyScript
     public override void Attacked(DamageToken token)
     {
         Stats.CurrentHitpoint -= token.damage;
-        if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
+        if (token.origin == DamageToken.DamageOrigin.Player) 
+            DamageOutputterUI.instance.DisplayText(token.damage);
+
+        Debug.Log($"{token.damage} - {token.origin} | {token.originEnemy}");
 
         float percentage = Stats.CurrentHitpoint / Stats.MaxHitpoint.Value;
 

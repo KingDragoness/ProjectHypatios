@@ -64,6 +64,7 @@ public class InteractableCamera : MonoBehaviour
             {
                 currentInteractable.Interact();
             }
+
         }
     }
 

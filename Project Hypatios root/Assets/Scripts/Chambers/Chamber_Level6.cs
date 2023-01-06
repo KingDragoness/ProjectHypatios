@@ -234,6 +234,11 @@ public class Chamber_Level6 : MonoBehaviour
                     AttemptSpawnSpider();
                 }
 
+                if (remainingCustomers <= 12 && remainingCustomers >= 10 && chance > 0.8f)
+                {
+                    SpawnSeaver();
+                }
+
                 if (everSpawnSeaver == false && remainingCustomers <= 2)
                 {
                     SpawnSeaver();

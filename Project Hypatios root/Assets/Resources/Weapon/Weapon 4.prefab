@@ -506,6 +506,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ondisableEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &984941290673216567
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,20 +1097,30 @@ MonoBehaviour:
     m_Bits: 5393
   weaponName: Rifle
   crosshairHit: {fileID: 0}
+  allAttachments: []
   damage: 65
   variableAdditionalDamage: 12
   isAmmoUnlimited: 0
   totalAmmo: 110
   magazineSize: 30
   curAmmo: 0
-  spread: 0.005
+  lowAmmoAlert: 5
+  spread: 0.016
   recoilX: -2
   recoilY: 3
   recoilZ: 2
-  canScope: 1
-  isAutomatic: 1
+  recoilMultiplier: 1
   bulletPerSecond: 9.75
   repulsionForce: 1
+  isFiring: 0
+  isReloading: 0
+  canScope: 1
+  isAutomatic: 1
+  reloadFrame: 140
+  curReloadTime: 0
+  isScoping: 0
+  isBurst: 0
+  burstAmount: 0
   bulletShooter: {fileID: 2355747187485613519}
   muzzle1: {fileID: 6072524067240984595}
   bulletImpact: {fileID: 5183920429748667237, guid: c1f32c6c29a77db41808d0fcdef314b5,
@@ -1116,14 +1129,6 @@ MonoBehaviour:
     type: 3}
   bulletTracer: {fileID: 1631304749667196354, guid: 6ca419833fe73b246b63fcbc767b547e,
     type: 3}
-  isFiring: 0
-  isReloading: 0
-  reloadFrame: 140
-  reloadTime: 0
-  curReloadTime: 0
-  isScoping: 0
-  isBurst: 0
-  burstAmount: 0
   audioFire: {fileID: 1898910595797416378}
   audioReload: {fileID: 2537971936769950352}
   isMelee: 0

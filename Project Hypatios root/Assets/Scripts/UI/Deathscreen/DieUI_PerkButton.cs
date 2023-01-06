@@ -14,6 +14,7 @@ public class DieUI_PerkButton : MonoBehaviour
     public Image iconImage;
     public StatusEffectCategory status;
     public PerkCustomEffect customEffect;
+    public bool isTemporaryPerk = false;
 
     [FoldoutGroup("Debug")] [Button("Refresh Perk")]
     public void RefreshPerk()
@@ -29,6 +30,12 @@ public class DieUI_PerkButton : MonoBehaviour
             int levelLuck = FPSMainScript.savedata.AllPerkDatas.Perk_LV_Soulbonus;
             descriptionText.text = PlayerPerk.GetDescription_LuckOfGod(levelLuck);
         }
+        else if (status == StatusEffectCategory.ShortcutDiscount)
+        {
+            var level = FPSMainScript.savedata.AllPerkDatas.Perk_LV_ShortcutDiscount;
+            descriptionText.text = PlayerPerk.GetDescription_Shortcut(level);
+        }
+
 
         if (customEffect.statusCategoryType != StatusEffectCategory.Nothing)
         {
@@ -53,6 +60,12 @@ public class DieUI_PerkButton : MonoBehaviour
             {
                 int levelLuck = FPSMainScript.savedata.AllPerkDatas.Perk_LV_Soulbonus;
                 string s = $"Reaper: \"{PlayerPerk.GetDescription_LuckOfGod(levelLuck)}\"";
+                DeadDialogue.PromptNotifyMessage(s, 999f);
+            }
+            else if (customEffect.statusCategoryType == StatusEffectCategory.ShortcutDiscount)
+            {
+                var level = FPSMainScript.savedata.AllPerkDatas.Perk_LV_ShortcutDiscount;
+                string s = $"Reaper: \"{ PlayerPerk.GetDescription_Shortcut(level)}\"";
                 DeadDialogue.PromptNotifyMessage(s, 999f);
             }
             else

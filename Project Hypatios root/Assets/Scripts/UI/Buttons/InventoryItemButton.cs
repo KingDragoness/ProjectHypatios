@@ -29,12 +29,16 @@ public class InventoryItemButton : MonoBehaviour
 
     public void DehighlightButton()
     {
+        Hypatios.UI.CloseAllTooltip();
 
     }
 
     public void ClickButton()
     {
         rpgUI.UseItem(this);
+        var button = GetComponent<Button>();
+        var selectable1 = button.FindSelectableOnDown();
+        selectable1.Select();
     }
 
     public ItemInventory GetItemInventory()

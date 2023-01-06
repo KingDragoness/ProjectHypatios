@@ -47,6 +47,8 @@ public class CharacterScript : Entity
 
     //Jumping
     [FoldoutGroup("Physics")] public float gravity = -18.3f;
+    [FoldoutGroup("Physics")] public float maximumSlopeLimit = 60f;
+    [FoldoutGroup("Physics")] public float softSlopeLimit = 40f; //angle which player greatly struggles to cliimb
     [FoldoutGroup("Physics")] public Transform groundCheck;
     [FoldoutGroup("Physics")] public float groundDistance = .4f;
     [FoldoutGroup("Physics")] public LayerMask player;
@@ -130,6 +132,17 @@ public class CharacterScript : Entity
         return netPerk;
     }
 
+    public int GetNetShortcutPerk()
+    {
+        var basePerkClass = PlayerPerk.GetBasePerk(StatusEffectCategory.ShortcutDiscount);
+        int netPerk = PerkData.Perk_LV_ShortcutDiscount;
+
+        if (netPerk > basePerkClass.MAX_LEVEL)
+            netPerk = basePerkClass.MAX_LEVEL;
+
+        return netPerk;
+    }
+
     public float GetCharFinalValue(StatusEffectCategory category)
     {
         if (category == StatusEffectCategory.MaxHitpointBonus)
@@ -165,10 +178,10 @@ public class CharacterScript : Entity
         foreach (var customPerk in PerkData.Temp_CustomPerk)
         {
             var category = customPerk.statusCategoryType;
-            var effectObject = GetGenericEffect(category, "TempPerk");
+            var effectObject = GetGenericEffect(category, $"{customPerk.origin}-TempPerk");
 
             if (effectObject == null)
-                CreatePersistentStatusEffect(category, customPerk.Value, "TempPerk");
+                CreatePersistentStatusEffect(category, customPerk.Value, $"{customPerk.origin}-TempPerk");
             else
             {
                 effectObject.Value = customPerk.Value;
@@ -412,7 +425,32 @@ public class CharacterScript : Entity
             yMovement = moveVector.y;//Input.GetAxisRaw("Vertical");
         }
 
-        dir = transform.right * xMovement + transform.forward * yMovement;
+        {
+            bool isTooSlope = false;
+            bool isSoftSlope = false;
+            SlopeCheck();
+
+            if (_slopeAngle > maximumSlopeLimit && _slopeHit.collider != null)
+                isTooSlope = true;
+            if (_slopeAngle > softSlopeLimit && _slopeHit.collider != null)
+                isSoftSlope = true;
+
+            if (isTooSlope && !WallRun.isWallRunning)
+            {
+                Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
+                var netDir = slopeDir * -fallSpeed;
+                netDir.y = netDir.y - _slopeHit.point.y;
+                dir = netDir;
+            }
+            else if (isSoftSlope && !WallRun.isWallRunning)
+            {
+                Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
+                var netDir = slopeDir * (-fallSpeed * 0.15f);
+                dir = (netDir) + transform.right * xMovement + transform.forward * yMovement;
+            }
+            else
+                dir = transform.right * xMovement + transform.forward * yMovement;
+        }
 
         float speed = moveSpeed;
 
@@ -479,30 +517,75 @@ public class CharacterScript : Entity
         }
     }
 
+    [ReadOnly] [ShowInInspector] private float _slopeAngle = 0f;
+    private RaycastHit _slopeHit;
+
+    private void SlopeCheck()
+    {
+        Vector3 checkPos = groundCheck.position + new Vector3(0, 0.1f, 0);
+        if (Physics.Raycast(checkPos, Vector3.down, out _slopeHit, 10f, player, QueryTriggerInteraction.Ignore))
+        {
+            _slopeAngle = Vector3.Angle(_slopeHit.normal, Vector3.up);
+        }
+        else
+        {
+
+        }
+    }
+
     void Jumping()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
         if (!isCheatMode)
         {
-          
+
+            bool isTooSlope = false;
+            SlopeCheck();
+
+            if (_slopeAngle > maximumSlopeLimit && _slopeHit.collider != null)
+                isTooSlope = true;
+
             if (isGrounded && Hypatios.Input.Jump.triggered && Gamepad.current == null)
             {
+                Vector3 dirJump = transform.up * jumpHeight;
+
+                if (isTooSlope)
+                {
+                    Vector3 slopeDir = _slopeHit.normal;
+                    dirJump = slopeDir * jumpHeight;
+                }
+
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+                rb.AddForce(dirJump, ForceMode.Impulse);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
             }
             else if (isGrounded && Hypatios.Input.Jump.triggered && Gamepad.current != null && InteractableCamera.instance.currentInteractable == null)
             {
+                Vector3 dirJump = transform.up * jumpHeight;
+
+                if (isTooSlope)
+                {
+                    Vector3 slopeDir = _slopeHit.normal;
+                    dirJump = slopeDir * jumpHeight;
+                }
+
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+                rb.AddForce(dirJump, ForceMode.Impulse);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
             }
-            else if (!isGrounded && !WallRun.isWallRunning)
+            else if (!isGrounded && !WallRun.isWallRunning) 
             {
                 rb.AddForce(-transform.up * fallSpeed, ForceMode.Acceleration);
+            }
+            else if (isGrounded && isTooSlope && !WallRun.isWallRunning)
+            {
+                Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
+                var netDir = slopeDir * -fallSpeed;
+                netDir.y = netDir.y - _slopeHit.point.y;
+                rb.AddForce(netDir, ForceMode.Acceleration);
             }
         }
         else

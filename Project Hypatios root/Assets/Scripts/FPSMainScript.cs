@@ -266,6 +266,12 @@ public class FPSMainScript : MonoBehaviour
         Hypatios.Player.Initialize();
         Weapons.LoadGame_InitializeGameSetup();
 
+        if (savedata.sceneEntryCache == null) savedata.sceneEntryCache = new HypatiosSave.EntryCache();
+        if (savedata.sceneEntryCache.entryIndex == -1)
+        {
+            Player.transform.position = savedata.sceneEntryCache.cachedPlayerPos;
+        }
+
         LoadFromSaveFile = false;
     }
 
@@ -304,6 +310,8 @@ public class FPSMainScript : MonoBehaviour
         {
             hypatiosSave.Game_LastLevelPlayed = targetLevel;
         }
+
+        if (hypatiosSave.sceneEntryCache == null) hypatiosSave.sceneEntryCache = new HypatiosSave.EntryCache();
 
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
@@ -399,7 +407,7 @@ public class FPSMainScript : MonoBehaviour
         }
     }
 
-    public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null)
+    public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null, HypatiosSave.EntryCache EntryToken = null)
     {
         string pathSave = "";
 
@@ -410,14 +418,25 @@ public class FPSMainScript : MonoBehaviour
 
         print(pathSave);
 
-        var saveData = PackSaveData(targetLevel);
+        var _saveData = PackSaveData(targetLevel);
 
         if (hypatiosSave != null)
         {
-            saveData = hypatiosSave;
+            _saveData = hypatiosSave;
         }
 
-        string jsonTypeNameAll = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings
+
+        if (EntryToken != null)
+        {
+
+            _saveData.sceneEntryCache = EntryToken;
+        }
+        else
+        {
+            _saveData.sceneEntryCache.entryIndex = 0;
+        }
+
+        string jsonTypeNameAll = JsonConvert.SerializeObject(_saveData, Formatting.Indented, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All,
             PreserveReferencesHandling = PreserveReferencesHandling.Objects

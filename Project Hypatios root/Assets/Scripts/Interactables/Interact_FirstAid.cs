@@ -12,7 +12,7 @@ public class Interact_FirstAid : MonoBehaviour
 
     private bool hasHealed = false;
     private float timeLastHealed = 1f;
-    private float cooldownRefresh = 60f;
+    private float cooldownRefresh = 99999f; //usable only once
 
     private void Update()
     {

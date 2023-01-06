@@ -20,6 +20,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Gameplay")] public Slider slider_Brightness;
     [FoldoutGroup("Video")] public Toggle toggle_VSync;
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
+    [FoldoutGroup("Video")] public Toggle toggle_DynamicUIScaling;
     [FoldoutGroup("Video")] public Text value_FPSCap;
     [FoldoutGroup("Video")] public Slider slider_FPSCap;
     [FoldoutGroup("Video")] public Dropdown dropdown_Resolution;
@@ -51,6 +52,7 @@ public class SettingsUI : MonoBehaviour
         slider_Brightness.SetValueWithoutNotify(Hypatios.Settings.BRIGHTNESS);
         slider_FPSCap.SetValueWithoutNotify(Hypatios.Settings.MAXIMUM_FRAMERATE);
         toggle_VSync.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.VSYNC));
+        toggle_DynamicUIScaling.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.DYNAMIC_UI_SCALING));
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         dropdown_Resolution.SetValueWithoutNotify(Hypatios.Settings.RESOLUTION);
         inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
@@ -106,6 +108,7 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.RESOLUTION = Mathf.RoundToInt(dropdown_Resolution.value);
             Hypatios.Settings.BRIGHTNESS = slider_Brightness.value;
             Hypatios.Settings.MOTIONBLUR = toggle_MotionBlur.isOn ? 1 : 0;
+            Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
             Hypatios.Settings.VSYNC = toggle_VSync.isOn ? 1 : 0;
             Hypatios.Settings.MOUSE_SENSITIVITY = slider_MouseSensitivity.value;
             Hypatios.Settings.MUSIC_VOLUME = slider_Music.value;
@@ -117,6 +120,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetFloat("SETTINGS.SFX_VOLUME", Hypatios.Settings.SFX_VOLUME);
             PlayerPrefs.SetFloat("SETTINGS.BRIGHTNESS", Hypatios.Settings.BRIGHTNESS);
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
+            PlayerPrefs.SetInt("SETTINGS.DYNAMIC_UI_SCALING", Hypatios.Settings.DYNAMIC_UI_SCALING);
             PlayerPrefs.SetInt("SETTINGS.VSYNC", Hypatios.Settings.VSYNC);
             PlayerPrefs.SetFloat("SETTINGS.MOUSE_SENSITIVITY", Hypatios.Settings.MOUSE_SENSITIVITY);
             PlayerPrefs.SetInt("SETTINGS.QUALITY_LEVEL", Hypatios.Settings.QUALITY_LEVEL);

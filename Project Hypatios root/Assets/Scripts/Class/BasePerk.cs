@@ -13,6 +13,7 @@ public class BasePerk : ScriptableObject
     public string ReaperDialogue;
     public string DescriptionPerk;
     public string TitlePerk;
+    public float pricingPerValue = 1f;
     public bool TemporaryPerkOverLimit = false;
     public float Commonness = 100; //100 is very common generate
     public StatusEffectCategory category;
@@ -20,17 +21,44 @@ public class BasePerk : ScriptableObject
 
     public bool CheckLevelMaxed()
     {
+        HypatiosSave.PerkDataSave perkDataClass = null;
+
+        if (Hypatios.Player == null)
+        {
+            perkDataClass = FPSMainScript.savedata.AllPerkDatas;
+        }
+        else
+        {
+            perkDataClass = Hypatios.Player.PerkData;
+        }
+
         if (category == StatusEffectCategory.MaxHitpointBonus)
         {
             return false; //the only perk which player can upgrade forever
         }
         else if (category == StatusEffectCategory.RegenHPBonus)
         {
-            return FPSMainScript.savedata.AllPerkDatas.Perk_LV_RegenHitpointUpgrade >= MAX_LEVEL;
+            return perkDataClass.Perk_LV_RegenHitpointUpgrade >= MAX_LEVEL;
         }
         else if (category == StatusEffectCategory.SoulBonus)
         {
-            return FPSMainScript.savedata.AllPerkDatas.Perk_LV_Soulbonus >= MAX_LEVEL;
+            return perkDataClass.Perk_LV_Soulbonus >= MAX_LEVEL;
+        }
+        else if (category == StatusEffectCategory.KnockbackResistance)
+        {
+            return perkDataClass.Perk_LV_KnockbackRecoil >= MAX_LEVEL;
+        }
+        else if (category == StatusEffectCategory.DashCooldown)
+        {
+            return perkDataClass.Perk_LV_DashCooldown >= MAX_LEVEL;
+        }
+        else if (category == StatusEffectCategory.ShortcutDiscount)
+        {
+            return perkDataClass.Perk_LV_ShortcutDiscount >= MAX_LEVEL;
+        }
+        else if (category == StatusEffectCategory.BonusDamageMelee)
+        {
+            return perkDataClass.Perk_LV_IncreaseMeleeDamage >= MAX_LEVEL;
         }
 
         return false;
@@ -121,6 +149,19 @@ public class BasePerk : ScriptableObject
         TitlePerk = "[MELEE DAMAGE UPGRADE]";
     }
 
+    [FoldoutGroup("Quick Menu")]
+    [Button("Shortcut Discount")]
+    public void Description_ShortcutDiscount(float Value)
+    {
+        PerkID = "ShortcutDiscount";
+        MAX_LEVEL = 5;
+        category = StatusEffectCategory.ShortcutDiscount;
+        ReaperDialogue = $"\"Discount for shortcuts.\"";
+        DescriptionPerk = "+4% increases melee ";
+        TemporaryPerkOverLimit = false;
+        Commonness = 10;
+        TitlePerk = "[SHORTCUT DISCOUNT]";
+    }
 
     public string GetDialogueTempPerk(float Value)
     {
@@ -155,7 +196,7 @@ public class BasePerk : ScriptableObject
         else if (category == StatusEffectCategory.RegenHPBonus)
             return $"+{Value} HP per second. Only lasts 1 run.";
         else if (category == StatusEffectCategory.KnockbackResistance)
-            return $"Decreases recoil effect by -{Value*100}. Only lasts 1 run.";
+            return $"Decreases recoil effect by -{Value*100}%. Only lasts 1 run.";
         else if (category == StatusEffectCategory.DashCooldown)
             return $"-0.2 seconds dash cooldown. Only lasts 1 run.";
         else if (category == StatusEffectCategory.BonusDamageMelee)
@@ -168,22 +209,33 @@ public class BasePerk : ScriptableObject
     public static float GenerateValueForCustomPerk(StatusEffectCategory category)
     {
         float Value = 0;
+        int run = 0;
+        var perkClass = HypatiosSave.PerkDataSave.GetPerkDataSave();
+
+        if (FPSMainScript.savedata != null)
+            run = FPSMainScript.savedata.Game_TotalRuns;
+        else
+            run = 0;
+
+        var hitpointNet = 100 + PlayerPerk.GetValue_MaxHPUpgrade(perkClass.Perk_LV_MaxHitpointUpgrade);
 
         if (category == StatusEffectCategory.MaxHitpointBonus)
         {
-            Value = Random.Range(16, 32);
-
-            var run = FPSMainScript.savedata.Game_TotalRuns;
-            if (run > 3)
-                Value += Random.Range(run / 2, run);
-            Value = Mathf.Clamp(Value, 4, 66);
+            float percent = Random.Range(0.35f, 0.5f);
+            
+            Value = Mathf.Clamp(percent * hitpointNet, 40, 1000);
+            Value = Mathf.Round(Value);
         }
         else if (category == StatusEffectCategory.RegenHPBonus)
         {
-            Value = Random.Range(0.42f, 0.8f);
-            Value = Mathf.Round(Value * 100) / 100;
+            float percent = Random.Range(0.006f, 0.012f);
+
+            Value = Mathf.Clamp(percent * hitpointNet, 0.1f, 100);
+            Value = Mathf.Round(Value * 100f) / 100f;
         }
         else if (category == StatusEffectCategory.SoulBonus)
+            Value = 1;
+        else if (category == StatusEffectCategory.ShortcutDiscount)
             Value = 1;
         else if (category == StatusEffectCategory.KnockbackResistance)
         {
@@ -191,12 +243,11 @@ public class BasePerk : ScriptableObject
             Value = Mathf.Round(Value * 100) / 100;
         }
         else if (category == StatusEffectCategory.DashCooldown)
-            Value = 1;
+            Value = -0.2f;
         else if (category == StatusEffectCategory.BonusDamageMelee)
         {
             Value = Random.Range(0.15f, 0.3f);
 
-            var run = FPSMainScript.savedata.Game_TotalRuns;
             if (run > 3)
                 Value += Random.Range(run * 0.005f, run * 0.01f);
 

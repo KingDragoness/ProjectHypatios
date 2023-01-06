@@ -73,6 +73,7 @@ public class soundManagerScript : MonoBehaviour
     public void Play3D(string name, Vector3 position)
     {
         Sound s = sounds.Find(x => x.name == name);
+        if (s == null) return;
         var source = s.GetAnySource();
         source.Play();
         source.spatialBlend = 1f;

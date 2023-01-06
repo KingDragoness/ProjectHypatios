@@ -1287,20 +1287,30 @@ MonoBehaviour:
     m_Bits: 5393
   weaponName: SMG
   crosshairHit: {fileID: 0}
+  allAttachments: []
   damage: 40
   variableAdditionalDamage: 20
   isAmmoUnlimited: 0
   totalAmmo: 150
   magazineSize: 30
   curAmmo: 0
+  lowAmmoAlert: 5
   spread: 0.005
   recoilX: -2
   recoilY: 3.5
   recoilZ: 3
-  canScope: 0
-  isAutomatic: 1
+  recoilMultiplier: 1
   bulletPerSecond: 26
   repulsionForce: 1
+  isFiring: 0
+  isReloading: 0
+  canScope: 0
+  isAutomatic: 1
+  reloadFrame: 140
+  curReloadTime: 0
+  isScoping: 0
+  isBurst: 0
+  burstAmount: 0
   bulletShooter: {fileID: 8760496661638497983}
   muzzle1: {fileID: 6039453858813808731}
   bulletImpact: {fileID: 5183920429748667237, guid: c1f32c6c29a77db41808d0fcdef314b5,
@@ -1309,14 +1319,6 @@ MonoBehaviour:
     type: 3}
   bulletTracer: {fileID: 1631304749667196354, guid: 6ca419833fe73b246b63fcbc767b547e,
     type: 3}
-  isFiring: 0
-  isReloading: 0
-  reloadFrame: 140
-  reloadTime: 0
-  curReloadTime: 0
-  isScoping: 0
-  isBurst: 0
-  burstAmount: 0
   audioFire: {fileID: 6693117990683653921}
   audioReload: {fileID: 2201558277525062256}
   isMelee: 0
@@ -1652,6 +1654,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ondisableEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3817288549109421623
 GameObject:
   m_ObjectHideFlags: 0

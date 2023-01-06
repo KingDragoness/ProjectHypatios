@@ -21,6 +21,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public int totalAmmo; 
     [FoldoutGroup("Weapon Stat")] public int magazineSize;
     [FoldoutGroup("Weapon Stat")] public int curAmmo;
+    [FoldoutGroup("Weapon Stat")] public int lowAmmoAlert = 2;
     [FoldoutGroup("Weapon Stat")] [Range(0f, .2f)] public float spread;
     [FoldoutGroup("Weapon Stat")] public float recoilX;
     [FoldoutGroup("Weapon Stat")] public float recoilY;

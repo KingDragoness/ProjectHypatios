@@ -107,6 +107,31 @@ public class IonBlasterWeapon : GunScript
 
     public void LaunchProjectile()
     {
+        var weapon = GetWeaponItem();
+        var weaponSave = GetWeaponItemSave();
+        bool enablePerfectAccuracy = false;
+        if (weapon.IsAttachmentExists("CrosshitGrip", weaponSave.allAttachments) == true)
+        {
+            enablePerfectAccuracy = true;
+        }
+
+        if (enablePerfectAccuracy)
+        {
+            origin.transform.position = cam.transform.position;
+            origin.transform.rotation = cam.transform.rotation;
+        }
+        else
+        {
+            origin.transform.position = cam.transform.position;
+
+            Vector3 target = cam.transform.position + (cam.transform.forward * 5f);
+            target.x += Random.Range(-spread * 5f, spread * 5f);
+            target.z += Random.Range(-spread * 5f, spread * 5f);
+            Vector3 dir = (target * 1f) - cam.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
+            origin.transform.rotation = rotation;
+        }
+
         gunRecoil.RecoilFire();
         cooldownFire = 1f / bulletPerSecond + 0.05f;
         audioFire.Play();

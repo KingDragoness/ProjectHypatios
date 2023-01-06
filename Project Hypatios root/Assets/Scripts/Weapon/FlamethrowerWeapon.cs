@@ -18,6 +18,7 @@ public class FlamethrowerWeapon : GunScript
     {
         isFiring = false;
         fireParticle.Stop();
+        currentHit = new RaycastHit();
     }
 
     public override void Update()
@@ -34,7 +35,6 @@ public class FlamethrowerWeapon : GunScript
             {
                 if (currentHit.collider != null)
                 {
-
                     TryDamage();
                 }
                 cooldownDamage = 0.1f;
@@ -52,7 +52,7 @@ public class FlamethrowerWeapon : GunScript
     {
         gunRecoil.RecoilFire();
         var damageToken = new DamageToken();
-        var damageReceiver = currentHit.transform.gameObject.GetComponentThenChild<damageReceiver>();
+        var damageReceiver = currentHit.collider.gameObject.GetComponentThenChild<damageReceiver>();
         float variableDamage = Random.Range(0, variableAdditionalDamage);
 
         float distance = Vector3.Distance(transform.position, currentHit.point); //50f

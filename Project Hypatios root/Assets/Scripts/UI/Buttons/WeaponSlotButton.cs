@@ -32,6 +32,8 @@ public class WeaponSlotButton : MonoBehaviour
     public void DehighlightButton()
     {
         rpgUI.DehighlightPerk();
+        Hypatios.UI.CloseAllTooltip();
+
     }
 
     public void ClickButton()

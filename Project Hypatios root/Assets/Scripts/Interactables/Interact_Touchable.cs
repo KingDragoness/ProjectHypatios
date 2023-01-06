@@ -8,7 +8,10 @@ public class Interact_Touchable : InteractableObject
 {
 
     public UnityEvent OnInteractEvent;
+    [ShowIf("useHoverEvent")] public UnityEvent OnHoveringEvent;
+    [ShowIf("useHoverEvent")] public UnityEvent OnNotHoverEvent;
     public AudioSource interactSound;
+    public bool useHoverEvent = false;
     public string interactDescription = "Interact";
 
     [Button("Interact")]
@@ -21,6 +24,25 @@ public class Interact_Touchable : InteractableObject
     public override string GetDescription()
     {
         return interactDescription;
+    }
+
+    private bool safetyBoolCheck = false;
+
+    private void Update()
+    {
+        if (useHoverEvent == false) return;
+        if (Time.timeScale == 0) return;
+
+        if (InteractableCamera.instance.currentInteractable == this)
+        {
+            if (safetyBoolCheck == false) OnHoveringEvent?.Invoke();
+            safetyBoolCheck = true;
+        }
+        else
+        {
+            if (safetyBoolCheck == true) OnNotHoverEvent?.Invoke();
+            safetyBoolCheck = false;
+        }
     }
 }
 

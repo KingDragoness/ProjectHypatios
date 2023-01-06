@@ -59,4 +59,9 @@ public class MainMenuTitleScript : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Hypatios.UI.RefreshUI_Resolutions();
+    }
+
 }

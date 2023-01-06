@@ -271,6 +271,9 @@ public class PlayerRPGUI : MonoBehaviour
         itemTooltip_LeftHandedLabel.text = sLeft;
         itemTooltip_RightHandedLabel.text = sRight;
         currentItemButton = button;
+
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
+
     }
 
     public void DehighlightItem()
@@ -306,6 +309,7 @@ public class PlayerRPGUI : MonoBehaviour
         perkTooltip_LeftHandedLabel.text = sLeft;
         perkTooltip_RightHandedLabel.text = sRight;
 
+        Hypatios.UI.ShowTooltipSmall(slotButton.GetComponent<RectTransform>());
     }
 
     public void DehighlightWeaponSlot()
@@ -326,6 +330,7 @@ public class PlayerRPGUI : MonoBehaviour
         perkTooltip_LeftHandedLabel.text = $"{baseStat.TitlePerk}";
         perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(charStatButton.category1, value1);
 
+        Hypatios.UI.ShowTooltipSmall(charStatButton.GetComponent<RectTransform>());
     }
 
     public void DehighlightStat()
@@ -351,6 +356,9 @@ public class PlayerRPGUI : MonoBehaviour
         {
             perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(_currentPerk.statusEffect.category, value);
         }
+
+        Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>());
+
     }
 
     public void DehighlightPerk()

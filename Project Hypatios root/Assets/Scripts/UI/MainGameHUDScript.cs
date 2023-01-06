@@ -12,6 +12,7 @@ public class MainGameHUDScript : MonoBehaviour
     [Header("Player")]
     public Text healthPoint;
     public Text soulPoint;
+    public GameObject NoAmmoAlert;
     public Slider healthSlider;
     public Slider justDamagedHealthSlider;
     public Slider dashSlider;
@@ -55,11 +56,17 @@ public class MainGameHUDScript : MonoBehaviour
     public ChargeStationUI chargeStationUI;
     public CraftingWorkstationUI craftingUI;
 
-    public static MainGameHUDScript Instance;
+    public static MainGameHUDScript Instance
+    {
+        get
+        {
+            return Hypatios.UI.mainHUDScript;
+        }
+    }
 
     private void Awake()
     {
-        Instance = this;
+
     }
 
     private void OnEnable()
@@ -71,6 +78,12 @@ public class MainGameHUDScript : MonoBehaviour
     {
         soulPoint.text = $"{Hypatios.Game.SoulPoint}";
         //justDamagedHealthSlider.value = Mathf.MoveTowards(justDamagedHealthSlider.value, healthSlider.value, drainHealthSpeed * Time.deltaTime);
+        HandleInteractable();
+        HandleWeaponIcon();
+    }
+
+    private void HandleInteractable()
+    {
 
         bool hidePrompt = true;
         bool containerExists = false;
@@ -105,7 +118,7 @@ public class MainGameHUDScript : MonoBehaviour
             if (!interactPrompt.activeSelf)
             {
                 interactPrompt.gameObject.SetActive(true);
-  
+
             }
 
             try
@@ -120,6 +133,26 @@ public class MainGameHUDScript : MonoBehaviour
             }
         }
 
+    }
+
+    private void HandleWeaponIcon()
+    {
+        GunScript weapon = Hypatios.Player.Weapon.currentGunHeld;
+
+        if (weapon == null) return;
+
+        if (weapon.lowAmmoAlert >= weapon.curAmmo)
+        {
+            if (!NoAmmoAlert.activeSelf)
+                NoAmmoAlert.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            if (NoAmmoAlert.activeSelf)
+                NoAmmoAlert.gameObject.SetActive(false);
+
+        }
     }
 
     public void PlayDash()

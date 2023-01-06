@@ -10,6 +10,7 @@ public class Interact_TutorialBubble : MonoBehaviour
     public string Dialogue_Content;
     public string Dialogue_SpeakerName;
     public float Dialogue_Timer = 4;
+    public bool shouldOverride = false;
     [Space]
     public List<Transform> ActivatingArea;
 
@@ -71,7 +72,7 @@ public class Interact_TutorialBubble : MonoBehaviour
 
     public  void TriggerMessage()
     {
-        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer);
+        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer, shouldOverride: shouldOverride);
         OnSpeechBubble?.Invoke();
 
         bAlreadyInside = true;

@@ -10,6 +10,14 @@ using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 public class MainUI : MonoBehaviour
 {
 
+    public enum UIScaling
+    {
+        p768,
+        p900,
+        p1080,
+        Custom
+    }
+
     public enum UIMode
     {
         Default,
@@ -23,6 +31,9 @@ public class MainUI : MonoBehaviour
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
     [FoldoutGroup("References")] public GameObject HUD;
+    [FoldoutGroup("References")] public CanvasScaler scaler_Main;
+    [FoldoutGroup("References")] public CanvasScaler scaler_Pause;
+    [FoldoutGroup("References")] public MainGameHUDScript mainHUDScript;
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
     [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
@@ -37,7 +48,13 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
+    [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
+    [FoldoutGroup("Tooltips")] public RectTransform tooltipBig;
+    [FoldoutGroup("Tooltips")] public RectTransform tooltipSmall;
+    [FoldoutGroup("Tooltips")] public RectTransform testingTooltipPos;
+
     public UIMode current_UI = UIMode.Default;
+    public UIScaling current_Scaling = UIScaling.p900;
     private bool paused = false;
 
     public static MainUI Instance;
@@ -64,6 +81,7 @@ public class MainUI : MonoBehaviour
 
     }
 
+    #region Utility
     public static float CalculateRatioX()
     {
         float x = Screen.width;
@@ -95,6 +113,31 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    public void ShowTooltipBig(RectTransform currentSelection)
+    {
+        tooltipBig.gameObject.SetActive(true);
+        var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
+        tooltipBig.position = v3;
+        testingTooltipPos.position = v3;
+    }
+
+    public void ShowTooltipSmall(RectTransform currentSelection)
+    {
+        tooltipSmall.gameObject.SetActive(true);
+        var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
+        tooltipSmall.position = v3;
+        testingTooltipPos.position = v3;
+    }
+
+    public void CloseAllTooltip()
+    {
+        tooltipBig.gameObject.SetActive(false);
+        tooltipSmall.gameObject.SetActive(false);
+
+    }
+
+    #endregion
 
     private bool b_OnActivateNoClipMode = false;
 
@@ -137,6 +180,16 @@ public class MainUI : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.F11))
         {
             Screen.fullScreen = !Screen.fullScreen;
+        }
+
+        if (Input.GetKeyUp(KeyCode.F3))
+        {
+            bool b = Hypatios.DebugObjectStat.gameObject.activeSelf;
+            Hypatios.DebugObjectStat.gameObject.SetActive(!b);
+        }
+
+        {
+            RefreshUI_Resolutions();
         }
 
         if (!paused)
@@ -253,6 +306,33 @@ public class MainUI : MonoBehaviour
             {
             }
         }
+    }
+
+  
+    public void RefreshUI_Resolutions()
+    {
+        var refResolution = scaler_Main.referenceResolution;
+
+        if (current_Scaling == UIScaling.p900)
+        {
+            refResolution.y = 900f;
+        }
+        else if (current_Scaling == UIScaling.p768)
+        {
+            refResolution.y = 768f;
+        }
+        else if (current_Scaling == UIScaling.p1080)
+        {
+            refResolution.y = 1080f;
+        }
+        else
+        {
+            refResolution.y = Screen.height;
+            if (refResolution.y < 720) refResolution.y = 720f;
+        }
+
+        scaler_Main.referenceResolution = refResolution;
+        scaler_Pause.referenceResolution = refResolution;
     }
 
     public void SetTempoPause(bool pause)

@@ -114,7 +114,6 @@ public class FW_ControlPoint : MonoBehaviour
 
         if (captureProgress >= 1f && !isCaptured)
         {
-            OnCaptured?.Invoke();
             CaptureCP();
         }
     }
@@ -135,6 +134,7 @@ public class FW_ControlPoint : MonoBehaviour
     public void CaptureCP()
     {
         isCaptured = true;
+        OnCaptured?.Invoke();
 
         if (audio_CPCaptured != null && CPNumber != 0)
         {

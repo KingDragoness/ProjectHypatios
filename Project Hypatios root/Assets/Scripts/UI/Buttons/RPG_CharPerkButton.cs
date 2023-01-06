@@ -26,6 +26,8 @@ public class RPG_CharPerkButton : MonoBehaviour
     public void DehighlightPerk()
     {
         playerRPGUI.DehighlightPerk();
+        Hypatios.UI.CloseAllTooltip();
+
     }
 
     public static string GetDescription(StatusEffectCategory statusEffect, float value)

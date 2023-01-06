@@ -15,10 +15,12 @@ public enum PlayerPerks
 public class PerkCustomEffect
 {
     public StatusEffectCategory statusCategoryType = StatusEffectCategory.Nothing;
+    public string origin = "DeathPerk";
     public float Value = 0.1f;
 
-    public void Generate()
+    public void Generate(string _origin)
     {
+        origin = _origin;
         Value = BasePerk.GenerateValueForCustomPerk(statusCategoryType);
     }
 }
@@ -58,7 +60,9 @@ public class PlayerPerk
         var ListPerk = new List<BasePerk>();
         foreach (var entry in Hypatios.Assets.AllBasePerks) ListPerk.Add(entry);
         ListPerk.RemoveAll(c => c.CheckLevelMaxed() && c.TemporaryPerkOverLimit == false);
-        ListPerk.RemoveAll(d => d.category == StatusEffectCategory.SoulBonus); 
+        { ListPerk.RemoveAll(d => d.category == StatusEffectCategory.SoulBonus); }
+        { ListPerk.RemoveAll(e => e.category == StatusEffectCategory.ShortcutDiscount); }
+        { ListPerk.RemoveAll(e => e.category == StatusEffectCategory.DashCooldown); }
 
         int[] allProbability = new int[ListPerk.Count];
 
@@ -79,7 +83,7 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusHP = level * 5;
+        float bonusHP = level * 6;
         return bonusHP;
     }
 
@@ -87,7 +91,7 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusRegen = level * 0.08f;
+        float bonusRegen = level * 0.1f;
         return bonusRegen;
     }
 
@@ -185,6 +189,7 @@ public class PlayerPerk
     }
 
 
+
     #region Legacy
     public static int GetPrice_MaxHP(float currentHP, float targetHP)
     {
@@ -236,6 +241,40 @@ public class PlayerPerk
         return priceSoul;
     }
     #endregion
+
+
+    public static float GetBonusShortcutDiscount(int level)
+    {
+        float discount = 0f;
+
+        var shortcutLevel = level;
+
+        if (shortcutLevel == 0)
+            discount -= 0.04f;
+        else if (shortcutLevel == 1)
+            discount -= 0.08f;
+        else if (shortcutLevel == 2)
+            discount -= 0.12f;
+        else if (shortcutLevel == 3)
+            discount -= 0.17f;
+        else if (shortcutLevel == 4)
+            discount -= 0.22f;
+        else if (shortcutLevel == 5)
+            discount -= 0.27f;
+
+        return discount;
+    }
+
+    public static string GetDescription_Shortcut(int level)
+    {
+        string s = "";
+
+        float discount = GetBonusShortcutDiscount(level);
+
+        s = $"{Mathf.RoundToInt(discount*100f)}% discount for shortcuts in the sewer's subway train.";
+
+        return s;
+    }
 
     public static string GetDescription_LuckOfGod(int level)
     {

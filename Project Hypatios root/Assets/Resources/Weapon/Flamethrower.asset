@@ -21,7 +21,41 @@ MonoBehaviour:
   ammoSpriteIcon: {fileID: 21300000, guid: f1ad3a46f26b354449a0536bf30dd2d9, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
     type: 3}
-  attachments: []
+  attachments:
+  - ID: ExtraTank
+    Name: Extra Tank
+    Description: Increases tank to 120.
+    slot: 5
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 4
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 1
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 120
+  - ID: SlowBurn
+    Name: Efficient Burner
+    Description: Minor reduction fuel usage.
+    slot: 0
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 5
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
+    modifier_damage: 0
+    modifier_cooldown: -16
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
     count: 4
@@ -38,8 +72,8 @@ MonoBehaviour:
   defaultMagazineSize: 80
   defaultCooldown: 120
   buy_AmmoAmount: 80
-  buy_AmmoSoulPrice: 14
-  buy_SoulPrice: 80
+  buy_AmmoSoulPrice: 15
+  buy_SoulPrice: 60
   rewardRate:
     serializedVersion: 2
     m_Curve:

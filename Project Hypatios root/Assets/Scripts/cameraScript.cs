@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class cameraScript : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class cameraScript : MonoBehaviour
 
     public static cameraScript instance;
     private Vector3 originalPos;
+ 
 
     private void Awake()
     {
@@ -42,7 +45,20 @@ public class cameraScript : MonoBehaviour
             cam = GetComponentInChildren<Camera>();
         }
 
+        if (Input.gyro != null)
+        {
+            Input.gyro.enabled = true;
+            Debug.Log("Gyro input enabled.");
+
+            if (SystemInfo.supportsGyroscope)
+            {
+                Debug.Log("Gyro supported");
+            }
+        }
+
+
         originalPos = transform.localPosition;
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -86,6 +102,15 @@ public class cameraScript : MonoBehaviour
         transform.localPosition = originalPos;
     }
 
+    private void Update()
+    {
+        if (Input.gyro != null)
+        {
+            //Debug.Log(Input.gyro.enabled);
+            //Debug.Log($"{Input.gyro.attitude} + {Input.gyro.rotationRateUnbiased}");
+        }
+    }
+
 
 
     // Update is called once per frame
@@ -105,6 +130,7 @@ public class cameraScript : MonoBehaviour
                 }
             }
         }
+
 
         var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
 

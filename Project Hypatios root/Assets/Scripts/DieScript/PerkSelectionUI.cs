@@ -56,30 +56,64 @@ public class PerkSelectionUI : MonoBehaviour
         foreach (var button in allPerkButtons) Destroy(button.gameObject);
         allPerkButtons.Clear();
 
-        int perkAmount = Random.Range(3, 5);
+        int perkAmount = Random.Range(4, 7);
+
+        if (FPSMainScript.savedata.Game_TotalRuns < 20)
+        {
+            perkAmount = Random.Range(3, 6);
+        }
 
         for (int x = 0; x < perkAmount; x++)
         {
             float chance1 = Random.Range(0f, 1f);
             var newButton = Instantiate(prefabPerkButton, parentPerkList.transform);
             newButton.gameObject.SetActive(true);
+            bool generateTempPerk = false;
 
-            if (chance1 < 0.8f)
+            if (chance1 > 0.5f)
             {
-                newButton.status = PlayerPerk.RandomPickBasePerk().category;
+                generateTempPerk = true;
             }
-            else
+
+            if (generateTempPerk)
             {
                 var statusTarget = PlayerPerk.RandomPickBaseTempPerk().category;
 
                 newButton.customEffect.statusCategoryType = statusTarget;
                 newButton.status = newButton.customEffect.statusCategoryType;
-                newButton.customEffect.Generate();
+                newButton.customEffect.Generate("DeathScreen");
+                newButton.isTemporaryPerk = true;
+            }
+            else
+            {
+                newButton.status = PlayerPerk.RandomPickBasePerk().category;
+                int runLoop = 0;
+                bool valid = false;
+
+                if (IsDuplicatePerkSelect(newButton.status) == false) valid = true;
+
+                while (valid == false)
+                {
+                    newButton.status = PlayerPerk.RandomPickBasePerk().category;
+                    if (IsDuplicatePerkSelect(newButton.status) == false) valid = true;
+                    if (runLoop > 100) break;
+                    runLoop++;
+                }
             }
 
             newButton.RefreshPerk();
             allPerkButtons.Add(newButton);
         }
+    }
+
+    public bool IsDuplicatePerkSelect(StatusEffectCategory _category)
+    {
+        if (allPerkButtons.Find(x => x.status == _category) != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     public StatusEffectCategory RandomSelectStatus()

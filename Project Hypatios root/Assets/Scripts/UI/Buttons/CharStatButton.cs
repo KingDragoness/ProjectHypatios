@@ -20,6 +20,7 @@ public class CharStatButton : MonoBehaviour
     public void DehighlightPerk()
     {
         playerRPGUI.DehighlightStat();
+        Hypatios.UI.CloseAllTooltip();
     }
 
 
@@ -70,6 +71,11 @@ public class CharStatButton : MonoBehaviour
         else if (category == StatusEffectCategory.SoulBonus)
         {
             value = Hypatios.Player.GetNetSoulBonusPerk();
+            s = $"Lv {value}/5";
+        }
+        else if (category == StatusEffectCategory.ShortcutDiscount)
+        {
+            value = Hypatios.Player.GetNetShortcutPerk();
             s = $"Lv {value}/5";
         }
         else if (category == StatusEffectCategory.Alcoholism)

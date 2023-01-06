@@ -124,10 +124,11 @@ public class HypatiosSave
     public float Player_CurrentHP = 100;
     public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;
+    public EntryCache sceneEntryCache;
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public InventoryData Player_Inventory;
 
-
+  
     [System.Serializable]
     public class ItemDataSave
     {
@@ -148,7 +149,16 @@ public class HypatiosSave
             int ammoAmount = Mathf.RoundToInt(weaponClass.rewardRate.Evaluate(randomTime)) + 5;
             weaponData.totalAmmo = ammoAmount;
         }
-}
+    }
+
+    [System.Serializable]
+    public class EntryCache
+    {
+        public Vector3 cachedPlayerPos;
+        public int entryIndex = 0; 
+        //0 does nothing and just use scene's player pos
+        //-1 override entry to cachedPlayerPos
+    }
 
     [System.Serializable]
     public class PerkDataSave
@@ -162,6 +172,17 @@ public class HypatiosSave
         public int Perk_LV_IncreaseMeleeDamage = 0;
         public List<PerkCustomEffect> Temp_CustomPerk = new List<PerkCustomEffect>();
 
+        public static PerkDataSave GetPerkDataSave()
+        {
+            if (Hypatios.Player == null)
+            {
+                return FPSMainScript.savedata.AllPerkDatas;
+            }
+            else
+            {
+                return Hypatios.Player.PerkData;
+            }
+        }
     }
 
     [System.Serializable]

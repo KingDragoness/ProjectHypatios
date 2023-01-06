@@ -240,6 +240,9 @@ public class DeathScreenScript : MonoBehaviour
             if (perkSelection.selectedPerkButton.status == StatusEffectCategory.SoulBonus)
                 hypatiosSave.AllPerkDatas.Perk_LV_Soulbonus++;
 
+            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.ShortcutDiscount)
+                hypatiosSave.AllPerkDatas.Perk_LV_ShortcutDiscount++;
+
             if (perkSelection.selectedPerkButton.status == StatusEffectCategory.KnockbackResistance)
                 hypatiosSave.AllPerkDatas.Perk_LV_KnockbackRecoil++;
 

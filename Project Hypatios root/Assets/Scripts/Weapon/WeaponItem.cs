@@ -197,6 +197,22 @@ public class WeaponItem : ScriptableObject
         return false;
     }
 
+    public bool IsAttachmentExists(string attachID, List<string> allAttachments)
+    {
+        var attachment = GetAttachmentWeaponMod(attachID);
+
+        foreach (var attach1 in allAttachments)
+        {
+            if (attach1 == attachment.ID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public bool IsCraftAttachmentRequirementMet(string attachID)
     {
         var attachment = GetAttachmentWeaponMod(attachID);

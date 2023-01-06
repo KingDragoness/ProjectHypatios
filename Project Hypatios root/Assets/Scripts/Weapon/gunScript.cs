@@ -45,6 +45,15 @@ public class GunScript : BaseWeaponScript
     internal Ray ray;
     internal Recoil gunRecoil;
 
+    public WeaponItem GetWeaponItem()
+    {
+        return Hypatios.Assets.GetWeapon(weaponName);
+    }
+
+    public HypatiosSave.WeaponDataSave GetWeaponItemSave()
+    {
+        return Hypatios.Game.GetWeaponSave(weaponName);
+    }
 
     // Start is called before the first frame update
     public virtual void Start()

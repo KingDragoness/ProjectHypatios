@@ -19,7 +19,8 @@ namespace UnityEngine.UI.Extensions
         public enum TooltipPositioningType {
             mousePosition,
             mousePositionAndFollow,
-            transformPosition
+            transformPosition,
+            mouseFollowAndSelectDontFollow
         }
 
         [Tooltip("Defines where the tooltip will be placed and how that placement will occur. Transform position will always be used if this element wasn't selected via mouse")]
@@ -31,6 +32,7 @@ namespace UnityEngine.UI.Extensions
         private bool isChildOfOverlayCanvas = false;
 
         private bool hovered = false;
+        private bool selected = false;
 
         public Vector3 offset;
 
@@ -85,21 +87,39 @@ namespace UnityEngine.UI.Extensions
                         toolTipToUse.GuiCamera.WorldToScreenPoint(transform.position) :
                         transform.position) + offset, true);
                     break;
+                case TooltipPositioningType.mouseFollowAndSelectDontFollow:
+                    StartHover(UIExtensionsInputManager.MousePosition + offset, true);
+                    hovered = true;
+                    StartCoroutine(HoveredMouseFollowingLoop());
+                    break;
             }
         }
 
         IEnumerator HoveredMouseFollowingLoop() {
-            while (hovered) {
-                StartHover(UIExtensionsInputManager.MousePosition + offset);
-                yield return null;
+            if (tooltipPositioningType != TooltipPositioningType.mouseFollowAndSelectDontFollow)
+            {
+                while (hovered)
+                {
+                    StartHover(UIExtensionsInputManager.MousePosition + offset);
+                    yield return null;
+                }
+            }
+            else
+            {
+                while (hovered && !selected)
+                {
+                    StartHover(UIExtensionsInputManager.MousePosition + offset);
+                    yield return null;
+                }
             }
         }
 
         public void OnSelect(BaseEventData eventData)
         {
-            StartHover((WorldToScreenIsRequired ?
-                toolTipToUse.GuiCamera.WorldToScreenPoint(transform.position) :
-                        transform.position) + offset, true);
+            //StartHover((WorldToScreenIsRequired ?
+            //    toolTipToUse.GuiCamera.WorldToScreenPoint(transform.position) :
+            //            transform.position) + offset, true);
+            selected = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -110,6 +130,7 @@ namespace UnityEngine.UI.Extensions
         public void OnDeselect(BaseEventData eventData)
         {
             StopHover();
+            selected = false;
         }
 
         void StartHover(Vector3 position, bool shouldCanvasUpdate = false)

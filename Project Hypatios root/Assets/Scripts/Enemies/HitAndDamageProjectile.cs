@@ -11,6 +11,7 @@ public class HitAndDamageProjectile : MonoBehaviour
     public bool isBurn = false;
     public bool allowHitEnemy = false;
     public bool isAllowIndicator = false;
+    [Tooltip("For player-made explosions")] [ShowIf("allowHitEnemy")] public bool shouldOverrideAsPlayerOrigin = false;
     public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
     public float preventKillAboveTimer = 0f;
@@ -58,6 +59,14 @@ public class HitAndDamageProjectile : MonoBehaviour
     {
        var gameObject1 = Instantiate(prefabSpawnOnImpact, transform.position, Quaternion.identity);
         gameObject1.gameObject.SetActive(true);
+
+        if (shouldOverrideAsPlayerOrigin)
+        {
+            var allKillzones = gameObject1.GetComponentsInChildren<KillZone>();
+
+            foreach (var killzone in allKillzones)
+                killzone.origin = DamageToken.DamageOrigin.Player;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
