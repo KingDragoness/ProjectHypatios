@@ -14,13 +14,27 @@ public class DamageToken
         Ally
     }
 
+    public enum DamageType
+    {
+        Generic = 0,
+        Ballistic = 1,
+        Poison,
+        Fire,
+        WeakLaser = 10,
+        MiningLaser = 11,
+        Melee = 50,
+        Explosion = 100,
+    }
+
     public float damage = 1;
     public float repulsionForce = 1;
     public float shakinessFactor = 0.5f;
     public float healthSpeed = 10f;
     public bool isBurn = false;
+    public bool isPoison = false;
     public bool allowPlayerIndicator = false;
     public EnemyScript originEnemy;
+    public DamageType damageType = DamageType.Generic;
     public DamageOrigin origin = DamageOrigin.Player;
 }
 
@@ -65,6 +79,8 @@ public class UniversalDamage
 
            
             if (token.isBurn && !health.character.IsStatusEffect(StatusEffectCategory.Fire)) health.character.Burn();
+            if (token.isPoison && !health.character.IsStatusEffect(StatusEffectCategory.Poison)) health.character.Poison();
+
         }
     }
 }
@@ -72,6 +88,7 @@ public class UniversalDamage
 public class damageReceiver : MonoBehaviour
 {
     public EnemyScript enemyScript;
+    public Destructibles destructibleScript;
     public bool isCriticalHit = false;
     [Tooltip("> 1 for weak spots. < 1 for resistant spots.")]
     public float multiplier = 1f;
@@ -87,6 +104,12 @@ public class damageReceiver : MonoBehaviour
         {
             enemyScript.Attacked(token);
             if (token.isBurn && !enemyScript.IsStatusEffect(StatusEffectCategory.Fire) && token.originEnemy != enemyScript) enemyScript.Burn();
+            if (token.isPoison && !enemyScript.IsStatusEffect(StatusEffectCategory.Poison) && token.originEnemy != enemyScript) enemyScript.Poison();
+        }
+
+        if (destructibleScript != null)
+        {
+            destructibleScript.Damage(token);
         }
 
         if (isCriticalHit && token.origin == DamageToken.DamageOrigin.Player)

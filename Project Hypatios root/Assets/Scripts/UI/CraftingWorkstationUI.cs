@@ -73,6 +73,13 @@ public class CraftingWorkstationUI : MonoBehaviour
         tooltip_Text.text = s;
     }
 
+    public BaseWeaponScript GetCurrentWeaponOnTable()
+    {
+        if (_currentButton != null)
+            return Hypatios.Player.Weapon.CurrentlyHeldWeapons[_currentButton.index];
+        else return null;
+    }
+
     #region Highlights and Actions
 
     public void HighlightWeaponMod(CraftWeaponModButton _button)

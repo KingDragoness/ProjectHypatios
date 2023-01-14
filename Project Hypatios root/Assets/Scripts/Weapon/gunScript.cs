@@ -1,9 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.VFX;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
+using Random = UnityEngine.Random;
 
 public class GunScript : BaseWeaponScript
 {
@@ -33,6 +35,11 @@ public class GunScript : BaseWeaponScript
     [FoldoutGroup("References")] public GameObject bulletSparks;
     [FoldoutGroup("References")] public GameObject bulletTracer;
 
+    [FoldoutGroup("Extensions")] public UnityEvent OnFire;
+    [FoldoutGroup("Extensions")] public UnityEvent OnHolding;
+    [FoldoutGroup("Extensions")] public UnityEvent OnReloadStart;
+    [FoldoutGroup("Extensions")] public Action<string> OnFireAction;
+
     [FoldoutGroup("Audios")] public AudioSource audioFire;
     [FoldoutGroup("Audios")] public AudioSource audioReload;
 
@@ -44,6 +51,7 @@ public class GunScript : BaseWeaponScript
     internal Camera cam;
     internal Ray ray;
     internal Recoil gunRecoil;
+    private float justUnpaused = 0.1f; //absolutely retarded fix
 
     public WeaponItem GetWeaponItem()
     {
@@ -53,6 +61,14 @@ public class GunScript : BaseWeaponScript
     public HypatiosSave.WeaponDataSave GetWeaponItemSave()
     {
         return Hypatios.Game.GetWeaponSave(weaponName);
+    }
+
+    internal bool IsRecentlyPaused()
+    {
+        if (justUnpaused <= 0f)
+            return true;
+
+        return false;
     }
 
     // Start is called before the first frame update
@@ -76,10 +92,14 @@ public class GunScript : BaseWeaponScript
     // Update is called once per frame
     public virtual void Update()
     {
+        justUnpaused -= Time.deltaTime;
+
         if (Time.timeScale <= 0)
         {
+            justUnpaused = 0.1f;
             return;
         }
+
 
         if (!isMelee)
         {
@@ -104,7 +124,7 @@ public class GunScript : BaseWeaponScript
 
                     totalAmmo -= ammoToFill;
                     curAmmo += ammoToFill;
-
+                    OnReloadCompleted();
 
                     isReloading = false;
                     curReloadTime = ReloadTime;
@@ -116,6 +136,11 @@ public class GunScript : BaseWeaponScript
             Melee();
         }
         
+    }
+
+    public virtual void OnReloadCompleted()
+    {
+
     }
 
     void Melee()
@@ -151,7 +176,7 @@ public class GunScript : BaseWeaponScript
             Hypatios.Input.Fire1.triggered && curAmmo == 0 && !isReloading && !isAutomatic ||
             Hypatios.Input.Reload.triggered && curAmmo < magazineSize && !isReloading)
         {
-
+            OnReloadStart?.Invoke();
             anim.SetTrigger("reload");
             isReloading = true;
 
@@ -202,7 +227,7 @@ public class GunScript : BaseWeaponScript
         }
     }
 
-    IEnumerator SetCrosshairHitActive()
+    internal IEnumerator SetCrosshairHitActive()
     {
         crosshairHit.gameObject.SetActive(true);
         MainGameHUDScript.Instance.audio_CrosshairClick.Play();
@@ -214,6 +239,7 @@ public class GunScript : BaseWeaponScript
     {
         if (Hypatios.Input.Fire2.IsPressed() && canScope)
         {
+            OnHolding?.Invoke();
             isScoping = true;
 
         }
@@ -227,7 +253,7 @@ public class GunScript : BaseWeaponScript
 
     IEnumerator shotgunCoroutine;
 
-    public RaycastHit GetHit()
+    public RaycastHit GetHit(float range = 1000f)
     {
         RaycastHit hit;
         float spreadX = Random.Range(-spread, spread);
@@ -235,20 +261,89 @@ public class GunScript : BaseWeaponScript
         Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
 
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, layerMask, QueryTriggerInteraction.Ignore))
         {
         }
         else
         {
-            hit.point = raycastDir * 1000f;
+            hit.point = cam.transform.position + (raycastDir * range);
         }
 
         return hit;
 
     }
 
+    private int loopScatterAmount = 0;
+
+    public void FireAdditionalScatterBullets(float spreadMult = 1f, int amount = 1)
+    {
+        if (loopScatterAmount > 100)
+        {
+            Debug.LogError("Stack overflow");
+            return;
+        }
+
+        if (loopScatterAmount < amount)
+        {
+            loopScatterAmount++;
+            FireAdditionalScatterBullets(spreadMult, amount);
+        }
+        else
+        {
+            loopScatterAmount = 0;
+            return;
+        }
+
+        var damageToken = new DamageToken();
+        damageToken.isBurn = isBurnBullet;
+        damageToken.isPoison = isPoisonBullet;
+        damageToken.damageType = DamageToken.DamageType.Ballistic;
+
+        RaycastHit hit;
+        float spreadX = Random.Range(-spread * spreadMult, spread * spreadMult);
+        float spreadY = Random.Range(-spread * spreadMult, spread * spreadMult);
+        Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
+
+
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+        {
+            var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
+            float variableDamage = Random.Range(0, variableAdditionalDamage);
+
+            if (damageReceiver != null)
+            {
+                damageToken.damage = (damage /5f) + variableDamage; damageToken.repulsionForce = repulsionForce;
+                damageReceiver.Attacked(damageToken);
+                StartCoroutine(SetCrosshairHitActive());
+            }
+
+            if (hit.transform.gameObject.layer != 13 &&
+                    hit.transform.gameObject.layer != 12)
+            {
+                GameObject bulletHole = Hypatios.ObjectPool.SummonObject(bulletImpact, 10, IncludeActive: true);
+                if (bulletHole != null)
+                {
+                    bulletHole.transform.position = hit.point + hit.normal * .0001f;
+                    bulletHole.transform.rotation = Quaternion.LookRotation(hit.normal);
+                    bulletHole.transform.SetParent(hit.collider.gameObject.transform);
+                }
+            }
+
+            GameObject bulletSpark_ = Hypatios.ObjectPool.SummonObject(bulletSparks, 10, IncludeActive: true);
+            if (bulletSpark_ != null)
+            {
+                bulletSpark_.transform.position = hit.point;
+                bulletSpark_.transform.rotation = Quaternion.LookRotation(hit.normal);
+                bulletSpark_.DisableObjectTimer(2f);
+            }
+
+            currentHit = hit;
+        }
+    }
+
     public override void FireWeapon()
     {
+        loopScatterAmount = 0;
         gunRecoil.RecoilFire();
 
         if (audioFire != null)
@@ -257,6 +352,12 @@ public class GunScript : BaseWeaponScript
         }
 
         var damageToken = new DamageToken();
+        damageToken.isBurn = isBurnBullet;
+        damageToken.isPoison = isPoisonBullet;
+        damageToken.origin = DamageToken.DamageOrigin.Player;
+        damageToken.damageType = damageType;
+        OnFire?.Invoke();
+        OnFireAction?.Invoke($"{weaponName}");
 
         if (!isBurst)
         {
@@ -344,7 +445,7 @@ public class GunScript : BaseWeaponScript
 
                     if (damageReceiver != null)
                     {
-                        damageToken.damage = damage + variableDamage; damageToken.repulsionForce = repulsionForce;
+                        damageToken.damage = (damage/2f) + variableDamage; damageToken.repulsionForce = repulsionForce;
                         damageReceiver.Attacked(damageToken);
                         StartCoroutine(SetCrosshairHitActive());
                     }

@@ -68,8 +68,13 @@ public class EnemyContainer : MonoBehaviour
         {
             Vector3 screenPos = cam.WorldToScreenPoint(x.transform.position);
             float dist = Vector3.Distance(new Vector3(Screen.width/2f, Screen.height/2f, screenPos.z), screenPos);
-            return dist;
-        }).ToList();
+            return Mathf.RoundToInt(dist*10)/10;
+        })
+        .ThenBy(l => 
+        {
+            return Vector3.Distance(cam.transform.position, l.transform.position);
+        })
+        .ToList();
 
         return FindEnemyEntity(alliance, chanceSelectAlly);
     }

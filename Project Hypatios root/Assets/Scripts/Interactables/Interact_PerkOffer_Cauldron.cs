@@ -8,7 +8,9 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
 {
 
     public Interact_PerkOffering offerPerkScript;
-    public PerkCustomEffect perkCustomEffect;
+    public bool isPermanent = false;
+    [HideIf("isPermanent")] public PerkCustomEffect perkCustomEffect;
+    [ShowIf("isPermanent")] public StatusEffectCategory statusType;
     public Interact_Touchable touch_TakePerk;
     public Interact_Touchable touch_Inspect;
     public Interact_TutorialBubble dialogInspect;
@@ -24,6 +26,11 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
     public void BuyPerk()
     {
         offerPerkScript.BuyPerk(this);
+    }
+
+    public void RewardPerk()
+    {
+        offerPerkScript.RewardPerk(this);
     }
 
     public void Deactivate()

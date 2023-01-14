@@ -50,6 +50,7 @@ public class MiningBeamWeapon : GunScript
         var damageToken = new DamageToken();
         var damageReceiver = currentHit.transform.gameObject.GetComponentThenChild<damageReceiver>();
         float variableDamage = Random.Range(0, variableAdditionalDamage);
+        damageToken.damageType = DamageToken.DamageType.MiningLaser;
 
         float distance = Vector3.Distance(transform.position, currentHit.point); //50f
 
@@ -63,13 +64,6 @@ public class MiningBeamWeapon : GunScript
             damageReceiver.Attacked(damageToken);
             StartCoroutine(SetCrosshairHitActive());
         }
-    }
-    IEnumerator SetCrosshairHitActive()
-    {
-        crosshairHit.gameObject.SetActive(true);
-        MainGameHUDScript.Instance.audio_CrosshairClick.Play();
-        yield return new WaitForSeconds(.2f);
-        crosshairHit.gameObject.SetActive(false);
     }
 
     private void FixedUpdate()

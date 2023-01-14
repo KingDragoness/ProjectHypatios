@@ -30,7 +30,7 @@ public class FireStatus : MonoBehaviour
         damageToken.damage = 10;
         damageToken.healthSpeed = 50;
         damageToken.origin = origin;
-
+        damageToken.damageType = DamageToken.DamageType.Fire;
         //target.Attacked(damageToken);
     }
 

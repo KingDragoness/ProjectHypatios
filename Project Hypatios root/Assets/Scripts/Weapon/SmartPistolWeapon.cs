@@ -59,6 +59,7 @@ public class SmartPistolWeapon : GunScript
         }
 
         var damageToken = new DamageToken();
+        damageToken.damageType = damageType;
 
         muzzle1.Emit(1);
 

@@ -37,6 +37,8 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.11
     override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
   - ID: AdvancedReceiver
     Name: Advanced Receiver
     Description: Deals superior damage and reduces cooldown. Worse recoil.
@@ -53,6 +55,8 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.2
     override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
   - ID: SuperReceiver
     Name: Super Receiver
     Description: Deals extraordinary damage and reduces cooldown. Terrible accuracy.
@@ -60,15 +64,35 @@ MonoBehaviour:
     order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 1
-    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
-    modifier_damage: 15
-    modifier_cooldown: 3
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
+    modifier_damage: 18
+    modifier_cooldown: 5
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.3
     override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: KilltronFrame
+    Name: Killtron Frame
+    Description: Deals extremely high damage and reduces cooldown. Minor recoil reduction.
+    slot: 0
+    order: 1000
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
+    modifier_damage: 50
+    modifier_cooldown: 5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.3
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
   - ID: BatteryIonCapacitor
     Name: Ion Capacitor Battery
     Description: Magazine size to 14.
@@ -85,6 +109,8 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
     override_magazineSize: 14
+    stat_burn: 0
+    stat_poison: 0
   - ID: BatteryUcilavor
     Name: Ucilavor Battery
     Description: Magazine size to 16.
@@ -101,6 +127,8 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
     override_magazineSize: 16
+    stat_burn: 0
+    stat_poison: 0
   - ID: FirmGrip
     Name: Firm Grip
     Description: Reduces recoil.
@@ -115,6 +143,8 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.3
     override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
   - ID: StableGrip
     Name: Stabilitator Grip
     Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
@@ -131,6 +161,42 @@ MonoBehaviour:
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.5
     override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: FlameTank
+    Name: Flame Tank
+    Description: Pistol now deal burning damage.
+    slot: 6
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+    stat_burn: 1
+    stat_poison: 0
+  - ID: PoisonTank
+    Name: Poison Tank
+    Description: Pistol now deal poison damage.
+    slot: 6
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 3
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 1
   WeaponRequirementCrafting: []
   AmmoRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}

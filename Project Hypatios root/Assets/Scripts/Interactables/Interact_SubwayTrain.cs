@@ -33,7 +33,7 @@ public class Interact_SubwayTrain : MonoBehaviour
             if (priceShortcut != null)
             {
                 var level = perkClass.Perk_LV_ShortcutDiscount;
-                float discount = PlayerPerk.GetBonusShortcutDiscount(level);
+                float discount = 1 + PlayerPerk.GetBonusShortcutDiscount(level);
                 int price = Mathf.RoundToInt(discount * priceShortcut.souls);
 
                 button.touchScript.interactDescription = $"{price} souls";
@@ -115,17 +115,18 @@ public class Interact_SubwayTrain : MonoBehaviour
 
         if (currentDestination.sceneTarget == null) yield break;
         var level = perkClass.Perk_LV_ShortcutDiscount;
-        float discount = PlayerPerk.GetBonusShortcutDiscount(level);
-
+        float discount = 1 + PlayerPerk.GetBonusShortcutDiscount(level);
         PriceShortcut priceShortcut = GetPriceList(currentDestination.sceneTarget);
-        Hypatios.Game.SoulPoint -= Mathf.RoundToInt(priceShortcut.souls * discount);
+        int netPrice = Mathf.RoundToInt(priceShortcut.souls * discount);
+
+        Hypatios.Game.SoulPoint -= netPrice;
         OnSceneTriggered?.Invoke();
         isLoading = true;
 
         target = currentDestination.sceneTarget.Index;
         Debug.Log($"{currentDestination.sceneTarget.SceneName} = ({currentDestination.sceneTarget.Index})");
 
-        DialogueSubtitleUI.instance.QueueDialogue($"Destination: {currentDestination.sceneTarget.SceneName}. {priceShortcut.souls} souls has been deducted.", "SYSTEM", 10f);
+        DialogueSubtitleUI.instance.QueueDialogue($"Destination: {currentDestination.sceneTarget.SceneName}. {netPrice} souls has been deducted.", "SYSTEM", 10f);
 
         yield return new WaitForSeconds(2f);
         MainGameHUDScript.Instance.FadeOutSceneTransition.gameObject.SetActive(true);

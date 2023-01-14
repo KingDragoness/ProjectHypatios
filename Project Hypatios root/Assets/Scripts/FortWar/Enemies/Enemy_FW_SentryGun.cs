@@ -171,6 +171,7 @@ public class Enemy_FW_SentryGun : EnemyScript
         {
             var token = new DamageToken();
             token.damage = weapon_Damage;
+            token.damageType = DamageToken.DamageType.Ballistic;
             if (Stats.MainAlliance != Alliance.Player) token.origin = DamageToken.DamageOrigin.Enemy; else token.origin = DamageToken.DamageOrigin.Ally;
             token.originEnemy = this;
             UniversalDamage.TryDamage(token, hit.transform, transform);

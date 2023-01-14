@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: Minigun
+  m_EditorClassIdentifier: 
+  nameWeapon: Minigun
+  moveSpeed: 1
+  prefab: {fileID: 13050034479496463, guid: bf0632830e9d6044a84e84e8205f2866, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 2526106477218704173, guid: 6596db5254a910f40b8d304c7b799466,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: fe5d9ef6ad10a134b802b16e522a0b89, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 4fcae4caaccd84242be83417a4eeb5c7, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 5a7513afcdc7df240b4b283c948ce541,
+    type: 3}
+  attachments:
+  - ID: StandardReceiver
+    Name: Standard Receiver
+    Description: Deals additional damage and reduces cooldown. Worse accuracy.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 4
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 1
+    modifier_damage: 1
+    modifier_cooldown: 8
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: -0.1
+    modifier_percent_recoil: 0.1
+    override_magazineSize: 0
+  - ID: RapidBarrel
+    Name: Rapid Barrel Receiver
+    Description: Startup revving minigun down from 3s to 1s.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  - ID: SlowReceiver
+    Name: Standard Receiver
+    Description: Superior damage, inferior cooldown.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 5
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
+    modifier_damage: 7
+    modifier_cooldown: -30
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.15
+    override_magazineSize: 0
+  - ID: ExtenderMag
+    Name: Extender Magazine
+    Description: Increases magazine size to 150.
+    slot: 5
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 4
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 150
+  - ID: KineFrame
+    Name: Kinetic Frame
+    Description: Superior damage and lower cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 6
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
+    modifier_damage: 2
+    modifier_cooldown: 5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 0
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 3
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 2
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 4
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 2
+  craft_AmmoAmount: 150
+  isCraftable: 1
+  defaultDamage: 2
+  defaultMagazineSize: 100
+  defaultCooldown: 60
+  buy_AmmoAmount: 100
+  buy_AmmoSoulPrice: 8
+  buy_SoulPrice: 50
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 30
+      inSlope: 10.932577
+      outSlope: 10.932577
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07702703
+    - serializedVersion: 3
+      time: 1
+      value: 90
+      inSlope: 26.553228
+      outSlope: 26.553228
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.060810804
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

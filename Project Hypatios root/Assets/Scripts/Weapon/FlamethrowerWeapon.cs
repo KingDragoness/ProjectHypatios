@@ -66,6 +66,7 @@ public class FlamethrowerWeapon : GunScript
             damageToken.damage = damageDist; damageToken.repulsionForce = repulsionForce;
             damageToken.origin = DamageToken.DamageOrigin.Player;
             damageToken.isBurn = true;
+            damageToken.damageType = DamageToken.DamageType.Fire;
             UniversalDamage.TryDamage(damageToken, currentHit.collider.transform, transform);
             StartCoroutine(SetCrosshairHitActive());
         }

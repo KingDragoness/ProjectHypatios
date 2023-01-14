@@ -18,6 +18,8 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public float damage;
     [FoldoutGroup("Weapon Stat")] public float variableAdditionalDamage = 4f;
     [FoldoutGroup("Weapon Stat")] public bool isAmmoUnlimited = false;
+    [FoldoutGroup("Weapon Stat")] public bool isBurnBullet = false;
+    [FoldoutGroup("Weapon Stat")] public bool isPoisonBullet = false;
     [FoldoutGroup("Weapon Stat")] public int totalAmmo; 
     [FoldoutGroup("Weapon Stat")] public int magazineSize;
     [FoldoutGroup("Weapon Stat")] public int curAmmo;
@@ -28,6 +30,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public float recoilZ;
     [FoldoutGroup("Weapon Stat")] public float recoilMultiplier = 1f;
     [FoldoutGroup("Weapon Stat")] public float bulletPerSecond; //AKA fire per second
+    [FoldoutGroup("Weapon Stat")] public DamageToken.DamageType damageType = DamageToken.DamageType.Ballistic;
 
     public virtual void FireWeapon()
     {

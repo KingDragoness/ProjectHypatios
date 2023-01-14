@@ -17,7 +17,7 @@ public class IonBlasterWeapon : GunScript
 
     private float _currentChargeTime = 0;
     private bool isChargeReady = false;
-    private float justUnpaused = 0.1f; //absolutely retarded fix
+    private float cooldownFire = 0.1f;
 
     public override void Start()
     {
@@ -27,16 +27,12 @@ public class IonBlasterWeapon : GunScript
 
     public override void Update()
     {
-        if (Time.timeScale <= 0)
-        {
-            justUnpaused = 0.1f;
-        }
+       
 
         base.Update();
    
 
         cooldownFire -= Time.deltaTime;
-        justUnpaused -= Time.deltaTime;
 
 
         if (isFiring)
@@ -70,13 +66,12 @@ public class IonBlasterWeapon : GunScript
         }
     }
 
-    private float cooldownFire = 0.1f;
 
     public override void FireInput()
     {
 
 
-        if (Hypatios.Input.Fire1.WasReleasedThisFrame() && bulletPerSecond > 5 && curAmmo > 0 && !isReloading && justUnpaused <= 0f)
+        if (Hypatios.Input.Fire1.WasReleasedThisFrame() && bulletPerSecond > 5 && curAmmo > 0 && !isReloading && IsRecentlyPaused())
         {
             if (cooldownFire < 0f)
             {

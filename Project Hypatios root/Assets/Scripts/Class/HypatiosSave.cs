@@ -125,9 +125,16 @@ public class HypatiosSave
     public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;
     public EntryCache sceneEntryCache;
+    public List<TimelineEventSave> Game_TimelineEvents = new List<TimelineEventSave>(); //Do not clear until wake up/level 1 script
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public InventoryData Player_Inventory;
 
+    //Player died
+    [System.Serializable]
+    public class TimelineEventSave
+    {
+        public string ID = "";
+    }
   
     [System.Serializable]
     public class ItemDataSave
@@ -139,7 +146,14 @@ public class HypatiosSave
 
         internal void GenerateWeaponData()
         {
-            var itemClass = Hypatios.Assets.GetItem(ID);
+            AssetStorageDatabase assets = null;
+
+            if (Hypatios.Instance == null)
+                assets = UnityEngine.GameObject.FindObjectOfType<AssetStorageDatabase>();
+            else
+                assets = Hypatios.Assets;
+
+            var itemClass = assets.GetItem(ID);
             var weaponClass = itemClass.attachedWeapon;
 
             weaponData = new HypatiosSave.WeaponDataSave();
@@ -183,6 +197,30 @@ public class HypatiosSave
                 return Hypatios.Player.PerkData;
             }
         }
+
+        public void AddPerkLevel(StatusEffectCategory category)
+        {
+            if (category == StatusEffectCategory.MaxHitpointBonus)
+                Perk_LV_MaxHitpointUpgrade++;
+
+            if (category == StatusEffectCategory.RegenHPBonus)
+                Perk_LV_RegenHitpointUpgrade++;
+
+            if (category == StatusEffectCategory.SoulBonus)
+                Perk_LV_Soulbonus++;
+
+            if (category == StatusEffectCategory.ShortcutDiscount)
+                Perk_LV_ShortcutDiscount++;
+
+            if (category == StatusEffectCategory.KnockbackResistance)
+                Perk_LV_KnockbackRecoil++;
+
+            if (category == StatusEffectCategory.DashCooldown)
+                Perk_LV_DashCooldown++;
+
+            if (category == StatusEffectCategory.BonusDamageMelee)
+                Perk_LV_IncreaseMeleeDamage++;
+        }
     }
 
     [System.Serializable]
@@ -208,6 +246,11 @@ public class HypatiosSave
         public void AddAttachment(string attachment)
         {
             allAttachments.Add(attachment);
+        }
+
+        public bool AttachmentExists(string attachment)
+        {
+            return allAttachments.Find(x => x == attachment) != null ? true : false;
         }
     }
     #endregion

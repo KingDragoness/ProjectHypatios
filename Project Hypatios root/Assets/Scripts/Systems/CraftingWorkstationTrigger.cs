@@ -35,14 +35,53 @@ public class CraftingWorkstationTrigger : MonoBehaviour
 
     public void RefreshWeaponModels()
     {
+        var craftingUI = MainGameHUDScript.Instance.craftingUI;
+
         displayWeapon_WeaponMod.ActivateWeapon();
         displayWeapon_Weapon.ActivateWeapon();
 
         var meshRenderers = displayWeapon_Weapon.gameObject.GetComponentsInChildren<MeshRenderer>();
+        var attachments = displayWeapon_WeaponMod.gameObject.GetComponentsInChildren<WeaponAttachmentVisuals>();
 
-        foreach(var meshRender in meshRenderers)
+        foreach (var meshRender in meshRenderers)
         {
             meshRender.material = defaultMaterial;
+        }
+
+        var currentWeapon = craftingUI.GetCurrentWeaponOnTable();
+        if (currentWeapon != null)
+        {
+            var weaponSave = Hypatios.Game.GetWeaponSave(currentWeapon.weaponName);
+            var weapon1 = Hypatios.Assets.GetWeapon(weaponSave.weaponID);
+            int order = 0;
+
+            foreach (var attach in attachments)
+            {
+                Transform[] allTs = attach.GetComponentsInChildren<Transform>(true);
+
+                foreach (var t in allTs)
+                    t.gameObject.layer = 0;
+
+                var att11 = weapon1.GetAttachmentWeaponMod(attach.ID); //i dont know what to name this variable
+                if (att11 != null)
+                {
+                    if (order > att11.order)
+                        continue;
+                }
+
+                if (weaponSave.AttachmentExists(attach.ID))
+                {
+                    attach.RefreshVisuals(attach.ID);
+                    attach.TriggerRequirements(true);
+
+                }
+                else
+                {
+                    attach.RefreshVisuals("");
+                    attach.TriggerRequirements(false);
+
+                }
+            }
         }
     }
 

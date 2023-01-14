@@ -97,6 +97,7 @@ public class ModularTurretGun : MonoBehaviour
         token.damage = damage;
         token.origin = originToken;
         token.healthSpeed = healthSpeed;
+        token.damageType = DamageToken.DamageType.Ballistic;
 
         var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
 

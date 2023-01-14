@@ -230,27 +230,8 @@ public class DeathScreenScript : MonoBehaviour
             hypatiosSave.AllPerkDatas.Temp_CustomPerk.Add(perkSelection.selectedPerkButton.customEffect);
         }
         else
-        { 
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.MaxHitpointBonus)
-                hypatiosSave.AllPerkDatas.Perk_LV_MaxHitpointUpgrade++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.RegenHPBonus)
-                hypatiosSave.AllPerkDatas.Perk_LV_RegenHitpointUpgrade++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.SoulBonus)
-                hypatiosSave.AllPerkDatas.Perk_LV_Soulbonus++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.ShortcutDiscount)
-                hypatiosSave.AllPerkDatas.Perk_LV_ShortcutDiscount++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.KnockbackResistance)
-                hypatiosSave.AllPerkDatas.Perk_LV_KnockbackRecoil++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.DashCooldown)
-                hypatiosSave.AllPerkDatas.Perk_LV_DashCooldown++;
-
-            if (perkSelection.selectedPerkButton.status == StatusEffectCategory.BonusDamageMelee)
-                hypatiosSave.AllPerkDatas.Perk_LV_IncreaseMeleeDamage++;
+        {
+            hypatiosSave.AllPerkDatas.AddPerkLevel(perkSelection.selectedPerkButton.status);
 
             //hypatiosSave.Perk_LV_RegenHitpointUpgrade = Perk_LV_RegenHitpointUpgrade;
             //hypatiosSave.Perk_LV_Soulbonus = Perk_LV_Soulbonus;

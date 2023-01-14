@@ -476,6 +476,8 @@ public class WeaponManager : MonoBehaviour
         weaponScript.magazineSize = weaponStat.magazineSize;
         weaponScript.allAttachments = weaponsave.allAttachments;
         weaponScript.recoilMultiplier = weaponStat.recoilMultiplier;
+        weaponScript.isBurnBullet = weaponStat.isBurn;
+        weaponScript.isPoisonBullet = weaponStat.isPoison;
 
         var attachmentVisuals = GetComponentsInChildren<WeaponAttachmentVisuals>();
 
@@ -484,12 +486,28 @@ public class WeaponManager : MonoBehaviour
             attach.visual.gameObject.SetActive(false);
         }
 
-        foreach (var attachID in weaponScript.allAttachments)
+        int order = 0;
+
+        foreach (var attach in attachmentVisuals)
         {
-            foreach (var attach in attachmentVisuals)
+            var attachModID = weaponScript.allAttachments.Find(x => x == attach.ID);
+            bool exists = attachModID != null ? true : false;
+
+            var att11 = weapon1.GetAttachmentWeaponMod(attachModID); //i dont know what to name this variable
+            if (att11 != null)
             {
-                if (attach.ID == attachID)
-                    attach.RefreshVisuals(attachID);
+                if (order > att11.order)
+                    continue;
+            }
+
+            if (exists)
+            {
+                attach.RefreshVisuals(attachModID);
+                attach.TriggerRequirements(true);
+            }
+            else
+            {
+                attach.TriggerRequirements(false);
             }
         }
     }

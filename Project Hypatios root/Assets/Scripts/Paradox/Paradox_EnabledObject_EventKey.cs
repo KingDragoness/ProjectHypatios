@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Paradox_EnabledObject_EventKey : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
     public List<string> eventKeyName = new List<string>();
     public Condition conditionType;
     public Mode mode;
+    public UnityEvent OnConditionMet;
+    public UnityEvent OnFailed;
     public GameObject targetObject;
 
     private void Start()
@@ -38,7 +41,7 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
                 }
             }
         }
-        else if (conditionType == Condition.Any)
+        else if (conditionType == Condition.And)
         {
             keyExist = true;
 
@@ -58,6 +61,7 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
             {
                 if (targetObject != null)
                 {
+                    OnConditionMet?.Invoke();
                     targetObject.gameObject.SetActive(true);
                 }
             }
@@ -66,6 +70,8 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
                 if (targetObject != null)
                 {
                     targetObject.gameObject.SetActive(false);
+                    OnFailed?.Invoke();
+
                 }
             }
         }
@@ -76,12 +82,15 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
                 if (targetObject != null)
                 {
                     targetObject.gameObject.SetActive(false);
+                    OnFailed?.Invoke();
+
                 }
             }
             else
             {
                 if (targetObject != null)
                 {
+                    OnConditionMet?.Invoke();
                     targetObject.gameObject.SetActive(true);
                 }
             }

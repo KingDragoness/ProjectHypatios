@@ -24,6 +24,8 @@ public class WeaponItem : ScriptableObject
         public float movespeedMultiplier = 0;
         public float accuracy = 0;
         public float recoilMultiplier = 0;
+        public bool isBurn = false;
+        public bool isPoison = false;
         public int magazineSize = 0;
     }
 
@@ -52,6 +54,8 @@ public class WeaponItem : ScriptableObject
         [FoldoutGroup("Modifiers")] public float modifier_percent_accuracy = 1;
         [FoldoutGroup("Modifiers")] public float modifier_percent_recoil = 1;
         [FoldoutGroup("Modifiers")] public int override_magazineSize = 10;
+        [FoldoutGroup("Modifiers")] public bool stat_burn = false;
+        [FoldoutGroup("Modifiers")] public bool stat_poison = false;
 
         public string GetRequirementText()
         {
@@ -80,7 +84,8 @@ public class WeaponItem : ScriptableObject
         Grip,
         Scope,
         Enchancement,
-        Magazine
+        Magazine,
+        Tank
     }
 
     public enum Category
@@ -137,6 +142,8 @@ public class WeaponItem : ScriptableObject
             stat.movespeedMultiplier += attach.modifier_percent_movespeed;
             stat.accuracy += attach.modifier_percent_accuracy;
             stat.recoilMultiplier += attach.modifier_percent_recoil;
+            if (attach.stat_burn) stat.isBurn = attach.stat_burn;
+            if (attach.stat_poison) stat.isPoison = attach.stat_poison;
             if (attach.override_magazineSize > 0) stat.magazineSize = attach.override_magazineSize;
         }
 

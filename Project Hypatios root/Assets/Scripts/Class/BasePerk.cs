@@ -15,6 +15,8 @@ public class BasePerk : ScriptableObject
     public string TitlePerk;
     public float pricingPerValue = 1f;
     public bool TemporaryPerkOverLimit = false;
+    public bool NoTemporaryPerk = false;
+    public bool NoPermanentPerk = false;
     public float Commonness = 100; //100 is very common generate
     public StatusEffectCategory category;
 
@@ -228,7 +230,7 @@ public class BasePerk : ScriptableObject
         }
         else if (category == StatusEffectCategory.RegenHPBonus)
         {
-            float percent = Random.Range(0.006f, 0.012f);
+            float percent = Random.Range(0.005f, 0.01f);
 
             Value = Mathf.Clamp(percent * hitpointNet, 0.1f, 100);
             Value = Mathf.Round(Value * 100f) / 100f;

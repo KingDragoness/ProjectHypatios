@@ -60,9 +60,7 @@ public class PlayerPerk
         var ListPerk = new List<BasePerk>();
         foreach (var entry in Hypatios.Assets.AllBasePerks) ListPerk.Add(entry);
         ListPerk.RemoveAll(c => c.CheckLevelMaxed() && c.TemporaryPerkOverLimit == false);
-        { ListPerk.RemoveAll(d => d.category == StatusEffectCategory.SoulBonus); }
-        { ListPerk.RemoveAll(e => e.category == StatusEffectCategory.ShortcutDiscount); }
-        { ListPerk.RemoveAll(e => e.category == StatusEffectCategory.DashCooldown); }
+        { ListPerk.RemoveAll(d => d.NoTemporaryPerk == true); }
 
         int[] allProbability = new int[ListPerk.Count];
 

@@ -8,6 +8,7 @@ public class Interact_PerkOffering : MonoBehaviour
 {
 
     public List<Interact_PerkOffer_Cauldron> allCauldrons = new List<Interact_PerkOffer_Cauldron>();
+    public bool isPermanentPerk = false;
 
     private void Start()
     {
@@ -17,16 +18,31 @@ public class Interact_PerkOffering : MonoBehaviour
     [Button("Refresh perks")]
     private void GeneratePerks()
     {
-        foreach(var cauldron in allCauldrons)
+        foreach (var cauldron in allCauldrons)
         {
-            cauldron.perkCustomEffect = CreateCustomPerkEffect();
-            var perk1 = PlayerPerk.GetBasePerk(cauldron.perkCustomEffect.statusCategoryType);
-            string s1 = perk1.GetDescriptionTempPerk(cauldron.perkCustomEffect.Value);
-            int price = Mathf.FloorToInt(perk1.pricingPerValue * cauldron.perkCustomEffect.Value);
 
-            cauldron.touch_TakePerk.interactDescription = $"{Mathf.FloorToInt(perk1.pricingPerValue * cauldron.perkCustomEffect.Value)} souls";
-            cauldron.icon.sprite = perk1.PerkSprite;
-            cauldron.dialogInspect.Dialogue_Content = $"{s1} Price: {price} souls";
+            if (isPermanentPerk)
+            {
+                cauldron.statusType = PlayerPerk.RandomPickBasePerk().category;
+                var perk1 = PlayerPerk.GetBasePerk(cauldron.statusType);
+
+                cauldron.icon.sprite = perk1.PerkSprite;
+                cauldron.touch_TakePerk.interactDescription = $"Take perk";
+                cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {perk1.DescriptionPerk}";
+
+            }
+            else
+            {
+                cauldron.perkCustomEffect = CreateCustomPerkEffect();
+                var perk1 = PlayerPerk.GetBasePerk(cauldron.perkCustomEffect.statusCategoryType);
+
+                string s1 = perk1.GetDescriptionTempPerk(cauldron.perkCustomEffect.Value);
+                int price = Mathf.FloorToInt(perk1.pricingPerValue * cauldron.perkCustomEffect.Value);
+
+                cauldron.touch_TakePerk.interactDescription = $"{Mathf.FloorToInt(perk1.pricingPerValue * cauldron.perkCustomEffect.Value)} souls";
+                cauldron.icon.sprite = perk1.PerkSprite;
+                cauldron.dialogInspect.Dialogue_Content = $"{s1} Price: {price} souls";
+            }
         }
     }
 
@@ -52,6 +68,21 @@ public class Interact_PerkOffering : MonoBehaviour
             cauldron.Deactivate();
         }
     }
+
+    public void RewardPerk(Interact_PerkOffer_Cauldron _cauldron)
+    {
+        var perk1 = PlayerPerk.GetBasePerk(_cauldron.statusType);
+
+        DialogueSubtitleUI.instance.QueueDialogue($"Aldrich gained {perk1.TitlePerk} perk.", "SYSTEM", 6f, shouldOverride: true);
+        Hypatios.Player.PerkData.AddPerkLevel(_cauldron.statusType);
+        Hypatios.Player.ReloadStatEffects();
+
+        foreach (var cauldron in allCauldrons)
+        {
+            cauldron.Deactivate();
+        }
+    }
+
 
     private PerkCustomEffect CreateCustomPerkEffect()
     {

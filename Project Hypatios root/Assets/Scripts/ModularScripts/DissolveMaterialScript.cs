@@ -23,7 +23,18 @@ public class DissolveMaterialScript : MonoBehaviour
 
     private void Update()
     {
-        _dissolveTime += Time.deltaTime * 0.1f * dissolveSpeed;
+        bool allowUpdateMaterial = true;
+
+        if (_dissolveTime > 1 && dissolveSpeed > 0)
+            allowUpdateMaterial = false;
+
+        if (_dissolveTime < 0 && dissolveSpeed < 0)
+            allowUpdateMaterial = false;
+
+        if (allowUpdateMaterial)
+            _dissolveTime += Time.deltaTime * 0.1f * dissolveSpeed;
+        else
+            return;
 
         foreach (Material m in dissolveMaterials)
         {
@@ -36,11 +47,21 @@ public class DissolveMaterialScript : MonoBehaviour
     {
         float dissolve = 0;
 
+        if (dissolveSpeed < 0)
+            dissolve = 1;
+
         foreach (Material m in dissolveMaterials)
         {
             m.SetFloat("_dissolve", dissolve);
             m.SetFloat("_DissolveAmount", dissolve);
         }
+
+        _dissolveTime = dissolve;
+    }
+
+    public void SetDissolve(float _dissolveSpeed)
+    {
+        dissolveSpeed = _dissolveSpeed;
     }
 
 }

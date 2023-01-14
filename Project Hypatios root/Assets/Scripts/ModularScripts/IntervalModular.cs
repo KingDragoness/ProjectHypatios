@@ -21,7 +21,7 @@ public class IntervalModular : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 1 && Mathf.RoundToInt(Time.time * 10) % interval == 1) { safetyCheck = false; }
+        if (Time.timeScale > 0 && Mathf.RoundToInt(Time.time * 10) % interval == 1) { safetyCheck = false; }
 
         if (Mathf.RoundToInt(Time.time * 10) % interval == 0 && safetyCheck == false)
         {

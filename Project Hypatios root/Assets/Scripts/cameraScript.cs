@@ -14,12 +14,14 @@ public class cameraScript : MonoBehaviour
     [Space]
     public wallRun wallRunScript;
     public float mouseSensitivity = 200f;
+    public float aimAssistSensitivity = 5f;
     public Transform playerBody;
     float xRot = 0f;
     public float x, y;
     public float externalX, externalY;
     public float maxPointingDistance = 1.5f;
     public LayerMask weaponMask;
+    public LayerMask cameraMaskAim;
     GameObject raycastedObject;
     public float throwingForce = 1f;
 
@@ -133,6 +135,7 @@ public class cameraScript : MonoBehaviour
 
 
         var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
+        if (Gamepad.current != null) moveVector += AimAssist();
 
         x = moveVector.x * 20 * modifiedSensitivity * Time.deltaTime;
         y = moveVector.y * 20 * modifiedSensitivity * Time.deltaTime;
@@ -145,5 +148,54 @@ public class cameraScript : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRot, 0f, wallRunScript.tilt);
 
         playerBody.Rotate(Vector3.up * x);
+    }
+
+    private Vector2 AimAssist()
+    {
+        Vector2 moveVector = new Vector2();
+
+        var entity = Hypatios.Enemy.FindEnemyEntityFromScreen(Alliance.Player, cam);
+
+        EnemyScript newTarget = null;
+        if (entity != null)
+        {
+            newTarget = entity as EnemyScript;
+        }
+
+        if (newTarget != null)
+        {
+            Vector3 screenPos = cam.WorldToScreenPoint(newTarget.OffsetedBoundWorldPosition);
+            Vector3 localPos = cam.transform.InverseTransformPoint(newTarget.transform.position);
+            Vector3 crosshair_ScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, screenPos.z);
+            float dist = Vector3.Distance(new Vector3(Screen.width / 2f, Screen.height / 2f, screenPos.z), screenPos);
+
+            if (localPos.z > 0 && dist < 100)
+            {
+                Vector3 dir = screenPos - crosshair_ScreenPos;
+                dir.Normalize();
+                moveVector += new Vector2(dir.x, dir.y) * Time.deltaTime * 0.05f * aimAssistSensitivity;
+            }
+
+            var dirReal = newTarget.transform.position - cam.transform.position;
+            RaycastHit hit;
+
+            //if blocked
+            if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 1000f, cameraMaskAim, QueryTriggerInteraction.Ignore))
+            {
+                var enemy = hit.collider.GetComponentInParent<EnemyScript>();
+
+                if (enemy == null)
+                {
+                    float distHitToCam = Vector3.Distance(hit.point, cam.transform.position);
+                    float distEnemyToCam = Vector3.Distance(newTarget.transform.position, cam.transform.position);
+
+                    if (distEnemyToCam > distHitToCam)
+                        moveVector = Vector3.zero;
+                }
+            }
+        }
+
+
+        return moveVector;
     }
 }

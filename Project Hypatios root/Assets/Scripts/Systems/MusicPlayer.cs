@@ -5,7 +5,15 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
 
+    [System.Serializable]
+    public class NewMusicLayer
+    {
+        public Trivia trivia;
+        public AudioClip clip;
+    }
+
     public AudioSource musicSource;
+    public NewMusicLayer newMusic;
     public AudioClip b_side_Track;
 
     public static MusicPlayer Instance;
@@ -21,6 +29,22 @@ public class MusicPlayer : MonoBehaviour
             if (chance > 0.5f)
                 musicSource.clip = b_side_Track;
         }
+
+
+        if (newMusic.trivia != null)
+        {
+            if (Hypatios.Game.Check_TriviaCompleted(newMusic.trivia))
+            {
+                musicSource.clip = newMusic.clip;
+                musicSource.Play();
+            }
+        }
+    }
+
+    public void PlayMusic(AudioClip audioClip)
+    {
+        musicSource.clip = audioClip;
+        musicSource.Play();
     }
 
     private void OnEnable()
