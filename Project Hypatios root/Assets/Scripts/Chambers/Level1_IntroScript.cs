@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Video;
+using Sirenix.OdinInspector;
 
 public class Level1_IntroScript : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Level1_IntroScript : MonoBehaviour
 
     [Space]
     public UnityEvent OnIntroEnded;
+    public UnityEvent OnIntroStarted;
 
     private bool hasStarted = false;
 
@@ -61,6 +63,7 @@ public class Level1_IntroScript : MonoBehaviour
             cineBrain.gameObject.SetActive(false);
             fakePlayer.gameObject.SetActive(false);
             firstRun = true;
+            OnIntroStarted?.Invoke();
         }
         else
         {
@@ -70,6 +73,18 @@ public class Level1_IntroScript : MonoBehaviour
             OnIntroEnded?.Invoke();
         }
         //mainGame_CanvasGroup.alpha = 0;
+    }
+
+    [Button("ForceStartCinematic")]
+    public void StartIntroForce()
+    {
+        playerMain.gameObject.SetActive(false);
+        specialIntro.gameObject.SetActive(true);
+        UI_FadeIn.gameObject.SetActive(false);
+        videoPlayer.gameObject.SetActive(true);
+        cineBrain.gameObject.SetActive(false);
+        fakePlayer.gameObject.SetActive(false);
+        firstRun = true;
     }
 
     private void Update()
