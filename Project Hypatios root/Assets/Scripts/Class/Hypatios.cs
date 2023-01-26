@@ -26,6 +26,7 @@ public class Hypatios : MonoBehaviour
         public static float BRIGHTNESS = 0.5f; //-1 - 1 -> 0 - 1
         public static int VSYNC = 0;
         public static int MOTIONBLUR = 0;
+        public static int ANTIALIASING = 1;
         public static int DYNAMIC_UI_SCALING = 0;
         public static int MAXIMUM_FRAMERATE = 201;
         public static int RESOLUTION = -1;
@@ -57,6 +58,7 @@ public class Hypatios : MonoBehaviour
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
             MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
             DYNAMIC_UI_SCALING = LoadPrefKeyInt("SETTINGS.DYNAMIC_UI_SCALING", 0);
+            ANTIALIASING = LoadPrefKeyInt("SETTINGS.ANTIALIASING", 0);
             SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); 
             MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1);
             QUALITY_LEVEL = LoadPrefKeyInt("SETTINGS.QUALITY_LEVEL", 1);
@@ -145,6 +147,20 @@ public class Hypatios : MonoBehaviour
             else
             {
                 UI.current_Scaling = MainUI.UIScaling.Custom;
+            }
+
+            if (Game.postProcessLayer_Player != null && Game.postProcessLayer_UI != null)
+            {
+                if (ANTIALIASING == 0)
+                {
+                    Game.postProcessLayer_Player.antialiasingMode = PostProcessLayer.Antialiasing.None;
+                    Game.postProcessLayer_UI.antialiasingMode = PostProcessLayer.Antialiasing.None;
+                }
+                else
+                {
+                    Game.postProcessLayer_Player.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
+                    Game.postProcessLayer_UI.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
+                }
             }
         }
 

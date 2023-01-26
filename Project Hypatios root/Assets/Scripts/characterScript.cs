@@ -13,6 +13,7 @@ public class CharacterScript : Entity
 
 
     [FoldoutGroup("Stats")] public CharacterStat BonusDamageMelee; //percentage only
+    [FoldoutGroup("Stats")] public CharacterStat BonusDamageGun; //percentage only
 
 
     private dashParticleManager dashManager;
@@ -117,6 +118,7 @@ public class CharacterScript : Entity
         PerkInitialize(StatusEffectCategory.RegenHPBonus);
         PerkInitialize(StatusEffectCategory.KnockbackResistance);
         PerkInitialize(StatusEffectCategory.BonusDamageMelee);
+        PerkInitialize(StatusEffectCategory.BonusDamageGun);
         PerkInitialize(StatusEffectCategory.Alcoholism);
         dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
     }
@@ -160,6 +162,10 @@ public class CharacterScript : Entity
         else if (category == StatusEffectCategory.BonusDamageMelee)
         {
             return BonusDamageMelee.Value;
+        }
+        else if (category == StatusEffectCategory.BonusDamageGun)
+        {
+            return BonusDamageGun.Value;
         }
         else if (category == StatusEffectCategory.DashCooldown)
         {
@@ -209,6 +215,10 @@ public class CharacterScript : Entity
         else if (category == StatusEffectCategory.BonusDamageMelee)
         {
             value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
+        }
+        else if (category == StatusEffectCategory.BonusDamageGun)
+        {
+            value = PlayerPerk.GetValue_BonusGunDamage(PerkData.Perk_LV_IncreaseGunDamage);
         }
         else if (category == StatusEffectCategory.Alcoholism)
         {

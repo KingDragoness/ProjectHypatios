@@ -69,7 +69,7 @@ public class SmartPistolWeapon : GunScript
         var projectile1 = Instantiate(spawnProjectile, posSpawn, cam.transform.rotation);
         var bulletTracer1 = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletDustTracer, true);
         projectile1.gameObject.SetActive(true);
-        projectile1.Damage = damage;
+        projectile1.Damage = damage * Hypatios.Player.BonusDamageGun.Value;
         projectile1.isAllowIndicator = true;
         var projectileScript = projectile1.GetComponent<SmartBulletProjectile>();
 

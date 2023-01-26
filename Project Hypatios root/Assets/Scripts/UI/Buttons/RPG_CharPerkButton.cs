@@ -42,6 +42,10 @@ public class RPG_CharPerkButton : MonoBehaviour
         {
             s = $"{Mathf.RoundToInt(value*100)}%";
         }
+        else if (statusEffect == StatusEffectCategory.BonusDamageGun)
+        {
+            s = $"{Mathf.RoundToInt(value * 100)}%";
+        }
         else if (statusEffect == StatusEffectCategory.RegenHPBonus)
         {
             float value_ = value;

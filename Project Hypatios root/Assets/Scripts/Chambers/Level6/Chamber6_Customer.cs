@@ -40,6 +40,7 @@ public class Chamber6_Customer : EnemyScript
     private bool orderAlreadyTaken = false;
     private float distance = 1;
     public bool AlreadyEat { get => alreadyEat;}
+    public bool OrderTaken { get => orderAlreadyTaken; }
 
     private void Start()
     {

@@ -62,6 +62,10 @@ public class BasePerk : ScriptableObject
         {
             return perkDataClass.Perk_LV_IncreaseMeleeDamage >= MAX_LEVEL;
         }
+        else if (category == StatusEffectCategory.BonusDamageGun)
+        {
+            return perkDataClass.Perk_LV_IncreaseGunDamage >= MAX_LEVEL;
+        }
 
         return false;
 
@@ -74,8 +78,8 @@ public class BasePerk : ScriptableObject
         PerkID = "MaxHPUpgrade";
         MAX_LEVEL = 999;
         category = StatusEffectCategory.MaxHitpointBonus;
-        ReaperDialogue = $"\"Vitality upgrade by 5 HP. Make yourself tougher.\"";
-        DescriptionPerk = "+5 Maximum Hitpoint";
+        ReaperDialogue = $"\"Vitality upgrade by 7 HP. Make yourself tougher.\"";
+        DescriptionPerk = "+7 Maximum Hitpoint";
         TemporaryPerkOverLimit = true;
         Commonness = 100;
         TitlePerk = "[MAX HP UPGRADE]";
@@ -144,8 +148,8 @@ public class BasePerk : ScriptableObject
         PerkID = "MeleeDamageUpgrade";
         MAX_LEVEL = 10;
         category = StatusEffectCategory.BonusDamageMelee;
-        ReaperDialogue = $"\"Increases melee damage by +4%.\"";
-        DescriptionPerk = "+4% increases melee damage";
+        ReaperDialogue = $"\"Increases melee damage by +12%.\"";
+        DescriptionPerk = "+12% increases melee damage";
         TemporaryPerkOverLimit = true;
         Commonness = 25;
         TitlePerk = "[MELEE DAMAGE UPGRADE]";
@@ -163,6 +167,20 @@ public class BasePerk : ScriptableObject
         TemporaryPerkOverLimit = false;
         Commonness = 10;
         TitlePerk = "[SHORTCUT DISCOUNT]";
+    }
+
+    [FoldoutGroup("Quick Menu")]
+    [Button("Gun Damage")]
+    public void Description_GunDamage(float Value)
+    {
+        PerkID = "GunDamage";
+        MAX_LEVEL = 5;
+        category = StatusEffectCategory.BonusDamageGun;
+        ReaperDialogue = $"\"Bonus damage for all guns.\"";
+        DescriptionPerk = "+5% bonus gun damage ";
+        TemporaryPerkOverLimit = false;
+        Commonness = 10;
+        TitlePerk = "[GUN DAMAGE]";
     }
 
     public string GetDialogueTempPerk(float Value)
@@ -187,6 +205,11 @@ public class BasePerk : ScriptableObject
         {
             return $"\"Increases melee damage by +{Value}%, remember only lasts 1 run.\"";
         }
+        else if (category == StatusEffectCategory.BonusDamageGun)
+        {
+            return $"\"Increases gun damage by +{Value}%, remember only lasts 1 run.\"";
+        }
+
 
         return "";
     }
@@ -203,7 +226,8 @@ public class BasePerk : ScriptableObject
             return $"-0.2 seconds dash cooldown. Only lasts 1 run.";
         else if (category == StatusEffectCategory.BonusDamageMelee)
             return $"+{Value * 100}% increases melee damage. Only lasts 1 run.";
-
+        else if (category == StatusEffectCategory.BonusDamageGun)
+            return $"+{Value * 100}% increases gun damage. Only lasts 1 run.";
         return "";
     }
 
@@ -247,6 +271,16 @@ public class BasePerk : ScriptableObject
         else if (category == StatusEffectCategory.DashCooldown)
             Value = -0.2f;
         else if (category == StatusEffectCategory.BonusDamageMelee)
+        {
+            Value = Random.Range(0.15f, 0.3f);
+
+            if (run > 3)
+                Value += Random.Range(run * 0.005f, run * 0.01f);
+
+            Value = Mathf.Clamp(Value, 0f, 2f);
+            Value = Mathf.Round(Value * 100) / 100;
+        }
+        else if (category == StatusEffectCategory.BonusDamageGun)
         {
             Value = Random.Range(0.15f, 0.3f);
 

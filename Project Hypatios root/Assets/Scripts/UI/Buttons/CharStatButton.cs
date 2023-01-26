@@ -63,6 +63,11 @@ public class CharStatButton : MonoBehaviour
             value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
             s = $"{value*100}%";
         }
+        else if (category == StatusEffectCategory.BonusDamageGun)
+        {
+            value = PlayerPerk.GetValue_BonusGunDamage(PerkData.Perk_LV_IncreaseGunDamage);
+            s = $"{value * 100}%";
+        }
         else if (category == StatusEffectCategory.DashCooldown)
         {
             value = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown);

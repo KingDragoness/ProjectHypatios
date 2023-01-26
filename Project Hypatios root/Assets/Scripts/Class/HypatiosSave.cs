@@ -184,6 +184,7 @@ public class HypatiosSave
         public int Perk_LV_KnockbackRecoil = 0;
         public int Perk_LV_DashCooldown = 0;
         public int Perk_LV_IncreaseMeleeDamage = 0;
+        public int Perk_LV_IncreaseGunDamage = 0;
         public List<PerkCustomEffect> Temp_CustomPerk = new List<PerkCustomEffect>();
 
         public static PerkDataSave GetPerkDataSave()
@@ -220,6 +221,9 @@ public class HypatiosSave
 
             if (category == StatusEffectCategory.BonusDamageMelee)
                 Perk_LV_IncreaseMeleeDamage++;
+
+            if (category == StatusEffectCategory.BonusDamageGun)
+                Perk_LV_IncreaseGunDamage++;
         }
     }
 

@@ -57,7 +57,7 @@ public class MiningBeamWeapon : GunScript
         if (damageReceiver != null)
         {
             float multiplierDamage1 = (5f - (distance / 10f)) / 5f;
-            float damageDist = (damage * 4f + variableDamage) * multiplierDamage1;
+            float damageDist = (damage * Hypatios.Player.BonusDamageGun.Value * 4f + variableDamage) * multiplierDamage1;
             damageDist = Mathf.Clamp(damageDist, 1, 9999);
 
             damageToken.damage = damageDist; damageToken.repulsionForce = repulsionForce;

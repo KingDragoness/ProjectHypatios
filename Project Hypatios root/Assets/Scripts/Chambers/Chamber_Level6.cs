@@ -358,6 +358,38 @@ public class Chamber_Level6 : MonoBehaviour
         everSpawnSeaver = true;
     }
 
+    public void AutoDishMainPlate()
+    {
+        if (mainPiring.gameObject.activeInHierarchy == false)
+        {
+            DialogueSubtitleUI.instance.QueueDialogue("Get your plate first.", "SYSTEM", 3);
+            return;
+        }
+
+        var listValid = allCustomers;
+        listValid.RemoveAll(x => x.OrderTaken);
+
+        if (listValid.Count == 0)
+        {
+            DialogueSubtitleUI.instance.QueueDialogue("There's no customer.", "SYSTEM", 3);
+            return;
+        }
+
+        Chamber6_Customer customer = listValid[Random.Range(0, allCustomers.Count)];
+   
+
+        if (mainPiring.HasIngredient(Ingredient.Rice))
+        {
+            DialogueSubtitleUI.instance.QueueDialogue("Empty your plate first.", "SYSTEM", 3);
+            return;
+        }
+
+        foreach(var ingredient in customer.order.allRecipes)
+        {
+            mainPiring.AddIngredient(ingredient);
+        }
+    }
+
 
 
     public void AmbilPiring()

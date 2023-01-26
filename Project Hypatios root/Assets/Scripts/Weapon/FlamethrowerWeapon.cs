@@ -29,7 +29,7 @@ public class FlamethrowerWeapon : GunScript
         {
             if (!audioFire.isPlaying) audioFire.Play();
             cooldownDamage -= Time.deltaTime;
-            splashDamageScript.DamagePerSecond = damage * 0.1f;
+            splashDamageScript.DamagePerSecond = damage * 0.15f * Hypatios.Player.BonusDamageGun.Value;
 
             if (cooldownDamage < 0)
             {
@@ -63,7 +63,7 @@ public class FlamethrowerWeapon : GunScript
             float damageDist = (damage * 4f + variableDamage) * multiplierDamage1;
             damageDist = Mathf.Clamp(damageDist, 1, 9999);
 
-            damageToken.damage = damageDist; damageToken.repulsionForce = repulsionForce;
+            damageToken.damage = damageDist * Hypatios.Player.BonusDamageGun.Value; damageToken.repulsionForce = repulsionForce;
             damageToken.origin = DamageToken.DamageOrigin.Player;
             damageToken.isBurn = true;
             damageToken.damageType = DamageToken.DamageType.Fire;

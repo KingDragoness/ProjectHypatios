@@ -24,9 +24,9 @@ public enum StatusEffectCategory
     BossDamageBonus,
     Alcoholism,
     //Bonus Damage weapons for Player 100-120
-    BonusDamagePistol = 100,
-    BonusDamageShotgun = 101,
-    BonusDamageMelee = 102,
+    BonusDamageMelee = 99,
+    BonusDamageGun = 100,
+    BonusDamageShotgun = 102,
     BonusDamageRifle = 103,
     BonusDamageExotics = 104
 }
@@ -74,7 +74,11 @@ public abstract class BaseStatusEffect : MonoBehaviour
             if (statusCategoryType == StatusEffectCategory.BonusDamageMelee)
                 playerScript.BonusDamageMelee.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
+            if (statusCategoryType == StatusEffectCategory.BonusDamageGun)
+                playerScript.BonusDamageGun.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
             var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
+            test1 = playerScript.BonusDamageGun.Value;
         }
         else if (enemyScript)
         {
@@ -108,6 +112,7 @@ public abstract class BaseStatusEffect : MonoBehaviour
         {
             playerScript.speedMultiplier.RemoveAllModifiersFromSource(gameObject);
             playerScript.BonusDamageMelee.RemoveAllModifiersFromSource(gameObject);
+            playerScript.BonusDamageGun.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);

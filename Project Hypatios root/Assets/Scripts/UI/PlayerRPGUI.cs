@@ -322,10 +322,12 @@ public class PlayerRPGUI : MonoBehaviour
         var value1 = Hypatios.Player.GetCharFinalValue(charStatButton.category1);
         var baseStat = Hypatios.Assets.GetStatusEffect(charStatButton.category1);
 
-        if (charStatButton.category1 == StatusEffectCategory.BonusDamageMelee)
+        if (charStatButton.category1 == StatusEffectCategory.BonusDamageMelee
+            | charStatButton.category1 == StatusEffectCategory.BonusDamageGun)
         {
             value1 -= 1;
         }
+
 
         perkTooltip_LeftHandedLabel.text = $"{baseStat.TitlePerk}";
         perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(charStatButton.category1, value1);

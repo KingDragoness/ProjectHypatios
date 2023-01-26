@@ -81,7 +81,7 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusHP = level * 6;
+        float bonusHP = level * 7;
         return bonusHP;
     }
 
@@ -97,9 +97,18 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusMelee = level * 0.04f;
+        float bonusMelee = level * 0.12f;
         return bonusMelee;
     }
+
+    public static float GetValue_BonusGunDamage(int level)
+    {
+        if (level == 0) return 0;
+
+        float bonusGun = level * 0.05f;
+        return bonusGun;
+    }
+
 
     public static float GetValue_KnockbackResistUpgrade(int level)
     {
