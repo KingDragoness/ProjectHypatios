@@ -85,6 +85,11 @@ public class UniversalDamage
     }
 }
 
+[System.Serializable]
+public class MyFloatEvent : UnityEvent<float>
+{
+}
+
 public class damageReceiver : MonoBehaviour
 {
     public EnemyScript enemyScript;
@@ -95,6 +100,8 @@ public class damageReceiver : MonoBehaviour
 
     [Space]
     public UnityEvent OnHit;
+    [HideInInspector] public MyFloatEvent m_MyEvent;
+
 
     public void Attacked(DamageToken token)
     {
@@ -119,7 +126,7 @@ public class damageReceiver : MonoBehaviour
 
         //Debug.Log(gameObject.name);
 
-
+        m_MyEvent.Invoke(token.damage);
         OnHit?.Invoke();
     }
 }

@@ -1,0 +1,97 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.VFX;
+using UnityEngine.UI;
+using Sirenix.OdinInspector;
+using Random = UnityEngine.Random;
+
+
+public class ForceShielderWeapon : GunScript
+{
+
+    [FoldoutGroup("Force Shielder")] public GameObject shieldProtect;
+    [FoldoutGroup("Force Shielder")] public Transform attachTarget;
+    [FoldoutGroup("Force Shielder")] public damageReceiver damageReceiver;
+
+    private void OnEnable()
+    {
+        isFiring = false;
+        shieldProtect.transform.SetParent(null);
+    }
+
+    public override void Start()
+    {
+        base.Start();
+        damageReceiver.m_MyEvent.AddListener(TakeDamage);
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(shieldProtect.gameObject);
+    }
+
+    private void OnDisable()
+    {
+        shieldProtect.gameObject.SetActive(false);
+        attachTarget.gameObject.SetActive(false);
+
+    }
+
+    public void TakeDamage(float damage)
+    {
+        int ammoToRemove = Mathf.RoundToInt(damage*0.2f);
+        curAmmo -= ammoToRemove;
+
+        if (curAmmo <= 0)
+        {
+            curAmmo = 0;
+        }
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (isFiring)
+        {
+            if (!audioFire.isPlaying) audioFire.Play();
+
+            Vector3 posTarget = attachTarget.transform.position;
+            Quaternion rotTarget = attachTarget.transform.rotation;
+            if (posTarget.y > attachTarget.transform.position.y)
+            {
+
+            }
+            shieldProtect.transform.position = posTarget;
+            shieldProtect.transform.rotation = rotTarget;
+        }
+        else
+        {
+            if (audioFire.isPlaying) audioFire.Stop();
+        }
+    }
+
+    public override void FireWeapon()
+    {
+
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (isFiring)
+        {
+            shieldProtect.gameObject.SetActive(true);
+            attachTarget.gameObject.SetActive(true);
+
+
+        }
+        else
+        {
+            shieldProtect.gameObject.SetActive(false);
+            attachTarget.gameObject.SetActive(false);
+        }
+    }
+}

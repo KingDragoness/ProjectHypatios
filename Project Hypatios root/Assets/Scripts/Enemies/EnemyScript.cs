@@ -161,7 +161,7 @@ public abstract class EnemyScript : Entity
         if (!Stats.IsDead)
         {
 
-            if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance))
+            if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance, Hypatios.Enemy.baseDetectionLayer))
             {
                 if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
                 {

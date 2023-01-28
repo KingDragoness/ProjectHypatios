@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: ForceShielder
+  m_EditorClassIdentifier: 
+  nameWeapon: ForceShielder
+  moveSpeed: 1
+  prefab: {fileID: 5695071563311780714, guid: f427e90fd205d8249aa5eec5807866c5, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 857b40d4dd1e2444ca520574e8e98ecc,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: 3e764867b7c3502489d7501804f92ad5, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 4fcae4caaccd84242be83417a4eeb5c7, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
+    type: 3}
+  attachments:
+  - ID: ExtraTank
+    Name: Extra Tank
+    Description: Increases tank to 100.
+    slot: 5
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 1
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    override_magazineSize: 100
+    stat_burn: 0
+    stat_poison: 0
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 3
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 2
+  craft_AmmoAmount: 80
+  isCraftable: 1
+  defaultDamage: 0
+  defaultMagazineSize: 60
+  defaultCooldown: 4
+  buy_AmmoAmount: 60
+  buy_AmmoSoulPrice: 3
+  buy_SoulPrice: 25
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 66
+      inSlope: 19.596167
+      outSlope: 19.596167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07171792
+    - serializedVersion: 3
+      time: 0.9986572
+      value: 120
+      inSlope: 77.26185
+      outSlope: 77.26185
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04589575
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

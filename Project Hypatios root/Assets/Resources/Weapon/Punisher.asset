@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: Punisher
+  m_EditorClassIdentifier: 
+  nameWeapon: Punisher
+  moveSpeed: 1
+  prefab: {fileID: 7951187618127200724, guid: 6c9099a44471b3d4090dae832c3ffabe, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 5989791327783834318, guid: a151c588438b03744ba06dbdb59dc395,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: 56af5aba8b5c51e4f9390ce4e27406b8, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 25f31228eca5d554982285b17ed58f22, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 726582350d5b05c43b62f0e07426786e,
+    type: 3}
+  attachments: []
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+    count: 20
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 10
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+    count: 1
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  craft_AmmoAmount: 50
+  isCraftable: 1
+  defaultDamage: 110
+  defaultMagazineSize: 30
+  defaultCooldown: 10
+  buy_AmmoAmount: 30
+  buy_AmmoSoulPrice: 4
+  buy_SoulPrice: 20
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 14
+      inSlope: 19.596167
+      outSlope: 19.596167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07171792
+    - serializedVersion: 3
+      time: 0.9986572
+      value: 23
+      inSlope: 16.308975
+      outSlope: 16.308975
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.059459478
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

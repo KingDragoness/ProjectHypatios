@@ -155,7 +155,7 @@ public class DecabotEnemy : EnemyScript
         foreach (var eyeLocation in eyeLocations)
         {
             Ray ray = new Ray(eyeLocation.transform.position, currentTarget.transform.position - eyeLocation.transform.position);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, Hypatios.Enemy.baseDetectionLayer))
             {
                 if (hit.transform.tag == "Player")
                 {

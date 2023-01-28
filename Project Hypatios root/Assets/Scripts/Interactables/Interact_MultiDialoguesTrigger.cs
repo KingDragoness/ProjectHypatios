@@ -48,7 +48,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
 
             Gizmos.matrix = t.transform.localToWorldMatrix;
             Gizmos.color = new Color(0.05f, 0.8f, 0.05f, 0.1f);
-            Gizmos.DrawWireCube(Vector3.zero, t.localScale);
+            Gizmos.DrawWireCube(Vector3.zero, t.localScale * 0.5f );
         }
 
     }

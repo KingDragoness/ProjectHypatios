@@ -9,6 +9,7 @@ public class EnemyContainer : MonoBehaviour
 {
 
     [ReadOnly] [ShowInInspector] private List<EnemyScript> AllEnemies = new List<EnemyScript>();
+    public LayerMask baseDetectionLayer;
     public System.Action<EnemyScript> OnEnemyDied;
 
     public void RegisterEnemy(EnemyScript enemy)

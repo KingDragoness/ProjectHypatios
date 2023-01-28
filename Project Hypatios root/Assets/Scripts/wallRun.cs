@@ -12,6 +12,7 @@ public class wallRun : MonoBehaviour
     public CharacterScript character;
 
     public float maxWallDistance = 1f;
+    public float stickToWallForce = 10f;
     public float minHeight = 1f;
     float wallRunGravity;
     public float wallRunJumpForce;
@@ -155,36 +156,46 @@ public class wallRun : MonoBehaviour
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
         wallRunGravity += Time.deltaTime * 3f;
 
+        Vector3 stickWallDir = new Vector3();
+
+
         if (wallLeft)
         {
             tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
+            stickWallDir = transform.up + -leftWallHit.normal;
         }
         else if (wallRight)
         {
             tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
+            stickWallDir = transform.up + -rightWallHit.normal;
         }
         else
         {
             tilt = 0;
         }
 
-       
+
+        rb.AddForce(stickWallDir * stickToWallForce, ForceMode.Force);
+
+
 
         if (Hypatios.Input.Jump.triggered)
         {
             anim.SetTrigger("jumping");
+            float power = Mathf.Clamp(rb.velocity.magnitude * 0.067f, 1f, 4f);
+
             if (wallLeft)
             {
                 Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
 
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
+                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * power * 100, ForceMode.Force);
             }
             else if (wallRight)
             {
                 Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
+                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * power * 100, ForceMode.Force);
             }
         }
     }

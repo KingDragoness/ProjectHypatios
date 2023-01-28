@@ -181,7 +181,7 @@ public class Chamber_Level6 : MonoBehaviour
 
                 //customer spawns
                 {
-                    if (remainingCustomers > 21)
+                    if (remainingCustomers > 16)
                     {
                         if (allCustomers.Count <= 0)
                         {
@@ -192,7 +192,7 @@ public class Chamber_Level6 : MonoBehaviour
                             spawn = true;
                         }
                     }
-                    else if (remainingCustomers > 11)
+                    else if (remainingCustomers > 8)
                     {
                         if (allCustomers.Count <= 0)
                         {
@@ -229,12 +229,12 @@ public class Chamber_Level6 : MonoBehaviour
                     }
                 }
 
-                if (remainingCustomers < 26 && enemies.Count < 10)
+                if (remainingCustomers < 15 && enemies.Count < 10)
                 {
                     AttemptSpawnSpider();
                 }
 
-                if (remainingCustomers <= 12 && remainingCustomers >= 10 && chance > 0.8f)
+                if (remainingCustomers == 6 && chance > 0.8f)
                 {
                     SpawnSeaver();
                 }
@@ -262,11 +262,11 @@ public class Chamber_Level6 : MonoBehaviour
         float chance = Random.Range(0, 1f);
         float spawnLimitChance = 0.05f;
 
-        if (remainingCustomers < 21)
+        if (remainingCustomers < 15)
         {
             spawnLimitChance += 0.02f;
         }
-        if (remainingCustomers < 11)
+        if (remainingCustomers < 6)
         {
             spawnLimitChance += 0.05f;
         }

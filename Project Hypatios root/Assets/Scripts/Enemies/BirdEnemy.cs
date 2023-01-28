@@ -79,6 +79,8 @@ public class BirdEnemy : EnemyScript
     {
         evaluateChoiceTimer += Time.deltaTime;
 
+        if (currentTarget == null) return;
+
         if (evaluateChoiceTimer > 4)
         {
             float dist = Vector3.Distance(transform.position, currentTarget.transform.position);

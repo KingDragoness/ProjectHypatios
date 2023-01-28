@@ -151,6 +151,8 @@ public class PlayerRPGUI : MonoBehaviour
                 Hypatios.Player.Weapon.TransferAllInventoryAmmoToOneItemData(ref itemData);
                 Hypatios.Player.Weapon.RefreshWeaponLoadout(itemData.ID);
                 Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
+
+                itemData.weaponData.currentAmmo = 0;
             }
             else
             {
