@@ -17,6 +17,7 @@ public class MainGameHUDScript : MonoBehaviour
     public Slider healthSlider;
     public Slider justDamagedHealthSlider;
     public Slider dashSlider;
+    public GenericBossUI bossUI;
     public GameObject dashOk;
     public GameObject interactPrompt;
     public GameObject interactContainerPrompt;

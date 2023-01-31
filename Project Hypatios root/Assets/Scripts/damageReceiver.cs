@@ -124,6 +124,9 @@ public class damageReceiver : MonoBehaviour
             soundManagerScript.instance.Play("bingo");
         }
 
+        if (token.origin == DamageToken.DamageOrigin.Player)
+            Hypatios.UI.mainHUDScript.bossUI.currentEnemy = enemyScript;
+
         //Debug.Log(gameObject.name);
 
         m_MyEvent.Invoke(token.damage);
