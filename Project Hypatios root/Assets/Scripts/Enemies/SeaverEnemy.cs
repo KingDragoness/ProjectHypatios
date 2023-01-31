@@ -47,7 +47,8 @@ public class SeaverEnemy : EnemyScript
         {
             Die();
         }
-        else if (token.origin == DamageToken.DamageOrigin.Player)
+
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
         {
             DamageOutputterUI.instance.DisplayText(token.damage);
         }
@@ -63,6 +64,7 @@ public class SeaverEnemy : EnemyScript
         corpse1.transform.position = transform.position;
         corpse1.transform.rotation = transform.rotation;
         OnDied?.Invoke();
+        Stats.IsDead = true;
 
     }
 

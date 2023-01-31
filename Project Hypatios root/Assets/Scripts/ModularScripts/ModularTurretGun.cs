@@ -17,7 +17,6 @@ public class ModularTurretGun : MonoBehaviour
     [FoldoutGroup("References")] public Transform outWeaponTransform;
     [FoldoutGroup("References")] public GameObject flashWeapon;
     [FoldoutGroup("References")] public GameObject tracerLaser;
-    public LayerMask layermaskWeapon;
 
     private EnemyScript targetEnemy;
     private float nextAttackTime = 0f;
@@ -60,7 +59,7 @@ public class ModularTurretGun : MonoBehaviour
         isHittingSomething = false;
         isHittingTarget = false;
 
-        if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layermaskWeapon, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
             isHittingSomething = true;
 

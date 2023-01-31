@@ -117,7 +117,16 @@ public class DynamicObjectPool : MonoBehaviour
         }
     }
 
-    public GameObject SummonObject(GameObject prefab, int startingAmount = 30, int hardLimit = 1000, bool IncludeActive = false)
+    /// <summary>
+    /// Can pool object on demand. IMPORTANT: Override position must be done under this function or else ObjectPool events might not work.
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="startingAmount"></param>
+    /// <param name="hardLimit"></param>
+    /// <param name="IncludeActive"></param>
+    /// <param name="spawnPos"></param>
+    /// <returns></returns>
+    public GameObject SummonObject(GameObject prefab, int startingAmount = 30, int hardLimit = 1000, bool IncludeActive = false, Vector3 spawnPos = new Vector3())
     {
         if (prefab == null)
         {
@@ -138,11 +147,23 @@ public class DynamicObjectPool : MonoBehaviour
         {
             instance.transform.SetParent(this.transform);
             var objPool = instance.GetComponent<ObjectPool>();
-            if (objPool != null) objPool.OnReuseObject();
+            if (objPool != null)
+            {
+                if (spawnPos.x != 0) objPool.transform.position = spawnPos;
+                objPool.OnReuseObject(); 
+            }
         }
         return instance;
     }
 
+    /// <summary>
+    /// Summon pre-determined particle.
+    /// </summary>
+    /// <param name="particle"></param>
+    /// <param name="IncludeActive"></param>
+    /// <param name="_pos"></param>
+    /// <param name="_rot"></param>
+    /// <returns></returns>
     public GameObject SummonParticle(CategoryParticleEffect particle, bool IncludeActive = false, Vector3 _pos = new Vector3(), Quaternion _rot = new Quaternion())
     {
         var targetPool = _pools.Find(x => x.Category == particle);

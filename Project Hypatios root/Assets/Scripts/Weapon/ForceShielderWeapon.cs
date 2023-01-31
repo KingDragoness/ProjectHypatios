@@ -30,12 +30,15 @@ public class ForceShielderWeapon : GunScript
     private void OnDestroy()
     {
         Destroy(shieldProtect.gameObject);
+        Hypatios.Player.Health.armorStrength = 1f;
+
     }
 
     private void OnDisable()
     {
         shieldProtect.gameObject.SetActive(false);
         attachTarget.gameObject.SetActive(false);
+        Hypatios.Player.Health.armorStrength = 1f;
 
     }
 
@@ -49,6 +52,8 @@ public class ForceShielderWeapon : GunScript
             curAmmo = 0;
         }
     }
+
+    bool b = false;
 
     public override void Update()
     {
@@ -66,10 +71,17 @@ public class ForceShielderWeapon : GunScript
             }
             shieldProtect.transform.position = posTarget;
             shieldProtect.transform.rotation = rotTarget;
+
+            Hypatios.Player.Health.armorStrength = GetFinalValue("Armor");
+
+
         }
         else
         {
             if (audioFire.isPlaying) audioFire.Stop();
+
+            Hypatios.Player.Health.armorStrength = 1f;
+
         }
     }
 

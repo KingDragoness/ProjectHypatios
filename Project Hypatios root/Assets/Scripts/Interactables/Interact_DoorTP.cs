@@ -18,7 +18,9 @@ public class Interact_DoorTP : InteractableObject
     public override void Interact()
     {
         Hypatios.Player.transform.position = target.position;
+        Hypatios.UI.mainHUDScript.FadeIn();
         if (interactSound != null) interactSound.Play();
+        else soundManagerScript.instance.Play("door");
     }
 
     public override string GetDescription()

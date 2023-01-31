@@ -87,7 +87,7 @@ public class AI_InvaderDrone : MonoBehaviour
         isHittingSomething = false;
         isHittingTarget = false;
 
-        if (Physics.Raycast(turretGun.transform.position, turretGun.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, turretGun.layermaskWeapon, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(turretGun.transform.position, turretGun.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
             isHittingSomething = true;
 

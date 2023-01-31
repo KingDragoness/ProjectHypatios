@@ -89,7 +89,8 @@ public abstract class Enemy_FW_Bot : EnemyScript
     public override void Attacked(DamageToken token)
     {
         Stats.CurrentHitpoint -= token.damage;
-        if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
+            DamageOutputterUI.instance.DisplayText(token.damage);
 
         if (Stats.CurrentHitpoint < 0)
         {
@@ -116,6 +117,7 @@ public abstract class Enemy_FW_Bot : EnemyScript
         }
         OnDied?.Invoke();
         Destroy(gameObject);
+        Stats.IsDead = true;
     }
 
 

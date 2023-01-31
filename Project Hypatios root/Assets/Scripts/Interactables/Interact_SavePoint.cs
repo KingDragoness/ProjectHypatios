@@ -12,6 +12,10 @@ public class Interact_SavePoint : MonoBehaviour
     public void Hover()
     {
         isHover = true;
+
+        Hypatios.Game.RuntimeTutorialHelp("Save Point", "You can save your progress in the middle of a level. Your inventory, weapons, trivias will be saved however " +
+            " keep in mind your progress in the level will not always be saved when loaded.", "SaveCheckPoint");
+
     }
 
     public void NotHover()

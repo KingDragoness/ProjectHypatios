@@ -144,10 +144,14 @@ public abstract class EnemyScript : Entity
 
     [FoldoutGroup("Debug")]
     [Button("Enforce scan target")]
-    public virtual void ScanForEnemies()
+    public virtual void ScanForEnemies(float favorPlayer = 0f)
     {
         float distPlayer = Vector3.Distance(Hypatios.Player.transform.position, transform.position);
         float f_valueChoosingPlayerAllies = Mathf.Clamp(distPlayer * 0.03f, 0.3f, 0.9f); //distance is 20 then 0.6, distance is 33 then 1 (limit)
+        if (favorPlayer > 0f)
+        {
+            f_valueChoosingPlayerAllies = favorPlayer;
+        }
         currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position, chanceSelectAlly: f_valueChoosingPlayerAllies);
     }
 

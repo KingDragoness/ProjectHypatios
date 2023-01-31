@@ -8,6 +8,7 @@ public class MainGameHUDScript : MonoBehaviour
 {
 
     public GameObject FadeOutSceneTransition;
+    public GameObject FadeInSceneTransition;
 
     [Header("Player")]
     public Text healthPoint;
@@ -207,6 +208,12 @@ public class MainGameHUDScript : MonoBehaviour
         if (isEnteringName)
         { promptUIInputNameGroup.gameObject.SetActive(true); }
         else { promptUIInputNameGroup.gameObject.SetActive(false); }
+    }
+
+    public void FadeIn()
+    {
+        FadeInSceneTransition.gameObject.SetActive(false);
+        FadeInSceneTransition.gameObject.SetActive(true);
     }
 
 

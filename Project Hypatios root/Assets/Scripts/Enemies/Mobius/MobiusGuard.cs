@@ -35,7 +35,6 @@ public class MobiusGuard : EnemyScript
     [FoldoutGroup("Weapon")] public GameObject sparkBullet;
     [FoldoutGroup("Weapon")] public GameObject flashWeapon;
     [FoldoutGroup("Weapon")] public GameObject tracerLaser;
-    [FoldoutGroup("Weapon")] public LayerMask layermaskWeapon;
     [FoldoutGroup("Weapon")] public AudioSource audio_FireGun;
     [FoldoutGroup("Weapon")] public AudioSource audio_Flyby;
     [FoldoutGroup("Weapon")] public List<AudioClip> audioClipsAudioFlyby;
@@ -316,7 +315,7 @@ public class MobiusGuard : EnemyScript
 
         bool PlayerSee = false;
 
-        if (Physics.Raycast(outEye.position, targetDir, out hit1, Mathf.Infinity, layermaskWeapon))
+        if (Physics.Raycast(outEye.position, targetDir, out hit1, Mathf.Infinity, Hypatios.Enemy.baseDetectionLayer))
         {
             Debug.DrawRay(outEye.position, targetDir * hit1.distance, Color.red);
 
@@ -346,7 +345,7 @@ public class MobiusGuard : EnemyScript
         bool isHittingSomething = false;
         bool isHittingPlayer = false;
 
-        if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layermaskWeapon))
+        if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer))
         {
             isHittingSomething = true;
             Debug.DrawRay(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward) * hit.distance, Color.green);

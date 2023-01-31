@@ -171,14 +171,13 @@ public class BirdEnemy : EnemyScript
 
         hasSeen = true;
 
+        if (!Stats.IsDead)
+            DamageOutputterUI.instance.DisplayText(token.damage);
         if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
-        else
-        {
-            DamageOutputterUI.instance.DisplayText(token.damage);
-        }
+
     }
 
     public override void Die()
@@ -191,6 +190,7 @@ public class BirdEnemy : EnemyScript
             audio_Die.Play();
             Debug.Log("Dies.");
             isDead = true;
+            Stats.IsDead = true;
         }
 
         afterDeathTime += Time.deltaTime;

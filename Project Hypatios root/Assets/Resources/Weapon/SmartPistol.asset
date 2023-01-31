@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: SmartPistol
   m_EditorClassIdentifier: 
   nameWeapon: SmartPistol
-  moveSpeed: 1
   prefab: {fileID: 3945017644634600252, guid: a41723eb0c13afb46ac57019ff6190f6, type: 3}
   UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 49d1cfb621c6f7741b80195afbbf1eec,
     type: 3}
@@ -33,6 +32,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 40
     stat_burn: 0
     stat_poison: 0
@@ -65,6 +66,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.3
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -81,6 +83,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.3
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -99,6 +102,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.5
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -113,19 +117,19 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
     count: 1
   craft_AmmoAmount: 40
-  isCraftable: 1
-  defaultDamage: 22
-  defaultMagazineSize: 16
-  defaultCooldown: 12.5
   buy_AmmoAmount: 40
   buy_AmmoSoulPrice: 3
   buy_SoulPrice: 40
+  isCraftable: 1
+  defaultDamage: 30
+  defaultMagazineSize: 16
+  defaultCooldown: 12.5
   rewardRate:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 23
+      value: 30
       inSlope: 5.6874986
       outSlope: 5.6874986
       tangentMode: 0
@@ -134,7 +138,7 @@ MonoBehaviour:
       outWeight: 0.06486487
     - serializedVersion: 3
       time: 0.9986572
-      value: 50
+      value: 63
       inSlope: 19.53153
       outSlope: 19.53153
       tangentMode: 0
@@ -144,3 +148,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

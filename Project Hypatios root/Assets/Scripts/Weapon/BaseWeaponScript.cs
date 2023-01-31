@@ -4,6 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
+[System.Serializable]
+public class CustomVariable
+{
+    public enum Type
+    {
+        Init,
+        FlatAdd,
+        Override
+    }
+
+    public string variableName = "EnhancedParalyzer";
+    public float value = 0.05f;
+    public Type type = Type.Init;
+
+    public CustomVariable(string variableName)
+    {
+        this.variableName = variableName;
+    }
+}
+
 public abstract class BaseWeaponScript : MonoBehaviour
 {
 
@@ -15,6 +35,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
 
 
     [FoldoutGroup("Weapon Stat")] public List<string> allAttachments = new List<string>();
+    [FoldoutGroup("Weapon Stat")] [ReadOnly] public List<CustomVariable> CustomVariables = new List<CustomVariable>();
     [FoldoutGroup("Weapon Stat")] public float damage;
     [FoldoutGroup("Weapon Stat")] public float variableAdditionalDamage = 4f;
     [FoldoutGroup("Weapon Stat")] public bool isAmmoUnlimited = false;
@@ -40,5 +61,23 @@ public abstract class BaseWeaponScript : MonoBehaviour
     public virtual void FireInput()
     {
 
+    }
+
+    internal CustomVariable GetCustomVariable(string ID)
+    {
+        return CustomVariables.Find(x => x.variableName == ID);
+    }
+
+    internal float GetFinalValue(string ID)
+    {
+        var allCustomVariables = CustomVariables.FindAll(x => x.variableName == ID);
+        float value = 0f;
+
+        foreach(var variable in allCustomVariables)
+        {
+            value = variable.value;
+        }
+
+        return value;
     }
 }

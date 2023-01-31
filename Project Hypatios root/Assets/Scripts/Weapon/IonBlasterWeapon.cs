@@ -35,34 +35,37 @@ public class IonBlasterWeapon : GunScript
         cooldownFire -= Time.deltaTime;
 
 
-        if (isFiring)
+        if (isAutomatic == false)
         {
-            _currentChargeTime += Time.deltaTime;
-            if (!audioLaserLoop.isPlaying) audioLaserLoop.Play();
-
-            float endTime = (1f / bulletPerSecond + 0.05f);
-            float a = _currentChargeTime / endTime;
-            a = Mathf.Clamp(a, 0f, 1f);
-            float pitch = Mathf.Lerp(minPitchLaser, maxPitchLaser, a);
-            audioLaserLoop.pitch = a;
-            chargingIonParticle.Play();
-
-            if (_currentChargeTime > endTime)
+            if (isFiring)
             {
-                isChargeReady = true;
-            }
-        }
-        else
-        {
-            if (audioLaserLoop.isPlaying) audioLaserLoop.Stop();
-            if (isChargeReady && cooldownFire < 0f)
-            {
-                if (curAmmo > 0) LaunchProjectile();
-                isChargeReady = false;
-            }
-            _currentChargeTime = 0f;
-            chargingIonParticle.Stop();
+                _currentChargeTime += Time.deltaTime;
+                if (!audioLaserLoop.isPlaying) audioLaserLoop.Play();
 
+                float endTime = (1f / bulletPerSecond + 0.05f);
+                float a = _currentChargeTime / endTime;
+                a = Mathf.Clamp(a, 0f, 1f);
+                float pitch = Mathf.Lerp(minPitchLaser, maxPitchLaser, a);
+                audioLaserLoop.pitch = a;
+                chargingIonParticle.Play();
+
+                if (_currentChargeTime > endTime)
+                {
+                    isChargeReady = true;
+                }
+            }
+            else
+            {
+                if (audioLaserLoop.isPlaying) audioLaserLoop.Stop();
+                if (isChargeReady && cooldownFire < 0f)
+                {
+                    if (curAmmo > 0) LaunchProjectile();
+                    isChargeReady = false;
+                }
+                _currentChargeTime = 0f;
+                chargingIonParticle.Stop();
+
+            }
         }
     }
 
@@ -71,33 +74,62 @@ public class IonBlasterWeapon : GunScript
     {
 
 
-        if (Hypatios.Input.Fire1.WasReleasedThisFrame() && bulletPerSecond > 5 && curAmmo > 0 && !isReloading && IsRecentlyPaused())
+        if (isAutomatic == false)
         {
-            if (cooldownFire < 0f)
+            if (Hypatios.Input.Fire1.WasReleasedThisFrame() && bulletPerSecond > 5 && curAmmo > 0 && !isReloading && IsRecentlyPaused())
             {
-                LaunchProjectile();
-            }
-        }
-
-
-        if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && !isReloading)
-        {
-            if (!isFiring)
-            {
-                isFiring = true;
+                if (cooldownFire < 0f)
+                {
+                    LaunchProjectile();
+                }
             }
 
-        }
-        else
-        {
-            if (isFiring)
+
+            if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && !isReloading)
             {
-                isFiring = false;
+                if (!isFiring)
+                {
+                    isFiring = true;
+                }
+
+            }
+            else
+            {
+                if (isFiring)
+                {
+                    isFiring = false;
+                }
+
+            }
+        }
+        else //For Aktion
+        {
+
+            if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && !isReloading)
+            {
+                if (!isFiring)
+                {
+                    isFiring = true;
+                    anim.SetBool("isFiring", isFiring);
+                }
+
+                if (Time.time >= nextAttackTime)
+                {
+                    LaunchProjectile();
+                    nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+                }
+            }
+            else
+            {
+                if (isFiring)
+                {
+                    isFiring = false;
+                    anim.SetBool("isFiring", isFiring);
+                }
+
             }
 
         }
-
-    
     }
 
     public void LaunchProjectile()

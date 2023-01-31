@@ -16,7 +16,6 @@ public class MeleeScript : MonoBehaviour
     int weaponBeforeMelee;
     Animator meleeAnim;
     bool hasMeleed;
-    public LayerMask layerMask;
     public bool IsOnMeleeAttack = false;
 
     WeaponManager WeaponManager;
@@ -90,7 +89,7 @@ public class MeleeScript : MonoBehaviour
         Vector3 raycastDir = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
         audio_Swing.Play();
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, meleeRange, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, meleeRange, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
             Debug.Log(hit.transform.name);
             var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();

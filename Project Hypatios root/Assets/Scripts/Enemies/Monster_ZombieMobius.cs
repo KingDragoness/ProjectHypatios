@@ -58,7 +58,9 @@ public class Monster_ZombieMobius : EnemyScript
 
         Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);
-        DamageOutputterUI.instance.DisplayText(token.damage);
+
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
+            DamageOutputterUI.instance.DisplayText(token.damage);
 
     }
     public void SetTarget(Transform target1 = null)
@@ -86,8 +88,16 @@ public class Monster_ZombieMobius : EnemyScript
 
         if (isAIEnabled == false) return;
 
-        if (Mathf.RoundToInt(Time.time) % 5 == 0)
-            ScanForEnemies();
+        if (Hypatios.Enemy.IsPlayerInNavMesh)
+        {
+            if (Mathf.RoundToInt(Time.time) % 5 == 0)
+                ScanForEnemies(0.1f);
+        }
+        else
+        {
+            if (Mathf.RoundToInt(Time.time) % 5 == 0)
+                ScanForEnemies(1);
+        }
 
         if (currentTarget == null) return;
 
@@ -124,8 +134,9 @@ public class Monster_ZombieMobius : EnemyScript
     public override void Die()
     {
         SpawnHeal.SpawnHealCapsule(2);
+        NavMeshAgent.Stop();
         animator.SetBool("Dead", true);
-        Destroy(gameObject, 5f);
+        //Destroy(gameObject, 5f);
         OnDead?.Invoke();
         OnDied?.Invoke();
     }

@@ -20,7 +20,6 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     public float repositionRange = 3f;
     [FoldoutGroup("Weapons")] public GameObject weapon_DebugFlashFire;
     [FoldoutGroup("Weapons")] public GameObject weapon_OriginFire;
-    [FoldoutGroup("Weapons")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapons")] public float laser_Damage = 20;
 
     #region INPUTS 
@@ -136,7 +135,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
 
         RaycastHit hit;
 
-        if (Physics.Raycast(weapon_OriginFire.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
+        if (Physics.Raycast(weapon_OriginFire.transform.position, dir, out hit, 100f, Hypatios.Enemy.baseSolidLayer))
         {
             var token = new DamageToken();
             token.damage = laser_Damage;

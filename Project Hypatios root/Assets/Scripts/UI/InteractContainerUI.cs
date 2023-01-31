@@ -136,9 +136,7 @@ public class InteractContainerUI : MonoBehaviour
             var newButton = Instantiate(button, parentContainer);
             var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 
-            Debug.Log(itemDat.ID);
             if (itemClass == null) continue;
-            Debug.Log(itemClass.name);
 
             newButton.gameObject.SetActive(true);
             newButton.nameLabel.text = itemClass.GetDisplayText();

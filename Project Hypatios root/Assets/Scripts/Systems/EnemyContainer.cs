@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using Sirenix.OdinInspector;
 
 
@@ -10,7 +11,11 @@ public class EnemyContainer : MonoBehaviour
 
     [ReadOnly] [ShowInInspector] private List<EnemyScript> AllEnemies = new List<EnemyScript>();
     public LayerMask baseDetectionLayer;
+    public LayerMask baseSolidLayer; //non transparent
     public System.Action<EnemyScript> OnEnemyDied;
+
+    private bool _isPlayerInNavMesh = false;
+    public bool IsPlayerInNavMesh { get => _isPlayerInNavMesh; }
 
     public void RegisterEnemy(EnemyScript enemy)
     {
@@ -29,7 +34,47 @@ public class EnemyContainer : MonoBehaviour
         return AllEnemies.FindAll(x => x.Stats.MainAlliance != alliance).Count;
     }
 
+    private float _cooldownPlayerNavMeshValid = 0.1f;
+
+    private void Update()
+    {
+        if (AllEnemies.Count == 0) return;
+
+        _cooldownPlayerNavMeshValid -= Time.deltaTime;
+
+        if (_cooldownPlayerNavMeshValid < 0f)
+        {
+
+            CheckCalculate(AllEnemies[Random.Range(0, AllEnemies.Count)]);
+            _cooldownPlayerNavMeshValid = 0.1f;
+        }
+    }
+
+    private void CheckCalculate(EnemyScript enemyScript)
+    {
+        NavMeshPath navMeshPath = new NavMeshPath();
+        if (enemyScript == null) return;
+        var agent = enemyScript.GetComponent<NavMeshAgent>();
+
+        if (agent == null) return;
+        if (agent.enabled == false) return;
+        if (enemyScript.gameObject.activeInHierarchy == false) return;
+        if (enemyScript.Stats.IsDead == true) return;
+
+        if (agent.CalculatePath(Hypatios.Player.transform.position, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
+        {
+            _isPlayerInNavMesh = true;
+
+        }
+        else
+        {
+            _isPlayerInNavMesh = false;
+        }
+
+    }
+
     [FoldoutGroup("Debug")] [ShowInInspector] [ReadOnly] private List<EnemyScript> tempList_NearestEnemy = new List<EnemyScript>();
+
 
     [FoldoutGroup("Debug")] [Button("testOrderDistance")]
     public void ListOrderTest(Transform enemyOrigin)

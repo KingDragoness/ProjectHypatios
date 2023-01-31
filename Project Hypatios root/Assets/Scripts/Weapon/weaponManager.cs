@@ -478,6 +478,7 @@ public class WeaponManager : MonoBehaviour
         weaponScript.recoilMultiplier = weaponStat.recoilMultiplier;
         weaponScript.isBurnBullet = weaponStat.isBurn;
         weaponScript.isPoisonBullet = weaponStat.isPoison;
+        weaponScript.CustomVariables = weaponStat.customVariable;
 
         var attachmentVisuals = GetComponentsInChildren<WeaponAttachmentVisuals>();
 

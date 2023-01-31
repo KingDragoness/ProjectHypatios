@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ForceShielder
   m_EditorClassIdentifier: 
   nameWeapon: ForceShielder
-  moveSpeed: 1
   prefab: {fileID: 5695071563311780714, guid: f427e90fd205d8249aa5eec5807866c5, type: 3}
   UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 857b40d4dd1e2444ca520574e8e98ecc,
     type: 3}
@@ -37,7 +36,26 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 100
+    stat_burn: 0
+    stat_poison: 0
+  - ID: ExtraArmor
+    Name: Extra Protection
+    Description: Change armor rating from 30% to 60%.
+    slot: 1
+    order: 10
+    RequirementCrafting: []
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: Armor
+      value: 1.6
+      type: 2
+    override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
   WeaponRequirementCrafting:
@@ -51,13 +69,13 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
     count: 2
   craft_AmmoAmount: 80
+  buy_AmmoAmount: 60
+  buy_AmmoSoulPrice: 3
+  buy_SoulPrice: 25
   isCraftable: 1
   defaultDamage: 0
   defaultMagazineSize: 60
   defaultCooldown: 4
-  buy_AmmoAmount: 60
-  buy_AmmoSoulPrice: 3
-  buy_SoulPrice: 25
   rewardRate:
     serializedVersion: 2
     m_Curve:
@@ -82,3 +100,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables:
+  - variableName: Armor
+    value: 1.3
+    type: 0

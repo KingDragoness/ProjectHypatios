@@ -70,14 +70,14 @@ public class DecabotEnemy : EnemyScript
         }
 
 
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
+            DamageOutputterUI.instance.DisplayText(token.damage);
+
         if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
-        else if (token.origin == DamageToken.DamageOrigin.Player)
-        {
-            DamageOutputterUI.instance.DisplayText(token.damage);
-        }
+
     }
 
     public override void Die()
@@ -88,6 +88,7 @@ public class DecabotEnemy : EnemyScript
         corpse1.gameObject.SetActive(true);
         corpse1.transform.position = transform.position;
         corpse1.transform.rotation = transform.rotation;
+        Stats.IsDead = true;
     }
 
     private void Update()

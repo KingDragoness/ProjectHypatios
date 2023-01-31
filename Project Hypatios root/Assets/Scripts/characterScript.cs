@@ -321,7 +321,7 @@ public class CharacterScript : Entity
 
                     {
                         float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 3);
-                        Weapon.Recoil.CustomRecoil(new Vector3(5, -5f, 5f), multiplierAir);
+                        Weapon.Recoil.CustomRecoil(new Vector3(6, -13f, 6f), multiplierAir);
                     }
                     airTime = 0;
 

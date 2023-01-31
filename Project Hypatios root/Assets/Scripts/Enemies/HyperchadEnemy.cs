@@ -31,6 +31,7 @@ public class HyperchadEnemy : EnemyScript
     public Transform playerTarget;
     public Animator bossAnimator;
     public GameObject molotovBomb;
+    public OnTriggerEnterEvent eventTriggerBoss;
     public ThrowProjectileEnemy throwProjectileEnemy;
 
     [Space]
@@ -121,6 +122,9 @@ public class HyperchadEnemy : EnemyScript
 
         if (isAIEnabled == false) return;
 
+        if (hasTriggeredFinalForm && !isOnFinalForm)
+            PrepareFinalForm();
+
         if (allowAIDecision && currentStance != MoveStances.Unactivated && !hasTriggeredFinalForm)
         {
             AI_Decision();
@@ -183,7 +187,8 @@ public class HyperchadEnemy : EnemyScript
     {
         if (currentStance == MoveStances.Unactivated)
         {
-            //ActivateEnemy();
+            eventTriggerBoss.TriggerManual();
+            ActivateEnemy();
         }
 
         if (token.originEnemy == this)

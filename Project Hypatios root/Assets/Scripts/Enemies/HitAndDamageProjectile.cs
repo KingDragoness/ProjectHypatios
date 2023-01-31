@@ -11,6 +11,8 @@ public class HitAndDamageProjectile : MonoBehaviour
     public bool isBurn = false;
     public bool allowHitEnemy = false;
     public bool isAllowIndicator = false;
+    public bool useObjectPooler = false;
+    [ShowIf("useObjectPooler")] public bool reuseInactive = true;
     [Tooltip("For player-made explosions")] [ShowIf("allowHitEnemy")] public bool shouldOverrideAsPlayerOrigin = false;
     public EnemyScript enemyOrigin;
     public UnityEvent OnHitImpact;
@@ -57,7 +59,14 @@ public class HitAndDamageProjectile : MonoBehaviour
 
     public void SpawnSomething()
     {
-       var gameObject1 = Instantiate(prefabSpawnOnImpact, transform.position, Quaternion.identity);
+        GameObject gameObject1 = null;
+
+        if (useObjectPooler == false)
+            gameObject1 = Instantiate(prefabSpawnOnImpact, transform.position, Quaternion.identity);
+        else
+        {
+            gameObject1 = Hypatios.ObjectPool.SummonObject(prefabSpawnOnImpact, 2, 30, reuseInactive, spawnPos: transform.position);
+        }
         gameObject1.gameObject.SetActive(true);
 
         if (shouldOverrideAsPlayerOrigin)

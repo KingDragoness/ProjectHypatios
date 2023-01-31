@@ -319,15 +319,15 @@ public class SpiderScript : EnemyScript
             transform.position += Vector3.back * 0.05f * token.repulsionForce;
         }
 
+        if (Stats.IsDead == false)
+            if (token.origin == DamageToken.DamageOrigin.Player | token.origin == DamageToken.DamageOrigin.Ally) DamageOutputterUI.instance.DisplayText(token.damage);
 
         if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
         }
-        else
-        {
-            if (token.origin == DamageToken.DamageOrigin.Player | token.origin == DamageToken.DamageOrigin.Ally) DamageOutputterUI.instance.DisplayText(token.damage);
-        }
+        
+      
     }
 
     public override void Die()

@@ -22,7 +22,6 @@ public class Enemy_FW_SentryGun : EnemyScript
     [ReadOnly] [FoldoutGroup("Weapon")] public Transform target;
     [FoldoutGroup("Weapon")] public Transform v_target_Turret;
     [FoldoutGroup("Weapon")] public Transform[] allTurretOrigin;
-    [FoldoutGroup("Weapon")] public LayerMask weapon_WeaponLayer;
     [FoldoutGroup("Weapon")] public float weapon_Damage = 20;
     [FoldoutGroup("Weapon")] public AudioSource audio_Fire;
 
@@ -167,7 +166,7 @@ public class Enemy_FW_SentryGun : EnemyScript
 
         RaycastHit hit;
 
-        if (Physics.Raycast(origin.transform.position, dir, out hit, 100f, weapon_WeaponLayer))
+        if (Physics.Raycast(origin.transform.position, dir, out hit, 100f, Hypatios.Enemy.baseSolidLayer))
         {
             var token = new DamageToken();
             token.damage = weapon_Damage;
@@ -202,10 +201,10 @@ public class Enemy_FW_SentryGun : EnemyScript
     public override void Attacked(DamageToken token)
     {
         Stats.CurrentHitpoint -= token.damage;
-        if (token.origin == DamageToken.DamageOrigin.Player) 
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player) 
             DamageOutputterUI.instance.DisplayText(token.damage);
 
-        Debug.Log($"{token.damage} - {token.origin} | {token.originEnemy}");
+       // Debug.Log($"{token.damage} - {token.origin} | {token.originEnemy}");
 
         float percentage = Stats.CurrentHitpoint / Stats.MaxHitpoint.Value;
 
@@ -254,6 +253,8 @@ public class Enemy_FW_SentryGun : EnemyScript
         }
         OnDied?.Invoke();
         Destroy(gameObject);
+        Stats.IsDead = true;
+
     }
 
 }

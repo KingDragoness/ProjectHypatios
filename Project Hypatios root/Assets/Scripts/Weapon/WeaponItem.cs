@@ -27,6 +27,12 @@ public class WeaponItem : ScriptableObject
         public bool isBurn = false;
         public bool isPoison = false;
         public int magazineSize = 0;
+        public List<CustomVariable> customVariable = new List<CustomVariable>();
+
+        public CustomVariable GetCustomVariable(string ID)
+        {
+            return customVariable.Find(x => x.variableName == ID);
+        }
     }
 
     [System.Serializable]
@@ -53,9 +59,15 @@ public class WeaponItem : ScriptableObject
         [FoldoutGroup("Modifiers")] public float modifier_percent_movespeed = 0f;
         [FoldoutGroup("Modifiers")] public float modifier_percent_accuracy = 1;
         [FoldoutGroup("Modifiers")] public float modifier_percent_recoil = 1;
+        [FoldoutGroup("Modifiers")] public List<CustomVariable> modifier_customVariable = new List<CustomVariable>();
         [FoldoutGroup("Modifiers")] public int override_magazineSize = 10;
         [FoldoutGroup("Modifiers")] public bool stat_burn = false;
         [FoldoutGroup("Modifiers")] public bool stat_poison = false;
+
+        public CustomVariable GetCustomVariable(string ID)
+        {
+            return modifier_customVariable.Find(x => x.variableName == ID);
+        }
 
         public string GetRequirementText()
         {
@@ -103,7 +115,6 @@ public class WeaponItem : ScriptableObject
 
 
     public string nameWeapon = "Pistol";
-    public float moveSpeed = 1f; //1/100%, normal speed. 0.5/50% for heavy weapons
     public GameObject prefab;
     public Template_AmmoAddedIcon UI_TemplateAmmoAdded;
     public Sprite weaponIcon;
@@ -113,16 +124,17 @@ public class WeaponItem : ScriptableObject
     [ShowIf("isCraftable", false)] public List<Recipe> WeaponRequirementCrafting = new List<Recipe>();
     [FoldoutGroup("Ammo Crafts")] public List<Recipe> AmmoRequirementCrafting = new List<Recipe>();
     [FoldoutGroup("Ammo Crafts")] public int craft_AmmoAmount = 20;
+    [FoldoutGroup("Charge Station")] public int buy_AmmoAmount = 20;
+    [FoldoutGroup("Charge Station")] public int buy_AmmoSoulPrice = 2;
+    [FoldoutGroup("Charge Station")] public int buy_SoulPrice = 2;
     public bool isCraftable = false;
     public int defaultDamage;
     public int defaultMagazineSize;
     public float defaultCooldown;
-    [FoldoutGroup("Charge Station")] public int buy_AmmoAmount = 20;
-    [FoldoutGroup("Charge Station")] public int buy_AmmoSoulPrice = 2;
-    [FoldoutGroup("Charge Station")] public int buy_SoulPrice = 2;
-    //t: 0 - 1
-    //value: 0 - anything beyond 0
     public AnimationCurve rewardRate;
+    public float moveSpeed = 1f; //1/100%, normal speed. 0.5/50% for heavy weapons
+    public List<CustomVariable> defaultVariables = new List<CustomVariable>();
+
 
     public WeaponFinalStat GetFinalStat(List<string> allAttachments)
     {
@@ -133,7 +145,19 @@ public class WeaponItem : ScriptableObject
         stat.recoilMultiplier = 1f;
         var newList = attachments.OrderBy(x => x.order).ToList();
 
- 
+        //Initialize default variables
+        foreach (var var1 in defaultVariables)
+        {
+            var statVariable = stat.GetCustomVariable(var1.variableName);
+
+            if (statVariable == null)
+            {
+                statVariable = new CustomVariable(var1.variableName);
+                statVariable.value = var1.value;
+                stat.customVariable.Add(statVariable);
+            }
+        }
+
         foreach (var attach in newList)
         {
             if (allAttachments.Contains(attach.ID) == false) continue;
@@ -145,6 +169,21 @@ public class WeaponItem : ScriptableObject
             if (attach.stat_burn) stat.isBurn = attach.stat_burn;
             if (attach.stat_poison) stat.isPoison = attach.stat_poison;
             if (attach.override_magazineSize > 0) stat.magazineSize = attach.override_magazineSize;
+
+
+            foreach (var var1 in defaultVariables)
+            {
+                var customVariable = attach.GetCustomVariable(var1.variableName);
+                var statVariable = stat.GetCustomVariable(var1.variableName);
+
+                if (customVariable == null) continue;
+
+                if (customVariable.type == CustomVariable.Type.FlatAdd)
+                    statVariable.value += customVariable.value;
+
+                if (customVariable.type == CustomVariable.Type.Override)
+                    statVariable.value = customVariable.value;
+            }
         }
 
         if (stat.magazineSize <= 0) stat.magazineSize = defaultMagazineSize;

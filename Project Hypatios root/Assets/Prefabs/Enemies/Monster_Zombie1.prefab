@@ -4966,9 +4966,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1875892279205684269}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1875892279205684273
@@ -5019,7 +5023,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8394c631da09fce418387302c7e51079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundingBox:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
   _baseStat: {fileID: 11400000, guid: 3f05580899de9084195d971d76e3c589, type: 2}
+  hasSeenPlayer: 0
+  isAIEnabled: 1
+  eyeLocation: {fileID: 0}
   variantControllers:
   - {fileID: 22100000, guid: 1eebb71d1300e9547915500e98404f68, type: 2}
   - {fileID: 22100000, guid: dbf53c7eaaabc634daa7ffaf835fc3e0, type: 2}
@@ -5131,14 +5141,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  hitpoint: 144
   animator: {fileID: 5431930210197499611}
-  speed: 11
+  speed: 5
   distanceToAttack: 3
   hitbox: {fileID: 1321675875}
   visualAttack: {fileID: 6399049525065384047}
-  target: {fileID: 0}
-  playerTarget: {fileID: 0}
   cooldownAttack: 1.5
   hitboxStart: 0.2
   hitboxLasts: 0.15
@@ -5152,7 +5159,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 9
+  m_Speed: 4
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -5178,98 +5185,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
     type: 3}
---- !u!1 &1875892279819073995
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1875892279819073994}
-  - component: {fileID: 1875892279819073989}
-  m_Layer: 12
-  m_Name: Point Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1875892279819073994
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875892279819073995}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.87, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2126327307419595937}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &1875892279819073989
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875892279819073995}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 0.07058823, g: 1, b: 0.32768625, a: 1}
-  m_Intensity: 1
-  m_Range: 4
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.02
-    m_NormalBias: 0.1
-    m_NearPlane: 0.1
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!65 &2172336098273612225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5296,9 +5211,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1875892279205684269}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5989042952293156431
@@ -5541,9 +5460,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1875892279205684269}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 2.5
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!65 &9150826066514603090
@@ -5572,9 +5495,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1875892279205684269}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &9151563658029794539
@@ -5684,9 +5611,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1875892279205684269}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1875892279630648138

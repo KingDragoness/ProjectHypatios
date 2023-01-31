@@ -29,7 +29,7 @@ public class KillZone : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerHealth = FindObjectOfType<PlayerHealth>();
+        PlayerHealth = Hypatios.Player.Health;
         if (alsoDamageEnemy) DamageEnemy();
 
         //Debug.Log("test1");
@@ -126,14 +126,15 @@ public class KillZone : MonoBehaviour
         foreach (var collider in hitColliders)
         {
             var damage = collider.GetComponent<damageReceiver>();
-            //Debug.Log(collider.gameObject.name);
             if (damage != null)
             {
                // Debug.Log(damage.gameObject.name);
-                var token = new DamageToken(); token.origin = origin; token.damage = DamagePerSecond; token.originEnemy = originEnemy;
+                var token = new DamageToken(); token.origin = origin; token.damage = DamagePerSecond + (Random.Range(0, DamagePerSecond /3f)); token.originEnemy = originEnemy;
                 token.isBurn = isBurn;
                 if (isAllowIndicator) token.allowPlayerIndicator = isAllowIndicator;
                 UniversalDamage.TryDamage(token, collider.transform, this.transform);
+
+                //Debug.Log(token.damage);
             }
 
         }
