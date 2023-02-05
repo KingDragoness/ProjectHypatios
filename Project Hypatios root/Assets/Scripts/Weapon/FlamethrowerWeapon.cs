@@ -103,7 +103,7 @@ public class FlamethrowerWeapon : GunScript
         RaycastHit hit;
 
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 12f, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 12f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
             currentHit = hit;
 

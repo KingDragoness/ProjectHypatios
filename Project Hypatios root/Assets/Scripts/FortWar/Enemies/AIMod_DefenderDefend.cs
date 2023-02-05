@@ -38,8 +38,19 @@ public class AIMod_DefenderDefend : FortWar_AIModule
         if (st1 != null) return true; else return false;
     }
 
+    private const float CALCULATION_TIMER = 0.5f;
+    private float _recalcTimer = 0.5f;
+
     public override void Run()
     {
+        _recalcTimer -= Time.deltaTime;
+
+        if (_recalcTimer <= 0)
+        {
+            _recalcTimer = CALCULATION_TIMER;
+            return;
+        }
+
         if (BotScript.Agent.isStopped == true)
             BotScript.Agent.Resume();
         BotScript.Agent.updateRotation = true;

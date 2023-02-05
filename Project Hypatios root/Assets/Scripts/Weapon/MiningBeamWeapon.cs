@@ -97,7 +97,7 @@ public class MiningBeamWeapon : GunScript
         RaycastHit hit;
 
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 50f, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 50f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
             currentHit = hit;
 

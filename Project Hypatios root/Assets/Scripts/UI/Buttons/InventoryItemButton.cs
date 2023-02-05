@@ -11,6 +11,7 @@ public class InventoryItemButton : MonoBehaviour
     public PlayerRPGUI rpgUI;
     public Text Name_label;
     public Text Count_label;
+    public Image FavoriteIcon;
     public int index = 0;
 
     public void Refresh()
@@ -20,6 +21,12 @@ public class InventoryItemButton : MonoBehaviour
 
         Name_label.text = itemClass.GetDisplayText();
         Count_label.text = itemDat.count.ToString();
+
+        if (itemDat.isFavorited)     
+            FavoriteIcon.gameObject.SetActive(true);
+        else
+            FavoriteIcon.gameObject.SetActive(false);
+
     }
 
     public void HighlightButton()

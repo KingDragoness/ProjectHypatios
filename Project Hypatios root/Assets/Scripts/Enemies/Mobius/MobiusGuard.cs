@@ -94,6 +94,8 @@ public class MobiusGuard : EnemyScript
         OnDied?.Invoke();
         Destroy(gameObject, 5f);
         spawnHeal.SpawnHealCapsule(1);
+        Stats.IsDead = true;
+
     }
 
     public override void Attacked(DamageToken token)

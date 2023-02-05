@@ -92,6 +92,11 @@ public abstract class EnemyScript : Entity
         ScanForEnemies();
     }
 
+    public override void Heal(float healAmount)
+    {
+        _stats.CurrentHitpoint += healAmount;
+    }
+
 
     /// <summary>
     /// Warp enemy to world position.

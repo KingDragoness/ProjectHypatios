@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: Sykosis
+  m_EditorClassIdentifier: 
+  nameWeapon: Sykosis
+  prefab: {fileID: 5282831817323421331, guid: 1eac8246b9b82b0419ae4c0abb9bff35, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 429bec234d0505f408ec51a918113903,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: 0766923a27ee93b4ea15fb5bf974ff1c, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 638387fadb4e30a48b3e9a123a936eb9, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 5a7513afcdc7df240b4b283c948ce541,
+    type: 3}
+  attachments: []
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 4
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 1
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+    count: 1
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  craft_AmmoAmount: 70
+  buy_AmmoAmount: 50
+  buy_AmmoSoulPrice: 3
+  buy_SoulPrice: 10
+  isCraftable: 0
+  defaultDamage: 13
+  defaultMagazineSize: 50
+  defaultCooldown: 5
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 12
+      inSlope: -0.2472929
+      outSlope: -0.2472929
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08571428
+    - serializedVersion: 3
+      time: 0.9932433
+      value: 40
+      inSlope: 3.0204191
+      outSlope: 3.0204191
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06666668
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables:
+  - variableName: ParalysisChance
+    value: 1
+    type: 0

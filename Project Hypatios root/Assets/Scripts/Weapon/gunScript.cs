@@ -261,7 +261,7 @@ public class GunScript : BaseWeaponScript
         Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
 
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
         }
         else
@@ -305,7 +305,7 @@ public class GunScript : BaseWeaponScript
         Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
 
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
             var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
             float variableDamage = Random.Range(0, variableAdditionalDamage);
@@ -372,7 +372,7 @@ public class GunScript : BaseWeaponScript
             Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
            
 
-            if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
             {
                 var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
                 float variableDamage = Random.Range(0, variableAdditionalDamage);
@@ -438,7 +438,7 @@ public class GunScript : BaseWeaponScript
                 float spreadY = Random.Range(-spread, spread);
                 Vector3 raycastDir = new Vector3(cam.transform.forward.x + spreadX, cam.transform.forward.y + spreadY, cam.transform.forward.z);
 
-                if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, layerMask, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
                 {
                     var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
                     float variableDamage = Random.Range(0, variableAdditionalDamage);

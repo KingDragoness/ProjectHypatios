@@ -16,6 +16,7 @@ public class Fortification_WoodenPlank : EnemyScript
         Destroy(gameObject, 3f);
         OnDied?.Invoke();
         OnDieEvent?.Invoke();
+        Stats.IsDead = true;
     }
 
     public override void Attacked(DamageToken token)

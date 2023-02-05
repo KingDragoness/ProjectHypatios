@@ -8,13 +8,15 @@ using Sirenix.OdinInspector;
 public class ItemInventory : ScriptableObject
 {
 
+    [System.Serializable]
     public enum Category
     {
         Normal,
         Consumables,
         Quest,
         Key,
-        Weapon
+        Weapon,
+        None = 999 //For inventory filter
     }
 
     [InfoBox("If DisplayName is empty, it will use ID's")] [SerializeField] private string _displayName = "";

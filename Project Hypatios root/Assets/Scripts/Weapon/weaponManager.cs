@@ -26,6 +26,8 @@ public class WeaponManager : MonoBehaviour
     public int previousWeapon;
     public GunScript currentGunHeld;
     public BaseWeaponScript currentWeaponHeld;
+    public LayerMask defaultLayerMask;
+
     Camera cam;
 
     [SerializeField] private List<BaseWeaponScript> currentlyHeldWeapons = new List<BaseWeaponScript>();

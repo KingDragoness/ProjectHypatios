@@ -1,7 +1,7 @@
 ﻿Shader "GUI/Depth Text Shader" {
     Properties{
         _MainTex("Font Texture", 2D) = "white" {}
-        _Color("Text Color", Color) = (1,1,1,1)
+        [HDR]_Color("Text Color", Color) = (1,1,1,1)
     }
 
         SubShader{
@@ -47,7 +47,7 @@
                     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     o.color = v.color * _Color;
-                    o.texcoord = TRANSFORM_TEX(v.texcoord,_MainTex);
+                    o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
                     return o;
                 }
 

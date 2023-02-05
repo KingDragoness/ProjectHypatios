@@ -52,7 +52,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
 
         if (chance < 0.1f)
         {
-            currentRole = Role.Defend;
+            //currentRole = Role.Defend;
         }
 
         gameObject.name += $"({currentRole})";
@@ -136,6 +136,10 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
         }
         else if (currentState == State.FollowPlayer)
         {
+            if (currentModule != Mod_FollowPlayer)
+            {
+                Agent.ResetPath();
+            }
             currentModule = Mod_FollowPlayer;
         }
 

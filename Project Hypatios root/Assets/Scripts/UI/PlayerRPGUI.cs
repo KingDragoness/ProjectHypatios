@@ -15,9 +15,12 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Perk Tooltip")] public ToolTip perkTooltipScript;
 
     [FoldoutGroup("Inventory")] public RectTransform parentInventory;
+    [FoldoutGroup("Inventory")] public Text mainTitleLabel;
     [FoldoutGroup("Inventory")] public Text itemTooltip_LeftHandedLabel;
     [FoldoutGroup("Inventory")] public Text itemTooltip_RightHandedLabel;
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
+    [FoldoutGroup("Inventory")] public ItemInventory.Category filterCategoryType = ItemInventory.Category.None;
+    [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
 
 
     public RPG_CharPerkButton PerkButton;
@@ -38,6 +41,32 @@ public class PlayerRPGUI : MonoBehaviour
     {
         RefreshUI();
         pauseCanvas = GetComponentInParent<Canvas>();
+    }
+
+    public void FavoriteMode()
+    {
+        isFavoriteActive = !isFavoriteActive;
+        if (isFavoriteActive)
+            filterCategoryType = ItemInventory.Category.None;
+
+        RefreshUI();
+    }
+
+    public void CategoryFilter(int _filterCategory)
+    {
+        var cat = (ItemInventory.Category)_filterCategory;
+
+        if (filterCategoryType != cat)
+            filterCategoryType = cat;
+        else
+            filterCategoryType = ItemInventory.Category.None;
+
+        if (isFavoriteActive)
+        {
+            isFavoriteActive = false;
+        }
+
+        RefreshUI();
     }
 
     private void RefreshUI()
@@ -78,19 +107,61 @@ public class PlayerRPGUI : MonoBehaviour
             }
         }
 
+        string s = "";
+
+        if (isFavoriteActive)
+            s += $"FAVORITES/";
+        else
+            s += $"INVENTORY/";
+
+        if (filterCategoryType == ItemInventory.Category.None)
+        {
+            s += $"ALL";
+        }
+        else
+        {
+            s += $"{filterCategoryType.ToString().ToUpper()}";
+        }
+
+        mainTitleLabel.text = s;
+
         //Refresh inventories
         {
-            var FilteredItem = new List<HypatiosSave.ItemDataSave>();
-            foreach (var item in Hypatios.Player.Inventory.allItemDatas) FilteredItem.Add(item);
+            List<int> indexes = new List<int>();
+            var All_Items = Hypatios.Player.Inventory.allItemDatas;
 
-            int index1 = 0;
-            foreach (var item in FilteredItem)
+
+            for(int x = 0; x < All_Items.Count; x++)
+            {
+                var itemData = All_Items[x];
+
+                if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive == false)
+                {
+                    indexes.Add(x);
+                }
+                else
+                {
+                    if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive && itemData.isFavorited)
+                    {
+                        indexes.Add(x);
+                    }
+                    else if (itemData.category == filterCategoryType && isFavoriteActive && itemData.isFavorited)
+                    {
+                        indexes.Add(x);
+                    }
+                    else if (itemData.category == filterCategoryType && !isFavoriteActive)
+                    {
+                        indexes.Add(x);
+                    }
+                }
+            }
+
+            foreach (var index in indexes)
             {
                 var newButton = Instantiate(InventoryItemButton, parentInventory);
                 newButton.gameObject.SetActive(true);
-                newButton.index = index1;
+                newButton.index = index;
                 newButton.Refresh();
-                index1++;
                 _allInventoryButtons.Add(newButton);
             }
 
@@ -107,7 +178,27 @@ public class PlayerRPGUI : MonoBehaviour
     private void Update()
     {
         HandleDiscardItem();
+        HandleFavoriteItem();
 
+    }
+
+    private void HandleFavoriteItem()
+    {
+        if (currentItemButton == null)
+            return;
+
+        if (Input.GetKeyUp(KeyCode.F) == false)
+            return;
+
+        var button = currentItemButton;
+        var itemData = button.GetItemData();
+
+        itemData.isFavorited = !itemData.isFavorited;
+
+        RefreshUI();
+
+        perkTooltipScript.gameObject.SetActive(false);
+        itemTooltipScript.gameObject.SetActive(false);
     }
 
     private void HandleDiscardItem()
@@ -252,7 +343,7 @@ public class PlayerRPGUI : MonoBehaviour
             sLeft += $"Fire rate\n";
             sLeft += $"Mag size\n";
             sLeft += $"Ammo Left\n";
-            if (!isSimilarWeaponEquipped) sLeft += $"\n<LMB to equip weapon> <X to discard>\n"; else sLeft += $"\n<X to discard>\n";
+            if (!isSimilarWeaponEquipped) sLeft += $"\n<LMB to equip weapon> <X to discard> <F to favorite>\n"; else sLeft += $"\n<X to discard> <F to favorite>\n";
             sLeft += $"\n<size=14>{s_allAttachments}</size>";
 
             sRight += $"{weaponStat.damage}\n";
@@ -265,8 +356,8 @@ public class PlayerRPGUI : MonoBehaviour
         {
             sLeft += $"{itemClass.GetDisplayText()}\n";
             sLeft += $"\n{itemClass.Description}\n";
-            if (itemClass.category != ItemInventory.Category.Consumables) sLeft += $"\n<X to discard>\n";
-            else sLeft += $"\n<LMB to consume> <X to discard>\n";
+            if (itemClass.category != ItemInventory.Category.Consumables) sLeft += $"\n<X to discard> <F to favorite>\n";
+            else sLeft += $"\n<LMB to consume> <X to discard> <F to favorite>\n";
             sRight += $"({itemDat.count})\n";
         }
 

@@ -44,4 +44,22 @@ public class ParticleFXResizer : MonoBehaviour
             ps.loop = false;
         }
     }
+
+    [Button("Reset Particle")]
+
+    public void ResetParticle()
+    {
+        var go = gameObject;
+
+        ParticleSystem[] systems;
+        if (pref_IncludeChildren)
+            systems = go.GetComponentsInChildren<ParticleSystem>(true);
+        else
+            systems = go.GetComponents<ParticleSystem>();
+
+        foreach (ParticleSystem ps in systems)
+        {
+            ps.loop = true;
+        }
+    }
 }

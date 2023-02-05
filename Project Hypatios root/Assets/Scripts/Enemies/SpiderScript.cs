@@ -361,6 +361,7 @@ public class SpiderScript : EnemyScript
             audio_Dead.Play();
 
             isDie = true;
+            Stats.IsDead = true;
         }
         
         if (colorSet > 0f)

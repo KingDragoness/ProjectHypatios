@@ -88,6 +88,41 @@ public abstract class Entity : MonoBehaviour
         FireParticle.transform.SetParent(statusObject.transform);
 
     }
+
+    [FoldoutGroup("Debug")]
+    [Button("Heal")]
+    public virtual void Heal(float healAmount)
+    {
+        //player use playerHealth
+
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Paralysis")]
+    public virtual void Paralysis()
+    {
+        if (CheckDuplicateBySimilarEffect(StatusEffectCategory.Paralyze))
+        {
+            var effect = GetStatusEffect(StatusEffectCategory.Paralyze);
+            effect.EffectTimer = 11f;
+            return;
+        }
+
+        var ParalyzeParticle = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ParalyzeEffect, false);
+        var particleFX = ParalyzeParticle.GetComponent<ParticleFXResizer>();
+        var pos = OffsetedBoundWorldPosition;
+        pos.y += OffsetedBoundScale.y;
+        ParalyzeParticle.transform.position = pos;
+        ParalyzeParticle.transform.localEulerAngles = Vector3.zero;
+
+        particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
+        var statusObject = CreateGenericStatusEffect(StatusEffectCategory.Paralyze, -1f, 11f);
+        var poisonStatus = statusObject.gameObject.AddComponent<FireStatus>();
+        poisonStatus.damageType = FireStatus.DamageType.NOTHING;
+        ParalyzeParticle.transform.SetParent(statusObject.transform);
+
+
+    }
     #endregion
 
     #region Status Effect Utilities

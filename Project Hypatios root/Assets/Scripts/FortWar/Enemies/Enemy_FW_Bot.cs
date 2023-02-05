@@ -21,6 +21,8 @@ public abstract class Enemy_FW_Bot : EnemyScript
     [FoldoutGroup("Base")] public UnityEvent OnPlayerKill;
     [FoldoutGroup("Base")] public GameObject botCorpse;
     [FoldoutGroup("AI System")] public Transform target;
+    [FoldoutGroup("AI System")] public Transform debug_Point;
+    [FoldoutGroup("AI System")] [ReadOnly] public NavMeshPathStatus pathValidStatus;
 
     [SerializeField] private NavMeshAgent _agent;
     protected Chamber_Level7 _chamberScript;
@@ -48,6 +50,13 @@ public abstract class Enemy_FW_Bot : EnemyScript
         _chamberScript.RegisterUnit(myUnit);
     }
 
+    public override void Hack()
+    {
+        base.Hack();
+        myUnit.SwapAlliance(FW_Alliance.INVADER);
+    }
+
+
     public Transform GetCurrentTarget()
     {
         return target;
@@ -71,6 +80,9 @@ public abstract class Enemy_FW_Bot : EnemyScript
                 _tickTimer = TICK_MAX + Random.Range(0,0.1f);
             }
         }
+
+        debug_Point.transform.position = Agent.destination;
+        pathValidStatus = Agent.pathStatus;
     }
 
     public async void AI_Tick()
@@ -115,6 +127,7 @@ public abstract class Enemy_FW_Bot : EnemyScript
             var corpse1 = Instantiate(botCorpse, transform.position, transform.rotation);
             corpse1.gameObject.SetActive(true);
         }
+
         OnDied?.Invoke();
         Destroy(gameObject);
         Stats.IsDead = true;

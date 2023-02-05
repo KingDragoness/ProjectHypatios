@@ -155,6 +155,7 @@ public class EastriaGuardTest : EnemyScript
         CopyTransformRagdoll ragdollScript = corpse1.GetComponent<CopyTransformRagdoll>();
         ragdollScript.CopyRotationPosition(rigOrigin);
         OnDied?.Invoke();
+        Stats.IsDead = true;
 
         Destroy(this.gameObject);
     }

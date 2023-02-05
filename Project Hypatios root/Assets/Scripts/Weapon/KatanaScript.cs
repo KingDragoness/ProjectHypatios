@@ -68,7 +68,7 @@ public class KatanaScript : BaseWeaponScript
         anim.SetTrigger("melee");
         nextAttackTime = Time.time + cooldownAttack;
 
-        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, layerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(cam.transform.position, raycastDir, out hit, range, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
             var damageReceiver = hit.transform.gameObject.GetComponentThenChild<damageReceiver>();
 

@@ -36,4 +36,9 @@ public class FW_Targetable : MonoBehaviour
             return FW_Alliance.DEFENDER;
     }
 
+    public void SwapAlliance(FW_Alliance _alliance)
+    {
+        alliance = _alliance;
+    }
+
 }

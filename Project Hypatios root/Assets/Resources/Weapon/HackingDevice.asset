@@ -1,0 +1,237 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: HackingDevice
+  m_EditorClassIdentifier: 
+  nameWeapon: HackingDevice
+  prefab: {fileID: 3920970183940846522, guid: afae83fa7635b604b8dec9eda8419bc9, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 0226c1971ca142549bbcfb2dff8b7927,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: afcd02378f3db5448bec3548e5331f62, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: f0da98ad860454b4f8f133ba67b829e9, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: addd936d3b2f1484894ea6f1dace4cfb,
+    type: 3}
+  attachments:
+  - ID: UHF
+    Name: UHF Receiver
+    Description: Ultra-high frequency (3 GhZ) allows slightly faster hacking time
+      but reduces its signal range.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 1
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: SignalRange
+      value: -3
+      type: 1
+    - variableName: HackingTime
+      value: -0.8
+      type: 1
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: HF
+    Name: HF Receiver
+    Description: High-frequency inferior hacking time but massively increase its
+      signal range and lower battery usage.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    modifier_damage: 0
+    modifier_cooldown: -2.5
+    modifier_percent_movespeed: 1
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: SignalRange
+      value: 25
+      type: 1
+    - variableName: HackingTime
+      value: 3.5
+      type: 1
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: SMF
+    Name: SMF Receiver
+    Description: Special frequency signal used by Mobius Corps. Superior signal range.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+      count: 3
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 4
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 1
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: SignalRange
+      value: 7.5
+      type: 1
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: IonBattery
+    Name: Ion Battery
+    Description: Changed battery capacity from 100 to 150.
+    slot: 5
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable: []
+    override_magazineSize: 150
+    stat_burn: 0
+    stat_poison: 0
+  - ID: BruteFrame
+    Name: Brute Force Frame
+    Description: 'Replaces algorithm in favor of brute force method. Drastically
+      decreases hacking battery usage but increases hacking time. '
+    slot: 0
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 3
+    modifier_damage: 0
+    modifier_cooldown: -5
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: HackingTime
+      value: 1.2
+      type: 1
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: ComputerFrame
+    Name: Computative Frame
+    Description: 'Favor of complex backdoor operation. Hacking time is always 3 seconds
+      but also massively increase hacking battery usage. '
+    slot: 0
+    order: 100
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 4
+    modifier_damage: 0
+    modifier_cooldown: 19
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: HackingTime
+      value: 3
+      type: 2
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: Restoration
+    Name: Restoration
+    Description: Instantly restores hacked enemy's hitpoints.
+    slot: 4
+    order: 50
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 3
+    modifier_damage: 0
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable:
+    - variableName: Restore
+      value: 1
+      type: 2
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+    count: 2
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 10
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 1
+  - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
+    count: 1
+  craft_AmmoAmount: 100
+  buy_AmmoAmount: 100
+  buy_AmmoSoulPrice: 8
+  buy_SoulPrice: 40
+  isCraftable: 1
+  defaultDamage: 0
+  defaultMagazineSize: 100
+  defaultCooldown: 7
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 70
+      inSlope: -0.2472929
+      outSlope: -0.2472929
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08571428
+    - serializedVersion: 3
+      time: 0.9932433
+      value: 114
+      inSlope: 3.0204191
+      outSlope: 3.0204191
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06666668
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables:
+  - variableName: SignalRange
+    value: 14
+    type: 0
+  - variableName: HackingTime
+    value: 5
+    type: 0
+  - variableName: Restore
+    value: 0
+    type: 0

@@ -15,6 +15,10 @@ public class EnemyContainer : MonoBehaviour
     public System.Action<EnemyScript> OnEnemyDied;
 
     private bool _isPlayerInNavMesh = false;
+
+    /// <summary>
+    /// Don't use this in FortWar
+    /// </summary>
     public bool IsPlayerInNavMesh { get => _isPlayerInNavMesh; }
 
     public void RegisterEnemy(EnemyScript enemy)
@@ -50,6 +54,8 @@ public class EnemyContainer : MonoBehaviour
         }
     }
 
+
+    #region Pathing
     private void CheckCalculate(EnemyScript enemyScript)
     {
         NavMeshPath navMeshPath = new NavMeshPath();
@@ -73,6 +79,23 @@ public class EnemyContainer : MonoBehaviour
 
     }
 
+    public Vector3 CheckTargetClosestPosition(Vector3 currentTarget, float maxRange = 10)
+    {
+        NavMeshHit hit;
+        Vector3 result = Vector3.zero;
+
+
+        if (NavMesh.FindClosestEdge(currentTarget, out hit, NavMesh.AllAreas))
+        {
+            if (hit.distance < maxRange)
+                return hit.position;
+        }
+
+        return currentTarget;
+    }
+
+    #endregion
+
     [FoldoutGroup("Debug")] [ShowInInspector] [ReadOnly] private List<EnemyScript> tempList_NearestEnemy = new List<EnemyScript>();
 
 
@@ -90,11 +113,31 @@ public class EnemyContainer : MonoBehaviour
     /// <param name="alliance">Finder's alliance.</param>
     /// <param name="myPos">Finder's current world position.</param>
     /// <param name="chanceSelectAlly">Recommended value 0.1-1</param>
-    public Entity FindEnemyEntity(Alliance alliance, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f)
+    public Entity FindEnemyEntity(Alliance alliance, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f)
     {
         tempList_NearestEnemy.Clear();
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
+        tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
+
+        return FindEnemyEntity(alliance, chanceSelectAlly);
+    }
+
+    /// <summary>
+    /// Find any enemies/player to attack. With UnitType filter.
+    /// </summary>
+    /// <param name="alliance">Finder's alliance.</param>
+    /// <param name="unitType">Mechanical, boss, biological, etc</param>
+    /// <param name="myPos">Finder's current world position.</param>
+    /// <param name="chanceSelectAlly">Recommended value 0.1-1</param>
+    /// <returns></returns>
+    public Entity FindEnemyEntity(Alliance alliance, UnitType unitType, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f)
+    {
+        tempList_NearestEnemy.Clear();
+        foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
+        tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
+        tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.UnitType != unitType);
 
         return FindEnemyEntity(alliance, chanceSelectAlly);
     }

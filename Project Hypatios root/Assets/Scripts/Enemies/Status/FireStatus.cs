@@ -8,7 +8,8 @@ public class FireStatus : MonoBehaviour
     public enum DamageType
     {
         Fire,
-        Poison
+        Poison,
+        NOTHING
     }
 
     [ShowInInspector] [ReadOnly] public EnemyScript target;
@@ -46,6 +47,19 @@ public class FireStatus : MonoBehaviour
             {
                 var ParticleFXResizer = gameObject.GetComponentInChildren<ParticleFXResizer>();
                 ParticleFXResizer.StopParticle();
+
+                if (target != null)
+                {
+                    if (genericStatus.statusCategoryType == StatusEffectCategory.Paralyze)
+                        target.isAIEnabled = true;
+                }
+
+            }
+            else
+            {
+                var ParticleFXResizer = gameObject.GetComponentInChildren<ParticleFXResizer>();
+                ParticleFXResizer.ResetParticle();
+
             }
 
             cooldown -= Time.deltaTime;
@@ -66,6 +80,16 @@ public class FireStatus : MonoBehaviour
             }
 
             if (character != null) UniversalDamage.TryDamage(damageToken, character.transform, transform);
+
+        }
+        
+        if (genericStatus.statusCategoryType == StatusEffectCategory.Paralyze)
+        {
+            if (target != null)
+            {
+                target.isAIEnabled = false;
+            }
+
 
         }
         cooldown = 1f;

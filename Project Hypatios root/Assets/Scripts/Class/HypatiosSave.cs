@@ -104,6 +104,8 @@ public class HypatiosSave
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;
     public int Game_TotalSouls = 0;
+    public PlayerStat persistent_PlayerStat;
+
     [Space]
 
     [Header("Perks")]
@@ -125,6 +127,7 @@ public class HypatiosSave
     public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;
     public EntryCache sceneEntryCache;
+    public PlayerStat run_PlayerStat;
     public List<TimelineEventSave> Game_TimelineEvents = new List<TimelineEventSave>(); //Do not clear until wake up/level 1 script
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public InventoryData Player_Inventory;
@@ -141,6 +144,7 @@ public class HypatiosSave
     {
         public string ID = "";
         public int count = 0;
+        public bool isFavorited = false;
         public ItemInventory.Category category;
         public WeaponDataSave weaponData; //only for weapon
 
@@ -257,5 +261,16 @@ public class HypatiosSave
             return allAttachments.Find(x => x == attachment) != null ? true : false;
         }
     }
+    
+    [System.Serializable]
+    public class PlayerStat
+    {
+        public int total_Enemy_Killed = 0;
+        public int total_Enemy_Hacked = 0;
+        public int total_Enemy_KillByMelee = 0;
+        public int total_DashUsed = 0;
+
+    }
+
     #endregion
 }

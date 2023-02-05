@@ -46,6 +46,12 @@ public class Enemy_FW_SentryGun : EnemyScript
         return target;
     }
 
+    public override void Hack()
+    {
+        base.Hack();
+        myUnit.SwapAlliance(FW_Alliance.INVADER);
+    }
+
     private void Update()
     {
         if (isAIEnabled == false) return;
@@ -244,7 +250,9 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     public override void Die()
     {
+        if (Stats.IsDead) return;
         _chamberScript.DeregisterUnit(myUnit);
+         
 
         if (botCorpse)
         {

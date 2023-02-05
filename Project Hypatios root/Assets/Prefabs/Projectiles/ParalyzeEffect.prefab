@@ -46,7 +46,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -865,7 +865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 9
+      scalar: 2
       minScalar: 4
       maxCurve:
         serializedVersion: 2
@@ -975,7 +975,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 2
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -4821,7 +4821,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8607533639324226731}
   - component: {fileID: 7411179039937237919}
-  - component: {fileID: 8607533639324226735}
   - component: {fileID: 3743752606279958165}
   m_Layer: 0
   m_Name: ParalyzeEffect
@@ -4858,22 +4857,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pref_IncludeChildren: 1
---- !u!114 &8607533639324226735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8607533639324226734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f46a72368be69b4d8ab9469ea737d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 3
-  destroy: 0
-  allowRestart: 0
-  DEBUG_isDisabledByDefault: 0
 --- !u!82 &3743752606279958165
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4887,7 +4870,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 5560234aa7446f5438aac9aa3c2c15b0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.17
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -4930,7 +4913,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.7
       inSlope: 0
       outSlope: 0
       tangentMode: 0

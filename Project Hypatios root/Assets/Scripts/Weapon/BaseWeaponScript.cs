@@ -29,7 +29,6 @@ public abstract class BaseWeaponScript : MonoBehaviour
 
     public WeaponManager weaponSystem;
     public Animator anim;
-    public LayerMask layerMask;
     public string weaponName;
     public Image crosshairHit;
 

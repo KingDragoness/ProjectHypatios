@@ -139,6 +139,8 @@ public class Monster_ZombieMobius : EnemyScript
         //Destroy(gameObject, 5f);
         OnDead?.Invoke();
         OnDied?.Invoke();
+        Stats.IsDead = true;
+
     }
 
     private void HandleRotation()
