@@ -24,6 +24,7 @@ public class DamageToken
         MiningLaser = 11,
         Melee = 50,
         Explosion = 100,
+        PlayerPunch = 101
     }
 
     public float damage = 1;
@@ -49,7 +50,7 @@ public class UniversalDamage
         {
             damageReceiver.Attacked(token);
 
-            if (token.allowPlayerIndicator)
+            if (token.allowPlayerIndicator && damageReceiver.enemyScript != null)
             {
                 Hypatios.Player.Weapon.ActivateCrosshairHit();
             }
@@ -67,7 +68,7 @@ public class UniversalDamage
             }
             if (Hypatios.Difficulty == Hypatios.GameDifficulty.Casual)
             {
-                token.damage *= 0.6f; token.healthSpeed *= 0.8f;
+                token.damage *= 0.3f; token.healthSpeed *= 0.4f;
             }
             if (Hypatios.Difficulty == Hypatios.GameDifficulty.Peaceful)
             {

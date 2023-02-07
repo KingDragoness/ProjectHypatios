@@ -55,6 +55,8 @@ public class DecabotEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         Stats.CurrentHitpoint -= token.damage;
 
 

@@ -38,7 +38,7 @@ public class StageChamberScript : MonoBehaviour
         Hypatios.Enemy.OnEnemyDied -= Enemy_onKilled;
     }
 
-    private void Enemy_onKilled(EnemyScript enemy)
+    private void Enemy_onKilled(EnemyScript enemy, DamageToken damagetoken)
     {
         enemiesToClear.Remove(enemy);
     }

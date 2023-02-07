@@ -227,6 +227,17 @@ public class GunScript : BaseWeaponScript
         }
     }
 
+    public void HandleCrosshairActive(damageReceiver damageReceiver)
+    {
+        if (damageReceiver.destructibleScript != null)
+        {
+            if (damageReceiver.destructibleScript.destroyType == damageType)
+                StartCoroutine(SetCrosshairHitActive());
+        }
+        else
+            StartCoroutine(SetCrosshairHitActive());
+    }
+
     internal IEnumerator SetCrosshairHitActive()
     {
         crosshairHit.gameObject.SetActive(true);
@@ -314,7 +325,7 @@ public class GunScript : BaseWeaponScript
             {
                 damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value / 5f) + variableDamage; damageToken.repulsionForce = repulsionForce;
                 damageReceiver.Attacked(damageToken);
-                StartCoroutine(SetCrosshairHitActive());
+                HandleCrosshairActive(damageReceiver);
             }
 
             if (hit.transform.gameObject.layer != 13 &&
@@ -381,7 +392,7 @@ public class GunScript : BaseWeaponScript
                 {
                     damageToken.damage = damage * Hypatios.Player.BonusDamageGun.Value + variableDamage; damageToken.repulsionForce = repulsionForce;
                     damageReceiver.Attacked(damageToken);
-                    StartCoroutine(SetCrosshairHitActive());
+                    HandleCrosshairActive(damageReceiver);
                 }
 
                 points[1] = hit.point;
@@ -447,7 +458,7 @@ public class GunScript : BaseWeaponScript
                     {
                         damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value / 2f) + variableDamage; damageToken.repulsionForce = repulsionForce;
                         damageReceiver.Attacked(damageToken);
-                        StartCoroutine(SetCrosshairHitActive());
+                        HandleCrosshairActive(damageReceiver);
                     }
 
                     points[1] = hit.point;

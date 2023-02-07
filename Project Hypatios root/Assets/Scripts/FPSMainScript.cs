@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.ImageEffects;
 using DevLocker.Utils;
+using static HypatiosSave;
 
 public class FPSMainScript : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class FPSMainScript : MonoBehaviour
     public float UNIX_Timespan = 0;
     public bool everUsed_Paradox = false;
     public bool everUsed_WeaponShop = false;
+    public PlayerStatSave persistent_PlayerStat;
+    public PlayerStatSave run_PlayerStat;
 
     public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
@@ -107,7 +110,79 @@ public class FPSMainScript : MonoBehaviour
 
     #endregion
 
+    #region Player Stats
 
+    public PlayerStatValueSave Get_StatEntryData(BaseStatValue statEntry, bool isPersistent = false)
+    {
+        if (statEntry == null)
+        {
+            Debug.LogError("Stat Entry not assigned!");
+            return null;
+        }
+        PlayerStatValueSave data = null;
+
+        if (isPersistent)
+        {
+            data = persistent_PlayerStat.GetValueStat(statEntry);
+        }
+        else
+        {
+            data = run_PlayerStat.GetValueStat(statEntry);
+
+        }
+
+        return data;
+    }
+
+    public void Increment_PlayerStat(string id)
+    {
+        var statEntry = Hypatios.Assets.AllStatEntries.Find(x => x.ID == id);
+
+        if (statEntry == null)
+        {
+            Debug.LogError("No stat entry detected.");
+            return;
+        }
+
+        var persistenceEntry = persistent_PlayerStat.GetValueStat(statEntry);
+        var currentRunEntry = run_PlayerStat.GetValueStat(statEntry);
+
+        persistenceEntry.value_int++;
+        currentRunEntry.value_int++;
+    }
+
+
+    public void Increment_PlayerStat(BaseStatValue statEntry)
+    {
+        if (statEntry == null)
+        {
+            Debug.LogError("Stat Entry not assigned!");
+            return;
+        }
+
+        var persistenceEntry = persistent_PlayerStat.GetValueStat(statEntry);
+        var currentRunEntry = run_PlayerStat.GetValueStat(statEntry);
+
+        persistenceEntry.value_int++;
+        currentRunEntry.value_int++;
+    }
+
+    public void Add_PlayerStat(BaseStatValue statEntry, int amount = 0)
+    {
+        if (statEntry == null)
+        {
+            Debug.LogError("Stat Entry not assigned!");
+            return;
+        }
+
+        var persistenceEntry = persistent_PlayerStat.GetValueStat(statEntry);
+        var currentRunEntry = run_PlayerStat.GetValueStat(statEntry);
+
+        persistenceEntry.value_int += amount;
+        currentRunEntry.value_int += amount;
+    }
+
+    #endregion
 
     public void CommandCheat(string cheatName)
     {
@@ -265,6 +340,8 @@ public class FPSMainScript : MonoBehaviour
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
         Player.Inventory = savedata.Player_Inventory;
+        persistent_PlayerStat = savedata.persistent_PlayerStat;
+        run_PlayerStat = savedata.run_PlayerStat;
         Hypatios.Player.Initialize();
         Weapons.LoadGame_InitializeGameSetup();
 
@@ -324,6 +401,8 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
         hypatiosSave.Game_Trivias = Game_Trivias;
         hypatiosSave.Player_Inventory = Player.Inventory;
+        hypatiosSave.persistent_PlayerStat = persistent_PlayerStat;
+        hypatiosSave.run_PlayerStat = run_PlayerStat;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
@@ -386,8 +465,9 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_LastLevelPlayed = 4;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
         hypatiosSave.Player_Inventory = new InventoryData();
+        hypatiosSave.run_PlayerStat = new PlayerStatSave();
 
-         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+        Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
         hypatiosSave.Game_WeaponStats.Clear();
 

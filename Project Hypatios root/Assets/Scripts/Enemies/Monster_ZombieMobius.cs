@@ -55,6 +55,7 @@ public class Monster_ZombieMobius : EnemyScript
     {
         if (token.originEnemy == this) return;
         if (Stats.IsDamagableBySameType == false && token.originEnemy is Monster_ZombieMobius) return;
+        _lastDamageToken = token;
 
         Stats.CurrentHitpoint -= token.damage;
         base.Attacked(token);

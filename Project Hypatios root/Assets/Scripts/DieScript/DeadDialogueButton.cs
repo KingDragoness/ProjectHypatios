@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+/// <summary>
+/// Used by the tooltip prompt UI
+/// </summary>
 public class DeadDialogueButton : MonoBehaviour
 {
 
@@ -23,6 +26,12 @@ public class DeadDialogueButton : MonoBehaviour
 	{
 		messageText.text = s;
 		currentTimer = TIMER_PROMPT_DISAPPEAR + additionalBonusTimer;
+	}
+
+	public void SetMessage(string s, float time)
+	{
+		messageText.text = s;
+		currentTimer = time;
 	}
 
 	public RectTransform GetRectTransform()

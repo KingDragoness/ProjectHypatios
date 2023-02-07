@@ -20,6 +20,8 @@ public class CraftingWorkstationUI : MonoBehaviour
     public CraftWeaponModButton WeaponModButton_prefab;
     public CraftNewWeaponButton NewWeaponButton_prefab;
     public List<CraftingWeaponSelectButton> allMainButtons = new List<CraftingWeaponSelectButton>();
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponCrafted;
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponModCrafted;
 
     private CraftingWorkstationTrigger _currentBench;
     private CraftingWeaponSelectButton _currentButton;
@@ -138,6 +140,7 @@ public class CraftingWorkstationUI : MonoBehaviour
 
         }
 
+        Hypatios.Game.Increment_PlayerStat(stat_weaponModCrafted);
         OpenWeaponMod(_currentButton);
         var WeaponManager = Hypatios.Player.Weapon;
         WeaponManager.SetWeaponSettings(WeaponManager.currentGunHeld);
@@ -186,6 +189,7 @@ public class CraftingWorkstationUI : MonoBehaviour
             Hypatios.Player.Inventory.RemoveItem(recipe.inventory.GetID(), recipe.count);
         }
 
+        Hypatios.Game.Increment_PlayerStat(stat_weaponCrafted);
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
 

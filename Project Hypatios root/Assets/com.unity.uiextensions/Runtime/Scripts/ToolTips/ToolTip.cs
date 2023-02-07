@@ -129,8 +129,12 @@ namespace UnityEngine.UI.Extensions
         //Call this function externally to set the text of the template and activate the tooltip
         public void SetTooltip(string ttext, Vector3 basePos, bool refreshCanvasesBeforeGetSize = false)
         {
+            Vector3 _basePosRounded = basePos;
+            _basePosRounded.x = Mathf.FloorToInt(_basePosRounded.x);
+            _basePosRounded.y = Mathf.FloorToInt(_basePosRounded.y);
+            _basePosRounded.z = Mathf.FloorToInt(_basePosRounded.z);
 
-            baseTooltipPos = basePos;
+            baseTooltipPos = _basePosRounded;
 
             //set the text
             if (_text) {

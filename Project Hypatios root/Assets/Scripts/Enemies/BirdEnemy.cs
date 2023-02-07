@@ -155,6 +155,8 @@ public class BirdEnemy : EnemyScript
     public override void Attacked(DamageToken token)
     {
         if (token.originEnemy == this) return;
+        _lastDamageToken = token;
+
         Stats.CurrentHitpoint -= token.damage;
 
 

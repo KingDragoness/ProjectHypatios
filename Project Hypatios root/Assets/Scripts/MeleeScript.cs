@@ -98,11 +98,27 @@ public class MeleeScript : MonoBehaviour
             {
                 var token = new DamageToken();
                 token.damage = Random.Range(meleeDamage - 3, meleeDamage + 3);
+                token.damageType = DamageToken.DamageType.PlayerPunch;
                 if (Hypatios.Player.BonusDamageMelee.Value != 0) token.damage *= Hypatios.Player.BonusDamageMelee.Value;
                 damageReceiver.Attacked(token);
-                audio_HitAttacked.Play();
+                handleMeleeHit(damageReceiver);
                 MainGameHUDScript.Instance.audio_CrosshairClick.Play();
             }
+        }
+    }
+
+    public void handleMeleeHit(damageReceiver damageReceiver)
+    {
+        if (damageReceiver.destructibleScript != null)
+        {
+            if (damageReceiver.destructibleScript.destroyType == DamageToken.DamageType.PlayerPunch)
+            {
+                audio_HitAttacked.Play();
+            }
+        }
+        else
+        {
+            audio_HitAttacked.Play();
         }
     }
 }

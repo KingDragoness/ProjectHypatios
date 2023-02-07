@@ -21,6 +21,8 @@ public abstract class EnemyScript : Entity
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] internal bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] internal Transform eyeLocation;
 
+    internal DamageToken _lastDamageToken;
+
     public System.Action OnDied;
     public System.Action OnPlayerDetected;
 
@@ -122,7 +124,7 @@ public abstract class EnemyScript : Entity
 
     private void Died()
     {
-        Hypatios.Enemy.OnEnemyDied?.Invoke(this);
+        Hypatios.Enemy.OnEnemyDied?.Invoke(this, _lastDamageToken);
         Stats.IsDead = true;
     }
 

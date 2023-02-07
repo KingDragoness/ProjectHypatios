@@ -14867,15 +14867,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 6076635611297215707}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: Flamethrower
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 5
   variableAdditionalDamage: 3
   isAmmoUnlimited: 0
+  isBurnBullet: 0
+  isPoisonBullet: 0
   totalAmmo: 150
   magazineSize: 80
   curAmmo: 80
@@ -14886,12 +14886,13 @@ MonoBehaviour:
   recoilZ: 0.25
   recoilMultiplier: 1
   bulletPerSecond: 100
+  damageType: 3
   repulsionForce: 1
   isFiring: 0
   isReloading: 0
   canScope: 0
   isAutomatic: 1
-  reloadFrame: 230
+  reloadFrame: 210
   curReloadTime: 0
   isScoping: 0
   isBurst: 0
@@ -14901,6 +14902,15 @@ MonoBehaviour:
   bulletImpact: {fileID: 0}
   bulletSparks: {fileID: 0}
   bulletTracer: {fileID: 0}
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHolding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStart:
+    m_PersistentCalls:
+      m_Calls: []
   audioFire: {fileID: 6955660650917176180}
   audioReload: {fileID: 2984157195733471116}
   isMelee: 0
@@ -19716,6 +19726,7 @@ MonoBehaviour:
   explosionDir: {x: 0, y: 9, z: -8}
   originEnemy: {fileID: 0}
   origin: 0
+  isAllowIndicator: 0
   sphereLayerMask:
     serializedVersion: 2
     m_Bits: 4097

@@ -100,6 +100,8 @@ public abstract class Enemy_FW_Bot : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         Stats.CurrentHitpoint -= token.damage;
         if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
             DamageOutputterUI.instance.DisplayText(token.damage);

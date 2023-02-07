@@ -181,7 +181,7 @@ public class MinigunWeapon : GunScript
                 {
                     damageToken.damage = damage * Hypatios.Player.BonusDamageGun.Value + variableDamage; damageToken.repulsionForce = repulsionForce;
                     damageReceiver.Attacked(damageToken);
-                    StartCoroutine(SetCrosshairHitActive());
+                    HandleCrosshairActive(damageReceiver);
                 }
 
                 points[1] = hit.point;//cam.transform.position + cam.transform.forward * hit.distance;

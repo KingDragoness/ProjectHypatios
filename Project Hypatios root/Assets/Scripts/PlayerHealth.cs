@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
     public float curHealth;
     public float targetHealth;
     public float HealthSpeed = 4;
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_damage_taken;
     [Range(0f, 100f)] public float alcoholMeter = 0;
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
@@ -183,6 +184,8 @@ public class PlayerHealth : MonoBehaviour
         {
             healthAfterHeal -= damage;
         }
+
+        Hypatios.Game.Add_PlayerStat(stat_damage_taken, damage);
         targetHealth -= (damage/ armorStrength);
 
         if (dof.focalLength.value < 68f)

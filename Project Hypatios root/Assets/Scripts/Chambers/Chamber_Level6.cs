@@ -101,7 +101,7 @@ public class Chamber_Level6 : MonoBehaviour
         Hypatios.Enemy.OnEnemyDied -= Enemy_onKilled;
     }
 
-    private void Enemy_onKilled(EnemyScript mySelf)
+    private void Enemy_onKilled(EnemyScript mySelf, DamageToken damagetoken)
     {
         if (enemies.Contains(mySelf))
         {

@@ -304,6 +304,8 @@ public class SpiderScript : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         hasSeenPlayer = true;
         Stats.CurrentHitpoint -= token.damage;
 

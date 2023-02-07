@@ -146,7 +146,11 @@ public class HyperchadEnemy : EnemyScript
 
     public override void Die()
     {
-        if (Stats.IsDead == false) BossDied();
+        if (Stats.IsDead == false)
+        {
+            BossDied();
+            OnDied?.Invoke();
+        }
         Stats.IsDead = true;
         Stats.CurrentHitpoint = 0;
         currentStance = MoveStances.PrepareDie;
@@ -195,6 +199,7 @@ public class HyperchadEnemy : EnemyScript
         {
             return;
         }
+        _lastDamageToken = token;
 
         float damageProcessed = token.damage;
 

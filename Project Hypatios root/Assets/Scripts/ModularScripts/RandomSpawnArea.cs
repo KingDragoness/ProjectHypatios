@@ -63,9 +63,9 @@ public class RandomSpawnArea : MonoBehaviour
 
     public Vector3 GetAnyPositionInsideBox()
     {
-        float max_X = ActivatingArea.localScale.x;
-        float max_Y = ActivatingArea.localScale.y;
-        float max_Z = ActivatingArea.localScale.z;
+        float max_X = ActivatingArea.localScale.x * 2;
+        float max_Y = ActivatingArea.localScale.y * 2;
+        float max_Z = ActivatingArea.localScale.z * 2;
 
         float x = Random.Range(-max_X, max_X);
         float y = Random.Range(-max_Y, max_Y);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -9,10 +10,15 @@ public class DisplayHighscores : MonoBehaviour
 {
 
     public HighscoreRankTemplateButtonUI buttonUI;
+    public StatEntryButton statButton;
     public Transform parentHighscores;
+    public Transform parentPlayerStat;
+    public bool isPersistent = false;
     HighScores myScores;
 
     [SerializeField] private List<HighscoreRankTemplateButtonUI> pooledButtons = new List<HighscoreRankTemplateButtonUI>();
+    [ReadOnly] [SerializeField] private List<StatEntryButton> pooledStatButtons = new List<StatEntryButton>();
+
     public int amountRank = 30;
 
     void Start() //Fetches the Data at the beginning
@@ -36,10 +42,40 @@ public class DisplayHighscores : MonoBehaviour
         StartCoroutine("RefreshHighscores");
     }
 
+    public void ChangeModeStat(bool _isPersist)
+    {
+        isPersistent = _isPersist;
+        RefreshStats();
+    }
+
     private void OnEnable()
     {
         myScores = FindObjectOfType<HighScores>();
+        RefreshStats();
         StartCoroutine("RefreshHighscores");
+    }
+
+    public void RefreshStats()
+    {
+        foreach (var button in pooledStatButtons)
+        {
+            if (button != null)
+                Destroy(button.gameObject);
+        }
+
+        pooledStatButtons.Clear();
+
+        var allStatEntries = Hypatios.Assets.AllStatEntries;
+
+        foreach(var entry in allStatEntries)
+        {
+            var prefab1 = Instantiate(statButton, parentPlayerStat);
+            prefab1.gameObject.SetActive(true);
+            prefab1.isPersistent = isPersistent;
+            prefab1.ID = entry.ID;
+            prefab1.Refresh();
+            pooledStatButtons.Add(prefab1);
+        }
     }
 
     public void SetScoresToMenu(PlayerScore[] highscoreList) //Assigns proper name and score for each text value

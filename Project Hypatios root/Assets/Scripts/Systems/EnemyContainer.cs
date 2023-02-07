@@ -12,7 +12,10 @@ public class EnemyContainer : MonoBehaviour
     [ReadOnly] [ShowInInspector] private List<EnemyScript> AllEnemies = new List<EnemyScript>();
     public LayerMask baseDetectionLayer;
     public LayerMask baseSolidLayer; //non transparent
-    public System.Action<EnemyScript> OnEnemyDied;
+    public System.Action<EnemyScript, DamageToken> OnEnemyDied;
+
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_kill;
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_kill_melee;
 
     private bool _isPlayerInNavMesh = false;
 
@@ -20,6 +23,25 @@ public class EnemyContainer : MonoBehaviour
     /// Don't use this in FortWar
     /// </summary>
     public bool IsPlayerInNavMesh { get => _isPlayerInNavMesh; }
+
+    private void Awake()
+    {
+        OnEnemyDied += OnEnemyDieEvent;
+    }
+
+    public void OnEnemyDieEvent(EnemyScript enemy, DamageToken token)
+    {
+        if (token.origin == DamageToken.DamageOrigin.Player &&
+            enemy.Stats.MainAlliance != Alliance.Player)
+        {
+            Hypatios.Game.Increment_PlayerStat(stat_kill);
+
+            if (token.damageType == DamageToken.DamageType.PlayerPunch)
+                Hypatios.Game.Increment_PlayerStat(stat_kill_melee);
+
+        }
+
+    }
 
     public void RegisterEnemy(EnemyScript enemy)
     {

@@ -5095,7 +5095,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1278057433712709147}
   m_Father: {fileID: 6545298139130427811}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5205,6 +5206,98 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &5837195280097952780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278057433712709147}
+  - component: {fileID: 3796765349440589894}
+  m_Layer: 0
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1278057433712709147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5837195280097952780}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4780858347936064135}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &3796765349440589894
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5837195280097952780}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 0.08033289, b: 0.042452812, a: 1}
+  m_Intensity: 1
+  m_Range: 7
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.02
+    m_NormalBias: 0.1
+    m_NearPlane: 0.1
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!95 &6728140932314144331
 Animator:
   serializedVersion: 3
@@ -5238,15 +5331,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 6728140932314144331}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: MiningBeam
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 1
   variableAdditionalDamage: 1
   isAmmoUnlimited: 0
+  isBurnBullet: 0
+  isPoisonBullet: 0
   totalAmmo: 250
   magazineSize: 100
   curAmmo: 100
@@ -5257,12 +5350,13 @@ MonoBehaviour:
   recoilZ: 1
   recoilMultiplier: 1
   bulletPerSecond: 1
+  damageType: 11
   repulsionForce: 1
   isFiring: 0
   isReloading: 0
   canScope: 0
   isAutomatic: 1
-  reloadFrame: 230
+  reloadFrame: 210
   curReloadTime: 0
   isScoping: 0
   isBurst: 0
@@ -5272,6 +5366,15 @@ MonoBehaviour:
   bulletImpact: {fileID: 0}
   bulletSparks: {fileID: 0}
   bulletTracer: {fileID: 0}
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHolding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStart:
+    m_PersistentCalls:
+      m_Calls: []
   audioFire: {fileID: 7605695630565362148}
   audioReload: {fileID: 2333559824074990876}
   isMelee: 0

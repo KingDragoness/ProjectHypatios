@@ -42,6 +42,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Console_UI;
     [FoldoutGroup("References")] public GameObject Camera_Cutscene;
     [FoldoutGroup("References")] public GameObject Camera_Main;
+    [FoldoutGroup("References")] public PromptMessengerUI PromptMessage_UI;
     [FoldoutGroup("References")] public GameObject SavingGameIcon_UI;
     [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
     [FoldoutGroup("References")] public SettingsUI settingsUI;

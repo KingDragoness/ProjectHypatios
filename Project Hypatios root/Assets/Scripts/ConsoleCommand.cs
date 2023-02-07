@@ -19,7 +19,23 @@ public class ConsoleCommand : MonoBehaviour
         "",
     };
 
-    public static ConsoleCommand Instance;
+    private static ConsoleCommand _instance;
+
+    public static ConsoleCommand Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = Hypatios.ConsoleCommand;
+
+            return _instance;
+        }
+
+        set
+        {
+            _instance = value;
+        }
+    }
 
     private void Awake()
     {

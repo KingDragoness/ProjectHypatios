@@ -104,7 +104,7 @@ public class HypatiosSave
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;
     public int Game_TotalSouls = 0;
-    public PlayerStat persistent_PlayerStat;
+    public PlayerStatSave persistent_PlayerStat;
 
     [Space]
 
@@ -127,7 +127,7 @@ public class HypatiosSave
     public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;
     public EntryCache sceneEntryCache;
-    public PlayerStat run_PlayerStat;
+    public PlayerStatSave run_PlayerStat;
     public List<TimelineEventSave> Game_TimelineEvents = new List<TimelineEventSave>(); //Do not clear until wake up/level 1 script
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public InventoryData Player_Inventory;
@@ -263,14 +263,36 @@ public class HypatiosSave
     }
     
     [System.Serializable]
-    public class PlayerStat
+    public class PlayerStatSave
     {
-        public int total_Enemy_Killed = 0;
-        public int total_Enemy_Hacked = 0;
-        public int total_Enemy_KillByMelee = 0;
-        public int total_DashUsed = 0;
+        public List<PlayerStatValueSave> allPlayerStats = new List<PlayerStatValueSave>();
 
+        public PlayerStatValueSave GetValueStat(BaseStatValue baseStat)
+        {
+            var targetStat = allPlayerStats.Find(x => x.ID == baseStat.ID);
+
+            if (targetStat == null)
+            {
+                targetStat = new PlayerStatValueSave(baseStat.ID);
+                allPlayerStats.Add(targetStat);
+            }
+
+            return targetStat;
+        }
     }
+
+    [System.Serializable]
+    public class PlayerStatValueSave
+    {
+        public string ID = "total_Enemy_Kill_Melee";
+        public int value_int = 0;
+
+        public PlayerStatValueSave(string _id)
+        {
+            ID = _id;
+        }
+    }
+
 
     #endregion
 }

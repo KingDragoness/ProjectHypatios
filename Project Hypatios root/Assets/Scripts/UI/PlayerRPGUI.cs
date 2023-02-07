@@ -320,6 +320,7 @@ public class PlayerRPGUI : MonoBehaviour
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
         string sLeft = "";
         string sRight = "";
+        string s_interaction = "";
 
         if (itemClass.category == ItemInventory.Category.Weapon)
         {
@@ -333,9 +334,18 @@ public class PlayerRPGUI : MonoBehaviour
             if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) != null) isSimilarWeaponEquipped = true;
 
 
-                foreach (var attachment in weaponSave.allAttachments)
+            foreach (var attachment in weaponSave.allAttachments)
             {
                 s_allAttachments += $"{weaponClass.GetAttachmentName(attachment)}, ";
+            }
+
+            if (!isSimilarWeaponEquipped)
+            {
+                s_interaction = "[LMB to equip weapon] [X to discard> [F to favorite]";
+            }
+            else
+            {
+                s_interaction = "[X to discard] [F to favorite]";
             }
 
 
@@ -343,7 +353,7 @@ public class PlayerRPGUI : MonoBehaviour
             sLeft += $"Fire rate\n";
             sLeft += $"Mag size\n";
             sLeft += $"Ammo Left\n";
-            if (!isSimilarWeaponEquipped) sLeft += $"\n<LMB to equip weapon> <X to discard> <F to favorite>\n"; else sLeft += $"\n<X to discard> <F to favorite>\n";
+            sLeft += $"\n<size=14>{s_interaction}</size>\n";
             sLeft += $"\n<size=14>{s_allAttachments}</size>";
 
             sRight += $"{weaponStat.damage}\n";
@@ -354,10 +364,18 @@ public class PlayerRPGUI : MonoBehaviour
         }
         else
         {
+            if (itemClass.category != ItemInventory.Category.Consumables)
+            {
+                s_interaction = "[X to discard] [F to favorite]";
+            }
+            else
+            {
+                s_interaction = "[LMB to consume] [X to discard] [F to favorite]";
+            }
+
             sLeft += $"{itemClass.GetDisplayText()}\n";
             sLeft += $"\n{itemClass.Description}\n";
-            if (itemClass.category != ItemInventory.Category.Consumables) sLeft += $"\n<X to discard> <F to favorite>\n";
-            else sLeft += $"\n<LMB to consume> <X to discard> <F to favorite>\n";
+            sLeft += $"\n<size=14>{s_interaction}</size>\n";
             sRight += $"({itemDat.count})\n";
         }
 

@@ -43,6 +43,8 @@ public class MechizDroneMonster : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         hitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
         animator_faceHurt.SetTrigger("Hurt");

@@ -5213,15 +5213,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 13050033693070749}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: Minigun
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 2
   variableAdditionalDamage: 2
   isAmmoUnlimited: 0
+  isBurnBullet: 0
+  isPoisonBullet: 0
   totalAmmo: 600
   magazineSize: 100
   curAmmo: 100
@@ -5232,12 +5232,13 @@ MonoBehaviour:
   recoilZ: -0.9
   recoilMultiplier: 1
   bulletPerSecond: 0
+  damageType: 1
   repulsionForce: 1
   isFiring: 0
   isReloading: 0
   canScope: 0
   isAutomatic: 1
-  reloadFrame: 230
+  reloadFrame: 210
   curReloadTime: 0
   isScoping: 0
   isBurst: 0
@@ -5250,6 +5251,15 @@ MonoBehaviour:
     type: 3}
   bulletTracer: {fileID: 3000425260294169686, guid: bf858b253e10be24da350ba5e0d57444,
     type: 3}
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHolding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStart:
+    m_PersistentCalls:
+      m_Calls: []
   audioFire: {fileID: 3818401064078164530}
   audioReload: {fileID: 9012560626912882378}
   isMelee: 0

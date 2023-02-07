@@ -247,6 +247,9 @@ public class Hypatios : MonoBehaviour
     private HypatiosControls _actionMap;
 
     [SerializeField]
+    private ConsoleCommand _cc;
+
+    [SerializeField]
     private FPSMainScript _fpsMainScript;
 
     [SerializeField]
@@ -277,6 +280,7 @@ public class Hypatios : MonoBehaviour
     private Settings _settings;
 
     public static FPSMainScript Game { get => Instance._fpsMainScript; }
+    public static ConsoleCommand ConsoleCommand { get => Instance._cc; }
     public static CharacterScript Player { get => Instance._characterScript; }
     public static AssetStorageDatabase Assets { get => Instance._assetStorage; }
     public static MainUI UI { get => Instance._ui; }

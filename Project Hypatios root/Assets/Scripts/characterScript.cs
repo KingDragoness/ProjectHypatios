@@ -14,7 +14,8 @@ public class CharacterScript : Entity
 
     [FoldoutGroup("Stats")] public CharacterStat BonusDamageMelee; //percentage only
     [FoldoutGroup("Stats")] public CharacterStat BonusDamageGun; //percentage only
-
+    [FoldoutGroup("Stats")] public BaseStatValue stat_jumps;
+    [FoldoutGroup("Stats")] public BaseStatValue stat_dash;
 
     private dashParticleManager dashManager;
     public Rigidbody rb;
@@ -369,7 +370,7 @@ public class CharacterScript : Entity
         {
             if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldown.Value)
             {
-
+                Hypatios.Game.Increment_PlayerStat(stat_dash);
                 StartCoroutine(Dash());
                 timeSinceLastDash = 0;
             }
@@ -570,6 +571,8 @@ public class CharacterScript : Entity
                 rb.AddForce(dirJump, ForceMode.Impulse);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
+                Hypatios.Game.Increment_PlayerStat(stat_jumps);
+
             }
             else if (isGrounded && Hypatios.Input.Jump.triggered && Gamepad.current != null && InteractableCamera.instance.currentInteractable == null)
             {
@@ -585,6 +588,8 @@ public class CharacterScript : Entity
                 rb.AddForce(dirJump, ForceMode.Impulse);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
+                Hypatios.Game.Increment_PlayerStat(stat_jumps);
+
             }
             else if (!isGrounded && !WallRun.isWallRunning) 
             {
@@ -606,6 +611,8 @@ public class CharacterScript : Entity
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
+                Hypatios.Game.Increment_PlayerStat(stat_jumps);
+
             }
         }
 

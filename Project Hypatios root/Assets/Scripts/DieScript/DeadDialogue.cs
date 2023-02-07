@@ -37,6 +37,23 @@ public class DeadDialogue : MonoBehaviour
 		PromptNotifyMessage(testText1, 9999f);
 	}
 
+	[FoldoutGroup("Debug")]
+	[Button("TestText2")]
+	public void TestText2(string testText1)
+	{
+		PromptNotifyMessage_Mod(testText1, 3f);
+	}
+
+
+	public static void PromptNotifyMessage_Mod(string text, float time)
+	{
+		instance.RefreshPrompt();
+		DeadDialogueButton newPrompt = instance.CreateMessageButton();
+		instance.promptMessages.Insert(0, newPrompt);
+		newPrompt.SetMessage(text, time);
+	}
+
+
 	public static void PromptNotifyMessage(string text, float bonusTime)
 	{
 		instance.RefreshPrompt();

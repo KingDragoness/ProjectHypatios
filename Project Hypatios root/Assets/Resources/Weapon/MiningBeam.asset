@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: MiningBeam
   m_EditorClassIdentifier: 
   nameWeapon: MiningBeam
-  moveSpeed: 1
   prefab: {fileID: 6728140930994960089, guid: 52d0e0bb62b178045989b67ea06224eb, type: 3}
   UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: db9b11ab43fa35a468cfb1dc6968a2a7,
     type: 3}
@@ -24,15 +23,20 @@ MonoBehaviour:
   attachments:
   - ID: FusionCutter
     Name: Fusion Cutter
-    Description: Minor increase in damage and cooldown.
+    Description: Minor increase in damage but also minor increase in fuel usage.
     slot: 0
     order: 10
-    RequirementCrafting: []
-    modifier_damage: 0.5
-    modifier_cooldown: 1
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 1
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 3
+    modifier_damage: 1
+    modifier_cooldown: 2
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -41,12 +45,17 @@ MonoBehaviour:
     Description: Increases magazine size to 130.
     slot: 5
     order: 10
-    RequirementCrafting: []
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 2
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 130
     stat_burn: 0
     stat_poison: 0
@@ -59,13 +68,13 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
     count: 1
   craft_AmmoAmount: 200
-  isCraftable: 1
-  defaultDamage: 5
-  defaultMagazineSize: 100
-  defaultCooldown: 60
-  buy_AmmoAmount: 80
+  buy_AmmoAmount: 100
   buy_AmmoSoulPrice: 4
   buy_SoulPrice: 20
+  isCraftable: 1
+  defaultDamage: 3
+  defaultMagazineSize: 100
+  defaultCooldown: 16
   rewardRate:
     serializedVersion: 2
     m_Curve:
@@ -90,3 +99,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

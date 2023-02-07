@@ -35,6 +35,7 @@ public class HackingDeviceWeapon : GunScript
     [FoldoutGroup("Audios")] public AudioSource audio_Hacking;
     [FoldoutGroup("Audios")] public AudioSource audio_HackingSuccess;
     [FoldoutGroup("Audios")] public AudioSource audio_HackingFailed;
+    [FoldoutGroup("Statistics")] public BaseStatValue stat_hacked;
 
     private float prepareHackTime = 1.3f;
     private float _preparingHackTimer = 0f;
@@ -242,6 +243,7 @@ public class HackingDeviceWeapon : GunScript
 
             //success!
             currentEnemyScript.Hack();
+            Hypatios.Game.Increment_PlayerStat(stat_hacked);
             DigitOutputLabel.gameObject.SetActive(true);
             ResetToScanMode();
         }

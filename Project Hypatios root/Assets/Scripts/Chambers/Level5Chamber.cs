@@ -127,7 +127,7 @@ public class Level5Chamber : MonoBehaviour
         OnChamberStarted?.Invoke();
     }
 
-    private void Enemy_onKilled(EnemyScript enemy)
+    private void Enemy_onKilled(EnemyScript enemy, DamageToken damagetoken)
     {
         enemiesToClear.Remove(enemy);
     }

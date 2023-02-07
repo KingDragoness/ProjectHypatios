@@ -137,6 +137,8 @@ public class B0MBScript : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         hasSeenPlayer = true;
         DamageOutputterUI.instance.DisplayText(token.damage);
         Stats.CurrentHitpoint -= token.damage;

@@ -62,9 +62,11 @@ public class MiningBeamWeapon : GunScript
 
             damageToken.damage = damageDist; damageToken.repulsionForce = repulsionForce;
             damageReceiver.Attacked(damageToken);
-            StartCoroutine(SetCrosshairHitActive());
+
+            HandleCrosshairActive(damageReceiver);
         }
     }
+
 
     private void FixedUpdate()
     {

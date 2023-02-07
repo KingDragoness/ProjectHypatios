@@ -12,6 +12,8 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<WeaponItem> Weapons = new List<WeaponItem>();
     public List<BasePerk> AllBasePerks;
     public List<ItemInventory> AllItems;
+    public List<BaseStatValue> AllStatEntries;
+
 
     private void Awake()
     {
@@ -25,7 +27,8 @@ public class AssetStorageDatabase : MonoBehaviour
         var _statusEffects = Resources.LoadAll("", typeof(BaseStatusEffectObject)).Cast<BaseStatusEffectObject>().ToList(); 
         var _weapons = Resources.LoadAll("", typeof(WeaponItem)).Cast<WeaponItem>().ToList(); 
         var _basePerks = Resources.LoadAll("", typeof(BasePerk)).Cast<BasePerk>().ToList(); 
-        var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList(); 
+        var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList();
+        var _statistics = Resources.LoadAll("", typeof(BaseStatValue)).Cast<BaseStatValue>().ToList();
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;
@@ -33,6 +36,8 @@ public class AssetStorageDatabase : MonoBehaviour
         Weapons = _weapons;
         AllBasePerks = _basePerks;
         AllItems = _itemInventory;
+        AllStatEntries = _statistics;
+
     }
 
     public BaseStatusEffectObject GetStatusEffect(StatusEffectCategory category)
@@ -48,6 +53,11 @@ public class AssetStorageDatabase : MonoBehaviour
     public ItemInventory GetItem(string ID)
     {
         return AllItems.Find(x => x.GetID() == ID);
+    }
+
+    public BaseStatValue GetStatEntry(string ID)
+    {
+        return AllStatEntries.Find(x => x.GetID() == ID);
     }
 
     public ItemInventory GetItemByWeapon(string ID)

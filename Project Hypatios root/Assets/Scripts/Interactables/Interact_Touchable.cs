@@ -13,6 +13,8 @@ public class Interact_Touchable : InteractableObject
     public AudioSource interactSound;
     public bool useHoverEvent = false;
     public string interactDescription = "Interact";
+    public string text_interactPrompt = "A door has been unlocked.";
+    public float time_interactPrompt = 4f;
 
     [Button("Interact")]
     public override void Interact()
@@ -27,6 +29,11 @@ public class Interact_Touchable : InteractableObject
     }
 
     private bool safetyBoolCheck = false;
+
+    public void Prompt()
+    {
+        DeadDialogue.PromptNotifyMessage_Mod(text_interactPrompt, time_interactPrompt);
+    }
 
     private void Update()
     {

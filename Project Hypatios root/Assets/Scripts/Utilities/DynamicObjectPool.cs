@@ -17,7 +17,8 @@ public enum CategoryParticleEffect
     ExplosionSeaver,
     FireEffect = 30,
     PoisonEffect,
-    ParalyzeEffect
+    ParalyzeEffect,
+    RockDestructible = 40
 }
 
 public class DynamicObjectPool : MonoBehaviour

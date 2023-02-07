@@ -100,6 +100,8 @@ public class MobiusGuard : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         timer_Stunned = stunDamageTime;
         aiState = AIState.UnderAttacked;
         animator.SetTrigger("Damaged");

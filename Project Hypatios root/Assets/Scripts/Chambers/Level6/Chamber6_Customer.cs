@@ -144,7 +144,10 @@ public class Chamber6_Customer : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         Stats.CurrentHitpoint -= token.damage;
+
         if (token.origin == DamageToken.DamageOrigin.Player) DamageOutputterUI.instance.DisplayText(token.damage);
         cooldownEscape = 10f;
         mode = AIMode.Escape;

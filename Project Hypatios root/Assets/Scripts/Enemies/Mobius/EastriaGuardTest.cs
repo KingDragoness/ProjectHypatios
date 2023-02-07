@@ -42,6 +42,8 @@ public class EastriaGuardTest : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
+        _lastDamageToken = token;
+
         SeenPlayer();
         Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
