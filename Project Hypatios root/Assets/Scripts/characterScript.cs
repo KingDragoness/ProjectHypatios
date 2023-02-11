@@ -53,6 +53,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] public float softSlopeLimit = 40f; //angle which player greatly struggles to cliimb
     [FoldoutGroup("Physics")] public Transform groundCheck;
     [FoldoutGroup("Physics")] public float groundDistance = .4f;
+    [FoldoutGroup("Physics")] public float groundRadiusCheck = .3f;
     [FoldoutGroup("Physics")] public LayerMask player;
     [FoldoutGroup("Physics")] public float jumpHeight;
     [FoldoutGroup("Physics")] public float jumpDrag = 1f;
@@ -450,8 +451,8 @@ public class CharacterScript : Entity
             {
                 Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
                 var netDir = slopeDir * -fallSpeed;
-                netDir.y = netDir.y - _slopeHit.point.y;
-                dir = netDir;
+                //netDir.y = (netDir.y - _slopeHit.point.y) * Time.deltaTime;
+                dir = netDir + (transform.right * xMovement * 0.5f) + (transform.forward * yMovement * 0.5f);
             }
             else if (isSoftSlope && !WallRun.isWallRunning)
             {
@@ -480,7 +481,7 @@ public class CharacterScript : Entity
         }
         else if (isGrounded && onSlope())
         {
-            rb.AddForce(slopeDirection.normalized * speed * speedMultiplier.Value, ForceMode.Acceleration);
+            rb.AddForce(dir.normalized * speed * speedMultiplier.Value, ForceMode.Acceleration);
         }
 
         if (isLimitedIntroMode == false)
@@ -534,19 +535,30 @@ public class CharacterScript : Entity
     private void SlopeCheck()
     {
         Vector3 checkPos = groundCheck.position + new Vector3(0, 0.1f, 0);
-        if (Physics.Raycast(checkPos, Vector3.down, out _slopeHit, 10f, player, QueryTriggerInteraction.Ignore))
+        Vector3 checkPos1 = groundCheck.position + (transform.forward*cc.radius) + new Vector3(0, 0.1f, 0);
+        Vector3 checkPos2 = groundCheck.position + (-transform.forward * cc.radius) + new Vector3(0, 0.1f, 0);
+
+        Debug.DrawRay(checkPos, Vector3.down * groundDistance * 2f, Color.red);
+        Debug.DrawRay(checkPos1, Vector3.down * groundDistance * 2f, Color.red);
+        Debug.DrawRay(checkPos2, Vector3.down * groundDistance * 2f, Color.red);
+
+        if (Physics.Raycast(checkPos, Vector3.down, out _slopeHit, groundDistance * 2f, player, QueryTriggerInteraction.Ignore))
         {
             _slopeAngle = Vector3.Angle(_slopeHit.normal, Vector3.up);
         }
-        else
+        else if (Physics.Raycast(checkPos1, Vector3.down, out _slopeHit, groundDistance * 2f, player, QueryTriggerInteraction.Ignore))
         {
-
+            _slopeAngle = Vector3.Angle(_slopeHit.normal, Vector3.up);
+        }
+        else if (Physics.Raycast(checkPos2, Vector3.down, out _slopeHit, groundDistance * 2f, player, QueryTriggerInteraction.Ignore))
+        {
+            _slopeAngle = Vector3.Angle(_slopeHit.normal, Vector3.up);
         }
     }
 
     void Jumping()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadiusCheck, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
         if (!isCheatMode)
         {
@@ -684,12 +696,17 @@ public class CharacterScript : Entity
         }
 
         if (isNoGravity == false) rb.useGravity = false;
-        rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
+        rb.AddForce(dashDirection * dashForce * Time.deltaTime * 50f, ForceMode.Impulse);
         soundManager.Play("dash");
         dashManager.manageDash();
+
         yield return new WaitForSeconds(dashDuration);
 
-        rb.velocity = dir * moveSpeed;
+        if (!isCheatMode)
+            rb.velocity = dir * moveSpeed;
+        else
+            rb.velocity = dir * moveSpeed;
+
         if (isNoGravity == false) rb.useGravity = true;
     }
 }
