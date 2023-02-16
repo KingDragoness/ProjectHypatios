@@ -22,6 +22,16 @@ public static class StringExtensions
     {
         return new string(Input.SelectMany((c, i) => i > 0 && char.IsUpper(c) ? new[] { ' ', c } : new[] { c }).ToArray());
     }
+
+    public static int CountLines(this string str)
+    {
+        int count = 0;
+
+        count = str.Count(c => c.Equals('\n')) + 1;
+
+
+        return count;
+    }
 }
 public static class IsopatiosUtility
 {

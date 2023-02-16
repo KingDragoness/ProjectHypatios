@@ -10,8 +10,10 @@ public class AI_AntiTurret : MonoBehaviour
     public ModularTurretGun turretGun;
     public float rotateSpeed = 20f;
     public float force = 10f;
+    public Alliance Alliance = Alliance.Player;
+    public bool slowlyRotate = false;
 
-    private EnemyScript targetBot;
+    private Entity targetBot;
     private Vector3 currentPosTargetMove;
     private bool canSeeEnemy = false;
 
@@ -36,7 +38,7 @@ public class AI_AntiTurret : MonoBehaviour
 
     private void FindEnemyTarget()
     {
-        targetBot = Hypatios.Enemy.FindEnemyEntity(Alliance.Player, transform.position) as EnemyScript;
+        targetBot = Hypatios.Enemy.FindEnemyEntity(Alliance, transform.position);
     }
 
     private RaycastHit currentHit;
@@ -72,15 +74,48 @@ public class AI_AntiTurret : MonoBehaviour
         RaycastSee();
 
         var enemyScript = targetBot.GetComponent<EnemyScript>();
-        Vector3 targetLook = enemyScript.OffsetedBoundWorldPosition;
+        Vector3 targetLook = targetBot.transform.position + new Vector3(0, 0.5f, 0);
 
-        Vector3 relativePos = targetLook - transform.position;
-        relativePos.z = 0;
+        if (enemyScript != null)
+        {
+            targetLook = enemyScript.OffsetedBoundWorldPosition;
+        }
+        else
+        {
 
-        Quaternion toRotation = Quaternion.LookRotation(relativePos);
-        transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
+        }
 
-        turretGun.transform.LookAt(targetLook);
+        bool isBehind = false;
+
+        {
+            Vector3 turretRelative = transform.InverseTransformPoint(targetLook);
+
+            if (turretRelative.z < 0)
+                isBehind = true;
+        }
+
+
+        Vector3 dir = targetLook - transform.position;
+        dir.z = 0;
+
+        Quaternion toRotation = Quaternion.LookRotation(dir);
+
+        if (!isBehind)
+        {
+            if (slowlyRotate == false)
+            {
+                turretGun.transform.LookAt(targetLook);
+                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotateSpeed * Time.deltaTime);
+            }
+            else
+            {
+
+                Vector3 dir2 = targetLook - turretGun.transform.position;
+
+                Quaternion q2 = Quaternion.LookRotation(dir2);
+                turretGun.transform.rotation = Quaternion.Lerp(turretGun.transform.rotation, q2, rotateSpeed * Time.deltaTime);
+            }
+        }
     }
 
 

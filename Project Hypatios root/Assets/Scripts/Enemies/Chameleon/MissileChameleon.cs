@@ -11,6 +11,9 @@ public class MissileChameleon : EnemyScript
     public float collisionLimitVelocity = 6f;
     public float initialVelocityForce = 1000;
     public float timer = 10;
+    public bool isSmart = false;
+    [ShowIf("isSmart", true)] public float predictiveVelocityMultiplier = 1f;
+    [ShowIf("isSmart", true)] public float directTargetMoveSpeed = 100;
 
     public Rigidbody rb;
 
@@ -49,8 +52,25 @@ public class MissileChameleon : EnemyScript
 
         if (currentTarget == null){ Dead(true); return; }
 
-        var q = Quaternion.LookRotation(currentTarget.transform.position - transform.position);
+        Vector3 pos = currentTarget.transform.position;
+
+        if (isSmart && currentTarget is CharacterScript)
+        {
+            var player = Hypatios.Player;
+            var rb = player.GetComponent<Rigidbody>();
+            pos += rb.velocity * predictiveVelocityMultiplier;
+        }
+
+        var q = Quaternion.LookRotation(pos - transform.position);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, q, rotateSpeed * Time.deltaTime);
+
+        float mcc = 1f; //multiplier correction course
+
+        if (isSmart)
+        {
+            Vector3 dir =  currentTarget.transform.position - transform.position;
+            rb.AddForce(dir * directTargetMoveSpeed * rb.mass * Time.deltaTime);
+        }
 
         rb.AddForce(transform.forward * moveSpeed * rb.mass * Time.deltaTime);
 

@@ -20,7 +20,27 @@ MonoBehaviour:
   ammoSpriteIcon: {fileID: 21300000, guid: 25f31228eca5d554982285b17ed58f22, type: 3}
   overrideCrosshair_Sprite: {fileID: 21300000, guid: 726582350d5b05c43b62f0e07426786e,
     type: 3}
-  attachments: []
+  attachments:
+  - ID: Ultrarium
+    Name: Ultrarium Receiver
+    Description: An ultra powerful, god-like attachment that can deals god-like damage,
+      less cooldown, deals fire damage and increase mag size to 100.
+    slot: 1
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+      count: 70
+    - inventory: {fileID: 11400000, guid: d329af244bfbe5047b2c92bfd5b2676c, type: 2}
+      count: 1
+    modifier_damage: 331
+    modifier_cooldown: 50
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable: []
+    override_magazineSize: 100
+    stat_burn: 1
+    stat_poison: 0
   WeaponRequirementCrafting:
   - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
     count: 20

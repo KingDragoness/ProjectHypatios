@@ -44,9 +44,9 @@ public class RandomSpawnArea : MonoBehaviour
         var colorGreen = Color.green;
         colorGreen.a = 0.08f;
         Gizmos.color = colorGreen;
-        Gizmos.DrawCube(Vector3.zero, ActivatingArea.localScale);
+        Gizmos.DrawCube(Vector3.zero, ActivatingArea.localScale/2f);
         colorGreen.a = 0.6f;
-        Gizmos.DrawWireCube(Vector3.zero, ActivatingArea.localScale);
+        Gizmos.DrawWireCube(Vector3.zero, ActivatingArea.localScale/2f);
         Gizmos.DrawIcon(transform.position, "RandomSpawnArea.png");
     }
 
@@ -56,6 +56,7 @@ public class RandomSpawnArea : MonoBehaviour
     }
 
     [ContextMenu("DEBUG_Test")]
+    [Button("Debug_test")]
     public void DEBUG_Test()
     {
         test.transform.position = GetAnyPositionInsideBox();

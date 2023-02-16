@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Minigun
   m_EditorClassIdentifier: 
   nameWeapon: Minigun
-  moveSpeed: 1
   prefab: {fileID: 13050034479496463, guid: bf0632830e9d6044a84e84e8205f2866, type: 3}
   UI_TemplateAmmoAdded: {fileID: 2526106477218704173, guid: 6596db5254a910f40b8d304c7b799466,
     type: 3}
@@ -37,6 +36,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: -0.1
     modifier_percent_recoil: 0.1
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -55,6 +55,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.15
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -91,6 +93,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 150
     stat_burn: 0
     stat_poison: 0
@@ -109,6 +112,26 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
+  - ID: AkvisFrame
+    Name: Akvis Frame
+    Description: Extremely high damage and lower cooldown.
+    slot: 0
+    order: 10
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 4
+    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+      count: 4
+    modifier_damage: 4
+    modifier_cooldown: 6
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: -0.2
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -123,13 +146,13 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
     count: 2
   craft_AmmoAmount: 150
+  buy_AmmoAmount: 100
+  buy_AmmoSoulPrice: 8
+  buy_SoulPrice: 50
   isCraftable: 1
   defaultDamage: 3
   defaultMagazineSize: 100
   defaultCooldown: 60
-  buy_AmmoAmount: 100
-  buy_AmmoSoulPrice: 8
-  buy_SoulPrice: 50
   rewardRate:
     serializedVersion: 2
     m_Curve:
@@ -154,3 +177,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

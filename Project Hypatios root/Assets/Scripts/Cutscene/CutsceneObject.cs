@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
 
@@ -9,6 +10,8 @@ public class CutsceneObject : MonoBehaviour
 {
 
     public GameObject virtualCam;
+    public List<GameObject> additionalVirtualCams; //primarily for cleanup
+    public UnityEvent OnCutsceneEnded; //primarily for cleanup
 
     private List<CutsceneAction> allActionEntries = new List<CutsceneAction>();
     private List<CutsceneAction> currentActions = new List<CutsceneAction>();
@@ -115,10 +118,12 @@ public class CutsceneObject : MonoBehaviour
 
     private void CloseCutscene()
     {
+        OnCutsceneEnded?.Invoke();
         virtualCam.gameObject.SetActive(false);
         foreach (var go in allActionEntries)
-        {
             go.gameObject.SetActive(true);
-        }
+
+        foreach (var vc in additionalVirtualCams)
+            vc.gameObject.SetActive(false);
     }
 }

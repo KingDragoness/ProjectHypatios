@@ -11,6 +11,7 @@ public class ModularTurretGun : MonoBehaviour
     public float healthSpeed = 25;
     public float bulletPerSecond = 10;
     public DamageToken.DamageOrigin originToken;
+    [Tooltip("Optional for enemyScript that have modular gun turret.")] public EnemyScript mySelf; 
     public Alliance alliance;
     [Range(0f,1f)]
     public float chanceFire = 0.5f;
@@ -18,10 +19,11 @@ public class ModularTurretGun : MonoBehaviour
     [FoldoutGroup("References")] public GameObject flashWeapon;
     [FoldoutGroup("References")] public GameObject tracerLaser;
 
-    private EnemyScript targetEnemy;
+    private Entity targetEnemy;
     private float nextAttackTime = 0f;
     private bool isHittingSomething = false;
     private bool isHittingTarget = false;
+    private bool isTargetingSelf = false;
 
     private void Update()
     {
@@ -50,7 +52,7 @@ public class ModularTurretGun : MonoBehaviour
 
     private void FindTarget()
     {
-        targetEnemy = Hypatios.Enemy.FindEnemyEntity(alliance, transform.position) as EnemyScript;
+        targetEnemy = Hypatios.Enemy.FindEnemyEntity(alliance, transform.position);
     }
 
     private void FireTurret()
@@ -58,6 +60,7 @@ public class ModularTurretGun : MonoBehaviour
         RaycastHit hit;
         isHittingSomething = false;
         isHittingTarget = false;
+        isTargetingSelf = false;
 
         if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
@@ -71,6 +74,14 @@ public class ModularTurretGun : MonoBehaviour
             {
                 isHittingTarget = true;
             }
+
+            if (mySelf != null)
+            {
+                if (hit.collider.gameObject.IsParentOf(mySelf.transform.gameObject))
+                {
+                    isTargetingSelf = true;
+                }
+            }
         }
 
         if (isHittingTarget == false)
@@ -81,7 +92,7 @@ public class ModularTurretGun : MonoBehaviour
                 return;
         }
 
-        if (hit.collider != null)
+        if (hit.collider != null && isTargetingSelf == false)
         {
             HitTarget(hit);
         }
@@ -96,6 +107,7 @@ public class ModularTurretGun : MonoBehaviour
         token.damage = damage;
         token.origin = originToken;
         token.healthSpeed = healthSpeed;
+        token.shakinessFactor = 0.2f;
         token.damageType = DamageToken.DamageType.Ballistic;
 
         var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
