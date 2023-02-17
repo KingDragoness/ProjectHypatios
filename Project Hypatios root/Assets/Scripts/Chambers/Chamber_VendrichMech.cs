@@ -22,6 +22,7 @@ public class Chamber_VendrichMech : MonoBehaviour
     [FoldoutGroup("Parameters")] [Range(0f,1f)] public float hTower_SpawnChance = 0.3f;
     [FoldoutGroup("Parameters")] public float hTower_limitMechHP = 80000f;
     [FoldoutGroup("Parameters")] public float triggerHP_RedDust = 60000f;
+    [FoldoutGroup("Parameters")] public float triggerHP_Ascension = 40000f;
     public bool DEBUG_DrawGizmos = false;
 
 
@@ -33,6 +34,7 @@ public class Chamber_VendrichMech : MonoBehaviour
 
     private float _spawnHealingTowerTimer = 0f;
     private bool _isRedDustTriggered = false;
+    private bool _isAscensionTriggered = false;
 
     private void Start()
     {
@@ -69,6 +71,14 @@ public class Chamber_VendrichMech : MonoBehaviour
             if (mechEnemy.Stats.CurrentHitpoint < triggerHP_RedDust)
             {
                 mechEnemy.ForceChangeStage(Stage.Stage2_Dust);
+            }
+        }
+
+        if (_isAscensionTriggered == false)
+        {
+            if (mechEnemy.Stats.CurrentHitpoint < triggerHP_Ascension)
+            {
+                mechEnemy.ForceChangeStage(Stage.Stage3_Ascend);
             }
         }
     }

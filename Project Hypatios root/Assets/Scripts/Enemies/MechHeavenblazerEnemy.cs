@@ -48,6 +48,7 @@ public class MechHeavenblazerEnemy : EnemyScript
 
     [FoldoutGroup("References")] public AnimancerPlayer AnimatorPlayer;
     [FoldoutGroup("References")] public RandomSpawnArea PatrolRegion;
+    [FoldoutGroup("References")] public RandomSpawnArea FlyRegion;
     [FoldoutGroup("References")] public LimbIK LeftArmIK;
     [FoldoutGroup("References")] public LimbIK RightArmIK;
     [FoldoutGroup("References")] public GameObject modularTurretGun;
@@ -56,11 +57,21 @@ public class MechHeavenblazerEnemy : EnemyScript
     [FoldoutGroup("References")] public ModularMissileTurretLauncher missileLaunch_Antiback;
     [FoldoutGroup("References")] public LineRenderer laser_LineRendr;
     [FoldoutGroup("References")] public Transform laser_Sparks;
+    [FoldoutGroup("References")] public Transform laser_OrbCharger;
     [FoldoutGroup("References")] public Transform laser_Origin;
+    [FoldoutGroup("References")] public GameObject synaxis_unholy;
+    [FoldoutGroup("References")] public GameObject synaxis_spawnHeaven;
+    [FoldoutGroup("References")] public GameObject laserFireFX;
+
 
     [FoldoutGroup("Module Variables")] public Vector3 patrolground_WalkTarget = Vector3.zero;
+    [FoldoutGroup("Module Variables")] public Vector3 patrolFly_Target = Vector3.zero;
     [FoldoutGroup("Module Variables")] public bool ik_target_player = false;
+    [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisHeaven = false;
+    [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisUnholy = false;
     [FoldoutGroup("Module Variables")] public float relativeDistZ_FireBackMissile = 3f;
+    [FoldoutGroup("Module Variables")] public float timerSynaxisFire = 0f;
+    [FoldoutGroup("Debug")] public Transform spawn_Synaxis;
 
 
     private float _refreshChangeStageTime = 0f;
@@ -87,6 +98,7 @@ public class MechHeavenblazerEnemy : EnemyScript
             if (DEBUG_EnableDecisionMaking) DecisionMaking();
             if (CurrentAI.category == HB_AIPackage.Category.PatrolIdle) FiringRockets();
             if (CurrentAI is HB_Stance_Laser) FireLaser();
+            if (currentStage == Stage.Stage3_Ascend) StartEngineJet(); else NotEngineJet();
             ControlLimbs();
         }
     }
@@ -229,6 +241,24 @@ public class MechHeavenblazerEnemy : EnemyScript
         missileLaunch_Mortar.Debug_Fire(Random.Range(3, 6));
     }
 
+    private const float TIMER_LASER_FX = 0.2f;
+    private float _timerLaserFX = 0.2f;
+
+    public void Run_SpawnLaserFire(Vector3 _position)
+    {
+        _timerLaserFX += Time.deltaTime;
+
+        if (_timerLaserFX < TIMER_LASER_FX)
+        {
+            return;
+        }
+
+        _timerLaserFX = 0;
+
+        var fire1 = Instantiate(laserFireFX, _position, laserFireFX.transform.rotation);
+        fire1.gameObject.SetActive(true);
+        Destroy(fire1, 5f);
+    }
 
 
     public void FireLaser()
@@ -258,6 +288,38 @@ public class MechHeavenblazerEnemy : EnemyScript
         }
 
     }
+
+    private void StartEngineJet()
+    {
+
+    }
+
+    private void NotEngineJet()
+    {
+
+    }
+
+    #endregion
+
+    #region Debugs
+
+    [FoldoutGroup("Debug")] [Button("Spawn Synaxis")]
+    public void DEBUG_SpawnSynaxis()
+    {
+        var synaxis1 = Instantiate(synaxis_unholy, spawn_Synaxis.transform.position, synaxis_unholy.transform.rotation);
+        synaxis1.gameObject.SetActive(true);
+        Destroy(synaxis1, 5f);
+    }
+
+    [FoldoutGroup("Debug")]
+    [Button("Spawn Heaven Area Synaxis")]
+    public void DEBUG_SpawnHeavenSynaxis()
+    {
+        var synaxis1 = Instantiate(synaxis_spawnHeaven, spawn_Synaxis.transform.position, synaxis_unholy.transform.rotation);
+        synaxis1.gameObject.SetActive(true);
+        Destroy(synaxis1, 5f);
+    }
+
 
     #endregion
 

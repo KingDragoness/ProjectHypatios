@@ -60,6 +60,13 @@ public class HB_Stance_PatrolGroundWalk : HB_AIPackage
         base.Run(_mech);
     }
 
+    public override void OnChangedToThis(MechHeavenblazerEnemy _mech)
+    {
+        _mech.AnimatorPlayer.PlayAnimation(clip, 0.5f);
+
+        base.OnChangedToThis(_mech);
+    }
+
     public override int GetWeightDecision(MechHeavenblazerEnemy _mech)
     {
 

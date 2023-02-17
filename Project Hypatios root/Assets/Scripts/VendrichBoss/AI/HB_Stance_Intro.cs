@@ -21,7 +21,7 @@ public class HB_Stance_Intro : HB_AIPackage
 
     public override void NotRun(MechHeavenblazerEnemy _mech)
     {
-        _mech.mainAnimator.SetTrigger("Start");
+        _mech.AnimatorPlayer.PlayAnimation(clip, 0.5f);
         base.NotRun(_mech);
     }
 

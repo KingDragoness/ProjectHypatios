@@ -15,11 +15,7 @@ public class HB_Stance_AttackFiring : HB_AIPackage
             if (_mech.modularTurretGun1.activeInHierarchy == false)
                 _mech.modularTurretGun1.SetActive(true);
         }
-
-        if (_mech.mainAnimator)
-        {
-            _mech.mainAnimator.SetBool("Firing", true);
-        }
+  
 
         _mech.ik_target_player = true;
 
@@ -33,13 +29,15 @@ public class HB_Stance_AttackFiring : HB_AIPackage
         if (_mech.modularTurretGun1.activeInHierarchy)
             _mech.modularTurretGun1.SetActive(false);
 
-        if (_mech.mainAnimator)
-        {
-            _mech.mainAnimator.SetBool("Firing", false);
-        }
-
         _mech.ik_target_player = false;
         base.NotRun(_mech);
+    }
+
+    public override void OnChangedToThis(MechHeavenblazerEnemy _mech)
+    {
+        _mech.AnimatorPlayer.PlayAnimation(clip, 0.5f);
+
+        base.OnChangedToThis(_mech);
     }
 
     public override int GetWeightDecision(MechHeavenblazerEnemy _mech)

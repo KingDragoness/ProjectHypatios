@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Animancer;
 
-
+/// <summary>
+/// Not going to use this system in the future anymore, this is horrible
+/// </summary>
 public abstract class HB_AIPackage : ScriptableObject
 {
 
@@ -15,7 +18,7 @@ public abstract class HB_AIPackage : ScriptableObject
     }
 
     public Category category;
-    public AnimationClip clip;
+    public ClipTransition clip;
 
     public virtual void OnChangedToThis(MechHeavenblazerEnemy _mech)
     {
