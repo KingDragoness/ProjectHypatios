@@ -61,7 +61,10 @@ public class MechHeavenblazerEnemy : EnemyScript
     [FoldoutGroup("References")] public Transform laser_Origin;
     [FoldoutGroup("References")] public GameObject synaxis_unholy;
     [FoldoutGroup("References")] public GameObject synaxis_spawnHeaven;
+    [FoldoutGroup("References")] public GameObject divineJudgement_Explosion;
     [FoldoutGroup("References")] public GameObject laserFireFX;
+    [FoldoutGroup("References")] public GameObject angelicRingOrb;
+    [FoldoutGroup("References")] public GameObject jetFX;
 
 
     [FoldoutGroup("Module Variables")] public Vector3 patrolground_WalkTarget = Vector3.zero;
@@ -69,6 +72,8 @@ public class MechHeavenblazerEnemy : EnemyScript
     [FoldoutGroup("Module Variables")] public bool ik_target_player = false;
     [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisHeaven = false;
     [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisUnholy = false;
+    [FoldoutGroup("Module Variables")] public bool has_reached_divineMaxHeight = false;
+    [FoldoutGroup("Module Variables")] public bool has_done_divineIntervention = false;
     [FoldoutGroup("Module Variables")] public float relativeDistZ_FireBackMissile = 3f;
     [FoldoutGroup("Module Variables")] public float timerSynaxisFire = 0f;
     [FoldoutGroup("Debug")] public Transform spawn_Synaxis;
@@ -291,11 +296,21 @@ public class MechHeavenblazerEnemy : EnemyScript
 
     private void StartEngineJet()
     {
+        if (angelicRingOrb.activeSelf == false) angelicRingOrb.SetActive(true);
+        if (jetFX.activeSelf == false) jetFX.SetActive(true);
+
+        if (CurrentAI.category == HB_AIPackage.Category.PatrolIdle) angelicRingOrb.SetActive(false);
+        else
+        {
+
+        }
 
     }
 
     private void NotEngineJet()
     {
+        if (angelicRingOrb.activeSelf == true) angelicRingOrb.SetActive(false);
+        if (jetFX.activeSelf == true) jetFX.SetActive(false);
 
     }
 
@@ -312,6 +327,16 @@ public class MechHeavenblazerEnemy : EnemyScript
     }
 
     [FoldoutGroup("Debug")]
+    [Button("Spawn Divine Bomb")]
+    public void DEBUG_SpawnDivineBomb()
+    {
+        var divineBomb = Instantiate(divineJudgement_Explosion, transform.position, divineJudgement_Explosion.transform.rotation);
+        divineBomb.gameObject.SetActive(true);
+        Destroy(divineBomb, 5f);
+    }
+
+
+    [FoldoutGroup("Debug")]
     [Button("Spawn Heaven Area Synaxis")]
     public void DEBUG_SpawnHeavenSynaxis()
     {
@@ -320,6 +345,20 @@ public class MechHeavenblazerEnemy : EnemyScript
         Destroy(synaxis1, 5f);
     }
 
+    [FoldoutGroup("Debug")]
+    [Button("Add AI Refresh Time")]
+    public void DEBUG_AddAIRefreshTime(float time = 2f)
+    {
+        _refreshChangeStageTime += time;
+    }
+
+
+    [FoldoutGroup("Debug")]
+    [Button("Manual inject AI package")]
+    public void DEBUG_InjectAIPackage(HB_AIPackage _newPackage)
+    {
+        ChangePackage(_newPackage);
+    }
 
     #endregion
 

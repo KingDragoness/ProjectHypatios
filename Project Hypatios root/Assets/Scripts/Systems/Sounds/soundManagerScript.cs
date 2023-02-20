@@ -63,6 +63,13 @@ public class soundManagerScript : MonoBehaviour
         CreateNewSound(sound1);
     }
 
+    public bool IsSoundExists(string name)
+    {
+        Sound s = sounds.Find(x => x.name == name);
+
+        return s != null;
+    }
+
     public void Play (string name)
     {
         Sound s = sounds.Find(x => x.name == name);

@@ -10,13 +10,7 @@ using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 public class MainUI : MonoBehaviour
 {
 
-    public enum UIScaling
-    {
-        p768,
-        p900,
-        p1080,
-        Custom
-    }
+
 
     public enum UIMode
     {
@@ -55,7 +49,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("Tooltips")] public RectTransform testingTooltipPos;
 
     public UIMode current_UI = UIMode.Default;
-    public UIScaling current_Scaling = UIScaling.p900;
+    [Range(0f, 1f)] public float UI_Scaling = 1f;
     private bool paused = false;
 
     public static MainUI Instance;
@@ -313,24 +307,13 @@ public class MainUI : MonoBehaviour
     public void RefreshUI_Resolutions()
     {
         var refResolution = scaler_Main.referenceResolution;
+        var targetY = Mathf.Lerp(720f, 1080f, UI_Scaling);
 
-        if (current_Scaling == UIScaling.p900)
-        {
-            refResolution.y = 900f;
-        }
-        else if (current_Scaling == UIScaling.p768)
-        {
-            refResolution.y = 768f;
-        }
-        else if (current_Scaling == UIScaling.p1080)
-        {
-            refResolution.y = 1080f;
-        }
-        else
-        {
+
+        if (Screen.height < targetY)
             refResolution.y = Screen.height;
-            if (refResolution.y < 720) refResolution.y = 720f;
-        }
+        else
+            refResolution.y = targetY;
 
         scaler_Main.referenceResolution = refResolution;
         scaler_Pause.referenceResolution = refResolution;

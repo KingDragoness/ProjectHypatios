@@ -23,6 +23,7 @@ public class Hypatios : MonoBehaviour
         public static float SFX_VOLUME = 0.5f;
         public static float MUSIC_VOLUME = 0.5f;
         public static float MOUSE_SENSITIVITY = 0.5f;
+        public static float UI_SCALING = 1f;
         public static float BRIGHTNESS = 0.5f; //-1 - 1 -> 0 - 1
         public static int VSYNC = 0;
         public static int MOTIONBLUR = 0;
@@ -57,7 +58,8 @@ public class Hypatios : MonoBehaviour
             RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
             MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
-            DYNAMIC_UI_SCALING = LoadPrefKeyInt("SETTINGS.DYNAMIC_UI_SCALING", 0);
+            UI_SCALING = LoadPrefKeyFloat("SETTINGS.UI_SCALING", 1f);
+            //DYNAMIC_UI_SCALING = LoadPrefKeyInt("SETTINGS.DYNAMIC_UI_SCALING", 0);
             ANTIALIASING = LoadPrefKeyInt("SETTINGS.ANTIALIASING", 0);
             SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); 
             MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1);
@@ -135,20 +137,11 @@ public class Hypatios : MonoBehaviour
                 }
             }
 
-            if (DYNAMIC_UI_SCALING == 0)
+            if (UI != null)
             {
-                if (resolution.height >= 1080f)
-                    UI.current_Scaling = MainUI.UIScaling.p1080;
-                else if (resolution.height >= 900f)
-                    UI.current_Scaling = MainUI.UIScaling.p900;
-                else
-                    UI.current_Scaling = MainUI.UIScaling.p768;
+                UI.UI_Scaling = UI_SCALING;
             }
-            else
-            {
-                UI.current_Scaling = MainUI.UIScaling.Custom;
-            }
-
+            
             if (Game.postProcessLayer_Player != null && Game.postProcessLayer_UI != null)
             {
                 if (ANTIALIASING == 0)
