@@ -44,9 +44,9 @@ public class RandomSpawnArea : MonoBehaviour
         var colorGreen = Color.green;
         colorGreen.a = 0.08f;
         Gizmos.color = colorGreen;
-        Gizmos.DrawCube(Vector3.zero, ActivatingArea.localScale/2f);
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);//ActivatingArea.localScale/2f);
         colorGreen.a = 0.6f;
-        Gizmos.DrawWireCube(Vector3.zero, ActivatingArea.localScale/2f);
+        Gizmos.DrawWireCube(Vector3.zero, Vector3.one);//ActivatingArea.localScale/2f);
         Gizmos.DrawIcon(transform.position, "RandomSpawnArea.png");
     }
 
@@ -62,11 +62,19 @@ public class RandomSpawnArea : MonoBehaviour
         test.transform.position = GetAnyPositionInsideBox();
     }
 
+    [ContextMenu("DEBUG_Test")]
+    [Button("testClosest")]
+    public void DEBUG_TestClosest()
+    {
+        test.transform.position = GetClosestPoint(test.transform.position);
+    }
+
+
     public Vector3 GetAnyPositionInsideBox()
     {
-        float max_X = ActivatingArea.localScale.x * 2;
-        float max_Y = ActivatingArea.localScale.y * 2;
-        float max_Z = ActivatingArea.localScale.z * 2;
+        float max_X = ActivatingArea.localScale.x /2f;
+        float max_Y = ActivatingArea.localScale.y /2f;
+        float max_Z = ActivatingArea.localScale.z /2f;
 
         float x = Random.Range(-max_X, max_X);
         float y = Random.Range(-max_Y, max_Y);
@@ -81,11 +89,41 @@ public class RandomSpawnArea : MonoBehaviour
         return result;
     }
 
+    public Vector3 GetClosestPoint(Vector3 currentPos)
+    {
+        Vector3 relativePos = ActivatingArea.InverseTransformPoint(currentPos);
+        float x_Rpos = (relativePos.x);
+        float y_Rpos = (relativePos.y);
+        float z_Rpos = (relativePos.z);
+
+        float max_X = ActivatingArea.localScale.x / 2f;
+        float max_Y = ActivatingArea.localScale.y / 2f;
+        float max_Z = ActivatingArea.localScale.z / 2f;
+
+        float x = Mathf.Clamp(x_Rpos * 2f * max_X, -max_X, max_X);
+        float y = Mathf.Clamp(y_Rpos * 2f * max_Y, -max_Y, max_Y);
+        float z = Mathf.Clamp(z_Rpos * 2f * max_Z, -max_Z, max_Z);
+
+        Vector3 planeX = transform.right * x;
+        Vector3 planeY = transform.up * y;
+        Vector3 planeZ = transform.forward * z;
+
+        Vector3 result = transform.position + planeX + planeY + planeZ;
+
+        return result;
+    }
+
+
     public bool IsInsideOcclusionBox(Vector3 aPoint)
     {
-        Vector3 localPos = ActivatingArea.InverseTransformPoint(aPoint);
+        Vector3 relativePos = ActivatingArea.InverseTransformPoint(aPoint);
+        float x = Mathf.Abs(relativePos.x);
+        float y = Mathf.Abs(relativePos.y);
+        float z = Mathf.Abs(relativePos.z);
 
-        if (Mathf.Abs(localPos.x) < (ActivatingArea.localScale.x / 2) && Mathf.Abs(localPos.y) < (ActivatingArea.localScale.y / 2) && Mathf.Abs(localPos.z) < (ActivatingArea.localScale.z / 2))
+        if (x < (0.5f) 
+            && y < (0.5f) 
+            && z < (0.5f))
         {
             return true;
         }

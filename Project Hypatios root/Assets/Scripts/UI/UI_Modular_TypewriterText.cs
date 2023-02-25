@@ -30,6 +30,7 @@ public class UI_Modular_TypewriterText : MonoBehaviour
             return;
         }
 
+        Debug.Log($"test1: {text}");
         currentCoroutine = Typewriter(text);
         StartCoroutine(currentCoroutine);
     }
@@ -37,11 +38,10 @@ public class UI_Modular_TypewriterText : MonoBehaviour
     IEnumerator Typewriter(string text)
     {
         text_DialogueContent.text = "";
-        dialogText = text;
         disabledCache = false;
 
         var waitTimer = new WaitForSeconds(secondsPerChar);
-        foreach (char c in dialogText)
+        foreach (char c in text)
         {
             text_DialogueContent.text = text_DialogueContent.text + c;
             yield return waitTimer;

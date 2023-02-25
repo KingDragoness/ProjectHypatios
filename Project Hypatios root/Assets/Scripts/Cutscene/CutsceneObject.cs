@@ -11,7 +11,7 @@ public class CutsceneObject : MonoBehaviour
 
     public GameObject virtualCam;
     public List<GameObject> additionalVirtualCams; //primarily for cleanup
-    public UnityEvent OnCutsceneEnded; //primarily for cleanup
+    public UnityEvent OnCutsceneEnded; 
 
     private List<CutsceneAction> allActionEntries = new List<CutsceneAction>();
     private List<CutsceneAction> currentActions = new List<CutsceneAction>();
@@ -99,6 +99,8 @@ public class CutsceneObject : MonoBehaviour
         var MainUI1 = MainUI.Instance;
         MainUI1.current_UI = MainUI.UIMode.Default;
 
+        OnCutsceneEnded?.Invoke();
+
         CloseAllCutsceneInstances();
         isPlaying = false;
     }
@@ -118,7 +120,6 @@ public class CutsceneObject : MonoBehaviour
 
     private void CloseCutscene()
     {
-        OnCutsceneEnded?.Invoke();
         virtualCam.gameObject.SetActive(false);
         foreach (var go in allActionEntries)
             go.gameObject.SetActive(true);

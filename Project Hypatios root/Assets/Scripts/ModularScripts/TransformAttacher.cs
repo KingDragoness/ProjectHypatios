@@ -24,5 +24,12 @@ public class TransformAttacher : MonoBehaviour
 
     }
 
+    [ContextMenu("Copy Transform")]
+    private void CopyTransform()
+    {
+        transform.position = targetCopy.position;
+        transform.eulerAngles = targetCopy.eulerAngles;
+    }
+
 
 }

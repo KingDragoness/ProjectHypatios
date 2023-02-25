@@ -7,6 +7,7 @@ public class OnTriviaTriggered : MonoBehaviour
 {
 
     public UnityEvent OnTriviaTrigger;
+    public UnityEvent OnTriviaNotActive;
     public Trivia trivia;
 
     public static System.Action<Trivia> OnActionTriviaTrigger;
@@ -19,6 +20,8 @@ public class OnTriviaTriggered : MonoBehaviour
         {
             OnTriviaTrigger?.Invoke();
         }
+        else
+            OnTriviaNotActive?.Invoke();
     }
 
     private void OnDestroy()
@@ -30,6 +33,7 @@ public class OnTriviaTriggered : MonoBehaviour
     {
         if (_trivia == trivia)
             OnTriviaTrigger?.Invoke();
+
     }
 
 }

@@ -15,14 +15,17 @@ public class Chamber_VendrichMech : MonoBehaviour
     [FoldoutGroup("Stage Object")] public GameObject Stage2_redDust;
     [FoldoutGroup("Stage Object")] public GameObject Stage3_ascension;
     [FoldoutGroup("Stage Object")] public GameObject Stage4_lastMessage;
+    [FoldoutGroup("Stage Object")] public GameObject DeathStage;
 
     [FoldoutGroup("Parameters")] public float hTower_distMinimum = 40;
     [FoldoutGroup("Parameters")] public int hTower_limitSpawnTries = 50;
     [FoldoutGroup("Parameters")] public float hTower_TimerSpawn = 35f;
     [FoldoutGroup("Parameters")] [Range(0f,1f)] public float hTower_SpawnChance = 0.3f;
+    [FoldoutGroup("Parameters")] [Range(0f, 1f)] public float hTower_SpawnChance_Ascen = 0.2f;
     [FoldoutGroup("Parameters")] public float hTower_limitMechHP = 80000f;
     [FoldoutGroup("Parameters")] public float triggerHP_RedDust = 60000f;
     [FoldoutGroup("Parameters")] public float triggerHP_Ascension = 40000f;
+    [FoldoutGroup("Parameters")] public float triggerHP_LastMessage = 20000f;
     public bool DEBUG_DrawGizmos = false;
 
 
@@ -35,6 +38,8 @@ public class Chamber_VendrichMech : MonoBehaviour
     private float _spawnHealingTowerTimer = 0f;
     private bool _isRedDustTriggered = false;
     private bool _isAscensionTriggered = false;
+    private bool _isLastMessageTriggered = false;
+    private bool _isDeathTriggered = false;
 
     private void Start()
     {
@@ -58,8 +63,24 @@ public class Chamber_VendrichMech : MonoBehaviour
         else
         {
             float chance = Random.Range(0f, 1f);
-            if (hTower_SpawnChance > chance && mechEnemy.Stats.CurrentHitpoint < hTower_limitMechHP)
-                SpawnHealingTower();
+            bool allowSpawn = true;
+
+            if (hTower_SpawnChance < chance) allowSpawn = false;
+            if (mechEnemy.Stats.CurrentHitpoint >= hTower_limitMechHP) allowSpawn = false;
+            if (mechEnemy.currentStage == Stage.Stage4_LastMessage) allowSpawn = false;
+            if (mechEnemy.currentStage == Stage.Death) allowSpawn = false;
+
+            if (allowSpawn)
+            {
+                if (mechEnemy.currentStage == Stage.Stage3_Ascend)
+                {
+                    if (hTower_SpawnChance_Ascen > chance)
+                        SpawnHealingTower();
+                }
+                else
+                    SpawnHealingTower();
+            }
+            
             _spawnHealingTowerTimer = hTower_TimerSpawn;
         }
     }
@@ -79,6 +100,14 @@ public class Chamber_VendrichMech : MonoBehaviour
             if (mechEnemy.Stats.CurrentHitpoint < triggerHP_Ascension)
             {
                 mechEnemy.ForceChangeStage(Stage.Stage3_Ascend);
+            }
+        }
+
+        if (_isLastMessageTriggered == false)
+        {
+            if (mechEnemy.Stats.CurrentHitpoint < triggerHP_LastMessage)
+            {
+                mechEnemy.ForceChangeStage(Stage.Stage4_LastMessage);
             }
         }
     }
@@ -115,6 +144,7 @@ public class Chamber_VendrichMech : MonoBehaviour
 
         if (mechEnemy.currentStage == Stage.Stage3_Ascend)
         {
+            _isAscensionTriggered = true;
             if (Stage3_ascension.activeSelf == false) Stage3_ascension.gameObject.SetActive(true);
         }
         else
@@ -124,11 +154,22 @@ public class Chamber_VendrichMech : MonoBehaviour
 
         if (mechEnemy.currentStage == Stage.Stage4_LastMessage)
         {
+            _isLastMessageTriggered = true;
             if (Stage4_lastMessage.activeSelf == false) Stage4_lastMessage.gameObject.SetActive(true);
         }
         else
         {
             if (Stage4_lastMessage.activeSelf == true) Stage4_lastMessage.gameObject.SetActive(false);
+        }
+
+        if (mechEnemy.currentStage == Stage.Death)
+        {
+            _isDeathTriggered = true;
+            if (DeathStage.activeSelf == false) DeathStage.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (DeathStage.activeSelf == true) DeathStage.gameObject.SetActive(false);
         }
     }
 

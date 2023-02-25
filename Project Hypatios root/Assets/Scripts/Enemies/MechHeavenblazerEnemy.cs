@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using RootMotion.FinalIK;
 using Animancer;
@@ -14,7 +15,8 @@ public class MechHeavenblazerEnemy : EnemyScript
         Stage1_Fight,
         Stage2_Dust,
         Stage3_Ascend,
-        Stage4_LastMessage
+        Stage4_LastMessage,
+        Death
     }
 
     [System.Serializable]
@@ -45,6 +47,7 @@ public class MechHeavenblazerEnemy : EnemyScript
     [FoldoutGroup("Heavenblazer")] public Stage currentStage = Stage.Stage0_Intro;
     [FoldoutGroup("Heavenblazer")] public List<StageAvailableAbilities> allStageSystems = new List<StageAvailableAbilities>();
     [FoldoutGroup("Heavenblazer")] public bool DEBUG_EnableDecisionMaking = true;
+    [FoldoutGroup("Heavenblazer")] public UnityEvent OnMechKilled;
 
     [FoldoutGroup("References")] public AnimancerPlayer AnimatorPlayer;
     [FoldoutGroup("References")] public RandomSpawnArea PatrolRegion;
@@ -62,20 +65,27 @@ public class MechHeavenblazerEnemy : EnemyScript
     [FoldoutGroup("References")] public GameObject synaxis_unholy;
     [FoldoutGroup("References")] public GameObject synaxis_spawnHeaven;
     [FoldoutGroup("References")] public GameObject divineJudgement_Explosion;
+    [FoldoutGroup("References")] public GameObject lastSword_Explosion;
+    [FoldoutGroup("References")] public GameObject lastMessageSword;
+    [FoldoutGroup("References")] public Transform lastSword_PointOfHit;
     [FoldoutGroup("References")] public GameObject laserFireFX;
     [FoldoutGroup("References")] public GameObject angelicRingOrb;
     [FoldoutGroup("References")] public GameObject jetFX;
 
 
     [FoldoutGroup("Module Variables")] public Vector3 patrolground_WalkTarget = Vector3.zero;
+    [FoldoutGroup("Module Variables")] public Vector3 swordChase_Target = Vector3.zero;
     [FoldoutGroup("Module Variables")] public Vector3 patrolFly_Target = Vector3.zero;
     [FoldoutGroup("Module Variables")] public bool ik_target_player = false;
     [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisHeaven = false;
     [FoldoutGroup("Module Variables")] public bool has_spawned_synaxisUnholy = false;
     [FoldoutGroup("Module Variables")] public bool has_reached_divineMaxHeight = false;
+    [FoldoutGroup("Module Variables")] public bool has_hit_lastSword = false;
     [FoldoutGroup("Module Variables")] public bool has_done_divineIntervention = false;
+    [FoldoutGroup("Module Variables")] public bool initiate_Attack = false;
     [FoldoutGroup("Module Variables")] public float relativeDistZ_FireBackMissile = 3f;
     [FoldoutGroup("Module Variables")] public float timerSynaxisFire = 0f;
+    [FoldoutGroup("Module Variables")] public float timer_SwordAttack = 0f;
     [FoldoutGroup("Debug")] public Transform spawn_Synaxis;
 
 
@@ -104,6 +114,7 @@ public class MechHeavenblazerEnemy : EnemyScript
             if (CurrentAI.category == HB_AIPackage.Category.PatrolIdle) FiringRockets();
             if (CurrentAI is HB_Stance_Laser) FireLaser();
             if (currentStage == Stage.Stage3_Ascend) StartEngineJet(); else NotEngineJet();
+            if (currentStage == Stage.Stage4_LastMessage) StartLastMessage(); else NotLastMessage();
             ControlLimbs();
         }
     }
@@ -314,6 +325,15 @@ public class MechHeavenblazerEnemy : EnemyScript
 
     }
 
+    private void StartLastMessage()
+    {
+        if (lastMessageSword.activeSelf == false) lastMessageSword.SetActive(true);
+    }
+    private void NotLastMessage()
+    {
+        if (lastMessageSword.activeSelf == true) lastMessageSword.SetActive(false);
+    }
+
     #endregion
 
     #region Debugs
@@ -335,6 +355,15 @@ public class MechHeavenblazerEnemy : EnemyScript
         Destroy(divineBomb, 5f);
     }
 
+
+    [FoldoutGroup("Debug")]
+    [Button("Spawn Last Sword Bomb")]
+    public void DEBUG_SpawnLastSwordBomb()
+    {
+        var explosion1 = Instantiate(lastSword_Explosion, lastSword_PointOfHit.position, lastSword_Explosion.transform.rotation);
+        explosion1.gameObject.SetActive(true);
+        Destroy(explosion1, 5f);
+    }
 
     [FoldoutGroup("Debug")]
     [Button("Spawn Heaven Area Synaxis")]
@@ -368,6 +397,7 @@ public class MechHeavenblazerEnemy : EnemyScript
 
 
         Stats.CurrentHitpoint -= damageProcessed;
+        _lastDamageToken = token;
 
         if (currentStage == Stage.Stage0_Intro)
         {
@@ -376,8 +406,18 @@ public class MechHeavenblazerEnemy : EnemyScript
 
         if (Stats.CurrentHitpoint > 0f)
             DamageOutputterUI.instance.DisplayText(damageProcessed);
+        else
+        {
+            Die();
+        }
 
         base.Attacked(token);
+    }
+
+    public override void Burn()
+    {
+        if (Stats.IsDead == true) return;
+        base.Burn();
     }
 
     public override void Die()
@@ -385,6 +425,8 @@ public class MechHeavenblazerEnemy : EnemyScript
         if (Stats.IsDead == false)
         {
             OnDied?.Invoke();
+            OnMechKilled?.Invoke();
+            ForceChangeStage(Stage.Death);
         }
         Stats.IsDead = true;
         Stats.CurrentHitpoint = 0;

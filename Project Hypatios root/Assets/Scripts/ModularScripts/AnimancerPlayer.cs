@@ -12,4 +12,9 @@ public class AnimancerPlayer : MonoBehaviour
         _Animancer.Play(_SeparateAnimation, time);
     }
 
+    public bool IsPlayingClip(AnimationClip clip)
+    {
+        return _Animancer.IsPlayingClip(clip);
+    }
+
 }

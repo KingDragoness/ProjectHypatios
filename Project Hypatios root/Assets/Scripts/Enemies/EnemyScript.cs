@@ -122,6 +122,9 @@ public abstract class EnemyScript : Entity
 
     public abstract void Die();
 
+    /// <summary>
+    /// Remember to assign _lastDamageToken!
+    /// </summary>
     private void Died()
     {
         Hypatios.Enemy.OnEnemyDied?.Invoke(this, _lastDamageToken);

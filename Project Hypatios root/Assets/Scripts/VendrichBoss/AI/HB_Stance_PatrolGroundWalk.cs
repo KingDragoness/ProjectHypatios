@@ -12,6 +12,7 @@ public class HB_Stance_PatrolGroundWalk : HB_AIPackage
     public float aggroPlayerRange = 20f;
     public float walkSpeed = 6f;
     public float rotateSpeed = 6f;
+    public float transitionSpeed = 1.5f;
 
     public override void Run(MechHeavenblazerEnemy _mech)
     {
@@ -62,7 +63,7 @@ public class HB_Stance_PatrolGroundWalk : HB_AIPackage
 
     public override void OnChangedToThis(MechHeavenblazerEnemy _mech)
     {
-        _mech.AnimatorPlayer.PlayAnimation(clip, 0.5f);
+        _mech.AnimatorPlayer.PlayAnimation(clip, transitionSpeed);
 
         base.OnChangedToThis(_mech);
     }
