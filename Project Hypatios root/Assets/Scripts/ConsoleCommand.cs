@@ -109,7 +109,6 @@ public class ConsoleCommand : MonoBehaviour
                 FreeMaterials(args);
                 break;
 
-
             case "giveammos":
                 GiveAmmos(args);
                 break;
@@ -172,6 +171,14 @@ public class ConsoleCommand : MonoBehaviour
 
             case "setfps":
                 SetFPS(args);
+                break;
+
+            case "setfov":
+                SetFOV(args);
+                break;
+
+            case "setperk":
+                SetPerk(args);
                 break;
 
             case "soul":
@@ -453,6 +460,19 @@ public class ConsoleCommand : MonoBehaviour
                     weaponData.allAttachments.Add(args[1]);
                     SendConsoleMessage($"Added {args[1]} to {weaponClass.nameWeapon}");
                     SendConsoleMessage($"Reequip weapon to take effect.");
+
+                }
+                else if (args[0] == "ammo")
+                {
+                    if (currentGun == null)
+                    {
+                        throw new Exception($"Null weapon! {args[1]}");
+                    }
+                    int ammo = 0;  
+                    int.TryParse(args[1], out ammo);
+
+                    currentGun.totalAmmo += ammo;
+                    SendConsoleMessage($"{weaponClass.nameWeapon}: {currentGun.totalAmmo}x.");
 
                 }
                 else if (args[0] == "rmvall")
@@ -804,13 +824,15 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'loadlevel' to load level. Resets progress!");
             helpCommands.Add("'mats' to give free materials");
             helpCommands.Add("'nextlevel' to go next level while retaining items");
-            helpCommands.Add("'nospeed' to set freecam speed. 'ui 4' to use noclip.");
+            helpCommands.Add("'nospeed' to set freecam speed. 'help ui' to check noclip.");
             helpCommands.Add("'res' to restore health & dash");
             helpCommands.Add("'savefile' to save file");
             helpCommands.Add("'screensize' to set screen size");
             helpCommands.Add("'setfps' to set game's FPS");
+            helpCommands.Add("'setfov' to set camera's FOV");
+            helpCommands.Add("'setperk' to set player's temporary perks. 'help setperk' to check perks.");
             helpCommands.Add("'soul' to get soul");
-            helpCommands.Add("'ui' to change UI mode 0/1/2");
+            helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");
             helpCommands.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
         }
 
@@ -854,6 +876,34 @@ public class ConsoleCommand : MonoBehaviour
             {
                 return;
             }
+            else if (args[0] == "ui")
+            {
+                int i = 0;
+             
+                helps.Add(" =============== 'ui' to change UI mode. =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                foreach (string name in Enum.GetNames(typeof(MainUI.UIMode)))
+                {
+                    helps.Add($"'ui {i}' : {name}");
+                    i++;
+                }
+                helps.Add(" ");
+            }
+            else if (args[0] == "setperk")
+            {
+
+                helps.Add(" =============== 'ui' to change UI mode. =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                foreach (string name in Enum.GetNames(typeof(StatusEffectCategory)))
+                {
+                    StatusEffectCategory e1 = StatusEffectCategory.Nothing;
+                    Enum.TryParse<StatusEffectCategory>(name, out e1);
+                    helps.Add($"'setperk {(int)e1}' : {name}");
+                }
+                helps.Add(" ");
+            }
             else if (args[0] == "wstat")
             {
                 helps.Add(" =============== HELP [WORLD STAT commnads] =============== ");
@@ -885,7 +935,8 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("'weapon attach (string attachmentID)' to add attachments.");
                 helps.Add("'weapon rmvall' to remove all attachments.");
                 helps.Add("'weapon report' to get weapon's stat.");
-            
+                helps.Add("'weapon ammo' to add ammo.");
+
                 helps.Add(" ");
             }
             else if (args[0] == "status")
@@ -928,6 +979,62 @@ public class ConsoleCommand : MonoBehaviour
         catch
         {
             SendConsoleMessage("Invalid argument! setfps [<color=#00cc99dd>int</color> fps]");
+
+        }
+    }
+
+    protected void SetPerk(string[] args)
+    {
+
+        try
+        {
+            //args 0 = int perkID
+            //args 1 = float value
+            int perkID = 0;
+            float value = 0;
+            int.TryParse(args[0], out perkID);
+            float.TryParse(args[1], out value);
+
+            StatusEffectCategory category = (StatusEffectCategory)perkID;
+
+            Hypatios.Player.PerkData.CheatTempPerk(category, value);
+            Hypatios.Player.ReloadStatEffects();
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! setperk [<color=#00cc99dd>int</color> perkID] [<color=#00cc99dd>float</color> value]");
+
+        }
+    }
+    
+
+    protected void SetFOV(string[] args)
+    {
+
+        try
+        {
+            int fov = 0;
+            int.TryParse(args[0], out fov);
+
+            if (fov < 30)
+            {
+                SendConsoleMessage($"Target fov: {fov} is too low. Reseting to 30.");
+                fov = 30;
+            }
+
+            if (fov > 150)
+            {
+                SendConsoleMessage($"Target fov: {fov} is too high. Reseting to 150.");
+                fov = 150;
+            }
+
+            Hypatios.Player.WallRun.SetFOV(fov);
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! setfov [<color=#00cc99dd>int</color> FOV]");
 
         }
     }

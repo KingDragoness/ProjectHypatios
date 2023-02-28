@@ -203,6 +203,24 @@ public class HypatiosSave
             }
         }
 
+        public void CheatTempPerk(StatusEffectCategory category, float value)
+        {
+            PerkCustomEffect perkOfType = Temp_CustomPerk.Find(x => x.origin == "CheatPerk" && x.statusCategoryType == category);
+
+            if (perkOfType == null)
+            {
+                perkOfType = new PerkCustomEffect();
+                perkOfType.statusCategoryType = category;
+                perkOfType.origin = "CheatPerk";
+                perkOfType.Value = value;
+                Temp_CustomPerk.Add(perkOfType);
+            }
+            else
+            {
+                perkOfType.Value = value;
+            }
+        }
+
         public void AddPerkLevel(StatusEffectCategory category)
         {
             if (category == StatusEffectCategory.MaxHitpointBonus)

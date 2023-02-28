@@ -253,8 +253,14 @@ public class PlayerRPGUI : MonoBehaviour
         }
         else if (itemCLass.category == ItemInventory.Category.Consumables)
         {
+
+            //heal amount: 55 HP
+            //heal time: 5 second
+            //then we should do 55/5 = 11 HP per second
+            float healSpeed = itemCLass.consume_HealAmount / itemCLass.consume_HealTime;
+
             soundManagerScript.instance.PlayOneShot("consume");
-            Hypatios.Player.Health.Heal((int)itemCLass.consume_HealAmount);
+            Hypatios.Player.Health.Heal((int)itemCLass.consume_HealAmount, healSpeed); 
             Hypatios.Player.Health.alcoholMeter += itemCLass.consume_AlcoholAmount;
 
             if (itemCLass.isInstantDashRefill)

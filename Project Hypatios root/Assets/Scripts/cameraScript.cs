@@ -50,7 +50,6 @@ public class cameraScript : MonoBehaviour
         if (Input.gyro != null)
         {
             Input.gyro.enabled = true;
-            Debug.Log("Gyro input enabled.");
 
             if (SystemInfo.supportsGyroscope)
             {

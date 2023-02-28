@@ -20,7 +20,7 @@ public class CharacterScript : Entity
     private dashParticleManager dashManager;
     public Rigidbody rb;
     private float playerHeight = 2f;
-    private wallRun WallRun;
+    private wallRun _wallRun;
 
     [Header("Special FPS Mode")]
     [FoldoutGroup("Modes")] public bool isLimitedIntroMode = false;
@@ -91,6 +91,8 @@ public class CharacterScript : Entity
     public InventoryData Inventory;
 
     [HideInInspector] public Animator Anim { get => anim; }
+    public wallRun WallRun { get => _wallRun;  }
+
     private float airTime = 0;
 
     //Scope
@@ -246,7 +248,7 @@ public class CharacterScript : Entity
     void Start()
     {   
         moveSpeed = runSpeed;
-        WallRun = GetComponent<wallRun>();
+        _wallRun = GetComponent<wallRun>();
         rb = GetComponent<Rigidbody>();
         dashManager = GetComponent<dashParticleManager>();
         rb.freezeRotation = true;
@@ -303,13 +305,13 @@ public class CharacterScript : Entity
 
             if (Anim != null)
             {
-                if (!isGrounded && !WallRun.isWallRunning)
+                if (!isGrounded && !_wallRun.isWallRunning)
                 {
                     inAir = true;
                     airTime += Time.deltaTime;
                     Anim.SetBool("inAir", true);
                 }
-                else if (WallRun.isWallRunning)
+                else if (_wallRun.isWallRunning)
                 {
                     inAir = false;
                     Anim.SetBool("inAir", false);
@@ -447,14 +449,14 @@ public class CharacterScript : Entity
             if (_slopeAngle > softSlopeLimit && _slopeHit.collider != null)
                 isSoftSlope = true;
 
-            if (isTooSlope && !WallRun.isWallRunning)
+            if (isTooSlope && !_wallRun.isWallRunning)
             {
                 Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
                 var netDir = slopeDir * -fallSpeed;
                 //netDir.y = (netDir.y - _slopeHit.point.y) * Time.deltaTime;
                 dir = netDir + (transform.right * xMovement * 0.5f) + (transform.forward * yMovement * 0.5f);
             }
-            else if (isSoftSlope && !WallRun.isWallRunning)
+            else if (isSoftSlope && !_wallRun.isWallRunning)
             {
                 Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
                 var netDir = slopeDir * (-fallSpeed * 0.15f);
@@ -510,7 +512,7 @@ public class CharacterScript : Entity
 
             if (gun != null)
             {
-                if (dir.magnitude > 0f || WallRun.isWallRunning)
+                if (dir.magnitude > 0f || _wallRun.isWallRunning)
                 {
                     if (isNoGravity == false) Anim.SetBool("isRunning", true);
 
@@ -603,11 +605,11 @@ public class CharacterScript : Entity
                 Hypatios.Game.Increment_PlayerStat(stat_jumps);
 
             }
-            else if (!isGrounded && !WallRun.isWallRunning) 
+            else if (!isGrounded && !_wallRun.isWallRunning) 
             {
                 rb.AddForce(-transform.up * fallSpeed, ForceMode.Acceleration);
             }
-            else if (isGrounded && isTooSlope && !WallRun.isWallRunning)
+            else if (isGrounded && isTooSlope && !_wallRun.isWallRunning)
             {
                 Vector3 slopeDir = Vector3.up - _slopeHit.normal * Vector3.Dot(Vector3.up, _slopeHit.normal);
                 var netDir = slopeDir * -fallSpeed;
@@ -644,7 +646,7 @@ public class CharacterScript : Entity
 
             if (isCheatMode)
             {
-                if (!isGrounded && !WallRun.isWallRunning)
+                if (!isGrounded && !_wallRun.isWallRunning)
                 {
                     rb.AddForce(-transform.up * fallSpeed, ForceMode.Acceleration);
                 }

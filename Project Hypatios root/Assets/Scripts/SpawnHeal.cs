@@ -6,7 +6,8 @@ public class SpawnHeal : MonoBehaviour
 {
 
     public GameObject healCapsule;
-    float radius = .6f;
+    public float radius = .6f;
+    public float explosionForce = 50f;
 
     // Start is called before the first frame update
     
@@ -27,7 +28,7 @@ public class SpawnHeal : MonoBehaviour
                     Rigidbody obj = c.GetComponent<Rigidbody>();
                     if (obj != null)
                     {
-                        obj.AddExplosionForce(50f, transform.position, radius);
+                        obj.AddExplosionForce(explosionForce, transform.position, radius);
                     }
                 }
             }

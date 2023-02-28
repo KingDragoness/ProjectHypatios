@@ -10,6 +10,7 @@ public class NoclipCamera : MonoBehaviour
     public UI_Modular_ShowTempCanvas canvasNoclip;
     public Text label_LockCamera;
     public MouseLook mouselook;
+    public Camera noClipCam;
 
     private bool isEnabled = true;
     private bool shift;
@@ -23,6 +24,15 @@ public class NoclipCamera : MonoBehaviour
     private void Awake()
     {
         AssignNoclip();
+    }
+
+    private void OnEnable()
+    {
+        var playerCam = Hypatios.MainCamera;
+        noClipCam.farClipPlane = playerCam.farClipPlane;
+        noClipCam.fieldOfView = playerCam.fieldOfView;
+        noClipCam.clearFlags = playerCam.clearFlags;
+        noClipCam.backgroundColor = playerCam.backgroundColor;
     }
 
     public void AssignNoclip()

@@ -7,8 +7,8 @@ public class LookAtPlayer : MonoBehaviour
 {
 
     public bool useSlowlyRotate = false;
-    [ShowIf("useSlowlyRotate", true)]
-    public float speedRotate = 10;
+    [ShowIf("useSlowlyRotate", true)]  public float speedRotate = 10;
+    [ShowIf("useSlowlyRotate", true)] public float errorMargin = 0f;
 
     public Transform targetLook;
 
@@ -22,7 +22,11 @@ public class LookAtPlayer : MonoBehaviour
         }
         else
         {
-            var q = Quaternion.LookRotation(targetLook.position - transform.position);
+            Vector3 target = targetLook.position;
+            target.x += Random.Range(-errorMargin, errorMargin);
+            target.y += Random.Range(-errorMargin, errorMargin);
+            target.z += Random.Range(-errorMargin, errorMargin);
+            var q = Quaternion.LookRotation(target - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, q, speedRotate * Time.deltaTime);
         }
     }

@@ -50,6 +50,12 @@ public class wallRun : MonoBehaviour
         wallRunGravity = baseWallRunGravity;
     }
 
+    public void SetFOV(int _fov)
+    {
+        originFPSCam_FOV = _fov;
+        fov = _fov;
+    }
+
     bool canWallRun()
     {
         return !character.isGrounded;

@@ -163,9 +163,20 @@ public class PlayerHealth : MonoBehaviour
        
     }
 
-    public void Heal(int healNum)
+    public void Heal(int healNum, float healthSpeed = 0, bool instantHeal = false)
     {
-        targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth.Value);
+        if (healthSpeed > 0f)
+        {
+            HealthSpeed = healthSpeed;
+        }
+
+        if (instantHeal == false)
+            targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth.Value);
+        else 
+        {
+            curHealth = Mathf.Clamp(curHealth + healNum, 0f, maxHealth.Value);
+            targetHealth = Mathf.Clamp(targetHealth + healNum, 0f, maxHealth.Value);
+        }
         soundManagerScript.instance.PlayOneShot("reward");
     }
     public void takeDamage(int damage, float speed = 11, float shakinessFactor = 1)
@@ -180,13 +191,22 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        bool isHealing = false;
+
         if (healthAfterHeal > 0)
-        {
-            healthAfterHeal -= damage;
-        }
+            healthAfterHeal -= damage;       
 
         Hypatios.Game.Add_PlayerStat(stat_damage_taken, damage);
-        targetHealth -= (damage/ armorStrength);
+
+        {
+            if (targetHealth > curHealth)
+                isHealing = true;
+
+            if (isHealing)
+                targetHealth = curHealth;
+
+            targetHealth -= (damage / armorStrength);
+        }
 
         if (dof.focalLength.value < 68f)
         {

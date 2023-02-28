@@ -121,6 +121,7 @@ public class CutsceneObject : MonoBehaviour
     private void CloseCutscene()
     {
         virtualCam.gameObject.SetActive(false);
+        additionalVirtualCams.RemoveAll(x => x == null);
         foreach (var go in allActionEntries)
             go.gameObject.SetActive(true);
 

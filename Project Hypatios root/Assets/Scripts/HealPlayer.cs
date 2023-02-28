@@ -5,6 +5,8 @@ using UnityEngine;
 public class HealPlayer : MonoBehaviour
 {
 
+    public int healMin = 1;
+    public int healMax = 5;
     GameObject player;
     public float speed;
     public float distanceToCollect;
@@ -34,7 +36,8 @@ public class HealPlayer : MonoBehaviour
     {
         if (other.tag == "Player" && curHealth < playerHealth.maxHealth.Value && !playerHealth.isDead)
         {
-            playerHealth.Heal(Random.Range(1, 5));
+            int additionalHeal = Mathf.Clamp(Mathf.RoundToInt(playerHealth.maxHealth.Value/50f),1, 99);
+            playerHealth.Heal(Random.Range(healMin + additionalHeal, healMax + additionalHeal), instantHeal: true);
             Destroy(gameObject);
         }
     }

@@ -284,24 +284,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 9030260937273200558}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: SmartPistol
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 20
   variableAdditionalDamage: 4
   isAmmoUnlimited: 0
+  isBurnBullet: 0
+  isPoisonBullet: 0
   totalAmmo: 40
   magazineSize: 16
   curAmmo: 16
+  lowAmmoAlert: 2
   spread: 0.0025
   recoilX: 2
   recoilY: 2
   recoilZ: -2.5
   recoilMultiplier: 1
   bulletPerSecond: 20
+  damageType: 1
   repulsionForce: 0.3
   isFiring: 0
   isReloading: 0
@@ -320,6 +322,15 @@ MonoBehaviour:
     type: 3}
   bulletTracer: {fileID: 1631304749667196354, guid: 6ca419833fe73b246b63fcbc767b547e,
     type: 3}
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHolding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStart:
+    m_PersistentCalls:
+      m_Calls: []
   audioFire: {fileID: 8309900107444334578}
   audioReload: {fileID: 759625091518962551}
   isMelee: 0
@@ -5432,11 +5443,11 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0.5, z: 0}
   m_Flip: {x: 0, y: 0.5, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 000103040508
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}

@@ -24578,11 +24578,11 @@ ParticleSystemRenderer:
   m_RenderAlignment: 0
   m_Pivot: {x: 0, y: 0.5, z: 0}
   m_Flip: {x: 0, y: 0.5, z: 0}
-  m_UseCustomVertexStreams: 0
+  m_UseCustomVertexStreams: 1
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
-  m_VertexStreams: 00010304
+  m_VertexStreams: 000103040508
   m_Mesh: {fileID: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
@@ -24719,15 +24719,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 5623259971423140406}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: ForceFielder
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 0
   variableAdditionalDamage: 4
   isAmmoUnlimited: 0
+  isBurnBullet: 0
+  isPoisonBullet: 0
   totalAmmo: 10
   magazineSize: 4
   curAmmo: 4
@@ -24738,6 +24738,7 @@ MonoBehaviour:
   recoilZ: 20
   recoilMultiplier: 1
   bulletPerSecond: 5
+  damageType: 1
   repulsionForce: 1
   isFiring: 0
   isReloading: 0
@@ -24754,6 +24755,15 @@ MonoBehaviour:
   bulletSparks: {fileID: 0}
   bulletTracer: {fileID: 1631304749667196354, guid: 9767f3ccfd991b74f91eea5d09420455,
     type: 3}
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHolding:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReloadStart:
+    m_PersistentCalls:
+      m_Calls: []
   audioFire: {fileID: 8510483408065597642}
   audioReload: {fileID: 0}
   isMelee: 0

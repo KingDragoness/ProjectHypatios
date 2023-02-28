@@ -17,7 +17,7 @@ public class OnTriggerEnterEvent : MonoBehaviour
     {
         if (usePlayer)
         {
-            objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
+            objectToCompare = Hypatios.Player.gameObject;
         }
     }
 

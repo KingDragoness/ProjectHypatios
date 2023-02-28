@@ -27,6 +27,7 @@ public class Chamber_VendrichMech : MonoBehaviour
     [FoldoutGroup("Parameters")] public float triggerHP_Ascension = 40000f;
     [FoldoutGroup("Parameters")] public float triggerHP_LastMessage = 20000f;
     public bool DEBUG_DrawGizmos = false;
+    public bool DEBUG_DrawGUI = false;
 
 
     [FoldoutGroup("Layout")] public float offsetX = 20f;
@@ -223,6 +224,9 @@ public class Chamber_VendrichMech : MonoBehaviour
 
     private void OnGUI()
     {
+        if (DEBUG_DrawGUI == false)
+            return;
+
         StageAvailableAbilities csd = mechEnemy.allStageSystems.Find(x => x.stage == mechEnemy.currentStage);
         string s1 = $"Stage: {mechEnemy.currentStage} | AI_Pack: {mechEnemy.CurrentAI.name}\n";
         s1 += $"[AI_Time: {Mathf.Round(mechEnemy.RefreshChangeStageTime*10)/10}s]\n";

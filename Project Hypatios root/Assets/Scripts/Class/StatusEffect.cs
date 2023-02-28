@@ -55,7 +55,7 @@ public abstract class BaseStatusEffect : MonoBehaviour
     {
         var enemyScript = target as EnemyScript;
         var playerScript = target as CharacterScript;
-
+        CleanupEffects();
 
         if (playerScript)
         {
@@ -92,7 +92,8 @@ public abstract class BaseStatusEffect : MonoBehaviour
 
         }
     }
-    private void RemoveEffects()
+
+    private void CleanupEffects()
     {
         var enemyScript = target as EnemyScript;
         var playerScript = target as CharacterScript;
@@ -118,6 +119,11 @@ public abstract class BaseStatusEffect : MonoBehaviour
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
 
         }
+    }
+
+    private void RemoveEffects()
+    {
+        CleanupEffects();
 
         if (target != null)
         {
