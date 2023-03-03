@@ -8,9 +8,14 @@ using Sirenix.OdinInspector;
 public class SykosisGunWeapon : GunScript
 {
 
+    public ParticleSystem trailSykos;
+
     public override void FireWeapon()
     {
         base.FireWeapon();
+        if (trailSykos.isPlaying == false)
+            trailSykos.Play();
+
         ParalysisEnemy();
     }
 
@@ -25,6 +30,8 @@ public class SykosisGunWeapon : GunScript
 
         if (random < paralysisChance)
             enemyScript.Paralysis();
+
+
 
     }
 

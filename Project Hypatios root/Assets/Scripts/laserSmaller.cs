@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class laserSmaller : MonoBehaviour
 {
-    float laserWidth = .4f;
+    public float laserWidth = .4f;
     float speedSmaller = 1f;
     LineRenderer lr;
     // Start is called before the first frame update

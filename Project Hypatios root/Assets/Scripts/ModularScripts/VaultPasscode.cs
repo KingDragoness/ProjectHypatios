@@ -9,6 +9,7 @@ public class VaultPasscode : MonoBehaviour
     public SpeechDialogueAsset dialogue_Success;
     public SpeechDialogueAsset dialogue_Failed;
     public AnimatorSetBool doorScript;
+    public AudioSource audio_Door;
     public Trivia trivia;
 
     private bool success = false;
@@ -29,6 +30,7 @@ public class VaultPasscode : MonoBehaviour
         {
             dialogue_Success.TriggerMessage();
             doorScript.SetBool(true);
+            audio_Door.Play();
             success = true;
         }
         else

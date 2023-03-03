@@ -20,6 +20,14 @@ public class StageChamberScript : MonoBehaviour
     private bool cleared = false;
 
     public bool Cleared { get => cleared; set => cleared = value; }
+    public static StageChamberScript Instance { get => _instance;  }
+
+    private static StageChamberScript _instance;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     private void Start()
     {

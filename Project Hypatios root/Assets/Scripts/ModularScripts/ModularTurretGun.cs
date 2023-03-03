@@ -10,6 +10,8 @@ public class ModularTurretGun : MonoBehaviour
     public float damage = 10f;
     public float healthSpeed = 25;
     public float bulletPerSecond = 10;
+    public bool keepFiringIfNoDetection = false;
+    [Tooltip("Prevent back-face collider problem.")] public bool useSecondPass = false;
     public DamageToken.DamageOrigin originToken;
     [Tooltip("Optional for enemyScript that have modular gun turret.")] public EnemyScript mySelf; 
     public Alliance alliance;
@@ -24,6 +26,7 @@ public class ModularTurretGun : MonoBehaviour
     private bool isHittingSomething = false;
     private bool isHittingTarget = false;
     private bool isTargetingSelf = false;
+    private bool secondpass_HitCeiling = false;
 
     private void Update()
     {
@@ -37,7 +40,7 @@ public class ModularTurretGun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (targetEnemy == null) return;
+        if (targetEnemy == null && keepFiringIfNoDetection == false) return;
 
         if (Time.time >= nextAttackTime)
         {
@@ -46,13 +49,27 @@ public class ModularTurretGun : MonoBehaviour
             if (random1 < chanceFire)
                 FireTurret();
 
-            nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+            nextAttackTime = Time.time + 1f / bulletPerSecond + 0.02f;
         }
     }
 
     private void FindTarget()
     {
         targetEnemy = Hypatios.Enemy.FindEnemyEntity(alliance, transform.position);
+    }
+
+    public bool IsHittingTargetEnemy(GameObject go)
+    {
+        if (targetEnemy == null)
+            return false;
+
+        if (go.IsParentOf(targetEnemy.gameObject))
+            return true;
+
+        if (go == targetEnemy.gameObject)
+            return true;
+
+        return false;
     }
 
     private void FireTurret()
@@ -62,18 +79,17 @@ public class ModularTurretGun : MonoBehaviour
         isHittingTarget = false;
         isTargetingSelf = false;
 
+
+        //first pass
         if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
             isHittingSomething = true;
 
-            if (hit.collider.gameObject.IsParentOf(targetEnemy.transform.gameObject))
+            if (IsHittingTargetEnemy(hit.collider.gameObject))
             {
                 isHittingTarget = true;
             }
-            else if (hit.collider.gameObject == targetEnemy.transform.gameObject)
-            {
-                isHittingTarget = true;
-            }
+           
 
             if (mySelf != null)
             {
@@ -84,7 +100,18 @@ public class ModularTurretGun : MonoBehaviour
             }
         }
 
-        if (isHittingTarget == false)
+        //second pass
+        if (useSecondPass)
+        {
+            RaycastHit secondHit;
+            if (Physics.Raycast(hit.point, hit.normal, out secondHit, hit.distance + 1, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
+            {
+                hit = secondHit;
+                secondpass_HitCeiling = true;
+            }
+        }
+
+        if (isHittingTarget == false && keepFiringIfNoDetection == false)
         {
             float random1 = Random.Range(0f, 1f);
 
@@ -92,32 +119,34 @@ public class ModularTurretGun : MonoBehaviour
                 return;
         }
 
-        if (hit.collider != null && isTargetingSelf == false)
+        if (isTargetingSelf == false)
         {
             HitTarget(hit);
         }
 
-
+      
     }
 
     private void HitTarget(RaycastHit hit)
     {
 
-        DamageToken token = new DamageToken();
-        token.damage = damage;
-        token.origin = originToken;
-        token.healthSpeed = healthSpeed;
-        token.shakinessFactor = 0.2f;
-        token.damageType = DamageToken.DamageType.Ballistic;
+        if (hit.collider != null)
+        {
+            DamageToken token = new DamageToken();
+            token.damage = damage;
+            token.origin = originToken;
+            token.healthSpeed = healthSpeed;
+            token.shakinessFactor = 0.2f;
+            token.damageType = DamageToken.DamageType.Ballistic;
 
-        var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
+            var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
 
-        spark.transform.position = hit.point;
-        spark.transform.rotation = Quaternion.LookRotation(hit.normal);
-        flashWeapon.gameObject.SetActive(true);
+            spark.transform.position = hit.point;
+            spark.transform.rotation = Quaternion.LookRotation(hit.normal);
+            flashWeapon.gameObject.SetActive(true);
 
-        UniversalDamage.TryDamage(token, hit.transform, transform);
-
+            UniversalDamage.TryDamage(token, hit.transform, transform);
+        }
 
         var points = new Vector3[2];
         points[0] = outWeaponTransform.transform.position;
