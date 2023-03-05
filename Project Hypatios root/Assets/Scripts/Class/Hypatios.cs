@@ -25,6 +25,7 @@ public class Hypatios : MonoBehaviour
         public static float MOUSE_SENSITIVITY = 0.5f;
         public static float UI_SCALING = 1f;
         public static float BRIGHTNESS = 0.5f; //-1 - 1 -> 0 - 1
+        public static float FOV = 71f;
         public static int VSYNC = 0;
         public static int MOTIONBLUR = 0;
         public static int ANTIALIASING = 1;
@@ -54,6 +55,7 @@ public class Hypatios : MonoBehaviour
 
             MY_NAME = LoadPrefKeyString("SETTINGS.MY_NAME", "Aldrich");
             BRIGHTNESS = LoadPrefKeyFloat("SETTINGS.BRIGHTNESS", 0.5f);
+            FOV = LoadPrefKeyFloat("SETTINGS.FOV", 71f);
             MAXIMUM_FRAMERATE = LoadPrefKeyInt("SETTINGS.MAXIMUM_FRAMERATE", 201);
             RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
@@ -99,6 +101,12 @@ public class Hypatios : MonoBehaviour
 
             if (MainCameraScript != null)
                 MainCameraScript.mouseSensitivity = MOUSE_SENSITIVITY;
+
+            if (Hypatios.Player != null)
+            {
+                wallRun WallrunScript = Hypatios.Player.WallRun;
+                WallrunScript.SetFOV(Mathf.RoundToInt(FOV));
+            }
 
             mixerSFX.SetFloat("Master", Mathf.Log10(SFX_VOLUME) * 20);
             mixerMusic.SetFloat("Master", Mathf.Log10(MUSIC_VOLUME) * 20);

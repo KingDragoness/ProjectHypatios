@@ -47,4 +47,11 @@ public class ItemInventory : ScriptableObject
             return _displayName;
         }
     }
+
+    [FoldoutGroup("Debug")]
+    [Button("Add item to Player")]
+    public void AddItem()
+    {
+        Hypatios.Player.Inventory.AddItem(this);
+    }
 }

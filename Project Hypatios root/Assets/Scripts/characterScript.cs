@@ -88,11 +88,17 @@ public class CharacterScript : Entity
     [ShowInInspector] [ReadOnly] private Animator anim;
     [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
     public HypatiosSave.PerkDataSave PerkData;
-    public InventoryData Inventory;
+    public InventoryData Inventory = new InventoryData();
 
     [HideInInspector] public Animator Anim { get => anim; }
-    public wallRun WallRun { get => _wallRun;  }
-
+    public wallRun WallRun
+    {
+        get
+        {
+            if (_wallRun != null) return _wallRun;
+            else return FindObjectOfType<wallRun>();
+        }
+    }
     private float airTime = 0;
 
     //Scope

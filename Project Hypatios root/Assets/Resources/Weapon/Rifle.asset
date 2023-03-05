@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   nameWeapon: Rifle
-  moveSpeed: 1
   prefab: {fileID: 2355747187573847083, guid: d987dd2e5eb7c4b4fbd95648e3e104b4, type: 3}
   UI_TemplateAmmoAdded: {fileID: 5989791327783834318, guid: a7767143e46bcea47aa90b3fca47fcd0,
     type: 3}
   weaponIcon: {fileID: 21300000, guid: 38ed49429195b31489e07eede73fc0a6, type: 3}
   ammoSpriteIcon: {fileID: 21300000, guid: 25f31228eca5d554982285b17ed58f22, type: 3}
-  overrideCrosshair_Sprite: {fileID: 21300000, guid: 901dd0fafe2706e45baa00a21713aa90,
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 7fd80c25bc88fd04a81825ac3dfb2889,
     type: 3}
   attachments:
   - ID: StasiFrame
@@ -37,6 +36,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -55,6 +55,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -73,6 +74,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -91,6 +93,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -110,6 +113,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.2
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -126,6 +130,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.3
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -144,6 +149,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.5
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -162,6 +168,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.7
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -180,6 +187,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 40
     stat_burn: 0
     stat_poison: 0
@@ -198,6 +206,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 1
     stat_poison: 0
@@ -214,6 +223,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 1
@@ -230,13 +240,13 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
     count: 1
   craft_AmmoAmount: 50
+  buy_AmmoAmount: 30
+  buy_AmmoSoulPrice: 4
+  buy_SoulPrice: 20
   isCraftable: 1
   defaultDamage: 42
   defaultMagazineSize: 25
   defaultCooldown: 9
-  buy_AmmoAmount: 30
-  buy_AmmoSoulPrice: 4
-  buy_SoulPrice: 20
   rewardRate:
     serializedVersion: 2
     m_Curve:
@@ -261,3 +271,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

@@ -18,6 +18,8 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Gameplay")] public Slider slider_MouseSensitivity;
     [FoldoutGroup("Gameplay")] public Text value_Brightness;
     [FoldoutGroup("Gameplay")] public Slider slider_Brightness;
+    [FoldoutGroup("Gameplay")] public Text value_FOV;
+    [FoldoutGroup("Gameplay")] public Slider slider_FOV;
     [FoldoutGroup("Video")] public Toggle toggle_VSync;
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
     [FoldoutGroup("Video")] public Toggle toggle_AntiAliasing;
@@ -53,6 +55,7 @@ public class SettingsUI : MonoBehaviour
         slider_Music.SetValueWithoutNotify(Hypatios.Settings.MUSIC_VOLUME);
         slider_MouseSensitivity.SetValueWithoutNotify(Hypatios.Settings.MOUSE_SENSITIVITY);
         slider_Brightness.SetValueWithoutNotify(Hypatios.Settings.BRIGHTNESS);
+        slider_FOV.SetValueWithoutNotify(Hypatios.Settings.FOV);
         slider_FPSCap.SetValueWithoutNotify(Hypatios.Settings.MAXIMUM_FRAMERATE);
         slider_UIScaling.SetValueWithoutNotify(Hypatios.Settings.UI_SCALING);
         toggle_VSync.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.VSYNC));
@@ -60,7 +63,7 @@ public class SettingsUI : MonoBehaviour
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
         dropdown_Resolution.SetValueWithoutNotify(Hypatios.Settings.RESOLUTION);
-        inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
+        //inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
 
         RefreshUI();
 
@@ -108,11 +111,12 @@ public class SettingsUI : MonoBehaviour
         }
 
         {
-            Hypatios.Settings.MY_NAME = inputfield_Name.text;
+            //Hypatios.Settings.MY_NAME = inputfield_Name.text;
             Hypatios.Settings.MAXIMUM_FRAMERATE = Mathf.RoundToInt(slider_FPSCap.value);
             Hypatios.Settings.UI_SCALING = slider_UIScaling.value;
             Hypatios.Settings.RESOLUTION = Mathf.RoundToInt(dropdown_Resolution.value);
             Hypatios.Settings.BRIGHTNESS = slider_Brightness.value;
+            Hypatios.Settings.FOV = slider_FOV.value;
             Hypatios.Settings.MOTIONBLUR = toggle_MotionBlur.isOn ? 1 : 0;
             Hypatios.Settings.ANTIALIASING = toggle_AntiAliasing.isOn ? 1 : 0;
             //Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
@@ -127,6 +131,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetFloat("SETTINGS.MUSIC_VOLUME", Hypatios.Settings.MUSIC_VOLUME);
             PlayerPrefs.SetFloat("SETTINGS.SFX_VOLUME", Hypatios.Settings.SFX_VOLUME);
             PlayerPrefs.SetFloat("SETTINGS.BRIGHTNESS", Hypatios.Settings.BRIGHTNESS);
+            PlayerPrefs.SetFloat("SETTINGS.FOV", Hypatios.Settings.FOV);
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
             PlayerPrefs.SetInt("SETTINGS.ANTIALIASING", Hypatios.Settings.ANTIALIASING);
             //PlayerPrefs.SetInt("SETTINGS.DYNAMIC_UI_SCALING", Hypatios.Settings.DYNAMIC_UI_SCALING);
@@ -143,6 +148,7 @@ public class SettingsUI : MonoBehaviour
         value_SFX.text = Mathf.RoundToInt(Hypatios.Settings.SFX_VOLUME * 100).ToString();
         value_Music.text = Mathf.RoundToInt(Hypatios.Settings.MUSIC_VOLUME * 100).ToString();
         value_MouseSensitivity.text = (Mathf.Round(Hypatios.Settings.MOUSE_SENSITIVITY * 10)/10).ToString();
+        value_FOV.text = (Mathf.Round(Hypatios.Settings.FOV)).ToString();
         value_Brightness.text = (Mathf.Round(displayBrightness * 10)/10).ToString();
         value_UIScaling.text = $"x{(Mathf.Round((1.5f - Hypatios.Settings.UI_SCALING) * 10) / 10)}";
 

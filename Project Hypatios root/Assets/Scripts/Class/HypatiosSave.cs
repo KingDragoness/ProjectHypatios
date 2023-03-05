@@ -54,7 +54,23 @@ public class InventoryData
     public void RemoveItem(string ID, int count = 1)
     {
         ItemDataSave targetData = SearchByID(ID);
-        RemoveItem(targetData, count);
+
+        if (targetData != null)
+            RemoveItem(targetData, count);
+        else
+        {
+            Debug.LogError($"Item doesn't exist: {ID}");
+        }
+    }
+
+    public int Count(ItemInventory itemInventory)
+    {
+        int count = 0;
+
+        count = Count(itemInventory.GetID());
+
+
+        return count;
     }
 
     public int Count(string ID)

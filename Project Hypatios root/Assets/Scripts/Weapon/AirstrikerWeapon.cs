@@ -367,7 +367,7 @@ public class AirstrikerWeapon : GunScript
     {
 
         //enable strikeTarget;
-
+        audioFire.Play();
     }
 
     #endregion
@@ -380,11 +380,13 @@ public class AirstrikerWeapon : GunScript
     //Called from unityevent
     public void InitiateReload()
     {
+        audio_Bootup.Play();
     }
 
     public override void OnReloadCompleted()
     {
         InsertLine("READY", 999);
+        audio_Bootup.Stop();
         audio_Startup.Play();
         base.OnReloadCompleted();
     }

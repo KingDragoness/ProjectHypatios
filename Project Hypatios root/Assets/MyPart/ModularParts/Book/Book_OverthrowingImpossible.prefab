@@ -92,6 +92,54 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6831677, y: 1.1131827, z: 0.10368676}
   m_Center: {x: -0.018547878, y: 0, z: -0.0000000037252899}
+--- !u!114 &502832403106743640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8610893769713131427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -288039276166085861}
+        m_MethodName: ExecuteFunction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8881489423753388086}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactSound: {fileID: 0}
+  useHoverEvent: 0
+  interactDescription: Interact
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!1 &8881489423753388086
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569cc78cb32118e4dacdeb7de56451ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 147cee288d1a97d40ba46e74e22f5aa7, type: 2}
+  item: {fileID: 11400000, guid: c4b166ee148ddf945afff8a6318f4442, type: 2}
   count: 1
 --- !u!1001 &8881489424008684274
 PrefabInstance:

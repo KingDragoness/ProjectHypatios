@@ -19353,7 +19353,7 @@ GameObject:
   - component: {fileID: 3851834393569678079}
   - component: {fileID: 3699690946529884572}
   m_Layer: 9
-  m_Name: Weapon_Audio_HackingError
+  m_Name: Weapon_Audio_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19371,7 +19371,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2361199203255670818}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &3699690946529884572
 AudioSource:
@@ -19384,10 +19384,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: f91eef1fcff11864abdc0e56c26b0036, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 449fd9f5f68e3c6418ec342bef3a8020, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.778
+  m_Pitch: 1.18
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -19499,7 +19499,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2361199203255670818}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4699797466952685355
 AudioSource:
@@ -20810,7 +20810,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 0db689f1525be524aaa4fe52b872e531, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 2
+  m_Pitch: 1.6
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -20984,8 +20984,8 @@ Transform:
   - {fileID: 2361199202443883911}
   - {fileID: 2361199203968992463}
   - {fileID: 2361199203148123896}
-  - {fileID: 3851834393569678079}
   - {fileID: 2450036157137300986}
+  - {fileID: 3851834393569678079}
   m_Father: {fileID: 2361199203599617269}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21655,8 +21655,19 @@ MonoBehaviour:
       m_Calls: []
   OnReloadStart:
     m_PersistentCalls:
-      m_Calls: []
-  audioFire: {fileID: 0}
+      m_Calls:
+      - m_Target: {fileID: 2361199203599617271}
+        m_MethodName: InitiateReload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  audioFire: {fileID: 3699690946529884572}
   audioReload: {fileID: 0}
   isMelee: 0
   isMeleeing: 0

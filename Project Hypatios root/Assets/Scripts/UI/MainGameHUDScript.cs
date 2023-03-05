@@ -50,6 +50,8 @@ public class MainGameHUDScript : MonoBehaviour
     public Recoil gunRecoil;
     public Image crosshairHit;
     public Image crosshairImage;
+    public Image reloadImageCircle;
+    public UI_Modular_CanvasOpacityController opacityReload;
     public Image weaponUI;
     public Sprite defaultCrosshair;
 
@@ -75,6 +77,8 @@ public class MainGameHUDScript : MonoBehaviour
     {
         ReloadAmmoIcons();
     }
+
+    #region Update
 
     private void Update()
     {
@@ -141,7 +145,11 @@ public class MainGameHUDScript : MonoBehaviour
     {
         GunScript weapon = Hypatios.Player.Weapon.currentGunHeld;
 
-        if (weapon == null) return;
+        if (weapon == null)
+        {
+            opacityReload.isVisible = false;
+            return;
+        }
 
         if (weapon.lowAmmoAlert >= weapon.curAmmo)
         {
@@ -153,9 +161,22 @@ public class MainGameHUDScript : MonoBehaviour
         {
             if (NoAmmoAlert.activeSelf)
                 NoAmmoAlert.gameObject.SetActive(false);
+        }
 
+        if (weapon.isReloading)
+        {
+            float _reloadTime = weapon.ReloadTime;
+            float _curTimerReload = weapon.curReloadTime;
+            reloadImageCircle.fillAmount = _curTimerReload / _reloadTime;
+            opacityReload.isVisible = true;
+        }
+        else
+        {
+            opacityReload.isVisible = false;
         }
     }
+
+    #endregion
 
     public void PlayDash()
     {

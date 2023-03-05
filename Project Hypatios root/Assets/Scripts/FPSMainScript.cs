@@ -75,7 +75,7 @@ public class FPSMainScript : MonoBehaviour
         colorGrading_.active = false;
         bloom_.active = false;
 
-        MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
+        //MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
     }
 
 
