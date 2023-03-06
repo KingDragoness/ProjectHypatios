@@ -16,12 +16,26 @@ public class ClockTimerDisplay : MonoBehaviour
         clockTimeText.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";
     }
 
-    public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+    public static DateTime UnixTimeStampToDateTime(double unixTimeStamp, bool ignoreTimeZone = false)
     {
         // Unix timestamp is seconds past epoch
         DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+        if (ignoreTimeZone == false)
+        {
+            dateTime = dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+        }
+        else
+        {
+            dateTime = dateTime.AddSeconds(unixTimeStamp);
+        }
+        
         return dateTime;
+    }
+
+    public static int TotalHoursPlayed(float unixTime)
+    {
+        float f = unixTime / 60f / 60f;
+        return Mathf.FloorToInt(f);
     }
 
 }

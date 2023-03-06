@@ -28,4 +28,10 @@ public class StatEntryButton : MonoBehaviour
         label_Value.text = $"{statData.value_int}";
     }
 
+    public void SetLabelManual(string title, string value)
+    {
+        label_Name.text = title;
+        label_Value.text = value;
+    }
+
 }

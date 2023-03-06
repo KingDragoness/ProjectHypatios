@@ -26,6 +26,10 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Video")] public Toggle toggle_DynamicUIScaling;
     [FoldoutGroup("Video")] public Text value_FPSCap;
     [FoldoutGroup("Video")] public Slider slider_FPSCap;
+    [FoldoutGroup("Video")] public Text value_Temperature;
+    [FoldoutGroup("Video")] public Slider slider_Temperature;
+    [FoldoutGroup("Video")] public Text value_Tint;
+    [FoldoutGroup("Video")] public Slider slider_Tint;
     [FoldoutGroup("Video")] public Text value_UIScaling;
     [FoldoutGroup("Video")] public Slider slider_UIScaling;
     [FoldoutGroup("Video")] public Dropdown dropdown_Resolution;
@@ -55,6 +59,8 @@ public class SettingsUI : MonoBehaviour
         slider_Music.SetValueWithoutNotify(Hypatios.Settings.MUSIC_VOLUME);
         slider_MouseSensitivity.SetValueWithoutNotify(Hypatios.Settings.MOUSE_SENSITIVITY);
         slider_Brightness.SetValueWithoutNotify(Hypatios.Settings.BRIGHTNESS);
+        slider_Temperature.SetValueWithoutNotify(Hypatios.Settings.VISUAL_TEMPERATURE);
+        slider_Tint.SetValueWithoutNotify(Hypatios.Settings.VISUAL_TINT);
         slider_FOV.SetValueWithoutNotify(Hypatios.Settings.FOV);
         slider_FPSCap.SetValueWithoutNotify(Hypatios.Settings.MAXIMUM_FRAMERATE);
         slider_UIScaling.SetValueWithoutNotify(Hypatios.Settings.UI_SCALING);
@@ -116,6 +122,8 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.UI_SCALING = slider_UIScaling.value;
             Hypatios.Settings.RESOLUTION = Mathf.RoundToInt(dropdown_Resolution.value);
             Hypatios.Settings.BRIGHTNESS = slider_Brightness.value;
+            Hypatios.Settings.VISUAL_TEMPERATURE = Mathf.RoundToInt(slider_Temperature.value);
+            Hypatios.Settings.VISUAL_TINT = Mathf.RoundToInt(slider_Tint.value);
             Hypatios.Settings.FOV = slider_FOV.value;
             Hypatios.Settings.MOTIONBLUR = toggle_MotionBlur.isOn ? 1 : 0;
             Hypatios.Settings.ANTIALIASING = toggle_AntiAliasing.isOn ? 1 : 0;
@@ -131,6 +139,8 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetFloat("SETTINGS.MUSIC_VOLUME", Hypatios.Settings.MUSIC_VOLUME);
             PlayerPrefs.SetFloat("SETTINGS.SFX_VOLUME", Hypatios.Settings.SFX_VOLUME);
             PlayerPrefs.SetFloat("SETTINGS.BRIGHTNESS", Hypatios.Settings.BRIGHTNESS);
+            PlayerPrefs.SetInt("SETTINGS.VISUAL_TEMPERATURE", Hypatios.Settings.VISUAL_TEMPERATURE);
+            PlayerPrefs.SetInt("SETTINGS.VISUAL_TINT", Hypatios.Settings.VISUAL_TINT);
             PlayerPrefs.SetFloat("SETTINGS.FOV", Hypatios.Settings.FOV);
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
             PlayerPrefs.SetInt("SETTINGS.ANTIALIASING", Hypatios.Settings.ANTIALIASING);
@@ -151,6 +161,8 @@ public class SettingsUI : MonoBehaviour
         value_FOV.text = (Mathf.Round(Hypatios.Settings.FOV)).ToString();
         value_Brightness.text = (Mathf.Round(displayBrightness * 10)/10).ToString();
         value_UIScaling.text = $"x{(Mathf.Round((1.5f - Hypatios.Settings.UI_SCALING) * 10) / 10)}";
+        value_Temperature.text = (Hypatios.Settings.VISUAL_TEMPERATURE).ToString();
+        value_Tint.text = (Hypatios.Settings.VISUAL_TINT).ToString();
 
         if (Hypatios.Settings.MAXIMUM_FRAMERATE < 201)
         value_FPSCap.text = (Mathf.Round(Hypatios.Settings.MAXIMUM_FRAMERATE)).ToString();

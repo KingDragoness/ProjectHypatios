@@ -26,6 +26,8 @@ public class Hypatios : MonoBehaviour
         public static float UI_SCALING = 1f;
         public static float BRIGHTNESS = 0.5f; //-1 - 1 -> 0 - 1
         public static float FOV = 71f;
+        public static int VISUAL_TEMPERATURE = 0;
+        public static int VISUAL_TINT = 0;
         public static int VSYNC = 0;
         public static int MOTIONBLUR = 0;
         public static int ANTIALIASING = 1;
@@ -60,6 +62,8 @@ public class Hypatios : MonoBehaviour
             RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
             MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
+            VISUAL_TEMPERATURE = LoadPrefKeyInt("SETTINGS.VISUAL_TEMPERATURE", 0);
+            VISUAL_TINT = LoadPrefKeyInt("SETTINGS.VISUAL_TINT", 0);
             UI_SCALING = LoadPrefKeyFloat("SETTINGS.UI_SCALING", 1f);
             //DYNAMIC_UI_SCALING = LoadPrefKeyInt("SETTINGS.DYNAMIC_UI_SCALING", 0);
             ANTIALIASING = LoadPrefKeyInt("SETTINGS.ANTIALIASING", 0);
@@ -97,7 +101,12 @@ public class Hypatios : MonoBehaviour
                 QualitySettings.vSyncCount = 0; else QualitySettings.vSyncCount = 1;
 
             if (colorGrading != null)
-            { colorGrading.gamma.value.w = (BRIGHTNESS / 2f); floatParam_Brightness.value = (BRIGHTNESS / 2f); }
+            { 
+                colorGrading.gamma.value.w = (BRIGHTNESS / 2f);
+                colorGrading.temperature.value = VISUAL_TEMPERATURE;
+                colorGrading.tint.value = VISUAL_TINT;
+                floatParam_Brightness.value = (BRIGHTNESS / 2f); 
+            }
 
             if (MainCameraScript != null)
                 MainCameraScript.mouseSensitivity = MOUSE_SENSITIVITY;
@@ -297,6 +306,7 @@ public class Hypatios : MonoBehaviour
     public static int UnixTimeStart { get => _unixTimeStart;  }
 
     public static float Time { get => Game.UNIX_Timespan; }
+    public static float Total_Time { get => Game.Total_UNIX_Timespan; }
 
     public static Hypatios Instance;
 

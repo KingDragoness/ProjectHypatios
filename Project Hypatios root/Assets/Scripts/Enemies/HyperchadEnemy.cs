@@ -33,6 +33,7 @@ public class HyperchadEnemy : EnemyScript
     public GameObject molotovBomb;
     public OnTriggerEnterEvent eventTriggerBoss;
     public ThrowProjectileEnemy throwProjectileEnemy;
+    [FoldoutGroup("Stats")] public BaseStatValue stat_Die;
 
     [Space]
     [Header("Properties")]
@@ -149,6 +150,7 @@ public class HyperchadEnemy : EnemyScript
         if (Stats.IsDead == false)
         {
             BossDied();
+            Hypatios.Game.Increment_PlayerStat(stat_Die);
             OnDied?.Invoke();
         }
         Stats.IsDead = true;

@@ -67,8 +67,21 @@ public class DisplayHighscores : MonoBehaviour
 
         var allStatEntries = Hypatios.Assets.AllStatEntries;
 
-        foreach(var entry in allStatEntries)
+        if (isPersistent)
         {
+            int bonusButton = 2;
+            //add bonus buttons for multiple runs
+            for (int x = 0; x < bonusButton; x++)
+            {
+                AddBonusButton(x);
+            }
+        }
+
+        foreach (var entry in allStatEntries)
+        {
+            if (entry.overallOnly && !isPersistent)
+                continue;
+
             var prefab1 = Instantiate(statButton, parentPlayerStat);
             prefab1.gameObject.SetActive(true);
             prefab1.isPersistent = isPersistent;
@@ -76,6 +89,33 @@ public class DisplayHighscores : MonoBehaviour
             prefab1.Refresh();
             pooledStatButtons.Add(prefab1);
         }
+
+       
+    }
+
+    private void AddBonusButton(int index)
+    {
+        string titleName = "";
+        string display = "";
+
+        if (index == 0)
+        {
+            titleName = "Total Runs";
+            display = $"{Hypatios.Game.TotalRuns}";
+        }
+        else if (index == 1)
+        {
+            var dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(Hypatios.Game.Total_UNIX_Timespan, true);
+            titleName = "Total Time Played";
+            display = $"{ClockTimerDisplay.TotalHoursPlayed(Hypatios.Game.Total_UNIX_Timespan).ToString("00")}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}s";
+        }
+
+
+        var prefab1 = Instantiate(statButton, parentPlayerStat);
+        prefab1.gameObject.SetActive(true);
+        prefab1.isPersistent = true;
+        prefab1.SetLabelManual(titleName, display);
+        pooledStatButtons.Add(prefab1);
     }
 
     public void SetScoresToMenu(PlayerScore[] highscoreList) //Assigns proper name and score for each text value

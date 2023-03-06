@@ -120,6 +120,7 @@ public class HypatiosSave
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;
     public int Game_TotalSouls = 0;
+    public int Game_UnixTime = 0;
     public PlayerStatSave persistent_PlayerStat;
 
     [Space]

@@ -36,6 +36,7 @@ public class FPSMainScript : MonoBehaviour
     public int SoulPoint = 0;
     public int TotalRuns = 0;
     public float UNIX_Timespan = 0;
+    public float Total_UNIX_Timespan = 0;
     public bool everUsed_Paradox = false;
     public bool everUsed_WeaponShop = false;
     public PlayerStatSave persistent_PlayerStat;
@@ -195,6 +196,7 @@ public class FPSMainScript : MonoBehaviour
     public void Update()
     {
         UNIX_Timespan += Time.deltaTime;
+        Total_UNIX_Timespan += Time.deltaTime;
     }
 
     #region Paradox and tips
@@ -329,6 +331,7 @@ public class FPSMainScript : MonoBehaviour
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
+        Total_UNIX_Timespan = savedata.Game_UnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
         Player.Health.targetHealth = savedata.Player_CurrentHP;
         Player.Health.curHealth = savedata.Player_CurrentHP;
@@ -364,6 +367,7 @@ public class FPSMainScript : MonoBehaviour
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
+        Total_UNIX_Timespan = savedata.Game_UnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
         Player.Health.targetHealth = Player.Health.maxHealth.Value;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
@@ -395,6 +399,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+        hypatiosSave.Game_UnixTime = Mathf.RoundToInt(Total_UNIX_Timespan);
         hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
         hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
