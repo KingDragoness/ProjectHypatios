@@ -48,8 +48,18 @@ public class Hypatios : MonoBehaviour
 
         internal void InitializeAtAwake()
         {
-            var validRes = Screen.resolutions;
-            resolutions = validRes;
+            var validRes = Screen.resolutions.ToList();
+            if (Display.main.systemWidth >= 1900)
+            {
+                var ultrawide = new Resolution();
+                ultrawide.width = 1920;
+                ultrawide.height = 830;
+                validRes.Add(ultrawide);
+            }
+
+            validRes.Sort((x, y) => x.width.CompareTo(y.width));
+
+            resolutions = validRes.ToArray();
             AO = Game.postProcessVolume.profile.GetSetting<AmbientOcclusion>();
             motionBlur = Game.postProcessVolume.profile.GetSetting<MotionBlur>();
             realtimeReflections = Game.postProcessVolume.profile.GetSetting<ScreenSpaceReflections>();

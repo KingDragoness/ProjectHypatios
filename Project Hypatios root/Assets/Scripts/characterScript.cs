@@ -54,6 +54,12 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] public Transform groundCheck;
     [FoldoutGroup("Physics")] public float groundDistance = .4f;
     [FoldoutGroup("Physics")] public float groundRadiusCheck = .3f;
+    [FoldoutGroup("Physics")] public float stepHeight = .3f;
+    [FoldoutGroup("Physics")] public float stepSmooth = .2f;
+    [FoldoutGroup("Physics")] public float stepDistCheck = 1f;
+    [FoldoutGroup("Physics")] public Transform stepCheckHigh;
+    [FoldoutGroup("Physics")] public Transform stepCheckLow;
+    [FoldoutGroup("Physics")] public LayerMask stepCheckLayerMask;
     [FoldoutGroup("Physics")] public LayerMask player;
     [FoldoutGroup("Physics")] public float jumpHeight;
     [FoldoutGroup("Physics")] public float jumpDrag = 1f;
@@ -262,6 +268,12 @@ public class CharacterScript : Entity
         soundManager = FindObjectOfType<soundManagerScript>();
         cc = GetComponent<CapsuleCollider>();
 
+        {
+            Vector3 v3 = stepCheckHigh.transform.position;
+            v3.y = stepCheckLow.transform.position.y + stepHeight;
+            stepCheckHigh.transform.position = v3;
+        }
+
         var currentWeapon = Weapon.currentWeaponHeld;
 
         if (currentWeapon != null)
@@ -348,6 +360,7 @@ public class CharacterScript : Entity
 
     bool testDashReady = false;
 
+    #region Physics and Interactions
 
     void FixedUpdate()
     {
@@ -535,6 +548,8 @@ public class CharacterScript : Entity
                 }
             }
         }
+
+        StepClimb();
     }
 
     [ReadOnly] [ShowInInspector] private float _slopeAngle = 0f;
@@ -561,6 +576,100 @@ public class CharacterScript : Entity
         else if (Physics.Raycast(checkPos2, Vector3.down, out _slopeHit, groundDistance * 2f, player, QueryTriggerInteraction.Ignore))
         {
             _slopeAngle = Vector3.Angle(_slopeHit.normal, Vector3.up);
+        }
+    }
+
+    private void StepClimb()
+    {
+        float checkDistLow = cc.radius;
+        float checkDistHigh = cc.radius;
+        float netMovement = Mathf.Clamp(Mathf.Abs(xMovement + yMovement)/2f, 0f, 1f);
+        RaycastHit hitLower;
+
+        bool allowStepClimb = true;
+
+        if (netMovement < 0.1f)
+            allowStepClimb = false;
+
+        bool isTooSlope = false;
+        bool isSoftSlope = false;
+        SlopeCheck();
+
+        if (_slopeAngle > maximumSlopeLimit && _slopeHit.collider != null)
+            isTooSlope = true;
+        if (_slopeAngle > softSlopeLimit && _slopeHit.collider != null)
+            isSoftSlope = true;
+
+        if (isSoftSlope | isTooSlope)
+            allowStepClimb = false;
+
+        if (allowStepClimb)
+        {
+            if (Physics.Raycast(stepCheckLow.transform.position, transform.TransformDirection(0, 0, 1), out hitLower, stepDistCheck, player, QueryTriggerInteraction.Ignore))
+            {
+                RaycastHit hitUpper;
+
+                if (!Physics.Raycast(stepCheckHigh.transform.position, transform.TransformDirection(0, 0, 1), out hitUpper, stepDistCheck, player, QueryTriggerInteraction.Ignore))
+                {
+                    rb.AddForce(new Vector3(0f, stepSmooth * netMovement, 0f));
+                }
+
+            }
+        }
+
+        Debug.DrawRay(stepCheckLow.transform.position, stepCheckLow.forward * stepDistCheck, Color.cyan);
+        Debug.DrawRay(stepCheckHigh.transform.position, stepCheckHigh.forward * stepDistCheck, Color.red);
+
+        
+        Vector3[] omniDirs = new Vector3[7];
+        omniDirs[0] = new Vector3(1.5f, 0, 1);
+        omniDirs[1] = new Vector3(-1.5f, 0, 1);
+        omniDirs[2] = new Vector3(-1, 0, 0f);
+        omniDirs[3] = new Vector3(1, 0, 0f);
+        omniDirs[4] = new Vector3(0f, 0, -1);
+        omniDirs[5] = new Vector3(1.5f, 0, -1);
+        omniDirs[6] = new Vector3(-1.5f, 0, -1);
+
+        foreach (var dir1 in omniDirs)
+        {
+            RaycastHit hitLower1;
+
+            if (allowStepClimb)
+            {
+                if (Physics.Raycast(stepCheckLow.transform.position, transform.TransformDirection(dir1), out hitLower1, stepDistCheck, player, QueryTriggerInteraction.Ignore))
+                {
+                    RaycastHit hitUpper1;
+
+                    if (!Physics.Raycast(stepCheckHigh.transform.position, transform.TransformDirection(dir1), out hitUpper1, stepDistCheck, player, QueryTriggerInteraction.Ignore))
+                    {
+                        //RETARDED CODE
+                        Vector3 dirFinal = dir1.normalized;
+                        Vector3 netMovementDir = new Vector3(xMovement, 0, yMovement);
+                        float maxDist = 0.9f;
+                        bool dontTrigger = false;
+
+                        netMovementDir -= dirFinal;
+                        netMovementDir.x = Mathf.Clamp(netMovementDir.x, -1f, 1f);
+                        netMovementDir.z = Mathf.Clamp(netMovementDir.z, -1f, 1f);
+                        {
+                            float x1 = Mathf.Abs(netMovementDir.x);
+                            float y1 = Mathf.Abs(netMovementDir.z);
+                            if (x1 > maxDist)
+                                dontTrigger = true;
+                            if (y1 > maxDist)
+                                dontTrigger = true;
+                        }
+
+                        float velocityFinal = 1f;
+                        if (dontTrigger)
+                            velocityFinal = 0f;
+                        rb.AddForce(new Vector3(0f, stepSmooth * velocityFinal, 0f));
+                    }
+                }
+            }
+
+            Debug.DrawRay(stepCheckLow.transform.position, transform.TransformDirection(dir1) * stepDistCheck, Color.cyan);
+            Debug.DrawRay(stepCheckHigh.transform.position, transform.TransformDirection(dir1) * stepDistCheck, Color.red);
         }
     }
 
@@ -717,4 +826,6 @@ public class CharacterScript : Entity
 
         if (isNoGravity == false) rb.useGravity = true;
     }
+
+    #endregion
 }

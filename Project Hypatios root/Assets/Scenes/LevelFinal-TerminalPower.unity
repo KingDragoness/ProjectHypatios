@@ -4668,8 +4668,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
   interactSound: {fileID: 0}
+  useHoverEvent: 0
   interactDescription: Interact
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!1001 &270693962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16051,6 +16060,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1853704945, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1853704945, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 709550005858481646, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -16196,6 +16213,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2002117729178636717, guid: bbec7d86000fe814bbac5d2d2e841787,
+        type: 3}
+      propertyPath: chamberObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a4dbbcd2aff2a24facbe1c0d265382d,
+        type: 2}
     - target: {fileID: 2002117730376217286, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_RootOrder
@@ -18390,6 +18413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 0}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 1
   OnHit:
@@ -18428,6 +18452,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  m_MyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!64 &773027281
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -41924,6 +41951,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1504926370}
+  newMusic:
+    trivia: {fileID: 0}
+    clip: {fileID: 0}
+  b_side_Track: {fileID: 0}
 --- !u!1001 &1524076083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66517,6 +66548,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCam: {fileID: 3429751663062887860}
+  additionalVirtualCams: []
+  OnCutsceneEnded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3429751662040311298
 MonoBehaviour:
   m_ObjectHideFlags: 0

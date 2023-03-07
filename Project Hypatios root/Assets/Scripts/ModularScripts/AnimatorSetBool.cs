@@ -8,6 +8,9 @@ public class AnimatorSetBool : MonoBehaviour
     public string boolParamName = "Opened";
     public Animator animator;
 
+    private bool cached_State = false;
+    private bool everSet = false;
+
     private void Awake()
     {
         if (animator == null)
@@ -16,8 +19,18 @@ public class AnimatorSetBool : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (everSet)
+        {
+            animator.SetBool(boolParamName, cached_State);
+        }
+    }
+
     public void SetBool(bool state)
     {
+        everSet = true;
+        cached_State = state;
         animator.SetBool(boolParamName, state);
     }
 

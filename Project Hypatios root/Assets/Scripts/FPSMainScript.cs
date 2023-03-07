@@ -45,6 +45,7 @@ public class FPSMainScript : MonoBehaviour
     public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
     public List<HypatiosSave.TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
+    public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
     public List<string> otherEverUsed = new List<string>();
 
     [Space]
@@ -342,6 +343,7 @@ public class FPSMainScript : MonoBehaviour
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        Game_ChamberSaves = savedata.Game_ChamberSaves;
         Player.Inventory = savedata.Player_Inventory;
         persistent_PlayerStat = savedata.persistent_PlayerStat;
         run_PlayerStat = savedata.run_PlayerStat;
@@ -370,12 +372,14 @@ public class FPSMainScript : MonoBehaviour
         Total_UNIX_Timespan = savedata.Game_UnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
         Player.Health.targetHealth = Player.Health.maxHealth.Value;
+        Player.Health.HealthSpeed = 50f;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        Game_ChamberSaves = savedata.Game_ChamberSaves;
         //Player.Inventory = savedata.Player_Inventory;
     }
 
@@ -398,13 +402,14 @@ public class FPSMainScript : MonoBehaviour
 
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
-        hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
-        hypatiosSave.Game_UnixTime = Mathf.RoundToInt(Total_UNIX_Timespan);
-        hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
-        hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
         hypatiosSave.Game_Trivias = Game_Trivias;
+        hypatiosSave.Game_ChamberSaves = Game_ChamberSaves;
+        hypatiosSave.Game_UnixTime = Mathf.RoundToInt(Total_UNIX_Timespan);
+        hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+        hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
+        hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
         hypatiosSave.Player_Inventory = Player.Inventory;
         hypatiosSave.persistent_PlayerStat = persistent_PlayerStat;
         hypatiosSave.run_PlayerStat = run_PlayerStat;

@@ -134,6 +134,7 @@ public class HypatiosSave
     public bool everUsed_WeaponShop = false;
     public List<string> otherEverUsed = new List<string>();
     public List<ParadoxEntity> Game_ParadoxEntities = new List<ParadoxEntity>();
+    public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
     public List<TriviaSave> Game_Trivias = new List<TriviaSave>();
 
     [Space]
@@ -313,6 +314,22 @@ public class HypatiosSave
             }
 
             return targetStat;
+        }
+    }
+
+
+    //All of the chamber's save data are handled by the ChamberLevelController script
+    [System.Serializable]
+    public class ChamberDataSave
+    {
+        public string ID = "Chamber1";
+        public int timesVisited = 0;
+        public int timesCompleted = 0;
+        public int lastRunVisit = 0;
+
+        public ChamberDataSave(string iD)
+        {
+            ID = iD;
         }
     }
 
