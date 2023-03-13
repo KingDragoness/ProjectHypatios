@@ -1001,11 +1001,11 @@ namespace VolumetricFogAndMist {
 
             bool maskChanged = false;
             bool maskEnabledInShader = shaderAdvancedOptionsInfo != null && (shaderAdvancedOptionsInfo.GetAdvancedOptionState("FOG_MASK") || shaderAdvancedOptionsInfo.GetAdvancedOptionState("FOG_INVERTED_MASK"));
-            _enableMask.boolValue = maskEnabledInShader;
+            //_enableMask.boolValue = maskEnabledInShader;
             expandFogMaskSection = EditorGUILayout.Foldout(expandFogMaskSection, _enableMask.boolValue ? FOG_MASK_ON : FOG_MASK_OFF, sectionHeaderStyle);
             if (expandFogMaskSection) {
                 if (maskEnabledInShader) {
-                    GUI.enabled = false;
+                    //GUI.enabled = false;
                     EditorGUILayout.PropertyField(_enableMask, new GUIContent("Mask Enabled", "Enables screen mask feature. Limits fog rendering on screen based on custom mesh volumes. This feature can be enabled/disabled in Shader Options section on top of inspector."));
                     GUI.enabled = _enableMask.boolValue;
 

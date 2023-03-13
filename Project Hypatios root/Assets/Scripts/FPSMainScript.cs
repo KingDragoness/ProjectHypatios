@@ -631,6 +631,8 @@ public class FPSMainScript : MonoBehaviour
     public void Menu_StartElenaStory()
     {
         int index = elenaScene.Index;
+        savedata = null;
+        LoadFromSaveFile = false;
         Application.LoadLevel(index);
 
     }
@@ -638,6 +640,8 @@ public class FPSMainScript : MonoBehaviour
     public void Menu_StartAldrich()
     {
         int index = aldrichScene.Index;
+        savedata = null;
+        LoadFromSaveFile = false;
         Application.LoadLevel(index);
 
     }

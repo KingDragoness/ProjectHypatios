@@ -350,7 +350,7 @@ MonoBehaviour:
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
   dummyAI: {fileID: 2375914904756159635}
-  stateAI: 0
+  stateAI: 2
   animator: {fileID: 3893534545613212683}
   throwProjectileEnemy: {fileID: 2375914904756159632}
   fireRate: 0.88
@@ -6040,9 +6040,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2375914904756159634}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5168709653123031844
@@ -6383,9 +6387,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2375914904756159634}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7791010010923939192

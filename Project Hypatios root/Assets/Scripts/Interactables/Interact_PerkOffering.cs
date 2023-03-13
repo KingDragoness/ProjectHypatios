@@ -27,6 +27,8 @@ public class Interact_PerkOffering : MonoBehaviour
                 var perk1 = PlayerPerk.GetBasePerk(cauldron.statusType);
 
                 cauldron.icon.sprite = perk1.PerkSprite;
+                cauldron.label_Title.text = perk1.TitlePerk;
+                cauldron.label_Description.text = perk1.DescriptionPerk;
                 cauldron.touch_TakePerk.interactDescription = $"Take perk";
                 cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {perk1.DescriptionPerk}";
 
@@ -41,6 +43,8 @@ public class Interact_PerkOffering : MonoBehaviour
 
                 cauldron.touch_TakePerk.interactDescription = $"{Mathf.FloorToInt(perk1.pricingPerValue * cauldron.perkCustomEffect.Value)} souls";
                 cauldron.icon.sprite = perk1.PerkSprite;
+                cauldron.label_Title.text = perk1.TitlePerk;
+                cauldron.label_Description.text = perk1.GetDescriptionTempPerk(cauldron.perkCustomEffect.Value);
                 cauldron.dialogInspect.Dialogue_Content = $"{s1} Price: {price} souls";
             }
         }

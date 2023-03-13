@@ -17,6 +17,8 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
     public GameObject activeMode;
     public GameObject unactiveMode;
     public Image icon;
+    public Text label_Title;
+    public Text label_Description;
 
     public void Inspect()
     {

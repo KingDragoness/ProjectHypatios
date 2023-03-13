@@ -1093,12 +1093,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSystem: {fileID: 0}
   anim: {fileID: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5393
   weaponName: Rifle
   crosshairHit: {fileID: 0}
   allAttachments: []
+  CustomVariables: []
   damage: 65
   variableAdditionalDamage: 12
   isAmmoUnlimited: 0
@@ -1109,11 +1107,12 @@ MonoBehaviour:
   curAmmo: 0
   lowAmmoAlert: 5
   spread: 0.016
-  recoilX: -2
-  recoilY: 3
-  recoilZ: 2
+  recoilX: -1
+  recoilY: 2
+  recoilZ: 1.5
   recoilMultiplier: 1
   bulletPerSecond: 9.75
+  damageType: 1
   repulsionForce: 1
   isFiring: 0
   isReloading: 0
@@ -1773,14 +1772,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6072524067240984597}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.119, y: 0, z: 0.372}
+  m_LocalRotation: {x: -0.000000059604645, y: 0.7071068, z: -0.0000000016298145, w: 0.7071067}
+  m_LocalPosition: {x: 0.12, y: -0, z: 0.06}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 7164563691911898459}
   m_Father: {fileID: 2355747187485613519}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
 --- !u!198 &6072524067240984595
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -1864,7 +1863,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.15
+      scalar: 0.16
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1971,7 +1970,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.9214659, b: 1, a: 1}
+      maxColor: {r: 0, g: 0.9214659, b: 1, a: 0.5882353}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2033,8 +2032,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.2
-      minScalar: 1
+      scalar: 1
+      minScalar: 0.8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3228,8 +3227,8 @@ ParticleSystem:
     startFrame:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.75
-      minScalar: 0
+      scalar: 0.9999
+      minScalar: 0.9999
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -6537,7 +6536,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 1
+  m_RenderMode: 4
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -6547,15 +6546,15 @@ ParticleSystemRenderer:
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
-  m_RenderAlignment: 0
-  m_Pivot: {x: 0, y: 0.5, z: 0}
-  m_Flip: {x: 0, y: 0.5, z: 0}
+  m_RenderAlignment: 2
+  m_Pivot: {x: 0, y: 0, z: 0}
+  m_Flip: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
-  m_EnableGPUInstancing: 1
+  m_EnableGPUInstancing: 0
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 1619860081568545487, guid: 76bf9932acd4eef479c4f0aefd8c963a, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -6948,7 +6947,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 4a1f763a7288f4a43b4712bb445b0a8c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1.1
+  m_Pitch: 0.8
   Loop: 0
   Mute: 0
   Spatialize: 0

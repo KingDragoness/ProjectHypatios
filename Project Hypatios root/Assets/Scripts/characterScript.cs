@@ -356,11 +356,35 @@ public class CharacterScript : Entity
             if (soundManager != null) soundManager.Pause("running");
             moveSpeed = 0f;
         }
+
+        //dash handling
+        if (isLimitedIntroMode == false)
+        {
+            if (isCheatMode == false)
+            {
+                HandleDash_Update();
+            }
+            else if (Hypatios.Input.Dash.triggered)
+            {
+                b_triggerDash = true;
+            }
+        }
     }
 
     bool testDashReady = false;
 
     #region Physics and Interactions
+
+    private void HandleDash_Update()
+    {
+        if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldown.Value)
+        {
+            b_triggerDash = true;
+        }
+
+    }
+
+    private bool b_triggerDash = false;
 
     void FixedUpdate()
     {
@@ -388,23 +412,14 @@ public class CharacterScript : Entity
             testDashReady = false;
         }
 
-        if (isCheatMode == false)
+        if (b_triggerDash)
         {
-            if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldown.Value)
-            {
-                Hypatios.Game.Increment_PlayerStat(stat_dash);
-                StartCoroutine(Dash());
-                timeSinceLastDash = 0;
-            }
+            Hypatios.Game.Increment_PlayerStat(stat_dash);
+            StartCoroutine(Dash());
+            timeSinceLastDash = 0;
+            b_triggerDash = false;
         }
-        else
-        {
-            if (Hypatios.Input.Dash.triggered)
-            {
-                StartCoroutine(Dash());
-                timeSinceLastDash = 0;
-            }
-        }
+
     }
 
     public void HandleCrouchingState()
