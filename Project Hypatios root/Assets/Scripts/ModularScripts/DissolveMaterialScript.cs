@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class DissolveMaterialScript : MonoBehaviour
 {
 
     public List<Renderer> targetRenderers = new List<Renderer>();
     public float dissolveSpeed = 10;
+    public bool manualControl = false;
+    [ShowIf("manualControl")] public float currentTime = 0f;
 
     private List<Material> dissolveMaterials = new List<Material>();
     private float _dissolveTime = 0;
@@ -23,18 +26,25 @@ public class DissolveMaterialScript : MonoBehaviour
 
     private void Update()
     {
-        bool allowUpdateMaterial = true;
+        if (manualControl == false)
+        {
+            bool allowUpdateMaterial = true;
 
-        if (_dissolveTime > 1 && dissolveSpeed > 0)
-            allowUpdateMaterial = false;
+            if (_dissolveTime > 1 && dissolveSpeed > 0)
+                allowUpdateMaterial = false;
 
-        if (_dissolveTime < 0 && dissolveSpeed < 0)
-            allowUpdateMaterial = false;
+            if (_dissolveTime < 0 && dissolveSpeed < 0)
+                allowUpdateMaterial = false;
 
-        if (allowUpdateMaterial)
-            _dissolveTime += Time.deltaTime * 0.1f * dissolveSpeed;
+            if (allowUpdateMaterial)
+                _dissolveTime += Time.deltaTime * 0.1f * dissolveSpeed;
+            else
+                return;
+        }
         else
-            return;
+        {
+            _dissolveTime = currentTime;
+        }
 
         foreach (Material m in dissolveMaterials)
         {

@@ -49,6 +49,8 @@ public class Hypatios : MonoBehaviour
         internal void InitializeAtAwake()
         {
             var validRes = Screen.resolutions.ToList();
+            validRes.RemoveAll(x => x.height < 720);
+
             if (Display.main.systemWidth >= 1900)
             {
                 var ultrawide = new Resolution();
@@ -319,6 +321,12 @@ public class Hypatios : MonoBehaviour
     public static float Total_Time { get => Game.Total_UNIX_Timespan; }
 
     public static Hypatios Instance;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void Init()
+    {
+
+    }
 
     private void Awake()
     {

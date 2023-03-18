@@ -9,11 +9,15 @@ public class Fortification_WoodenPlank : EnemyScript
 
     [FoldoutGroup("Events")] public UnityEvent OnDieEvent;
     [FoldoutGroup("Audios")] public AudioSource destroyedWood;
+    [FoldoutGroup("Audios")] public AudioSource damagedWood;
+    public DissolveMaterialScript dissolveMat;
+    public DissolveMaterialScript dissolveMat1;
+
 
     public override void Die()
     {
-        destroyedWood.Play();
         Destroy(gameObject, 3f);
+        destroyedWood.Play();
         OnDied?.Invoke();
         OnDieEvent?.Invoke();
         Stats.IsDead = true;
@@ -25,7 +29,11 @@ public class Fortification_WoodenPlank : EnemyScript
             return;
         //DamageOutputterUI.instance.DisplayText(token.damage)
         Stats.CurrentHitpoint -= token.damage;
+        _lastDamageToken = token;
+        damagedWood.Play();
 
+        dissolveMat.currentTime = 1f -(Stats.CurrentHitpoint/Stats.MaxHitpoint.Value);
+        dissolveMat1.currentTime = 1f - (Stats.CurrentHitpoint / Stats.MaxHitpoint.Value);
 
         if (Stats.CurrentHitpoint <= 0f)
         {

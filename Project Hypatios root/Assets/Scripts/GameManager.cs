@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
-    public int deadLevelIndex = 1;
 
     public void NextLevel()
     {
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
         //Restart the level for non-Aldrich levels
         if (Hypatios.Game.currentGamemode == FPSMainScript.CurrentGamemode.Aldrich)
         {
-            SceneManager.LoadScene(deadLevelIndex);
+            SceneManager.LoadScene(Hypatios.Game.deadScene.Index);
         }
         else
         {

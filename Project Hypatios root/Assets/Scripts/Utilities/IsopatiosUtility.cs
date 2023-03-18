@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -35,6 +36,54 @@ public static class StringExtensions
 }
 public static class IsopatiosUtility
 {
+    public static bool IsAgentCanReachLocation(this NavMeshAgent agent, Vector3 pos)
+    {
+        NavMeshPath navMeshPath = new NavMeshPath();
+
+        if (agent == null) return false;
+
+        if (agent.CalculatePath(pos, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    public static bool GetPath(this NavMeshPath path, Vector3 fromPos, Vector3 toPos, int passableMask)
+    {
+        path.ClearCorners();
+
+        if (NavMesh.CalculatePath(fromPos, toPos, passableMask, path) == false)
+            return false;
+
+        return true;
+    }
+
+    public static float GetPathLength(this NavMeshPath path)
+    {
+        if (path.corners.Length < 2)
+            return 9999;
+
+        Vector3 previousCorner = path.corners[0];
+        float lengthSoFar = 0.0F;
+        int i = 1;
+        while (i < path.corners.Length)
+        {
+            Vector3 currentCorner = path.corners[i];
+            lengthSoFar += Vector3.Distance(previousCorner, currentCorner);
+            Debug.DrawLine(previousCorner, currentCorner, Color.red);
+            previousCorner = currentCorner;
+            i++;
+        }
+
+        return lengthSoFar;
+    }
+
     public static int Choose(int[] probs)
     {
 

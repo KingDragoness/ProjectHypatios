@@ -84,9 +84,11 @@ public class SettingsUI : MonoBehaviour
 
     public void SetSomething()
     {
+        Debug.Log("test set 44");
 
         PlayerPrefs.Save();
         RefreshUI();
+        Debug.Log("test set");
 
     }
 
@@ -151,6 +153,7 @@ public class SettingsUI : MonoBehaviour
 
         }
 
+        Debug.Log(Hypatios.Settings.SFX_VOLUME);
 
 
         float displayBrightness = (Hypatios.Settings.BRIGHTNESS + 1) / 2;

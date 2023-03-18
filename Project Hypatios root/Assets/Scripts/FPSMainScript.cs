@@ -24,6 +24,9 @@ public class FPSMainScript : MonoBehaviour
     public CurrentGamemode currentGamemode = CurrentGamemode.Aldrich;
     [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
+    [FoldoutGroup("Story Selection")] public SceneReference level1_Scene;
+    [FoldoutGroup("Story Selection")] public SceneReference deadScene;
+    [FoldoutGroup("Story Selection")] public SceneReference gameSelectionScene;
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume; //DOF, Motion blur, AO, Vignette
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_Player;
@@ -59,6 +62,12 @@ public class FPSMainScript : MonoBehaviour
 
     public static HypatiosSave savedata; //cached
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void Init()
+    {
+        LoadFromSaveFile = false;
+        Player_RunSessionUnixTime = 0;
+    }
 
     private void Awake()
     {
@@ -472,7 +481,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_CurrentHP = 100;
         hypatiosSave.Player_AlchoholMeter = 0f;
         hypatiosSave.Player_RunSessionUnixTime = 0;
-        hypatiosSave.Game_LastLevelPlayed = 4;
+        hypatiosSave.Game_LastLevelPlayed = level1_Scene.Index;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
         hypatiosSave.Player_Inventory = new InventoryData();
         hypatiosSave.run_PlayerStat = new PlayerStatSave();
@@ -481,7 +490,7 @@ public class FPSMainScript : MonoBehaviour
 
         hypatiosSave.Game_WeaponStats.Clear();
 
-        SaveGame(targetLevel: 4, hypatiosSave: hypatiosSave);
+        SaveGame(targetLevel: level1_Scene.Index, hypatiosSave: hypatiosSave);
 
         string pathLoad = "";
         JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
@@ -603,8 +612,8 @@ public class FPSMainScript : MonoBehaviour
     //Load player cutscene char select
     public void Menu_StartPlayGame()
     {
-        Application.LoadLevel(3);
-
+        int index = gameSelectionScene.Index;
+        Application.LoadLevel(index);
     }
 
     public void Menu_ResumeGame()

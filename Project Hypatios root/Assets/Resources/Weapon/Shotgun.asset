@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   nameWeapon: Shotgun
-  moveSpeed: 1
   prefab: {fileID: 5714527462833675118, guid: 58731b7a9914a3b48908a026f9cef527, type: 3}
   UI_TemplateAmmoAdded: {fileID: 8369859860185949910, guid: 63992b4879291674facfb401f6f9cab8,
     type: 3}
@@ -32,11 +31,12 @@ MonoBehaviour:
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 1
-    modifier_damage: 20
+    modifier_damage: 12
     modifier_cooldown: 2.5
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.2
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -50,17 +50,18 @@ MonoBehaviour:
       count: 3
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
-    modifier_damage: 40
+    modifier_damage: 25
     modifier_cooldown: 2.5
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0.45
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
   - ID: Multishot
     Name: Multiscatter Shot
-    Description: Fires additional 6 wide shot bullets.
+    Description: Fires additional 6 wide shot bullets, minor damage reduction.
     slot: 1
     order: 10
     RequirementCrafting:
@@ -68,11 +69,12 @@ MonoBehaviour:
       count: 3
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
-    modifier_damage: 0
+    modifier_damage: -25
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -86,11 +88,12 @@ MonoBehaviour:
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
-    modifier_damage: 100
+    modifier_damage: 70
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.3
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -109,6 +112,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 10
     stat_burn: 0
     stat_poison: 0
@@ -125,6 +129,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.3
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -143,6 +148,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: -0.5
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
@@ -161,6 +167,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 1
     stat_poison: 0
@@ -177,6 +184,7 @@ MonoBehaviour:
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
     modifier_percent_recoil: 0
+    modifier_customVariable: []
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 1
@@ -191,13 +199,13 @@ MonoBehaviour:
   - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
     count: 1
   craft_AmmoAmount: 16
-  isCraftable: 1
-  defaultDamage: 75
-  defaultMagazineSize: 4
-  defaultCooldown: 3.5
   buy_AmmoAmount: 10
   buy_AmmoSoulPrice: 3
   buy_SoulPrice: 10
+  isCraftable: 1
+  defaultDamage: 60
+  defaultMagazineSize: 4
+  defaultCooldown: 3.5
   rewardRate:
     serializedVersion: 2
     m_Curve:
@@ -222,3 +230,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

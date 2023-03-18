@@ -6,6 +6,7 @@ public class CustomSoundSourceSpawnerModular : MonoBehaviour
 {
 
     public AudioClip audioClip;
+    public Sound sound;
 
 
     public void PlayAudioSource()
@@ -15,5 +16,22 @@ public class CustomSoundSourceSpawnerModular : MonoBehaviour
 
         soundManagerScript.instance.Play($"{audioClip.name}");
     }
+
+    public void PlaySound()
+    {
+        if (soundManagerScript.instance.IsSoundExists(sound.name) == false)
+            soundManagerScript.instance.Temp_NewSound(sound);
+
+        soundManagerScript.instance.Play($"{sound.name}");
+    }
+
+    public void PlaySound3D()
+    {
+        if (soundManagerScript.instance.IsSoundExists(sound.name) == false)
+            soundManagerScript.instance.Temp_NewSound(sound);
+
+        soundManagerScript.instance.Play3D($"{sound.name}", transform.position);
+    }
+
 
 }

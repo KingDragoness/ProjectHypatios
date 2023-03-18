@@ -162,8 +162,11 @@ public abstract class EnemyScript : Entity
         {
             f_valueChoosingPlayerAllies = favorPlayer;
         }
+
         currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position, chanceSelectAlly: f_valueChoosingPlayerAllies);
+
     }
+
 
     public virtual void AI_Detection()
     {

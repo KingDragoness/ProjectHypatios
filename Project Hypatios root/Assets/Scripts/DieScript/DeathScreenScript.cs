@@ -37,7 +37,7 @@ public class DeathScreenScript : MonoBehaviour
     public ReaperStage currentReaperStage = ReaperStage.Main;
     public int UNIX_Remaining = 360; //1 = 1 second
     public int test_UNIX_Start = 1640087660;
-    public int levelTarget = 2;
+    public FPSMainScript fpsMainScript;
     [Space]
 
     [Header("Cutscene Special")]
@@ -311,7 +311,7 @@ public class DeathScreenScript : MonoBehaviour
 
     public void TriggerLoad()
     {
-        Application.LoadLevel(levelTarget);
+        Application.LoadLevel(fpsMainScript.level1_Scene.Index);
         Time.timeScale = 1;
     }
 

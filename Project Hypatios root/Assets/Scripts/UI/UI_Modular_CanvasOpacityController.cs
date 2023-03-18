@@ -12,6 +12,9 @@ public class UI_Modular_CanvasOpacityController : MonoBehaviour
     private void Start()
     {
         canvasGroup.alpha = 0;
+
+        if (isVisible == false)
+            canvasGroup.alpha = 1;
     }
 
     private void Update()

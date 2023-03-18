@@ -22,6 +22,7 @@ public class CraftingWorkstationUI : MonoBehaviour
     public List<CraftingWeaponSelectButton> allMainButtons = new List<CraftingWeaponSelectButton>();
     [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponCrafted;
     [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponModCrafted;
+    [FoldoutGroup("Audios")] public AudioSource audio_DrillCraft;
 
     private CraftingWorkstationTrigger _currentBench;
     private CraftingWeaponSelectButton _currentButton;
@@ -142,6 +143,8 @@ public class CraftingWorkstationUI : MonoBehaviour
 
         Hypatios.Game.Increment_PlayerStat(stat_weaponModCrafted);
         OpenWeaponMod(_currentButton);
+        audio_DrillCraft.Play();
+
         var WeaponManager = Hypatios.Player.Weapon;
         WeaponManager.SetWeaponSettings(WeaponManager.currentGunHeld);
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
@@ -191,6 +194,7 @@ public class CraftingWorkstationUI : MonoBehaviour
 
         Hypatios.Game.Increment_PlayerStat(stat_weaponCrafted);
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
+        audio_DrillCraft.Play();
         RefreshUI();
 
         OpenWeapon();

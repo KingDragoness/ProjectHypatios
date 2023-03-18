@@ -1126,6 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameDifficulty: 20
+  _cc: {fileID: 0}
   _fpsMainScript: {fileID: 310647415}
   _characterScript: {fileID: 0}
   _assetStorage: {fileID: 310647416}
@@ -4769,7 +4770,7 @@ MonoBehaviour:
   currentReaperStage: 0
   UNIX_Remaining: 41111
   test_UNIX_Start: 1640087660
-  levelTarget: 4
+  fpsMainScript: {fileID: 310647415}
   DEBUG_CutsceneTest: 3
   speedMultiplierTime: 1
   DEBUG_NoKey: 1
@@ -38995,7 +38996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ee1f5e75b3bfc478262247e71b5bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deadLevelIndex: 1
 --- !u!4 &7790643842210544778
 Transform:
   m_ObjectHideFlags: 0
@@ -39033,8 +39033,25 @@ MonoBehaviour:
     m_IsDirty: 0
     m_ScenePath: 
     m_index: 0
+  level1_Scene:
+    m_SceneAsset: {fileID: 0}
+    m_IsDirty: 0
+    m_ScenePath: 
+    m_index: 0
+  deadScene:
+    m_SceneAsset: {fileID: 0}
+    m_IsDirty: 0
+    m_ScenePath: 
+    m_index: 0
+  gameSelectionScene:
+    m_SceneAsset: {fileID: 0}
+    m_IsDirty: 0
+    m_ScenePath: 
+    m_index: 0
   postProcessVolume: {fileID: 7790643843161365034}
   postProcessVolume_2: {fileID: 7790643842852672754}
+  postProcessLayer_Player: {fileID: 0}
+  postProcessLayer_UI: {fileID: 0}
   Prefab_SpawnAmmo: {fileID: 8451620349001071941, guid: 2ee29f38451d34345a0518acef8061f3,
     type: 3}
   Prefab_SpawnSoul: {fileID: 4495519293201509545, guid: e6af2ddff81d89747ad581260b4fd164,
@@ -39043,11 +39060,17 @@ MonoBehaviour:
   SoulPoint: 0
   TotalRuns: 0
   UNIX_Timespan: 0
+  Total_UNIX_Timespan: 0
   everUsed_Paradox: 0
   everUsed_WeaponShop: 0
+  persistent_PlayerStat:
+    allPlayerStats: []
+  run_PlayerStat:
+    allPlayerStats: []
   currentWeaponStat: []
   paradoxEntities: []
   Game_Trivias: []
+  Game_ChamberSaves: []
   otherEverUsed: []
   DEBUG_ShowTutorial: 0
 --- !u!1 &7790643842713893730
