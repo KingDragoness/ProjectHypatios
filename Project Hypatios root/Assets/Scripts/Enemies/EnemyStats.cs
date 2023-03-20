@@ -33,6 +33,7 @@ public class EnemyStats
     [BoxGroup("Stats")] public CharacterStat MovementBonus;
     public Alliance MainAlliance = Alliance.Mobius;
     public UnitType UnitType;
+    public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
 
 

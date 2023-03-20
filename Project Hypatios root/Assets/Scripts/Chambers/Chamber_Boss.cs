@@ -17,6 +17,7 @@ public class Chamber_Boss : MonoBehaviour
     [Header("Final Form")]
     public Vector3 downwardPlatformSpeed = new Vector3(0, -10, 0);
     public float delayPerPlatform = 0.5f;
+    public UnityEvent OnBattleEnter;
     public UnityEvent OnFinalFormTrigger;
     public UnityEvent OnPrepareFinalFormTrigger;
     public List<GameObject> PlatformToBeDismantled = new List<GameObject>();
@@ -145,6 +146,7 @@ public class Chamber_Boss : MonoBehaviour
     public void TriggerEnterBattle()
     {
         hasEnteredBattle = true;
+        OnBattleEnter?.Invoke();
     }
 
 }

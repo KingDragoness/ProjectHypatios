@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
 
@@ -10,6 +11,8 @@ public abstract class EnemyScript : Entity
 
     [FoldoutGroup("Base")] [HideInEditorMode] [ShowInInspector] private EnemyStats _stats;
     [FoldoutGroup("Base")] [HideInPlayMode] [SerializeField] [InlineEditor] private BaseEnemyStats _baseStat;
+    [FoldoutGroup("Optional")] public UnityEvent OnDamaged; //called from derived enemy classes
+    [FoldoutGroup("Optional")] public UnityEvent OnSelfKilled; //called from derived enemy classes
 
 
     public EnemyStats Stats { get => _stats; }

@@ -112,7 +112,7 @@ public class damageReceiver : MonoBehaviour
         {
             enemyScript.Attacked(token);
             if (token.isBurn && !enemyScript.IsStatusEffect(StatusEffectCategory.Fire) && token.originEnemy != enemyScript) enemyScript.Burn();
-            if (token.isPoison && !enemyScript.IsStatusEffect(StatusEffectCategory.Poison) && token.originEnemy != enemyScript) enemyScript.Poison();
+            if (token.isPoison && !enemyScript.IsStatusEffect(StatusEffectCategory.Poison) && token.originEnemy != enemyScript && enemyScript.Stats.UnitType != UnitType.Mechanical) enemyScript.Poison();
         }
 
         if (destructibleScript != null)

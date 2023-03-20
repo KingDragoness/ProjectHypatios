@@ -7,6 +7,7 @@ public class StupidDamageHitbox : MonoBehaviour
 
     [Tooltip("For Enemy attacks")]
     public EnemyScript originEnemy;
+    public float speedHealth = 10f;
     public int damage = 10;
     public DamageToken.DamageOrigin originDamage = DamageToken.DamageOrigin.Enemy;
 
@@ -21,6 +22,7 @@ public class StupidDamageHitbox : MonoBehaviour
             token.damage = damage;
             token.origin = originDamage;
             token.originEnemy = originEnemy;
+            token.healthSpeed = speedHealth;
 
             UniversalDamage.TryDamage(token, other.transform, transform);
         }

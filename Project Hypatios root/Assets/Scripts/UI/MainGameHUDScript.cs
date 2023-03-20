@@ -28,6 +28,8 @@ public class MainGameHUDScript : MonoBehaviour
     public AudioSource audio_CrosshairClick;
     public AudioSource audio_Error;
     public AudioSource audio_PurchaseReward;
+    public AudioSource audio_interactMonitor;
+
 
     [Header("Trivias")]
     public UI_Modular_TypewriterText typewriter_Trivia;

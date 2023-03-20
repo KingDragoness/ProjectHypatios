@@ -347,6 +347,7 @@ public class SpiderScript : EnemyScript
 
         if (!isDie)
         {
+            OnSelfKilled?.Invoke();
             LootDrop();
 
             NavMeshAgent meshAgent = GetComponent<NavMeshAgent>();

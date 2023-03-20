@@ -25,7 +25,8 @@ public class Fortification_WoodenPlank : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        if (token.origin == DamageToken.DamageOrigin.Player | token.origin == DamageToken.DamageOrigin.Ally)
+        if ((token.origin == DamageToken.DamageOrigin.Player | token.origin == DamageToken.DamageOrigin.Ally) &&
+                token.isBurn == false)
             return;
         //DamageOutputterUI.instance.DisplayText(token.damage)
         Stats.CurrentHitpoint -= token.damage;

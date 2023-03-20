@@ -15,9 +15,11 @@ public class Monster_ZombieMobius : EnemyScript
     [FoldoutGroup("References")] public CopyTransformRagdoll targetRagdoll;
     [FoldoutGroup("Parameters")] public float minDistChangeRandomPos = 3f;
     [FoldoutGroup("Parameters")] public float scanEnemyCooldown = 0.5f;
+    [FoldoutGroup("Parameters")] public Vector2 randomizedDefaultSpeed = new Vector2();
 
     public Animator animator;
     public float speed = 10;
+    public Vector3 defaultScale = new Vector3(0.73f, 0.73f, 0.73f);
     public float distanceToAttack = 5f;
     public GameObject hitbox;
     public GameObject visualAttack;
@@ -27,8 +29,7 @@ public class Monster_ZombieMobius : EnemyScript
     [FoldoutGroup("Animations")] public float hitboxStart = .2f;
     [FoldoutGroup("Animations")] public float hitboxLasts = .3f;
     [FoldoutGroup("Animations")] public float anim_MultiplierMoveSpeed = .33f;
-    [FoldoutGroup("DEBUG")] public Transform DEBUG_TESTSTUPIDNAVMESH;
-    [FoldoutGroup("DEBUG")] public bool DEBUG_ChecknavmeshPath = false;
+    [FoldoutGroup("Debug")] public Transform Debug_TestTargetMove;
 
     private bool isAttacking = false;
     private Vector3 _targetMove;
@@ -37,6 +38,7 @@ public class Monster_ZombieMobius : EnemyScript
     private NavMeshAgent _navMeshAgent;
     private SpawnHeal SpawnHeal;
     private float distanceToPlayer = 0;
+    private float _defaultSpeedRandom = 0f;
 
     public static int TotalZombieInScene = 0;
 
@@ -50,11 +52,11 @@ public class Monster_ZombieMobius : EnemyScript
     private void Start()
     {
         TotalZombieInScene++;
+        _defaultSpeedRandom = Random.Range(randomizedDefaultSpeed.x, randomizedDefaultSpeed.y);
         currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         if (currentTarget != null) _targetMove = currentTarget.transform.position;
         _navMeshAgent = GetComponent<NavMeshAgent>();
         SpawnHeal = GetComponent<SpawnHeal>();
-        _navMeshAgent.speed = speed + Random.Range(-1, 2f);
         hitbox.gameObject.SetActive(false);
 
         float random = Random.Range(0f, 1f);
@@ -62,7 +64,7 @@ public class Monster_ZombieMobius : EnemyScript
         if (random < 0.5f)
         {
             animator.runtimeAnimatorController = variantControllers[0];
-            transform.localScale *= 1.1f;
+            transform.localScale = defaultScale * 1.1f;
         }
         else
         {
@@ -129,10 +131,9 @@ public class Monster_ZombieMobius : EnemyScript
 
     private void Update()
     {
-        if (DEBUG_ChecknavmeshPath) Debug_DrawNavmeshPath();
 
         if (Time.timeScale <= 0) return;
-        DEBUG_TESTSTUPIDNAVMESH.transform.position = _targetMove;
+        Debug_TestTargetMove.transform.position = _targetMove;
         if (Stats.CurrentHitpoint < 0)
         {
             if (Stats.IsDead == false) Die();
@@ -152,10 +153,6 @@ public class Monster_ZombieMobius : EnemyScript
 
     }
 
-    private void Debug_DrawNavmeshPath()
-    {
-
-    }
 
     private float _cooldownCheckTarget = 0.5f;
     private float distTargetMove;
@@ -240,6 +237,7 @@ public class Monster_ZombieMobius : EnemyScript
         if (isAttacking == false)
         {
             _navMeshAgent.updateRotation = true;
+            _navMeshAgent.speed = speed + Random.Range(-1, 2f) + _defaultSpeedRandom;
             _navMeshAgent.SetDestination(_targetMove);
         }
         else

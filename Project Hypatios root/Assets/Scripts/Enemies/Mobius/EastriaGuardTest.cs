@@ -17,6 +17,7 @@ public class EastriaGuardTest : EnemyScript
 
     [FoldoutGroup("Prefabs")] public GameObject corpsePrefab;
     [FoldoutGroup("Prefabs")] public GameObject projectilePrefab;
+    [FoldoutGroup("Prefabs")] [Tooltip("For puzzle")] public GameObject specialCorpsePrefab;
     [FoldoutGroup("References")] public Transform[] rigOrigin;
     [FoldoutGroup("References")] public Transform fireOrigin;
     [FoldoutGroup("References")] public FollowObject followObject;
@@ -43,7 +44,7 @@ public class EastriaGuardTest : EnemyScript
     public override void Attacked(DamageToken token)
     {
         _lastDamageToken = token;
-
+        OnDamaged?.Invoke();
         SeenPlayer();
         Stats.CurrentHitpoint -= token.damage;
         DamageOutputterUI.instance.DisplayText(token.damage);
@@ -150,7 +151,9 @@ public class EastriaGuardTest : EnemyScript
 
     public override void Die()
     {
-        var corpse1 = Instantiate(corpsePrefab);
+        GameObject corpse1 = null;
+        if (specialCorpsePrefab == null) corpse1 = Instantiate(corpsePrefab);
+        else corpse1 = specialCorpsePrefab;
         corpse1.transform.position = transform.position;
         corpse1.transform.rotation = transform.rotation;
         corpse1.gameObject.SetActive(true);

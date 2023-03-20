@@ -10,7 +10,6 @@ public class EnemyContainer : MonoBehaviour
 {
 
     //This is absolutely retarded
-    //Unity AI memang tong sampah, barebone as fuck
     [System.Serializable]
     public class PathReportToken
     {
@@ -131,7 +130,6 @@ public class EnemyContainer : MonoBehaviour
     {
         if (horde_lastTimeCheck + 1f < Time.timeSinceLevelLoad)
         {
-            horde_targetFocus = new Entity[3];
             horde_lastTimeCheck = Time.timeSinceLevelLoad;
             //sampling
             int i = 0;
@@ -140,12 +138,15 @@ public class EnemyContainer : MonoBehaviour
             while (i < totalHorde)
             {
                 EnemyScript _entity = GetRandomEnemyEntity(alliance) as EnemyScript;
-                if (_entity != null) horde_targetFocus[i] = Hypatios.Enemy.FindEnemyEntity(alliance, _entity, chanceSelectAlly: 1f, distanceNavmesh: true);
+                if (_entity != null) horde_targetFocus[i] = Hypatios.Enemy.FindEnemyEntity(alliance, _entity, chanceSelectAlly: 1f, distanceNavmesh: true);            
                 i++;
             }
         }
 
         var listFocuses = horde_targetFocus.ToList(); listFocuses.RemoveAll(x => x == null);
+
+        if (listFocuses.Count == 0)
+            return null;
 
         return listFocuses[Random.Range(0, listFocuses.Count-1)];
     }

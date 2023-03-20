@@ -22,6 +22,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject weaponHolder;
     public GameObject weaponNumToSwap;
     public GameObject weaponToSwap;
+    public GameEvent event_currentSwitch;
     public bool IsOnMeleeAttack = false;
     public int previousWeapon;
     public GunScript currentGunHeld;
@@ -350,7 +351,8 @@ public class WeaponManager : MonoBehaviour
             }
             i++;
         }
-        
+        event_currentSwitch.Raise();
+
     }
 
     private IEnumerator CrosshairCoroutine;

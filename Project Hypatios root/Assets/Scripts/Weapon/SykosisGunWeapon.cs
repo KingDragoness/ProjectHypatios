@@ -28,6 +28,9 @@ public class SykosisGunWeapon : GunScript
         float paralysisChance = GetFinalValue("ParalysisChance");
         float random = Random.Range(0f, 1f);
 
+        if (enemyScript.Stats.IsDeadObject)
+            return;
+
         if (random < paralysisChance)
             enemyScript.Paralysis();
 
