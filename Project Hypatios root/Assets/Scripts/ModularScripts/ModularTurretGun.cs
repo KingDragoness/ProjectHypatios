@@ -10,7 +10,10 @@ public class ModularTurretGun : MonoBehaviour
     public float damage = 10f;
     public float healthSpeed = 25;
     public float bulletPerSecond = 10;
+    [Range(0.001f, 0.5f)]
+    public float spread = 0f;
     public bool keepFiringIfNoDetection = false;
+    public UnityEvent OnFire;
     [Tooltip("Prevent back-face collider problem.")] public bool useSecondPass = false;
     public DamageToken.DamageOrigin originToken;
     [Tooltip("Optional for enemyScript that have modular gun turret.")] public EnemyScript mySelf; 
@@ -53,6 +56,19 @@ public class ModularTurretGun : MonoBehaviour
         }
     }
 
+    public void ForceFire()
+    {
+        if (Time.time >= nextAttackTime)
+        {
+            float random1 = Random.Range(0f, 1f);
+
+            if (random1 < chanceFire)
+                FireTurret();
+
+            nextAttackTime = Time.time + 1f / bulletPerSecond + 0.02f;
+        }
+    }
+
     private void FindTarget()
     {
         targetEnemy = Hypatios.Enemy.FindEnemyEntity(alliance, transform.position);
@@ -79,9 +95,15 @@ public class ModularTurretGun : MonoBehaviour
         isHittingTarget = false;
         isTargetingSelf = false;
 
+        Vector3 posTarget = outWeaponTransform.position + outWeaponTransform.transform.forward;
+        posTarget.x += Random.Range(-spread, spread);
+        posTarget.y += Random.Range(-spread, spread);
+        posTarget.z += Random.Range(-spread, spread);
+        Vector3 dirTarget = posTarget - outWeaponTransform.position;
+        dirTarget.Normalize();
 
         //first pass
-        if (Physics.Raycast(outWeaponTransform.position, outWeaponTransform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(outWeaponTransform.position, dirTarget, out hit, Mathf.Infinity, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
             isHittingSomething = true;
 
@@ -129,6 +151,7 @@ public class ModularTurretGun : MonoBehaviour
 
     private void HitTarget(RaycastHit hit)
     {
+        OnFire?.Invoke();
 
         if (hit.collider != null)
         {

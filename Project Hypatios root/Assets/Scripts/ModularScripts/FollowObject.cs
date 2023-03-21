@@ -9,6 +9,7 @@ public class FollowObject : MonoBehaviour
 
     private void Update()
     {
+        if (target == null) return;
         transform.position = target.position;
         if (useRotation) transform.rotation = target.rotation;
     }

@@ -47,6 +47,11 @@ public class EnemyContainer : MonoBehaviour
     //Error in here means missing _lastdamagetoken!
     public void OnEnemyDieEvent(EnemyScript enemy, DamageToken token)
     {
+        if (token == null)
+        {
+            Debug.LogError("Damage token is missing!");
+            return;
+        }
         if (token.origin == DamageToken.DamageOrigin.Player &&
             enemy.Stats.MainAlliance != Alliance.Player)
         {
@@ -461,7 +466,7 @@ public class EnemyContainer : MonoBehaviour
 
             if (chance < chanceSelectAlly && CountMyEnemies(alliance) > 0)
             {
-                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
+                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false);
 
                 return enemy;
             }

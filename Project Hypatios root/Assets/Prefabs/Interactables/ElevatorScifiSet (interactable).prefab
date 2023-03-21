@@ -92,6 +92,7 @@ Transform:
   m_Children:
   - {fileID: 2521640968758358642}
   - {fileID: 2154815828549035779}
+  - {fileID: 8096857837700735924}
   m_Father: {fileID: 1178407154145290622}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -484,7 +485,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 02efe0d3531393449be8f22bcb2c0c99, type: 2}
   editMode: 1
   recalculateTangents: 1
-  instanceID: 105126
+  instanceID: 503696
   assetPath: 
   isInvisibleObject: 0
 --- !u!33 &2154815827285340109
@@ -765,7 +766,7 @@ Transform:
   m_GameObject: {fileID: 2154815828549035836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0.037, z: 0}
-  m_LocalScale: {x: 1.9075, y: 1.759, z: 0.040453}
+  m_LocalScale: {x: 2.0944352, y: 1.759, z: 0.040453}
   m_Children: []
   m_Father: {fileID: 4542932018910748276}
   m_RootOrder: 1
@@ -1191,7 +1192,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 02efe0d3531393449be8f22bcb2c0c99, type: 2}
   editMode: 1
   recalculateTangents: 1
-  instanceID: 105150
+  instanceID: 503760
   assetPath: 
   isInvisibleObject: 0
 --- !u!33 &2154815829298374988
@@ -1538,6 +1539,99 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1628618793797607070, guid: bd64b74fe8d0ff24d97f5bf88188197a, type: 3}
+--- !u!1 &9045223942483201925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8096857837700735924}
+  - component: {fileID: 2955861622576601918}
+  - component: {fileID: 4335332112615675236}
+  - component: {fileID: 4064499578536891981}
+  m_Layer: 0
+  m_Name: Cube (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8096857837700735924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045223942483201925}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.037, z: -0.057}
+  m_LocalScale: {x: 2.0944352, y: 1.759, z: 0.040453}
+  m_Children: []
+  m_Father: {fileID: 4542932018910748276}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2955861622576601918
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045223942483201925}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4335332112615675236
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045223942483201925}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &4064499578536891981
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045223942483201925}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2154815827380833837
 PrefabInstance:
   m_ObjectHideFlags: 0
