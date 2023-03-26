@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2122060173081287435}
+  - component: {fileID: 3126684475603055764}
   m_Layer: 0
   m_Name: ChargeStationNPC_Final
   m_TagString: Untagged
@@ -29,9 +30,36 @@ Transform:
   m_Children:
   - {fileID: 1813304214696324067}
   - {fileID: 6475602934964401433}
+  - {fileID: 6000398376892093600}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &3126684475603055764
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601243897851527601}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.14718634, y: 0.48264337, z: -0.0016658306}
+  m_Size: 3.3744755
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.0384777
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3756733248638055881}
+    - renderer: {fileID: 8460063928062382334}
+    - renderer: {fileID: 1943772759400028077}
+    - renderer: {fileID: 1943772758889979757}
+  - screenRelativeHeight: 0.010200121
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6491590106163692536}
+  m_Enabled: 1
 --- !u!1 &1943772758889979759
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +517,85 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8719377003681309010, guid: c412e677a0476f143bc81340588deca4, type: 3}
+--- !u!1 &6804997456457956555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6000398376892093600}
+  - component: {fileID: 1908743474085754163}
+  - component: {fileID: 6491590106163692536}
+  m_Layer: 0
+  m_Name: TorsoRobot.LOD1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6000398376892093600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804997456457956555}
+  m_LocalRotation: {x: 0.40157798, y: 0.5809944, z: -0.5816579, w: 0.40355277}
+  m_LocalPosition: {x: 0.51015, y: 1.4042, z: -0.1998}
+  m_LocalScale: {x: 1.860387, y: 1.9649, z: 1.8088083}
+  m_Children: []
+  m_Father: {fileID: 2122060173081287435}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 89.83301, y: -323.273, z: -73.868004}
+--- !u!33 &1908743474085754163
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804997456457956555}
+  m_Mesh: {fileID: 8108563764783910780, guid: 3572d8a2758ff144ea4d60cab91b9be2, type: 3}
+--- !u!23 &6491590106163692536
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804997456457956555}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 245d9939141de4a42895eee25808e1d3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &8161862724794203243
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,4 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e690c294ff31f04c900336cba7e329c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSlowlyRotate: 0
+  speedRotate: 10
+  errorMargin: 0
   targetLook: {fileID: 0}

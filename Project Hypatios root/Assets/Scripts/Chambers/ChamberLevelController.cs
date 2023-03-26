@@ -60,4 +60,15 @@ public class ChamberLevelController : MonoBehaviour
         chamberSave.timesCompleted++;
     }
 
+    public int GetChamberCompletion()
+    {
+        var chamberSave = GetSaveData();
+        if (chamberSave == null)
+        {
+            return 0;
+        }
+
+        return chamberSave.timesCompleted;
+    }
+
 }

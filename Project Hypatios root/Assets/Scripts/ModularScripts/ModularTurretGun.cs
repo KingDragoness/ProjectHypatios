@@ -13,6 +13,7 @@ public class ModularTurretGun : MonoBehaviour
     [Range(0.001f, 0.5f)]
     public float spread = 0f;
     public bool keepFiringIfNoDetection = false;
+    public bool dontFireIfBlocked = false;
     public UnityEvent OnFire;
     [Tooltip("Prevent back-face collider problem.")] public bool useSecondPass = false;
     public DamageToken.DamageOrigin originToken;
@@ -63,7 +64,7 @@ public class ModularTurretGun : MonoBehaviour
             float random1 = Random.Range(0f, 1f);
 
             if (random1 < chanceFire)
-                FireTurret();
+                FireTurret(true);
 
             nextAttackTime = Time.time + 1f / bulletPerSecond + 0.02f;
         }
@@ -88,7 +89,7 @@ public class ModularTurretGun : MonoBehaviour
         return false;
     }
 
-    private void FireTurret()
+    private void FireTurret(bool forceFire = false)
     {
         RaycastHit hit;
         isHittingSomething = false;
@@ -133,11 +134,19 @@ public class ModularTurretGun : MonoBehaviour
             }
         }
 
-        if (isHittingTarget == false && keepFiringIfNoDetection == false)
+        if (isHittingTarget == false && keepFiringIfNoDetection == false && forceFire == false)
         {
             float random1 = Random.Range(0f, 1f);
 
             if (random1 < 0.1f)
+                return;
+        }
+
+        if (dontFireIfBlocked && hit.collider != null && forceFire == false)
+        {
+            var damageReceiver = hit.collider.GetComponent<damageReceiver>();
+
+            if (damageReceiver == null)
                 return;
         }
 
@@ -151,6 +160,8 @@ public class ModularTurretGun : MonoBehaviour
 
     private void HitTarget(RaycastHit hit)
     {
+       
+
         OnFire?.Invoke();
 
         if (hit.collider != null)

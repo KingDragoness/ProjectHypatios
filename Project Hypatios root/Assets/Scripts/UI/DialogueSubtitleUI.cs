@@ -19,6 +19,7 @@ public class DialogueSubtitleUI : MonoBehaviour
     public Text Label_DialogueContent;
     public Text Label_SpeakerName;
     public Image Image_SpeakerPortrait;
+    public Slider slider_DialogTimer;
     public AudioSource audioSource;
 
     public static DialogueSubtitleUI instance;
@@ -43,6 +44,7 @@ public class DialogueSubtitleUI : MonoBehaviour
     {
         if (timer > 0)
         {
+            slider_DialogTimer.value = timer;
             timer -= Time.deltaTime;
             isClosed = false;
         }
@@ -129,6 +131,7 @@ public class DialogueSubtitleUI : MonoBehaviour
         Label_DialogueContent.text = dialogueSpeech.dialogue;
         Label_SpeakerName.text = dialogueSpeech.speakerName;
         timer = dialogueSpeech.timer1;
+        slider_DialogTimer.maxValue = timer;
         dialogueSpeech.dialogEvent?.Invoke();
 
         if (dialogueSpeech.charPortrait != null)

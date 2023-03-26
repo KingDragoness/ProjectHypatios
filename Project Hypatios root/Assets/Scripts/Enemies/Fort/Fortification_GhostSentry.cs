@@ -139,6 +139,7 @@ public class Fortification_GhostSentry : EnemyScript
 
     public void FireSentry()
     {
+        if (sentryAmmo <= 0) return;
         turretGun.ForceFire();
         turretGun1.ForceFire();
     }

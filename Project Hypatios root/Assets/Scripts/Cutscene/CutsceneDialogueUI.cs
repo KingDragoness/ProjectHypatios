@@ -65,13 +65,13 @@ public class CutsceneDialogueUI : MonoBehaviour
         if (isLeft)
         {
             leftSpeaker = dialogSpeaker;
-            portrait_Left.sprite = portrait.portraitSprite;
+            if (portrait != null) portrait_Left.sprite = portrait.portraitSprite; else portrait_Left.sprite = null;
             portrait_Left.enabled = true;
         }
         else
         {
             rightSpeaker = dialogSpeaker;
-            portrait_Right.sprite = portrait.portraitSprite;
+            if (portrait != null) portrait_Right.sprite = portrait.portraitSprite; else portrait_Right.sprite = null;
             portrait_Right.enabled = true;
         }
     }
