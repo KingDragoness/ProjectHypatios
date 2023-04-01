@@ -11,7 +11,7 @@ public class InstantiateRandomObject : MonoBehaviour
     public List<GameObject> prefabs;
     public bool useRandomSpawn = false;
 
-    public void SpawnThing()
+    public GameObject SpawnThing()
     {
         var go = prefabs[Random.Range(0, prefabs.Count)];
 
@@ -19,13 +19,14 @@ public class InstantiateRandomObject : MonoBehaviour
         {
             var go1 = Instantiate(go, randomPositioner.GetAnyPositionInsideBox(), go.transform.rotation);
             IntializedSpawn(go1);
+            return go1;
         }
         else
         {
             var t = SpawnList[Random.Range(0, SpawnList.Count)];
             var go1 = Instantiate(go, t.transform.position, t.rotation);
             IntializedSpawn(go1);
-
+            return go1;
         }
     }
 

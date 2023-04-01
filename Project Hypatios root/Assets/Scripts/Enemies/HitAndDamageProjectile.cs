@@ -32,7 +32,9 @@ public class HitAndDamageProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        if (!allowHitEnemy && other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            return;
+        
         AttemptDamage(other);
 
     }

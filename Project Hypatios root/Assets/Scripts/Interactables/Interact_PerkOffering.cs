@@ -25,12 +25,18 @@ public class Interact_PerkOffering : MonoBehaviour
             {
                 cauldron.statusType = PlayerPerk.RandomPickBasePerk().category;
                 var perk1 = PlayerPerk.GetBasePerk(cauldron.statusType);
+                string description = perk1.DescriptionPerk;
+
+                if (cauldron.statusType == StatusEffectCategory.ShortcutDiscount)
+                    description = PlayerPerk.GetDescription_Shortcut(Hypatios.Player.PerkData.Perk_LV_ShortcutDiscount);
+                if (cauldron.statusType == StatusEffectCategory.SoulBonus)
+                    description = PlayerPerk.GetDescription_LuckOfGod(Hypatios.Player.PerkData.Perk_LV_Soulbonus);
 
                 cauldron.icon.sprite = perk1.PerkSprite;
                 cauldron.label_Title.text = perk1.TitlePerk;
-                cauldron.label_Description.text = perk1.DescriptionPerk;
+                cauldron.label_Description.text = description;
                 cauldron.touch_TakePerk.interactDescription = $"Take perk";
-                cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {perk1.DescriptionPerk}";
+                cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {description}";
 
             }
             else

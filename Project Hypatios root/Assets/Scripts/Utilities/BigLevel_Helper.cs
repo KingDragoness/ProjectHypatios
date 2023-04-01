@@ -119,7 +119,7 @@ public class BigLevel_Helper : MonoBehaviour
 #if UNITY_EDITOR
         EnableAll();
 
-        NavMeshBuilder.BuildNavMesh();
+        NavMeshBuilder.BuildNavMeshAsync();
 #endif
 
     }

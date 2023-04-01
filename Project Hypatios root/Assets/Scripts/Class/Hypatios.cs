@@ -318,9 +318,13 @@ public class Hypatios : MonoBehaviour
     public static int UnixTimeStart { get => _unixTimeStart;  }
 
     public static float Time { get => Game.UNIX_Timespan; }
+    public static int TimeTick { get => Mathf.RoundToInt(UnityEngine.Time.time * 20f); }
+    public static int TimeTickForStupidConstructor { get => _tickTime; }
     public static float Total_Time { get => Game.Total_UNIX_Timespan; }
 
     public static Hypatios Instance;
+
+    private static int _tickTime = 0;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init()
@@ -376,6 +380,11 @@ public class Hypatios : MonoBehaviour
         int seed = Hypatios.Game.TotalRuns + SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
 
         return seed;
+    }
+
+    private void Update()
+    {
+        _tickTime = Mathf.RoundToInt(UnityEngine.Time.time * 20f);
     }
 
     public static float GetRandomChance()

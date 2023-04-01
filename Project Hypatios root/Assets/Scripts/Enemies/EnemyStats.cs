@@ -35,6 +35,7 @@ public class EnemyStats
     public UnitType UnitType;
     public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
+    public bool AllowMultipleHitSameFrame = true;
 
 
     [Header("Runtime Only")]

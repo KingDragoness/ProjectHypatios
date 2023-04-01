@@ -336,7 +336,7 @@ public class Chamber6_Customer : EnemyScript
         chamberScript.OnCustomerLeaving?.Invoke();
         chamberScript.remainingCustomers++;
         chamberScript.RefreshList();
-
+        chamberScript.OnCustomerChanged?.Invoke();
         Destroy(gameObject);
     }
 
@@ -378,6 +378,19 @@ public class Chamber6_Customer : EnemyScript
 
         var leftover = order.allRecipes.Except(piring.ingredients).ToList();
         var leftover1 = piring.ingredients.Except(order.allRecipes).ToList();
+
+        if (leftover.Count == 0 && leftover1.Count == 0)
+            valid = true;
+
+        return valid;
+    }
+
+    public bool CheckRecipesValid(List<Chamber_Level6.Ingredient> _recipe)
+    {
+        bool valid = false;
+
+        var leftover = order.allRecipes.Except(_recipe).ToList();
+        var leftover1 = _recipe.Except(order.allRecipes).ToList();
 
         if (leftover.Count == 0 && leftover1.Count == 0)
             valid = true;

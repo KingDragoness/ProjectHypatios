@@ -69,11 +69,13 @@ public class Chamber_Level6 : MonoBehaviour
     public int customerServed = 0;
     public Gamemode currentGamemode = Gamemode.NotPlay;
     public UnityEvent OnCustomerLeaving;
+    public UnityEvent OnCustomerChanged;
     public UnityEvent OnChamberCompleted;
     public List<Order> order = new List<Order>();
 
     [ReadOnly] public List<Chamber6_Piring> piringList = new List<Chamber6_Piring>();
     [ReadOnly] public List<Chamber6_Customer> allCustomers = new List<Chamber6_Customer>();
+    [ReadOnly] public List<Chamber6_ServerRobot> allServos = new List<Chamber6_ServerRobot>();
     [ReadOnly] private List<EnemyScript> enemies = new List<EnemyScript>();
 
     private static Chamber_Level6 instance;
@@ -369,9 +371,14 @@ public class Chamber_Level6 : MonoBehaviour
         var listValid = allCustomers;
         listValid.RemoveAll(x => x.OrderTaken);
 
+        foreach(var servo in allServos)
+        {
+            listValid.RemoveAll(x => servo.IsOrderMatch(x));
+        }
+
         if (listValid.Count == 0)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("There's no customer.", "SYSTEM", 3);
+            DialogueSubtitleUI.instance.QueueDialogue("There's no valid order.", "SYSTEM", 3);
             return;
         }
 
@@ -392,6 +399,18 @@ public class Chamber_Level6 : MonoBehaviour
         Audio_foodDelivered.Play();
     }
 
+
+    public bool IsCustomerBeingServoed(Chamber6_Customer customer)
+    {
+        foreach (var servo in allServos)
+        {
+            bool matched = servo.IsOrderMatch(customer);
+            if (matched)
+                return true;
+        }
+
+        return false;
+    }
 
 
     public void AmbilPiring()
@@ -437,6 +456,7 @@ public class Chamber_Level6 : MonoBehaviour
         piringList.Add(newPiring);
         Audio_foodDelivered.Play();
         PutOffPiring();
+        OnCustomerChanged?.Invoke();
 
     }
 
@@ -483,6 +503,7 @@ public class Chamber_Level6 : MonoBehaviour
         allCustomers.Add(newRobot);
         Audio_newCustomer.Play();
         remainingCustomers--;
+        OnCustomerChanged?.Invoke();
     }
 
     public void RefreshList()

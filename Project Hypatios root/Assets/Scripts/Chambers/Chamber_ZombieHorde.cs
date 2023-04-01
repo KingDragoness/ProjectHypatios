@@ -19,12 +19,15 @@ public class Chamber_ZombieHorde : MonoBehaviour
 
     [FoldoutGroup("UI")] public Text label_TimeRound;
     [FoldoutGroup("References")] public AudioSource audio_CompletedChamber;
-    public float RoundTimer = 600f;
-    public float SpawnTimeRefresh = 4f;
-    public int zombieLimit = 70;
+    [FoldoutGroup("Parameters")] public float RoundTimer = 600f;
+    [FoldoutGroup("Parameters")] public float SpawnTimeRefresh = 4f;
+    [FoldoutGroup("Parameters")] public int zombieLimit = 70;
+    [FoldoutGroup("Parameters")] public int spiderLimit = 10;
+    [FoldoutGroup("Parameters")] [Range(0f,1f)] public float chanceSpawnSpider = 0.2f;
     public UnityEvent OnRoundStarted;
     public UnityEvent OnFinished;
     public InstantiateRandomObject randomSpawner;
+    public InstantiateRandomObject spiderSpawner;
     public Stage currentStage = Stage.NotStart;
 
     private float _timerSpawn = 4f;
@@ -50,7 +53,11 @@ public class Chamber_ZombieHorde : MonoBehaviour
 
             if (_timerSpawn <= 0)
             {
-                SpawnZombies();
+                float chance = UnityEngine.Random.Range(0f, 1f);
+                if (chance > chanceSpawnSpider)
+                    SpawnZombies();
+                else
+                    SpawnSpider();
                 _timerSpawn = SpawnTimeRefresh;
             }
         }
@@ -106,5 +113,14 @@ public class Chamber_ZombieHorde : MonoBehaviour
         if (Monster_ZombieMobius.TotalZombieInScene > zombieLimit)
             return;
         randomSpawner.SpawnThing();
+    }
+
+    private void SpawnSpider()
+    {
+        var spiderEnemy = spiderSpawner.prefabs[0].GetComponent<EnemyScript>();
+        int totalSpider = Hypatios.Enemy.CountEnemyOfType(spiderEnemy);
+
+        if (totalSpider < spiderLimit)
+            spiderSpawner.SpawnThing();
     }
 }

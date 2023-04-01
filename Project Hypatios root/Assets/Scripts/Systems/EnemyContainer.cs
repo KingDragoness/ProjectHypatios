@@ -44,6 +44,7 @@ public class EnemyContainer : MonoBehaviour
         OnEnemyDied += OnEnemyDieEvent;
     }
 
+    #region Utility events
     //Error in here means missing _lastdamagetoken!
     public void OnEnemyDieEvent(EnemyScript enemy, DamageToken token)
     {
@@ -85,6 +86,13 @@ public class EnemyContainer : MonoBehaviour
     {
         return AllEnemies.FindAll(x => x.Stats.MainAlliance == alliance).Count;
     }
+
+    public int CountEnemyOfType(EnemyScript stat)
+    {
+        return AllEnemies.FindAll(x => x.EnemyName == stat.EnemyName).Count;
+    }
+
+    #endregion
 
     private float _cooldownPlayerNavMeshValid = 0.1f;
 

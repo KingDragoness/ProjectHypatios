@@ -13,7 +13,7 @@ public class SoulCapsulePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = Hypatios.Player.gameObject;
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class SoulCapsulePlayer : MonoBehaviour
 
     public void AddSoul()
     {
-        soundManagerScript.instance.PlayOneShot("soul");
+        soundManagerScript.instance.Play("soul");
         Hypatios.Game.SoulPoint += soulAmount;
     }
 }

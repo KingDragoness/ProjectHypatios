@@ -70,7 +70,7 @@ public class PerkSelectionUI : MonoBehaviour
             newButton.gameObject.SetActive(true);
             bool generateTempPerk = false;
 
-            if (chance1 > 0.5f)
+            if (chance1 > 0.66f)
             {
                 generateTempPerk = true;
             }

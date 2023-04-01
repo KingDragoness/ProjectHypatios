@@ -37,6 +37,12 @@ public class DamageToken
     public EnemyScript originEnemy;
     public DamageType damageType = DamageType.Generic;
     public DamageOrigin origin = DamageOrigin.Player;
+    public int timeAttack;
+
+    public DamageToken()
+    {
+        timeAttack = Hypatios.TimeTickForStupidConstructor;
+    }
 }
 
 public class UniversalDamage

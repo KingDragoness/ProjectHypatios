@@ -668,9 +668,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 5564195316736043916}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!205 &4936827813741452312
@@ -1032,6 +1036,13 @@ MonoBehaviour:
     m_Center: {x: 0, y: 1.75, z: 0}
     m_Extent: {x: 3, y: 3.5, z: 3}
   _baseStat: {fileID: 11400000, guid: a743bf70723747b4298f14edd7988467, type: 2}
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelfKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  hasSeenPlayer: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 5564195318639927960}
   laserCharging: {fileID: 5564195317923238979}
@@ -1075,6 +1086,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
     type: 3}
+  radius: 0.6
+  explosionForce: 50
 --- !u!114 &3541979803877423491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1087,7 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3023b9fe18eea834da4fcd48d88240a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulAmount: 2
+  soulAmount: 1
 --- !u!1 &5564195316822464967
 GameObject:
   m_ObjectHideFlags: 0
@@ -11867,9 +11880,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 5564195316736043916}
+  destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 3
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8427856015259671029

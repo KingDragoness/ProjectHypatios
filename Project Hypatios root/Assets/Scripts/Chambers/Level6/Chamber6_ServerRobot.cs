@@ -21,7 +21,7 @@ public class Chamber6_ServerRobot : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
+        chamberScript.allServos.Add(this);
     }
 
     private void Update()
@@ -109,6 +109,7 @@ public class Chamber6_ServerRobot : MonoBehaviour
         targetPiring.ChangeOwnership(this.transform);
         chamberScript.piringList.Add(targetPiring);
         chamberScript.RefreshList();
+        chamberScript.OnCustomerChanged?.Invoke();
     }
 
     private bool IsAnyOrderMatch(Chamber6_Piring piring)
@@ -126,6 +127,17 @@ public class Chamber6_ServerRobot : MonoBehaviour
 
         return false;
     }
+
+    public bool IsOrderMatch(Chamber6_Customer customer)
+    {
+        if (targetPiring == null) return false;
+        if (customer.CheckRecipesValid(targetPiring.ingredients))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     private Chamber6_Customer GetCustomerThatMatch(Chamber6_Piring piring)
     {
