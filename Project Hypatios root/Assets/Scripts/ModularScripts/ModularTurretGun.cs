@@ -32,6 +32,8 @@ public class ModularTurretGun : MonoBehaviour
     private bool isTargetingSelf = false;
     private bool secondpass_HitCeiling = false;
 
+    private DamageToken cachedToken;
+
     private void Update()
     {
         if (Time.timeScale <= 0) return;
@@ -122,6 +124,10 @@ public class ModularTurretGun : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            hit.point = outWeaponTransform.position + dirTarget * 1000f;
+        }
 
         //second pass
         if (useSecondPass)
@@ -158,6 +164,17 @@ public class ModularTurretGun : MonoBehaviour
       
     }
 
+    private void OnEnable()
+    {
+        DamageToken token = new DamageToken();
+        token.damage = damage;
+        token.origin = originToken;
+        token.healthSpeed = healthSpeed;
+        token.shakinessFactor = 0.2f;
+        token.damageType = DamageToken.DamageType.Ballistic;
+        cachedToken = token;
+    }
+
     private void HitTarget(RaycastHit hit)
     {
        
@@ -165,21 +182,14 @@ public class ModularTurretGun : MonoBehaviour
         OnFire?.Invoke();
 
         if (hit.collider != null)
-        {
-            DamageToken token = new DamageToken();
-            token.damage = damage;
-            token.origin = originToken;
-            token.healthSpeed = healthSpeed;
-            token.shakinessFactor = 0.2f;
-            token.damageType = DamageToken.DamageType.Ballistic;
-
+        {      
             var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
 
             spark.transform.position = hit.point;
             spark.transform.rotation = Quaternion.LookRotation(hit.normal);
             flashWeapon.gameObject.SetActive(true);
 
-            UniversalDamage.TryDamage(token, hit.transform, transform);
+            UniversalDamage.TryDamage(cachedToken, hit.collider.transform, transform);
         }
 
         var points = new Vector3[2];
