@@ -53,6 +53,7 @@ public class FPSMainScript : MonoBehaviour
 
     [Space]
     public bool DEBUG_ShowTutorial = false;
+    public bool DEBUG_ShowAllParadox = false;
 
     public static bool LoadFromSaveFile = false;
     public static int Player_RunSessionUnixTime;

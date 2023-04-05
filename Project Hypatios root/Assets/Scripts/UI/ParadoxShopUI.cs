@@ -251,7 +251,9 @@ public class ParadoxShopUI : MonoBehaviour
             shopOwner.RefreshAllParadoxes();
 
             var filteredParadoxes = shopOwner.paradoxLevelScripts;
-            filteredParadoxes.RemoveAll(x => x.isRequireTrivia == true && x.IsTriviaFulfilled() == false);
+
+            if (Hypatios.Game.DEBUG_ShowAllParadox == false)
+                filteredParadoxes.RemoveAll(x => x.isRequireTrivia == true && x.IsTriviaFulfilled() == false);
 
             foreach (var levelScript in filteredParadoxes)
             {

@@ -15,6 +15,7 @@ public class MusicPlayer : MonoBehaviour
     public AudioSource musicSource;
     public NewMusicLayer newMusic;
     public AudioClip b_side_Track;
+    public bool playBSideUponStart = false;
 
     public static MusicPlayer Instance;
 
@@ -27,7 +28,10 @@ public class MusicPlayer : MonoBehaviour
             var chance = Random.Range(0f, 1f);
 
             if (chance > 0.5f)
+            {
                 musicSource.clip = b_side_Track;
+                if (playBSideUponStart) musicSource.Play();
+            }
         }
 
 

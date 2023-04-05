@@ -75,6 +75,8 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
 
     private void ProcessDamage()
     {
+        if (Stats.IsDead) return;
+
         if (Stats.CurrentHitpoint <= 0)
         {
             Drop();
@@ -95,7 +97,9 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
 
     private void Drop()
     {
+
         allowShoot = false;
+        Stats.IsDead = true;
         SinkToGround();
         dropped = true;
         Destroy(gameObject, 3f);

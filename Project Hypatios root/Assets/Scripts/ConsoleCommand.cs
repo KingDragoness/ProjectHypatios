@@ -181,6 +181,10 @@ public class ConsoleCommand : MonoBehaviour
                 SetPerk(args);
                 break;
 
+            case "showallpdx":
+                ShowAllParadox(args);
+                break;
+
             case "soul":
                 Soul(args);
                 break;
@@ -672,6 +676,21 @@ public class ConsoleCommand : MonoBehaviour
         }
     }
 
+    protected void ShowAllParadox(string[] args)
+    {
+        try
+        {
+            var gameScript = Hypatios.Game;
+            gameScript.DEBUG_ShowAllParadox = !gameScript.DEBUG_ShowAllParadox;
+            SendConsoleMessage($"Show All Paradox: {gameScript.DEBUG_ShowAllParadox}");
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! showallpdx");
+
+        }
+    }
+
 
     protected void ScreenSize(string[] args)
     {
@@ -831,6 +850,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'setfps' to set game's FPS");
             helpCommands.Add("'setfov' to set camera's FOV");
             helpCommands.Add("'setperk' to set player's temporary perks. 'help setperk' to check perks.");
+            helpCommands.Add("'showallpdx' to show all paradoxes.");
             helpCommands.Add("'soul' to get soul");
             helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");
             helpCommands.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");

@@ -101,9 +101,12 @@ public class BigLevel_Helper : MonoBehaviour
 
             foreach(var go1 in listGOs)
             {
+                bool containAntiOcclude = go1.GetComponent<IgnoreOcclusionCulling>() != null;
                 if (navmeshExcludeLayer.Contains(go1.layer)) continue;
 
                 StaticEditorFlags flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration | StaticEditorFlags.OccludeeStatic | StaticEditorFlags.OccluderStatic;
+                if (containAntiOcclude)
+                    flag = StaticEditorFlags.NavigationStatic | StaticEditorFlags.OffMeshLinkGeneration;
                 GameObjectUtility.SetStaticEditorFlags(go1, flag);
 
             }
