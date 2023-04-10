@@ -17,6 +17,7 @@ public class Trivia : ScriptableObject
     [SerializeField] private string _id = "Chamber1.Completed";
     [SerializeField] private string _title = "Chamber 1";
     [SerializeField] private Sprite _spriteIcon;
+    [SerializeField] private Sprite _spritePreviewImage;
     [TextArea(2,4)] [SerializeField] private string _description = "I've completed the first chamber of the game.";
     [SerializeField] private TriviaType _triviaType;
     public bool disableTrivia = false;
@@ -25,6 +26,7 @@ public class Trivia : ScriptableObject
     public string ID { get => _id;  }
     public string Title { get => _title;  }
     public Sprite SpriteIcon { get => _spriteIcon; }
+    public Sprite PreviewSprite { get => _spritePreviewImage; }
     public string Description { get => _description;  }
     public TriviaType TriviaCategory { get => _triviaType; }
 

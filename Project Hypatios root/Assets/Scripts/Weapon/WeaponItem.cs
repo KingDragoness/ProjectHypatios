@@ -38,22 +38,21 @@ public class WeaponItem : ScriptableObject
     [System.Serializable]
     public class Recipe
     {
-        public ItemInventory inventory;
-        [Range(1,100)]
-        public int count = 1;
+        [HorizontalGroup] [HideLabel] public ItemInventory inventory;
+        [HorizontalGroup] [LabelWidth(40)] public int count = 1;
     }
 
     [System.Serializable]
     public class Attachment
     {
         public string ID = "StandardReceiver";
+        public List<Recipe> RequirementCrafting = new List<Recipe>();
         [FoldoutGroup("Details")] public string Name = "Standard Receiver";
         [FoldoutGroup("Details")]
         [TextArea(3,5)]
         public string Description = "Deals additional damage and reduces cooldown. Worse accuracy.";
         [FoldoutGroup("Details")] public AttachementSlot slot;
         [FoldoutGroup("Details")] public int order = 10; //higher value means its prioritized first
-        [FoldoutGroup("Details")] public List<Recipe> RequirementCrafting = new List<Recipe>();
         [FoldoutGroup("Modifiers")] public float modifier_damage = 10;
         [FoldoutGroup("Modifiers")] public float modifier_cooldown = 0.2f;
         [FoldoutGroup("Modifiers")] public float modifier_percent_movespeed = 0f;

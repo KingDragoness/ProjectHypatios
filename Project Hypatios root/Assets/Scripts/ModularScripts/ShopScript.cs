@@ -31,14 +31,21 @@ public class ShopScript : MonoBehaviour
     private void GenerateBuyableWeapons()
     {
         storage.allItemDatas.Clear();
-        for (int x = 0; x < 3; x++)
+        int itemSellCount = 3;
+
+        if (Hypatios.Game.TotalRuns <= 10)
+            itemSellCount = 1;
+        else if (Hypatios.Game.TotalRuns <= 20)
+            itemSellCount = 2;
+
+        for (int x = 0; x < itemSellCount; x++)
         {
             bool valid = false;
             int count = 0;
 
             while (valid == false)
             {
-                var weapon1 = lootTable.GetEntry().item;
+                var weapon1 = lootTable.GetEntry(count).item;
                 if (IsDuplicate(weapon1.attachedWeapon) == false)
                 {
                     storage.AddItem(weapon1);

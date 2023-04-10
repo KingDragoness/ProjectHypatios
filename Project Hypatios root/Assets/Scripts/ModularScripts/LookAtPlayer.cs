@@ -31,4 +31,11 @@ public class LookAtPlayer : MonoBehaviour
         }
     }
 
+    [ContextMenu("Look At Target")]
+    public void LookNow()
+    {
+        transform.LookAt(targetLook);
+
+    }
+
 }

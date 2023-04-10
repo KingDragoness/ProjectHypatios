@@ -22,13 +22,13 @@ MonoBehaviour:
     type: 3}
   attachments:
   - ID: StandardReceiver
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 5
     Name: Repeating Receiver
     Description: Increases rate of fire. Weaker damage and worse accuracy.
     slot: 1
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 3
     modifier_damage: -1
     modifier_cooldown: 30
     modifier_percent_movespeed: 0
@@ -39,15 +39,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: RapidBarrel
-    Name: Rapid Barrel Receiver
-    Description: Startup revving minigun down from 3s to 1s.
-    slot: 1
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 3
+    Name: Rapid Barrel Receiver
+    Description: Startup revving minigun down from 3s to 1s.
+    slot: 1
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -58,15 +58,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: SlowReceiver
-    Name: Slow Receiver
-    Description: Superior damage, inferior cooldown.
-    slot: 1
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 8
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
+    Name: Slow Receiver
+    Description: Superior damage, inferior cooldown.
+    slot: 1
+    order: 10
     modifier_damage: 11
     modifier_cooldown: -30
     modifier_percent_movespeed: 0
@@ -77,15 +77,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: ExtenderMag
-    Name: Extender Magazine
-    Description: Increases magazine size to 150.
-    slot: 5
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 4
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
-      count: 1
+      count: 2
+    Name: Extender Magazine
+    Description: Increases magazine size to 150.
+    slot: 5
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -96,15 +96,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: KineFrame
-    Name: Kinetic Frame
-    Description: Superior damage and lower cooldown.
-    slot: 0
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 6
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 3
+    Name: Kinetic Frame
+    Description: Superior damage and lower cooldown.
+    slot: 0
+    order: 10
     modifier_damage: 2
     modifier_cooldown: 5
     modifier_percent_movespeed: 0
@@ -115,15 +115,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: AkvisFrame
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 5
+    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
+      count: 3
     Name: Akvis Frame
     Description: Extremely high damage and lower cooldown.
     slot: 0
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 4
-    - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
-      count: 4
     modifier_damage: 4
     modifier_cooldown: 6
     modifier_percent_movespeed: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   buy_AmmoSoulPrice: 8
   buy_SoulPrice: 50
   isCraftable: 1
-  defaultDamage: 6
+  defaultDamage: 9
   defaultMagazineSize: 100
   defaultCooldown: 60
   rewardRate:

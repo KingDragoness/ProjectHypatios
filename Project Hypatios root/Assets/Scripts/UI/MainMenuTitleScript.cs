@@ -70,7 +70,7 @@ public class MainMenuTitleScript : MonoBehaviour
                 allowPlay = false;
             if (Application.isEditor == false)
                 allowPlay = true;
-            if (cachedSaveFile.Game_TotalRuns < 10 | AlreadyPlayedCutscene == true)
+            if (cachedSaveFile.Game_TotalRuns < 9999999 | AlreadyPlayedCutscene == true)
                 allowPlay = false;
 
 

@@ -76,7 +76,7 @@ public class ActivatorRegion : MonoBehaviour
             {
                 foreach (GameObject go in TargetObjectRegion)
                 {
-                    go.SetActive(true);
+                    if (go.activeSelf == false) go.SetActive(true);
                 }
             }
         }

@@ -137,6 +137,10 @@ public class ConsoleCommand : MonoBehaviour
                 KillAll(args);
                 break;
 
+            case "listitem":
+                ListItem(args);
+                break;
+
             case "loadlevel":
                 LoadLevel(args);
                 break;
@@ -210,10 +214,12 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+
     private void Alcohol(string[] args)
     {
         try
         {
+
             float alcohol = 0;
             float.TryParse(args[0], out alcohol);
 
@@ -621,6 +627,74 @@ public class ConsoleCommand : MonoBehaviour
     }
 
 
+    private void ListItem(string[] args)
+    {
+        try
+        {
+            if (args.Length > 0)
+            {
+                int category = 0;
+                int.TryParse(args[0], out category);
+
+                ItemInventory.Category itemCat = (ItemInventory.Category)category;
+                var allItems = Hypatios.Assets.GetItemsByCategory(itemCat);
+
+                string s = "";
+                int ix = 0;
+                int i = 0;
+
+                foreach (var item in allItems)
+                {
+                    s += $"{item.GetID()} | ";
+                    ix++;
+                    i++;
+                    if (ix >= 10)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        ix = 0;
+                        s = "";
+                    }
+                    else if (i >= allItems.Count - 1)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        s = "";
+                    }
+                }
+            }
+            else
+            {
+                var allItems = Hypatios.Assets.AllItems;
+                string s = "";
+                int ix = 0;
+                int i = 0;
+
+                foreach(var item in allItems)
+                {
+                    s += $"{item.GetID()} | ";
+                    ix++;
+                    i++;
+                    if (ix >= 10)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        ix = 0;
+                        s = "";
+                    }
+                    else if (i >= allItems.Count - 1)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        s = "";
+                    }
+                }
+            }
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! listitem [<color=#00cc99dd>int</color> category]. Use 'help listitem' to see more help.");
+        }
+
+    }
+
     private void Debug_ObjectStat(string[] args)
     {
         try
@@ -839,6 +913,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'killall' to all enemies");
             helpCommands.Add("'killme' to commit suicide");
             helpCommands.Add("'levelnames' gets every level exists in the current build.");
+            helpCommands.Add("'listitem' gets every item in the game. 'help listitem' to see additional info.");
             helpCommands.Add("'loadfile' to load save file");
             helpCommands.Add("'loadlevel' to load level. Resets progress!");
             helpCommands.Add("'mats' to give free materials");
@@ -930,6 +1005,11 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 helps.Add("'wstat lock' to lock on targeted enemy.");
+                helps.Add(" ");
+            }
+            else if (args[0] == "listitem")
+            {
+                helps.Add("[0 normal, 1 consume, 2 quest, 3 key, 4 weapon, 999 none (unfiltered)]");
                 helps.Add(" ");
             }
             else if (args[0] == "enemy")

@@ -20,13 +20,15 @@ public class MainUI : MonoBehaviour
         Crafting,
         Shop,
         Cinematic,
-        FreecamMode
+        FreecamMode,
+        Trivia
     }
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
     [FoldoutGroup("References")] public GameObject HUD;
     [FoldoutGroup("References")] public CanvasScaler scaler_Main;
     [FoldoutGroup("References")] public CanvasScaler scaler_Pause;
+    [FoldoutGroup("References")] public CanvasScaler scaler_Trivia;
     [FoldoutGroup("References")] public MainGameHUDScript mainHUDScript;
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
@@ -41,6 +43,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
     [FoldoutGroup("References")] public SettingsUI settingsUI;
     [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
+    [FoldoutGroup("References")] public GameObject TriviaMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
@@ -138,11 +141,12 @@ public class MainUI : MonoBehaviour
 
     void Update()
     {
+        //Escape when Trivia Map mode = go back to main menu
         if (Hypatios.Input.Pause.triggered)
         {
             bool allowToggle = false;
 
-            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode)
+            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia)
                 && Hypatios.Player.Health.isDead == false)
             {
                 allowToggle = true;
@@ -159,12 +163,24 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (allowToggle)
+            if (current_UI != UIMode.Trivia)
             {
-                paused = !paused;
-                tempoPause = false;
-                RefreshPauseState();
+                if (allowToggle)
+                {
+                    paused = !paused;
+                    tempoPause = false;
+                    RefreshPauseState();
+                }
             }
+            else if (current_UI == UIMode.Trivia)
+            {
+                if (allowToggle)
+                {
+                    //back to main menu or reset whatever last set
+                    current_UI = UIMode.Default;
+                }
+            }
+
         }
 
         if (Input.GetKeyUp(KeyCode.BackQuote))
@@ -199,6 +215,7 @@ public class MainUI : MonoBehaviour
                 Shop_Weapon_UI.gameObject.SetActive(false);
                 Shop_Paradox_UI.gameObject.SetActive(false);
                 CraftingWeapon_UI.gameObject.SetActive(false);
+                TriviaMap.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(false);
                 DefaultHUD_UI.gameObject.SetActive(true);
 
@@ -289,6 +306,7 @@ public class MainUI : MonoBehaviour
                 {
                     CutsceneHUD_UI.gameObject.SetActive(true);
                 }
+         
             }
 
             if (tempoPause)
@@ -299,6 +317,41 @@ public class MainUI : MonoBehaviour
             }
             else
             {
+            }
+        }
+
+        if (paused)
+        {
+            if (Hypatios.Input.Pause.triggered)
+            {
+                bool allowToggle = false;
+
+                if ((current_UI == UIMode.Trivia) && Hypatios.Player.Health.isDead == false)
+                {
+                    allowToggle = true;
+                }        
+
+                if (current_UI == UIMode.Trivia)
+                {
+                    if (allowToggle)
+                    {
+                        current_UI = UIMode.Default;
+                    }
+                }
+
+            }
+
+            if (current_UI == UIMode.Trivia)
+            {
+                if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
+                if (TriviaMap.activeSelf == false) TriviaMap.gameObject.SetActive(true);
+                if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (Camera_Main.activeSelf == false) Camera_Main.gameObject.SetActive(true);
+                if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
+                if (PauseMenu.activeSelf == false) PauseMenu.gameObject.SetActive(true);
             }
         }
     }
@@ -317,6 +370,7 @@ public class MainUI : MonoBehaviour
 
         scaler_Main.referenceResolution = refResolution;
         scaler_Pause.referenceResolution = refResolution;
+        scaler_Trivia.referenceResolution = refResolution;
     }
 
     public void SetTempoPause(bool pause)
@@ -332,18 +386,15 @@ public class MainUI : MonoBehaviour
             Cursor.visible = false;
             PauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;
-            //Player.gameObject.SetActive(true);
             HUD.gameObject.SetActive(true);
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-
             PauseMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
 
-            //Player.gameObject.SetActive(false);
             HUD.gameObject.SetActive(false);
 
 

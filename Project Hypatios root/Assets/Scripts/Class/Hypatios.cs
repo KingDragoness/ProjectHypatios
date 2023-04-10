@@ -377,7 +377,7 @@ public class Hypatios : MonoBehaviour
             i1 = f1 - '0';
         }
 
-        int seed = Hypatios.Game.TotalRuns + SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
+        int seed = Hypatios.Game.TotalRuns + Mathf.RoundToInt(Hypatios.Game.Total_UNIX_Timespan) + SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
 
         return seed;
     }

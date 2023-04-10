@@ -37,7 +37,6 @@ public class BirdEnemy : EnemyScript
     public GameObject aliveState;
 
     private bool isDead = false;
-    private bool hasSeen = false;
 
     private Vector3 lookPos;
     float afterDeathTime = 0f;
@@ -73,7 +72,7 @@ public class BirdEnemy : EnemyScript
  
 
     private float timerFire = 0;
-    private float evaluateChoiceTimer = 5;
+    private float evaluateChoiceTimer = 2;
 
     private void EvaluateMyLife()
     {
@@ -81,12 +80,13 @@ public class BirdEnemy : EnemyScript
 
         if (currentTarget == null) return;
 
-        if (evaluateChoiceTimer > 4)
+        if (evaluateChoiceTimer > 2)
         {
             float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
             audio_Idle.Play();
+            AI_Detection();
 
-            if (hasSeen)
+            if (hasSeenPlayer)
             {
                 if (dist <= maxAttackRange)
                 {
@@ -99,10 +99,6 @@ public class BirdEnemy : EnemyScript
             }
             else
             {
-                if (dist <= acquisationRange)
-                {
-                    hasSeen = true;
-                }
 
                 stateAI = StateAI.Idle;
             }
@@ -171,7 +167,7 @@ public class BirdEnemy : EnemyScript
             transform.position += Vector3.back * 0.05f * token.repulsionForce;
         }
 
-        hasSeen = true;
+        hasSeenPlayer = true;
 
         if (!Stats.IsDead)
             DamageOutputterUI.instance.DisplayText(token.damage);

@@ -55,6 +55,12 @@ public class AssetStorageDatabase : MonoBehaviour
         return AllItems.Find(x => x.GetID() == ID);
     }
 
+    public List<ItemInventory> GetItemsByCategory(ItemInventory.Category _category)
+    {
+        return AllItems.FindAll(x => x.category == _category);
+    }
+
+
     public BaseStatValue GetStatEntry(string ID)
     {
         return AllStatEntries.Find(x => x.GetID() == ID);

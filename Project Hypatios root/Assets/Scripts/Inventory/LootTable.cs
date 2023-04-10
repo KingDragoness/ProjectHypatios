@@ -31,14 +31,17 @@ public class LootTable : ScriptableObject
         return total;
     }
 
-    public Entry GetEntry()
+    public Entry GetEntry(int customSeed = 0)
     {
         int output = 0;
+        var seed = Hypatios.GetSeed() + customSeed;
+        var RandomSys = new System.Random(seed);
 
         //Getting a random weight value
         var totalWeight = GetTotalWeight();
-        
-        var rndWeightValue = Random.Range(1, totalWeight + 1);
+        int rndWeightValue = RandomSys.Next(1, totalWeight + 1);
+        //Debug.Log($"SEED: {seed} | Pointer: {rndWeightValue} | Totalweight: {totalWeight}");
+
 
         //Checking where random weight value falls
         var processedWeight = 0;
