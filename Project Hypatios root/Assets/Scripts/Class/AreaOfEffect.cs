@@ -7,7 +7,7 @@ public class AreaOfEffect : MonoBehaviour
 
     public OnTriggerEnterEvent TriggerScript;
     public float Value = 0;
-    public StatusEffectCategory statusEffect;
+    public ModifierEffectCategory statusEffect;
 
     private GenericStatus genericStatus;
 

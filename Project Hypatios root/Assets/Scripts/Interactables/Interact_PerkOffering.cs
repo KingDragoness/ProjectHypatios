@@ -27,9 +27,9 @@ public class Interact_PerkOffering : MonoBehaviour
                 var perk1 = PlayerPerk.GetBasePerk(cauldron.statusType);
                 string description = perk1.DescriptionPerk;
 
-                if (cauldron.statusType == StatusEffectCategory.ShortcutDiscount)
+                if (cauldron.statusType == ModifierEffectCategory.ShortcutDiscount)
                     description = PlayerPerk.GetDescription_Shortcut(Hypatios.Player.PerkData.Perk_LV_ShortcutDiscount);
-                if (cauldron.statusType == StatusEffectCategory.SoulBonus)
+                if (cauldron.statusType == ModifierEffectCategory.SoulBonus)
                     description = PlayerPerk.GetDescription_LuckOfGod(Hypatios.Player.PerkData.Perk_LV_Soulbonus);
 
                 cauldron.icon.sprite = perk1.PerkSprite;
@@ -107,7 +107,7 @@ public class Interact_PerkOffering : MonoBehaviour
     }
 
 
-    public bool IsDuplicatePerkSelect(StatusEffectCategory _category)
+    public bool IsDuplicatePerkSelect(ModifierEffectCategory _category)
     {
         if (allCauldrons.Find(x => x.perkCustomEffect.statusCategoryType == _category) != null)
         {

@@ -130,18 +130,18 @@ public class CharacterScript : Entity
     {
         RemoveAllEffectsBySource("PermanentPerk");
         CustomPerkLoad();
-        PerkInitialize(StatusEffectCategory.MaxHitpointBonus);
-        PerkInitialize(StatusEffectCategory.RegenHPBonus);
-        PerkInitialize(StatusEffectCategory.KnockbackResistance);
-        PerkInitialize(StatusEffectCategory.BonusDamageMelee);
-        PerkInitialize(StatusEffectCategory.BonusDamageGun);
-        PerkInitialize(StatusEffectCategory.Alcoholism);
+        PerkInitialize(ModifierEffectCategory.MaxHitpointBonus);
+        PerkInitialize(ModifierEffectCategory.RegenHPBonus);
+        PerkInitialize(ModifierEffectCategory.KnockbackResistance);
+        PerkInitialize(ModifierEffectCategory.BonusDamageMelee);
+        PerkInitialize(ModifierEffectCategory.BonusDamageGun);
+        PerkInitialize(ModifierEffectCategory.Alcoholism);
         dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
     }
 
     public int GetNetSoulBonusPerk()
     {
-        var basePerkClass = PlayerPerk.GetBasePerk(StatusEffectCategory.SoulBonus);
+        var basePerkClass = PlayerPerk.GetBasePerk(ModifierEffectCategory.SoulBonus);
         int netPerk = PerkData.Perk_LV_Soulbonus;
 
         if (netPerk > basePerkClass.MAX_LEVEL)
@@ -152,7 +152,7 @@ public class CharacterScript : Entity
 
     public int GetNetShortcutPerk()
     {
-        var basePerkClass = PlayerPerk.GetBasePerk(StatusEffectCategory.ShortcutDiscount);
+        var basePerkClass = PlayerPerk.GetBasePerk(ModifierEffectCategory.ShortcutDiscount);
         int netPerk = PerkData.Perk_LV_ShortcutDiscount;
 
         if (netPerk > basePerkClass.MAX_LEVEL)
@@ -161,33 +161,33 @@ public class CharacterScript : Entity
         return netPerk;
     }
 
-    public float GetCharFinalValue(StatusEffectCategory category)
+    public float GetCharFinalValue(ModifierEffectCategory category)
     {
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             return Health.maxHealth.Value;
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             return Health.healthRegen.Value;
         }
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             return Weapon.Recoil.knockbackResistance.Value;
         }
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             return BonusDamageMelee.Value;
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             return BonusDamageGun.Value;
         }
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
         {
             return dashCooldown.Value;
         }
-        else if (category == StatusEffectCategory.Alcoholism)
+        else if (category == ModifierEffectCategory.Alcoholism)
         {
             return Health.alcoholMeter;
         }
@@ -210,33 +210,62 @@ public class CharacterScript : Entity
                 effectObject.ApplyEffect();
             }
         }
+
+        foreach (var statusEffect in PerkData.Temp_StatusEffect)
+        {
+            var baseStatusEffect = Hypatios.Assets.GetStatusEffect(statusEffect.ID);
+            StatusEffectMono statusMono = null;
+            if (IsStatusEffectGroup(baseStatusEffect) == false)
+            {
+                statusMono = CreateStatusEffectGroup(baseStatusEffect, statusEffect.Time);
+            }
+            else statusMono = GetStatusEffectGroup(baseStatusEffect);
+            foreach (var modifier in baseStatusEffect.allStatusEffects)
+            {
+                var category = modifier.statusCategoryType;
+                var effectObject = GetGenericEffect(category, $"playerModifier_{statusEffect.ID}");
+
+                if (effectObject == null)
+                {
+                    effectObject = CreateTimerStatusEffect(category, modifier.Value, statusEffect.Time, $"playerModifier_{statusEffect.ID}", allowDuplicate: true);
+                    effectObject.statusMono = statusMono;
+                }
+                else
+                {
+                    effectObject.Value = modifier.Value;
+                    effectObject.ApplyEffect();
+                }
+
+            }
+
+        }
     }
 
-    private void PerkInitialize(StatusEffectCategory category)
+    private void PerkInitialize(ModifierEffectCategory category)
     {
         float value = 0;
 
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             value = PlayerPerk.GetValue_MaxHPUpgrade(PerkData.Perk_LV_MaxHitpointUpgrade);
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             value = PlayerPerk.GetValue_RegenHPUpgrade(PerkData.Perk_LV_RegenHitpointUpgrade);
         }
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
         }
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             value = PlayerPerk.GetValue_BonusGunDamage(PerkData.Perk_LV_IncreaseGunDamage);
         }
-        else if (category == StatusEffectCategory.Alcoholism)
+        else if (category == ModifierEffectCategory.Alcoholism)
         {
             value = Health.alcoholMeter;
         }

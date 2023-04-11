@@ -8,7 +8,7 @@ public class CharStatButton : MonoBehaviour
 {
 
     public PlayerRPGUI playerRPGUI;
-    public StatusEffectCategory category1;
+    public ModifierEffectCategory category1;
     public Text statLabel;
 
 
@@ -35,55 +35,55 @@ public class CharStatButton : MonoBehaviour
 
     }
 
-    private void PerkInitialize(StatusEffectCategory category)
+    private void PerkInitialize(ModifierEffectCategory category)
     {
         float value = 0;
         string s = "";
         HypatiosSave.PerkDataSave PerkData = Hypatios.Player.PerkData;
 
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             value = PlayerPerk.GetValue_MaxHPUpgrade(PerkData.Perk_LV_MaxHitpointUpgrade);
             s = $"{value} HP";
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             value = PlayerPerk.GetValue_RegenHPUpgrade(PerkData.Perk_LV_RegenHitpointUpgrade);
             if (value == 0) s = $"{value} HP/s";
             else if (value > 0) s = $"{value} HP/s";
             else s = $"-{value} HP/s";
         }
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
             s = $"-{value}";
         }
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             value = PlayerPerk.GetValue_BonusMeleeDamage(PerkData.Perk_LV_IncreaseMeleeDamage);
             s = $"{value*100}%";
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             value = PlayerPerk.GetValue_BonusGunDamage(PerkData.Perk_LV_IncreaseGunDamage);
             s = $"{value * 100}%";
         }
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
         {
             value = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown);
             s = $"{value}s";
         }
-        else if (category == StatusEffectCategory.SoulBonus)
+        else if (category == ModifierEffectCategory.SoulBonus)
         {
             value = Hypatios.Player.GetNetSoulBonusPerk();
             s = $"Lv {value}/5";
         }
-        else if (category == StatusEffectCategory.ShortcutDiscount)
+        else if (category == ModifierEffectCategory.ShortcutDiscount)
         {
             value = Hypatios.Player.GetNetShortcutPerk();
             s = $"Lv {value}/5";
         }
-        else if (category == StatusEffectCategory.Alcoholism)
+        else if (category == ModifierEffectCategory.Alcoholism)
         {
             value = Mathf.RoundToInt(Hypatios.Player.Health.alcoholMeter);
             s = $"{value}/100%";

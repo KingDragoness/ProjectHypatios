@@ -10,7 +10,7 @@ public class PerkSelectionUI : MonoBehaviour
     public DeathScreenScript deathScreenScript;
     public DieUI_PerkButton prefabPerkButton;
     public DieUI_PerkButton selectedPerkButton;
-    public List<StatusEffectCategory> allStatusUpgradables = new List<StatusEffectCategory>();
+    public List<ModifierEffectCategory> allStatusUpgradables = new List<ModifierEffectCategory>();
     public RectTransform parentPerkList;
 
     private List<DieUI_PerkButton> allPerkButtons = new List<DieUI_PerkButton>();
@@ -106,7 +106,7 @@ public class PerkSelectionUI : MonoBehaviour
         }
     }
 
-    public bool IsDuplicatePerkSelect(StatusEffectCategory _category)
+    public bool IsDuplicatePerkSelect(ModifierEffectCategory _category)
     {
         if (allPerkButtons.Find(x => x.status == _category) != null)
         {
@@ -116,15 +116,15 @@ public class PerkSelectionUI : MonoBehaviour
         return false;
     }
 
-    public StatusEffectCategory RandomSelectStatus()
+    public ModifierEffectCategory RandomSelectStatus()
     {
         return allStatusUpgradables[Random.Range(0, allStatusUpgradables.Count)];
     }
 
-    public StatusEffectCategory RandomSelectStatusNoTemp()
+    public ModifierEffectCategory RandomSelectStatusNoTemp()
     {
-        var newList = new List<StatusEffectCategory>(); foreach (var entry in allStatusUpgradables) newList.Add(entry);
-        newList.RemoveAll(x => x == StatusEffectCategory.SoulBonus);
+        var newList = new List<ModifierEffectCategory>(); foreach (var entry in allStatusUpgradables) newList.Add(entry);
+        newList.RemoveAll(x => x == ModifierEffectCategory.SoulBonus);
         return newList[Random.Range(0, newList.Count)];
     }
 

@@ -222,7 +222,7 @@ public class DeathScreenScript : MonoBehaviour
 
         bool isTemp = false;
 
-        if (perkSelection.selectedPerkButton.customEffect.statusCategoryType != StatusEffectCategory.Nothing)
+        if (perkSelection.selectedPerkButton.customEffect.statusCategoryType != ModifierEffectCategory.Nothing)
             isTemp = true;
 
         if (isTemp)

@@ -10,7 +10,7 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
     public Interact_PerkOffering offerPerkScript;
     public bool isPermanent = false;
     [HideIf("isPermanent")] public PerkCustomEffect perkCustomEffect;
-    [ShowIf("isPermanent")] public StatusEffectCategory statusType;
+    [ShowIf("isPermanent")] public ModifierEffectCategory statusType;
     public Interact_Touchable touch_TakePerk;
     public Interact_Touchable touch_Inspect;
     public Interact_TutorialBubble dialogInspect;

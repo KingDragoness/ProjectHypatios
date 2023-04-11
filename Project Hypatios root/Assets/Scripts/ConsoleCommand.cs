@@ -991,10 +991,10 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add(" =============== 'ui' to change UI mode. =============== ");
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
-                foreach (string name in Enum.GetNames(typeof(StatusEffectCategory)))
+                foreach (string name in Enum.GetNames(typeof(ModifierEffectCategory)))
                 {
-                    StatusEffectCategory e1 = StatusEffectCategory.Nothing;
-                    Enum.TryParse<StatusEffectCategory>(name, out e1);
+                    ModifierEffectCategory e1 = ModifierEffectCategory.Nothing;
+                    Enum.TryParse<ModifierEffectCategory>(name, out e1);
                     helps.Add($"'setperk {(int)e1}' : {name}");
                 }
                 helps.Add(" ");
@@ -1042,7 +1042,7 @@ public class ConsoleCommand : MonoBehaviour
             else if (args[0] == "status")
             {
                 helps.Add(" =============== HELP [EVERY STATUS EFFECTS] =============== ");
-                foreach (string name in Enum.GetNames(typeof(StatusEffectCategory)))
+                foreach (string name in Enum.GetNames(typeof(ModifierEffectCategory)))
                 {
                     helps.Add(name);
                 }
@@ -1095,7 +1095,7 @@ public class ConsoleCommand : MonoBehaviour
             int.TryParse(args[0], out perkID);
             float.TryParse(args[1], out value);
 
-            StatusEffectCategory category = (StatusEffectCategory)perkID;
+            ModifierEffectCategory category = (ModifierEffectCategory)perkID;
 
             Hypatios.Player.PerkData.CheatTempPerk(category, value);
             Hypatios.Player.ReloadStatEffects();

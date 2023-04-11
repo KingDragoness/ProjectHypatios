@@ -7,8 +7,21 @@ public abstract class Entity : MonoBehaviour
 {
 
     [FoldoutGroup("Base")] [SerializeField] private Bounds boundingBox;
-    [FoldoutGroup("Base")] [ShowInInspector] private List<BaseStatusEffect> _allStatusInEffect = new List<BaseStatusEffect>();
-    public List<BaseStatusEffect> AllStatusInEffect { get => _allStatusInEffect; }
+    [FoldoutGroup("Base")] [ShowInInspector] private List<BaseModifierEffect> _allStatusInEffect = new List<BaseModifierEffect>();
+    public List<BaseModifierEffect> AllStatusInEffect { get => _allStatusInEffect; }
+    public List<StatusEffectMono> AllStatusMonos { get 
+        {
+            List<StatusEffectMono> _statMonos = new List<StatusEffectMono>();
+            foreach (var status in _allStatusInEffect)
+            {
+                var _statusEffect = status as StatusEffectMono;
+                if (_statusEffect != null)
+                    _statMonos.Add(_statusEffect);
+            }
+
+            return _statMonos; 
+        } 
+    }
     public Bounds BoundingBox { get => boundingBox; }
 
     private Transform _containerEntityParent;
@@ -44,9 +57,9 @@ public abstract class Entity : MonoBehaviour
     [FoldoutGroup("Debug")] [Button("Burn")]
     public virtual void Burn()
     {
-        if (CheckDuplicateBySimilarEffect(StatusEffectCategory.Fire))
+        if (CheckDuplicateBySimilarEffect(ModifierEffectCategory.Fire))
         {
-            var effect = GetStatusEffect(StatusEffectCategory.Fire);
+            var effect = GetStatusEffect(ModifierEffectCategory.Fire);
             effect.EffectTimer = 5f;
             return;
         }
@@ -59,7 +72,7 @@ public abstract class Entity : MonoBehaviour
         FireParticle.transform.localEulerAngles = Vector3.zero;
 
         particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
-        var statusObject = CreateGenericStatusEffect(StatusEffectCategory.Fire, -1f, 5f);
+        var statusObject = CreateGenericStatusEffect(ModifierEffectCategory.Fire, -1f, 5f);
         var fireStatus = statusObject.gameObject.AddComponent<FireStatus>();
         fireStatus.damageType = FireStatus.DamageType.Fire;
         FireParticle.transform.SetParent(statusObject.transform);
@@ -69,9 +82,9 @@ public abstract class Entity : MonoBehaviour
     [Button("Poison")]
     public virtual void Poison()
     {
-        if (CheckDuplicateBySimilarEffect(StatusEffectCategory.Poison))
+        if (CheckDuplicateBySimilarEffect(ModifierEffectCategory.Poison))
         {
-            var effect = GetStatusEffect(StatusEffectCategory.Poison);
+            var effect = GetStatusEffect(ModifierEffectCategory.Poison);
             effect.EffectTimer = 5f;
             return;
         }
@@ -82,7 +95,7 @@ public abstract class Entity : MonoBehaviour
         FireParticle.transform.localEulerAngles = Vector3.zero;
 
         particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
-        var statusObject = CreateGenericStatusEffect(StatusEffectCategory.Poison, -1f, 5f);
+        var statusObject = CreateGenericStatusEffect(ModifierEffectCategory.Poison, -1f, 5f);
         var poisonStatus = statusObject.gameObject.AddComponent<FireStatus>();
         poisonStatus.damageType = FireStatus.DamageType.Poison;
         FireParticle.transform.SetParent(statusObject.transform);
@@ -101,9 +114,9 @@ public abstract class Entity : MonoBehaviour
     [Button("Paralysis")]
     public virtual void Paralysis()
     {
-        if (CheckDuplicateBySimilarEffect(StatusEffectCategory.Paralyze))
+        if (CheckDuplicateBySimilarEffect(ModifierEffectCategory.Paralyze))
         {
-            var effect = GetStatusEffect(StatusEffectCategory.Paralyze);
+            var effect = GetStatusEffect(ModifierEffectCategory.Paralyze);
             effect.EffectTimer = 11f;
             return;
         }
@@ -116,7 +129,7 @@ public abstract class Entity : MonoBehaviour
         ParalyzeParticle.transform.localEulerAngles = Vector3.zero;
 
         particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
-        var statusObject = CreateGenericStatusEffect(StatusEffectCategory.Paralyze, -1f, 11f);
+        var statusObject = CreateGenericStatusEffect(ModifierEffectCategory.Paralyze, -1f, 11f);
         var poisonStatus = statusObject.gameObject.AddComponent<FireStatus>();
         poisonStatus.damageType = FireStatus.DamageType.NOTHING;
         ParalyzeParticle.transform.SetParent(statusObject.transform);
@@ -126,22 +139,23 @@ public abstract class Entity : MonoBehaviour
     #endregion
 
     #region Status Effect Utilities
-    private BaseStatusEffect GetStatusEffect(StatusEffectCategory _statusCategory)
+    private BaseModifierEffect GetStatusEffect(ModifierEffectCategory _statusCategory)
     {
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory);
     }
 
-    private BaseStatusEffect GetStatusEffect(StatusEffectCategory _statusCategory, string _source)
+    private BaseModifierEffect GetStatusEffect(ModifierEffectCategory _statusCategory, string _source)
     {
         return _allStatusInEffect.Find(x => x.SourceID == _source);
     }
 
-    private bool CheckDuplicates(StatusEffectCategory _statusCategory, string _source)
+    private bool CheckDuplicates(ModifierEffectCategory _statusCategory, string _source)
     {
         return _allStatusInEffect.Find(x => x.SourceID == _source && x.statusCategoryType == _statusCategory);
     }
 
-    private bool CheckDuplicateBySimilarEffect(StatusEffectCategory _statusCategory)
+
+    private bool CheckDuplicateBySimilarEffect(ModifierEffectCategory _statusCategory)
     {
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory);
     }
@@ -151,14 +165,41 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.SourceID == _source);
     }
 
-    public GenericStatus GetGenericEffect(StatusEffectCategory _statusCategory, string _source)
+    public GenericStatus GetGenericEffect(ModifierEffectCategory _statusCategory, string _source)
     {
         return _allStatusInEffect.Find(x => x.SourceID == _source && x.statusCategoryType == _statusCategory) as GenericStatus;
     }
 
-    public bool IsStatusEffect(StatusEffectCategory _statusCategory)
+    public bool IsStatusEffect(ModifierEffectCategory _statusCategory)
     {
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory) != null;
+    }
+
+    public bool IsStatusEffectGroup(BaseStatusEffectObject _statusEffectObject)
+    {
+        List<StatusEffectMono> allStatusEffectMonos = new List<StatusEffectMono>();
+        foreach (var status in _allStatusInEffect)
+        {
+            var _statusEffect = status as StatusEffectMono;
+            if (_statusEffect != null)
+                allStatusEffectMonos.Add(_statusEffect);
+        }
+
+        return allStatusEffectMonos.Find(x => x.statusEffect == _statusEffectObject);
+    }
+
+
+    public StatusEffectMono GetStatusEffectGroup(BaseStatusEffectObject _statusEffectObject)
+    {
+        List<StatusEffectMono> allStatusEffectMonos = new List<StatusEffectMono>();
+        foreach (var status in _allStatusInEffect)
+        {
+            var _statusEffect = status as StatusEffectMono;
+            if (_statusEffect != null)
+                allStatusEffectMonos.Add(_statusEffect);
+        }
+
+        return allStatusEffectMonos.Find(x => x.statusEffect == _statusEffectObject);
     }
 
     /// <summary>
@@ -180,9 +221,24 @@ public abstract class Entity : MonoBehaviour
     }
 
 
+
+    public StatusEffectMono CreateStatusEffectGroup(BaseStatusEffectObject _effectObject,
+    float _effectTimer = 1f,
+    string _source = "Generic")
+    {
+        StatusEffectMono statusMono = StatusEffectMono.CreateStatusEffect(_effectObject, 1f, _effectTimer, _source);
+        if (_containerEntityParent == null) CreateEntityParent();
+        statusMono.transform.SetParent(_containerEntityParent.transform);
+        statusMono.target = this;
+        statusMono.ApplyEffect();
+        _allStatusInEffect.Add(statusMono);
+        return statusMono;
+    }
+
+
     [FoldoutGroup("Debug")]
     [Button("Create Status Effect")]
-    private GenericStatus CreateGenericStatusEffect(StatusEffectCategory _statusCategory,
+    private GenericStatus CreateGenericStatusEffect(ModifierEffectCategory _statusCategory,
         float _value,
         float _effectTimer = 1f,
         string _source = "Generic")
@@ -205,7 +261,7 @@ public abstract class Entity : MonoBehaviour
     /// <param name="_value"></param>
     /// <param name="_source">Must assign source! Or else it'll will duplicate for infinity.</param>
     /// <param name="allowDuplicate"></param>
-    public GenericStatus CreatePersistentStatusEffect(StatusEffectCategory _statusCategory, float _value, string _source, bool allowDuplicate = false)
+    public GenericStatus CreatePersistentStatusEffect(ModifierEffectCategory _statusCategory, float _value, string _source, bool allowDuplicate = false)
     {
         if (allowDuplicate == false && CheckDuplicates(_statusCategory, _source))
             return GetStatusEffect(_statusCategory, _source) as GenericStatus;
@@ -221,7 +277,7 @@ public abstract class Entity : MonoBehaviour
     /// <param name="_timer"></param>
     /// <param name="_source"></param>
     /// <param name="allowDuplicate"></param>
-    public GenericStatus CreateTimerStatusEffect(StatusEffectCategory _statusCategory, float _value, float _timer = 1, string _source = "Generic", bool allowDuplicate = false)
+    public GenericStatus CreateTimerStatusEffect(ModifierEffectCategory _statusCategory, float _value, float _timer = 1, string _source = "Generic", bool allowDuplicate = false)
     {
         if (allowDuplicate == false && CheckDuplicateBySimilarSource(_source))
             return GetStatusEffect(_statusCategory) as GenericStatus;

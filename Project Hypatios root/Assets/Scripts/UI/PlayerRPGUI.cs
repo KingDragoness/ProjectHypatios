@@ -11,6 +11,8 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Perk Tooltip")] public RectTransform perktooltipUI;
     [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_LeftHandedLabel;
     [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_RightHandedLabel;
+    [FoldoutGroup("Perk Tooltip")] public Text bigTooltip_LeftHandedLabel;
+    [FoldoutGroup("Perk Tooltip")] public Text bigTooltip_RightHandedLabel;
     [FoldoutGroup("Perk Tooltip")] public Vector3 offsetTooltip;
     [FoldoutGroup("Perk Tooltip")] public ToolTip perkTooltipScript;
 
@@ -24,6 +26,7 @@ public class PlayerRPGUI : MonoBehaviour
 
 
     public RPG_CharPerkButton PerkButton;
+    public RPG_CharPerkButton StatusMonoButton;
     public InventoryItemButton InventoryItemButton;
     public RPG_CharPerkButton currentPerkButton;
     public Transform parentPerks;
@@ -32,6 +35,7 @@ public class PlayerRPGUI : MonoBehaviour
     public Text time_label;
 
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
+    private List<RPG_CharPerkButton> _allStatusMonoButtons = new List<RPG_CharPerkButton>();
     private List<InventoryItemButton> _allInventoryButtons = new List<InventoryItemButton>();
     private Canvas pauseCanvas;
 
@@ -75,12 +79,17 @@ public class PlayerRPGUI : MonoBehaviour
         {
             Destroy(perkButton.gameObject);
         }
+        foreach (var statButton in _allStatusMonoButtons)
+        {
+            Destroy(statButton.gameObject);
+        }
         foreach (var button in _allInventoryButtons)
         {
             Destroy(button.gameObject);
         }
         _allCharPerkButtons.Clear();
         _allInventoryButtons.Clear();
+        _allStatusMonoButtons.Clear();
 
         string HP = $"{Mathf.RoundToInt(Hypatios.Player.Health.curHealth)}/{Mathf.RoundToInt(Hypatios.Player.Health.maxHealth.Value)}";
         hp_Label.text = HP;
@@ -93,8 +102,9 @@ public class PlayerRPGUI : MonoBehaviour
         //Refresh perks
         {
             var allCurrentPerk = Hypatios.Player.AllStatusInEffect.FindAll(x => x.SourceID != "PermanentPerk"); //"TempPerk"
+            allCurrentPerk.RemoveAll(x => x.IsTiedToStatusMono == true);
 
-            foreach(var perk in allCurrentPerk)
+            foreach (var perk in allCurrentPerk)
             {
                 var statusEffect1 = Hypatios.Assets.GetStatusEffect(perk.statusCategoryType);
                 if (statusEffect1 == null) continue;
@@ -102,6 +112,21 @@ public class PlayerRPGUI : MonoBehaviour
                 newButton.gameObject.SetActive(true);
                 newButton.statusEffect = statusEffect1;
                 newButton.attachedStatusEffectGO = perk;
+                newButton.Refresh();
+                _allCharPerkButtons.Add(newButton);
+            }
+        }
+        {
+            var AllStatusMono = Hypatios.Player.AllStatusMonos;
+
+            foreach (var baseStatusEffect in AllStatusMono)
+            {
+                var statusEffect1 = Hypatios.Assets.GetStatusEffect(baseStatusEffect.statusEffect.GetID());
+                if (statusEffect1 == null) continue;
+                var newButton = Instantiate(StatusMonoButton, parentPerks);
+                newButton.gameObject.SetActive(true);
+                newButton.baseStatusEffectGroup = statusEffect1;
+                newButton.attachedStatusEffectGO = baseStatusEffect;
                 newButton.Refresh();
                 _allCharPerkButtons.Add(newButton);
             }
@@ -439,8 +464,8 @@ public class PlayerRPGUI : MonoBehaviour
         var value1 = Hypatios.Player.GetCharFinalValue(charStatButton.category1);
         var baseStat = Hypatios.Assets.GetStatusEffect(charStatButton.category1);
 
-        if (charStatButton.category1 == StatusEffectCategory.BonusDamageMelee
-            | charStatButton.category1 == StatusEffectCategory.BonusDamageGun)
+        if (charStatButton.category1 == ModifierEffectCategory.BonusDamageMelee
+            | charStatButton.category1 == ModifierEffectCategory.BonusDamageGun)
         {
             value1 -= 1;
         }
@@ -464,20 +489,40 @@ public class PlayerRPGUI : MonoBehaviour
         string timerString = $"{(Mathf.RoundToInt(currentPerkButton.attachedStatusEffectGO.EffectTimer*10f)/10f)}";
         if (currentPerkButton.attachedStatusEffectGO.EffectTimer >= 9999f) timerString = $"";
         else timerString = $"({timerString}s)";
-        var value = currentPerkButton.attachedStatusEffectGO.Value;
-        perkTooltip_LeftHandedLabel.text = $"{currentPerkButton.statusEffect.TitlePerk} {timerString}";
 
-        if (value == 0  | value == -1)
+        if (_currentPerk.type == RPG_CharPerkButton.Type.TemporaryModifier)
         {
-            perkTooltip_RightHandedLabel.text = "";
+            var value = currentPerkButton.attachedStatusEffectGO.Value;
+            perkTooltip_LeftHandedLabel.text = $"{currentPerkButton.statusEffect.TitlePerk} {timerString}";
+
+            if (value == 0 | value == -1)
+            {
+                perkTooltip_RightHandedLabel.text = "";
+            }
+            else
+            {
+                perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(_currentPerk.statusEffect.category, value);
+            }
+
+            Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>());
         }
         else
         {
-            perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(_currentPerk.statusEffect.category, value);
+            var statEffectGroup = _currentPerk.baseStatusEffectGroup;
+            string str1 = $"{statEffectGroup.GetDisplayText()}\n<size=13>{statEffectGroup.Description}</size>";
+            string str2 = "";
+
+            foreach(var modifier in statEffectGroup.allStatusEffects)
+            {
+                var baseModifier = Hypatios.Assets.GetStatusEffect(modifier.statusCategoryType);
+                str2 += $"[{baseModifier.TitlePerk}] [{RPG_CharPerkButton.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
+            }
+            str2 = ""; //scrapped modifier text
+            bigTooltip_LeftHandedLabel.text = $"{str1} {timerString}\n<size=13>{str2}</size>";
+            bigTooltip_RightHandedLabel.text = "";
+            Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>());
+
         }
-
-        Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>());
-
     }
 
     public void DehighlightPerk()

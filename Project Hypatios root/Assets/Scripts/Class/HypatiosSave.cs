@@ -208,6 +208,7 @@ public class HypatiosSave
         public int Perk_LV_IncreaseMeleeDamage = 0;
         public int Perk_LV_IncreaseGunDamage = 0;
         public List<PerkCustomEffect> Temp_CustomPerk = new List<PerkCustomEffect>();
+        public List<StatusEffectData> Temp_StatusEffect = new List<StatusEffectData>(); //Status Effect will never be saved.
 
         public static PerkDataSave GetPerkDataSave()
         {
@@ -221,7 +222,7 @@ public class HypatiosSave
             }
         }
 
-        public void CheatTempPerk(StatusEffectCategory category, float value)
+        public void CheatTempPerk(ModifierEffectCategory category, float value)
         {
             PerkCustomEffect perkOfType = Temp_CustomPerk.Find(x => x.origin == "CheatPerk" && x.statusCategoryType == category);
 
@@ -239,30 +240,30 @@ public class HypatiosSave
             }
         }
 
-        public void AddPerkLevel(StatusEffectCategory category)
+        public void AddPerkLevel(ModifierEffectCategory category)
         {
-            if (category == StatusEffectCategory.MaxHitpointBonus)
+            if (category == ModifierEffectCategory.MaxHitpointBonus)
                 Perk_LV_MaxHitpointUpgrade++;
 
-            if (category == StatusEffectCategory.RegenHPBonus)
+            if (category == ModifierEffectCategory.RegenHPBonus)
                 Perk_LV_RegenHitpointUpgrade++;
 
-            if (category == StatusEffectCategory.SoulBonus)
+            if (category == ModifierEffectCategory.SoulBonus)
                 Perk_LV_Soulbonus++;
 
-            if (category == StatusEffectCategory.ShortcutDiscount)
+            if (category == ModifierEffectCategory.ShortcutDiscount)
                 Perk_LV_ShortcutDiscount++;
 
-            if (category == StatusEffectCategory.KnockbackResistance)
+            if (category == ModifierEffectCategory.KnockbackResistance)
                 Perk_LV_KnockbackRecoil++;
 
-            if (category == StatusEffectCategory.DashCooldown)
+            if (category == ModifierEffectCategory.DashCooldown)
                 Perk_LV_DashCooldown++;
 
-            if (category == StatusEffectCategory.BonusDamageMelee)
+            if (category == ModifierEffectCategory.BonusDamageMelee)
                 Perk_LV_IncreaseMeleeDamage++;
 
-            if (category == StatusEffectCategory.BonusDamageGun)
+            if (category == ModifierEffectCategory.BonusDamageGun)
                 Perk_LV_IncreaseGunDamage++;
         }
     }

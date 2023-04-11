@@ -18,7 +18,7 @@ public class BasePerk : ScriptableObject
     public bool NoTemporaryPerk = false;
     public bool NoPermanentPerk = false;
     public float Commonness = 100; //100 is very common generate
-    public StatusEffectCategory category;
+    public ModifierEffectCategory category;
 
 
     public bool CheckLevelMaxed()
@@ -34,35 +34,35 @@ public class BasePerk : ScriptableObject
             perkDataClass = Hypatios.Player.PerkData;
         }
 
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             return false; //the only perk which player can upgrade forever
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             return perkDataClass.Perk_LV_RegenHitpointUpgrade >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.SoulBonus)
+        else if (category == ModifierEffectCategory.SoulBonus)
         {
             return perkDataClass.Perk_LV_Soulbonus >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             return perkDataClass.Perk_LV_KnockbackRecoil >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
         {
             return perkDataClass.Perk_LV_DashCooldown >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.ShortcutDiscount)
+        else if (category == ModifierEffectCategory.ShortcutDiscount)
         {
             return perkDataClass.Perk_LV_ShortcutDiscount >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             return perkDataClass.Perk_LV_IncreaseMeleeDamage >= MAX_LEVEL;
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             return perkDataClass.Perk_LV_IncreaseGunDamage >= MAX_LEVEL;
         }
@@ -77,7 +77,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "MaxHPUpgrade";
         MAX_LEVEL = 999;
-        category = StatusEffectCategory.MaxHitpointBonus;
+        category = ModifierEffectCategory.MaxHitpointBonus;
         ReaperDialogue = $"\"Vitality upgrade by 7 HP. Make yourself tougher.\"";
         DescriptionPerk = "+7 Maximum Hitpoint";
         TemporaryPerkOverLimit = true;
@@ -91,7 +91,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "RegenHPUpgrade";
         MAX_LEVEL = 20;
-        category = StatusEffectCategory.RegenHPBonus;
+        category = ModifierEffectCategory.RegenHPBonus;
         ReaperDialogue = $"\"Regenerate hitpoint upgrades by +0.1 HP per second.\"";
         DescriptionPerk = "+0.1 HP per second";
         TemporaryPerkOverLimit = true;
@@ -105,7 +105,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "SoulBonusUpgrade";
         MAX_LEVEL = 5;
-        category = StatusEffectCategory.SoulBonus;
+        category = ModifierEffectCategory.SoulBonus;
         ReaperDialogue = $"\"Increases your luck of finding souls.\"";
         DescriptionPerk = "+0.08 HP per second"; //needs custom description
         TemporaryPerkOverLimit = false;
@@ -119,7 +119,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "KnockbackUpgrade";
         MAX_LEVEL = 10;
-        category = StatusEffectCategory.KnockbackResistance;
+        category = ModifierEffectCategory.KnockbackResistance;
         ReaperDialogue = $"\"Decreases gun recoil effect and damage shake effect.\"";
         DescriptionPerk = "Decreases recoil effect by -0.15 ";
         TemporaryPerkOverLimit = false;
@@ -133,7 +133,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "DashCooldownUpgrade";
         MAX_LEVEL = 5;
-        category = StatusEffectCategory.DashCooldown;
+        category = ModifierEffectCategory.DashCooldown;
         ReaperDialogue = $"\"Decreases dash cooldown by -0.2 seconds.\"";
         DescriptionPerk = "-0.2 seconds dash cooldown";
         TemporaryPerkOverLimit = false;
@@ -147,7 +147,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "MeleeDamageUpgrade";
         MAX_LEVEL = 10;
-        category = StatusEffectCategory.BonusDamageMelee;
+        category = ModifierEffectCategory.BonusDamageMelee;
         ReaperDialogue = $"\"Increases melee damage by +12%.\"";
         DescriptionPerk = "+12% increases melee damage";
         TemporaryPerkOverLimit = true;
@@ -161,7 +161,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "ShortcutDiscount";
         MAX_LEVEL = 5;
-        category = StatusEffectCategory.ShortcutDiscount;
+        category = ModifierEffectCategory.ShortcutDiscount;
         ReaperDialogue = $"\"Discount for shortcuts.\"";
         DescriptionPerk = "+4% increases melee ";
         TemporaryPerkOverLimit = false;
@@ -175,7 +175,7 @@ public class BasePerk : ScriptableObject
     {
         PerkID = "GunDamage";
         MAX_LEVEL = 5;
-        category = StatusEffectCategory.BonusDamageGun;
+        category = ModifierEffectCategory.BonusDamageGun;
         ReaperDialogue = $"\"Bonus damage for all guns.\"";
         DescriptionPerk = "+5% bonus gun damage ";
         TemporaryPerkOverLimit = false;
@@ -185,27 +185,27 @@ public class BasePerk : ScriptableObject
 
     public string GetDialogueTempPerk(float Value)
     {
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             return $"\"Vitality increased by {Value} HP, remember only lasts 1 run.\"";
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             return $"\"Regen increased by +{Value} HP per second, remember only lasts 1 run.\"";
         }
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             return $"\"Decreases knockback by -{Value * 100}%, remember only lasts 1 run.\"";
         }
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
         {
             return $"\"Decreases dash cooldown by -0.2 seconds, remember only lasts 1 run.\"";
         }
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             return $"\"Increases melee damage by +{Value}%, remember only lasts 1 run.\"";
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             return $"\"Increases gun damage by +{Value}%, remember only lasts 1 run.\"";
         }
@@ -216,23 +216,23 @@ public class BasePerk : ScriptableObject
 
     public string GetDescriptionTempPerk(float Value)
     {
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
             return $"+{Value} Maximum Hitpoint. Only lasts 1 run.";
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
             return $"+{Value} HP per second. Only lasts 1 run.";
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
             return $"Decreases recoil effect by -{Value*100}%. Only lasts 1 run.";
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
             return $"-0.2 seconds dash cooldown. Only lasts 1 run.";
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
             return $"+{Value * 100}% increases melee damage. Only lasts 1 run.";
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
             return $"+{Value * 100}% increases gun damage. Only lasts 1 run.";
         return "";
     }
 
 
-    public static float GenerateValueForCustomPerk(StatusEffectCategory category)
+    public static float GenerateValueForCustomPerk(ModifierEffectCategory category)
     {
         float Value = 0;
         int run = 0;
@@ -245,32 +245,32 @@ public class BasePerk : ScriptableObject
 
         var hitpointNet = 100 + PlayerPerk.GetValue_MaxHPUpgrade(perkClass.Perk_LV_MaxHitpointUpgrade);
 
-        if (category == StatusEffectCategory.MaxHitpointBonus)
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
             float percent = Random.Range(0.35f, 0.5f);
             
             Value = Mathf.Clamp(percent * hitpointNet, 40, 1000);
             Value = Mathf.Round(Value);
         }
-        else if (category == StatusEffectCategory.RegenHPBonus)
+        else if (category == ModifierEffectCategory.RegenHPBonus)
         {
             float percent = Random.Range(0.005f, 0.01f);
 
             Value = Mathf.Clamp(percent * hitpointNet, 0.1f, 100);
             Value = Mathf.Round(Value * 100f) / 100f;
         }
-        else if (category == StatusEffectCategory.SoulBonus)
+        else if (category == ModifierEffectCategory.SoulBonus)
             Value = 1;
-        else if (category == StatusEffectCategory.ShortcutDiscount)
+        else if (category == ModifierEffectCategory.ShortcutDiscount)
             Value = 1;
-        else if (category == StatusEffectCategory.KnockbackResistance)
+        else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             Value = Random.Range(0.25f, 0.5f);
             Value = Mathf.Round(Value * 100) / 100;
         }
-        else if (category == StatusEffectCategory.DashCooldown)
+        else if (category == ModifierEffectCategory.DashCooldown)
             Value = -0.2f;
-        else if (category == StatusEffectCategory.BonusDamageMelee)
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
             Value = Random.Range(0.15f, 0.3f);
 
@@ -280,7 +280,7 @@ public class BasePerk : ScriptableObject
             Value = Mathf.Clamp(Value, 0f, 2f);
             Value = Mathf.Round(Value * 100) / 100;
         }
-        else if (category == StatusEffectCategory.BonusDamageGun)
+        else if (category == ModifierEffectCategory.BonusDamageGun)
         {
             Value = Random.Range(0.15f, 0.3f);
 

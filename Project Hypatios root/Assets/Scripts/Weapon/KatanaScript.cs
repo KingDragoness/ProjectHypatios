@@ -40,7 +40,7 @@ public class KatanaScript : BaseWeaponScript
         if (Input.GetButton("Fire2"))
         {
             playerHealth.armorStrength = 2f;
-            if (!b) Hypatios.Player.CreatePersistentStatusEffect(StatusEffectCategory.MovementBonus, -0.5f, "Katana"); 
+            if (!b) Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.MovementBonus, -0.5f, "Katana"); 
             anim.SetBool("Block", true);
             b = true;
         }

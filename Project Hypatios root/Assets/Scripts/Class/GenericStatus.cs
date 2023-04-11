@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericStatus : BaseStatusEffect
+public class GenericStatus : BaseModifierEffect
 {
 
     /// <summary>
@@ -14,9 +14,9 @@ public class GenericStatus : BaseStatusEffect
     /// <param name="_source"></param>
     /// <returns></returns>
     public static GenericStatus CreateStatusEffect
-        (StatusEffectCategory _statusCategory, 
-        float _value, 
-        float _effectTimer = 1f, 
+        (ModifierEffectCategory _statusCategory,
+        float _value,
+        float _effectTimer = 1f,
         string _sourceID = "Generic"
         )
     {
@@ -25,7 +25,7 @@ public class GenericStatus : BaseStatusEffect
         status.Value = _value;
         status.EffectTimer = _effectTimer;
         status.SourceID = _sourceID;
-        status.gameObject.name = _statusCategory.ToString();
+        status.gameObject.name = $"{ _statusCategory}_{_sourceID}";
         return status;
     }
 

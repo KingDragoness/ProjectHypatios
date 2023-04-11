@@ -50,7 +50,7 @@ public class FireStatus : MonoBehaviour
 
                 if (target != null)
                 {
-                    if (genericStatus.statusCategoryType == StatusEffectCategory.Paralyze)
+                    if (genericStatus.statusCategoryType == ModifierEffectCategory.Paralyze)
                         target.isAIEnabled = true;
                 }
 
@@ -83,7 +83,7 @@ public class FireStatus : MonoBehaviour
 
         }
         
-        if (genericStatus.statusCategoryType == StatusEffectCategory.Paralyze)
+        if (genericStatus.statusCategoryType == ModifierEffectCategory.Paralyze)
         {
             if (target != null)
             {

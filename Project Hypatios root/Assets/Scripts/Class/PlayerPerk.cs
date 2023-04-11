@@ -14,7 +14,7 @@ public enum PlayerPerks
 [System.Serializable]
 public class PerkCustomEffect
 {
-    public StatusEffectCategory statusCategoryType = StatusEffectCategory.Nothing;
+    public ModifierEffectCategory statusCategoryType = ModifierEffectCategory.Nothing;
     public string origin = "DeathPerk";
     public float Value = 0.1f;
 
@@ -25,12 +25,19 @@ public class PerkCustomEffect
     }
 }
 
+[System.Serializable]
+public class StatusEffectData
+{
+    public string ID = "Bleeding";
+    public float Time = 10f;
+}
+
 public class PlayerPerk
 {
 
 
 
-    public static BasePerk GetBasePerk(StatusEffectCategory type)
+    public static BasePerk GetBasePerk(ModifierEffectCategory type)
     {
         return Hypatios.Assets.AllBasePerks.Find(x => x.category == type);
     }

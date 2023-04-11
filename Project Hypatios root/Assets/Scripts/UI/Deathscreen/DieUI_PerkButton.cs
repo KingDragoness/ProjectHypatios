@@ -12,7 +12,7 @@ public class DieUI_PerkButton : MonoBehaviour
     public Text titleText;
     public Text descriptionText;
     public Image iconImage;
-    public StatusEffectCategory status;
+    public ModifierEffectCategory status;
     public PerkCustomEffect customEffect;
     public bool isTemporaryPerk = false;
 
@@ -25,19 +25,19 @@ public class DieUI_PerkButton : MonoBehaviour
         iconImage.sprite = perk.PerkSprite;
 
         //make sure there's no temporary perk of soul bonus 
-        if (status == StatusEffectCategory.SoulBonus)
+        if (status == ModifierEffectCategory.SoulBonus)
         {
             int levelLuck = FPSMainScript.savedata.AllPerkDatas.Perk_LV_Soulbonus;
             descriptionText.text = PlayerPerk.GetDescription_LuckOfGod(levelLuck);
         }
-        else if (status == StatusEffectCategory.ShortcutDiscount)
+        else if (status == ModifierEffectCategory.ShortcutDiscount)
         {
             var level = FPSMainScript.savedata.AllPerkDatas.Perk_LV_ShortcutDiscount;
             descriptionText.text = PlayerPerk.GetDescription_Shortcut(level);
         }
 
 
-        if (customEffect.statusCategoryType != StatusEffectCategory.Nothing)
+        if (customEffect.statusCategoryType != ModifierEffectCategory.Nothing)
         {
             var perk1 = PlayerPerk.GetBasePerk(customEffect.statusCategoryType);
             descriptionText.text = perk1.GetDescriptionTempPerk(customEffect.Value);
@@ -52,17 +52,17 @@ public class DieUI_PerkButton : MonoBehaviour
     public void Hover()
     {
         //temp perk
-        if (customEffect.statusCategoryType != StatusEffectCategory.Nothing)
+        if (customEffect.statusCategoryType != ModifierEffectCategory.Nothing)
         {
             var perk = PlayerPerk.GetBasePerk(customEffect.statusCategoryType);
 
-            if (customEffect.statusCategoryType == StatusEffectCategory.SoulBonus)
+            if (customEffect.statusCategoryType == ModifierEffectCategory.SoulBonus)
             {
                 int levelLuck = FPSMainScript.savedata.AllPerkDatas.Perk_LV_Soulbonus;
                 string s = $"Reaper: \"{PlayerPerk.GetDescription_LuckOfGod(levelLuck)}\"";
                 DeadDialogue.PromptNotifyMessage(s, 999f);
             }
-            else if (customEffect.statusCategoryType == StatusEffectCategory.ShortcutDiscount)
+            else if (customEffect.statusCategoryType == ModifierEffectCategory.ShortcutDiscount)
             {
                 var level = FPSMainScript.savedata.AllPerkDatas.Perk_LV_ShortcutDiscount;
                 string s = $"Reaper: \"{ PlayerPerk.GetDescription_Shortcut(level)}\"";

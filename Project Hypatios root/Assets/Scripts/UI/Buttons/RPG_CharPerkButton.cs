@@ -7,9 +7,17 @@ using Sirenix.OdinInspector;
 public class RPG_CharPerkButton : MonoBehaviour
 {
 
+    public enum Type
+    {
+        TemporaryModifier,
+        StatusEffect
+    }
+
     public PlayerRPGUI playerRPGUI;
-    public BaseStatusEffectObject statusEffect;
-    public BaseStatusEffect attachedStatusEffectGO;
+    public Type type;
+    public BaseModifierEffectObject statusEffect;
+    public BaseStatusEffectObject baseStatusEffectGroup;
+    public BaseModifierEffect attachedStatusEffectGO;
     public Image icon;
     public float value = 0;
 
@@ -20,7 +28,14 @@ public class RPG_CharPerkButton : MonoBehaviour
 
     public void Refresh()
     {
-        icon.sprite = statusEffect.PerkSprite;
+        if (type == Type.TemporaryModifier)
+        {
+            icon.sprite = statusEffect.PerkSprite;
+        }
+        else
+        {
+            icon.sprite = baseStatusEffectGroup.PerkSprite;
+        }
     }
 
     public void DehighlightPerk()
@@ -30,41 +45,45 @@ public class RPG_CharPerkButton : MonoBehaviour
 
     }
 
-    public static string GetDescription(StatusEffectCategory statusEffect, float value)
+    public static string GetDescription(ModifierEffectCategory statusEffect, float value)
     {
         string s = "";
 
-        if (statusEffect == StatusEffectCategory.MovementBonus)
+        if (statusEffect == ModifierEffectCategory.MovementBonus)
         {
             s = $"{Mathf.RoundToInt(value *100)}%";
         }
-        else if (statusEffect == StatusEffectCategory.BonusDamageMelee)
+        else if (statusEffect == ModifierEffectCategory.BonusDamageMelee)
         {
             s = $"{Mathf.RoundToInt(value*100)}%";
         }
-        else if (statusEffect == StatusEffectCategory.BonusDamageGun)
+        else if (statusEffect == ModifierEffectCategory.BonusDamageGun)
         {
             s = $"{Mathf.RoundToInt(value * 100)}%";
         }
-        else if (statusEffect == StatusEffectCategory.RegenHPBonus)
+        else if (statusEffect == ModifierEffectCategory.RegenHPBonus)
         {
             float value_ = value;
             if (value_ == 0) s = $"{value_} HP/s";
             else if (value_ > 0) s = $"{value_} HP/s";
-            else s = $"-{value_} HP/s";
+            else s = $"{value_} HP/s";
         }
-        else if (statusEffect == StatusEffectCategory.MaxHitpointBonus)
+        else if (statusEffect == ModifierEffectCategory.MaxHitpointBonus)
         {
             float value_ = value;
             if (value_ == 0) s = $"{value_} HP";
             else if (value_ > 0) s = $"+{value_} HP";
-            else s = $"-{value_} HP";
+            else s = $"{value_} HP";
         }
-        else if (statusEffect == StatusEffectCategory.DashCooldown)
+        else if (statusEffect == ModifierEffectCategory.MaxHPPercentage)
+        {
+            s = $"{Mathf.RoundToInt(value * 100)}%";
+        }
+        else if (statusEffect == ModifierEffectCategory.DashCooldown)
         {
             s = $"{value}s";
         }
-        else if (statusEffect == StatusEffectCategory.Alcoholism)
+        else if (statusEffect == ModifierEffectCategory.Alcoholism)
         {
             s = $"{value}/100%";
         }

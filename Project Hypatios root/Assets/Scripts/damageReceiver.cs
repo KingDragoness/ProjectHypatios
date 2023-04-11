@@ -85,8 +85,8 @@ public class UniversalDamage
             health.takeDamage(Mathf.RoundToInt(token.damage), token.healthSpeed, token.shakinessFactor);
 
            
-            if (token.isBurn && !health.character.IsStatusEffect(StatusEffectCategory.Fire)) health.character.Burn();
-            if (token.isPoison && !health.character.IsStatusEffect(StatusEffectCategory.Poison)) health.character.Poison();
+            if (token.isBurn && !health.character.IsStatusEffect(ModifierEffectCategory.Fire)) health.character.Burn();
+            if (token.isPoison && !health.character.IsStatusEffect(ModifierEffectCategory.Poison)) health.character.Poison();
 
         }
     }
@@ -117,8 +117,8 @@ public class damageReceiver : MonoBehaviour
         if (enemyScript != null)
         {
             enemyScript.Attacked(token);
-            if (token.isBurn && !enemyScript.IsStatusEffect(StatusEffectCategory.Fire) && token.originEnemy != enemyScript) enemyScript.Burn();
-            if (token.isPoison && !enemyScript.IsStatusEffect(StatusEffectCategory.Poison) && token.originEnemy != enemyScript && enemyScript.Stats.UnitType != UnitType.Mechanical) enemyScript.Poison();
+            if (token.isBurn && !enemyScript.IsStatusEffect(ModifierEffectCategory.Fire) && token.originEnemy != enemyScript) enemyScript.Burn();
+            if (token.isPoison && !enemyScript.IsStatusEffect(ModifierEffectCategory.Poison) && token.originEnemy != enemyScript && enemyScript.Stats.UnitType != UnitType.Mechanical) enemyScript.Poison();
         }
 
         if (destructibleScript != null)

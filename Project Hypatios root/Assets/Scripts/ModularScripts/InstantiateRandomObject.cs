@@ -30,6 +30,12 @@ public class InstantiateRandomObject : MonoBehaviour
         }
     }
 
+    public void SpawnThing1()
+    {
+        SpawnThing();
+    }
+
+
     public void SpawnThing(GameObject prefab1)
     {
         if (useRandomSpawn)

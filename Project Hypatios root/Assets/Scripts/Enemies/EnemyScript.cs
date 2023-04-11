@@ -140,11 +140,11 @@ public abstract class EnemyScript : Entity
 
     public bool IsOnFire()
     {
-        return AllStatusInEffect.Find(x => x.statusCategoryType == StatusEffectCategory.Fire);
+        return AllStatusInEffect.Find(x => x.statusCategoryType == ModifierEffectCategory.Fire);
     }
     public bool IsPoisoned()
     {
-        return AllStatusInEffect.Find(x => x.statusCategoryType == StatusEffectCategory.Poison);
+        return AllStatusInEffect.Find(x => x.statusCategoryType == ModifierEffectCategory.Poison);
     }
     public bool IsParalyzed()
     {

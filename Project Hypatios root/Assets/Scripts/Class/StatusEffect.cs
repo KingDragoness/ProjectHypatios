@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using Kryz.CharacterStats;
 
 
-public enum StatusEffectCategory
+public enum ModifierEffectCategory
 {
     //Generic status 0 - 49
     Nothing = 0,
@@ -15,6 +15,7 @@ public enum StatusEffectCategory
     MovementBonus,
     MaxHitpointBonus,
     DamageBonus,
+    MaxHPPercentage,
     //Bonus Perks for Player 50 - 99
     RegenHPBonus = 50,
     KnockbackResistance,
@@ -40,14 +41,22 @@ public enum StatusEffectCategory
 /// </summary>
 
 
-public abstract class BaseStatusEffect : MonoBehaviour
+public abstract class BaseModifierEffect : MonoBehaviour
 {
     [ShowInInspector] [ReadOnly] public Entity target;
     public float EffectTimer = 5f;
-    public StatusEffectCategory statusCategoryType;
+    public ModifierEffectCategory statusCategoryType;
     public float Value = 0.1f;
+    public StatusEffectMono statusMono;
     public string SourceID = "PermanentPerk";
 
+    public bool IsTiedToStatusMono
+    {
+        get
+        {
+            return statusMono != null;
+        }
+    }
 
     public abstract void ApplyEffect();
 
@@ -59,22 +68,25 @@ public abstract class BaseStatusEffect : MonoBehaviour
 
         if (playerScript)
         {
-            if (statusCategoryType == StatusEffectCategory.MovementBonus)
+            if (statusCategoryType == ModifierEffectCategory.MovementBonus)
                 playerScript.speedMultiplier.AddModifier(new StatModifier(Value, StatModType.PercentAdd, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.MaxHitpointBonus)
+            if (statusCategoryType == ModifierEffectCategory.MaxHitpointBonus)
                 playerScript.Health.maxHealth.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.RegenHPBonus)
+            if (statusCategoryType == ModifierEffectCategory.MaxHPPercentage)
+                playerScript.Health.maxHealth.AddModifier(new StatModifier(Value, StatModType.PercentMult, this.gameObject));
+
+            if (statusCategoryType == ModifierEffectCategory.RegenHPBonus)
                 playerScript.Health.healthRegen.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.KnockbackResistance)
+            if (statusCategoryType == ModifierEffectCategory.KnockbackResistance)
                 playerScript.Weapon.Recoil.knockbackResistance.AddModifier(new StatModifier(-Value, StatModType.Flat, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.BonusDamageMelee)
+            if (statusCategoryType == ModifierEffectCategory.BonusDamageMelee)
                 playerScript.BonusDamageMelee.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.BonusDamageGun)
+            if (statusCategoryType == ModifierEffectCategory.BonusDamageGun)
                 playerScript.BonusDamageGun.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
             var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
@@ -82,11 +94,14 @@ public abstract class BaseStatusEffect : MonoBehaviour
         }
         else if (enemyScript)
         {
-            if (statusCategoryType == StatusEffectCategory.MovementBonus)
+            if (statusCategoryType == ModifierEffectCategory.MovementBonus)
                 enemyScript.Stats.MovementBonus.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
-            if (statusCategoryType == StatusEffectCategory.MaxHitpointBonus)
+            if (statusCategoryType == ModifierEffectCategory.MaxHitpointBonus)
                 enemyScript.Stats.MaxHitpoint.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
+            if (statusCategoryType == ModifierEffectCategory.MaxHPPercentage)
+                enemyScript.Stats.MaxHitpoint.AddModifier(new StatModifier(Value, StatModType.PercentMult, this.gameObject));
 
             // if (statusCategoryType == StatusEffectCategory.RegenHPBonus), not implemented
 
@@ -132,7 +147,7 @@ public abstract class BaseStatusEffect : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public virtual void OnDestroy()
     {
         RemoveEffects();
     }
