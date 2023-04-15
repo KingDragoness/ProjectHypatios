@@ -5,7 +5,7 @@ using UnityEngine;
 public class Chamber_Level4 : MonoBehaviour
 {
 
-    public List<EnemyScript> enemyToSpawn;
+    public List<InstantiateRandomObject> enemySpawners;
     public int leftEnemy = 15;
     public Transform spawnTransform;
     public float range = 10;
@@ -68,16 +68,9 @@ public class Chamber_Level4 : MonoBehaviour
         rangeSpawn.x += Random.Range(-range / 2, range / 2);
         rangeSpawn.z += Random.Range(-range / 2, range / 2);
 
-        var enemyTarget = enemyToSpawn[0];
-        float chance = Random.Range(0, 1f);
+        InstantiateRandomObject spawner = enemySpawners[Random.Range(0, enemySpawners.Count - 1)];
 
-        if (chance > 0.9f)
-        {
-            enemyTarget = enemyToSpawn[1];
-        }
-
-        var NewEnemy = Instantiate(enemyTarget, transform);
-        NewEnemy.transform.position = rangeSpawn;
+        var NewEnemy = spawner.SpawnWithChanceThing().GetComponent<EnemyScript>();
         NewEnemy.gameObject.SetActive(true);
         chamberScript.AddEnemy(NewEnemy);
     }

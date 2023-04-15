@@ -82,8 +82,9 @@ public class BirdEnemy : EnemyScript
 
         if (evaluateChoiceTimer > 2)
         {
+            float randomSound = Random.Range(0f, 5f);
             float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
-            audio_Idle.Play();
+            if (randomSound < 1f) audio_Idle.Play();
             AI_Detection();
 
             if (hasSeenPlayer)

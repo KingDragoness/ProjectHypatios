@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Serialization;
 using Sirenix.OdinInspector;
 using UnityEngine.InputSystem;
+using UnityEngine.UI.Extensions;
 using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 public class MainUI : MonoBehaviour
@@ -46,10 +47,13 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject TriviaMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
+
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
     [FoldoutGroup("Tooltips")] public RectTransform tooltipBig;
     [FoldoutGroup("Tooltips")] public RectTransform tooltipSmall;
     [FoldoutGroup("Tooltips")] public RectTransform testingTooltipPos;
+    [FoldoutGroup("Tooltips")] public Text smallTooltip_LeftHandedLabel;
+    [FoldoutGroup("Tooltips")] public Text smallTooltip_RightHandedLabel;
 
     public UIMode current_UI = UIMode.Default;
     [Range(0f, 1f)] public float UI_Scaling = 1f;
@@ -126,6 +130,17 @@ public class MainUI : MonoBehaviour
         var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
         tooltipSmall.position = v3;
         testingTooltipPos.position = v3;
+    }
+
+
+    public void ShowTooltipSmall(RectTransform currentSelection, string str_left, string str_right)
+    {
+        tooltipSmall.gameObject.SetActive(true);
+        var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
+        tooltipSmall.position = v3;
+        testingTooltipPos.position = v3;
+        smallTooltip_LeftHandedLabel.text = str_left;
+        smallTooltip_RightHandedLabel.text = str_right;
     }
 
     public void CloseAllTooltip()

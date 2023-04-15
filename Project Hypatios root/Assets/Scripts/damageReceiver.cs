@@ -104,6 +104,7 @@ public class damageReceiver : MonoBehaviour
     public bool isCriticalHit = false;
     [Tooltip("> 1 for weak spots. < 1 for resistant spots.")]
     public float multiplier = 1f;
+    public bool isPrintDebug = false;
 
     [Space]
     public UnityEvent OnHit;
@@ -112,6 +113,7 @@ public class damageReceiver : MonoBehaviour
 
     public void Attacked(DamageToken token)
     {
+        if (isPrintDebug) Debug.Log(token.damage);
         token.damage *= multiplier;
 
         if (enemyScript != null)

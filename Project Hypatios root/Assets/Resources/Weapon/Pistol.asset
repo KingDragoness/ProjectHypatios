@@ -22,16 +22,16 @@ MonoBehaviour:
     type: 3}
   attachments:
   - ID: StandardReceiver
-    Name: Standard Receiver
-    Description: Deals additional damage and reduces cooldown. Worse recoil.
-    slot: 1
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 1
-    modifier_damage: 5
+    Name: Standard Receiver
+    Description: Deals additional damage and reduces cooldown. Worse recoil.
+    slot: 1
+    order: 10
+    modifier_damage: 9
     modifier_cooldown: 1
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
@@ -41,16 +41,16 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: AdvancedReceiver
-    Name: Advanced Receiver
-    Description: Deals superior damage and reduces cooldown. Worse recoil.
-    slot: 1
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 3
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 1
-    modifier_damage: 9
+    Name: Advanced Receiver
+    Description: Deals superior damage and reduces cooldown. Worse recoil.
+    slot: 1
+    order: 10
+    modifier_damage: 15
     modifier_cooldown: 2
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
@@ -60,16 +60,16 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: SuperReceiver
-    Name: Super Receiver
-    Description: Deals extraordinary damage and reduces cooldown. Terrible accuracy.
-    slot: 1
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 3
-    modifier_damage: 18
+    Name: Super Receiver
+    Description: Deals extraordinary damage and reduces cooldown. Terrible accuracy.
+    slot: 1
+    order: 10
+    modifier_damage: 27
     modifier_cooldown: 5
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
@@ -79,16 +79,16 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: KilltronFrame
-    Name: Killtron Frame
-    Description: Deals extremely high damage and reduces cooldown. Minor recoil reduction.
-    slot: 0
-    order: 1000
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
       count: 1
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 2
-    modifier_damage: 50
+    Name: Killtron Frame
+    Description: Deals extremely high damage and reduces cooldown. Minor recoil reduction.
+    slot: 0
+    order: 1000
+    modifier_damage: 51
     modifier_cooldown: 5
     modifier_percent_movespeed: 0
     modifier_percent_accuracy: 0
@@ -98,15 +98,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: BatteryIonCapacitor
-    Name: Ion Capacitor Battery
-    Description: Magazine size to 14.
-    slot: 5
-    order: 250
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 1
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 1
+    Name: Ion Capacitor Battery
+    Description: Magazine size to 14.
+    slot: 5
+    order: 250
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -117,15 +117,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: BatteryUcilavor
-    Name: Ucilavor Battery
-    Description: Magazine size to 16.
-    slot: 5
-    order: 250
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 2
+    Name: Ucilavor Battery
+    Description: Magazine size to 16.
+    slot: 5
+    order: 250
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -136,13 +136,13 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: FirmGrip
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     Name: Firm Grip
     Description: Reduces recoil.
     slot: 2
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 2
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -153,15 +153,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: StableGrip
-    Name: Stabilitator Grip
-    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
-    slot: 2
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 3
     - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
       count: 1
+    Name: Stabilitator Grip
+    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
+    slot: 2
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -172,15 +172,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: FlameTank
-    Name: Flame Tank
-    Description: Pistol now deal burning damage.
-    slot: 6
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 882e522c8321cfd41b2ec2b1c7e7a808, type: 2}
       count: 1
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 1
+    Name: Flame Tank
+    Description: Pistol now deal burning damage.
+    slot: 6
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -191,13 +191,13 @@ MonoBehaviour:
     stat_burn: 1
     stat_poison: 0
   - ID: PoisonTank
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+      count: 3
     Name: Poison Tank
     Description: Pistol now deal poison damage.
     slot: 6
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
-      count: 3
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0

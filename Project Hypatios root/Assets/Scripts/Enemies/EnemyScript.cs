@@ -17,6 +17,7 @@ public abstract class EnemyScript : Entity
 
     public EnemyStats Stats { get => _stats; }
     public string EnemyName { get => _baseStat.name; }
+    public RaycastHit HitDetection { get => _hitDetection;  }
 
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal Entity currentTarget;
     [FoldoutGroup("AI")] [ShowInInspector] public bool hasSeenPlayer = false;
@@ -28,6 +29,8 @@ public abstract class EnemyScript : Entity
 
     public System.Action OnDied;
     public System.Action OnPlayerDetected;
+
+    private RaycastHit _hitDetection;
 
     public virtual void Awake()
     {
@@ -168,7 +171,7 @@ public abstract class EnemyScript : Entity
 
         currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance, transform.position, chanceSelectAlly: f_valueChoosingPlayerAllies, maxDistance: maxDistance);
 
-        if (currentTarget != null)
+        if (currentTarget != null && Stats.MainAlliance != Alliance.Player)
         {
             float distAlly = Vector3.Distance(currentTarget.transform.position, Hypatios.Player.transform.position);
             //if nearest ally distance to the player is over 20 then just target the player
@@ -200,7 +203,7 @@ public abstract class EnemyScript : Entity
                     Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
                 }
 
-
+                _hitDetection = hit;
             }
         }
     }

@@ -75,7 +75,7 @@ MonoBehaviour:
   TimeToInitialize: 2
   sentryAmmo: 400
   maxSentryAmmo: 400
-  maxDistance: 100
+  maxDistance: 999
   manualControl: 0
 --- !u!114 &5395228656160041105
 MonoBehaviour:
@@ -366,6 +366,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -729,7 +730,8 @@ MonoBehaviour:
   enemyScript: {fileID: 227020768848326631}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.6
+  multiplier: 0.45
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -968,6 +970,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1115,6 +1118,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.7
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1294,7 +1298,8 @@ MonoBehaviour:
   enemyScript: {fileID: 227020768848326631}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.6
+  multiplier: 0.45
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1411,7 +1416,8 @@ MonoBehaviour:
   enemyScript: {fileID: 227020768848326631}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.6
+  multiplier: 0.45
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1535,6 +1541,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1753,6 +1760,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1849,6 +1857,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -2057,7 +2066,8 @@ MonoBehaviour:
   enemyScript: {fileID: 227020768848326631}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.6
+  multiplier: 0.45
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -2174,7 +2184,8 @@ MonoBehaviour:
   enemyScript: {fileID: 227020768848326631}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.6
+  multiplier: 0.45
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -2268,6 +2279,11 @@ PrefabInstance:
       propertyPath: damage
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
+        type: 3}
+      propertyPath: mySelf
+      value: 
+      objectReference: {fileID: 227020768848326631}
     - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: spread
@@ -2488,6 +2504,11 @@ PrefabInstance:
       propertyPath: damage
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
+        type: 3}
+      propertyPath: mySelf
+      value: 
+      objectReference: {fileID: 227020768848326631}
     - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: spread

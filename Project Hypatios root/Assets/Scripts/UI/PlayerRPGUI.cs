@@ -292,6 +292,10 @@ public class PlayerRPGUI : MonoBehaviour
             {
                 Hypatios.Player.timeSinceLastDash = 10f;
             }
+            if (itemCLass.statusEffect != null)
+            {
+                itemCLass.statusEffect.AddStatusEffectPlayer(itemCLass.statusEffectTime);
+            }
 
             Hypatios.Player.Inventory.RemoveItem(itemData);
         }

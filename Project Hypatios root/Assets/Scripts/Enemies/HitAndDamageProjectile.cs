@@ -9,6 +9,7 @@ public class HitAndDamageProjectile : MonoBehaviour
 
     public bool killByImpact = false;
     public bool isBurn = false;
+    public bool isPoison = false;
     public bool allowHitEnemy = false;
     public bool isAllowIndicator = false;
     public bool useObjectPooler = false;
@@ -49,6 +50,7 @@ public class HitAndDamageProjectile : MonoBehaviour
         token.healthSpeed = DamageSpeedOverride;
         token.originEnemy = enemyOrigin;
         token.isBurn = isBurn;
+        token.isPoison = isPoison;
         if (isAllowIndicator) token.allowPlayerIndicator = true;
 
         UniversalDamage.TryDamage(token, other.transform, transform);

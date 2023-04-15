@@ -273,7 +273,7 @@ public class SentryPDAWeapon : GunScript
                 DigitOutputLabel.text = $"DEST.ROY0.MODE";
                 if (isDestroyingHold)
                 {
-                    Label_Prompt.text = $"<HOLD... ({Mathf.RoundToInt(_timerToDestroy*10f)/10f}/3s)>";
+                    Label_Prompt.text = $"<HOLD... ({Mathf.RoundToInt(_timerToDestroy*10f)/10f}/2s)>";
                 }
                 else
                 {
@@ -436,7 +436,7 @@ public class SentryPDAWeapon : GunScript
         }
         else
         {
-            _timerToDestroy = 3f;
+            _timerToDestroy = 2f;
         }
 
 
@@ -521,7 +521,7 @@ public class SentryPDAWeapon : GunScript
     private void Action_Destroy()
     {
         currentSentryGun.Stats.CurrentHitpoint = -1f;
-        _timerToDestroy = 3f;
+        _timerToDestroy = 2f;
         isDestroyingHold = false;
     }
 

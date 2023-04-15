@@ -27,6 +27,7 @@ public class FlamethrowerWeapon : GunScript
 
         if (isFiring)
         {
+            if (muzzle1.gameObject.activeSelf == false) muzzle1.gameObject.SetActive(true);
             if (!audioFire.isPlaying) audioFire.Play();
             cooldownDamage -= Time.deltaTime;
             splashDamageScript.DamagePerSecond = damage * 0.15f * Hypatios.Player.BonusDamageGun.Value;
@@ -43,6 +44,7 @@ public class FlamethrowerWeapon : GunScript
         else
         {
             if (audioFire.isPlaying) audioFire.Stop();
+            muzzle1.gameObject.SetActive(false);
 
             cooldownDamage = 0.1f;
         }

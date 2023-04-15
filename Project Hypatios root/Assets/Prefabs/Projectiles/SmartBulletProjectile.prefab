@@ -48,7 +48,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05
+  m_Radius: 0.066
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &815568748394216750
 Rigidbody:
@@ -58,9 +58,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815568748394216749}
   serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 0.1
-  m_AngularDrag: 0.1
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -80,8 +80,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killByImpact: 1
   isBurn: 0
+  isPoison: 0
   allowHitEnemy: 1
   isAllowIndicator: 0
+  useObjectPooler: 0
+  reuseInactive: 1
+  shouldOverrideAsPlayerOrigin: 0
   enemyOrigin: {fileID: 0}
   OnHitImpact:
     m_PersistentCalls:
@@ -106,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: {x: 0, y: 0, z: 0}
-  relativeForce: {x: 0, y: 0, z: 1400}
+  relativeForce: {x: 0, y: 0, z: 12}
   multiplier: 1
   Rigidbody: {fileID: 815568748394216750}
 --- !u!114 &1858696537829962523
@@ -150,13 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bc010e8e9f23d4797057e60bb4a75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedRotate: 999
+  speedRotate: 9999
   isDisableAutoTrack: 0
   isSuperSmartBullet: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 5377
-  forceAdd: {x: 0, y: 0, z: 7000}
+  forceAdd: {x: 0, y: 0, z: 1000}
   enemyTarget: {fileID: 0}
   cachedTargetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &2749669402339519247
@@ -171,12 +175,12 @@ GameObject:
   - component: {fileID: 894590701887952465}
   - component: {fileID: 851753415715194733}
   m_Layer: 20
-  m_Name: Cube
+  m_Name: VISUALTEST
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5879159684240022292
 Transform:
   m_ObjectHideFlags: 0
@@ -186,7 +190,7 @@ Transform:
   m_GameObject: {fileID: 2749669402339519247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
   m_Children: []
   m_Father: {fileID: 815568748394216748}
   m_RootOrder: 0
@@ -217,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1846053388404335818, guid: e526bfa9a57b2b34784be48c0dd6bb01, type: 3}
+  - {fileID: 2100000, guid: a55de927fe4d3d04cbe83daae3df47f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

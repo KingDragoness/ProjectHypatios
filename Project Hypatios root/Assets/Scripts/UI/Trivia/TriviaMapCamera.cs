@@ -19,6 +19,8 @@ public class TriviaMapCamera : MonoBehaviour
     private float xMovement;
     private float yMovement;
     private bool enableLook = false;
+    private bool isMouse = false;
+    private bool isKeyboard = false;
     private Vector3 lastPanPosition;
 
     private void OnDrawGizmosSelected()
@@ -31,6 +33,8 @@ public class TriviaMapCamera : MonoBehaviour
 
     private void Update()
     {
+        isMouse = false;
+        isKeyboard = false;
 
         HandleKeyBoard();
         HandleMouse();
@@ -90,12 +94,15 @@ public class TriviaMapCamera : MonoBehaviour
             }
         }
 
+
+        if (isKeyboard == true) return; //prevent bug
         if (Input.GetMouseButtonDown(0))
         {
             lastPanPosition = Input.mousePosition;
         }
         else if (Input.GetMouseButton(0))
         {
+            isMouse = true;
             PanCamera(Input.mousePosition);
         }
 
@@ -123,6 +130,7 @@ public class TriviaMapCamera : MonoBehaviour
             }
 
             PanCameraByKeyboard(move3DVector * PanSpeedKey);
+            isKeyboard = true;
         }
         else
         {

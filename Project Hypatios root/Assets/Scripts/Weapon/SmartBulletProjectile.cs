@@ -47,11 +47,15 @@ public class SmartBulletProjectile : MonoBehaviour
     {
         float a = 1;
         bulletCanSee = false;
+        bool backwardForce = false;
 
         if (enemyTarget != null)
         {
             var offsetPos = enemyTarget.OffsetedBoundWorldPosition;
             var q = Quaternion.LookRotation(offsetPos - transform.position);
+            var dir = transform.position - offsetPos;
+            Vector3 velocity = rb.velocity.normalized;
+            var dot = Vector3.Dot(velocity, dir);
             RaycastHit hit = new RaycastHit();
 
             if (isSuperSmartBullet)
@@ -80,6 +84,11 @@ public class SmartBulletProjectile : MonoBehaviour
             {
             }
 
+            //backward manuever
+            if (dot < -0.5f)
+            {
+                backwardForce = true;
+            }
 
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, q, speedRotate * Time.deltaTime);
@@ -89,7 +98,7 @@ public class SmartBulletProjectile : MonoBehaviour
             float distXYPlane = Vector3.Distance(transform.position, relativePos);
             float dist = Vector3.Distance(transform.position, enemyTarget.transform.position);
 
-            if (distXYPlane > 3f)
+            if (distXYPlane > 3f | backwardForce)
             {
                 a = Mathf.Clamp(1f - (distXYPlane - 3f) * 0.04f, 0f ,1f);
             }
@@ -119,9 +128,10 @@ public class SmartBulletProjectile : MonoBehaviour
 
         }
 
+ 
         float _speedMod = Mathf.Clamp(a, 0.3f, 1f);
 
-        rb.AddRelativeForce(forceAdd * _speedMod * Time.deltaTime);
+        rb.AddRelativeForce(forceAdd * _speedMod * Time.deltaTime, ForceMode.VelocityChange);
     }
 
     public void SetLookImmediately()

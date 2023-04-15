@@ -22,11 +22,13 @@ MonoBehaviour:
     type: 3}
   attachments:
   - ID: TacticalFrame
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 3
     Name: Tactical Frame
     Description: Higher rate of fire.
     slot: 0
     order: 10
-    RequirementCrafting: []
     modifier_damage: 0
     modifier_cooldown: 8
     modifier_percent_movespeed: 0
@@ -37,15 +39,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: ExtenderMag
-    Name: Extender Magazine
-    Description: Increases magazine size to 40.
-    slot: 5
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 1
+    Name: Extender Magazine
+    Description: Increases magazine size to 40.
+    slot: 5
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -56,11 +58,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: AdvancedReceiver
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 4
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 2
     Name: Advanced Receiver
     Description: Deals additional damage. Worse recoil.
     slot: 1
     order: 10
-    RequirementCrafting: []
     modifier_damage: 6
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -70,14 +76,33 @@ MonoBehaviour:
     override_magazineSize: 0
     stat_burn: 0
     stat_poison: 0
+  - ID: SuperiorReceive
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 10
+    - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+      count: 4
+    Name: Superior Receiver
+    Description: Deals exceptional damage.
+    slot: 1
+    order: 10
+    modifier_damage: 12
+    modifier_cooldown: 0
+    modifier_percent_movespeed: 0
+    modifier_percent_accuracy: 0
+    modifier_percent_recoil: 0
+    modifier_customVariable: []
+    override_magazineSize: 0
+    stat_burn: 0
+    stat_poison: 0
   - ID: FirmGrip
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     Name: Firm Grip
     Description: Reduces recoil.
     slot: 2
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 2
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -88,15 +113,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: StableGrip
-    Name: Stabilitator Grip
-    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
-    slot: 2
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 3
     - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
       count: 1
+    Name: Stabilitator Grip
+    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
+    slot: 2
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -121,7 +146,7 @@ MonoBehaviour:
   buy_AmmoSoulPrice: 3
   buy_SoulPrice: 40
   isCraftable: 1
-  defaultDamage: 45
+  defaultDamage: 18
   defaultMagazineSize: 16
   defaultCooldown: 12
   rewardRate:

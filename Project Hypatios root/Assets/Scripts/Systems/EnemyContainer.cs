@@ -318,6 +318,29 @@ public class EnemyContainer : MonoBehaviour
 
     #endregion
 
+
+    public RaycastHit GetHit(Vector3 pos, Vector3 dir, float range = 1000f, int layerMask = -99)
+    {
+        RaycastHit hit;
+        int lm = Hypatios.Player.Weapon.defaultLayerMask;
+
+        if (layerMask != -99)
+        {
+            lm = layerMask;
+        }
+
+        if (Physics.Raycast(pos, dir, out hit, range, lm, QueryTriggerInteraction.Ignore))
+        {
+        }
+        else
+        {
+            hit.point = pos + (dir * range);
+        }
+
+        return hit;
+
+    }
+
     [FoldoutGroup("Debug")] [ShowInInspector] [ReadOnly] private List<EnemyScript> tempList_NearestEnemy = new List<EnemyScript>();
 
 

@@ -27,6 +27,8 @@ public class ItemInventory : ScriptableObject
     [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
     [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
     [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
+    [ShowIf("category", Category.Consumables)] public BaseStatusEffectObject statusEffect;
+    [ShowIf("statusEffect", true)] public float statusEffectTime = 5;
     [ShowIf("category", Category.Consumables)] [Range(0.1f,30f)] public float consume_HealTime = 5; //this is different from speed (higher heal time means longer heal time)
 
     public string Description { get => _description;  }

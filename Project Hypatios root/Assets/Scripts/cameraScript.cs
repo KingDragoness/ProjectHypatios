@@ -36,6 +36,12 @@ public class cameraScript : MonoBehaviour
         if (isLimitedIntroMode == false)
             instance = this;
     }
+
+    private void BaitTest1()
+    {
+        Texture texture = null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

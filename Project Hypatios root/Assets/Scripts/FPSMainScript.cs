@@ -198,9 +198,10 @@ public class FPSMainScript : MonoBehaviour
 
     public void CommandCheat(string cheatName)
     {
-        if (cheatName == "ignoregravity")
+        if (cheatName == "sentry")
         {
-            
+            ConsoleCommand.Instance.CommandInput("mats");
+            ConsoleCommand.Instance.CommandInput("additem SentryPDA");
         }
     }
 
@@ -348,6 +349,7 @@ public class FPSMainScript : MonoBehaviour
         Player.Health.curHealth = savedata.Player_CurrentHP;
         Player.Health.alcoholMeter = savedata.Player_AlchoholMeter;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
+        Player.PerkData.Temp_StatusEffect = savedata.AllPerkDatas.Temp_StatusEffect;
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -384,6 +386,7 @@ public class FPSMainScript : MonoBehaviour
         Player.Health.targetHealth = Player.Health.maxHealth.Value;
         Player.Health.HealthSpeed = 50f;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
+        Player.PerkData.Temp_StatusEffect = savedata.AllPerkDatas.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -424,6 +427,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.persistent_PlayerStat = persistent_PlayerStat;
         hypatiosSave.run_PlayerStat = run_PlayerStat;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
+        hypatiosSave.AllPerkDatas.Temp_StatusEffect = Player.PerkData.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
         hypatiosSave.otherEverUsed = otherEverUsed;
@@ -484,6 +488,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_RunSessionUnixTime = 0;
         hypatiosSave.Game_LastLevelPlayed = level1_Scene.Index;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
+        hypatiosSave.AllPerkDatas.Temp_StatusEffect.Clear();
         hypatiosSave.Player_Inventory = new InventoryData();
         hypatiosSave.run_PlayerStat = new PlayerStatSave();
 

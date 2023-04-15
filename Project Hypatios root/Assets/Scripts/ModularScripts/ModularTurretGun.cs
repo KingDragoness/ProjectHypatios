@@ -91,6 +91,72 @@ public class ModularTurretGun : MonoBehaviour
         return false;
     }
 
+    public void FireTurret(Vector3 customPos, Vector3 customDir, float limitDist)
+    {
+        RaycastHit hit;
+        isHittingSomething = false;
+        isHittingTarget = false;
+        isTargetingSelf = false;
+
+        //first pass
+        if (Physics.Raycast(customPos, customDir, out hit, limitDist, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
+        {
+            isHittingSomething = true;
+
+            if (IsHittingTargetEnemy(hit.collider.gameObject))
+            {
+                isHittingTarget = true;
+            }
+
+
+            if (mySelf != null)
+            {
+                if (hit.collider.gameObject.IsParentOf(mySelf.transform.gameObject))
+                {
+                    isTargetingSelf = true;
+                }
+            }
+        }
+        else
+        {
+            hit.point = customPos + customDir * limitDist;
+        }
+
+        //second pass
+        if (useSecondPass)
+        {
+            RaycastHit secondHit;
+            if (Physics.Raycast(hit.point, hit.normal, out secondHit, hit.distance + 1, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
+            {
+                hit = secondHit;
+                secondpass_HitCeiling = true;
+            }
+        }
+
+        if (isHittingTarget == false && keepFiringIfNoDetection == false)
+        {
+            float random1 = Random.Range(0f, 1f);
+
+            if (random1 < 0.1f)
+                return;
+        }
+
+        if (dontFireIfBlocked && hit.collider != null)
+        {
+            var damageReceiver = hit.collider.GetComponent<damageReceiver>();
+
+            if (damageReceiver == null)
+                return;
+        }
+
+        if (isTargetingSelf == false)
+        {
+            HitTarget(hit);
+        }
+
+
+    }
+
     private void FireTurret(bool forceFire = false)
     {
         RaycastHit hit;
@@ -166,6 +232,11 @@ public class ModularTurretGun : MonoBehaviour
 
     private void OnEnable()
     {
+        CreateToken();
+    }
+
+    private void CreateToken()
+    {
         DamageToken token = new DamageToken();
         token.damage = damage;
         token.origin = originToken;
@@ -182,14 +253,15 @@ public class ModularTurretGun : MonoBehaviour
         OnFire?.Invoke();
 
         if (hit.collider != null)
-        {      
+        {
+            if (cachedToken == null) CreateToken();
             var spark = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.BulletSparksEnemy, true);
 
             spark.transform.position = hit.point;
             spark.transform.rotation = Quaternion.LookRotation(hit.normal);
             flashWeapon.gameObject.SetActive(true);
 
-            UniversalDamage.TryDamage(cachedToken, hit.collider.transform, transform);
+            UniversalDamage.TryDamage(cachedToken.Clone(), hit.collider.transform, transform);
         }
 
         var points = new Vector3[2];

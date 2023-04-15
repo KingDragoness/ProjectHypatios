@@ -301,6 +301,7 @@ public class Hypatios : MonoBehaviour
     [SerializeField]
     private Settings _settings;
 
+
     public static FPSMainScript Game { get => Instance._fpsMainScript; }
     public static ConsoleCommand ConsoleCommand { get => Instance._cc; }
     public static CharacterScript Player { get => Instance._characterScript; }
@@ -313,6 +314,16 @@ public class Hypatios : MonoBehaviour
     public static HypatiosControls.DefaultActions Input { get => Instance._actionMap.Default; }
     public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
+
+    #region Systems (ecs, System)
+
+    [FoldoutGroup("Systems")] [SerializeField] private MicrobotsControllerSystem _microbot;
+    public static MicrobotsControllerSystem Microbot { get => Instance._microbot; set => Instance._microbot = value; }
+
+
+
+    #endregion
+
 
     private static int _unixTimeStart = 1640087660;
     public static int UnixTimeStart { get => _unixTimeStart;  }
