@@ -8,6 +8,8 @@ using Sirenix.OdinInspector;
 public class ChamberLevel : ScriptableObject
 {
 
+    public bool isCausingFatigue = true;
+
     public string GetID()
     {
         return name;

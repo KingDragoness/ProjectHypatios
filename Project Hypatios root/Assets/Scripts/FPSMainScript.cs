@@ -31,8 +31,9 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_Player;
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_UI;
-    [FoldoutGroup("References")] public GameObject Prefab_SpawnAmmo;
-    [FoldoutGroup("References")] public GameObject Prefab_SpawnSoul;
+    [FoldoutGroup("References")] public RefillAmmoPlayer Prefab_SpawnAmmo;
+    [FoldoutGroup("References")] public SoulCapsulePlayer Prefab_SpawnSoul;
+    [FoldoutGroup("References")] public HealPlayer Prefab_SpawnHeal;
     [FoldoutGroup("References")] public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
 
     [Header("Saves")]

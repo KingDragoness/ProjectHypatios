@@ -24,8 +24,10 @@ public abstract class EnemyScript : Entity
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool canLookAtTarget = false;
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] internal bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] internal Transform eyeLocation;
+    [FoldoutGroup("AI")] [SerializeField] internal Transform debug_SecondPassHit;
 
     internal DamageToken _lastDamageToken;
+    internal float _lastTimeSeenPlayer = 0f;
 
     public System.Action OnDied;
     public System.Action OnPlayerDetected;
@@ -183,8 +185,10 @@ public abstract class EnemyScript : Entity
     }
 
 
+    //Must run this in update!
     public virtual void AI_Detection()
     {
+        if (Time.timeScale <= 0) return;
         var posOffsetLook = currentTarget.OffsetedBoundWorldPosition;
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
         Debug.DrawLine(transform.position, posOffsetLook);
@@ -195,16 +199,48 @@ public abstract class EnemyScript : Entity
 
             if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance, Hypatios.Enemy.baseDetectionLayer))
             {
+                _hitDetection = hit;
+                bool firstPassSucceed = false;
+                bool secondPassSucceed = false;
+
                 if (hit.transform.tag == "Player" | Hypatios.Enemy.CheckTransformIsAnEnemy(hit.transform, Stats.MainAlliance))
+                {
+                    firstPassSucceed = true;
+                }
+
+                //secondpass
+                RaycastHit secondHit;
+                if (Physics.Raycast(hit.point + hit.normal, hit.normal, out secondHit, hit.distance + 1, Hypatios.Enemy.baseDetectionLayer, QueryTriggerInteraction.Ignore))
+                {
+                   
+                }
+                else
+                {
+
+                }
+
+                float limitThreshold = 3f;
+                float dist = Vector3.Distance(secondHit.point, eyeLocation.transform.position);
+                if (debug_SecondPassHit != null) debug_SecondPassHit.transform.position = secondHit.point + secondHit.normal;
+                if (dist <= limitThreshold) secondPassSucceed = true;
+
+                if (firstPassSucceed && secondPassSucceed)
                 {
                     if (hasSeenPlayer == false) OnPlayerDetected?.Invoke();
                     hasSeenPlayer = true;
                     canLookAtTarget = true;
-                    Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position);
+                    Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, Color.grey);
                 }
-
-                _hitDetection = hit;
             }
+          }
+
+        if (canLookAtTarget == false)
+        {
+            _lastTimeSeenPlayer += Time.deltaTime;
+        }
+        else
+        {
+            _lastTimeSeenPlayer = 0f;
         }
     }
 

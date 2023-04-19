@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BotScript: {fileID: 145977078456378202}
   targetPosition: {x: 0, y: 0, z: 0}
+  destinationValid: 0
 --- !u!1 &582397589
 GameObject:
   m_ObjectHideFlags: 0
@@ -5158,6 +5159,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -5199,6 +5201,8 @@ MonoBehaviour:
   interactSound: {fileID: 0}
   useHoverEvent: 0
   interactDescription: Follow/Unfollow
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!1 &145977078456378021
 GameObject:
   m_ObjectHideFlags: 0
@@ -5279,7 +5283,13 @@ MonoBehaviour:
     m_Center: {x: 0, y: 1, z: 0}
     m_Extent: {x: 1.4, y: 2, z: 1.4}
   _baseStat: {fileID: 11400000, guid: ac827f295f9bce94db53a71954454442, type: 2}
-  hasSeenPlayer: 0
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelfKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  hasSeenPlayer: 1
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
   allAIModules:
@@ -5299,6 +5309,7 @@ MonoBehaviour:
   botCorpse: {fileID: 0}
   target: {fileID: 0}
   debug_Point: {fileID: 7340633352396582985}
+  pathValidStatus: 0
   _agent: {fileID: 145977078456378203}
   Mod_Assault: {fileID: 231218801}
   Mod_CaptureCP: {fileID: 404299100}
@@ -5438,6 +5449,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -10923,6 +10935,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -11369,6 +11382,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -26207,6 +26221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BotScript: {fileID: 145977078456378202}
   MustFollowRange: 10
+  destinationValid: 0
+  playerCanBeReached: 0
 --- !u!1 &7164188561355093414
 GameObject:
   m_ObjectHideFlags: 0
@@ -31073,6 +31089,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []

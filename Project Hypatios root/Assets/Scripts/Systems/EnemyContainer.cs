@@ -92,6 +92,11 @@ public class EnemyContainer : MonoBehaviour
         return AllEnemies.FindAll(x => x.EnemyName == stat.EnemyName).Count;
     }
 
+    public int CountEnemyHasSeenMe()
+    {
+        return AllEnemies.FindAll(x => x.hasSeenPlayer == true).Count;
+    }
+
     #endregion
 
     private float _cooldownPlayerNavMeshValid = 0.1f;

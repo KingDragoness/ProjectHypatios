@@ -89,6 +89,10 @@ public abstract class BaseModifierEffect : MonoBehaviour
             if (statusCategoryType == ModifierEffectCategory.BonusDamageGun)
                 playerScript.BonusDamageGun.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
+            if (statusCategoryType == ModifierEffectCategory.DashCooldown)
+                playerScript.dashCooldown.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
+
             var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
             test1 = playerScript.BonusDamageGun.Value;
         }
@@ -132,6 +136,7 @@ public abstract class BaseModifierEffect : MonoBehaviour
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
+            playerScript.dashCooldown.RemoveAllModifiersFromSource(gameObject);
 
         }
     }

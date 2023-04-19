@@ -15,6 +15,8 @@ public class StageChamberScript : MonoBehaviour
     public GameObject sign_LevelStateUnclear;
     public List<EnemyScript> enemiesToClear;
     public UnityEvent OnChamberCompleted;
+    [FoldoutGroup("Stats")] [Tooltip("Enemy outside the volume will be killed instantly.")] public bool IsVolumeKillLimit = false;
+    [FoldoutGroup("Stats")] [ShowIf("IsVolumeKillLimit")] public RandomSpawnArea VolumeKillBox;
     public AudioSource chamberAudioAnnouncement;
     public Animator anim;
     private bool cleared = false;
@@ -56,6 +58,7 @@ public class StageChamberScript : MonoBehaviour
         enemiesToClear.Add(enemy);
     }
 
+    private float _checkTimer = 2f;
 
     // Update is called once per frame
     void Update()
@@ -69,6 +72,30 @@ public class StageChamberScript : MonoBehaviour
             chamberText.SetTextContent(enemiesToClear.Count.ToString());
         }
 
+        if (_checkTimer >= 0f)
+        {
+            _checkTimer -= Time.deltaTime;
+        }
+        else
+        {
+            if (IsVolumeKillLimit) CheckEnemyToKill();
+            _checkTimer = 2f;
+        }
+
+    }
+
+    private void CheckEnemyToKill()
+    {
+        DamageToken token = new DamageToken();
+        token.damage = 9999f;
+
+        foreach (var enemy in enemiesToClear)
+        {
+            if (VolumeKillBox.IsInsideOcclusionBox(enemy.OffsetedBoundWorldPosition) == false)
+            {          
+                enemy.Attacked(token);
+            }
+        }
     }
 
     [FoldoutGroup("Debug")]

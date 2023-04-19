@@ -5408,6 +5408,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -5502,9 +5503,13 @@ MonoBehaviour:
   OnDamaged:
     m_PersistentCalls:
       m_Calls: []
+  OnSelfKilled:
+    m_PersistentCalls:
+      m_Calls: []
   hasSeenPlayer: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
   OnAttack:
     m_PersistentCalls:
       m_Calls:
@@ -5619,7 +5624,7 @@ MonoBehaviour:
   scanEnemyCooldown: 0.5
   randomizedDefaultSpeed: {x: -4, y: 0}
   animator: {fileID: 5431930210197499611}
-  speed: 15
+  speed: 13
   defaultScale: {x: 0.73, y: 0.73, z: 0.73}
   distanceToAttack: 3.1
   hitbox: {fileID: 1321675875}
@@ -5666,8 +5671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f34bcff82f45844887162caf1954724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
-    type: 3}
+  customCapsule: {fileID: 0}
   radius: 0.6
   explosionForce: 50
 --- !u!1 &2742585520254561900
@@ -5805,6 +5809,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -6943,6 +6948,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -6978,6 +6984,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.5
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -7168,6 +7175,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 0.7
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []

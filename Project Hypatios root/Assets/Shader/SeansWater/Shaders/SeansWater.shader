@@ -10,7 +10,7 @@ Shader "Custom/SeansWater" {
         _GlossAmount ("Gloss Amount", Range(0, 1)) = 1
         _WaveNormals ("Wave Normals", 2D) = "bump" {}
         _WaveIntensity ("Wave Intensity", Range(-1.5, 1.5)) = 1
-        _WaveScrollSpeed ("Wave Scroll Speed", Range(0, 0.1)) = 0
+        _WaveScrollSpeed ("Wave Scroll Speed", Range(0, 2)) = 0
         _DetailNormals ("Detail Normals", 2D) = "bump" {}
         _DetailIntensity ("Detail Intensity", Range(1, 1.5)) = 1
         _DetailScrollSpeed ("Detail Scroll Speed", Range(0, 0.1)) = 0

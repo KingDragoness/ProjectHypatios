@@ -102,7 +102,7 @@ public class MicrobotsControllerSystem : MonoBehaviour
             if (drone == null) continue;
             if (drone.currentTarget == null) continue;
             drone.AI_Detection();
-            if (drone.canLookAtTarget)
+            if (drone._lastTimeSeenPlayer > 0.5f)
             {
                 drone.avoidanceLeft = false;
                 drone.avoidanceRight = false;

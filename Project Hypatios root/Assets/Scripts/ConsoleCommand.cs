@@ -19,6 +19,8 @@ public class ConsoleCommand : MonoBehaviour
         "",
     };
 
+    private int index = 0;
+
     private static ConsoleCommand _instance;
 
     public static ConsoleCommand Instance
@@ -44,9 +46,36 @@ public class ConsoleCommand : MonoBehaviour
 
     public void Update()
     {
+        if (inputField.isFocused == false)
+        {
+            inputField.Select();
+            inputField.ActivateInputField();
+        }
+
         if (Input.GetKeyUp(KeyCode.Return))
         {
+            index = 0;
             CommandInput(inputField.text);
+        }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            index++;
+            if (index >= historyCommands.Count)
+            {
+                index = historyCommands.Count - 1;
+            }
+            inputField.SetTextWithoutNotify(historyCommands[index]);
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            index--;
+            if (index < 0)
+            {
+                index = 0;
+            }
+            inputField.SetTextWithoutNotify(historyCommands[index]);
         }
     }
 
@@ -62,6 +91,7 @@ public class ConsoleCommand : MonoBehaviour
         ProcessCommand(commandInput, args);
 
         historyCommands.Insert(0, command);
+        inputField.Select();
     }
 
     public void SendConsoleMessage(string msg)
@@ -163,6 +193,10 @@ public class ConsoleCommand : MonoBehaviour
 
             case "help":
                 Help(args);
+                break;
+
+            case "paradoxes":
+                ParadoxListAll(args);
                 break;
 
             case "res":
@@ -695,6 +729,77 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// List all paradox events that ever occured.
+    /// </summary>
+    /// <param name="args"></param>
+    private void ParadoxListAll(string[] args)
+    {
+        try
+        {
+            if (args.Length > 0)
+            {
+                int category = 0;
+                int.TryParse(args[0], out category);
+
+                var allEventKeys = Hypatios.Game.otherEverUsed;
+
+                string s = "";
+                int ix = 0;
+                int i = 0;
+
+                foreach (var key in allEventKeys)
+                {
+                    s += $"{key} | ";
+                    ix++;
+                    i++;
+                    if (ix >= 10)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        ix = 0;
+                        s = "";
+                    }
+                    else if (i >= allEventKeys.Count - 1)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        s = "";
+                    }
+                }
+            }
+            else
+            {
+                var allEventKeys = Hypatios.Game.otherEverUsed;
+                string s = "";
+                int ix = 0;
+                int i = 0;
+
+                foreach (var key in allEventKeys)
+                {
+                    s += $"{key} | ";
+                    ix++;
+                    i++;
+                    if (ix >= 10)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        ix = 0;
+                        s = "";
+                    }
+                    else if (i >= allEventKeys.Count - 1)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        s = "";
+                    }
+                }
+            }
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! paradoxes [<color=#00cc99dd>int</color> index].");
+        }
+
+    }
+
     private void Debug_ObjectStat(string[] args)
     {
         try
@@ -919,6 +1024,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'mats' to give free materials");
             helpCommands.Add("'nextlevel' to go next level while retaining items");
             helpCommands.Add("'nospeed' to set freecam speed. 'help ui' to check noclip.");
+            helpCommands.Add("'paradoxes' to check every key event triggered.");
             helpCommands.Add("'res' to restore health & dash");
             helpCommands.Add("'savefile' to save file");
             helpCommands.Add("'screensize' to set screen size");

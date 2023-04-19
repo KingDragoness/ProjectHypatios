@@ -12,6 +12,7 @@ public class TriviaMapUI : MonoBehaviour
     [Space]
     public TriviaBallButton triviaBall;
     public Wire wire;
+    public Transform farlandPoint;
     [FoldoutGroup("Preview")] public GameObject previewDescriptionPanel;
     [FoldoutGroup("Preview")] public Text titleLabel;
     [FoldoutGroup("Preview")] public Text descriptionLabel;
@@ -63,12 +64,36 @@ public class TriviaMapUI : MonoBehaviour
         var allButtons = parentTrivias.GetComponentsInChildren<TriviaBallButton>();
         allTriviaButtons = allButtons.ToList();
 
+        GenerateMissingTrivias();
         foreach (var button in allTriviaButtons)
         {
             button.RefreshTrivia();
         }
         GenerateTriviaLine();
 
+    }
+
+    private void GenerateMissingTrivias()
+    {
+        var allMissingTrivias = Hypatios.Assets.AllTrivias.ToList();
+        foreach (var button in allTriviaButtons)
+        {
+            allMissingTrivias.RemoveAll(x => x == button.trivia);
+        }
+
+        int i = 0;
+        foreach(var _trivia in allMissingTrivias)
+        {
+            var pos = new Vector3(farlandPoint.transform.position.x, farlandPoint.position.y, farlandPoint.position.z);
+            pos.x += (i * 1.5f);
+            var newButton = Instantiate(triviaBall, parentTrivias);
+            newButton.gameObject.transform.position = pos;
+            newButton.trivia = _trivia;
+            newButton.gameObject.name = $"TriviaBall ({_trivia.Title})";
+            newButton.gameObject.SetActive(true);
+            allTriviaButtons.Add(newButton);
+            i++;
+        }
     }
 
     [Button("Editor - Update trivia menu")]

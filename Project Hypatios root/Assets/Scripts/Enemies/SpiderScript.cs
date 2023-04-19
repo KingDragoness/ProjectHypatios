@@ -189,7 +189,7 @@ public class SpiderScript : EnemyScript
         {
             ManageSpiderRotation();
 
-            if (!canLookAtTarget)
+            if (_lastTimeSeenPlayer > 0.5f)
             {
                 audio_AboutAttack.pitch = 1;
                 audio_AboutAttack.volume = 0.3f;

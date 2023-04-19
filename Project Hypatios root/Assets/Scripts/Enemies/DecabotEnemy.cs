@@ -110,6 +110,7 @@ public class DecabotEnemy : EnemyScript
         {
             Movement();
             Weapons();
+            AI_Detection();
         }
     }
 
@@ -268,9 +269,8 @@ public class DecabotEnemy : EnemyScript
             var turret1 = weaponTurret[index1];
 
 
-            AI_Detection();
 
-            if (canLookAtTarget)
+            if (_lastTimeSeenPlayer > 0.5f)
             {
                 FireMissile(turret1.origin);
             }

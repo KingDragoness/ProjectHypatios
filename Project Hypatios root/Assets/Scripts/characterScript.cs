@@ -424,7 +424,8 @@ public class CharacterScript : Entity
             return;
         }
 
-        if (timeSinceLastDash > dashCooldown.Value)
+        float dashCooldownLimit = Mathf.Clamp(dashCooldown.Value, 0.05f, 99f); //Dash cooldown can never reach under 0.05 second
+        if (timeSinceLastDash > dashCooldownLimit)
         {
             MainGameHUDScript.Instance.dashOk.gameObject.SetActive(true);
 

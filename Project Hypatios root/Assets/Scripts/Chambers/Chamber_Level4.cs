@@ -21,7 +21,10 @@ public class Chamber_Level4 : MonoBehaviour
 
         if (cooldownCheck < 0)
         {
-            if (chamberScript.enemiesToClear.Count <= 4 && leftEnemy > 0)
+            int enemyLimitPerScene = 7;
+            enemyLimitPerScene += Mathf.FloorToInt(Hypatios.Chamber.GetChamberCompletion()/2);
+
+            if (chamberScript.enemiesToClear.Count < enemyLimitPerScene && leftEnemy > 0)
             {
                 SpawnEnemy();
             }
@@ -29,12 +32,13 @@ public class Chamber_Level4 : MonoBehaviour
             //special
 
 
-
-            if (leftEnemy == 12)
+            //UNLIMITED ENEMY BUG if all is true!
+            if (leftEnemy == 18)
             {
-                SpawnEnemy();
-                SpawnEnemy();
-                SpawnEnemy();
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
                 SpawnEnemy();
 
 
@@ -42,17 +46,25 @@ public class Chamber_Level4 : MonoBehaviour
 
             if (leftEnemy == 9)
             {
-                SpawnEnemy();
-                SpawnEnemy();
-                SpawnEnemy();
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
                 SpawnEnemy();
 
             }
 
             if (leftEnemy == 3)
             {
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
+                SpawnEnemy(true);
                 SpawnEnemy();
-                SpawnEnemy();
+
             }
 
             cooldownCheck = 1;
@@ -60,9 +72,9 @@ public class Chamber_Level4 : MonoBehaviour
     }
 
     [ContextMenu("SpawnEnemy")]
-    public void SpawnEnemy()
+    public void SpawnEnemy(bool ignoreCount = false)
     {
-        leftEnemy--;
+        if (ignoreCount == false) leftEnemy--;
 
         Vector3 rangeSpawn = spawnTransform.position;
         rangeSpawn.x += Random.Range(-range / 2, range / 2);

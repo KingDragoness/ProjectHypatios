@@ -399,7 +399,7 @@ public class MainUI : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            PauseMenu.gameObject.SetActive(false);
+            if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;
             HUD.gameObject.SetActive(true);
         }
@@ -407,7 +407,7 @@ public class MainUI : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            PauseMenu.gameObject.SetActive(true);
+            if (PauseMenu.activeSelf == false) PauseMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
 
             HUD.gameObject.SetActive(false);

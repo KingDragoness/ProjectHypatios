@@ -30,7 +30,6 @@ public class UI_Modular_TypewriterText : MonoBehaviour
             return;
         }
 
-        Debug.Log($"test1: {text}");
         currentCoroutine = Typewriter(text);
         StartCoroutine(currentCoroutine);
     }

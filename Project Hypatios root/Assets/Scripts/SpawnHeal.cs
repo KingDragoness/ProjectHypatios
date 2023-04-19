@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnHeal : MonoBehaviour
 {
 
-    public GameObject healCapsule;
+    public HealPlayer customCapsule;
     public float radius = .6f;
     public float explosionForce = 50f;
 
@@ -14,12 +14,17 @@ public class SpawnHeal : MonoBehaviour
     public void SpawnHealCapsule(int amount)
     {
         float capsuleAmount = Random.Range(Mathf.Clamp(amount-3, 2, 10), amount);
-        
+        var prefabTemplate = Hypatios.Game.Prefab_SpawnHeal;
+
+        if (customCapsule != null)
+            prefabTemplate = customCapsule;
+
         for (int i = 0; i < capsuleAmount; i++)
         {
             float x = Random.Range(-.5f, .5f);
             float z = Random.Range(-.5f, .5f);
-            Instantiate(healCapsule, transform.position + new Vector3(x, 0f, z), Quaternion.identity);
+            var c1 = Instantiate(prefabTemplate, transform.position + new Vector3(x, 0f, z), Quaternion.identity);
+            c1.isSpawned = true;
             Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
             foreach (Collider c in colliders)
             {

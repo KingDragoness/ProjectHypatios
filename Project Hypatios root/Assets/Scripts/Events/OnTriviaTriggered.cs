@@ -26,6 +26,18 @@ public class OnTriviaTriggered : MonoBehaviour
             OnTriviaNotActive?.Invoke();
     }
 
+    public void EnforceTrigger()
+    {
+        bool allow = CheckTriviaValid();
+
+        if (allow)
+        {
+            OnTriviaTrigger?.Invoke();
+        }
+        else
+            OnTriviaNotActive?.Invoke();
+    }
+
     private void OnDestroy()
     {
         OnActionTriviaTrigger -= OnTriggerTrivia;

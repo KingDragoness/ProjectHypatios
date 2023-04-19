@@ -19,16 +19,42 @@ public class Interact_OreTrader : MonoBehaviour
     public TextMesh label_Count;
     public int index = 0;
 
+    private float _timerRefresh = 1f;
+
     private void Start()
     {
         RefreshMonitor();
     }
 
+    private void Update()
+    {
+        if (_timerRefresh > 0f)
+        {
+            _timerRefresh -= Time.deltaTime;
+        }
+        else
+        {
+            RefreshMonitor();
+            _timerRefresh = 1f;
+        }
+    }
     [FoldoutGroup("Debug")]
     [Button("Sell Ores")]
     public void Sell()
     {
-        OrePriceList priceList = all_PriceList[index];
+        Sell_Item(index);
+    }
+
+    [Button("Sell Item")]
+    public void SellByCustomIndex(int _s)
+    {
+        Sell_Item(_s);
+    }
+
+
+    private void Sell_Item(int _index)
+    {
+        OrePriceList priceList = all_PriceList[_index];
         int count = Hypatios.Player.Inventory.Count(priceList.itemClass.GetID());
 
         if (count < priceList.sellAmount)
@@ -44,7 +70,7 @@ public class Interact_OreTrader : MonoBehaviour
         int bonusReward = 0;
         {
             int a = (int)Mathf.Clamp((baseReward / 4f), 1f, 10f);
-            int countSoul = Random.Range(1, a+1);
+            int countSoul = Random.Range(1, a + 1);
 
             for (int i = 0; i < countSoul; i++)
             {
@@ -62,7 +88,7 @@ public class Interact_OreTrader : MonoBehaviour
 
         Hypatios.Player.Inventory.RemoveItem(priceList.itemClass.GetID(), priceList.sellAmount);
         soundManagerScript.instance.Play("reward");
- 
+
 
 
         RefreshMonitor();

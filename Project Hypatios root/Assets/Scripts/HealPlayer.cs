@@ -10,23 +10,45 @@ public class HealPlayer : MonoBehaviour
     GameObject player;
     public float speed;
     public float distanceToCollect;
+    public bool isSpawned = false;
     PlayerHealth playerHealth;
     float curHealth;
+
+    private float _TimeSpawned;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        _TimeSpawned = Time.time;
+        player = Hypatios.Player.gameObject;
         playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        curHealth = playerHealth.targetHealth;
-        if (Vector3.Distance(transform.position, player.transform.position) < distanceToCollect && curHealth < playerHealth.maxHealth.Value)
+        bool inDistance = false;
+
+        if (Time.time > _TimeSpawned + 1f && isSpawned)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            inDistance = true;
+        }
+
+        if (Vector3.Distance(transform.position, player.transform.position) < distanceToCollect)
+        {
+            inDistance = true;
+        }
+
+        if (inDistance)
+        {
+            bool allowHeal = false;
+            curHealth = playerHealth.targetHealth;
+
+            if (curHealth < playerHealth.maxHealth.Value) allowHeal = true;
+
+            if (allowHeal)
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         }
     }
 

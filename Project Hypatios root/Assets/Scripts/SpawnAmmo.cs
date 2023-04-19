@@ -26,7 +26,8 @@ public class SpawnAmmo : MonoBehaviour
 
         float x = Random.Range(-.5f, .5f);
         float z = Random.Range(-.5f, .5f);
-        Instantiate(Hypatios.Game.Prefab_SpawnAmmo, transform.position + new Vector3(x, 0f, z), Quaternion.identity);
+        var c1 = Instantiate(Hypatios.Game.Prefab_SpawnAmmo, transform.position + new Vector3(x, 0f, z), Quaternion.identity);
+        c1.isSpawned = true;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider c in colliders)
@@ -50,6 +51,7 @@ public class SpawnAmmo : MonoBehaviour
         var spawnSoul = Instantiate(Hypatios.Game.Prefab_SpawnSoul, transform.position + new Vector3(x, 0f, z), Quaternion.identity);
         var spawnSoulComp = spawnSoul.GetComponent<SoulCapsulePlayer>();
         spawnSoulComp.soulAmount = soulAmount;
+        spawnSoulComp.isSpawned = true;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         foreach (Collider c in colliders)
