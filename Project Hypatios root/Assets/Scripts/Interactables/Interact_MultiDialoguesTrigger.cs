@@ -21,6 +21,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
 
     void Start()
     {
+        player = Hypatios.Player.transform;
         if (AutoScanDialogues)
             ScanDialogues();
     }
@@ -76,6 +77,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
     public void TriggerMessage()
     {
         if (alreadyTriggered) return;
+        ScanDialogues();
 
         foreach (var dialog in allDialogues)
         {

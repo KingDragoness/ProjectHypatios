@@ -14,6 +14,7 @@ public class RPG_CharPerkButton : MonoBehaviour
     }
 
     public PlayerRPGUI playerRPGUI;
+    public PlayerStatusUI playerStatusUI;
     public Type type;
     public BaseModifierEffectObject statusEffect;
     public BaseStatusEffectObject baseStatusEffectGroup;
@@ -23,7 +24,8 @@ public class RPG_CharPerkButton : MonoBehaviour
 
     public void HighlightPerk()
     {
-        playerRPGUI.HighlightPerk(this);
+        if (playerRPGUI != null) playerRPGUI.HighlightPerk(this);
+        if (playerStatusUI != null) playerStatusUI.HighlightPerk(this);
     }
 
     public void Refresh()
@@ -40,7 +42,8 @@ public class RPG_CharPerkButton : MonoBehaviour
 
     public void DehighlightPerk()
     {
-        playerRPGUI.DehighlightPerk();
+        if (playerRPGUI != null) playerRPGUI.DehighlightPerk();
+        if (playerStatusUI != null) playerStatusUI.DehighlightPerk();
         Hypatios.UI.CloseAllTooltip();
 
     }

@@ -12,6 +12,7 @@ public class InventoryItemButton : MonoBehaviour
     public Text Name_label;
     public Text Count_label;
     public Image FavoriteIcon;
+    public Image Subicon;
     public int index = 0;
 
     public void Refresh()

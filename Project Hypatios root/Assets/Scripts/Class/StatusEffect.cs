@@ -24,6 +24,8 @@ public enum ModifierEffectCategory
     ShortcutDiscount,
     BossDamageBonus,
     Alcoholism,
+    Recoil,
+    RegenHPPercentage,
     //Bonus Damage weapons for Player 100-120
     BonusDamageMelee = 99,
     BonusDamageGun = 100,
@@ -80,8 +82,14 @@ public abstract class BaseModifierEffect : MonoBehaviour
             if (statusCategoryType == ModifierEffectCategory.RegenHPBonus)
                 playerScript.Health.healthRegen.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
+            if (statusCategoryType == ModifierEffectCategory.RegenHPPercentage)
+                playerScript.Health.healthRegen.AddModifier(new StatModifier(Value, StatModType.PercentMult, this.gameObject));
+
             if (statusCategoryType == ModifierEffectCategory.KnockbackResistance)
                 playerScript.Weapon.Recoil.knockbackResistance.AddModifier(new StatModifier(-Value, StatModType.Flat, this.gameObject));
+
+            if (statusCategoryType == ModifierEffectCategory.Recoil)
+                playerScript.Weapon.Recoil.baseRecoil.AddModifier(new StatModifier(Value, StatModType.PercentMult, this.gameObject));
 
             if (statusCategoryType == ModifierEffectCategory.BonusDamageMelee)
                 playerScript.BonusDamageMelee.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
@@ -136,6 +144,7 @@ public abstract class BaseModifierEffect : MonoBehaviour
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
+            playerScript.Weapon.Recoil.baseRecoil.RemoveAllModifiersFromSource(gameObject);
             playerScript.dashCooldown.RemoveAllModifiersFromSource(gameObject);
 
         }

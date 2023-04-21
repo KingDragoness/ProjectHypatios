@@ -50,6 +50,10 @@ public class BasePerk : ScriptableObject
         {
             return perkDataClass.Perk_LV_KnockbackRecoil >= MAX_LEVEL;
         }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            return perkDataClass.Perk_LV_WeaponRecoil >= MAX_LEVEL;
+        }
         else if (category == ModifierEffectCategory.DashCooldown)
         {
             return perkDataClass.Perk_LV_DashCooldown >= MAX_LEVEL;
@@ -120,11 +124,25 @@ public class BasePerk : ScriptableObject
         PerkID = "KnockbackUpgrade";
         MAX_LEVEL = 10;
         category = ModifierEffectCategory.KnockbackResistance;
-        ReaperDialogue = $"\"Decreases gun recoil effect and damage shake effect.\"";
-        DescriptionPerk = "Decreases recoil effect by -0.15 ";
+        ReaperDialogue = $"\"Decreases physical knockback and damage shake effect.\"";
+        DescriptionPerk = "Decreases knockback effect by -0.15 point.";
         TemporaryPerkOverLimit = false;
         Commonness = 10;
         TitlePerk = "[KNOCKBACK RESISTANCE UPGRADE]";
+    }
+
+    [FoldoutGroup("Quick Menu")]
+    [Button("Recoil")]
+    public void Description_RecoilUpgrade(float Value)
+    {
+        PerkID = "RecoilUpgrade";
+        MAX_LEVEL = 12;
+        category = ModifierEffectCategory.Recoil;
+        ReaperDialogue = $"\"Decreases gun recoil effect.\"";
+        DescriptionPerk = "Decreases recoil effect by -6%";
+        TemporaryPerkOverLimit = false;
+        Commonness = 10;
+        TitlePerk = "[RECOIL UPGRADE]";
     }
 
     [FoldoutGroup("Quick Menu")]
@@ -197,6 +215,10 @@ public class BasePerk : ScriptableObject
         {
             return $"\"Decreases knockback by -{Value * 100}%, remember only lasts 1 run.\"";
         }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            return $"\"Decreases recoil by -{Value * 100}%, remember only lasts 1 run.\"";
+        }
         else if (category == ModifierEffectCategory.DashCooldown)
         {
             return $"\"Decreases dash cooldown by -0.2 seconds, remember only lasts 1 run.\"";
@@ -221,7 +243,9 @@ public class BasePerk : ScriptableObject
         else if (category == ModifierEffectCategory.RegenHPBonus)
             return $"+{Value} HP per second. Only lasts 1 run.";
         else if (category == ModifierEffectCategory.KnockbackResistance)
-            return $"Decreases recoil effect by -{Value*100}%. Only lasts 1 run.";
+            return $"Decreases knockback effect by -{Value*100}%. Only lasts 1 run.";
+        else if (category == ModifierEffectCategory.Recoil)
+            return $"Decreases recoil effect by -{Value * 100}%. Only lasts 1 run.";
         else if (category == ModifierEffectCategory.DashCooldown)
             return $"-0.2 seconds dash cooldown. Only lasts 1 run.";
         else if (category == ModifierEffectCategory.BonusDamageMelee)
@@ -265,27 +289,32 @@ public class BasePerk : ScriptableObject
             Value = 1;
         else if (category == ModifierEffectCategory.KnockbackResistance)
         {
-            Value = Random.Range(0.25f, 0.5f);
+            Value = Random.Range(0.4f, 0.8f);
+            Value = Mathf.Round(Value * 100) / 100;
+        }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            Value = Random.Range(0.2f, 0.4f);
             Value = Mathf.Round(Value * 100) / 100;
         }
         else if (category == ModifierEffectCategory.DashCooldown)
             Value = -0.2f;
         else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
-            Value = Random.Range(0.15f, 0.3f);
+            Value = Random.Range(0.25f, 0.4f);
 
             if (run > 3)
-                Value += Random.Range(run * 0.005f, run * 0.01f);
+                Value += Random.Range(run * 0.007f, run * 0.02f);
 
             Value = Mathf.Clamp(Value, 0f, 2f);
             Value = Mathf.Round(Value * 100) / 100;
         }
         else if (category == ModifierEffectCategory.BonusDamageGun)
         {
-            Value = Random.Range(0.15f, 0.3f);
+            Value = Random.Range(0.21f, 0.4f);
 
             if (run > 3)
-                Value += Random.Range(run * 0.005f, run * 0.01f);
+                Value += Random.Range(run * 0.0075f, run * 0.022f);
 
             Value = Mathf.Clamp(Value, 0f, 2f);
             Value = Mathf.Round(Value * 100) / 100;

@@ -204,6 +204,7 @@ public class HypatiosSave
         public int Perk_LV_Soulbonus = 0;
         public int Perk_LV_ShortcutDiscount = 0;
         public int Perk_LV_KnockbackRecoil = 0;
+        public int Perk_LV_WeaponRecoil = 0;
         public int Perk_LV_DashCooldown = 0;
         public int Perk_LV_IncreaseMeleeDamage = 0;
         public int Perk_LV_IncreaseGunDamage = 0;
@@ -256,6 +257,9 @@ public class HypatiosSave
 
             if (category == ModifierEffectCategory.KnockbackResistance)
                 Perk_LV_KnockbackRecoil++;
+
+            if (category == ModifierEffectCategory.Recoil)
+                Perk_LV_WeaponRecoil++;
 
             if (category == ModifierEffectCategory.DashCooldown)
                 Perk_LV_DashCooldown++;

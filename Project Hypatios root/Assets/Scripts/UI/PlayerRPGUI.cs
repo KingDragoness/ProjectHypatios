@@ -8,6 +8,13 @@ using Sirenix.OdinInspector;
 public class PlayerRPGUI : MonoBehaviour
 {
 
+    [System.Serializable]
+    public class SubiconIdentifier
+    {
+        public ItemInventory.SubiconCategory categoryIcon;
+        public Sprite sprite;
+    }
+
     [FoldoutGroup("Perk Tooltip")] public RectTransform perktooltipUI;
     [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_LeftHandedLabel;
     [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_RightHandedLabel;
@@ -25,6 +32,7 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
 
 
+    public List<SubiconIdentifier> allSubIcons = new List<SubiconIdentifier>();
     public RPG_CharPerkButton PerkButton;
     public RPG_CharPerkButton StatusMonoButton;
     public InventoryItemButton InventoryItemButton;
@@ -183,10 +191,15 @@ public class PlayerRPGUI : MonoBehaviour
 
             foreach (var index in indexes)
             {
+                var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
+                var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+                SubiconIdentifier subicon = Subcategory(itemClass.subCategory);
                 var newButton = Instantiate(InventoryItemButton, parentInventory);
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
                 newButton.Refresh();
+                newButton.Subicon.sprite = subicon.sprite;
                 _allInventoryButtons.Add(newButton);
             }
 
@@ -205,6 +218,11 @@ public class PlayerRPGUI : MonoBehaviour
         HandleDiscardItem();
         HandleFavoriteItem();
 
+    }
+
+    public SubiconIdentifier Subcategory(ItemInventory.SubiconCategory category)
+    {
+        return allSubIcons.Find(x => x.categoryIcon == category);
     }
 
     private void HandleFavoriteItem()
@@ -376,7 +394,7 @@ public class PlayerRPGUI : MonoBehaviour
 
             if (!isSimilarWeaponEquipped)
             {
-                s_interaction = "[LMB to equip weapon] [X to discard> [F to favorite]";
+                s_interaction = "[LMB to equip weapon] [X to discard] [F to favorite]";
             }
             else
             {
@@ -513,7 +531,7 @@ public class PlayerRPGUI : MonoBehaviour
         else
         {
             var statEffectGroup = _currentPerk.baseStatusEffectGroup;
-            string str1 = $"{statEffectGroup.GetDisplayText()}\n<size=13>{statEffectGroup.Description}</size>";
+            string str1 = $"{statEffectGroup.GetDisplayText()} <size=13>{timerString}</size>\n<size=13>{statEffectGroup.Description}</size>";
             string str2 = "";
 
             foreach(var modifier in statEffectGroup.allStatusEffects)
@@ -522,7 +540,7 @@ public class PlayerRPGUI : MonoBehaviour
                 str2 += $"[{baseModifier.TitlePerk}] [{RPG_CharPerkButton.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
             }
             str2 = ""; //scrapped modifier text
-            bigTooltip_LeftHandedLabel.text = $"{str1} {timerString}\n<size=13>{str2}</size>";
+            bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";
             bigTooltip_RightHandedLabel.text = "";
             Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>());
 

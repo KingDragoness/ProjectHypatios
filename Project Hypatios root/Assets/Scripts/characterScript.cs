@@ -133,6 +133,7 @@ public class CharacterScript : Entity
         PerkInitialize(ModifierEffectCategory.MaxHitpointBonus);
         PerkInitialize(ModifierEffectCategory.RegenHPBonus);
         PerkInitialize(ModifierEffectCategory.KnockbackResistance);
+        PerkInitialize(ModifierEffectCategory.Recoil);
         PerkInitialize(ModifierEffectCategory.BonusDamageMelee);
         PerkInitialize(ModifierEffectCategory.BonusDamageGun);
         PerkInitialize(ModifierEffectCategory.Alcoholism);
@@ -174,6 +175,10 @@ public class CharacterScript : Entity
         else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             return Weapon.Recoil.knockbackResistance.Value;
+        }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            return Weapon.Recoil.baseRecoil.Value;
         }
         else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
@@ -256,6 +261,10 @@ public class CharacterScript : Entity
         else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
+        }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            value = PlayerPerk.GetValue_RecoilUpgrade(PerkData.Perk_LV_WeaponRecoil);
         }
         else if (category == ModifierEffectCategory.BonusDamageMelee)
         {

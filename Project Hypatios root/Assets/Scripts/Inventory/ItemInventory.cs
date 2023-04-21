@@ -19,9 +19,24 @@ public class ItemInventory : ScriptableObject
         None = 999 //For inventory filter
     }
 
+    public enum SubiconCategory
+    {
+        Default,
+        Book = 10,
+        Material,
+        Alcohol = 20,
+        Serum,
+        Medicine,
+        Food,
+        Drinks,
+        Key = 40,
+        Weapon = 50,
+    }
+
     [InfoBox("If DisplayName is empty, it will use ID's")] [SerializeField] private string _displayName = "";
     [TextArea(3,5)] [SerializeField] private string _description = "";
     public Category category;
+    public SubiconCategory subCategory;
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
     [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;
     [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;

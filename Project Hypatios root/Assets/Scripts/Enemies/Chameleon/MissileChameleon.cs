@@ -104,6 +104,7 @@ public class MissileChameleon : EnemyScript
     public override void Die()
     {
         Destroy(gameObject);
+        OnSelfKilled?.Invoke();
         Stats.IsDead = true;
     }
 

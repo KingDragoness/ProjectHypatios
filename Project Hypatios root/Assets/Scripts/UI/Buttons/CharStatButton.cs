@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
+//You can modify this
 public class CharStatButton : MonoBehaviour
 {
 
@@ -56,6 +57,11 @@ public class CharStatButton : MonoBehaviour
         else if (category == ModifierEffectCategory.KnockbackResistance)
         {
             value = PlayerPerk.GetValue_KnockbackResistUpgrade(PerkData.Perk_LV_KnockbackRecoil);
+            s = $"-{value}";
+        }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            value = PlayerPerk.GetValue_RecoilUpgrade(PerkData.Perk_LV_WeaponRecoil);
             s = $"-{value}";
         }
         else if (category == ModifierEffectCategory.BonusDamageMelee)

@@ -17,6 +17,8 @@ public class InfernosEnemy : EnemyScript
 
     [FoldoutGroup("References")] public Animator animator;
     [FoldoutGroup("References")] public GameObject corpse;
+    [FoldoutGroup("References")] public GameObject startingModel;
+    [FoldoutGroup("References")] public GameObject currentModel;
     [FoldoutGroup("References")] public GameObject fireAttackZone;
     [FoldoutGroup("References")] public ParticleSystem fireParticle;
     [FoldoutGroup("References")] public Transform posSpawn;
@@ -34,6 +36,7 @@ public class InfernosEnemy : EnemyScript
     private NavMeshAgent agent;
     private IEnumerator _coroutineAttack;
     private float _timerAttack = 0f;
+    private bool _isReady = false;
 
     private void Start()
     {
@@ -41,6 +44,17 @@ public class InfernosEnemy : EnemyScript
         agent = GetComponent<NavMeshAgent>();
         _timerAttack = CooldownAttack;
 
+        if (onSpawnShouldReady)
+        {
+            _isReady = true;
+        }
+        else
+        {
+            startingModel.gameObject.SetActive(true);
+            currentModel.gameObject.SetActive(false);
+            NavMeshAgent meshAgent = GetComponent<NavMeshAgent>();
+            meshAgent.enabled = false;
+        }
     }
 
     #region Attacks
@@ -132,6 +146,22 @@ public class InfernosEnemy : EnemyScript
 
     private void Update()
     {
+        if (_isReady == false)
+        {
+            if (_timerReady > 0)
+            {
+                _timerReady -= Time.deltaTime;
+            }
+            else
+            {
+                startingModel.gameObject.SetActive(false);
+                currentModel.gameObject.SetActive(true);
+                NavMeshAgent meshAgent = GetComponent<NavMeshAgent>();
+                meshAgent.enabled = true;
+                _isReady = true;
+            }
+        }
+
         if (Stats.CurrentHitpoint <= 0f)
         {
             Die();
@@ -141,7 +171,7 @@ public class InfernosEnemy : EnemyScript
         if (Mathf.RoundToInt(Time.time) % 5 == 0)
             ScanForEnemies(0f, 60f);
 
-        if (currentTarget != null)
+        if (currentTarget != null && _isReady)
         {
             float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
 

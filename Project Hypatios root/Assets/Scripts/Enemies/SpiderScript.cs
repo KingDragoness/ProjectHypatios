@@ -38,7 +38,6 @@ public class SpiderScript : EnemyScript
     [FoldoutGroup("Stats")] public float attackRecharge;
     [FoldoutGroup("Stats")] public float lockBeforeAttackTime;
     [FoldoutGroup("Stats")] public float dieHeight;
-    [FoldoutGroup("Stats")] public bool onSpawnShouldReady = true;
     [FoldoutGroup("Stats")] public float spawnChance_Ammo = 0.17f;
     [FoldoutGroup("Stats")] public float damping = 2f;
 

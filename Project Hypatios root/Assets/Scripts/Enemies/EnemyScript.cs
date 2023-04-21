@@ -13,6 +13,7 @@ public abstract class EnemyScript : Entity
     [FoldoutGroup("Base")] [HideInPlayMode] [SerializeField] [InlineEditor] private BaseEnemyStats _baseStat;
     [FoldoutGroup("Optional")] public UnityEvent OnDamaged; //called from derived enemy classes
     [FoldoutGroup("Optional")] public UnityEvent OnSelfKilled; //called from derived enemy classes
+    [FoldoutGroup("Optional")] public UnityEvent OnPlayerDetected1; //called from derived enemy classes
 
 
     public EnemyStats Stats { get => _stats; }
@@ -24,7 +25,10 @@ public abstract class EnemyScript : Entity
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] internal bool canLookAtTarget = false;
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] internal bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] internal Transform eyeLocation;
+    [FoldoutGroup("AI")] [SerializeField] internal Transform debug_FirstPassHit;
     [FoldoutGroup("AI")] [SerializeField] internal Transform debug_SecondPassHit;
+    [FoldoutGroup("AI")] [SerializeField] internal bool onSpawnShouldReady = true;
+    [FoldoutGroup("AI")] [SerializeField] internal float _timerReady = 0f;
 
     internal DamageToken _lastDamageToken;
     internal float _lastTimeSeenPlayer = 0f;
@@ -33,6 +37,7 @@ public abstract class EnemyScript : Entity
     public System.Action OnPlayerDetected;
 
     private RaycastHit _hitDetection;
+    private bool _hasTriggeredDetection = false;
 
     public virtual void Awake()
     {
@@ -190,14 +195,24 @@ public abstract class EnemyScript : Entity
     {
         if (Time.timeScale <= 0) return;
         var posOffsetLook = currentTarget.OffsetedBoundWorldPosition;
-        float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
-        Debug.DrawLine(transform.position, posOffsetLook);
+        float distance = 9999f;//Vector3.Distance(eyeLocation.transform.position, currentTarget.OffsetedBoundWorldPosition) + 10f;
+        Debug.DrawLine(eyeLocation.transform.position, posOffsetLook, Color.cyan);
         canLookAtTarget = false;
+
+        if (hasSeenPlayer)
+        {
+            if (_hasTriggeredDetection == false)
+            {
+                OnPlayerDetected?.Invoke();
+                OnPlayerDetected1?.Invoke();
+            }
+            _hasTriggeredDetection = true;
+        }
 
         if (!Stats.IsDead)
         {
-
-            if (Physics.Raycast(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, out RaycastHit hit, distance, Hypatios.Enemy.baseDetectionLayer))
+            var mainDir = (posOffsetLook - eyeLocation.transform.position).normalized;
+            if (Physics.Raycast(eyeLocation.transform.position, mainDir, out RaycastHit hit, distance, Hypatios.Enemy.baseDetectionLayer))
             {
                 _hitDetection = hit;
                 bool firstPassSucceed = false;
@@ -208,25 +223,45 @@ public abstract class EnemyScript : Entity
                     firstPassSucceed = true;
                 }
 
+                var inverseDir = (eyeLocation.transform.position - hit.point).normalized;
+
                 //secondpass
                 RaycastHit secondHit;
-                if (Physics.Raycast(hit.point + hit.normal, hit.normal, out secondHit, hit.distance + 1, Hypatios.Enemy.baseDetectionLayer, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(hit.point + inverseDir, inverseDir, out secondHit, hit.distance + 1, Hypatios.Enemy.baseDetectionLayer, QueryTriggerInteraction.Ignore))
                 {
                    
                 }
                 else
                 {
-
+                    secondHit.point = hit.point + (inverseDir * (hit.distance + 1f));
                 }
+                if (debug_FirstPassHit != null)
+                {
+                    debug_FirstPassHit.transform.position = hit.point + inverseDir;
+                    debug_FirstPassHit.transform.rotation = Quaternion.LookRotation(inverseDir, Vector3.up);
+                }
+                Debug.DrawLine(eyeLocation.transform.position, hit.point, Color.red);
+                Debug.DrawLine(hit.point, secondHit.point, Color.red);
 
+                var secondDir = (hit.point - secondHit.point).normalized;
                 float limitThreshold = 3f;
                 float dist = Vector3.Distance(secondHit.point, eyeLocation.transform.position);
-                if (debug_SecondPassHit != null) debug_SecondPassHit.transform.position = secondHit.point + secondHit.normal;
+                if (debug_SecondPassHit != null)
+                {
+                    if (secondHit.collider != null)
+                    {
+                        debug_SecondPassHit.transform.position = secondHit.point;
+                        debug_SecondPassHit.transform.rotation = Quaternion.LookRotation(secondDir, Vector3.up);
+                    }
+                    else
+                    {
+                        debug_SecondPassHit.transform.position = new Vector3(-999f, -999f, -9999f);
+                    }
+                }
                 if (dist <= limitThreshold) secondPassSucceed = true;
 
                 if (firstPassSucceed && secondPassSucceed)
-                {
-                    if (hasSeenPlayer == false) OnPlayerDetected?.Invoke();
+                {            
                     hasSeenPlayer = true;
                     canLookAtTarget = true;
                     Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, Color.grey);

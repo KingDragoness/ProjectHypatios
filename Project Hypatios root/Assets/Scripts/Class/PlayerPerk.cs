@@ -125,6 +125,15 @@ public class PlayerPerk
         return bonusResistKnock;
     }
 
+
+    public static float GetValue_RecoilUpgrade(int level)
+    {
+        if (level == 0) return 0;
+
+        float bonusResistRecoil = -(level * 0.06f);
+        return bonusResistRecoil;
+    }
+
     public static float GetValue_Dashcooldown(int level)
     {
         if (level == 0) return 3;

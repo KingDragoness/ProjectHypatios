@@ -35,7 +35,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("References")] public SoulCapsulePlayer Prefab_SpawnSoul;
     [FoldoutGroup("References")] public HealPlayer Prefab_SpawnHeal;
     [FoldoutGroup("References")] public UnityStandardAssets.ImageEffects.MotionBlur minorMotionBlur;
-
+    [FoldoutGroup("Cheat")] public GameObject cheatContainer;
     [Header("Saves")]
     public int SoulPoint = 0;
     public int TotalRuns = 0;
@@ -204,6 +204,17 @@ public class FPSMainScript : MonoBehaviour
             ConsoleCommand.Instance.CommandInput("mats");
             ConsoleCommand.Instance.CommandInput("additem SentryPDA");
         }
+        if (cheatName == "lv5")
+        {
+            ConsoleCommand.Instance.CommandInput("mats");
+            ConsoleCommand.Instance.CommandInput("setperk 50 5");
+            ConsoleCommand.Instance.CommandInput("setperk 6 300");
+            ConsoleCommand.Instance.CommandInput("res");
+            cheatContainer.gameObject.SetActive(true);
+            cheatContainer.transform.position = Hypatios.Player.transform.position + Hypatios.Player.transform.forward;
+
+        }
+
     }
 
     public void Update()
