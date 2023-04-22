@@ -127,6 +127,7 @@ namespace UnityEngine.UI.Extensions
             StopHover();
         }
 
+
         public void OnDeselect(BaseEventData eventData)
         {
             StopHover();

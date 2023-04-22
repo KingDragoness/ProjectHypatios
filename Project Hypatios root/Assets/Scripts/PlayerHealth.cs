@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour
     public float targetHealth;
     public float HealthSpeed = 4;
     [FoldoutGroup("Statistics")] public BaseStatValue stat_damage_taken;
+    [FoldoutGroup("Blur Effect")] public float dof_Max = 55f;
+    [FoldoutGroup("Blur Effect")] public float dof_Power = 13f;
     [Range(0f, 100f)] public float alcoholMeter = 0;
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
@@ -208,13 +210,14 @@ public class PlayerHealth : MonoBehaviour
             targetHealth -= (damage / armorStrength);
         }
 
-        if (dof.focalLength.value < 68f)
+        if (dof.focalLength.value < dof_Max)
         {
-            dof.focalLength.value = damage * 20f;
+            float blurPower = 100f / maxHealth.Value; //100/600 = x0.16
+            dof.focalLength.value = damage * dof_Power * blurPower;
 
-            if (dof.focalLength.value > 68f)
+            if (dof.focalLength.value > dof_Max)
             {
-                dof.focalLength.value = 68f;
+                dof.focalLength.value = dof_Max;
             }
         }
 

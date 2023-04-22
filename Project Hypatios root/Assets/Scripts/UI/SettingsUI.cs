@@ -10,6 +10,7 @@ public class SettingsUI : MonoBehaviour
 {
 
     [FoldoutGroup("Video")] public List<Button> qualityLevels = new List<Button>();
+    [FoldoutGroup("Video")] public Dropdown dropdown_Quality;
     [FoldoutGroup("Sounds")] public Text value_SFX;
     [FoldoutGroup("Sounds")] public Slider slider_SFX;
     [FoldoutGroup("Sounds")] public Text value_Music;
@@ -69,6 +70,7 @@ public class SettingsUI : MonoBehaviour
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
         dropdown_Resolution.SetValueWithoutNotify(Hypatios.Settings.RESOLUTION);
+        dropdown_Quality.SetValueWithoutNotify(Hypatios.Settings.QUALITY_LEVEL);
         //inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
 
         RefreshUI();
@@ -103,26 +105,27 @@ public class SettingsUI : MonoBehaviour
     private void RefreshUI()
     {
 
-        for (int x = 0; x < qualityLevels.Count; x++)
-        {
-            var button = qualityLevels[x];
+        //for (int x = 0; x < qualityLevels.Count; x++)
+        //{
+        //    var button = qualityLevels[x];
 
-            if (x == Hypatios.Settings.QUALITY_LEVEL)
-            {
-                button.interactable = false;
-            }
-            else
-            {
-                button.interactable = true;
-            }
+        //    if (x == Hypatios.Settings.QUALITY_LEVEL)
+        //    {
+        //        button.interactable = false;
+        //    }
+        //    else
+        //    {
+        //        button.interactable = true;
+        //    }
 
-        }
+        //}
 
         {
             //Hypatios.Settings.MY_NAME = inputfield_Name.text;
             Hypatios.Settings.MAXIMUM_FRAMERATE = Mathf.RoundToInt(slider_FPSCap.value);
             Hypatios.Settings.UI_SCALING = slider_UIScaling.value;
             Hypatios.Settings.RESOLUTION = Mathf.RoundToInt(dropdown_Resolution.value);
+            Hypatios.Settings.QUALITY_LEVEL = Mathf.RoundToInt(dropdown_Quality.value);
             Hypatios.Settings.BRIGHTNESS = slider_Brightness.value;
             Hypatios.Settings.VISUAL_TEMPERATURE = Mathf.RoundToInt(slider_Temperature.value);
             Hypatios.Settings.VISUAL_TINT = Mathf.RoundToInt(slider_Tint.value);

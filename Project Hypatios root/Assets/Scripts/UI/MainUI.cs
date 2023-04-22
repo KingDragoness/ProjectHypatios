@@ -375,17 +375,20 @@ public class MainUI : MonoBehaviour
     public void RefreshUI_Resolutions()
     {
         var refResolution = scaler_Main.referenceResolution;
-        var targetY = Mathf.Lerp(720f, 1080f, UI_Scaling);
+        var UIScaling_Y = Mathf.Lerp(768f, 1080f, UI_Scaling);
+        float absoluteMaxY = Mathf.Lerp(768f, 1080f, UI_Scaling * 1.5f);
 
+        //if (Screen.height < UIScaling_Y)
+        //    refResolution.y = Screen.height;
+        //else
+            refResolution.y = UIScaling_Y;
 
-        if (Screen.height < targetY)
-            refResolution.y = Screen.height;
-        else
-            refResolution.y = targetY;
+        if (refResolution.y < 768f)
+            refResolution.y = 768f;
 
         scaler_Main.referenceResolution = refResolution;
         scaler_Pause.referenceResolution = refResolution;
-        scaler_Trivia.referenceResolution = refResolution;
+        if (scaler_Trivia != null) scaler_Trivia.referenceResolution = refResolution; //remember title screen
     }
 
     public void SetTempoPause(bool pause)
