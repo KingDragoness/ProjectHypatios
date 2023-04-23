@@ -30,11 +30,17 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
     [FoldoutGroup("Inventory")] public ItemInventory.Category filterCategoryType = ItemInventory.Category.None;
     [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
-
+    [FoldoutGroup("Weapon Preview")] public Previewer3DWeaponUI previewerWeapon;
+    [FoldoutGroup("Weapon Preview")] public RectTransform parentAttachmentButtons;
+    [FoldoutGroup("Weapon Preview")] public GameObject weaponPreviewerUI;
+    [FoldoutGroup("Weapon Preview")] public Text weaponPreview_Label;
+    [FoldoutGroup("Weapon Preview")] public Text weaponPreview_AmmoCount;
+    [FoldoutGroup("Weapon Preview")] public Image weaponPreview_AmmoIcon;
 
     public List<SubiconIdentifier> allSubIcons = new List<SubiconIdentifier>();
     public RPG_CharPerkButton PerkButton;
     public RPG_CharPerkButton StatusMonoButton;
+    public AttachmentWeaponButton WeaponModButton;
     public InventoryItemButton InventoryItemButton;
     public RPG_CharPerkButton currentPerkButton;
     public Transform parentPerks;
@@ -45,7 +51,9 @@ public class PlayerRPGUI : MonoBehaviour
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
     private List<RPG_CharPerkButton> _allStatusMonoButtons = new List<RPG_CharPerkButton>();
     private List<InventoryItemButton> _allInventoryButtons = new List<InventoryItemButton>();
+    private List<AttachmentWeaponButton> _allWeaponModButtons = new List<AttachmentWeaponButton>();
     private Canvas pauseCanvas;
+    private HypatiosSave.WeaponDataSave _currentHighlightedWeaponData;
 
     private InventoryItemButton currentItemButton;
 
@@ -53,6 +61,11 @@ public class PlayerRPGUI : MonoBehaviour
     {
         RefreshUI();
         pauseCanvas = GetComponentInParent<Canvas>();
+    }
+
+    private void OnDisable()
+    {
+        DepreviewWeapon();
     }
 
     public void FavoriteMode()
@@ -367,6 +380,23 @@ public class PlayerRPGUI : MonoBehaviour
 
     }
 
+    public void HighlightAttachment(AttachmentWeaponButton button)
+    {
+        var weaponItem = Hypatios.Assets.GetWeapon(button.weaponName);
+        if (weaponItem == null)
+        { return; }
+        var weaponMod = weaponItem.GetAttachmentWeaponMod(button.attachmentID);
+        string sLeft = "";
+        string sRight = "";
+
+        sLeft = $"<size=14>{weaponMod.Description}</size>";
+
+        itemTooltip_LeftHandedLabel.text = sLeft;
+        itemTooltip_RightHandedLabel.text = sRight;
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
+
+    }
+
     public void HighlightItem(InventoryItemButton button)
     {
         var itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
@@ -379,20 +409,24 @@ public class PlayerRPGUI : MonoBehaviour
         {
             var weaponClass = itemClass.attachedWeapon;
             var weaponSave = itemDat.weaponData;
+            _currentHighlightedWeaponData = weaponSave;
             var weaponStat = weaponClass.GetFinalStat(weaponSave.allAttachments);
             int totalAmmoOfType = Hypatios.Player.Weapon.GetTotalAmmoOfWeapon(weaponClass.nameWeapon);
             string s_allAttachments = "";
+            string s_Description = $"{itemClass.Description}";
+
             bool isSimilarWeaponEquipped = false;
+            bool isTooManyEqupped = false;
 
             if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) != null) isSimilarWeaponEquipped = true;
-
+            if (Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count >= 4) isTooManyEqupped = true;
 
             foreach (var attachment in weaponSave.allAttachments)
             {
                 s_allAttachments += $"{weaponClass.GetAttachmentName(attachment)}, ";
             }
 
-            if (!isSimilarWeaponEquipped)
+            if (!isSimilarWeaponEquipped && !isTooManyEqupped)
             {
                 s_interaction = "[LMB to equip weapon] [X to discard] [F to favorite]";
             }
@@ -406,14 +440,16 @@ public class PlayerRPGUI : MonoBehaviour
             sLeft += $"Fire rate\n";
             sLeft += $"Mag size\n";
             sLeft += $"Ammo Left\n";
+            sLeft += $"\n<size=14>{s_Description}</size>\n";
             sLeft += $"\n<size=14>{s_interaction}</size>\n";
-            sLeft += $"\n<size=14>{s_allAttachments}</size>";
+            //sLeft += $"\n<size=14>{s_allAttachments}</size>";
 
             sRight += $"{weaponStat.damage}\n";
             sRight += $"{weaponStat.cooldown} per sec\n";
             sRight += $"{weaponStat.magazineSize}\n";
             sRight += $"{totalAmmoOfType}\n";
 
+            PreviewWeapon(weaponClass, weaponSave);
         }
         else
         {
@@ -459,26 +495,96 @@ public class PlayerRPGUI : MonoBehaviour
         string s_allAttachments = "";
         string sLeft = "";
         string sRight = "";
+        string s_interaction = "[LMB to unequip]";
+
 
         foreach (var attachment in weaponSave.allAttachments)
         {
             s_allAttachments += $"{WeaponClass.GetAttachmentName(attachment)}, ";
         }
 
-        sLeft += $"Magazine/Total Ammo";
-        if (weaponSave.allAttachments.Count != 0) sLeft += $"\n<size=14>{s_allAttachments}</size>";
-        sRight += $"{Weapon.curAmmo}/{Weapon.totalAmmo}";
-        if (weaponSave.allAttachments.Count != 0) sRight += "\n";
-
+        if (slotButton.equipIndex != 0)
+        { sLeft = $"<size=14>{s_interaction}</size>"; }
+        else if (slotButton.equipIndex == 0) 
+        { sLeft = $"<size=14>Cannot unequip Pistol.</size>"; }
         perkTooltip_LeftHandedLabel.text = sLeft;
         perkTooltip_RightHandedLabel.text = sRight;
-
+        PreviewWeapon(WeaponClass, weaponSave, isWeaponSlot: true);
         Hypatios.UI.ShowTooltipSmall(slotButton.GetComponent<RectTransform>());
     }
 
     public void DehighlightWeaponSlot()
     {
 
+    }
+
+    private void PreviewWeapon(WeaponItem weaponItem, HypatiosSave.WeaponDataSave weaponData, bool isWeaponSlot = false)
+    {
+        foreach (var button in _allWeaponModButtons)
+        {
+            Destroy(button.gameObject);
+        }
+        BaseWeaponScript weaponScript = null;
+        if (isWeaponSlot)
+        {
+            weaponScript = Hypatios.Player.Weapon.GetWeaponScript(weaponItem.nameWeapon);
+        }
+
+        var itemclass = Hypatios.Assets.GetItemByWeapon(weaponItem.nameWeapon);
+
+        _allWeaponModButtons.Clear();
+
+        previewerWeapon.gameObject.SetActive(true);
+        weaponPreviewerUI.gameObject.SetActive(true);
+        previewerWeapon.DisplayWeapon(weaponItem);
+
+        foreach (var attachment in weaponData.allAttachments)
+        {
+            var weaponMod = weaponItem.GetAttachmentWeaponMod(attachment);
+            if (weaponMod == null) continue;
+
+            var newButton = Instantiate(WeaponModButton, parentAttachmentButtons);
+            newButton.gameObject.SetActive(true);
+            newButton.weaponName = weaponItem.nameWeapon;
+            newButton.attachmentID = attachment;
+            newButton.Refresh();
+            _allWeaponModButtons.Add(newButton);
+        }
+
+        if (weaponItem.attachments.Count == 0)
+        {
+            var newButton = Instantiate(WeaponModButton, parentAttachmentButtons);
+            newButton.gameObject.SetActive(true);
+            newButton.label.text = "No possible attachment";
+            newButton.tooltipTrigger.enabled = false;
+            _allWeaponModButtons.Add(newButton);
+        }
+        else if (weaponData.allAttachments.Count == 0)
+        {
+            var newButton = Instantiate(WeaponModButton, parentAttachmentButtons);
+            newButton.gameObject.SetActive(true);
+            newButton.label.text = "No attachment";
+            newButton.tooltipTrigger.enabled = false;
+            _allWeaponModButtons.Add(newButton);
+        }
+       
+        weaponPreview_Label.text = itemclass.GetDisplayText();
+        if (isWeaponSlot == false)
+        {
+            weaponPreview_AmmoCount.text = $"{weaponData.currentAmmo} / {weaponData.totalAmmo}";
+        }
+        else
+        {
+            weaponPreview_AmmoCount.text = $"{weaponScript.curAmmo} / {weaponScript.totalAmmo}";
+        }
+
+        weaponPreview_AmmoIcon.sprite = weaponItem.ammoSpriteIcon;
+    }
+
+    private void DepreviewWeapon()
+    {
+        previewerWeapon.gameObject.SetActive(false);
+        weaponPreviewerUI.gameObject.SetActive(false);
     }
 
     public void HighlightStat(CharStatButton charStatButton)

@@ -209,6 +209,7 @@ public class FPSMainScript : MonoBehaviour
             ConsoleCommand.Instance.CommandInput("mats");
             ConsoleCommand.Instance.CommandInput("setperk 50 5");
             ConsoleCommand.Instance.CommandInput("setperk 6 300");
+            ConsoleCommand.Instance.CommandInput("soul 999");
             ConsoleCommand.Instance.CommandInput("res");
             cheatContainer.gameObject.SetActive(true);
             cheatContainer.transform.position = Hypatios.Player.transform.position + Hypatios.Player.transform.forward;

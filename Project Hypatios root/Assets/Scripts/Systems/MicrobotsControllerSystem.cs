@@ -11,13 +11,14 @@ public class MicrobotsControllerSystem : MonoBehaviour
     public LayerMask layer_SwarmDetect;
     public ModularTurretGun modularGun;
     public float CooldownUpdateAI = 0.1f;
+    [Tooltip("Note: affected by update AI tick.")] public float CooldownShoot = 0.06f;
     public float AvoidanceDistance = 3f;
     [Range(0f,1f)] public float ChanceDroneShoot = 0.3f;
     [Range(1, 9)] public int MaxDroneShootPerTick = 3;
     [Tooltip("Amount of drones simulated per tick. i.e: 5 means maximum of 50 drones simulated per second (Tick = 0.1s).")] [Range(1,20)] public int PerTick_SimulateDrones = 5;
 
     private float _timerUpdate = 0.1f;
-    private float _timerShooting = 0.02f;
+    private float _timerShooting = 0.05f;
     private int _tick = 0;
     private int _currentIndex = 0;
 
@@ -67,18 +68,18 @@ public class MicrobotsControllerSystem : MonoBehaviour
         {
             _timerShooting -= Time.deltaTime;
         }
-        else
-        {
-            UpdateShoot();
-            _timerShooting = 0.02f;
-        }
-
+       
         if (_timerUpdate > 0f)
         {
             _timerUpdate -= Time.deltaTime;
             return;
         }
 
+        if (_timerShooting <= 0)
+        {
+            UpdateShoot();
+            _timerShooting = CooldownShoot;
+        }
         _timerUpdate = CooldownUpdateAI;
         _tick++;
 
