@@ -35,6 +35,7 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Weapon Preview")] public GameObject weaponPreviewerUI;
     [FoldoutGroup("Weapon Preview")] public Text weaponPreview_Label;
     [FoldoutGroup("Weapon Preview")] public Text weaponPreview_AmmoCount;
+    [FoldoutGroup("Weapon Preview")] public Text weaponPreview_WeaponStats;
     [FoldoutGroup("Weapon Preview")] public Image weaponPreview_AmmoIcon;
 
     public List<SubiconIdentifier> allSubIcons = new List<SubiconIdentifier>();
@@ -61,6 +62,11 @@ public class PlayerRPGUI : MonoBehaviour
     {
         RefreshUI();
         pauseCanvas = GetComponentInParent<Canvas>();
+    }
+
+    private void Start()
+    {
+        DepreviewWeapon();
     }
 
     private void OnDisable()
@@ -576,6 +582,17 @@ public class PlayerRPGUI : MonoBehaviour
         else
         {
             weaponPreview_AmmoCount.text = $"{weaponScript.curAmmo} / {weaponScript.totalAmmo}";
+        }
+
+        {
+            var weaponStat = weaponItem.GetFinalStat(weaponData.allAttachments);
+            string s_weaponStat = "<size=16>";
+            s_weaponStat += $"Damage: {weaponStat.damage}\n";
+            s_weaponStat += $"Fire rate: {weaponStat.cooldown}\n";
+            s_weaponStat += $"Mag size: {weaponStat.magazineSize}";
+            s_weaponStat += "</size>\n\n";
+            s_weaponStat += $"{itemclass.Description}";
+            weaponPreview_WeaponStats.text = s_weaponStat;
         }
 
         weaponPreview_AmmoIcon.sprite = weaponItem.ammoSpriteIcon;

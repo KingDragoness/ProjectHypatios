@@ -144,6 +144,10 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory);
     }
 
+    public int GetTempStatusEffectByCount(ModifierEffectCategory _statusCategory)
+    {
+        return _allStatusInEffect.FindAll(x => x.statusCategoryType == _statusCategory && x.SourceID != "PermanentPerk").Count;
+    }
     private BaseModifierEffect GetStatusEffect(ModifierEffectCategory _statusCategory, string _source)
     {
         return _allStatusInEffect.Find(x => x.SourceID == _source);
@@ -175,6 +179,11 @@ public abstract class Entity : MonoBehaviour
         return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory) != null;
     }
 
+    public bool IsStatusEffect(ModifierEffectCategory _statusCategory, string _source)
+    {
+        return _allStatusInEffect.Find(x => x.statusCategoryType == _statusCategory && x.SourceID == _source) != null;
+    }
+
     public bool IsStatusEffectGroup(BaseStatusEffectObject _statusEffectObject)
     {
         List<StatusEffectMono> allStatusEffectMonos = new List<StatusEffectMono>();
@@ -201,6 +210,7 @@ public abstract class Entity : MonoBehaviour
 
         return allStatusEffectMonos.Find(x => x.statusEffect == _statusEffectObject);
     }
+
 
     /// <summary>
     /// 

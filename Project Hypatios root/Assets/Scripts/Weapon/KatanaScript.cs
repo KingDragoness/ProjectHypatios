@@ -28,6 +28,25 @@ public class KatanaScript : BaseWeaponScript
 
     bool b = false;
 
+    private void ActivateArmor()
+    {
+        if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.ArmorRating, "Weapon.Katana") == false)
+        {
+            Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.ArmorRating, 2f, "Weapon.Katana");
+        }
+
+    }
+
+    private void DeactivateArmor()
+    {
+
+        if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.ArmorRating, "Weapon.Katana") == true)
+        {
+            Hypatios.Player.RemoveAllEffectsBySource("Weapon.Katana");
+        }
+    }
+
+
     private void Update()
     {
         if (Time.timeScale <= 0) return;
@@ -39,14 +58,14 @@ public class KatanaScript : BaseWeaponScript
 
         if (Input.GetButton("Fire2"))
         {
-            playerHealth.armorStrength = 2f;
+            ActivateArmor();
             if (!b) Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.MovementBonus, -0.5f, "Katana"); 
             anim.SetBool("Block", true);
             b = true;
         }
         else
         {
-            playerHealth.armorStrength = 1f;
+            DeactivateArmor();
             if (b) Hypatios.Player.RemoveAllEffectsBySource("Katana");
             //characterScript.speedMultiplier.Value = 8f;
             anim.SetBool("Block", false);

@@ -25,6 +25,7 @@ public class PlayerStatusUI : MonoBehaviour
     public Transform parentPerks;
     public Text hp_Label;
     public Slider hp_Slider;
+    public Text label_Soul;
 
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
     private List<RPG_CharPerkButton> _allStatusMonoButtons = new List<RPG_CharPerkButton>();
@@ -52,11 +53,11 @@ public class PlayerStatusUI : MonoBehaviour
         _allCharPerkButtons.Clear();
         _allStatusMonoButtons.Clear();
 
-        string HP = $"{Mathf.RoundToInt(Hypatios.Player.Health.curHealth)}/{Mathf.RoundToInt(Hypatios.Player.Health.maxHealth.Value)}";
+        string HP = $"<size=24>{Mathf.RoundToInt(Hypatios.Player.Health.curHealth)}</size>/{Mathf.RoundToInt(Hypatios.Player.Health.maxHealth.Value)}";
         hp_Label.text = HP;
         hp_Slider.value = Hypatios.Player.Health.curHealth;
         hp_Slider.maxValue = Hypatios.Player.Health.maxHealth.Value;
-
+        label_Soul.text = Hypatios.Game.SoulPoint.ToString();
 
         //Refresh perks
         {

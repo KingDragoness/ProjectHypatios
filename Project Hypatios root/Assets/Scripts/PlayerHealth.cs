@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
     [Range(0f, 100f)] public float alcoholMeter = 0;
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
-    [FoldoutGroup("Elena Section")] public float armorStrength = 1;
+    [FoldoutGroup("Elena Section")] public CharacterStat armorRating = new CharacterStat(1);
     float healthAfterHeal = 0f;
     public bool isDead;
     public SlowMotion slow;
@@ -207,7 +207,7 @@ public class PlayerHealth : MonoBehaviour
             if (isHealing)
                 targetHealth = curHealth;
 
-            targetHealth -= (damage / armorStrength);
+            targetHealth -= (damage / armorRating.Value);
         }
 
         if (dof.focalLength.value < dof_Max)

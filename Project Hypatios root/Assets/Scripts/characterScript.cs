@@ -138,6 +138,11 @@ public class CharacterScript : Entity
         PerkInitialize(ModifierEffectCategory.BonusDamageGun);
         PerkInitialize(ModifierEffectCategory.Alcoholism);
         dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
+
+        //bugged value
+        {
+            var test1 = Health.armorRating.Value;
+        }
     }
 
     public int GetNetSoulBonusPerk()
@@ -160,6 +165,52 @@ public class CharacterScript : Entity
             netPerk = basePerkClass.MAX_LEVEL;
 
         return netPerk;
+    }
+
+    public float GetCharBaseValue(ModifierEffectCategory category)
+    {
+        if (category == ModifierEffectCategory.MaxHitpointBonus)
+        {
+            return Health.maxHealth.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.RegenHPBonus)
+        {
+            return Health.healthRegen.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.KnockbackResistance)
+        {
+            return Weapon.Recoil.knockbackResistance.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.Recoil)
+        {
+            return Weapon.Recoil.baseRecoil.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.BonusDamageMelee)
+        {
+            return BonusDamageMelee.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.BonusDamageGun)
+        {
+            return BonusDamageGun.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.DashCooldown)
+        {
+            return dashCooldown.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.Alcoholism)
+        {
+            return 0;
+        }
+        else if (category == ModifierEffectCategory.MovementBonus)
+        {
+            return speedMultiplier.BaseValue;
+        }
+        else if (category == ModifierEffectCategory.ArmorRating)
+        {
+            return Health.armorRating.BaseValue;
+        }
+
+        return 0;
     }
 
     public float GetCharFinalValue(ModifierEffectCategory category)
@@ -195,6 +246,14 @@ public class CharacterScript : Entity
         else if (category == ModifierEffectCategory.Alcoholism)
         {
             return Health.alcoholMeter;
+        }
+        else if (category == ModifierEffectCategory.MovementBonus)
+        {
+            return speedMultiplier.Value;
+        }
+        else if (category == ModifierEffectCategory.ArmorRating)
+        {
+            return Health.armorRating.Value;
         }
 
         return 0;

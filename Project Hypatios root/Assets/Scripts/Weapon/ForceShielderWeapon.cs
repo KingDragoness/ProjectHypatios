@@ -30,7 +30,7 @@ public class ForceShielderWeapon : GunScript
     private void OnDestroy()
     {
         Destroy(shieldProtect.gameObject);
-        Hypatios.Player.Health.armorStrength = 1f;
+        DeactivateArmor();
 
     }
 
@@ -38,7 +38,7 @@ public class ForceShielderWeapon : GunScript
     {
         shieldProtect.gameObject.SetActive(false);
         attachTarget.gameObject.SetActive(false);
-        Hypatios.Player.Health.armorStrength = 1f;
+        DeactivateArmor();
 
     }
 
@@ -54,6 +54,24 @@ public class ForceShielderWeapon : GunScript
     }
 
     bool b = false;
+
+    private void ActivateArmor()
+    {
+        if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.ArmorRating, "Weapon.ForceShielder") == false)
+        {
+            Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.ArmorRating, GetFinalValue("Armor"), "Weapon.ForceShielder");
+        }
+
+    }
+
+    private void DeactivateArmor()
+    {
+
+        if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.ArmorRating, "Weapon.ForceShielder") == true)
+        {
+            Hypatios.Player.RemoveAllEffectsBySource("Weapon.ForceShielder");
+        }
+    }
 
     public override void Update()
     {
@@ -72,16 +90,12 @@ public class ForceShielderWeapon : GunScript
             shieldProtect.transform.position = posTarget;
             shieldProtect.transform.rotation = rotTarget;
 
-            Hypatios.Player.Health.armorStrength = GetFinalValue("Armor");
-
-
+            ActivateArmor();
         }
         else
         {
             if (audioFire.isPlaying) audioFire.Stop();
-
-            Hypatios.Player.Health.armorStrength = 1f;
-
+            DeactivateArmor();
         }
     }
 

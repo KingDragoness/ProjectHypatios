@@ -16,6 +16,7 @@ public enum ModifierEffectCategory
     MaxHitpointBonus,
     DamageBonus,
     MaxHPPercentage,
+    ArmorRating,
     //Bonus Perks for Player 50 - 99
     RegenHPBonus = 50,
     KnockbackResistance,
@@ -100,9 +101,13 @@ public abstract class BaseModifierEffect : MonoBehaviour
             if (statusCategoryType == ModifierEffectCategory.DashCooldown)
                 playerScript.dashCooldown.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
+            if (statusCategoryType == ModifierEffectCategory.ArmorRating)
+                playerScript.Health.armorRating.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
+
 
             var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
             test1 = playerScript.BonusDamageGun.Value;
+            test1 = playerScript.Health.armorRating.Value;
         }
         else if (enemyScript)
         {
@@ -143,6 +148,7 @@ public abstract class BaseModifierEffect : MonoBehaviour
             playerScript.BonusDamageGun.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
+            playerScript.Health.armorRating.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.baseRecoil.RemoveAllModifiersFromSource(gameObject);
             playerScript.dashCooldown.RemoveAllModifiersFromSource(gameObject);
