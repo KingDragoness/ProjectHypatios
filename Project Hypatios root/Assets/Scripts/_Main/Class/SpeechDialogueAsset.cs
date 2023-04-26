@@ -19,12 +19,17 @@ public class SpeechDialogueAsset : ScriptableObject
     }
 
     public List<EntryDialogue> entryDialogues = new List<EntryDialogue>();
-    public bool shouldOverride = false;
+    public bool cannotWhenTalkingToOther = false;
     public bool isImportant = true;
 
     [Button("Trigger Message")]
     public void TriggerMessage()
     {
+
+        if (DialogueSubtitleUI.instance.IsTalking() && cannotWhenTalkingToOther)
+        {
+            return;
+        }
 
         foreach (var dialog in entryDialogues)
         {
@@ -45,7 +50,7 @@ public class SpeechDialogueAsset : ScriptableObject
                 portrait,
                 dialog.dialogAudioClip, priorityLevel: 100,
                 isImportant: isImportant,
-                shouldOverride: shouldOverride);
+                false);
 
         }
 

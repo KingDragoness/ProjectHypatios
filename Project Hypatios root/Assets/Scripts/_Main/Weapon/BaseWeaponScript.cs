@@ -51,6 +51,8 @@ public abstract class BaseWeaponScript : MonoBehaviour
     [FoldoutGroup("Weapon Stat")] public float recoilMultiplier = 1f;
     [FoldoutGroup("Weapon Stat")] public float bulletPerSecond; //AKA fire per second
     [FoldoutGroup("Weapon Stat")] public DamageToken.DamageType damageType = DamageToken.DamageType.Ballistic;
+    [FoldoutGroup("Hint")] public bool UseTutorialHint = false;
+
 
     public virtual void FireWeapon()
     {

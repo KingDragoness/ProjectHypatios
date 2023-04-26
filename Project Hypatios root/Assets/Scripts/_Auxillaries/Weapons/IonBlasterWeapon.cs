@@ -30,7 +30,8 @@ public class IonBlasterWeapon : GunScript
        
 
         base.Update();
-   
+
+        if (Time.timeScale == 0) return;
 
         cooldownFire -= Time.deltaTime;
 

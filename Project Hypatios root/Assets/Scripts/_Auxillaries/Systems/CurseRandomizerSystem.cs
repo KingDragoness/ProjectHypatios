@@ -115,6 +115,7 @@ public class CurseRandomizerSystem : MonoBehaviour
     {
         depression.AddStatusEffectPlayer(9999f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from depression.", 4f);
+        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
     }
 
     [FoldoutGroup("DEBUG")] [Button("Add Fatigue")]
@@ -123,6 +124,7 @@ public class CurseRandomizerSystem : MonoBehaviour
 
         chamberFatigue.AddStatusEffectPlayer(3000f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from chamber fatigue.", 4f);
+        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
     }
 
     [FoldoutGroup("DEBUG")]
@@ -132,6 +134,7 @@ public class CurseRandomizerSystem : MonoBehaviour
 
         panicAttack.AddStatusEffectPlayer(25f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from panic attack.", 4f);
+        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
     }
 
 

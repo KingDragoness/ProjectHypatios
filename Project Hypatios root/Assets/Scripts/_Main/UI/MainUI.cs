@@ -55,6 +55,9 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("Tooltips")] public Text smallTooltip_LeftHandedLabel;
     [FoldoutGroup("Tooltips")] public Text smallTooltip_RightHandedLabel;
 
+    [FoldoutGroup("Events")] public GameEvent event_GamePause;
+    [FoldoutGroup("Events")] public GameEvent event_GameResume;
+
     public UIMode current_UI = UIMode.Default;
     [Range(0f, 1f)] public float UI_Scaling = 1f;
     private bool paused = false;
@@ -404,6 +407,7 @@ public class MainUI : MonoBehaviour
             Cursor.visible = false;
             if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;
+            event_GameResume?.Raise();
             HUD.gameObject.SetActive(true);
         }
         else
@@ -412,6 +416,7 @@ public class MainUI : MonoBehaviour
             Cursor.visible = true;
             if (PauseMenu.activeSelf == false) PauseMenu.gameObject.SetActive(true);
             Time.timeScale = 0;
+            event_GamePause?.Raise();
 
             HUD.gameObject.SetActive(false);
 
@@ -420,7 +425,7 @@ public class MainUI : MonoBehaviour
 
         if (tempoPause == false)
         {
-            MainGameHUDScript.Instance.promptUIMain.SetActive(false);
+            //MainGameHUDScript.Instance.promptUIMain.SetActive(false);
         }
 
         if (Gamepad.all.Count > 0)

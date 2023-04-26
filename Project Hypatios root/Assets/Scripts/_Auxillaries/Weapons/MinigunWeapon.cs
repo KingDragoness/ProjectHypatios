@@ -70,6 +70,8 @@ public class MinigunWeapon : GunScript
     {
         base.Update();
 
+        if (Time.timeScale == 0) return;
+
         if (isRevving)
         {
             if (_readyFireTimer < RevTime) _readyFireTimer += Time.deltaTime;

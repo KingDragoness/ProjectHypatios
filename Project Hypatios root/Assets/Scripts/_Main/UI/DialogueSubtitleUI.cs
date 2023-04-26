@@ -28,6 +28,14 @@ public class DialogueSubtitleUI : MonoBehaviour
     private float timer = 2f;
     private bool isClosed = true;
 
+    public bool IsTalking()
+    {
+        if (dialogueSpeeches.Count == 0)
+            return false;
+
+        return true;
+    }
+
     private void Awake()
     {
         instance = this;

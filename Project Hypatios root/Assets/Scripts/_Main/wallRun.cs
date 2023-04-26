@@ -8,6 +8,7 @@ public class wallRun : MonoBehaviour
     public Rigidbody rb;
     [SerializeField] Transform body;
     public WeaponManager weapon;
+    public AudioSource audio_Wallrun;
 
     public CharacterScript character;
 
@@ -155,6 +156,10 @@ public class wallRun : MonoBehaviour
 
     void startWallRun()
     {
+        if (isWallRunning == false)
+        {
+            if (audio_Wallrun.isPlaying == false) audio_Wallrun?.Play();
+        }
         isWallRunning = true;
         rb.useGravity = false;
 
@@ -208,6 +213,10 @@ public class wallRun : MonoBehaviour
 
     void stopWallRun()
     {
+        if (isWallRunning)
+        {
+            audio_Wallrun?.Stop();
+        }
         isWallRunning = false;
         rb.useGravity = true;
         wallRunGravity = baseWallRunGravity;

@@ -236,7 +236,7 @@ public class FPSMainScript : MonoBehaviour
         if (Hypatios.Game.Check_EverUsed(key) == false)
         {
             MainGameHUDScript.Instance.ShowPromptUI(about, description, false);
-            MainUI.Instance.SetTempoPause(true);
+            //MainUI.Instance.SetTempoPause(true);
             Hypatios.Game.TryAdd_EverUsed(key);
         }
     }

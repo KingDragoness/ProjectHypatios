@@ -15,6 +15,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Sounds")] public Slider slider_SFX;
     [FoldoutGroup("Sounds")] public Text value_Music;
     [FoldoutGroup("Sounds")] public Slider slider_Music;
+    [FoldoutGroup("Sounds")] public TestAudioVisualizer audioVisualizer;
     [FoldoutGroup("Gameplay")] public Text value_MouseSensitivity;
     [FoldoutGroup("Gameplay")] public Slider slider_MouseSensitivity;
     [FoldoutGroup("Gameplay")] public Text value_Brightness;
@@ -37,7 +38,12 @@ public class SettingsUI : MonoBehaviour
     public InputField inputfield_Name;
 
 
- 
+    private void OnEnable()
+    {
+        if (MusicPlayer.Instance != null)
+            audioVisualizer.audioSource = MusicPlayer.Instance.musicSource;
+    }
+
 
 
 

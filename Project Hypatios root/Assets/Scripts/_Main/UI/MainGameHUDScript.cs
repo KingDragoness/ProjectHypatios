@@ -39,7 +39,7 @@ public class MainGameHUDScript : MonoBehaviour
     public Text promptUIText;
     public Text promptUITitleText;
     public GameObject promptUIInputNameGroup;
-    public GameObject promptUIMain;
+    public PromptHelperUI promptUIMain;
 
     [Space]
 
@@ -223,8 +223,9 @@ public class MainGameHUDScript : MonoBehaviour
 
     }
 
-    public void ShowPromptUI(string title, string text, bool isEnteringName = false)
+    public void ShowPromptUI(string title, string text, bool isEnteringName = false, float _time = 7.5f)
     {
+        promptUIMain.gameObject.SetActive(false);
         promptUIMain.gameObject.SetActive(true);
         promptUIText.text = text;
         promptUITitleText.text = title;
