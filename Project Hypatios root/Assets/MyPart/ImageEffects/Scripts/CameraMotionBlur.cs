@@ -31,7 +31,7 @@ namespace UnityStandardAssets.ImageEffects
         public float minVelocity = 0.1f;	// minimum velocity in pixels
         public float velocityScale = 0.375f;	// global velocity scale
         public float softZDistance = 0.005f;	// for z overlap check softness (reconstruction filter only)
-        public int velocityDownsample = 1;	// low resolution velocity buffer? (optimization)
+        public int velocityDownsample = 1;	// low resolution velocity buffer? (optimization).
         public LayerMask excludeLayers = 0;
         private GameObject tmpCam = null;
 

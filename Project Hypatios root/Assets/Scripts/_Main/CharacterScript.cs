@@ -137,11 +137,23 @@ public class CharacterScript : Entity
         PerkInitialize(ModifierEffectCategory.BonusDamageMelee);
         PerkInitialize(ModifierEffectCategory.BonusDamageGun);
         PerkInitialize(ModifierEffectCategory.Alcoholism);
+        PerkInitialize(ModifierEffectCategory.Digestion);
         dashCooldown.BaseValue = PlayerPerk.GetValue_Dashcooldown(PerkData.Perk_LV_DashCooldown); //dash cooldown is fixed due to changing too much will easily break the level design
 
         //bugged value
         {
             var test1 = Health.armorRating.Value;
+            test1 = Health.digestion.Value;
+        }
+    }
+
+    public override void RemoveStatusEffectGroup(BaseStatusEffectObject _statusEffect)
+    {
+        base.RemoveStatusEffectGroup(_statusEffect);
+        var tempDataStats = PerkData.Temp_StatusEffect.Find(x => x.ID == _statusEffect.GetID());
+        if (tempDataStats != null)
+        {
+            PerkData.Temp_StatusEffect.Remove(tempDataStats);
         }
     }
 
@@ -209,6 +221,10 @@ public class CharacterScript : Entity
         {
             return Health.armorRating.BaseValue;
         }
+        else if (category == ModifierEffectCategory.Digestion)
+        {
+            return Health.digestion.BaseValue;
+        }
 
         return 0;
     }
@@ -254,6 +270,10 @@ public class CharacterScript : Entity
         else if (category == ModifierEffectCategory.ArmorRating)
         {
             return Health.armorRating.Value;
+        }
+        else if (category == ModifierEffectCategory.Digestion)
+        {
+            return Health.digestion.Value;
         }
 
         return 0;

@@ -1916,11 +1916,15 @@ MonoBehaviour:
   OnPlayerDetected1:
     m_PersistentCalls:
       m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 9079167431539053239}
   debug_FirstPassHit: {fileID: 0}
   debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 0
+  _timerReady: 0
   laserCharging: {fileID: 9079167431065609324}
   laserChargingRenderer: {fileID: 9079167431065609327}
   laser: {fileID: 3000425260294169686, guid: 2bc4039641ca4eb4a8aedbee88dd6fa4, type: 3}
@@ -1939,11 +1943,10 @@ MonoBehaviour:
   PlayerColor: {r: 0.178377, g: 3.5420578, b: 4.867144, a: 0}
   NormalColor: {r: 0.98039216, g: 0.36862746, b: 1.4980392, a: 0}
   attackRange: 60
-  attackTime: 0.9
+  attackTime: 2
   attackRecharge: 2
   lockBeforeAttackTime: 5
   dieHeight: -0.75
-  onSpawnShouldReady: 0
   spawnChance_Ammo: 0.17
   damping: 5
   spawnHeal: {fileID: 7836777316428737629}

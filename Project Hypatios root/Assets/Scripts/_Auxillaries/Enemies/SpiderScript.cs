@@ -90,7 +90,7 @@ public class SpiderScript : EnemyScript
             meshAgent.enabled = false;
             Rigidbody rb = gameObject.AddComponent<Rigidbody>();
             rb.drag = 0.15f;
-            rb.angularDrag = 0.2f;
+            rb.angularDrag = 0.21f;
             ready = false;
         }
 

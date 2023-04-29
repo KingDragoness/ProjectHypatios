@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Medicine_AntiDepressant
   m_EditorClassIdentifier: 
   _displayName: Anti-Depressant
-  _description: Prevent player from getting fatigue, depression and panic attack.
+  _description: Prevent and immediately heals player from getting fatigue, depression
+    and panic attack.
   category: 1
   subCategory: 22
   attachedWeapon: {fileID: 11400000, guid: ddcfc9267a2091941ac5258d25908640, type: 2}
@@ -22,5 +23,9 @@ MonoBehaviour:
   consume_HealAmount: 0
   consume_AlcoholAmount: 0
   statusEffect: {fileID: 11400000, guid: e9cc5594d71301141839d011e9348093, type: 2}
+  statusEffectToRemove:
+  - {fileID: 11400000, guid: 1c9c721ea0f65a24da1f7112a5c0cf7c, type: 2}
+  - {fileID: 11400000, guid: f9a977ca1750d2f4eb49020529d0b2ea, type: 2}
+  - {fileID: 11400000, guid: 044b1b66c5c634847a356dbcdce50537, type: 2}
   statusEffectTime: 19999
   consume_HealTime: 0.1

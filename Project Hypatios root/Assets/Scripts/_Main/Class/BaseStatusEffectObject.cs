@@ -40,7 +40,10 @@ public class BaseStatusEffectObject : ScriptableObject
         var statusEffectDat = new StatusEffectData();
         statusEffectDat.ID = GetID();
         statusEffectDat.Time = Time;
-        Hypatios.Player.PerkData.Temp_StatusEffect.Add(statusEffectDat);
-        Hypatios.Player.ReloadStatEffects();
+        if (Hypatios.Player.PerkData.Temp_StatusEffect.Find(x => x.ID == GetID()) == null)
+        {
+            Hypatios.Player.PerkData.Temp_StatusEffect.Add(statusEffectDat);
+            Hypatios.Player.ReloadStatEffects();
+        }
     }
 }

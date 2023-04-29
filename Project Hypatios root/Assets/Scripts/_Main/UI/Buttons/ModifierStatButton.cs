@@ -65,7 +65,7 @@ public class ModifierStatButton : MonoBehaviour
         {
             if (value == 0) s = $"{value} HP/s";
             else if (value > 0) s = $"{value} HP/s";
-            else s = $"-{value} HP/s";
+            else s = $"{value} HP/s";
         }
         else if (category == ModifierEffectCategory.KnockbackResistance)
         {
@@ -104,6 +104,10 @@ public class ModifierStatButton : MonoBehaviour
             s = $"{value}m/s";
         }
         else if (category == ModifierEffectCategory.ArmorRating)
+        {
+            s = $"{value * 100}%";
+        }
+        else if (category == ModifierEffectCategory.Digestion)
         {
             s = $"{value * 100}%";
         }
@@ -162,6 +166,10 @@ public class ModifierStatButton : MonoBehaviour
             value = Hypatios.Player.GetCharBaseValue(category);
         }
         else if (category == ModifierEffectCategory.ArmorRating)
+        {
+            value = Hypatios.Player.GetCharBaseValue(category);
+        }
+        else if (category == ModifierEffectCategory.Digestion)
         {
             value = Hypatios.Player.GetCharBaseValue(category);
         }

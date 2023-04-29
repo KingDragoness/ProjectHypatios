@@ -23,6 +23,9 @@ public class Enemy_FW_SentryGun : EnemyScript
     [FoldoutGroup("Weapon")] public Transform v_target_Turret;
     [FoldoutGroup("Weapon")] public Transform[] allTurretOrigin;
     [FoldoutGroup("Weapon")] public float weapon_Damage = 20;
+    [FoldoutGroup("Weapon")] public int OverheatLimitTick = 50;
+    [FoldoutGroup("Weapon")] [Range(1,5)] public int OverheatedReducePerTick = 2;
+    [FoldoutGroup("Weapon")] [Range(2, 6)] public int AddOverheatPerAttack = 2;
     [FoldoutGroup("Weapon")] public AudioSource audio_Fire;
 
     public delegate void OnAITick();
@@ -35,15 +38,23 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     private Chamber_Level7 _chamberScript;
 
+    private int _overheatCurrentTick = 0;
+    private bool _hasOverheated = false;
 
     public void Start()
     {
         _chamberScript = Chamber_Level7.instance;
         _chamberScript.RegisterUnit(myUnit);
+        _overheatCurrentTick = 0;
     }
     public Transform GetCurrentTarget()
     {
         return target;
+    }
+
+    public bool IsSentryOverheated()
+    {
+        return _overheatCurrentTick >= OverheatLimitTick ? true : false;
     }
 
     public override void Hack()
@@ -58,6 +69,8 @@ public class Enemy_FW_SentryGun : EnemyScript
 
         UpdateTick();
         UpdateVisuals();
+
+  
     }
 
     private void UpdateTick()
@@ -127,10 +140,33 @@ public class Enemy_FW_SentryGun : EnemyScript
             _timeSinceEnemyLastSeen--;
         }
 
+        HandleOverheating();
         _isAttack = isAttacking;
     }
 
     #region Weaponary
+
+    private void HandleOverheating()
+    {
+        if (_overheatCurrentTick > 0)
+        {
+            _overheatCurrentTick--;
+
+            if (_hasOverheated)
+            {
+                _overheatCurrentTick -= OverheatedReducePerTick;
+            }
+        }
+        else
+        {
+            _hasOverheated = false;
+        }
+
+        if (IsSentryOverheated())
+        {
+            _hasOverheated = true;
+        }
+    }
 
     private void RotateToTarget()
     {
@@ -145,6 +181,11 @@ public class Enemy_FW_SentryGun : EnemyScript
     {
         if (target == null)
             return;
+
+        if (IsSentryOverheated() | _hasOverheated)
+            return;
+
+        _overheatCurrentTick += AddOverheatPerAttack;
 
         int index = 0;
 

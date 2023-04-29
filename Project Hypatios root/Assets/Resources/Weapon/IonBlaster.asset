@@ -22,13 +22,13 @@ MonoBehaviour:
     type: 3}
   attachments:
   - ID: Torpedo
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     Name: Torpedo Launcher
     Description: Greatly decreases cooldown.
     slot: 0
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 2
     modifier_damage: 0
     modifier_cooldown: 1.5
     modifier_percent_movespeed: 0
@@ -39,15 +39,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: HighCap
-    Name: High Capacitor Pack
-    Description: Increases magazine size to 6.
-    slot: 5
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 2
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 1
+    Name: High Capacitor Pack
+    Description: Increases magazine size to 6.
+    slot: 5
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -58,15 +58,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: Turbo
-    Name: Turbo Charger
-    Description: Can fire without charge. Charging now fires 2 projectiles.
-    slot: 0
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
       count: 4
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 3
+    Name: Turbo Charger
+    Description: Can fire without charge. Charging now fires 2 projectiles.
+    slot: 0
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 5
     modifier_percent_movespeed: 0
@@ -77,13 +77,13 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: FirmGrip
+    RequirementCrafting:
+    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+      count: 2
     Name: Firm Grip
     Description: Reduces recoil.
     slot: 2
     order: 10
-    RequirementCrafting:
-    - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
-      count: 2
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -94,15 +94,15 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: StableGrip
-    Name: Stabilitator Grip
-    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
-    slot: 2
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
       count: 3
     - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
       count: 1
+    Name: Stabilitator Grip
+    Description: Computer-assisted anti-recoil system. Greatly decreases recoil.
+    slot: 2
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -113,16 +113,16 @@ MonoBehaviour:
     stat_burn: 0
     stat_poison: 0
   - ID: CrosshitGrip
-    Name: Crosshit Grip
-    Description: Decreases recoil and projectile now no longer scatter and will hit
-      at crosshair.
-    slot: 2
-    order: 10
     RequirementCrafting:
     - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
       count: 4
     - inventory: {fileID: 11400000, guid: e35aad0928a7e2d4abdc34865caba309, type: 2}
       count: 2
+    Name: Crosshit Grip
+    Description: Decreases recoil and projectile now no longer scatter and will hit
+      at crosshair.
+    slot: 2
+    order: 10
     modifier_damage: 0
     modifier_cooldown: 0
     modifier_percent_movespeed: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   buy_AmmoSoulPrice: 8
   buy_SoulPrice: 50
   isCraftable: 1
-  defaultDamage: 60
+  defaultDamage: 35
   defaultMagazineSize: 3
   defaultCooldown: 1
   rewardRate:

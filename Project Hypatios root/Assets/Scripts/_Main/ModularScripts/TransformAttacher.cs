@@ -7,6 +7,7 @@ public class TransformAttacher : MonoBehaviour
 {
 
     public Transform targetCopy;
+    public bool useLateUpdate = false;
 
     private Vector3 offsetPosition;
     private Vector3 offsetRotation;
@@ -19,9 +20,17 @@ public class TransformAttacher : MonoBehaviour
 
     private void Update()
     {
+        if (useLateUpdate) return;
         transform.position = targetCopy.position;//+ offsetPosition;
         transform.eulerAngles = targetCopy.eulerAngles;// + offsetRotation;
 
+    }
+
+    private void LateUpdate()
+    {
+        if (!useLateUpdate) return;
+        transform.position = targetCopy.position;//+ offsetPosition;
+        transform.eulerAngles = targetCopy.eulerAngles;// + offsetRotation;
     }
 
     [ContextMenu("Copy Transform")]

@@ -7,7 +7,7 @@ using System.Linq;
 [System.Serializable]
 public class Sound
 {
-    [HorizontalGroup(LabelWidth = 44)] public string name;
+    [HorizontalGroup(LabelWidth = 45)] public string name;
     [HorizontalGroup(LabelWidth = 44)] public AudioClip clip;
 
     [FoldoutGroup("Show more")]

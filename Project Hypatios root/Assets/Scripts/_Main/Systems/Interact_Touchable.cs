@@ -12,6 +12,7 @@ public class Interact_Touchable : InteractableObject
     [ShowIf("useHoverEvent")] public UnityEvent OnNotHoverEvent;
     public AudioSource interactSound;
     public bool useHoverEvent = false;
+    public bool useGenericSound = false;
     public string interactDescription = "Interact";
     public string text_interactPrompt = "A door has been unlocked.";
     public float time_interactPrompt = 4f;
@@ -21,6 +22,10 @@ public class Interact_Touchable : InteractableObject
     {
         OnInteractEvent?.Invoke();
         if (interactSound != null) interactSound.Play();
+        if (useGenericSound)
+        {
+            MainGameHUDScript.Instance.audio_interactMonitor?.Play();
+        }
     }
 
     public override string GetDescription()

@@ -315,10 +315,6 @@ public class PlayerRPGUI : MonoBehaviour
         }
         else if (itemCLass.category == ItemInventory.Category.Consumables)
         {
-
-            //heal amount: 55 HP
-            //heal time: 5 second
-            //then we should do 55/5 = 11 HP per second
             float healSpeed = itemCLass.consume_HealAmount / itemCLass.consume_HealTime;
 
             soundManagerScript.instance.PlayOneShot("consume");
@@ -332,6 +328,14 @@ public class PlayerRPGUI : MonoBehaviour
             if (itemCLass.statusEffect != null)
             {
                 itemCLass.statusEffect.AddStatusEffectPlayer(itemCLass.statusEffectTime);
+            }
+            if (itemCLass.statusEffectToRemove.Count > 0)
+            {
+                foreach(var sg in itemCLass.statusEffectToRemove)
+                {
+                    if (sg == null) continue;
+                    Hypatios.Player.RemoveStatusEffectGroup(sg);
+                }
             }
 
             Hypatios.Player.Inventory.RemoveItem(itemData);

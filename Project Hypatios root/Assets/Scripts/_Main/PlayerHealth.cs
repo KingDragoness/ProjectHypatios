@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
     public Vector3 camRecoilDamage = new Vector3(3f, 3f, 3f);
     [InfoBox("Only for Elena")]
     [FoldoutGroup("Elena Section")] public CharacterStat armorRating = new CharacterStat(1);
+    public CharacterStat digestion = new CharacterStat(1);
     float healthAfterHeal = 0f;
     public bool isDead;
     public SlowMotion slow;
@@ -169,7 +170,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (healthSpeed > 0f)
         {
-            HealthSpeed = healthSpeed;
+            HealthSpeed = (healthSpeed * digestion.Value);
         }
 
         if (instantHeal == false)

@@ -39211,9 +39211,18 @@ MonoBehaviour:
   OnSelfKilled:
     m_PersistentCalls:
       m_Calls: []
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 1
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
+  debug_FirstPassHit: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   myUnit: {fileID: 2392288587143870203}
   OnBotKilled:
     m_PersistentCalls:
@@ -39257,6 +39266,9 @@ MonoBehaviour:
   - {fileID: 3310836332024217277}
   - {fileID: 3310836332919598917}
   weapon_Damage: 7.5
+  OverheatLimitTick: 150
+  OverheatedReducePerTick: 2
+  AddOverheatPerAttack: 2
   audio_Fire: {fileID: 4791473219316785539}
 --- !u!114 &2392288587143870203
 MonoBehaviour:

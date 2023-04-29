@@ -13,7 +13,7 @@ public class ActivatorRegion : MonoBehaviour
 
     void Start()
     {
-        if (player == null) player = FindObjectOfType<CharacterScript>().transform;
+        if (player == null) player = Hypatios.Player.transform;
     }
 
     private void OnDrawGizmos()

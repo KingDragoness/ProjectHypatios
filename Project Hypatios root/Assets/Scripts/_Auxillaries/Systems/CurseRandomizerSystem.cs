@@ -9,10 +9,17 @@ public class CurseRandomizerSystem : MonoBehaviour
     [FoldoutGroup("Ailment Stats")] public float timePlayerGetFatigue = 600f;
     [FoldoutGroup("Ailment Stats")] [Range(0f,1f)] public float chancePanicAttack = 0.1f;
     [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceDepressionAttack = 0.02f;
-    [SerializeField] private BaseStatusEffectObject depression;
-    [SerializeField] private BaseStatusEffectObject panicAttack;
-    [SerializeField] private BaseStatusEffectObject chamberFatigue;
-    [SerializeField] private BaseStatusEffectObject antiDepressant;
+    [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceBurnDegree = 0.1f;
+    [FoldoutGroup("Ailment Stats")] public int tickThreshold_Degree2 = 200;
+    [FoldoutGroup("Ailment Stats")] public int tickThreshold_Degree3 = 500;
+    [FoldoutGroup("Ailment Stats")] public int tickThreshold_Degree4 = 1000;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject depression;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject panicAttack;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject chamberFatigue;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject antiDepressant;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree2;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree3;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree4;
     [SerializeField] private float refreshTime;
 
     private bool isAntiDepressant = false;
@@ -105,6 +112,23 @@ public class CurseRandomizerSystem : MonoBehaviour
     private void CheckBurning()
     {
         if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.Fire) == false) return;
+        float chance1 = Random.Range(0f, 1f);
+
+        if (chance1 < chanceBurnDegree)
+        {
+            if (_ticksPlayerGotBurned > tickThreshold_Degree2 && Hypatios.Player.IsStatusEffectGroup(fire_degree2) == false)
+            {
+                BurningInjury(2);
+            }
+            if (_ticksPlayerGotBurned > tickThreshold_Degree3 && Hypatios.Player.IsStatusEffectGroup(fire_degree3) == false)
+            {
+                BurningInjury(3);
+            }
+            if (_ticksPlayerGotBurned > tickThreshold_Degree4 && Hypatios.Player.IsStatusEffectGroup(fire_degree4) == false)
+            {
+                BurningInjury(4);
+            }
+        }
 
         _ticksPlayerGotBurned++;
 
@@ -137,7 +161,33 @@ public class CurseRandomizerSystem : MonoBehaviour
         Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
     }
 
+    /// <summary>
+    /// Set player status effect burning degree
+    /// </summary>
+    /// <param name="degree">2, 3, 4</param>
+    [FoldoutGroup("DEBUG")]
+    [Button("Add burning injury")]
 
+    public void BurningInjury(int degree = 2)
+    {
+        if (degree == 2)
+        {
+            fire_degree2.AddStatusEffectPlayer(9999f);
+            DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from second-degree burn injury.", 4f);
+        }
+        else if (degree == 3)
+        {
+            fire_degree3.AddStatusEffectPlayer(9999f);
+            DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from third-degree burn injury.", 4f);
+        }
+        else if (degree == 4)
+        {
+            fire_degree4.AddStatusEffectPlayer(9999f);
+            DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from fourth-degree burn injury.", 4f);
+        }
+
+        Hypatios.Game.RuntimeTutorialHelp("Burn Injury", "Despite Aldrich's high endurance and damage resistance, fire can cause severe injury to Aldrich. Try not to get on fire too long.", "curse.burninjurydegree");
+    }
 
     #endregion
 

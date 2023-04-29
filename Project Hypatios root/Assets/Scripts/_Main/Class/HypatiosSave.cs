@@ -185,6 +185,26 @@ public class HypatiosSave
             int ammoAmount = Mathf.RoundToInt(weaponClass.rewardRate.Evaluate(randomTime)) + 5;
             weaponData.totalAmmo = ammoAmount;
         }
+
+        public void RewardAmmo(int count)
+        {
+            AssetStorageDatabase assets = null;
+
+            if (Hypatios.Instance == null)
+                assets = UnityEngine.GameObject.FindObjectOfType<AssetStorageDatabase>();
+            else
+                assets = Hypatios.Assets;
+
+            var itemClass = assets.GetItem(ID);
+            var weaponClass = itemClass.attachedWeapon;
+
+            for (int x = 0; x < count; x++)
+            {
+                float randomTime = UnityEngine.Random.Range(0f, 1f);
+                int ammoAmount = Mathf.RoundToInt(weaponClass.rewardRate.Evaluate(randomTime)) + 5;
+                weaponData.totalAmmo += ammoAmount;
+            }
+        }
     }
 
     [System.Serializable]

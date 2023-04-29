@@ -14,7 +14,7 @@ public class CustomVariable
         Override
     }
 
-    public string variableName = "EnhancedParalyzer";
+    public string variableName = "ParalyzeChance";
     public float value = 0.05f;
     public Type type = Type.Init;
 

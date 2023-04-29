@@ -27,6 +27,7 @@ public enum ModifierEffectCategory
     Alcoholism,
     Recoil,
     RegenHPPercentage,
+    Digestion,
     //Bonus Damage weapons for Player 100-120
     BonusDamageMelee = 99,
     BonusDamageGun = 100,
@@ -104,6 +105,8 @@ public abstract class BaseModifierEffect : MonoBehaviour
             if (statusCategoryType == ModifierEffectCategory.ArmorRating)
                 playerScript.Health.armorRating.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
+            if (statusCategoryType == ModifierEffectCategory.Digestion)
+                playerScript.Health.digestion.AddModifier(new StatModifier(Value, StatModType.Flat, this.gameObject));
 
             var test1 = playerScript.BonusDamageMelee.Value; //prevent value bug
             test1 = playerScript.BonusDamageGun.Value;
@@ -149,6 +152,7 @@ public abstract class BaseModifierEffect : MonoBehaviour
             playerScript.Health.maxHealth.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.healthRegen.RemoveAllModifiersFromSource(gameObject);
             playerScript.Health.armorRating.RemoveAllModifiersFromSource(gameObject);
+            playerScript.Health.digestion.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.knockbackResistance.RemoveAllModifiersFromSource(gameObject);
             playerScript.Weapon.Recoil.baseRecoil.RemoveAllModifiersFromSource(gameObject);
             playerScript.dashCooldown.RemoveAllModifiersFromSource(gameObject);

@@ -211,6 +211,37 @@ public abstract class Entity : MonoBehaviour
         return allStatusEffectMonos.Find(x => x.statusEffect == _statusEffectObject);
     }
 
+    /// <summary>
+    /// Remove player's ailments or effects
+    /// </summary>
+    public virtual void RemoveStatusEffectGroup(BaseStatusEffectObject _statusEffect)
+    {
+        _allStatusInEffect.RemoveAll(x => x == null);
+        var allGenericStatus = _allStatusInEffect.FindAll(x => x is GenericStatus);
+        StatusEffectMono targetMono = GetStatusEffectGroup(_statusEffect);
+
+        if (targetMono == null)
+            return;
+        else {
+            _allStatusInEffect.Remove(targetMono);
+            Destroy(targetMono.gameObject);
+        }
+
+        foreach (var effect in allGenericStatus)
+        {
+            if (effect.IsTiedToStatusMono == false) continue;
+            if (effect.statusMono == null) continue;
+            if (effect.statusMono.statusEffect == _statusEffect)
+            {
+                _allStatusInEffect.Remove(effect);
+                Destroy(effect.gameObject);
+            }
+        }
+        _allStatusInEffect.RemoveAll(x => x == null);
+    }
+
+
+
 
     /// <summary>
     /// 

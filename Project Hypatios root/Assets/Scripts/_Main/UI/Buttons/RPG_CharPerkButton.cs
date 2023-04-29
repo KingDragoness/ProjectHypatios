@@ -90,6 +90,10 @@ public class RPG_CharPerkButton : MonoBehaviour
         {
             s = $"{value}/100%";
         }
+        else if (statusEffect == ModifierEffectCategory.Digestion)
+        {
+            s = $"{Mathf.RoundToInt(value * 100)}%";
+        }
         else
         {
             s = $"{value}";
