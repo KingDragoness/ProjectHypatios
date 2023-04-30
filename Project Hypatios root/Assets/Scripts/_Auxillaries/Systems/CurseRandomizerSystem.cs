@@ -17,12 +17,14 @@ public class CurseRandomizerSystem : MonoBehaviour
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject panicAttack;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject chamberFatigue;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject antiDepressant;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fireRetardant;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree2;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree3;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree4;
     [SerializeField] private float refreshTime;
 
     private bool isAntiDepressant = false;
+    private bool isFireRetardant = false;
     private bool isFatigueChamber = false;
     private int _ticksPlayerGotBurned = 0;
     private float _timerRandomizer = 1f;
@@ -39,11 +41,11 @@ public class CurseRandomizerSystem : MonoBehaviour
 
     private void CheckPlayerCondition()
     {
-        if (Hypatios.Player.IsStatusEffectGroup(antiDepressant))
-        {
-            isAntiDepressant = true;
-        }
-        else isAntiDepressant = false;
+        isAntiDepressant = false;
+        isFireRetardant = false;
+        if (Hypatios.Player.IsStatusEffectGroup(antiDepressant)) isAntiDepressant = true;
+        if (Hypatios.Player.IsStatusEffectGroup(fireRetardant)) isFireRetardant = true;
+
 
         isFatigueChamber = Hypatios.Chamber.chamberObject.isCausingFatigue;
         _totalEnemiesSeePlayer = Hypatios.Enemy.CountEnemyHasSeenMe();
@@ -112,6 +114,7 @@ public class CurseRandomizerSystem : MonoBehaviour
     private void CheckBurning()
     {
         if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.Fire) == false) return;
+        if (isFireRetardant) return;
         float chance1 = Random.Range(0f, 1f);
 
         if (chance1 < chanceBurnDegree)

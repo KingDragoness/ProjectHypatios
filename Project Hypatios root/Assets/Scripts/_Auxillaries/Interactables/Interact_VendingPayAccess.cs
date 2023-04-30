@@ -23,6 +23,12 @@ public class Interact_VendingPayAccess : MonoBehaviour
 
     public void Pay()
     {
+        if (soulCost == 0)
+        {
+            DeadDialogue.PromptNotifyMessage_Mod(failedText, time_interactPrompt);
+            return;
+        }
+
         if (soulCost > Hypatios.Game.SoulPoint)
         {
             DeadDialogue.PromptNotifyMessage_Mod(failedText, time_interactPrompt);

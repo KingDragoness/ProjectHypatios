@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087666053241469639}
   m_LocalRotation: {x: -0.7071069, y: -0, z: 0.000000029802322, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.063, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.49999997}
   m_Children: []
   m_Father: {fileID: 7142187764437361899}
@@ -132,8 +132,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
   interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
   interactDescription: Pick up
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!1 &4053237073037428653
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4053237073037428653}
   m_LocalRotation: {x: -0.7071069, y: -0, z: 0.000000029802322, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.063, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.49999997}
   m_Children: []
   m_Father: {fileID: 7142187764437361899}
@@ -260,3 +270,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3e067ccc011439644ae084ddf22ac8b6, type: 2}
   count: 1
+  displayPrompt: 0
