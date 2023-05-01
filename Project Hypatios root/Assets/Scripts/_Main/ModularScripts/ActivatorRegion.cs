@@ -45,44 +45,43 @@ public class ActivatorRegion : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void Update()
     {
 
-        if (player == null)
-        {
-            return;
-        }
+        if (player == null) return;
+        if (Time.timeScale == 0) return;
 
         bool activate = false;
 
         foreach (var t in ActivatingArea)
         {
-            if (activate != true)
+            if (activate == false)
                 activate = IsInsideOcclusionBox(t, player.position);
   
         }
 
-        foreach (GameObject go in TargetObjectRegion)
+
+        if (allowWhenParadoxMode && MainUI.Instance.current_UI == MainUI.UIMode.Paradox)
         {
-            if (go.activeSelf != activate)
+            foreach (GameObject go in TargetObjectRegion)
             {
-                go.SetActive(activate);
+                if (go.activeSelf == false) go.SetActive(true);
             }
         }
 
-        if (allowWhenParadoxMode)
+        if (MainUI.Instance.current_UI != MainUI.UIMode.Paradox)
         {
-            if (MainUI.Instance.current_UI == MainUI.UIMode.Paradox)
+            foreach (GameObject go in TargetObjectRegion)
             {
-                foreach (GameObject go in TargetObjectRegion)
+                if (go.activeSelf != activate)
                 {
-                    if (go.activeSelf == false) go.SetActive(true);
+                    go.SetActive(activate);
                 }
             }
         }
     }
 
-    [ContextMenu("Rough bound calculation")]
+    [ContextMenu("Bound calculation")]
     public void CalculateBounds()
     {
         Bounds bounds = new Bounds();
