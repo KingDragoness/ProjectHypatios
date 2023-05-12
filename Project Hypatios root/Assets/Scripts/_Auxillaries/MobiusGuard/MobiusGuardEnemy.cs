@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
 
+// Terminology:
+// SE = Survive-Engage: two goals on the end spectrum
+/// <summary>
+/// 
+/// </summary>
 public class MobiusGuardEnemy : MonoBehaviour
 {
 
@@ -15,13 +21,35 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     }
 
+    public bool IsAiming = false;
+    public bool DEBUG_ShowAIBehaviour = false;
+    public Transform target;
+
+    [FoldoutGroup("References")] public Animator animator;
+    [FoldoutGroup("References")] public BipedIK bipedIk;
+    [FoldoutGroup("References")] public NavMeshAgent agent;
+    [FoldoutGroup("References")] public Rigidbody mainRagdollRigidbody;
+    [FoldoutGroup("References")] public Rigidbody[] _ragdollRigidbodies;
 
 
-    [SerializeField] private Animator animator;
-    [SerializeField] private AimController aimController;
-    [SerializeField] private AimIK aimIK;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Rigidbody[] _ragdollRigidbodies;
+    [FoldoutGroup("Decision Makings")] public MobiusAIBehaviour startingBehaviour;
+
+    [FoldoutGroup("Decision Makings")] 
+    [ReadOnly] [Tooltip("When in the negative spectrum, prioritize survival (escape, flee, take cover). When in positive, prioritize killing the player.")] 
+    public int survivalEngageLevel = 0;
+
+    [FoldoutGroup("Decision Makings")]
+    [ReadOnly]
+    [Tooltip("Randomly generated. Per guard has different level of confidence/braveness.")]
+    [Range(-100,100)]
+    public int confidenceLevel = 0;
+
+    [FoldoutGroup("Decision Makings")] [ReadOnly] public MobiusAIBehaviour currentBehaviour;
+    [FoldoutGroup("Decision Makings")] [ReadOnly] public List<MobiusAIBehaviour> currentAvailableNextBehaviour = new List<MobiusAIBehaviour>(); //If ragdoll mode, then the only next behaviour is wakeup.
+    [FoldoutGroup("Decision Makings")] [ReadOnly] public Queue<MobiusAIBehaviour> currentPlan;
+    [FoldoutGroup("Decision Makings")] public List<MobiusAIBehaviour> allBehaviours = new List<MobiusAIBehaviour>();
+
+    private MobiusAIBehaviour previousBehaviour;
 
     #region Parameter - Ragdolls
 
@@ -29,7 +57,6 @@ public class MobiusGuardEnemy : MonoBehaviour
     [FoldoutGroup("Ragdoll")] public string _standupFaceDownClipName = "";
     [FoldoutGroup("Ragdoll")] public int layerAimingIndex = 1;
     [FoldoutGroup("Ragdoll")] public float TimeToResetBones = 1f;
-    [FoldoutGroup("Ragdoll")] public bool IsAiming = false;
     [FoldoutGroup("Ragdoll")] public Transform Debug_RagdollForceorigin;
 
     private Transform _hipsBone;
@@ -42,8 +69,10 @@ public class MobiusGuardEnemy : MonoBehaviour
     private bool isResettingBones = false;
     private bool _isFacingUp = false;
     private float _elapsedTimeBoneReset = 0f;
-    private float _currentAimingValue = 0f;
+    private float _currentAimingValue = 1f;
     #endregion
+
+    public bool IsMoving => agent.velocity.magnitude > 0.1f;
 
     private void Awake()
     {
@@ -72,6 +101,28 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        confidenceLevel = Random.Range(-100, 100);
+        ChangeAIBehaviour(startingBehaviour);
+    }
+
+
+    #region Setup
+
+    [FoldoutGroup("Debug")] [Button("Setup AIs")]
+    public void SetupAIBehavioursDetails()
+    {
+        var AIbehaviours = GetComponentsInChildren<MobiusAIBehaviour>();
+        allBehaviours = AIbehaviours.ToList();
+        foreach (var behaviour in allBehaviours)
+        {
+            behaviour.gameObject.name = behaviour.GetType().Name;
+            behaviour.mobiusGuardScript = this;
+        }
+    }
+
+    #endregion
 
     #region Ragdolls
 
@@ -146,9 +197,9 @@ public class MobiusGuardEnemy : MonoBehaviour
     [FoldoutGroup("Debug")] [Button("Enable ragdoll")]
     public void EnableRagdoll()
     {
-        //aimIK.enabled = false;
-        //aimController.enabled = false;
-        agent.enabled = true;
+        Set_DisableAiming();
+        ChangeAIBehaviour_Type<MAIB_Ragdoll>();
+        agent.enabled = false;
         animator.enabled = false;
 
         foreach (var rb in _ragdollRigidbodies)
@@ -161,8 +212,6 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     public void DisableRagdoll()
     {
-        // aimIK.enabled = true;
-        //aimController.enabled = true;
         agent.enabled = true;
         animator.enabled = true;
 
@@ -197,7 +246,7 @@ public class MobiusGuardEnemy : MonoBehaviour
         Vector3 originalHipPosition = _hipsBone.position;
         Quaternion originalHipRotation = _hipsBone.rotation;
 
-        Vector3 desiredDirection = _hipsBone.up;
+        Vector3 desiredDirection = _hipsBone.transform.up;
 
         if (_isFacingUp)
         {
@@ -229,13 +278,19 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     [FoldoutGroup("Debug")]
     [Button("Wakeup")]
-    private void Wakeup()
+    public void Wakeup()
     {
-        _isFacingUp = _hipsBone.forward.y > 0;
+        _isFacingUp = _hipsBone.transform.forward.y > 0;
+        ChangeAIBehaviour_Type<MAIB_Wakeup>();
 
         AlignRotationToHips();
         AlignPositionToHips();
         PopulateBoneTransform(_ragdollBoneTransforms);
+
+        foreach (var rb in _ragdollRigidbodies)
+        {
+            rb.isKinematic = true;
+        }
         isResettingBones = true;
         _elapsedTimeBoneReset = 0f;
     }
@@ -270,18 +325,140 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     #endregion
 
+    #region Behaviour Sets
+
+    public void Set_EnableAiming()
+    {
+
+        if (IsAiming == false) IsAiming = true;
+
+        bipedIk.enabled = true;
+        bipedIk.solvers.aim.IKPositionWeight = 1f;
+        bipedIk.solvers.aim.target = target;
+    }
+
+    public void OverrideAimingTarget()
+    {
+        bipedIk.solvers.aim.target = target;
+
+    }
+
+    public void Set_DisableAiming()
+    {
+
+        if (IsAiming == true) IsAiming = false;
+
+        bipedIk.enabled = false;
+        bipedIk.solvers.aim.IKPositionWeight = 0f;
+    }
+
+    public void Set_StopMoving()
+    {
+
+        if (IsMoving)
+        {
+            agent.Stop();
+        }
+
+        animator.SetFloat("Speed", 0f);
+    }
+
+    public void Set_StartMoving(float moveSpeed, float animSpeed)
+    {
+        if (agent.isStopped) agent.Resume();
+        if (IsMoving)
+        {
+            animator.SetFloat("Speed", animSpeed);
+        }
+        else animator.SetFloat("Speed", Mathf.MoveTowards(animator.GetFloat("Speed"), 0f, Time.deltaTime));
+
+        agent.speed = moveSpeed;
+
+    }
+
+    #endregion
 
     #region Updates
     private void Update()
     {
         UpdateRagdolls();
+        UpdateAI();
+ 
+    }
+
+    private void FixedUpdate()
+    {
+        if (isRagdoll && isResettingBones == false)
+        {
+            var originalPos = _hipsBone.transform.position;
+            transform.position = _hipsBone.transform.position;
+            _hipsBone.transform.position = originalPos;
+        }
     }
 
     private void LateUpdate()
     {
         if (isRagdoll)
         {
+
             //transform.position = _hipsBone.position;
+        }
+    }
+
+    [FoldoutGroup("Decision Makings")][Button("Change Behaviour")]
+    public void ChangeAIBehaviour(MobiusAIBehaviour _behaviour)
+    {
+        if (currentBehaviour != null) currentBehaviour.OnBehaviourDisable();
+        previousBehaviour = currentBehaviour;
+        currentBehaviour = _behaviour;
+        currentBehaviour.OnBehaviourActive();
+    }
+
+    public void ChangeAIBehaviour_Type<T>()
+    {
+        if (currentBehaviour != null) currentBehaviour.OnBehaviourDisable();
+        previousBehaviour = currentBehaviour;
+        currentBehaviour = allBehaviours.Find(x => x.GetType() == typeof(T));
+        currentBehaviour.OnBehaviourActive();
+    }
+
+
+    private void UpdateAI()
+    {
+        if (currentBehaviour != null)
+        {
+            currentBehaviour.Execute();
+        }
+
+        EvaluateAvailableBehaviours();
+    }
+
+    private void EvaluateAvailableBehaviours()
+    {
+        currentAvailableNextBehaviour.Clear();
+
+        foreach(var behaviour in allBehaviours)
+        {
+            if (behaviour == currentBehaviour)
+                continue;
+
+            if (currentBehaviour.cannotBeSelectedByDecision && behaviour.isExclusive == false)
+                continue;
+
+            if (behaviour.isExclusive)
+            {
+                var b1 = behaviour.allowPreviousBehaviours.Find(x => x == currentBehaviour);
+
+                if (b1 != null)
+                {
+                    currentAvailableNextBehaviour.Add(b1);
+                }
+            }
+            else
+            {
+                currentAvailableNextBehaviour.Add(behaviour);
+            }
+
         }
     }
 

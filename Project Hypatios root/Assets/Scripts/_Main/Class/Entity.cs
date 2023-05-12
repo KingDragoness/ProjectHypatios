@@ -146,7 +146,15 @@ public abstract class Entity : MonoBehaviour
 
     public int GetTempStatusEffectByCount(ModifierEffectCategory _statusCategory)
     {
-        return _allStatusInEffect.FindAll(x => x.statusCategoryType == _statusCategory && x.SourceID != "PermanentPerk").Count;
+        var listStatuses = _allStatusInEffect.FindAll(x => x.statusCategoryType == _statusCategory && x.SourceID != "PermanentPerk");
+        var childCategories = Hypatios.Assets.GetStatusEffect(_statusCategory).childCategories;
+        foreach(var category in childCategories)
+        {
+            var tempList = _allStatusInEffect.FindAll(x => x.statusCategoryType == category && x.SourceID != "PermanentPerk");
+            listStatuses.AddRange(tempList);
+        }
+
+        return listStatuses.Count;
     }
     private BaseModifierEffect GetStatusEffect(ModifierEffectCategory _statusCategory, string _source)
     {

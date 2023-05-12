@@ -23,7 +23,7 @@ public class Interact_TravellatorLift : MonoBehaviour
 
         if (_timerCheck < 0f)
         {
-            if (waypoint.isObjectMoving)
+            if (waypoint.isObjectMoving && waypoint.enabled == true)
             {
                 if (audio_LiftSound.isPlaying == false) audio_LiftSound.Play();
             }
@@ -31,6 +31,8 @@ public class Interact_TravellatorLift : MonoBehaviour
             {
                 if (audio_LiftSound.isPlaying == true) audio_LiftSound.Stop();
             }
+
+
             _timerCheck = 0.1f;
         }
     }

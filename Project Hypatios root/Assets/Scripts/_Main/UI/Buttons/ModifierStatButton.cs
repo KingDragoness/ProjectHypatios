@@ -33,14 +33,14 @@ public class ModifierStatButton : MonoBehaviour
         {
             label_Value.text = $"{GetBaseValueStr(category1)}";
         }
-        label_ModifierName.text = baseModifierClass.TitlePerk;
+        label_ModifierName.text = baseModifierClass.GetTitlePerk();
         if (countModifiers == 0)
         {
-            label_Description.text = baseModifierClass.DescriptionModifier;
+            label_Description.text = baseModifierClass.GetDescriptionPerk();
         }
         else
         {
-            label_Description.text = $"{baseModifierClass.DescriptionModifier} <size=13>(There are {countModifiers} modifiers affecting this stat)</size>";
+            label_Description.text = $"{baseModifierClass.GetDescriptionPerk()} <size=13>(There are {countModifiers} modifiers affecting this stat)</size>";
 
         }
         icon.sprite = baseModifierClass.PerkSprite;

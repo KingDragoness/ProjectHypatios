@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using UnityEngine.Localization.Settings;
 
 public class ConsoleCommand : MonoBehaviour
 {
@@ -131,6 +132,10 @@ public class ConsoleCommand : MonoBehaviour
                 CommandCheat(args);
                 break;
 
+            case "changelocale":
+                ChangeLanguage(args);
+                break;
+
             case "additem":
                 AddItem(args);
                 break;
@@ -249,6 +254,60 @@ public class ConsoleCommand : MonoBehaviour
     }
 
 
+
+    #region Commands
+    protected void CommandCheat(string[] args)
+    {
+
+        try
+        {
+            Hypatios.Game.CommandCheat(args[0]);
+        }
+        catch
+        {
+            //SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
+        }
+    }
+
+    protected void ChangeUIMode(string[] args)
+    {
+
+        try
+        {
+            int enum1 = 0;
+            int.TryParse(args[0], out enum1);
+
+            var MainUI1 = MainUI.Instance;
+
+            MainUI1.current_UI = (MainUI.UIMode)enum1;
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
+        }
+    }
+
+
+    private void ChangeLanguage(string[] args)
+    {
+        try
+        {
+
+            int localeID = 0;
+            int.TryParse(args[0], out localeID);
+
+            Hypatios.Instance.ChangeLocale(localeID);
+
+        }
+        catch (System.Exception e)
+        {
+            SendConsoleMessage("Invalid argument! changelocale [<color=#00cc99dd>int</color> _localeID]");
+            Debug.LogError(e.Message);
+        }
+
+    }
+
     private void Alcohol(string[] args)
     {
         try
@@ -325,42 +384,6 @@ public class ConsoleCommand : MonoBehaviour
             Debug.LogError(e.Message);
         }
     }
-
-
-
-    #region Commands
-    protected void CommandCheat(string[] args)
-    {
-
-        try
-        {
-            Hypatios.Game.CommandCheat(args[0]);
-        }
-        catch
-        {
-            //SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
-        }
-    }
-
-    protected void ChangeUIMode(string[] args)
-    {
-
-        try
-        {
-            int enum1 = 0;
-            int.TryParse(args[0], out enum1);
-
-            var MainUI1 = MainUI.Instance;
-
-            MainUI1.current_UI = (MainUI.UIMode)enum1;
-
-        }
-        catch
-        {
-            SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
-        }
-    }
-
 
     protected void KillMe(string[] args)
     {
@@ -454,6 +477,8 @@ public class ConsoleCommand : MonoBehaviour
         catch (System.Exception e)
         {
             SendConsoleMessage("Invalid argument! loadlevel [<color=#00cc99dd>int</color> levelIndex]");
+            Debug.LogError(e.StackTrace);
+            Debug.LogError(e.Source);
             Debug.LogError(e.Message);
         }
     }
@@ -1010,6 +1035,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'alcohol' to add alcohol meter");
             helpCommands.Add("'additem' to add items");
             helpCommands.Add("'cc' to use extra commands");
+            helpCommands.Add("'changelocale' to change language");
             helpCommands.Add("'giveammos' to give ammos");
             helpCommands.Add("'givemeallweapons' to unlock all weapons");
             helpCommands.Add("'god' to toggle god mode");
@@ -1089,6 +1115,15 @@ public class ConsoleCommand : MonoBehaviour
                     helps.Add($"'ui {i}' : {name}");
                     i++;
                 }
+                helps.Add(" ");
+            }
+            else if (args[0] == "changelocale")
+            {
+                helps.Add(" =============== HELP [changelocale] =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                StartCoroutine(CheckAndListLanguages());
+
                 helps.Add(" ");
             }
             else if (args[0] == "setperk")
@@ -1247,4 +1282,22 @@ public class ConsoleCommand : MonoBehaviour
 
     #endregion
 
+    #region Operations
+    IEnumerator CheckAndListLanguages()
+    {
+        // Wait for the localization system to initialize, loading Locales, preloading etc.
+        yield return LocalizationSettings.InitializationOperation;
+
+        // Generate list of available Locales
+        int selected = 0;
+        for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; ++i)
+        {
+            var locale = LocalizationSettings.AvailableLocales.Locales[i];
+            if (LocalizationSettings.SelectedLocale == locale)
+                selected = i;
+
+            SendConsoleMessage($"{i} | {locale.LocaleName}");
+        }
+    }
+    #endregion
 }

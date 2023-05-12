@@ -21,7 +21,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
     [FoldoutGroup("Weapons")] public GameObject weapon_DebugFlashFire;
     [FoldoutGroup("Weapons")] public GameObject weapon_OriginFire;
     [FoldoutGroup("Weapons")] public float laser_Damage = 20;
-
+    [FoldoutGroup("Weapons")] public float laser_Cooldown = 0.2f;
     #region INPUTS 
 
 
@@ -79,7 +79,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
         return finalPosition;
     }
 
-    private float cooldownAttack = 0.15f;
+    private float cooldownAttack = 0f;
 
     #region Attack Enemy
     public void State_Fire()
@@ -115,7 +115,7 @@ public class AIMod_AssaultInvader : FortWar_AIModule
             if (chanceHoldFire < 0.4)
                 FireWeapon();
             
-            cooldownAttack = 0.15f;
+            cooldownAttack = laser_Cooldown;
         }
     }
 

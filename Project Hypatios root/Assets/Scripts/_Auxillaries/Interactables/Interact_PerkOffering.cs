@@ -9,6 +9,7 @@ public class Interact_PerkOffering : MonoBehaviour
 
     public List<Interact_PerkOffer_Cauldron> allCauldrons = new List<Interact_PerkOffer_Cauldron>();
     public bool isPermanentPerk = false;
+    public bool multipleAvailablity = false;
 
     private void Start()
     {
@@ -73,9 +74,16 @@ public class Interact_PerkOffering : MonoBehaviour
         Hypatios.Player.ReloadStatEffects();
         Hypatios.Game.SoulPoint -= price;
 
-        foreach (var cauldron in allCauldrons)
+        if (multipleAvailablity == false)
         {
-            cauldron.Deactivate();
+            foreach (var cauldron in allCauldrons)
+            {
+                cauldron.Deactivate();
+            }
+        }
+        else
+        {
+            _cauldron.Deactivate();
         }
     }
 
@@ -87,9 +95,16 @@ public class Interact_PerkOffering : MonoBehaviour
         Hypatios.Player.PerkData.AddPerkLevel(_cauldron.statusType);
         Hypatios.Player.ReloadStatEffects();
 
-        foreach (var cauldron in allCauldrons)
+        if (multipleAvailablity == false)
         {
-            cauldron.Deactivate();
+            foreach (var cauldron in allCauldrons)
+            {
+                cauldron.Deactivate();
+            }
+        }
+        else
+        {
+            _cauldron.Deactivate();
         }
     }
 

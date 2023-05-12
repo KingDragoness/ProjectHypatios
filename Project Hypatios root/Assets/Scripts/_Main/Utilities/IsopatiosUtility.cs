@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -33,6 +35,50 @@ public static class StringExtensions
 
         return count;
     }
+
+    public static string GetString(this LocalizedString _locString, string defaultText)
+    {
+        bool isInvalid = false;
+    
+        if (_locString == null)
+        {
+            isInvalid = true;
+        }
+        else if (string.IsNullOrEmpty(_locString.TableReference.TableCollectionName) | _locString.TableEntryReference.KeyId == 0)
+        {
+            isInvalid = true;
+        }
+
+        if (isInvalid == false)
+        {
+            var sd = LocalizationSettings.StringDatabase;
+            var table = sd.GetTable(_locString.TableReference.TableCollectionName);
+
+            if (table == null)
+                isInvalid = true;
+            else
+            {
+                var entry = table.GetEntry(_locString.TableEntryReference.KeyId);
+
+                if (entry == null)
+                {
+                    isInvalid = true;
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(entry.GetLocalizedString()))
+                    {
+                        isInvalid = true;
+                    }
+                }
+            }
+        }
+
+        if (isInvalid)
+            return defaultText;
+        else
+            return _locString.GetLocalizedString();
+    }
 }
 public static class IsopatiosUtility
 {
@@ -60,6 +106,35 @@ public static class IsopatiosUtility
         {
             return 0.0f;
         }
+    }
+
+    public static bool CheckNavMeshWalkable(Vector3 center, float range, out Vector3 result, int tries = 20)
+    {
+        for (int i = 0; i < tries; i++)
+        {
+            Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+        result = Vector3.zero;
+        return false;
+    }
+
+    public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
+    {
+        Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * distance;
+
+        randomDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randomDirection, out navHit, distance, layermask);
+
+        return navHit.position;
     }
 
     public static bool IsAgentCanReachLocation(this NavMeshAgent agent, Vector3 pos)

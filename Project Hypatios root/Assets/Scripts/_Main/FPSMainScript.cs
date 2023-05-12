@@ -512,7 +512,7 @@ public class FPSMainScript : MonoBehaviour
         SaveGame(targetLevel: level1_Scene.Index, hypatiosSave: hypatiosSave);
 
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
         pathLoad = GameSavePath + "/defaultSave.save";
 
 
@@ -559,7 +559,9 @@ public class FPSMainScript : MonoBehaviour
         string jsonTypeNameAll = JsonConvert.SerializeObject(_saveData, Formatting.Indented, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            MissingMemberHandling = MissingMemberHandling.Ignore
         });
 
 
@@ -573,7 +575,7 @@ public class FPSMainScript : MonoBehaviour
     public void BufferSaveData(string path = "")
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
 
         if (path == "")
@@ -601,7 +603,7 @@ public class FPSMainScript : MonoBehaviour
     public static bool CheckSaveFileExist()
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
         pathLoad = FPSMainScript.GameSavePath + "/defaultSave.save";
 
@@ -638,7 +640,7 @@ public class FPSMainScript : MonoBehaviour
     public void Menu_ResumeGame()
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
         pathLoad = GameSavePath + "/defaultSave.save";
 
@@ -677,7 +679,7 @@ public class FPSMainScript : MonoBehaviour
     private void Legacy_StartPlayGame()
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
         pathLoad = GameSavePath + "/defaultSave.save";
 
@@ -698,7 +700,7 @@ public class FPSMainScript : MonoBehaviour
     public void LoadGame(string path = "")
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
 
         if (path == "")
@@ -728,7 +730,7 @@ public class FPSMainScript : MonoBehaviour
     public static void CacheLoadSave(string path = "")
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = JsonSettings();
 
         if (path == "")
         {
@@ -745,6 +747,18 @@ public class FPSMainScript : MonoBehaviour
             ConsoleCommand.Instance.SendConsoleMessage("Save file cannot be loaded!");
         }
 
+
+    }
+
+    public static JsonSerializerSettings JsonSettings()
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings { 
+            TypeNameHandling = TypeNameHandling.All, 
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            MissingMemberHandling = MissingMemberHandling.Ignore
+        };
+
+        return settings;
 
     }
 

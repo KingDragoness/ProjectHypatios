@@ -27,7 +27,7 @@ public class MainMenuTitleScript : MonoBehaviour
     private void Start()
     {
         string pathLoad = "";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = FPSMainScript.JsonSettings();
 
         pathLoad = FPSMainScript.GameSavePath + "/defaultSave.save";
 

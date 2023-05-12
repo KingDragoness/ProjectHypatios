@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using Sirenix.OdinInspector;
 using System.Linq;
-
 
 public class Hypatios : MonoBehaviour
 {
@@ -410,4 +411,19 @@ public class Hypatios : MonoBehaviour
         return random;
     }
 
+    private bool isChangingLocale = false;
+
+    public void ChangeLocale(int _localeID)
+    {
+        if (isChangingLocale == true) return;
+        StartCoroutine(SetLocale(_localeID));
+    }
+
+    IEnumerator SetLocale(int _localeID)
+    {
+        isChangingLocale = true;
+        yield return LocalizationSettings.InitializationOperation;
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
+        isChangingLocale = false;
+    }
 }

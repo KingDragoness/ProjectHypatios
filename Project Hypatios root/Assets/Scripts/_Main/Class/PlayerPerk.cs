@@ -88,7 +88,7 @@ public class PlayerPerk
     {
         if (level == 0) return 0;
 
-        float bonusHP = level * 7;
+        float bonusHP = level * 8;
         return bonusHP;
     }
 
@@ -273,17 +273,17 @@ public class PlayerPerk
         var shortcutLevel = level;
 
         if (shortcutLevel == 0)
-            discount -= 0.04f;
+            discount -= 0.06f;
         else if (shortcutLevel == 1)
-            discount -= 0.08f;
-        else if (shortcutLevel == 2)
             discount -= 0.12f;
+        else if (shortcutLevel == 2)
+            discount -= 0.19f;
         else if (shortcutLevel == 3)
-            discount -= 0.17f;
+            discount -= 0.26f;
         else if (shortcutLevel == 4)
-            discount -= 0.22f;
+            discount -= 0.35f;
         else if (shortcutLevel == 5)
-            discount -= 0.27f;
+            discount -= 0.49f;
 
         return discount;
     }

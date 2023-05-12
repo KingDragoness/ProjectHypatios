@@ -620,7 +620,7 @@ public class PlayerRPGUI : MonoBehaviour
         }
 
 
-        perkTooltip_LeftHandedLabel.text = $"{baseStat.TitlePerk}";
+        perkTooltip_LeftHandedLabel.text = $"{baseStat.GetTitlePerk()}";
         perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(charStatButton.category1, value1);
 
         Hypatios.UI.ShowTooltipSmall(charStatButton.GetComponent<RectTransform>());
@@ -642,7 +642,7 @@ public class PlayerRPGUI : MonoBehaviour
         if (_currentPerk.type == RPG_CharPerkButton.Type.TemporaryModifier)
         {
             var value = currentPerkButton.attachedStatusEffectGO.Value;
-            perkTooltip_LeftHandedLabel.text = $"{currentPerkButton.statusEffect.TitlePerk} {timerString}";
+            perkTooltip_LeftHandedLabel.text = $"{currentPerkButton.statusEffect.GetTitlePerk()} {timerString}";
 
             if (value == 0 | value == -1)
             {
@@ -664,7 +664,7 @@ public class PlayerRPGUI : MonoBehaviour
             foreach(var modifier in statEffectGroup.allStatusEffects)
             {
                 var baseModifier = Hypatios.Assets.GetStatusEffect(modifier.statusCategoryType);
-                str2 += $"[{baseModifier.TitlePerk}] [{RPG_CharPerkButton.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
+                str2 += $"[{baseModifier.GetTitlePerk()}] [{RPG_CharPerkButton.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
             }
             str2 = ""; //scrapped modifier text
             bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";

@@ -25,8 +25,11 @@ public class DialogueSubtitleUI : MonoBehaviour
     public static DialogueSubtitleUI instance;
 
     [SerializeField] private Queue<DialogueSpeechCache> dialogueSpeeches = new Queue<DialogueSpeechCache>();
-    private float timer = 2f;
+    [SerializeField] private List<DialogueSpeechCache> allDialogueHistory = new List<DialogueSpeechCache>();
+     private float timer = 2f;
     private bool isClosed = true;
+
+    public List<DialogueSpeechCache> AllDialogueHistory { get => allDialogueHistory;  }
 
     public bool IsTalking()
     {
@@ -156,6 +159,8 @@ public class DialogueSubtitleUI : MonoBehaviour
             audioSource.clip = dialogueSpeech.audioClip;
             audioSource.Play();
         }
+
+        AllDialogueHistory.Add(dialogueSpeech);
     }
 
     private void EnqueueDialogue(DialogueSpeechCache dialogueSpeech)

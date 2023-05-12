@@ -11,13 +11,16 @@ public class DisplayHighscores : MonoBehaviour
 
     public HighscoreRankTemplateButtonUI buttonUI;
     public StatEntryButton statButton;
+    public TalkHistory_EntryButton talkButton;
     public Transform parentHighscores;
+    public Transform parentConversation;
     public Transform parentPlayerStat;
     public bool isPersistent = false;
     HighScores myScores;
 
     [SerializeField] private List<HighscoreRankTemplateButtonUI> pooledButtons = new List<HighscoreRankTemplateButtonUI>();
     [ReadOnly] [SerializeField] private List<StatEntryButton> pooledStatButtons = new List<StatEntryButton>();
+    [ReadOnly] [SerializeField] private List<TalkHistory_EntryButton> pooledDialogueButtons = new List<TalkHistory_EntryButton>();
 
     public int amountRank = 30;
 
@@ -90,7 +93,33 @@ public class DisplayHighscores : MonoBehaviour
             pooledStatButtons.Add(prefab1);
         }
 
-       
+        GenerateDialogueEntries(); 
+    }
+
+    private void GenerateDialogueEntries()
+    {
+        var listAllConversations = new List<DialogueSpeechCache>();
+        listAllConversations.AddRange(DialogueSubtitleUI.instance.AllDialogueHistory);
+        foreach (var button in pooledDialogueButtons)
+        {
+            if (button != null)
+                Destroy(button.gameObject);
+        }
+
+        pooledDialogueButtons.Clear();
+
+        listAllConversations.Reverse();
+        foreach (var entry in listAllConversations)
+        {
+
+            var prefab1 = Instantiate(talkButton, parentConversation);
+            prefab1.gameObject.SetActive(true);
+            prefab1.dialogueLabel.text = entry.dialogue;
+            prefab1.speakerLabel.text = entry.speakerName;
+
+            pooledDialogueButtons.Add(prefab1);
+        }
+
     }
 
     private void AddBonusButton(int index)

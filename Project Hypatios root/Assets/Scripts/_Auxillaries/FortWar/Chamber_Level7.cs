@@ -30,7 +30,7 @@ public class Chamber_Level7 : MonoBehaviour
     [ReadOnly] private List<FW_Targetable> allUnits = new List<FW_Targetable>();
 
     public static Chamber_Level7 instance;
-    public const int MAXIMUM_PLAYER_TEAM = 20;
+    public const int MAXIMUM_PLAYER_TEAM = 15;
     public delegate void OnModifiedFollower();
     public event OnModifiedFollower onModifiedFollower;
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 919506778671928156}
   - component: {fileID: 919506778671928154}
   - component: {fileID: 919506778671928155}
+  - component: {fileID: 4142807124327439986}
   m_Layer: 5
   m_Name: label
   m_TagString: Untagged
@@ -68,9 +69,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 11cb6a93b1ad9ff4aa5fbe85a8d7017d, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 23
+    m_MaxSize: 16
     m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -78,6 +79,44 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: RESUME
+--- !u!114 &4142807124327439986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919506778671928157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:c82e58cde7631f84ca766ef396e31c0b
+    m_TableEntryReference:
+      m_KeyId: 8235630403584
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 919506778671928155}
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 1
 --- !u!1 &919506778683577543
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +349,21 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6613840095519449676}
           m_MethodName: Sound_Hover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6613840095519449676}
+          m_MethodName: Sound_Click
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

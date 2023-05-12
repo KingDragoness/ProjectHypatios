@@ -77,11 +77,11 @@ public class FW_SpawnerBot : MonoBehaviour
 
 
     private float _timerSpawn = 3f;
-    private float _timeToSpawn = 3f;
+    [Tooltip("Subjected to changes by SetTimerSpawn()")] public float TimerSpawn = 3f;
 
     public void SetTimerSpawn(float time = 4f)
     {
-        _timeToSpawn = time;
+        TimerSpawn = time;
     }
 
     private void PrepareSpawn()
@@ -94,7 +94,7 @@ public class FW_SpawnerBot : MonoBehaviour
         else
         {
             SpawnUnit();
-            _timerSpawn = _timeToSpawn;
+            _timerSpawn = TimerSpawn;
         }
     }
 

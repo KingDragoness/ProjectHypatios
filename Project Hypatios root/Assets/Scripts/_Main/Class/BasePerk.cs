@@ -271,7 +271,7 @@ public class BasePerk : ScriptableObject
 
         if (category == ModifierEffectCategory.MaxHitpointBonus)
         {
-            float percent = Random.Range(0.35f, 0.5f);
+            float percent = Random.Range(0.42f, 0.56f);
             
             Value = Mathf.Clamp(percent * hitpointNet, 40, 1000);
             Value = Mathf.Round(Value);

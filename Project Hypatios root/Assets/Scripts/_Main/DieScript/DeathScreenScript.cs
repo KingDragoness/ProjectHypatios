@@ -215,7 +215,7 @@ public class DeathScreenScript : MonoBehaviour
     {
         string pathSave = "";
         pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
-        JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+        JsonSerializerSettings settings = FPSMainScript.JsonSettings();
 
         //overload savefile
         HypatiosSave hypatiosSave = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathSave), settings);
@@ -244,7 +244,9 @@ public class DeathScreenScript : MonoBehaviour
         string jsonTypeNameAll = JsonConvert.SerializeObject(hypatiosSave, Formatting.Indented, new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.All,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            MissingMemberHandling = MissingMemberHandling.Ignore
         });
 
 

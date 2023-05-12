@@ -20,6 +20,17 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
     public Text label_Title;
     public Text label_Description;
 
+    private bool isDeactive = false;
+
+    private void OnEnable()
+    {
+        if (isDeactive)
+        {
+            if (activeMode.gameObject.activeSelf) activeMode.gameObject.SetActive(false);
+            if (unactiveMode.gameObject.activeSelf == false) unactiveMode.gameObject.SetActive(true);
+        }
+    }
+
     public void Inspect()
     {
         dialogInspect.TriggerMessage();
@@ -37,6 +48,7 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
 
     public void Deactivate()
     {
+        isDeactive = true;
         activeMode.gameObject.SetActive(false);
         unactiveMode.gameObject.SetActive(true);
     }
