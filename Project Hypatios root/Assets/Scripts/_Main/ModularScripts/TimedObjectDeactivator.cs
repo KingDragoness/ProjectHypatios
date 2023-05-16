@@ -5,13 +5,23 @@ using UnityEngine;
 public class TimedObjectDeactivator : MonoBehaviour
 {
 
-    public float timer = 0.1f;
+    [SerializeField] private float timer = 0.1f;
     public bool destroy = false;
     public bool allowRestart = false;
     public bool DEBUG_isDisabledByDefault = false;
     private float currentTimer = 0.1f;
 
     private bool isStart = false;
+
+    public float Timer 
+    { 
+        get => timer;
+        set
+        {
+            currentTimer = value;
+            timer = value;
+        }
+    }
 
     public void OnEnable()
     {

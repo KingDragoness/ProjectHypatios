@@ -102,7 +102,7 @@ public class LifetakerWeapon : GunScript
 
             if (enemy != null)
             {
-                Hypatios.Player.Health.Heal(Mathf.RoundToInt(damageDist * damageReceiver.multiplier /4f), 20f);
+                Hypatios.Player.Health.Heal(Mathf.RoundToInt(damageDist * damageReceiver.multiplier /2f), instantHeal: true);
             }
 
             HandleCrosshairActive(damageReceiver);

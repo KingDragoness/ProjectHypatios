@@ -152,7 +152,7 @@ public class PlayerPerk
 
         if (soulLevel == 1)
         {
-            if (chance < 0.4f)
+            if (chance < 0.3f)
             {
                 soulAmount += 1;
             }
@@ -163,7 +163,7 @@ public class PlayerPerk
             {
                 soulAmount += 1;
             }
-            if (chance < 0.2f)
+            if (chance < 0.1f)
             {
                 soulAmount += 1;
             }
@@ -172,40 +172,31 @@ public class PlayerPerk
         {
             soulAmount += 1;
 
-            if (chance < 0.4f)
+            if (chance < 0.3f)
             {
                 soulAmount += 1;
             }
-            if (chance < 0.1f)
-            {
-                soulAmount += 1;
-            }
+        
         }
         else if (soulLevel == 4)
         {
             soulAmount += 2;
 
-            if (chance < 0.4f)
+            if (chance < 0.3f)
             {
                 soulAmount += 1;
             }
-            if (chance < 0.1f)
-            {
-                soulAmount += 1;
-            }
+       
         }
         else if (soulLevel == 5)
         {
             soulAmount += 3;
 
-            if (chance < 0.5f)
+            if (chance < 0.3f)
             {
                 soulAmount += 1;
             }
-            if (chance < 0.1f)
-            {
-                soulAmount += 1;
-            }
+   
         }
 
         return soulAmount;
@@ -305,23 +296,23 @@ public class PlayerPerk
 
         if (level == 0)
         {
-            s = "40% chance for +1 soul.";
+            s = "30% chance for +1 soul.";
         }
         else if (level == 1)
         {
-            s = "40% chance for +1 soul, 20% chance for +2 souls.";
+            s = "60% chance for +1 soul, 10% chance for +2 souls.";
         }
         else if (level == 2)
         {
-            s = "+1 souls by default. 30% chance for +2 souls, 10% chance for +3 souls.";
+            s = "+1 souls by default. 30% chance for +2 souls.";
         }
         else if (level == 3)
         {
-            s = "+2 souls by default. 30% chance for +3 souls, 10% chance for +4 souls.";
+            s = "+2 souls by default. 30% chance for +3 souls.";
         }
         else if (level == 4)
         {
-            s = "+3 souls by default. 40% chance for +4 souls, 10% chance for +5 souls.";
+            s = "+3 souls by default. 30% chance for +4 souls.";
         }
 
         return s;

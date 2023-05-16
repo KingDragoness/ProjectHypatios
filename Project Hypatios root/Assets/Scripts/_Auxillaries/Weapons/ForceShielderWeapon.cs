@@ -60,6 +60,8 @@ public class ForceShielderWeapon : GunScript
         if (Hypatios.Player.IsStatusEffect(ModifierEffectCategory.ArmorRating, "Weapon.ForceShielder") == false)
         {
             Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.ArmorRating, GetFinalValue("Armor"), "Weapon.ForceShielder");
+            Hypatios.Player.CreatePersistentStatusEffect(ModifierEffectCategory.KnockbackResistance, GetFinalValue("KnockbackResist"), "Weapon.ForceShielder");
+
         }
 
     }

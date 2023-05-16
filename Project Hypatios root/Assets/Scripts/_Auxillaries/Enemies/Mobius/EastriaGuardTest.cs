@@ -125,7 +125,7 @@ public class EastriaGuardTest : EnemyScript
                     //Audio_FireShockwave.pitch = Random.Range(0.9f, 1.1f);
                 }
                 fireOrigin.LookAt(currentTarget.transform.transform);
-                StartCoroutine(FireWeapon());
+                //StartCoroutine(FireWeapon());
                 _cooldownAttack = attackCooldown + Random.Range(0f, 0.1f);
             }
         }

@@ -57,9 +57,9 @@ public class ParadoxShopUI : MonoBehaviour
             Hypatios.Game.everUsed_Paradox = true;
         }
 
-        descriptionPrev_Text.text = "Welcome to the Paradox Shop! Here we sell shortcut, secret passage and level modification to shorten the level course. We only accept payment in Souls.";
+        descriptionPrev_Text.text = "Welcome to the Paradox Shop. You can buy shortcut, secret passage and level modification to shorten the level course.";
 
-        ShowTooltip("Welcome to the Paradox Shop! Here we sell shortcut, secret passage and level modification to shorten the level course.");
+        ShowTooltip("Welcome to the Paradox Shop. You can buy shortcut, secret passage and level modification to shorten the level course.");
 
     }
 

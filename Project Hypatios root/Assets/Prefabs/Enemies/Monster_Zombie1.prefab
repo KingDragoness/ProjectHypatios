@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCopy: {fileID: 7810764360501160263}
+  useLateUpdate: 0
 --- !u!54 &1055232906
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5256,6 +5257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCopy: {fileID: 3635751847944710337}
+  useLateUpdate: 0
 --- !u!1 &1250810873900047829
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,7 +5409,7 @@ MonoBehaviour:
   enemyScript: {fileID: 1875892279205684269}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.5
+  multiplier: 0.7
   isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
@@ -5506,10 +5508,18 @@ MonoBehaviour:
   OnSelfKilled:
     m_PersistentCalls:
       m_Calls: []
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
+  debug_FirstPassHit: {fileID: 0}
   debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   OnAttack:
     m_PersistentCalls:
       m_Calls:
@@ -5808,7 +5818,7 @@ MonoBehaviour:
   enemyScript: {fileID: 1875892279205684269}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.5
+  multiplier: 0.7
   isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
@@ -6625,6 +6635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCopy: {fileID: 7810764360501160263}
+  useLateUpdate: 0
 --- !u!54 &1055232879
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6983,7 +6994,7 @@ MonoBehaviour:
   enemyScript: {fileID: 1875892279205684269}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.5
+  multiplier: 0.7
   isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
@@ -7174,7 +7185,7 @@ MonoBehaviour:
   enemyScript: {fileID: 1875892279205684269}
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
-  multiplier: 0.7
+  multiplier: 1
   isPrintDebug: 0
   OnHit:
     m_PersistentCalls:

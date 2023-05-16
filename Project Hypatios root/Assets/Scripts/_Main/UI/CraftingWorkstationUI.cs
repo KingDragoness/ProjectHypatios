@@ -8,6 +8,13 @@ using System;
 public class CraftingWorkstationUI : MonoBehaviour
 {
 
+    [System.Serializable]
+    public class AttachmentIcon
+    {
+        public WeaponItem.AttachementSlot slotType;
+        public Sprite sprite;
+    }
+
     public Text stat_Description_Label;
     public Text stat_Title_Label;
     public Text button_Ammo_Label;
@@ -20,6 +27,7 @@ public class CraftingWorkstationUI : MonoBehaviour
     public CraftWeaponModButton WeaponModButton_prefab;
     public CraftNewWeaponButton NewWeaponButton_prefab;
     public List<CraftingWeaponSelectButton> allMainButtons = new List<CraftingWeaponSelectButton>();
+    public List<AttachmentIcon> allAttachmentIcon = new List<AttachmentIcon>();
     [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponCrafted;
     [FoldoutGroup("Statistics")] public BaseStatValue stat_weaponModCrafted;
     [FoldoutGroup("Audios")] public AudioSource audio_DrillCraft;
@@ -35,6 +43,15 @@ public class CraftingWorkstationUI : MonoBehaviour
     public void SetShopScript(CraftingWorkstationTrigger _shop)
     {
         _currentBench = _shop;
+    }
+
+    public Sprite GetAttachIcon(WeaponItem.AttachementSlot slottype)
+    {
+        var attach = allAttachmentIcon.Find(x => x.slotType == slottype);
+
+        if (attach != null)
+            return attach.sprite;
+        else return null;
     }
 
 

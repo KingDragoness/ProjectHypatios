@@ -18,8 +18,10 @@ public enum CategoryParticleEffect
     FireEffect = 30,
     PoisonEffect,
     ParalyzeEffect,
+    HealEffect,
     RockDestructible = 40,
-    ExplosiveDust
+    ExplosiveDust,
+    ClawAttack = 100
 }
 
 public class DynamicObjectPool : MonoBehaviour

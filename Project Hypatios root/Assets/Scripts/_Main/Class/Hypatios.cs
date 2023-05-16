@@ -32,6 +32,7 @@ public class Hypatios : MonoBehaviour
         public static int VSYNC = 0;
         public static int MOTIONBLUR = 0;
         public static int ANTIALIASING = 1;
+        public static int TV_EFFECT_UI = 0;
         public static int DYNAMIC_UI_SCALING = 0;
         public static int MAXIMUM_FRAMERATE = 201;
         public static int RESOLUTION = -1;
@@ -80,6 +81,7 @@ public class Hypatios : MonoBehaviour
             UI_SCALING = LoadPrefKeyFloat("SETTINGS.UI_SCALING", 1f);
             //DYNAMIC_UI_SCALING = LoadPrefKeyInt("SETTINGS.DYNAMIC_UI_SCALING", 0);
             ANTIALIASING = LoadPrefKeyInt("SETTINGS.ANTIALIASING", 0);
+            TV_EFFECT_UI = LoadPrefKeyInt("SETTINGS.TV_EFFECT_UI", 1);
             SFX_VOLUME = AssignValuePref("SETTINGS.SFX_VOLUME", 1); 
             MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1);
             QUALITY_LEVEL = LoadPrefKeyInt("SETTINGS.QUALITY_LEVEL", 1);
@@ -183,6 +185,26 @@ public class Hypatios : MonoBehaviour
                 {
                     Game.postProcessLayer_Player.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
                     Game.postProcessLayer_UI.antialiasingMode = PostProcessLayer.Antialiasing.SubpixelMorphologicalAntialiasing;
+                }
+            }
+
+            if (Game.postProcessVolumeUI != null)
+            {
+                var lensDistort = Game.postProcessVolumeUI.profile.GetSetting<LensDistortion>();
+                var chromaAberr = Game.postProcessVolumeUI.profile.GetSetting<ChromaticAberration>();
+                var vignette = Game.postProcessVolumeUI.profile.GetSetting<Vignette>();
+
+                if (TV_EFFECT_UI == 0)
+                {
+                    lensDistort.enabled.value = false;
+                    chromaAberr.enabled.value = false;
+                    vignette.enabled.value = false;
+                }
+                else
+                {
+                    lensDistort.enabled.value = true;
+                    chromaAberr.enabled.value = true;
+                    vignette.enabled.value = true;
                 }
             }
         }

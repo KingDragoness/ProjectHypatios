@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854965191231403519}
   - component: {fileID: 7283240164885767755}
+  - component: {fileID: 8398699630159067537}
   m_Layer: 12
   m_Name: Audio_AboutAttack
   m_TagString: Untagged
@@ -436,6 +437,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8398699630159067537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2238696308399447715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a10c44bbe814342af80233054cf6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 7283240164885767755}
 --- !u!1 &2428296770170013059
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +685,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -1042,9 +1057,18 @@ MonoBehaviour:
   OnSelfKilled:
     m_PersistentCalls:
       m_Calls: []
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 5564195318639927960}
+  debug_FirstPassHit: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   laserCharging: {fileID: 5564195317923238979}
   laserChargingRenderer: {fileID: 5564195317923238976}
   laser: {fileID: 3000425260294169686, guid: 42203aa4cafe8c64bb3de009459eebbd, type: 3}
@@ -1067,7 +1091,6 @@ MonoBehaviour:
   attackRecharge: 4
   lockBeforeAttackTime: 4
   dieHeight: -0.75
-  onSpawnShouldReady: 1
   spawnChance_Ammo: 0.17
   damping: 5
   spawnHeal: {fileID: 6631977024649960562}
@@ -1084,8 +1107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f34bcff82f45844887162caf1954724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
-    type: 3}
+  customCapsule: {fileID: 0}
   radius: 0.6
   explosionForce: 50
 --- !u!114 &3541979803877423491
@@ -11883,6 +11905,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 3
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []

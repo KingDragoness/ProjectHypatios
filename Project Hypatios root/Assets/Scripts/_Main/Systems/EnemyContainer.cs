@@ -44,6 +44,15 @@ public class EnemyContainer : MonoBehaviour
         OnEnemyDied += OnEnemyDieEvent;
     }
 
+    private void Start()
+    {
+        Vector3 offset = transform.position;
+        offset.x += Random.Range(-0.2f, 0.2f);
+        offset.y += Random.Range(-0.2f, 0.2f);
+        offset.z += Random.Range(-0.2f, 0.2f);
+        transform.position = offset;
+    }
+
     #region Utility events
     //Error in here means missing _lastdamagetoken!
     public void OnEnemyDieEvent(EnemyScript enemy, DamageToken token)
@@ -363,15 +372,16 @@ public class EnemyContainer : MonoBehaviour
     /// <param name="alliance">Finder's alliance.</param>
     /// <param name="myPos">Finder's current world position.</param>
     /// <param name="chanceSelectAlly">Recommended value 0.1-1</param>
-    public Entity FindEnemyEntity(Alliance alliance, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f)
+    public Entity FindEnemyEntity(Alliance alliance, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f, EnemyScript enemySelf = null)
     {
         tempList_NearestEnemy.Clear();
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
+        if (enemySelf != null) tempList_NearestEnemy.Remove((EnemyScript)enemySelf);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
         tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
 
-        return FindEnemyEntity(alliance, chanceSelectAlly);
+        return FindEnemyEntity(alliance, chanceSelectAlly, enemySelf);
     }
 
     [FoldoutGroup("Debug")] [ShowInInspector] [ReadOnly] private PathReportToken[] stupidTokens = new PathReportToken[5];
@@ -491,10 +501,11 @@ public class EnemyContainer : MonoBehaviour
     }
 
 
-    private Entity FindEnemyEntity(Alliance alliance, float chanceSelectAlly = 0.3f)
+    private Entity FindEnemyEntity(Alliance alliance, float chanceSelectAlly = 0.3f, EnemyScript mySelf = null)
     {
         //base enemy entity searcher
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsTargetable == false);
 
         if (alliance != Alliance.Player)
         {
@@ -502,7 +513,19 @@ public class EnemyContainer : MonoBehaviour
 
             if (chance < chanceSelectAlly && CountMyEnemies(alliance) > 0)
             {
-                var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false);
+                EnemyScript enemy = null;
+
+                if (mySelf == null)
+                {
+                    enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false);
+                }
+                else
+                {
+
+                    enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false
+                    && (mySelf.Stats.AllowTargetSameType == false && mySelf.GetType() != x.GetType()));
+                    Debug.Log(mySelf.GetType());
+                }
 
                 return enemy;
             }
@@ -520,6 +543,35 @@ public class EnemyContainer : MonoBehaviour
         else
         {
             var enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile);
+
+            if (mySelf == null)
+            {
+                enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false);
+            }
+            else
+            {
+
+                foreach (var x in tempList_NearestEnemy)
+                {
+                    if (x.Stats.MainAlliance == alliance) continue;
+                    if (x.gameObject.activeInHierarchy == false) continue;
+                    if (x.Stats.UnitType == UnitType.Projectile) continue;
+
+                    if (mySelf.Stats.AllowTargetSameType == false)
+                    {
+      
+
+                        if (mySelf.GetType() == x.GetType())
+                        {
+
+                            continue;
+                        }
+                    }
+
+                    enemy = x;
+                    break;
+                }
+            }
             return enemy;
 
         }

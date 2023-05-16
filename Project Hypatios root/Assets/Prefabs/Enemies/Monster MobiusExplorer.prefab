@@ -63,11 +63,15 @@ MonoBehaviour:
   OnPlayerDetected1:
     m_PersistentCalls:
       m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 929874462317132011}
   debug_FirstPassHit: {fileID: 0}
   debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   allRandomPatrols:
   - {fileID: 0}
   CooldownUpdateAI: 0.2
@@ -77,6 +81,8 @@ MonoBehaviour:
     type: 3}
   PerTickFire: 5
   audio_Fire: {fileID: 1834654204807342118}
+  mobiusCorpse: {fileID: 7687428058262611556, guid: 64be3c9f1a464804d959020cf9a38b58,
+    type: 3}
   distanceToTarget: 10
   distanceTooFar: 20
   flySpeed: 6

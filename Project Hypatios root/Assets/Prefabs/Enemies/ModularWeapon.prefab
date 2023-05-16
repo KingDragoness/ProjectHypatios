@@ -47,16 +47,21 @@ MonoBehaviour:
   damage: 5
   healthSpeed: 25
   bulletPerSecond: 10
+  spread: 0.001
+  keepFiringIfNoDetection: 0
+  dontFireIfBlocked: 0
+  OnFire:
+    m_PersistentCalls:
+      m_Calls: []
+  useSecondPass: 0
   originToken: 0
+  mySelf: {fileID: 0}
   alliance: 100
   chanceFire: 0.3
   outWeaponTransform: {fileID: 5120115178288853187}
   flashWeapon: {fileID: 5120115179148106983}
   tracerLaser: {fileID: 3000425260294169686, guid: bf858b253e10be24da350ba5e0d57444,
     type: 3}
-  layermaskWeapon:
-    serializedVersion: 2
-    m_Bits: 5393
 --- !u!1 &5120115178662583337
 GameObject:
   m_ObjectHideFlags: 0
@@ -4846,7 +4851,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 4
+  m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5

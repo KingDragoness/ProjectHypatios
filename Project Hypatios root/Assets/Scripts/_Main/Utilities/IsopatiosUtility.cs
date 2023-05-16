@@ -379,7 +379,7 @@ public static class IsopatiosUtility
         var deactivator = gameObject.GetComponent<TimedObjectDeactivator>();
         if (deactivator == null) deactivator = gameObject.AddComponent<TimedObjectDeactivator>();
         deactivator.allowRestart = true;
-        deactivator.timer = time;
+        deactivator.Timer = time;
     }
 
 public static bool IsIndexExist<T>(this List<T> list, int index)

@@ -26,13 +26,31 @@ public class KillZone : MonoBehaviour
     private PlayerHealth PlayerHealth;
     private float cooldown = 1f;
     private const float COOLDOWN_DAMAGE = 0.5f;
+    private IEnumerator c1;
 
+    //For explosion shits:
+    //If Explosion() called, even if the position and setactive is on the same function/frame,
+    //The OnEnabled always triggered first while the position ONLY FUCKING UPDATED in the next
+    // frame which caused explosion function to trigger when the explosion prefab is at (0,0)
+    //And this shit happens all of the fucking time
     void OnEnable()
     {
         PlayerHealth = Hypatios.Player.Health;
-        if (alsoDamageEnemy) DamageEnemy();
+        if (alsoDamageEnemy)
+        {
+            if (c1 != null)
+                StopCoroutine(c1);
 
+            c1 = NextFrameDamage();
+            StartCoroutine(c1);
+        }
         //Debug.Log("test1");
+    }
+
+    IEnumerator NextFrameDamage()
+    {
+        yield return null;
+        DamageEnemy();
     }
 
     private void OnDrawGizmos()
@@ -122,6 +140,7 @@ public class KillZone : MonoBehaviour
 
     /// <summary>
     /// Unreliable garbage
+    /// #May 13: still unreliable garbage
     /// </summary>
     public void DamageEnemy()
     {
@@ -133,9 +152,10 @@ public class KillZone : MonoBehaviour
             var damage = collider.GetComponent<damageReceiver>();
             if (damage != null)
             {
-               // Debug.Log(damage.gameObject.name);
+                //Debug.Log(damage.gameObject.name);
                 var token = new DamageToken(); token.origin = origin; token.damage = DamagePerSecond + (Random.Range(0, DamagePerSecond /3f)); token.originEnemy = originEnemy;
                 token.isBurn = isBurn;
+                token.damageType = DamageToken.DamageType.Explosion;
                 if (isAllowIndicator) token.allowPlayerIndicator = isAllowIndicator;
                 UniversalDamage.TryDamage(token, collider.transform, this.transform);
 

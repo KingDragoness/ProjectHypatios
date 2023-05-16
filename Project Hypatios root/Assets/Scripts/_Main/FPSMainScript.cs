@@ -29,6 +29,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("Story Selection")] public SceneReference gameSelectionScene;
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume; //DOF, Motion blur, AO, Vignette
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
+    [FoldoutGroup("References")] public PostProcessVolume postProcessVolumeUI; //UI TV effects, lens distortion
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_Player;
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_UI;
     [FoldoutGroup("References")] public RefillAmmoPlayer Prefab_SpawnAmmo;

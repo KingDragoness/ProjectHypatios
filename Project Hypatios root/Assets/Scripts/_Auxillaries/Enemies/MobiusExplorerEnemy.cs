@@ -16,6 +16,7 @@ public class MobiusExplorerEnemy : EnemyScript
     [FoldoutGroup("Weapon")] public GameObject missile_kThanid;
     [FoldoutGroup("Weapon")] public int PerTickFire = 10;
     [FoldoutGroup("Audios")] public AudioSource audio_Fire;
+    public GameObject mobiusCorpse;
     public float distanceToTarget = 10f;
     public float distanceTooFar = 20f;
     public float flySpeed = 6f;
@@ -194,6 +195,12 @@ public class MobiusExplorerEnemy : EnemyScript
 
     public override void Die()
     {
+        {
+            var corpse1 = Instantiate(mobiusCorpse, transform.position, transform.rotation);
+            corpse1.gameObject.SetActive(true);
+            corpse1.transform.position = transform.position;
+            corpse1.transform.rotation = transform.rotation;
+        }
         Destroy(gameObject);
         OnSelfKilled?.Invoke();
     }

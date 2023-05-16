@@ -593,6 +593,7 @@ public class PlayerRPGUI : MonoBehaviour
             string s_weaponStat = "<size=16>";
             s_weaponStat += $"Damage: {weaponStat.damage}\n";
             s_weaponStat += $"Fire rate: {weaponStat.cooldown}\n";
+            s_weaponStat += $"DPS: {Mathf.Round(weaponStat.damage * weaponStat.cooldown * 10)/10}\n";
             s_weaponStat += $"Mag size: {weaponStat.magazineSize}";
             s_weaponStat += "</size>\n\n";
             s_weaponStat += $"{itemclass.Description}";

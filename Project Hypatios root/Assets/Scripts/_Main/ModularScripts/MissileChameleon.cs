@@ -12,6 +12,7 @@ public class MissileChameleon : EnemyScript
     public float initialVelocityForce = 1000;
     public float timer = 10;
     public bool isSmart = false;
+    public GameObject customExplosionPrefab;
     [ShowIf("isSmart", true)] public float predictiveVelocityMultiplier = 1f;
     [ShowIf("isSmart", true)] public float directTargetMoveSpeed = 100;
 
@@ -86,16 +87,21 @@ public class MissileChameleon : EnemyScript
     private void Dead(bool harmless = false)
     {
         if (Stats.IsDead) return;
-        GameObject explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false);
+        //explosion with damage better not using object pooling
+        GameObject explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionAll, false, _pos:transform.position);
+        if (customExplosionPrefab != null)
+        {
+            explosion = Instantiate(customExplosionPrefab, transform.position, Quaternion.identity);
+        }
         if (harmless)
-            explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionHarmless, false);
+            explosion = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.ExplosionHarmless, false, _pos: transform.position);
 
         if (explosion != null)
         {
             explosion.transform.position = transform.position;
             explosion.transform.rotation = Quaternion.identity;
             explosion.gameObject.SetActive(true);
-            explosion.DisableObjectTimer(5f);
+            if (customExplosionPrefab == null) explosion.DisableObjectTimer(5f);
         }
 
         Die();

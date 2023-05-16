@@ -26,6 +26,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
     [FoldoutGroup("Video")] public Toggle toggle_AntiAliasing;
     [FoldoutGroup("Video")] public Toggle toggle_DynamicUIScaling;
+    [FoldoutGroup("Video")] public Toggle toggle_UITVEffect;
     [FoldoutGroup("Video")] public Text value_FPSCap;
     [FoldoutGroup("Video")] public Slider slider_FPSCap;
     [FoldoutGroup("Video")] public Text value_Temperature;
@@ -40,7 +41,7 @@ public class SettingsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (MusicPlayer.Instance != null)
+        if (MusicPlayer.Instance != null && audioVisualizer != null)
             audioVisualizer.audioSource = MusicPlayer.Instance.musicSource;
     }
 
@@ -75,6 +76,7 @@ public class SettingsUI : MonoBehaviour
         toggle_DynamicUIScaling.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.DYNAMIC_UI_SCALING));
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
+        toggle_UITVEffect.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.TV_EFFECT_UI));
         dropdown_Resolution.SetValueWithoutNotify(Hypatios.Settings.RESOLUTION);
         dropdown_Quality.SetValueWithoutNotify(Hypatios.Settings.QUALITY_LEVEL);
         //inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
@@ -138,6 +140,7 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.FOV = slider_FOV.value;
             Hypatios.Settings.MOTIONBLUR = toggle_MotionBlur.isOn ? 1 : 0;
             Hypatios.Settings.ANTIALIASING = toggle_AntiAliasing.isOn ? 1 : 0;
+            Hypatios.Settings.TV_EFFECT_UI = toggle_UITVEffect.isOn ? 1 : 0;
             //Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
             Hypatios.Settings.VSYNC = toggle_VSync.isOn ? 1 : 0;
             Hypatios.Settings.MOUSE_SENSITIVITY = slider_MouseSensitivity.value;
@@ -152,6 +155,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetFloat("SETTINGS.BRIGHTNESS", Hypatios.Settings.BRIGHTNESS);
             PlayerPrefs.SetInt("SETTINGS.VISUAL_TEMPERATURE", Hypatios.Settings.VISUAL_TEMPERATURE);
             PlayerPrefs.SetInt("SETTINGS.VISUAL_TINT", Hypatios.Settings.VISUAL_TINT);
+            PlayerPrefs.SetInt("SETTINGS.TV_EFFECT_UI", Hypatios.Settings.TV_EFFECT_UI);
             PlayerPrefs.SetFloat("SETTINGS.FOV", Hypatios.Settings.FOV);
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
             PlayerPrefs.SetInt("SETTINGS.ANTIALIASING", Hypatios.Settings.ANTIALIASING);

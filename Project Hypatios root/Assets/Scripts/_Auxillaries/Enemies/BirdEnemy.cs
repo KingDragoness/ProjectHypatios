@@ -110,6 +110,7 @@ public class BirdEnemy : EnemyScript
     public void AliveState()
     {
         if (currentTarget == null) return;
+        dummyAI.target = currentTarget.transform;
 
         if (stateAI == StateAI.Pursue)
         {
