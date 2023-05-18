@@ -14,7 +14,7 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<BasePerk> AllBasePerks;
     public List<ItemInventory> AllItems;
     public List<BaseStatValue> AllStatEntries;
-
+    public List<ChamberLevel> AllChamberLevels;
 
     private void Awake()
     {
@@ -31,6 +31,7 @@ public class AssetStorageDatabase : MonoBehaviour
         var _basePerks = Resources.LoadAll("", typeof(BasePerk)).Cast<BasePerk>().ToList(); 
         var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList();
         var _statistics = Resources.LoadAll("", typeof(BaseStatValue)).Cast<BaseStatValue>().ToList();
+        var _levels = Resources.LoadAll("", typeof(ChamberLevel)).Cast<ChamberLevel>().ToList();
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;
@@ -40,7 +41,7 @@ public class AssetStorageDatabase : MonoBehaviour
         AllBasePerks = _basePerks;
         AllItems = _itemInventory;
         AllStatEntries = _statistics;
-
+        AllChamberLevels = _levels;
     }
 
     public BaseModifierEffectObject GetStatusEffect(ModifierEffectCategory category)
@@ -67,10 +68,14 @@ public class AssetStorageDatabase : MonoBehaviour
         return AllItems.FindAll(x => x.category == _category);
     }
 
-
     public BaseStatValue GetStatEntry(string ID)
     {
         return AllStatEntries.Find(x => x.GetID() == ID);
+    }
+
+    public ChamberLevel GetLevel(string ID)
+    {
+        return AllChamberLevels.Find(x => x.GetID() == ID);
     }
 
     public ItemInventory GetItemByWeapon(string ID)

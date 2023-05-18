@@ -137,6 +137,12 @@ public static class IsopatiosUtility
         return navHit.position;
     }
 
+    public static void EnableGameobject(this GameObject go, bool active)
+    {
+        if (go.activeSelf != active) go.SetActive(active);
+    }
+
+
     public static bool IsAgentCanReachLocation(this NavMeshAgent agent, Vector3 pos)
     {
         NavMeshPath navMeshPath = new NavMeshPath();

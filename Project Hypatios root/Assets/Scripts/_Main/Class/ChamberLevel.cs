@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 public class ChamberLevel : ScriptableObject
 {
 
+    public string levelName = "Chamber 1";
     public bool isCausingFatigue = true;
 
     public string GetID()
