@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f34bcff82f45844887162caf1954724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
-    type: 3}
+  customCapsule: {fileID: 0}
+  radius: 0.6
+  explosionForce: 50
 --- !u!114 &4575864494153576391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +27,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3023b9fe18eea834da4fcd48d88240a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulAmount: 5
+  soulAmount: 3
 --- !u!1001 &903466048887611663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42,7 +43,7 @@ PrefabInstance:
     - target: {fileID: 145977078456378021, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
         type: 3}
       propertyPath: m_Name
-      value: AI_Test(Defender) Variant
+      value: Fortwar Bot(Defender) Variant
       objectReference: {fileID: 0}
     - target: {fileID: 145977078456378200, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
         type: 3}
@@ -285,6 +286,21 @@ PrefabInstance:
       propertyPath: OnPlayerKill.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 463887445695387592, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000001872535
+      objectReference: {fileID: 0}
+    - target: {fileID: 463887445695387592, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 3.5063874e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 463887445695387592, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000001872535
+      objectReference: {fileID: 0}
     - target: {fileID: 738069441025066083, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
         type: 3}
       propertyPath: m_RotationOffset.x
@@ -330,6 +346,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: cd3e9839976fe8549afeb29ec04594f4, type: 2}
+    - target: {fileID: 7401495023384336984, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7401495023384336984, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7401495023384336984, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 7974819097949655906, guid: 7b1ac7e2de9f4fb4bad46219613ef267,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -103,6 +103,7 @@ public class Debug_ObjectStat : MonoBehaviour
                 s1 += $"Reserved: {Profiler.GetTotalReservedMemoryLong() / 1000000} MB\n";
                 s1 += $"Allocated: {Profiler.GetTotalAllocatedMemoryLong() / 1000000} MB\n";
                 s1 += $"VRam: {Profiler.GetAllocatedMemoryForGraphicsDriver() / 1000000} MB / {SystemInfo.graphicsMemorySize} MB\n";
+                s1 += $"Device name: {SystemInfo.deviceName} | {Hypatios.unicodeValue(SystemInfo.deviceName)}";
                 s1 += $"{Hypatios.GetSeed()}";
 
                 GUI.Box(new Rect(0, 10, 350f, 100f), s1, skin2.box);

@@ -6,6 +6,12 @@ using Sirenix.OdinInspector;
 
 public class AssetStorageDatabase : MonoBehaviour
 {
+    [System.Serializable]
+    public class SubiconIdentifier
+    {
+        public ItemInventory.SubiconCategory categoryIcon;
+        public Sprite sprite;
+    }
 
     public List<Trivia> AllTrivias = new List<Trivia>();
     public List<BaseModifierEffectObject> AllModifierEffects;
@@ -15,6 +21,7 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<ItemInventory> AllItems;
     public List<BaseStatValue> AllStatEntries;
     public List<ChamberLevel> AllChamberLevels;
+    public List<SubiconIdentifier> AllSubIcons = new List<SubiconIdentifier>();
 
     private void Awake()
     {
@@ -51,6 +58,10 @@ public class AssetStorageDatabase : MonoBehaviour
     public BaseStatusEffectObject GetStatusEffect(string ID)
     {
         return AllStatusEffects.Find(x => x.GetID() == ID);
+    }
+    public SubiconIdentifier GetSubcategoryItemIcon(ItemInventory.SubiconCategory category1)
+    {
+        return AllSubIcons.Find(x => x.categoryIcon == category1);
     }
 
     public WeaponItem GetWeapon(string ID)

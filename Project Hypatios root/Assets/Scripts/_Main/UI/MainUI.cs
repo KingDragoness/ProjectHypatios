@@ -22,7 +22,8 @@ public class MainUI : MonoBehaviour
         Shop,
         Cinematic,
         FreecamMode,
-        Trivia
+        Trivia,
+        Favorite
     }
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
@@ -36,6 +37,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
     [FoldoutGroup("References")] public GameObject CraftingWeapon_UI;
     [FoldoutGroup("References")] public GameObject DefaultHUD_UI;
+    [FoldoutGroup("References")] public GameObject FavoriteHUD_UI;
     [FoldoutGroup("References")] public GameObject Console_UI;
     [FoldoutGroup("References")] public GameObject Camera_Cutscene;
     [FoldoutGroup("References")] public GameObject Camera_Main;
@@ -169,7 +171,7 @@ public class MainUI : MonoBehaviour
             {
                 allowToggle = true;
             }
-            else
+            else if (current_UI != UIMode.Favorite)
             {
                 if (!paused)
                 {
@@ -181,7 +183,7 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (current_UI != UIMode.Trivia)
+            if (current_UI != UIMode.Trivia && current_UI != UIMode.Favorite)
             {
                 if (allowToggle)
                 {
@@ -217,6 +219,20 @@ public class MainUI : MonoBehaviour
             Hypatios.DebugObjectStat.gameObject.SetActive(!b);
         }
 
+        if (current_UI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
+        {
+            if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                current_UI = UIMode.Favorite;
+                SetTempoPause(true);
+            }
+        }
+        else if (current_UI == UIMode.Favorite && Input.GetKeyUp(KeyCode.Tab))
+        {
+            current_UI = UIMode.Default;
+            SetTempoPause(false);
+        }
+
         {
             RefreshUI_Resolutions();
         }
@@ -235,6 +251,7 @@ public class MainUI : MonoBehaviour
                 CraftingWeapon_UI.gameObject.SetActive(false);
                 TriviaMap.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(false);
+                FavoriteHUD_UI.gameObject.SetActive(false);
                 DefaultHUD_UI.gameObject.SetActive(true);
 
                 if (Hypatios.Player.Health.isDead == false)
@@ -324,7 +341,13 @@ public class MainUI : MonoBehaviour
                 {
                     CutsceneHUD_UI.gameObject.SetActive(true);
                 }
-         
+
+                if (current_UI == UIMode.Favorite)
+                {
+                    FavoriteHUD_UI.gameObject.SetActive(true);
+                    Hypatios.Player.disableInput = true;
+                }
+
             }
 
             if (tempoPause)

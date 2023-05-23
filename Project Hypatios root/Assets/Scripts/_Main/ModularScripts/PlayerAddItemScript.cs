@@ -12,7 +12,8 @@ public class PlayerAddItemScript : MonoBehaviour
     public void ExecuteFunction()
     {
         Hypatios.Player.Inventory.AddItem(item, count);
-        if(displayPrompt) DeadDialogue.PromptNotifyMessage_Mod($"Added {item.GetDisplayText()} ({count})", 3.5f);
+        MainGameHUDScript.Instance.lootItemUI.NotifyItemLoot(item, count);
+        if (displayPrompt) DeadDialogue.PromptNotifyMessage_Mod($"Added {item.GetDisplayText()} ({count})", 3.5f);
     }
 
 }

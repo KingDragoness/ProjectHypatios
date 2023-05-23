@@ -414,9 +414,24 @@ public class Hypatios : MonoBehaviour
             i1 = f1 - '0';
         }
 
-        int seed = Hypatios.Game.TotalRuns + Mathf.RoundToInt(Hypatios.Game.Total_UNIX_Timespan) + SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
+        int seed = Hypatios.Game.TotalRuns + Mathf.RoundToInt(Hypatios.Game.Total_UNIX_Timespan);
+        seed += SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
+        seed += unicodeValue(SystemInfo.deviceName);
 
         return seed;
+    }
+
+    public static int unicodeValue(string text)
+    {
+        int result = 0;
+        foreach (char c in text)
+        {
+            int unicode = c;
+            if (unicode < 128)
+                result += unicode;
+            //Console.WriteLine(unicode < 128 ? "ASCII: {0}" : "Non-ASCII: {0}", unicode);
+        }
+        return result;
     }
 
     private void Update()

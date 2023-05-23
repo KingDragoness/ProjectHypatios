@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using ItemDataSave = HypatiosSave.ItemDataSave;
+using Newtonsoft.Json;
 using System;
 
 [System.Serializable]
@@ -93,7 +94,7 @@ public class InventoryData
     /// </summary>
     /// <param name="target"></param>
     /// <param name="currentIndex">Selected index of current inventory.</param>
-    public void TransferTo(InventoryData target, int currentIndex)
+    public ItemDataSave TransferTo(InventoryData target, int currentIndex)
     {
         var itemDat = allItemDatas[currentIndex];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
@@ -107,6 +108,7 @@ public class InventoryData
             target.AddItem(itemClass, itemDat.count);
         }
         allItemDatas.Remove(itemDat);
+        return itemDat;
     }
 }
 
@@ -133,6 +135,7 @@ public class HypatiosSave
     public bool everUsed_Paradox = false;
     public bool everUsed_WeaponShop = false;
     public List<string> otherEverUsed = new List<string>();
+    public List<string> favoritedItems = new List<string>();
     public List<ParadoxEntity> Game_ParadoxEntities = new List<ParadoxEntity>();
     public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
     public List<TriviaSave> Game_Trivias = new List<TriviaSave>();
@@ -162,9 +165,53 @@ public class HypatiosSave
     {
         public string ID = "";
         public int count = 0;
-        public bool isFavorited = false;
         public ItemInventory.Category category;
         public WeaponDataSave weaponData; //only for weapon
+        public bool IsFavorite
+        {
+            get
+            {
+                if (category == ItemInventory.Category.Weapon)
+                {
+                    return isFavorited;
+                }
+                else
+                {
+                    return Hypatios.Game.IsItemFavorited(ID);
+                }
+            }
+
+            set
+            {
+                if (category == ItemInventory.Category.Weapon)
+                {
+                    isFavorited = value;
+                }
+                else
+                {
+                    if (value == true)
+                        Hypatios.Game.AddFavorite(ID);
+                    else
+                        Hypatios.Game.RemoveFavorite(ID);
+                }
+            }
+        }
+
+        [JsonProperty] private bool isFavorited = false;
+
+        public bool IsItemFavorited()
+        { 
+            if (category == ItemInventory.Category.Weapon)
+            {
+                return isFavorited;
+            }
+            else
+            {
+                return Hypatios.Game.IsItemFavorited(ID);
+            }
+
+            return false;
+        }
 
         internal void GenerateWeaponData()
         {

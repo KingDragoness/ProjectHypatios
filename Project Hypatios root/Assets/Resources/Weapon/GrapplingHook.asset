@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6877b811295576046a08461784e469e4, type: 3}
+  m_Name: GrapplingHook
+  m_EditorClassIdentifier: 
+  nameWeapon: GrapplingHook
+  prefab: {fileID: 8584968636934683392, guid: dd196635888740546bd8c8b0ac6d2c8c, type: 3}
+  UI_TemplateAmmoAdded: {fileID: 5989791327783834318, guid: 0de0def4879e1554dbf4058f3adbece5,
+    type: 3}
+  weaponIcon: {fileID: 21300000, guid: 41862eaae236e004db3d729302ec0858, type: 3}
+  ammoSpriteIcon: {fileID: 21300000, guid: 33f227d4f130db3408d7e0fcbb3a5eec, type: 3}
+  overrideCrosshair_Sprite: {fileID: 21300000, guid: 3fb9888ae1f421c43a626366c964ecb2,
+    type: 3}
+  attachments: []
+  WeaponRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 819af6914dc4826499091390d39186fc, type: 2}
+    count: 5
+  AmmoRequirementCrafting:
+  - inventory: {fileID: 11400000, guid: 2ba6ddae0e3b1304695af068ac2aa2e5, type: 2}
+    count: 10
+  - inventory: {fileID: 11400000, guid: b1e4ffa5763bb6842b0c2b57f6798125, type: 2}
+    count: 5
+  craft_AmmoAmount: 10
+  buy_AmmoAmount: 6
+  buy_AmmoSoulPrice: 10
+  buy_SoulPrice: 100
+  isCraftable: 0
+  defaultDamage: 0
+  defaultMagazineSize: 5
+  defaultCooldown: 20
+  rewardRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 7
+      inSlope: 19.596167
+      outSlope: 19.596167
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.07171792
+    - serializedVersion: 3
+      time: 0.9986572
+      value: 15
+      inSlope: 16.308975
+      outSlope: 16.308975
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.059459478
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  moveSpeed: 1
+  defaultVariables: []

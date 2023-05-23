@@ -427,6 +427,7 @@ public class CharacterScript : Entity
 
             Friction();
             HandleCrouchingState();
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundRadiusCheck, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
             if (isLimitedIntroMode == false && !disableInput)
                 Jumping();
@@ -590,6 +591,28 @@ public class CharacterScript : Entity
             xMovement = moveVector.x;//Input.GetAxisRaw("Horizontal");
             yMovement = moveVector.y;//Input.GetAxisRaw("Vertical");
         }
+        else
+        {
+            if (Weapon != null)
+            {
+                var gun = Weapon.currentGunHeld;
+
+                if (gun != null)
+                {
+                    if (rb.velocity.magnitude > 0.2f)
+                    {
+                        if (isNoGravity == false) Anim.SetBool("isRunning", true);
+                    }
+                    else
+                    {
+                        Anim.SetBool("isRunning", false);
+                    }
+                }
+            }
+
+            xMovement = 0f;
+            yMovement = 0f;
+        }
 
         {
             bool isTooSlope = false;
@@ -666,9 +689,7 @@ public class CharacterScript : Entity
             {
                 if (dir.magnitude > 0f || _wallRun.isWallRunning)
                 {
-                    if (isNoGravity == false) Anim.SetBool("isRunning", true);
-
-                 
+                    if (isNoGravity == false) Anim.SetBool("isRunning", true);              
                 }
                 else
                 {
@@ -808,7 +829,6 @@ public class CharacterScript : Entity
 
     void Jumping()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundRadiusCheck, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
         if (!isCheatMode)
         {

@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
 
     public CharacterStat maxHealth = new CharacterStat(100);
     public CharacterStat healthRegen = new CharacterStat(0);
+    public GameEvent OnPlayerDead;
     public float curHealth;
     public float targetHealth;
     public float HealthSpeed = 4;
@@ -273,6 +274,7 @@ public class PlayerHealth : MonoBehaviour
             cameraScript.instance.gameObject.SetActive(false);
             Hypatios.Game.Death_NoSaturation();
             MainGameHUDScript.Instance.gameObject.SetActive(false);
+            OnPlayerDead.Raise();
 
             soundManagerScript.instance.Play("Die");
 

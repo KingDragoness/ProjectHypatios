@@ -61,6 +61,8 @@ public class MainGameHUDScript : MonoBehaviour
 
     public ChargeStationUI chargeStationUI;
     public CraftingWorkstationUI craftingUI;
+    public LootedItemNotifyUI lootItemUI;
+    public PlayerRPGUI rpgUI;
 
     public static MainGameHUDScript Instance
     {

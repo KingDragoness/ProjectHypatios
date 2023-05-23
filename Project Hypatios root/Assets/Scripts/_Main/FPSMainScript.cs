@@ -52,6 +52,7 @@ public class FPSMainScript : MonoBehaviour
     public List<HypatiosSave.TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
     public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
     public List<string> otherEverUsed = new List<string>();
+    public List<string> favoritedItems = new List<string>();
 
     [Space]
     public bool DEBUG_ShowTutorial = false;
@@ -341,6 +342,54 @@ public class FPSMainScript : MonoBehaviour
 
     #endregion
 
+    public bool IsItemFavorited(string ID)
+    {
+        if (favoritedItems.Find(x => x == ID) != null)
+        {
+            return true;
+        }
+        return false;
+    }    
+
+    public void AddFavorite(string ID)
+    {
+        SanityCheck_WeaponFavorite();
+
+        if (IsItemFavorited(ID))
+        {
+            //already favorited.
+            return;
+        }
+        favoritedItems.Add(ID);
+    }
+
+    //sanity check to remove weapon favorites
+    private void SanityCheck_WeaponFavorite()
+    {
+        foreach (var item in Hypatios.Assets.AllItems)
+        {
+            if (item.category == ItemInventory.Category.Weapon)
+            {
+                if (IsItemFavorited(item.GetID()))
+                    favoritedItems.Remove(item.GetID());
+
+            }
+        }
+    }
+
+    public void RemoveFavorite(string ID)
+    {
+        SanityCheck_WeaponFavorite();
+
+        if (IsItemFavorited(ID) == false)
+        {
+            //already not favorited.
+            return;
+        }
+        favoritedItems.Remove(ID);
+    }
+
+
     #region Save System
     private void LoadFromSaveBuffer()
     {
@@ -367,6 +416,7 @@ public class FPSMainScript : MonoBehaviour
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
+        favoritedItems = savedata.favoritedItems;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
@@ -404,6 +454,7 @@ public class FPSMainScript : MonoBehaviour
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
+        favoritedItems = savedata.favoritedItems;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
@@ -445,6 +496,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
         hypatiosSave.otherEverUsed = otherEverUsed;
+        hypatiosSave.favoritedItems = favoritedItems;
         hypatiosSave.AllPerkDatas = Player.PerkData;
 
 

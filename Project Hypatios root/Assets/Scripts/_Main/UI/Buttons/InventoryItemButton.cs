@@ -23,7 +23,7 @@ public class InventoryItemButton : MonoBehaviour
         Name_label.text = itemClass.GetDisplayText();
         Count_label.text = itemDat.count.ToString();
 
-        if (itemDat.isFavorited)     
+        if (itemDat.IsFavorite)     
             FavoriteIcon.gameObject.SetActive(true);
         else
             FavoriteIcon.gameObject.SetActive(false);

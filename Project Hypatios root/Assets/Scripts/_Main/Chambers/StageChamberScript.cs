@@ -78,6 +78,7 @@ public class StageChamberScript : MonoBehaviour
         }
         else
         {
+            enemiesToClear.RemoveAll(x => x == null);
             if (IsVolumeKillLimit) CheckEnemyToKill();
             _checkTimer = 2f;
         }

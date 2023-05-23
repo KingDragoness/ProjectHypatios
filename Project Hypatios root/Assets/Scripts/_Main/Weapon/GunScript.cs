@@ -102,6 +102,9 @@ public class GunScript : BaseWeaponScript
             return;
         }
 
+        if (Hypatios.Player.disableInput)
+            return;
+
 
         if (!isMelee)
         {

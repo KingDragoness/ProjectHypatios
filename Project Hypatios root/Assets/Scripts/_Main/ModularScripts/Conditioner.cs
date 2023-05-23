@@ -45,7 +45,7 @@ public class Conditioner : MonoBehaviour
             else if (conditionType == ConditionType.ChamberCompleted)
             {
                 int i = Hypatios.Chamber.GetChamberCompletion();
-                if (chamberAtLeastComplete <= i && chamberAtMostComplete >= i)
+                if (i >= chamberAtLeastComplete && i <= chamberAtMostComplete)
                     return true;
 
             }
@@ -65,6 +65,7 @@ public class Conditioner : MonoBehaviour
     public List<ConditionEvent> AllConditions = new List<ConditionEvent>();
     public FulfillCondition conditionForTrue;
     [ShowIf("isStartImmediately", true)] public UnityEvent OnTriggerStart;
+    [ShowIf("isStartImmediately", true)] [InfoBox("In prefab this is empty because easier debugging. Best used for scene objects.")] public UnityEvent OnTriggerFail;
     public bool isStartImmediately = false;
 
     private void Start()
@@ -74,6 +75,10 @@ public class Conditioner : MonoBehaviour
             if (GetEvaluateResult())
             {
                 OnTriggerStart?.Invoke();
+            }
+            else
+            {
+                OnTriggerFail?.Invoke();
             }
         }
     }

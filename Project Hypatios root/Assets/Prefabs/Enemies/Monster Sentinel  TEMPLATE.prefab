@@ -124,6 +124,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 0
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -5024,6 +5025,7 @@ MonoBehaviour:
   destructibleScript: {fileID: 0}
   isCriticalHit: 1
   multiplier: 2
+  isPrintDebug: 0
   OnHit:
     m_PersistentCalls:
       m_Calls: []
@@ -10272,9 +10274,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 4486926595778528795}
+  debug_FirstPassHit: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   laserCharging: {fileID: 4486926595837538380}
   laserChargingRenderer: {fileID: 4486926595837538381}
   laser: {fileID: 3000425260294169686, guid: 9af970afb6db4ae4992566f9e6d4b321, type: 3}
@@ -10295,10 +10306,9 @@ MonoBehaviour:
   NormalColor: {r: 8.47419, g: 5.146628, b: 0.3105724, a: 0}
   attackRange: 45
   attackTime: 1
-  attackRecharge: 0.4
-  lockBeforeAttackTime: 0.4
+  attackRecharge: 0.6
+  lockBeforeAttackTime: 0.6
   dieHeight: -0.75
-  onSpawnShouldReady: 1
   spawnChance_Ammo: 0.2
   damping: 2
   spawnHeal: {fileID: 4486926596079679596}
@@ -10315,8 +10325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f34bcff82f45844887162caf1954724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healCapsule: {fileID: 2558265170865548969, guid: 494d466511c813c4d9a3dec8169d90e1,
-    type: 3}
+  customCapsule: {fileID: 0}
   radius: 0.6
   explosionForce: 50
 --- !u!114 &4486926596079679599

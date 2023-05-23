@@ -33,14 +33,32 @@ public class Interact_Container : InteractableObject
     private void GenerateLoot()
     {
         var guidStr = Guid.GetGuid().ToString().Substring(0,5);
-        seed = Hypatios.GetSeed() + System.Convert.ToInt32(guidStr, 16);
+        seed = Hypatios.GetSeed() + System.Convert.ToInt32(guidStr, 16) + Application.loadedLevel;
         var RandomSys = new System.Random(seed);
         int roll = RandomSys.Next(lootTable.minRoll, lootTable.maxRoll);
 
+
         for (int x = 0; x < roll; x++)
         {
-            inventory.AddItem(lootTable.GetEntry(seed + x).item, 1);
+            var item = lootTable.GetEntry(seed + x).item;
+
+            //Hard-coded balance to prevent container spawning multiple 
+            //weapon per item container
+            if (IsContainWeapon() == false || item.category != ItemInventory.Category.Weapon)
+            {
+                inventory.AddItem(item, 1);
+            }
         }
+    }
+
+    public bool IsContainWeapon()
+    {
+        if (inventory.allItemDatas.Find(x => x.category == ItemInventory.Category.Weapon) != null)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     //Display custom HUD window for container

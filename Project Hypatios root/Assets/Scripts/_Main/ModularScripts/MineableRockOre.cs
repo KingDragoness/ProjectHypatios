@@ -44,7 +44,8 @@ public class MineableRockOre : MonoBehaviour
             var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 
             inventory.TransferTo(Hypatios.Player.Inventory, index);
-            DeadDialogue.PromptNotifyMessage_Mod($"Added {itemClass.GetDisplayText()} ({itemDat.count})", 3.5f);
+            MainGameHUDScript.Instance.lootItemUI.NotifyItemLoot(itemDat);
+            //DeadDialogue.PromptNotifyMessage_Mod($"Added {itemClass.GetDisplayText()} ({itemDat.count})", 3.5f);
         }
 
         Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.RockDestructible, true, transform.position, transform.rotation);

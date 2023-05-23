@@ -146,6 +146,7 @@ public abstract class BaseChamberScript : MonoBehaviour
         {
             if (currentRun >= stat.chamberCompleted && highestEntry <= stat.chamberCompleted)
             {
+                Hypatios.Game.RuntimeTutorialHelp("Harder Chamber", "In some chambers, the difficult may ramp up after you complete it multiple times.", "chamber.harder_difficulty");
                 highestEntry = stat.chamberCompleted;
                 _currentStat = stat;
             }

@@ -23,6 +23,9 @@ public class LevelSelect_Progression : MonoBehaviour
     public TextMesh label_HPMax;
     public TextMesh label_HPRegen;
     public TextMesh label_Alcohol;
+    public TextMesh label_TotalPlaytime;
+    public TextMesh label_CurrentTime;
+    public BaseStatValue Stat_TotalTime;
     public WeaponModelDisplay weapon_Slot2;
     public WeaponModelDisplay weapon_Slot3;
     public WeaponModelDisplay weapon_Slot4;
@@ -74,12 +77,22 @@ public class LevelSelect_Progression : MonoBehaviour
         weapon_Slot4.gameObject.SetActive(false);
 
         {
+            var dateTime_runSession = ClockTimerDisplay.UnixTimeStampToDateTime(save.Player_RunSessionUnixTime + Hypatios.UnixTimeStart);
+            var dateTime_totalPlaytime = ClockTimerDisplay.UnixTimeStampToDateTime(save.Game_UnixTime, true);
+            string display_totalPlayTime = "";
+            string display_runTime = "";
+
+            display_totalPlayTime = $"{ClockTimerDisplay.TotalHoursPlayed(save.Game_UnixTime).ToString("00")}:{dateTime_totalPlaytime.Minute.ToString("00")}:{dateTime_totalPlaytime.Second.ToString("00")}s";
+            display_runTime =  $"{dateTime_runSession.Hour}:{dateTime_runSession.Minute.ToString("00")}:{dateTime_runSession.Second.ToString("00")}";
+
             float maxHP = 100;
             maxHP += PlayerPerk.GetValue_MaxHPUpgrade(save.AllPerkDatas.Perk_LV_MaxHitpointUpgrade);
             label_progress.text = $"{levelPos.level.levelName} | {save.Game_TotalRuns} deaths";
             label_HPMax.text = $"{Mathf.FloorToInt(save.Player_CurrentHP)}/{maxHP}";
             label_HPRegen.text = $"+{PlayerPerk.GetValue_RegenHPUpgrade(save.AllPerkDatas.Perk_LV_RegenHitpointUpgrade)}HP/s";
             label_Alcohol.text = $"{Mathf.FloorToInt(save.Player_AlchoholMeter)}/100%";
+            label_TotalPlaytime.text = $"Total playtime: {display_totalPlayTime}";
+            label_CurrentTime.text = $"[{display_runTime}]";
 
             if (save.Game_WeaponStats.Count >= 2)
             {

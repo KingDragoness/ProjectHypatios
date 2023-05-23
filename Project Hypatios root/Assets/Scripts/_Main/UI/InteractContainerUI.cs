@@ -30,23 +30,6 @@ public class InteractContainerUI : MonoBehaviour
 
     void Update()
     {
-        //safety check
-        //bool containerExists = false;
-
-        //if (InteractableCamera.instance != null)
-        //{
-        //    if (InteractableCamera.instance.currentInteractable != null)
-        //    {
-        //        if (InteractableCamera.instance.currentInteractable is Interact_Container)
-        //        {
-        //            containerExists = true;
-        //        }
-        //    }
-        //}
-
-        //if (containerExists == false)
-        //    return;
-
         var _interact1 = InteractableCamera.instance.currentInteractable as Interact_Container;
 
         if (_interact1 != null)
@@ -110,7 +93,8 @@ public class InteractContainerUI : MonoBehaviour
 
     public void QuickLoot()
     {
-        currentContainer.inventory.TransferTo(Hypatios.Player.Inventory, index);
+        var itemDat = currentContainer.inventory.TransferTo(Hypatios.Player.Inventory, index);
+        MainGameHUDScript.Instance.lootItemUI.NotifyItemLoot(itemDat);
         RefreshUI();
     }
 

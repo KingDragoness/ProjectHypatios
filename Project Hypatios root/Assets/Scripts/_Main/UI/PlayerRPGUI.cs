@@ -8,12 +8,7 @@ using Sirenix.OdinInspector;
 public class PlayerRPGUI : MonoBehaviour
 {
 
-    [System.Serializable]
-    public class SubiconIdentifier
-    {
-        public ItemInventory.SubiconCategory categoryIcon;
-        public Sprite sprite;
-    }
+    
 
     [FoldoutGroup("Perk Tooltip")] public RectTransform perktooltipUI;
     [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_LeftHandedLabel;
@@ -38,7 +33,6 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Weapon Preview")] public Text weaponPreview_WeaponStats;
     [FoldoutGroup("Weapon Preview")] public Image weaponPreview_AmmoIcon;
 
-    public List<SubiconIdentifier> allSubIcons = new List<SubiconIdentifier>();
     public RPG_CharPerkButton PerkButton;
     public RPG_CharPerkButton StatusMonoButton;
     public AttachmentWeaponButton WeaponModButton;
@@ -193,11 +187,11 @@ public class PlayerRPGUI : MonoBehaviour
                 }
                 else
                 {
-                    if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive && itemData.isFavorited)
+                    if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive && itemData.IsFavorite)
                     {
                         indexes.Add(x);
                     }
-                    else if (itemData.category == filterCategoryType && isFavoriteActive && itemData.isFavorited)
+                    else if (itemData.category == filterCategoryType && isFavoriteActive && itemData.IsFavorite)
                     {
                         indexes.Add(x);
                     }
@@ -213,7 +207,7 @@ public class PlayerRPGUI : MonoBehaviour
                 var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
                 var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 
-                SubiconIdentifier subicon = Subcategory(itemClass.subCategory);
+                AssetStorageDatabase.SubiconIdentifier subicon = Hypatios.Assets.GetSubcategoryItemIcon(itemClass.subCategory);
                 var newButton = Instantiate(InventoryItemButton, parentInventory);
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
@@ -239,10 +233,6 @@ public class PlayerRPGUI : MonoBehaviour
 
     }
 
-    public SubiconIdentifier Subcategory(ItemInventory.SubiconCategory category)
-    {
-        return allSubIcons.Find(x => x.categoryIcon == category);
-    }
 
     private void HandleFavoriteItem()
     {
@@ -255,7 +245,7 @@ public class PlayerRPGUI : MonoBehaviour
         var button = currentItemButton;
         var itemData = button.GetItemData();
 
-        itemData.isFavorited = !itemData.isFavorited;
+        itemData.IsFavorite = !itemData.IsFavorite;
 
         RefreshUI();
 

@@ -138,15 +138,22 @@ public class cameraScript : MonoBehaviour
             }
         }
 
+        if (Hypatios.Player.disableInput == false)
+        {
+            var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
+            if (Gamepad.current != null) moveVector += AimAssist();
 
-        var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
-        if (Gamepad.current != null) moveVector += AimAssist();
+            x = moveVector.x * 20 * modifiedSensitivity * Time.deltaTime;
+            y = moveVector.y * 20 * modifiedSensitivity * Time.deltaTime;
+            x += externalX * Time.deltaTime;
+            y += externalX * Time.deltaTime;
+        }
+        else
+        {
+            x = 0;
+            y = 0;
+        }
 
-        x = moveVector.x * 20 * modifiedSensitivity * Time.deltaTime;
-        y = moveVector.y * 20 * modifiedSensitivity * Time.deltaTime;
-
-        x += externalX * Time.deltaTime;
-        y += externalX * Time.deltaTime;
 
         xRot -= y;
         xRot = Mathf.Clamp(xRot, -85f, 85f);

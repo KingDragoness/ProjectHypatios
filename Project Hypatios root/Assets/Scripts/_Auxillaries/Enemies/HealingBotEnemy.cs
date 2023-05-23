@@ -144,5 +144,6 @@ public class HealingBotEnemy : EnemyScript
         }
         Destroy(gameObject);
         OnSelfKilled?.Invoke();
+        Stats.IsDead = true;
     }
 }
