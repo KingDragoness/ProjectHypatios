@@ -114,6 +114,7 @@ public class StageChamberScript : MonoBehaviour
             {
                 chamberAudioAnnouncement.Play();
                 OnChamberCompleted?.Invoke();
+                ChamberLevelController.Instance.ChamberCompleted();
                 DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
             }
         }

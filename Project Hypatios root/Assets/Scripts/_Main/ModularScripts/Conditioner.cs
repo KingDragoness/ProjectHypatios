@@ -66,6 +66,8 @@ public class Conditioner : MonoBehaviour
     public FulfillCondition conditionForTrue;
     [ShowIf("isStartImmediately", true)] public UnityEvent OnTriggerStart;
     [ShowIf("isStartImmediately", true)] [InfoBox("In prefab this is empty because easier debugging. Best used for scene objects.")] public UnityEvent OnTriggerFail;
+    public UnityEvent OnTriggerFunction;
+    public UnityEvent OnTriggerFunctionFailed;
     public bool isStartImmediately = false;
 
     private void Start()
@@ -82,6 +84,18 @@ public class Conditioner : MonoBehaviour
             }
         }
     }
+
+    public void TriggerFunction()
+    {
+        if (GetEvaluateResult())
+        {
+            OnTriggerFunction?.Invoke();
+        }
+        else
+        {
+            OnTriggerFunctionFailed?.Invoke();
+        }
+    }    
 
     public bool GetEvaluateResult()
     {

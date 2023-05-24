@@ -362,6 +362,7 @@ public class Hypatios : MonoBehaviour
     public static Hypatios Instance;
 
     private static int _tickTime = 0;
+    private static int RandomizationIndex = 0;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void Init()
@@ -372,6 +373,7 @@ public class Hypatios : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        RandomizationIndex = 0;
         _actionMap = new HypatiosControls();
         _actionMap.Enable();
         Settings1.InitializeAtAwake();
@@ -441,9 +443,10 @@ public class Hypatios : MonoBehaviour
 
     public static float GetRandomChance()
     {
-        int seed = GetSeed();
+        int seed = GetSeed() + RandomizationIndex;
         var RandomSys = new System.Random(seed);
         float random = (RandomSys.Next(0, 100)) / 100f;
+        RandomizationIndex++;
 
         return random;
     }
