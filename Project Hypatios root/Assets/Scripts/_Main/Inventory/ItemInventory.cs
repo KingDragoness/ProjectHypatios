@@ -42,6 +42,8 @@ public class ItemInventory : ScriptableObject
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
     [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;
     [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
+    public bool isTriggerTrivia = false;
+    [ShowIf("isTriggerTrivia", true)] public Trivia trivia;
     [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
     [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
     [ShowIf("category", Category.Consumables)] public BaseStatusEffectObject statusEffect;

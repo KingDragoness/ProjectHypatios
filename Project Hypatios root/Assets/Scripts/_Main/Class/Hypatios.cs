@@ -322,6 +322,9 @@ public class Hypatios : MonoBehaviour
     private Debug_ObjectStat _debugObjectStat;
 
     [SerializeField]
+    private HypatiosEvents _event;
+
+    [SerializeField]
     private ChamberLevelController _chamberLevelController;
 
     [SerializeField]
@@ -340,6 +343,7 @@ public class Hypatios : MonoBehaviour
     public static ChamberLevelController Chamber { get => Instance._chamberLevelController; }
     public static HypatiosControls.DefaultActions Input { get => Instance._actionMap.Default; }
     public static Debug_ObjectStat DebugObjectStat { get => Instance._debugObjectStat; }
+    public static HypatiosEvents Event { get => Instance._event; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
 
     #region Systems (ecs, System)

@@ -8,7 +8,7 @@ public class MineableRockOre : MonoBehaviour
 
     public bool shouldGenerateLoot = true;
     public LootTable lootTable;
-    public InventoryData inventory;
+    public Inventory inventory;
 
     private void Start()
     {

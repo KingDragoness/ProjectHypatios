@@ -11,7 +11,7 @@ public class Interact_Container : InteractableObject
     public string ContainerName = "Container";
     public bool shouldGenerateLoot = true;
     public LootTable lootTable;
-    public InventoryData inventory;
+    public Inventory inventory;
     [FoldoutGroup("DEBUG")] public bool printRandomSeed = false;
 
     private int seed = 0;

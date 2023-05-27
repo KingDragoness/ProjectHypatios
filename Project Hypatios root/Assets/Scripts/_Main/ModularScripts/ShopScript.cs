@@ -10,7 +10,7 @@ public class ShopScript : MonoBehaviour
     public WeaponModelDisplay weaponBuyable_1;
     public WeaponModelDisplay weaponBuyable_2;
     public WeaponModelDisplay weaponBuyable_3;
-    public InventoryData storage;
+    public Inventory storage;
     public LootTable lootTable;
     public int currentHighlight = 0; //-1 
     public GameObject previewNormalView;

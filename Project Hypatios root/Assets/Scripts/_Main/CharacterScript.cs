@@ -94,7 +94,7 @@ public class CharacterScript : Entity
     [ShowInInspector] [ReadOnly] private Animator anim;
     [ShowInInspector] [ReadOnly] private BaseWeaponScript weaponScript;
     public HypatiosSave.PerkDataSave PerkData;
-    public InventoryData Inventory = new InventoryData();
+    public Inventory Inventory = new Inventory();
 
     [HideInInspector] public Animator Anim { get => anim; }
     public wallRun WallRun

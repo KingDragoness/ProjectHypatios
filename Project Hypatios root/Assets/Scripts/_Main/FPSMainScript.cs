@@ -420,7 +420,7 @@ public class FPSMainScript : MonoBehaviour
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
-        Player.Inventory = savedata.Player_Inventory;
+        Player.Inventory.allItemDatas = savedata.Player_Inventory;
         persistent_PlayerStat = savedata.persistent_PlayerStat;
         run_PlayerStat = savedata.run_PlayerStat;
         Hypatios.Player.Initialize();
@@ -488,7 +488,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
         hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
         hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
-        hypatiosSave.Player_Inventory = Player.Inventory;
+        hypatiosSave.Player_Inventory = Player.Inventory.allItemDatas;
         hypatiosSave.persistent_PlayerStat = persistent_PlayerStat;
         hypatiosSave.run_PlayerStat = run_PlayerStat;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
@@ -555,7 +555,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_LastLevelPlayed = level1_Scene.Index;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
         hypatiosSave.AllPerkDatas.Temp_StatusEffect.Clear();
-        hypatiosSave.Player_Inventory = new InventoryData();
+        hypatiosSave.Player_Inventory = new List<ItemDataSave>();
         hypatiosSave.run_PlayerStat = new PlayerStatSave();
 
         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);

@@ -7,9 +7,10 @@ using Newtonsoft.Json;
 using System;
 
 [System.Serializable]
-public class InventoryData
+public class Inventory
 {
     public List<ItemDataSave> allItemDatas = new List<ItemDataSave>();
+    public gEvent_OnItemAdd OnItemAdded;
 
     //search
     public ItemDataSave SearchByID(string ID)
@@ -39,6 +40,7 @@ public class InventoryData
             allItemDatas.Add(itemDataSave);
         }
 
+        OnItemAdded?.Raise(itemInventory);
         return itemDataSave;
     }
 
@@ -50,6 +52,7 @@ public class InventoryData
         {
             allItemDatas.Remove(targetData);
         }
+
     }
 
     public void RemoveItem(string ID, int count = 1)
@@ -62,6 +65,7 @@ public class InventoryData
         {
             Debug.LogError($"Item doesn't exist: {ID}");
         }
+
     }
 
     public int Count(ItemInventory itemInventory)
@@ -94,7 +98,7 @@ public class InventoryData
     /// </summary>
     /// <param name="target"></param>
     /// <param name="currentIndex">Selected index of current inventory.</param>
-    public ItemDataSave TransferTo(InventoryData target, int currentIndex)
+    public ItemDataSave TransferTo(Inventory target, int currentIndex)
     {
         var itemDat = allItemDatas[currentIndex];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
@@ -108,8 +112,10 @@ public class InventoryData
             target.AddItem(itemClass, itemDat.count);
         }
         allItemDatas.Remove(itemDat);
+        OnItemAdded?.Raise(itemClass);
         return itemDat;
     }
+
 }
 
 
@@ -151,7 +157,7 @@ public class HypatiosSave
     public PlayerStatSave run_PlayerStat;
     public List<TimelineEventSave> Game_TimelineEvents = new List<TimelineEventSave>(); //Do not clear until wake up/level 1 script
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
-    public InventoryData Player_Inventory;
+    public List<ItemDataSave> Player_Inventory = new List<ItemDataSave>();
 
     //Player died
     [System.Serializable]
