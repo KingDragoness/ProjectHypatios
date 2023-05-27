@@ -19,6 +19,14 @@ public class ShopScript : MonoBehaviour
     public GameObject previewCam3;
 
     private bool isShopOpened = false;
+    public static int ShopScriptIndex = 0;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
+    {
+        ShopScriptIndex = 0;
+    }
+
 
     private void Start()
     {
@@ -26,6 +34,7 @@ public class ShopScript : MonoBehaviour
         enterEvent.objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
         GenerateBuyableWeapons();
         RefreshWeaponModels();
+        ShopScriptIndex++;
     }
 
     private void GenerateBuyableWeapons()
@@ -45,7 +54,7 @@ public class ShopScript : MonoBehaviour
 
             while (valid == false)
             {
-                var weapon1 = lootTable.GetEntry(count).item;
+                var weapon1 = lootTable.GetEntry(Application.loadedLevel + ShopScriptIndex + count).item;
                 if (IsDuplicate(weapon1.attachedWeapon) == false)
                 {
                     storage.AddItem(weapon1);

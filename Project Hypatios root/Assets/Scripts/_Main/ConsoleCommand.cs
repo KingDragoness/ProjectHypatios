@@ -124,6 +124,14 @@ public class ConsoleCommand : MonoBehaviour
                 EnemyCommand(args);
                 break;
 
+            case "additem":
+                AddItem(args);
+                break;
+
+            case "addstatus":
+                AddStatus(args);
+                break;
+
             case "alcohol":
                 Alcohol(args);
                 break;
@@ -136,8 +144,8 @@ public class ConsoleCommand : MonoBehaviour
                 ChangeLanguage(args);
                 break;
 
-            case "additem":
-                AddItem(args);
+            case "removestatus":
+                RemoveStatus(args);
                 break;
 
             case "mats":
@@ -356,6 +364,58 @@ public class ConsoleCommand : MonoBehaviour
             SendConsoleMessage("Invalid argument! additem [string itemID] [<color=#00cc99dd>int</color> count]");
         }
     }
+
+    private void AddStatus(string[] args)
+    {
+        try
+        {
+            int time = 0;
+
+            var statusEffect = Hypatios.Assets.GetStatusEffect(args[0]);
+
+            if (args.Length > 1 && statusEffect != null)
+            {
+                if (int.TryParse(args[1], out time))
+                {
+                    statusEffect.AddStatusEffectPlayer(time);
+                }
+                else
+                {
+
+                }
+            }
+            else if (statusEffect != null)
+            {
+                statusEffect.AddStatusEffectPlayer(15f);
+            }
+
+            if (statusEffect == null)
+            {
+                SendConsoleMessage("Missing status effect!");
+            }
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! addstatus [string statusID] [<color=#00cc99dd>int</color> seconds]");
+        }
+    }
+
+    private void RemoveStatus(string[] args)
+    {
+        try
+        {
+            var statusEffect = Hypatios.Assets.GetStatusEffect(args[0]);
+
+            Hypatios.Player.RemoveStatusEffectGroup(statusEffect);
+            Hypatios.Player.PerkData.Temp_StatusEffect.RemoveAll(x => x.ID == args[0]);
+            Hypatios.Player.ReloadStatEffects();
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! removestatus [string statusID]");
+        }
+    }
+
 
 
     private void FreeMaterials(string[] args)
@@ -1034,6 +1094,7 @@ public class ConsoleCommand : MonoBehaviour
         {
             helpCommands.Add("'alcohol' to add alcohol meter");
             helpCommands.Add("'additem' to add items");
+            helpCommands.Add("'addstatus' to add status effect");
             helpCommands.Add("'cc' to use extra commands");
             helpCommands.Add("'changelocale' to change language");
             helpCommands.Add("'giveammos' to give ammos");
@@ -1051,6 +1112,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'nextlevel' to go next level while retaining items");
             helpCommands.Add("'nospeed' to set freecam speed. 'help ui' to check noclip.");
             helpCommands.Add("'paradoxes' to check every key event triggered.");
+            helpCommands.Add("'removestatus' to remove status effect");
             helpCommands.Add("'res' to restore health & dash");
             helpCommands.Add("'savefile' to save file");
             helpCommands.Add("'screensize' to set screen size");
@@ -1129,7 +1191,7 @@ public class ConsoleCommand : MonoBehaviour
             else if (args[0] == "setperk")
             {
 
-                helps.Add(" =============== 'ui' to change UI mode. =============== ");
+                helps.Add(" =============== 'setperk' to set perk. =============== ");
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
                 foreach (string name in Enum.GetNames(typeof(ModifierEffectCategory)))
@@ -1137,6 +1199,18 @@ public class ConsoleCommand : MonoBehaviour
                     ModifierEffectCategory e1 = ModifierEffectCategory.Nothing;
                     Enum.TryParse<ModifierEffectCategory>(name, out e1);
                     helps.Add($"'setperk {(int)e1}' : {name}");
+                }
+                helps.Add(" ");
+            }
+            else if (args[0] == "addstatus")
+            {
+
+                helps.Add(" =============== 'addstatus' to add status effect. =============== ");
+                helps.Add("Press ENTER to execute command");
+                helps.Add("Press ~ key to toggle console");
+                foreach (var status1 in Hypatios.Assets.AllStatusEffects)
+                {
+                    helps.Add($"{status1.GetID()}");
                 }
                 helps.Add(" ");
             }

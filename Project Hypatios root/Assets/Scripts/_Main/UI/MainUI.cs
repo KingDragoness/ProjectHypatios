@@ -227,7 +227,7 @@ public class MainUI : MonoBehaviour
                 SetTempoPause(true);
             }
         }
-        else if (current_UI == UIMode.Favorite && Input.GetKeyUp(KeyCode.Tab))
+        else if (current_UI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
         {
             current_UI = UIMode.Default;
             SetTempoPause(false);

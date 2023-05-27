@@ -264,7 +264,7 @@ MonoBehaviour:
   Dialogue_Content: Aldrich, I got reading that a MicroDrone shuttle dropped in your
     chamber. Stay caution.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 0}
+  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 5
   OnDialogTriggered:
@@ -343,10 +343,6 @@ Transform:
   - {fileID: 8043387087068512738}
   - {fileID: 8043387087501683699}
   - {fileID: 8043387087620050706}
-  - {fileID: 8043387087704398934}
-  - {fileID: 8043387086538443718}
-  - {fileID: 8043387088515100077}
-  - {fileID: 8043387087101359901}
   m_Father: {fileID: 1708449519993732696}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -423,6 +419,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnTriggerFail:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTriggerFunction:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTriggerFunctionFailed:
+    m_PersistentCalls:
+      m_Calls: []
   isStartImmediately: 1
 --- !u!1 &8357272909968290326
 GameObject:
@@ -957,15 +962,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8357272908848926480}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8390283157241522427 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2735efe19ffa5446981e47b46a34190,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357272908848926480}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3912446290998087912 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4201521715100786696, guid: c2735efe19ffa5446981e47b46a34190,
+    type: 3}
+  m_PrefabInstance: {fileID: 8357272908848926480}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8390283157241522427 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c2735efe19ffa5446981e47b46a34190,
     type: 3}
   m_PrefabInstance: {fileID: 8357272908848926480}
   m_PrefabAsset: {fileID: 0}
@@ -1475,81 +1480,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8357272909102031696}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8357272909117200426
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8357272909105861131}
-    m_Modifications:
-    - target: {fileID: 2046084066751475508, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_Name
-      value: Monster MicroDroneBots (15)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.741
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.913
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.399
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.15299782
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5225557
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6034195
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.58259094
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -32.901
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -250.927
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 105.54101
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ce9a33eee0255744db3cbc001519647d, type: 3}
---- !u!4 &8043387087101359901 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357272909117200426}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8357272909193403499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1774,156 +1704,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
     type: 3}
   m_PrefabInstance: {fileID: 8357272909478621018}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8357272909661103345
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8357272909105861131}
-    m_Modifications:
-    - target: {fileID: 2046084066751475508, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_Name
-      value: Monster MicroDroneBots (13)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.742
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.812
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.15299782
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5225557
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6034195
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.58259094
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -32.901
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -250.927
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 105.54101
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ce9a33eee0255744db3cbc001519647d, type: 3}
---- !u!4 &8043387086538443718 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357272909661103345}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8357272909716718234
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8357272909105861131}
-    m_Modifications:
-    - target: {fileID: 2046084066751475508, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_Name
-      value: Monster MicroDroneBots (14)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.913
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.812
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.15299782
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5225557
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6034195
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.58259094
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -32.901
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -250.927
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 105.54101
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ce9a33eee0255744db3cbc001519647d, type: 3}
---- !u!4 &8043387088515100077 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357272909716718234}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8357272909938885132
 PrefabInstance:
@@ -2224,81 +2004,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
     type: 3}
   m_PrefabInstance: {fileID: 8357272910470229286}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8357272910525330273
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8357272909105861131}
-    m_Modifications:
-    - target: {fileID: 2046084066751475508, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_Name
-      value: Monster MicroDroneBots (12)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.196
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.742
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.15299782
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5225557
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6034195
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.58259094
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -32.901
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -250.927
-      objectReference: {fileID: 0}
-    - target: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 105.54101
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ce9a33eee0255744db3cbc001519647d, type: 3}
---- !u!4 &8043387087704398934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2046084066751475511, guid: ce9a33eee0255744db3cbc001519647d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8357272910525330273}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8357272910741659685
 PrefabInstance:

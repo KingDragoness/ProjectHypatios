@@ -352,9 +352,18 @@ MonoBehaviour:
   OnSelfKilled:
     m_PersistentCalls:
       m_Calls: []
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 2375914906268001541}
+  debug_FirstPassHit: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   dummyAI: {fileID: 2375914904756159635}
   stateAI: 2
   animator: {fileID: 3893534545613212683}
@@ -390,6 +399,7 @@ MonoBehaviour:
   MinDist: 5
   disableBehavior: 0
   rotationSpeed: 7.5
+  target: {fileID: 0}
 --- !u!114 &2375914904756159632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,8 +413,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   origin: {fileID: 2375914906268001541}
-  force: 24000
-  variableForce: 5000
+  force: 20000
+  variableForce: 3000
   projectile: {fileID: 2398125246986748370, guid: 477182fafd9d76f42ad0a3c9efa5f191,
     type: 3}
 --- !u!54 &4200181802856738931

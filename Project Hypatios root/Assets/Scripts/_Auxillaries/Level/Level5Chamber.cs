@@ -243,10 +243,10 @@ public class Level5Chamber : MonoBehaviour
 
         timer = TIMER_LIMIT_ANSWER + UnityEngine.Random.Range(-1, 1);
 
-        //special
+        //just dont do fucking anything
         if (chance > 0.95f | chance < 0.05f)
         {
-            SpawnSpider();
+            //SpawnSpider();
         }
     }
 

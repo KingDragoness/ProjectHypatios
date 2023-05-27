@@ -24,6 +24,8 @@ public class ItemInventory : ScriptableObject
         Default,
         Book = 10,
         Material,
+        Notes,
+        FictionBook,
         Alcohol = 20,
         Serum,
         Meds,

@@ -16,7 +16,7 @@ public class StageChamberScript : MonoBehaviour
     public List<EnemyScript> enemiesToClear;
     public UnityEvent OnChamberCompleted;
     [FoldoutGroup("Stats")] [Tooltip("Enemy outside the volume will be killed instantly.")] public bool IsVolumeKillLimit = false;
-    [FoldoutGroup("Stats")] [ShowIf("IsVolumeKillLimit")] public RandomSpawnArea VolumeKillBox;
+    [FoldoutGroup("Stats")] [ShowIf("IsVolumeKillLimit")] public List<RandomSpawnArea> VolumeKillBox;
     public AudioSource chamberAudioAnnouncement;
     public Animator anim;
     private bool cleared = false;
@@ -92,11 +92,25 @@ public class StageChamberScript : MonoBehaviour
 
         foreach (var enemy in enemiesToClear)
         {
-            if (VolumeKillBox.IsInsideOcclusionBox(enemy.OffsetedBoundWorldPosition) == false)
-            {          
+
+            bool isInsideAny = false;
+
+            foreach (var box in VolumeKillBox)
+            {
+                if (box.IsInsideOcclusionBox(enemy.OffsetedBoundWorldPosition) == true)
+                {
+                    isInsideAny = true;
+                    break;
+                }
+            }
+
+            if (isInsideAny == false)
+            {
                 enemy.Attacked(token);
             }
+
         }
+       
     }
 
     [FoldoutGroup("Debug")]
