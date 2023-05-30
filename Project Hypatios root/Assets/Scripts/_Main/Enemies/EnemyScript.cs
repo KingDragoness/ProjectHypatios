@@ -24,13 +24,21 @@ public abstract class EnemyScript : Entity
 
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] public Entity currentTarget;
     [FoldoutGroup("AI")] [ShowInInspector] public bool hasSeenPlayer = false;
-    [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] public bool canLookAtTarget = false;
+    [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] private bool _canLookAtTarget = false;
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] public bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] protected internal Transform eyeLocation;
     [FoldoutGroup("AI")] [SerializeField] protected Transform debug_FirstPassHit;
     [FoldoutGroup("AI")] [SerializeField] protected Transform debug_SecondPassHit;
     [FoldoutGroup("AI")] [SerializeField] public bool onSpawnShouldReady = true;
     [FoldoutGroup("AI")] [SerializeField] protected float _timerReady = 0f;
+
+    public bool canLookAtTarget
+    {
+        get
+        {
+             return _canLookAtTarget;
+        }
+    }
 
     protected DamageToken _lastDamageToken;
     protected float _lastTimeSeenPlayer = 0f;
@@ -207,7 +215,7 @@ public abstract class EnemyScript : Entity
         var posOffsetLook = currentTarget.OffsetedBoundWorldPosition;
         float distance = 9999f;//Vector3.Distance(eyeLocation.transform.position, currentTarget.OffsetedBoundWorldPosition) + 10f;
         Debug.DrawLine(eyeLocation.transform.position, posOffsetLook, Color.cyan);
-        canLookAtTarget = false;
+        _canLookAtTarget = false;
 
         if (hasSeenPlayer)
         {
@@ -273,13 +281,13 @@ public abstract class EnemyScript : Entity
                 if (firstPassSucceed && secondPassSucceed)
                 {            
                     hasSeenPlayer = true;
-                    canLookAtTarget = true;
+                    _canLookAtTarget = true;
                     Debug.DrawLine(eyeLocation.transform.position, posOffsetLook - eyeLocation.transform.position, Color.grey);
                 }
             }
           }
 
-        if (canLookAtTarget == false)
+        if (_canLookAtTarget == false)
         {
             _lastTimeSeenPlayer += Time.deltaTime;
         }

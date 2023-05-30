@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// 
 /// </summary>
-public class MobiusGuardEnemy : MonoBehaviour
+public class MobiusGuardEnemy : EnemyScript
 {
 
     private class BoneTransform
@@ -22,8 +22,8 @@ public class MobiusGuardEnemy : MonoBehaviour
     }
 
     public bool IsAiming = false;
+    public bool IsBrainEnabled = false;
     public bool DEBUG_ShowAIBehaviour = false;
-    public Transform target;
 
     [FoldoutGroup("References")] public Animator animator;
     [FoldoutGroup("References")] public BipedIK bipedIk;
@@ -32,17 +32,21 @@ public class MobiusGuardEnemy : MonoBehaviour
     [FoldoutGroup("References")] public Rigidbody[] _ragdollRigidbodies;
 
 
-    [FoldoutGroup("Decision Makings")] public MobiusAIBehaviour startingBehaviour;
+    [FoldoutGroup("Decision Makings")] [ChildGameObjectsOnly(IncludeSelf = false)] public MobiusAIBehaviour startingBehaviour;
 
     [FoldoutGroup("Decision Makings")] 
     [ReadOnly] [Tooltip("When in the negative spectrum, prioritize survival (escape, flee, take cover). When in positive, prioritize killing the player.")] 
-    public int survivalEngageLevel = 0;
+    [Range(-100,100)] public float survivalEngageLevel = 0;
 
     [FoldoutGroup("Decision Makings")]
     [ReadOnly]
     [Tooltip("Randomly generated. Per guard has different level of confidence/braveness.")]
     [Range(-100,100)]
     public int confidenceLevel = 0;
+
+    [FoldoutGroup("Decision Makings")]
+    [Tooltip("Timer to evaluate every decision. 0.6 means it will make decision every 0.6 seconds.")]
+    public float EvaluateTimer = 0.6f;
 
     [FoldoutGroup("Decision Makings")] [ReadOnly] public MobiusAIBehaviour currentBehaviour;
     [FoldoutGroup("Decision Makings")] [ReadOnly] public List<MobiusAIBehaviour> currentAvailableNextBehaviour = new List<MobiusAIBehaviour>(); //If ragdoll mode, then the only next behaviour is wakeup.
@@ -74,8 +78,9 @@ public class MobiusGuardEnemy : MonoBehaviour
 
     public bool IsMoving => agent.velocity.magnitude > 0.1f;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         #region Ragdolls - Awake
         {
             _hipsBone = animator.GetBoneTransform(HumanBodyBones.Hips);
@@ -104,6 +109,7 @@ public class MobiusGuardEnemy : MonoBehaviour
     private void Start()
     {
         confidenceLevel = Random.Range(-100, 100);
+        ScanForEnemies();
         ChangeAIBehaviour(startingBehaviour);
     }
 
@@ -334,12 +340,12 @@ public class MobiusGuardEnemy : MonoBehaviour
 
         bipedIk.enabled = true;
         bipedIk.solvers.aim.IKPositionWeight = 1f;
-        bipedIk.solvers.aim.target = target;
+        bipedIk.solvers.aim.target = currentTarget.transform;
     }
 
     public void OverrideAimingTarget()
     {
-        bipedIk.solvers.aim.target = target;
+        bipedIk.solvers.aim.target = currentTarget.transform;
 
     }
 
@@ -382,8 +388,13 @@ public class MobiusGuardEnemy : MonoBehaviour
     private void Update()
     {
         UpdateRagdolls();
-        UpdateAI();
- 
+
+        if (isAIEnabled)
+        {
+            UpdateAIState();
+
+            if (IsBrainEnabled) RunBrainAI();
+        }
     }
 
     private void FixedUpdate()
@@ -405,6 +416,7 @@ public class MobiusGuardEnemy : MonoBehaviour
         }
     }
 
+
     [FoldoutGroup("Decision Makings")][Button("Change Behaviour")]
     public void ChangeAIBehaviour(MobiusAIBehaviour _behaviour)
     {
@@ -423,7 +435,7 @@ public class MobiusGuardEnemy : MonoBehaviour
     }
 
 
-    private void UpdateAI()
+    private void UpdateAIState()
     {
         if (currentBehaviour != null)
         {
@@ -431,6 +443,14 @@ public class MobiusGuardEnemy : MonoBehaviour
         }
 
         EvaluateAvailableBehaviours();
+
+    }
+
+    //running brain AI to make decisions
+    private void RunBrainAI()
+    {
+        ScanForEnemies();
+        AI_Detection();
     }
 
     private void EvaluateAvailableBehaviours()
@@ -480,6 +500,49 @@ public class MobiusGuardEnemy : MonoBehaviour
             _currentAimingValue = Mathf.MoveTowards(_currentAimingValue, 0f, Time.deltaTime);
             animator.SetLayerWeight(layerAimingIndex, _currentAimingValue);
         }
+    }
+
+
+    #endregion
+
+    #region Enemy base class
+
+    public override void Attacked(DamageToken token)
+    {
+        _lastDamageToken = token;
+
+        Stats.CurrentHitpoint -= token.damage;
+
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.AddRelativeForce(Vector3.forward * -1 * 100 * token.repulsionForce);
+        }
+        else
+        {
+            transform.position += Vector3.back * 0.05f * token.repulsionForce;
+        }
+
+
+        if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
+            DamageOutputterUI.instance.DisplayText(token.damage);
+
+        if (Stats.CurrentHitpoint <= 0f)
+        {
+            Die();
+        }
+
+        base.Attacked(token);
+    }
+
+    public override void Die()
+    {
+        if (Stats.IsDead) return;
+        Stats.IsDead = true;
+        OnDied?.Invoke();
+
     }
     #endregion
 }

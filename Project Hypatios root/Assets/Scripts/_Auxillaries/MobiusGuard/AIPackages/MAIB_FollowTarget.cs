@@ -32,11 +32,11 @@ public class MAIB_FollowTarget : MobiusAIBehaviour
 
     public override void Execute()
     {
-        if (mobiusGuardScript.target == null) return;
+        if (mobiusGuardScript.currentTarget == null) return;
 
         
         mobiusGuardScript.Set_StartMoving(move_Speed, animFloatParam_Speed);
-        mobiusGuardScript.agent.SetDestination(mobiusGuardScript.target.position);
+        mobiusGuardScript.agent.SetDestination(mobiusGuardScript.currentTarget.transform.position);
         mobiusGuardScript.OverrideAimingTarget();
 
 

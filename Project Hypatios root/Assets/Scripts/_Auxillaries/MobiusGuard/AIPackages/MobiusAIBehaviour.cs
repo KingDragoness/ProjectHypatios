@@ -21,11 +21,21 @@ public abstract class MobiusAIBehaviour : MonoBehaviour, IMAIBGoal
     [ShowIf("isExclusive")] public List<MobiusAIBehaviour> allowPreviousBehaviours = new List<MobiusAIBehaviour>();
     [HideIf("isExclusive")] public List<MobiusAIBehaviour> unallowPreviousBehaviours = new List<MobiusAIBehaviour>();
     public int basePriority = 0;
+    [ReadOnly] public int currentPriorityLevel = 0;
 
     public virtual void Awake()
     {
         if (mobiusGuardScript == null)
             mobiusGuardScript = GetComponentInParent<MobiusGuardEnemy>();
+    }
+
+    //For calculating priority level
+    private void OnDrawGizmosSelected()
+    {
+        if (Application.isPlaying)
+        {
+            currentPriorityLevel = CalculatePriority();
+        }
     }
 
     public virtual bool IsConditionFulfilled()

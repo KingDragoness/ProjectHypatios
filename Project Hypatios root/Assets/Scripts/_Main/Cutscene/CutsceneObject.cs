@@ -22,6 +22,8 @@ public class CutsceneObject : MonoBehaviour
     {
         cutsceneUI = MainUI.Instance.cutsceneUI;
         allActionEntries = GetComponentsInChildren<CutsceneAction>().ToList();
+        foreach (var v in additionalVirtualCams)
+            v.gameObject.SetActive(false);
     }
 
     private float timer_continueWait = 0.5f;
