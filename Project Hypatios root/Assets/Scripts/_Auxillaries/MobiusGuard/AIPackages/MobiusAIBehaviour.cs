@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
 public interface IMAIBGoal
@@ -18,6 +19,8 @@ public abstract class MobiusAIBehaviour : MonoBehaviour, IMAIBGoal
     public MobiusGuardEnemy mobiusGuardScript;
     public bool isExclusive = false;
     public bool cannotBeSelectedByDecision = false;
+    public UnityEvent OnEnableBehaviour;
+    public UnityEvent OnDisableBehaviour;
     [ShowIf("isExclusive")] public List<MobiusAIBehaviour> allowPreviousBehaviours = new List<MobiusAIBehaviour>();
     [HideIf("isExclusive")] public List<MobiusAIBehaviour> unallowPreviousBehaviours = new List<MobiusAIBehaviour>();
     public int basePriority = 0;
@@ -30,12 +33,10 @@ public abstract class MobiusAIBehaviour : MonoBehaviour, IMAIBGoal
     }
 
     //For calculating priority level
-    private void OnDrawGizmosSelected()
+    private void Update()
     {
-        if (Application.isPlaying)
-        {
-            currentPriorityLevel = CalculatePriority();
-        }
+        if (Time.timeScale == 0) return;
+        currentPriorityLevel = CalculatePriority();
     }
 
     public virtual bool IsConditionFulfilled()

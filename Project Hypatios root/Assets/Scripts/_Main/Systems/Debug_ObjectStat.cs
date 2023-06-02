@@ -20,6 +20,7 @@ public class Debug_ObjectStat : MonoBehaviour
     [FoldoutGroup("Layout")] public float offsetX = 20f;
     [FoldoutGroup("Layout")] public float perLineYSize = 20f;
     [FoldoutGroup("Layout")] public Vector3 EnemyWindowSize = new Vector3(300, 100);
+    [FoldoutGroup("Layout")] public Vector3 MainWindowSize = new Vector3(350, 400);
     [FoldoutGroup("Layout")] public Vector3 EnemyWindowOffset = new Vector3(30, 20);
 
     private bool isCrosshairHitSomething = false;
@@ -103,10 +104,17 @@ public class Debug_ObjectStat : MonoBehaviour
                 s1 += $"Reserved: {Profiler.GetTotalReservedMemoryLong() / 1000000} MB\n";
                 s1 += $"Allocated: {Profiler.GetTotalAllocatedMemoryLong() / 1000000} MB\n";
                 s1 += $"VRam: {Profiler.GetAllocatedMemoryForGraphicsDriver() / 1000000} MB / {SystemInfo.graphicsMemorySize} MB\n";
-                s1 += $"Device name: {SystemInfo.deviceName} | {Hypatios.unicodeValue(SystemInfo.deviceName)}";
-                s1 += $"{Hypatios.GetSeed()}";
+                s1 += $"Device name: {SystemInfo.deviceName} | {Hypatios.unicodeValue(SystemInfo.deviceName)}\n";
+                s1 += $"Dynamic Seed: {Hypatios.GetSeed()}";
 
-                GUI.Box(new Rect(0, 10, 350f, 100f), s1, skin2.box);
+                if (currentEnemy != null)
+                {
+                    s1 += "\n";
+                    s1 += currentEnemy.Debug_AdditionalString();
+                }
+
+                int numLines = s1.Split('\n').Length;
+                GUI.Box(new Rect(0, 10, MainWindowSize.x, numLines * perLineYSize), s1, skin2.box);
             }
 
             if (currentInteract != null)
@@ -186,6 +194,16 @@ public class Debug_ObjectStat : MonoBehaviour
 
 
     #region Enemy Commands
+    public void Enemy_Dupe()
+    {
+        if (currentEnemy == null)
+        {
+            ConsoleCommand.Instance.SendConsoleMessage("No enemy detected! Target enemy and then 'wstat lockenemy' to get enemy.");
+            return;
+        }
+
+        Instantiate(currentEnemy);
+    }
 
     public void Enemy_ChangeAllianceToPlayer()
     {

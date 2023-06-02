@@ -7,18 +7,20 @@ using UnityEngine.Events;
 public class MAIB_FireWeapon : MobiusAIBehaviour
 {
 
-    public UnityEvent OnEnableBehaviour;
-    public UnityEvent OnDisableBehaviour;
 
+    public float multiplierPriority = 0.4f;
 
     public override int CalculatePriority()
     {
         if (mobiusGuardScript.canLookAtTarget)
         {
-            return 10 + (int)mobiusGuardScript.survivalEngageLevel;
+            return 10 + (int)(mobiusGuardScript.survivalEngageLevel * multiplierPriority) + basePriority;
+        }
+        else
+        {
+            return -10;
         }
 
-        return base.CalculatePriority();
     }
 
     public override bool IsConditionFulfilled()
@@ -29,6 +31,7 @@ public class MAIB_FireWeapon : MobiusAIBehaviour
     public override void OnBehaviourActive()
     {
         mobiusGuardScript.Set_EnableAiming();
+        mobiusGuardScript.ShowRifleModel();
         OnEnableBehaviour?.Invoke();
     }
 
@@ -37,6 +40,7 @@ public class MAIB_FireWeapon : MobiusAIBehaviour
         base.OnBehaviourDisable();
         OnDisableBehaviour?.Invoke();
     }
+
 
     public override void Execute()
     {

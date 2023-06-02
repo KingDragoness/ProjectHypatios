@@ -21,6 +21,8 @@ public class ModularTurretGun : MonoBehaviour
     public Alliance alliance;
     [Range(0f,1f)]
     public float chanceFire = 0.5f;
+    [Range(0f, 1f)]
+    public float chanceNoDetectionKeepFire = 0.1f;
     [FoldoutGroup("References")] public Transform outWeaponTransform;
     [FoldoutGroup("References")] public GameObject flashWeapon;
     [FoldoutGroup("References")] public GameObject tracerLaser;
@@ -137,7 +139,7 @@ public class ModularTurretGun : MonoBehaviour
         {
             float random1 = Random.Range(0f, 1f);
 
-            if (random1 < 0.1f)
+            if (random1 < chanceNoDetectionKeepFire)
                 return;
         }
 
@@ -203,6 +205,14 @@ public class ModularTurretGun : MonoBehaviour
             {
                 hit = secondHit;
                 secondpass_HitCeiling = true;
+
+                if (mySelf != null)
+                {
+                    if (hit.collider.gameObject.IsParentOf(mySelf.transform.gameObject))
+                    {
+                        isTargetingSelf = true;
+                    }
+                }
             }
         }
 
@@ -210,9 +220,11 @@ public class ModularTurretGun : MonoBehaviour
         {
             float random1 = Random.Range(0f, 1f);
 
-            if (random1 < 0.1f)
+            if (random1 < chanceNoDetectionKeepFire)
                 return;
         }
+
+
 
         if (dontFireIfBlocked && hit.collider != null && forceFire == false)
         {

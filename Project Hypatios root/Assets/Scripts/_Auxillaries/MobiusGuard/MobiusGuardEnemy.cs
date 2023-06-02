@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using RootMotion.FinalIK;
 using Sirenix.OdinInspector;
+using Animancer;
 
 // Terminology:
 // SE = Survive-Engage: two goals on the end spectrum
@@ -30,7 +31,8 @@ public class MobiusGuardEnemy : EnemyScript
     [FoldoutGroup("References")] public NavMeshAgent agent;
     [FoldoutGroup("References")] public Rigidbody mainRagdollRigidbody;
     [FoldoutGroup("References")] public Rigidbody[] _ragdollRigidbodies;
-
+    [FoldoutGroup("References")] public GameObject weaponModel;
+    [FoldoutGroup("References")] public AnimancerPlayer AnimatorPlayer;
 
     [FoldoutGroup("Decision Makings")] [ChildGameObjectsOnly(IncludeSelf = false)] public MobiusAIBehaviour startingBehaviour;
 
@@ -53,6 +55,9 @@ public class MobiusGuardEnemy : EnemyScript
     [FoldoutGroup("Decision Makings")] [ReadOnly] public Queue<MobiusAIBehaviour> currentPlan;
     [FoldoutGroup("Decision Makings")] public List<MobiusAIBehaviour> allBehaviours = new List<MobiusAIBehaviour>();
 
+    [FoldoutGroup("Audios")] public AudioSource audio_Dead;
+
+    private static List<MobiusGuardEnemy> _allActiveGuards = new List<MobiusGuardEnemy>();
     private MobiusAIBehaviour previousBehaviour;
 
     #region Parameter - Ragdolls
@@ -77,6 +82,8 @@ public class MobiusGuardEnemy : EnemyScript
     #endregion
 
     public bool IsMoving => agent.velocity.magnitude > 0.1f;
+    public static List<MobiusGuardEnemy> AllActiveGuards { get => _allActiveGuards; }
+
 
     public override void Awake()
     {
@@ -106,6 +113,20 @@ public class MobiusGuardEnemy : EnemyScript
 
     }
 
+    private void OnEnable()
+    {
+        if (Stats.IsDead)
+            return;
+
+        _allActiveGuards.RemoveAll(x => x == null);
+        _allActiveGuards.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        _allActiveGuards.Remove(this);
+    }
+
     private void Start()
     {
         confidenceLevel = Random.Range(-100, 100);
@@ -113,10 +134,28 @@ public class MobiusGuardEnemy : EnemyScript
         ChangeAIBehaviour(startingBehaviour);
     }
 
+    public override string Debug_AdditionalString()
+    {
+        string s1 = "\n";
+
+        s1 += $"Current behaviour: {currentBehaviour.GetType()} ({survivalEngageLevel})\n";
+
+        foreach (var mobiusAI in allBehaviours)
+        {
+            s1 += $"{mobiusAI.GetType()} [{mobiusAI.currentPriorityLevel}]\n";
+        }
+
+        s1 += "\n";
+        s1 += $"[TOTAL: {_allActiveGuards.Count}]\n";
+
+        return s1;
+    }
+
 
     #region Setup
 
-    [FoldoutGroup("Debug")] [Button("Setup AIs")]
+    [HorizontalGroup("xDebug", Order = 0)]
+    [Button("Setup AIs", ButtonHeight = 30)]
     public void SetupAIBehavioursDetails()
     {
         var AIbehaviours = GetComponentsInChildren<MobiusAIBehaviour>();
@@ -126,6 +165,18 @@ public class MobiusGuardEnemy : EnemyScript
             behaviour.gameObject.name = behaviour.GetType().Name;
             behaviour.mobiusGuardScript = this;
         }
+    }
+
+    public MobiusAIBehaviour GetAIBehaviour<T>()
+    {
+        foreach(var behaviour in allBehaviours)
+        {
+            if (behaviour.GetType() == typeof(T))
+            {
+                return behaviour;
+            }
+        }
+        return null;
     }
 
     #endregion
@@ -161,11 +212,15 @@ public class MobiusGuardEnemy : EnemyScript
         transform.rotation = rotBeforeSample;
     }
 
-    [FoldoutGroup("Debug")] [Button("Collect rigidbodies")]
+
+    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Debug/V1")]
+    [Button("Collect rigidbodies")]
     public void CollectRigidbodies()
     {
         _ragdollRigidbodies = gameObject.GetComponentsInChildren<Rigidbody>();
     }
+
 
     [FoldoutGroup("Debug")]
     [Button("Trigger Ragdoll")]
@@ -200,7 +255,8 @@ public class MobiusGuardEnemy : EnemyScript
         return closestRigidbody;
     }
 
-    [FoldoutGroup("Debug")] [Button("Enable ragdoll")]
+    [HorizontalGroup("Debug/V1")]
+    [Button("Enable ragdoll")]
     public void EnableRagdoll()
     {
         Set_DisableAiming();
@@ -282,7 +338,7 @@ public class MobiusGuardEnemy : EnemyScript
 
     }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Debug/V1")]
     [Button("Wakeup")]
     public void Wakeup()
     {
@@ -343,6 +399,16 @@ public class MobiusGuardEnemy : EnemyScript
         bipedIk.solvers.aim.target = currentTarget.transform;
     }
 
+    public void ShowRifleModel()
+    {
+        weaponModel.gameObject.SetActive(true);
+    }
+
+    public void HideRifleModel()
+    {
+        weaponModel.gameObject.SetActive(false);
+    }
+
     public void OverrideAimingTarget()
     {
         bipedIk.solvers.aim.target = currentTarget.transform;
@@ -385,16 +451,44 @@ public class MobiusGuardEnemy : EnemyScript
     #endregion
 
     #region Updates
+    private float _timerBehaviour = 1f;
+
+    private bool lastAIState = false;
+
     private void Update()
     {
+        if (Stats.IsDead)
+        {
+            return;
+        }
         UpdateRagdolls();
 
         if (isAIEnabled)
         {
-            UpdateAIState();
+            if (Hypatios.TimeTick % 10 == 0)
+                ScanForEnemies();
 
-            if (IsBrainEnabled) RunBrainAI();
+            if (currentTarget != null)
+            {
+                UpdateAIState();
+
+                if (IsBrainEnabled) RunBrainAI();
+            }
         }
+
+        if (lastAIState != isAIEnabled)
+        {
+            if (isAIEnabled == false)
+            {
+                currentBehaviour.OnBehaviourDisable();
+            }
+            else
+            {
+                currentBehaviour.OnBehaviourActive();
+            }
+        }
+
+        lastAIState = isAIEnabled;
     }
 
     private void FixedUpdate()
@@ -449,8 +543,40 @@ public class MobiusGuardEnemy : EnemyScript
     //running brain AI to make decisions
     private void RunBrainAI()
     {
-        ScanForEnemies();
+
         AI_Detection();
+
+        _timerBehaviour -= Time.deltaTime;
+
+        if (_timerBehaviour < 0f)
+        {
+            _timerBehaviour = EvaluateTimer;
+        }
+        else return;
+
+        //evaluating decisions
+        int ix = 0;
+        int highestValue = int.MinValue;
+
+        for(int x = 0; x < currentAvailableNextBehaviour.Count; x++)
+        {
+            var AI_package = currentAvailableNextBehaviour[x];
+            
+            if (highestValue < AI_package.CalculatePriority())
+            {
+                ix = x;
+                highestValue = AI_package.CalculatePriority();
+            }
+        }
+
+        if (currentAvailableNextBehaviour.Count > ix)
+        {
+            var behaviour = currentAvailableNextBehaviour[ix];
+            if (behaviour != currentBehaviour)
+            {
+                ChangeAIBehaviour(behaviour);
+            }
+        }
     }
 
     private void EvaluateAvailableBehaviours()
@@ -459,8 +585,6 @@ public class MobiusGuardEnemy : EnemyScript
 
         foreach(var behaviour in allBehaviours)
         {
-            if (behaviour == currentBehaviour)
-                continue;
 
             if (currentBehaviour.cannotBeSelectedByDecision && behaviour.isExclusive == false)
                 continue;
@@ -507,24 +631,50 @@ public class MobiusGuardEnemy : EnemyScript
 
     #region Enemy base class
 
+    public override void Burn()
+    {
+        if (Stats.IsDead) return;
+
+        base.Burn();
+    }
+
+    public override void Poison()
+    {
+        if (Stats.IsDead) return;
+
+        base.Poison();
+    }
+
+    public override void Paralysis()
+    {
+        if (Stats.IsDead) return;
+
+        base.Paralysis();
+    }
+
     public override void Attacked(DamageToken token)
     {
-        _lastDamageToken = token;
 
+        int time1 = Hypatios.TimeTick;
+
+        if (_lastDamageToken != null)
+        {
+            if (time1 <= _lastDamageToken.timeAttack) return;
+        }
+
+        _lastDamageToken = token;
         Stats.CurrentHitpoint -= token.damage;
 
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-
-        if (rb != null)
+        if (token.damageType == DamageToken.DamageType.Explosion)
         {
-            rb.AddRelativeForce(Vector3.forward * -1 * 100 * token.repulsionForce);
-        }
-        else
-        {
-            transform.position += Vector3.back * 0.05f * token.repulsionForce;
+            if (token.damage > 30f)
+            {
+                float repulsionPower = Mathf.Clamp(token.damage, 30f, 1000f) * 0.1f;
+                TriggerRagdoll(-transform.forward * 30f * repulsionPower);
+            }
         }
 
+  
 
         if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
             DamageOutputterUI.instance.DisplayText(token.damage);
@@ -540,6 +690,9 @@ public class MobiusGuardEnemy : EnemyScript
     public override void Die()
     {
         if (Stats.IsDead) return;
+        audio_Dead?.Play();
+        _allActiveGuards.Remove(this);
+        TriggerRagdoll(-transform.forward * 160f);
         Stats.IsDead = true;
         OnDied?.Invoke();
 

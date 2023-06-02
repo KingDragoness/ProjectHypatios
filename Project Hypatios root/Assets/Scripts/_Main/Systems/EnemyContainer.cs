@@ -522,9 +522,24 @@ public class EnemyContainer : MonoBehaviour
                 else
                 {
 
-                    enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false
-                    && (mySelf.Stats.AllowTargetSameType == false && mySelf.GetType() != x.GetType()));
-                    Debug.Log(mySelf.GetType());
+                    if (mySelf.Stats.AllowTargetSameType == false)
+                    {
+                        enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false
+                        && (mySelf.GetType() != x.GetType()));
+                    }
+                    else
+                    {
+                        enemy = tempList_NearestEnemy.Find(x => x.Stats.MainAlliance != alliance && x.gameObject.activeInHierarchy && x.Stats.UnitType != UnitType.Projectile && x.Stats.IsDead == false);
+                    }
+
+                    string sz1 = "";
+                    foreach (var enemy1 in tempList_NearestEnemy)
+                    {
+                        sz1 += enemy1.gameObject.name + ", ";
+                    }
+
+                    //Debug.Log($"{mySelf.GetType()} ({sz1})");
+                    //Debug.Log($"{mySelf.GetType()} targeting: {enemy.GetType()}");
                 }
 
                 return enemy;

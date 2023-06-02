@@ -704,6 +704,16 @@ public class ConsoleCommand : MonoBehaviour
                 {
                     Hypatios.DebugObjectStat.Enemy_Poison();
                 }
+                else if (args[0] == "dupe")
+                {
+                    Hypatios.DebugObjectStat.Enemy_Dupe();
+                }
+                else if (args[0] == "lock")
+                {
+                    Hypatios.DebugObjectStat.LockEnemy = !Hypatios.DebugObjectStat.LockEnemy;
+                    if (Hypatios.DebugObjectStat.CheckThereIsEnemyOnCrosshair()) SendConsoleMessage($" {Hypatios.DebugObjectStat.LockEnemy}");
+                    else SendConsoleMessage($"No enemy detected.");
+                }
                 else
                 {
                     throw new System.Exception("");

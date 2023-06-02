@@ -54,7 +54,8 @@ public abstract class Entity : MonoBehaviour
 
     #region Status
 
-    [FoldoutGroup("Debug")] [Button("Burn")]
+    [HorizontalGroup("Status1", order: 100, Title = "Statuses")]
+    [Button("Burn")]
     public virtual void Burn()
     {
         if (CheckDuplicateBySimilarEffect(ModifierEffectCategory.Fire))
@@ -78,7 +79,7 @@ public abstract class Entity : MonoBehaviour
         FireParticle.transform.SetParent(statusObject.transform);
     }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Status1")]
     [Button("Poison")]
     public virtual void Poison()
     {
@@ -102,15 +103,16 @@ public abstract class Entity : MonoBehaviour
 
     }
 
-    [FoldoutGroup("Debug")]
-    [Button("Heal")]
+    [HorizontalGroup("Status2", order: 102)]
+    [InlineButton("Heal")] [ShowInInspector]
+    private float heal;
     public virtual void Heal(float healAmount)
     {
         //player use playerHealth
 
     }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Status1")]
     [Button("Paralysis")]
     public virtual void Paralysis()
     {

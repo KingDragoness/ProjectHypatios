@@ -26,4 +26,8 @@ public class AnimancerPlayer : MonoBehaviour
         return _Animancer.IsPlayingClip(clip);
     }
 
+    public void DisableAnimancer()
+    {
+        _Animancer.Stop();
+    }
 }

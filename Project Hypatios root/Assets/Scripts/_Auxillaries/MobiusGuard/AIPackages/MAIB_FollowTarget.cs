@@ -10,6 +10,17 @@ public class MAIB_FollowTarget : MobiusAIBehaviour
 
     public override int CalculatePriority()
     {
+        if (mobiusGuardScript.hasSeenPlayer == false)
+        {
+            return -100;
+        }
+
+        if (!mobiusGuardScript.canLookAtTarget)
+        {
+            return (int)mobiusGuardScript.survivalEngageLevel + basePriority;
+        }
+
+
         return base.CalculatePriority();
     }
 
@@ -21,12 +32,14 @@ public class MAIB_FollowTarget : MobiusAIBehaviour
     public override void OnBehaviourActive()
     {
         mobiusGuardScript.Set_EnableAiming();
-
+        mobiusGuardScript.ShowRifleModel();
+        OnEnableBehaviour?.Invoke();
     }
 
     public override void OnBehaviourDisable()
     {
         mobiusGuardScript.animator.SetFloat("Speed", 0f);
+        OnDisableBehaviour?.Invoke();
         base.OnBehaviourDisable();
     }
 

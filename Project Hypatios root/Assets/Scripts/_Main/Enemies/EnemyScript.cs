@@ -58,6 +58,12 @@ public abstract class EnemyScript : Entity
         OnDied += Died;
 
     }
+
+    public virtual string Debug_AdditionalString()
+    {
+        return "";
+    }
+
     public virtual void OnDestroy()
     {
         Hypatios.Enemy.DeregisterEnemy(this);
@@ -66,8 +72,7 @@ public abstract class EnemyScript : Entity
 
     #region Status
 
-    [FoldoutGroup("Debug")]
-    [Button("Paralyze")]
+    [HorizontalGroup("Status", order: 101)] [Button("Paralyze")]
     /// <summary>
     /// Disables enemy's AI.
     /// </summary>
@@ -88,14 +93,14 @@ public abstract class EnemyScript : Entity
         isAIEnabled = false; 
     }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Status")]
     [Button("Deparalyze")]
     /// <summary>
     /// Disables enemy's AI.
     /// </summary>
     public virtual void Deparalyze() { isAIEnabled = true; }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Status")]
     [Button("Hack")]
     /// <summary>
     /// Turn enemy's faction to Player.
@@ -106,7 +111,7 @@ public abstract class EnemyScript : Entity
         ScanForEnemies();
     }
 
-    [FoldoutGroup("Debug")]
+    [HorizontalGroup("Status")]
     [Button("Frenzy")]
     /// <summary>
     /// Turn enemy's faction to Player.

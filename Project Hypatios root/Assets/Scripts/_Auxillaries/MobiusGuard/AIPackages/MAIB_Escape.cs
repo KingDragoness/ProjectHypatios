@@ -11,13 +11,37 @@ public class MAIB_Escape : MobiusAIBehaviour
     public float distanceRandomSphere = 11f;
     public float cooldownFindNewEscapePoint = 5;
     public float distThresholdLimit = 5f;
+    public List<WeaponItem> dangerousWeapons = new List<WeaponItem>();
+    public RandomSpawnArea escapeAreaFallback;
 
     private float cooldown = 5f;
     private Vector3 escapePos = Vector3.zero;
 
     public override int CalculatePriority()
     {
-        return base.CalculatePriority();
+        int priority = -(int)mobiusGuardScript.survivalEngageLevel + basePriority;
+
+        if (IsWeaponDangerous())
+        {
+            priority += 20;
+        }
+
+        return priority;
+
+
+    }
+
+    public bool IsWeaponDangerous()
+    {
+        if (Hypatios.Player.Weapon.currentGunHeld != null)
+        {
+            if (dangerousWeapons.Find(x => x.nameWeapon == Hypatios.Player.Weapon.currentGunHeld.weaponName) != null)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public override bool IsConditionFulfilled()
@@ -28,12 +52,16 @@ public class MAIB_Escape : MobiusAIBehaviour
     public override void OnBehaviourActive()
     {
         mobiusGuardScript.Set_DisableAiming();
+        mobiusGuardScript.HideRifleModel();
+        OnEnableBehaviour?.Invoke();
 
     }
 
     public override void OnBehaviourDisable()
     {
         base.OnBehaviourDisable();
+        OnDisableBehaviour?.Invoke();
+
     }
 
     public override void Execute()
