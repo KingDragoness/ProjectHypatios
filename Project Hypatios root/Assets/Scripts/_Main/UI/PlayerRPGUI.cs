@@ -117,7 +117,16 @@ public class PlayerRPGUI : MonoBehaviour
         hp_Slider.value = Hypatios.Player.Health.curHealth;
         hp_Slider.maxValue = Hypatios.Player.Health.maxHealth.Value;
 
-        var dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(Hypatios.Game.UNIX_Timespan + Hypatios.UnixTimeStart);
+        System.DateTime dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(Hypatios.Game.UNIX_Timespan + Hypatios.UnixTimeStart);
+
+        if (ChamberLevelController.Instance.chamberObject.isWIRED)
+        {
+            if (FPSMainScript.savedata != null)
+            {
+                dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(FPSMainScript.savedata.Player_RunSessionUnixTime + Hypatios.UnixTimeStart);
+            }
+        }
+
         time_label.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";
 
         //Refresh perks

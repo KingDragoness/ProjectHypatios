@@ -10,6 +10,7 @@ public class ChamberLevel : ScriptableObject
 
     public string levelName = "Chamber 1";
     public bool isCausingFatigue = true;
+    public bool isWIRED = false;
 
     public string GetID()
     {
