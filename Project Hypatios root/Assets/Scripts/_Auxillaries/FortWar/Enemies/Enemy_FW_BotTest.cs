@@ -155,7 +155,7 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
     private void RefreshAI()
     {
         float distToPlayer = Mod_FollowPlayer.DistancePlayer;
-        var botsInSight = sensor.GetBotsInSight(myUnit.AllianceEnemy()).ToList();
+        var botsInSight = sensor.GetBotsInSight(this).ToList();
         bool anyBotsInSight = false; if (botsInSight.Count > 0) anyBotsInSight = true;
         bool isTargetBlocked = false;
 

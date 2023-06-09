@@ -112,7 +112,7 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     private void RefreshAI()
     {
-        var botsInSight = sensor.GetBotsInSight(myUnit.AllianceEnemy()).ToList();
+        var botsInSight = sensor.GetBotsInSight(this).ToList();
         bool anyBotsInSight = false; if (botsInSight.Count > 0) anyBotsInSight = true;
         bool isTargetBlocked = false;
         bool isAttacking = false;

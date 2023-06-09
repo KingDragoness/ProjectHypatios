@@ -70,8 +70,7 @@ public class MercenaryEnemy : EnemyScript
         _timerDetection -= Time.deltaTime;
         _escapeCooldown -= Time.deltaTime;
 
-        if (Mathf.RoundToInt(Time.time) % 5 == 0)
-            ScanForEnemies();
+        if (Mathf.RoundToInt(Time.time * 10) % 5 == 0) ScanForEnemies(thresholdNearestAllyDist: 80, maxDistance: 150);
 
         if (currentTarget != null) AI_Detection();
 

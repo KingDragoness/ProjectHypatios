@@ -356,6 +356,20 @@ public class EnemyContainer : MonoBehaviour
     }
 
     [FoldoutGroup("Debug")] [ShowInInspector] [ReadOnly] private List<EnemyScript> tempList_NearestEnemy = new List<EnemyScript>();
+    private List<EnemyScript> enemiesTempList2 = new List<EnemyScript>();
+
+    public List<EnemyScript> RetrieveAllEnemies(EnemyScript mySelf, float maxDistance = 1000f)
+    {
+        foreach (var enemy1 in AllEnemies) enemiesTempList2.Add(enemy1);
+        enemiesTempList2.RemoveAll(x => x == null);
+        enemiesTempList2.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        enemiesTempList2.RemoveAll(x => x.Stats.IsTargetable == false);
+        enemiesTempList2.RemoveAll(x => x.Stats.MainAlliance == mySelf.Stats.MainAlliance);
+        enemiesTempList2.RemoveAll(x => x.Stats.UnitType == UnitType.Projectile);
+        enemiesTempList2.RemoveAll(x => Vector3.Distance(mySelf.transform.position, x.transform.position) > maxDistance);
+
+        return enemiesTempList2;
+    }
 
 
     [FoldoutGroup("Debug")] [Button("testOrderDistance")]

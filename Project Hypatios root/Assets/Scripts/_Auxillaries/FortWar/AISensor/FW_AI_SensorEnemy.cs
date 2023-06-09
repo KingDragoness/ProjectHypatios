@@ -9,6 +9,8 @@ public class FW_AI_SensorEnemy : MonoBehaviour
     public Transform[] sensors;
     public float limitRange = 100f;
     public LayerMask layerMask;
+    public Enemy_FW_BotTest botScript;
+
     private Chamber_Level7 _chamberScript;
 
     public virtual void Awake()
@@ -16,10 +18,18 @@ public class FW_AI_SensorEnemy : MonoBehaviour
         _chamberScript = Chamber_Level7.instance;
     }
 
-    public FW_Targetable[] GetBotsInSight(FW_Alliance enemyForce)
+    public Entity[] GetBotsInSight(EnemyScript mySelf)
     {
-        List<FW_Targetable> allBots = new List<FW_Targetable>();
-        var ListAllUnits = _chamberScript.RetrieveAllUnitsOfType(enemyForce);
+        List<Entity> allBots = new List<Entity>();
+        var ListAllUnits = Hypatios.Enemy.RetrieveAllEnemies(mySelf);//_chamberScript.RetrieveAllUnitsOfType(enemyForce); DEPRECATED, replaced with the new enemy system
+
+        if (mySelf.Stats.MainAlliance != Alliance.Player)
+        {
+            float dist = Vector3.Distance(transform.position, Hypatios.Player.transform.position);
+
+            if (CheckTargetVisibleOnSight(Hypatios.Player.transform) && dist < limitRange)
+                allBots.Add(Hypatios.Player);
+        }
 
         foreach (var enemy in ListAllUnits)
         {
