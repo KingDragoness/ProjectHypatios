@@ -389,8 +389,10 @@ public class EnemyContainer : MonoBehaviour
     public Entity FindEnemyEntity(Alliance alliance, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f, EnemyScript enemySelf = null)
     {
         tempList_NearestEnemy.Clear();
-        tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
+        tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsDead == true);
         if (enemySelf != null) tempList_NearestEnemy.Remove((EnemyScript)enemySelf);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
         tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
@@ -409,9 +411,11 @@ public class EnemyContainer : MonoBehaviour
     private Entity FindEnemyEntity(Alliance alliance, Entity entityScript, float chanceSelectAlly = 0.3f, float maxDistance = 1000f, bool distanceNavmesh = false)
     {
         tempList_NearestEnemy.Clear();
-        tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+
         EnemyScript mySelf = entityScript as EnemyScript;
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
+        tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsDead == true);
         if (tempList_NearestEnemy.Find(x => x == mySelf) != null) tempList_NearestEnemy.Remove(mySelf);
 
         if (distanceNavmesh == false)
@@ -464,6 +468,7 @@ public class EnemyContainer : MonoBehaviour
     {
         tempList_NearestEnemy.Clear();
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsDead == true);
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x => Vector3.Distance(myPos, x.transform.position)).ToList();
         tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
@@ -483,6 +488,7 @@ public class EnemyContainer : MonoBehaviour
     {
         tempList_NearestEnemy.Clear();
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
+        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsDead == true);
         foreach (var enemy1 in AllEnemies) tempList_NearestEnemy.Add(enemy1);
         tempList_NearestEnemy = tempList_NearestEnemy.OrderBy(x =>
         {

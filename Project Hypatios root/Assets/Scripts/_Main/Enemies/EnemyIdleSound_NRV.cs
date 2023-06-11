@@ -47,4 +47,12 @@ public class EnemyIdleSound_NRV : MonoBehaviour
 
         _timer = cooldown;
     }
+
+    public void ForcePlay()
+    {
+        var clip = clips[Random.Range(0, clips.Length)];
+        audioSource.clip = clip;
+        audioSource.Play();
+        isPlayed = true;
+    }
 }

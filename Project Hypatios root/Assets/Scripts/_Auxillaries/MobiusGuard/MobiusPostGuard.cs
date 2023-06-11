@@ -15,7 +15,7 @@ public class MobiusPostGuard : MonoBehaviour
         AreaPatrol
     }
 
-    [FoldoutGroup("Idle")] public ClipTransition idleAnimation;
+    public ClipTransition idleAnimation;
     [FoldoutGroup("Events")] public UnityEvent OnGuarding; //update run
     [FoldoutGroup("Events")] public UnityEvent OnEnterPost;
     [FoldoutGroup("Events")] public UnityEvent OnLeavePost; //disable turret machine gun

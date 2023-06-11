@@ -114,7 +114,12 @@ public class InteractContainerUI : MonoBehaviour
 
         titleLabel.text = currentContainer.ContainerName;
 
+        int lastIndexSelected = index;
+        if (lastIndexSelected >= currentContainer.inventory.allItemDatas.Count - 1) lastIndexSelected = currentContainer.inventory.allItemDatas.Count - 1;
+        if (lastIndexSelected <= 0) lastIndexSelected = 0;
+
         bool b = false;
+        int count = 0;
 
         foreach (var itemDat in currentContainer.inventory.allItemDatas)
         {
@@ -127,13 +132,14 @@ public class InteractContainerUI : MonoBehaviour
             newButton.nameLabel.text = itemClass.GetDisplayText();
             newButton.countLabel.text = itemDat.count.ToString();
             
-            if (b == false)
+            if (lastIndexSelected == count && b == false)
             {
-                index = 0;
+                index = lastIndexSelected;
                 newButton.selectable.Select();
                 b = true;
             }
 
+            count++;
             allQuickLootButtons.Add(newButton);
         }
     }

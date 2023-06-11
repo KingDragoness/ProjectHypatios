@@ -33,6 +33,7 @@ public class MobiusGuardEnemy : EnemyScript
     [FoldoutGroup("References")] public Rigidbody[] _ragdollRigidbodies;
     [FoldoutGroup("References")] public GameObject weaponModel;
     [FoldoutGroup("References")] public AnimancerPlayer AnimatorPlayer;
+    [FoldoutGroup("References")] public Transform baitTarget; //because offset entity bounding box problem
 
     [FoldoutGroup("Decision Makings")] [ChildGameObjectsOnly(IncludeSelf = false)] public MobiusAIBehaviour startingBehaviour;
 
@@ -396,7 +397,8 @@ public class MobiusGuardEnemy : EnemyScript
 
         bipedIk.enabled = true;
         bipedIk.solvers.aim.IKPositionWeight = 1f;
-        bipedIk.solvers.aim.target = currentTarget.transform;
+        baitTarget.transform.position = currentTarget.OffsetedBoundWorldPosition;
+        bipedIk.solvers.aim.target = baitTarget.transform;
     }
 
     public void ShowRifleModel()
@@ -411,7 +413,8 @@ public class MobiusGuardEnemy : EnemyScript
 
     public void OverrideAimingTarget()
     {
-        bipedIk.solvers.aim.target = currentTarget.transform;
+        baitTarget.transform.position = currentTarget.OffsetedBoundWorldPosition;
+        bipedIk.solvers.aim.target = baitTarget.transform;
 
     }
 
@@ -652,21 +655,29 @@ public class MobiusGuardEnemy : EnemyScript
         base.Paralysis();
     }
 
+    private float _lastTimeGotExplosion = 0f;
+
     public override void Attacked(DamageToken token)
     {
 
-        int time1 = Hypatios.TimeTick;
 
         if (_lastDamageToken != null)
         {
-            if (time1 <= _lastDamageToken.timeAttack) return;
+            //if (time1 <= _lastDamageToken.timeAttack) return;
         }
 
-        _lastDamageToken = token;
-        Stats.CurrentHitpoint -= token.damage;
 
         if (token.damageType == DamageToken.DamageType.Explosion)
         {
+
+            //mobius guard received explosion damage within 0.5 second, ignore damage
+            if (Time.time - _lastTimeGotExplosion < 0.5f)
+            {
+                return;
+            }
+
+            _lastTimeGotExplosion = Time.time;
+
             if (token.damage > 30f)
             {
                 float repulsionPower = Mathf.Clamp(token.damage, 30f, 1000f) * 0.1f;
@@ -674,8 +685,10 @@ public class MobiusGuardEnemy : EnemyScript
             }
         }
 
-  
 
+
+        _lastDamageToken = token;
+        Stats.CurrentHitpoint -= token.damage;
         if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
             DamageOutputterUI.instance.DisplayText(token.damage);
 

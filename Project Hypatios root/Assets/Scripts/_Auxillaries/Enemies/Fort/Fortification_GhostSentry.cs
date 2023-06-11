@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class Fortification_GhostSentry : EnemyScript
@@ -16,6 +17,12 @@ public class Fortification_GhostSentry : EnemyScript
     [FoldoutGroup("Sentry")] public GameObject botCorpse;    
     [FoldoutGroup("Sentry")] public DynamicObjectPivot pivotObject;
     [FoldoutGroup("Sentry")] public AimConstraint aimConstraint;
+    [FoldoutGroup("Sentry")] public Text UI_label_HP;
+    [FoldoutGroup("Sentry")] public Text UI_label_Ammo;
+    [FoldoutGroup("Sentry")] public Slider UI_slider_HP;
+    [FoldoutGroup("Sentry")] public Slider UI_slider_Ammo;
+    [FoldoutGroup("Sentry")] public SentryGunUI UI_windowSentry;
+
 
     public float TimeToInitialize = 2f;
     public int sentryAmmo = 200;
@@ -26,18 +33,34 @@ public class Fortification_GhostSentry : EnemyScript
     public static Fortification_GhostSentry Instance;
     private float _timerInitialize = 2f;
     private bool _hasInitialized = false;
+    private GameObject _windowSentryUI;
 
     private void Start()
     {
         _timerInitialize = TimeToInitialize;
         currentTarget = Hypatios.Enemy.FindEnemyEntity(Stats.MainAlliance);
         Instance = this;
+
+        if (SentryGunUI.Instance == null)
+        {
+            _windowSentryUI = MainGameHUDScript.Instance.AttachModularUI(UI_windowSentry.gameObject);
+        }
+        else
+        {
+            _windowSentryUI = SentryGunUI.Instance.gameObject;
+        }
     }
 
 
     public override void OnDestroy()
     {
         Instance = null;
+        if (_windowSentryUI != null)
+        {
+            Destroy(_windowSentryUI.gameObject);
+            _windowSentryUI = null;
+        }
+
         base.OnDestroy();
     }
 
@@ -80,6 +103,17 @@ public class Fortification_GhostSentry : EnemyScript
 
         CheckEnableTurret();
         RunAI();
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        UI_label_HP.text = $"{Mathf.RoundToInt(Stats.CurrentHitpoint)}/{Stats.MaxHitpoint.Value}";
+        UI_label_Ammo.text = $"{sentryAmmo}/{maxSentryAmmo}";
+        UI_slider_HP.value = Stats.CurrentHitpoint;
+        UI_slider_HP.maxValue = Stats.MaxHitpoint.Value;
+        UI_slider_Ammo.value = sentryAmmo;
+        UI_slider_Ammo.maxValue = maxSentryAmmo;
     }
 
     private void CheckEnableTurret()
@@ -128,7 +162,7 @@ public class Fortification_GhostSentry : EnemyScript
 
         if (manualControl == true) return;
 
-        Vector3 posTarget = currentTarget.transform.position;
+        Vector3 posTarget = currentTarget.OffsetedBoundWorldPosition;
         v_target_Turret.LookAt(posTarget);
     }
 

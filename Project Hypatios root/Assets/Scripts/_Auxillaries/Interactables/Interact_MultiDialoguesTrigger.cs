@@ -107,6 +107,11 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
         alreadyTriggered = true;
     }
 
+    public void ManualTriggeredCheck()
+    {
+        alreadyTriggered = true;
+    }
+
     public static bool IsInsideOcclusionBox(Transform box, Vector3 aPoint)
     {
         Vector3 localPos = box.InverseTransformPoint(aPoint);

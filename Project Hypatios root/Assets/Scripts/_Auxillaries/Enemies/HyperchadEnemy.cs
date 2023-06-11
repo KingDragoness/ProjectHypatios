@@ -222,6 +222,8 @@ public class HyperchadEnemy : EnemyScript
         if (Stats.CurrentHitpoint > 0f)
             DamageOutputterUI.instance.DisplayText(damageProcessed);
 
+        OnDamaged?.Invoke();
+
         base.Attacked(token);
     }
 

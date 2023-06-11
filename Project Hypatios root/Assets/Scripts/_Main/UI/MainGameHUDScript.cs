@@ -9,6 +9,7 @@ public class MainGameHUDScript : MonoBehaviour
 
     public GameObject FadeOutSceneTransition;
     public GameObject FadeInSceneTransition;
+    public RectTransform mainHUDParent;
 
     [Header("Player")]
     public Text healthPoint;
@@ -241,6 +242,15 @@ public class MainGameHUDScript : MonoBehaviour
     {
         FadeInSceneTransition.gameObject.SetActive(false);
         FadeInSceneTransition.gameObject.SetActive(true);
+    }
+
+    public GameObject AttachModularUI(GameObject modularUI)
+    {
+        var newWindow = Instantiate(modularUI, mainHUDParent.transform);
+        newWindow.transform.localScale = Vector3.one;
+
+
+        return newWindow;
     }
 
 

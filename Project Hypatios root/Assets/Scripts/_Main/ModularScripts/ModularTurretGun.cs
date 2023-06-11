@@ -149,6 +149,9 @@ public class ModularTurretGun : MonoBehaviour
 
             if (damageReceiver == null)
                 return;
+
+            if (damageReceiver.enemyScript == null)
+                return;
         }
 
         if (isTargetingSelf == false)
@@ -232,7 +235,20 @@ public class ModularTurretGun : MonoBehaviour
 
             if (damageReceiver == null)
                 return;
+
+            if (damageReceiver.enemyScript == null)
+                return;
+
+            if (damageReceiver.enemyScript.Stats.IsDead)
+                return;
+
+            if (mySelf != null)
+            {
+                if (damageReceiver.enemyScript.Stats.MainAlliance == mySelf.Stats.MainAlliance)
+                    return;
+            }
         }
+
 
         if (isTargetingSelf == false)
         {
