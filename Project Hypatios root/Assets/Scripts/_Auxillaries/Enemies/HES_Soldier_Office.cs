@@ -38,6 +38,11 @@ public class HES_Soldier_Office : EnemyScript
         agent.enabled = false;
     }
 
+    public void SetState(int _state)
+    {
+        currentState = (State)_state;
+    }
+
     //cannot be attacked
     public override void Attacked(DamageToken token)
     {

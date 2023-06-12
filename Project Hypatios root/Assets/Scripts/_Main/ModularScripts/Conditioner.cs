@@ -12,7 +12,9 @@ public class Conditioner : MonoBehaviour
         ChamberCompleted, //Chamber completed
         ParadoxEventChecked, //Paradox event flag
         TriviaCompleted = 20, //Trivia complete check
-        Randomization //Randomize 0f-1f
+        Randomization, //Randomize 0f-1f
+        EnemyClearance,
+        DistanceCheck
     }
 
     public enum FulfillCondition
@@ -31,6 +33,11 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtLeastComplete = 2;
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtMostComplete = 9999;
         [ShowIf("conditionType", ConditionType.Randomization)] [Range(0f,1f)] public float randomChance = 0.1f;
+        [ShowIf("conditionType", ConditionType.EnemyClearance)] public List<EnemyScript> allEnemiesToClear = new List<EnemyScript>();
+        [ShowIf("conditionType", ConditionType.DistanceCheck)] public Transform t1;
+        [ShowIf("conditionType", ConditionType.DistanceCheck)] public Transform t2;
+        [ShowIf("conditionType", ConditionType.DistanceCheck)] public float distMin = 5f;
+        [ShowIf("conditionType", ConditionType.DistanceCheck)] public float distMax = 20f;
 
         public bool IsConditionChecked()
         {
@@ -56,6 +63,25 @@ public class Conditioner : MonoBehaviour
                     return true;
 
             }
+            else if (conditionType == ConditionType.EnemyClearance)
+            {
+                allEnemiesToClear.RemoveAll(x => x == null);
+
+                foreach(var enemy in allEnemiesToClear)
+                {
+                    if (enemy == null) continue;
+                    if (enemy.Stats.IsDead == false) return false;
+                }
+
+                return true;
+            }
+            else if (conditionType == ConditionType.DistanceCheck)
+            {
+                float dist = Vector3.Distance(t1.position, t2.position);
+
+                if (distMin < dist && distMax > dist)
+                    return true;
+            }
 
             return false;
         }
@@ -64,11 +90,14 @@ public class Conditioner : MonoBehaviour
     public string Title = "";
     public List<ConditionEvent> AllConditions = new List<ConditionEvent>();
     public FulfillCondition conditionForTrue;
-    [ShowIf("isStartImmediately", true)] public UnityEvent OnTriggerStart;
-    [ShowIf("isStartImmediately", true)] [InfoBox("In prefab this is empty because easier debugging. Best used for scene objects.")] public UnityEvent OnTriggerFail;
-    public UnityEvent OnTriggerFunction;
-    public UnityEvent OnTriggerFunctionFailed;
+    [FoldoutGroup("Events")] [ShowIf("isStartImmediately", true)] public UnityEvent OnTriggerStart;
+    [FoldoutGroup("Events")] [ShowIf("isStartImmediately", true)] [InfoBox("OnTriggerFail: In prefab this is empty because easier debugging. Best used for scene objects.")] public UnityEvent OnTriggerFail;
+    [FoldoutGroup("Events")] public UnityEvent OnTriggerFunction;
+    [FoldoutGroup("Events")] public UnityEvent OnTriggerFunctionFailed;
     public bool isStartImmediately = false;
+    public bool constantTriggerCheck = false;
+
+    private bool _isTriggered = false;
 
     private void Start()
     {
@@ -76,6 +105,7 @@ public class Conditioner : MonoBehaviour
         {
             if (GetEvaluateResult())
             {
+                _isTriggered = true;
                 OnTriggerStart?.Invoke();
             }
             else
@@ -90,12 +120,23 @@ public class Conditioner : MonoBehaviour
         if (GetEvaluateResult())
         {
             OnTriggerFunction?.Invoke();
+            _isTriggered = true;
         }
         else
         {
             OnTriggerFunctionFailed?.Invoke();
         }
-    }    
+    }
+
+    private void Update()
+    {
+        if (Time.timeScale <= 0) return;
+        if (constantTriggerCheck == false) return;
+        if (_isTriggered == true) return;
+
+        TriggerFunction();
+
+    }
 
     public bool GetEvaluateResult()
     {
