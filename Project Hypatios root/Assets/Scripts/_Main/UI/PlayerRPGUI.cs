@@ -23,6 +23,8 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Inventory")] public Text itemTooltip_LeftHandedLabel;
     [FoldoutGroup("Inventory")] public Text itemTooltip_RightHandedLabel;
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
+    [FoldoutGroup("Inventory")] public Slider healthRestoreBar;
+    [FoldoutGroup("Inventory")] public Slider healthRestore_BorderBar;
     [FoldoutGroup("Inventory")] public ItemInventory.Category filterCategoryType = ItemInventory.Category.None;
     [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
     [FoldoutGroup("Weapon Preview")] public Previewer3DWeaponUI previewerWeapon;
@@ -51,11 +53,14 @@ public class PlayerRPGUI : MonoBehaviour
     private HypatiosSave.WeaponDataSave _currentHighlightedWeaponData;
 
     private InventoryItemButton currentItemButton;
+    private float _timeSlider = 0f;
+    private ItemInventory prevItemClass;
 
     private void OnEnable()
     {
         RefreshUI();
         pauseCanvas = GetComponentInParent<Canvas>();
+        HideHealthRestore();
     }
 
     private void Start()
@@ -66,6 +71,7 @@ public class PlayerRPGUI : MonoBehaviour
     private void OnDisable()
     {
         DepreviewWeapon();
+        _timeSlider = 0f;
     }
 
     public void FavoriteMode()
@@ -239,9 +245,43 @@ public class PlayerRPGUI : MonoBehaviour
     {
         HandleDiscardItem();
         HandleFavoriteItem();
-
+        HandlePreview();
     }
 
+
+    private void HandlePreview()
+    {
+        if (currentItemButton == null) return;
+        if (healthRestoreBar.gameObject.activeInHierarchy == false) return;
+        var itemClass = currentItemButton.GetItemInventory();
+
+        if (itemClass == null) return;
+        if (itemClass.category != ItemInventory.Category.Consumables) return;
+        if (prevItemClass != itemClass) _timeSlider = 0f;
+
+        float healSpeed = itemClass.consume_HealAmount / itemClass.consume_HealTime;
+        float targetHeal = Hypatios.Player.Health.curHealth + _timeSlider;
+
+        _timeSlider += Time.unscaledDeltaTime * healSpeed * (Hypatios.Player.Health.digestion.Value);
+
+        if (_timeSlider > itemClass.consume_HealAmount)
+        {
+            _timeSlider = 0;
+        }
+
+        if (Hypatios.Player.Health.curHealth + _timeSlider > Hypatios.Player.Health.maxHealth.Value)
+        {
+            _timeSlider = 0f;
+        }
+
+        healthRestoreBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
+        healthRestoreBar.value = targetHeal;
+        healthRestore_BorderBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
+        healthRestore_BorderBar.value = Hypatios.Player.Health.curHealth + itemClass.consume_HealAmount;
+
+        prevItemClass = itemClass;
+
+    }
 
     private void HandleFavoriteItem()
     {
@@ -469,6 +509,7 @@ public class PlayerRPGUI : MonoBehaviour
             else
             {
                 s_interaction = "[LMB to consume] [X to discard] [F to favorite]";
+                ShowPreviewHealthRestore();
             }
 
             sLeft += $"{itemClass.GetDisplayText()}\n";
@@ -488,6 +529,23 @@ public class PlayerRPGUI : MonoBehaviour
     public void DehighlightItem()
     {
         currentItemButton = null;
+        HideHealthRestore();
+    }
+
+    public void ShowPreviewHealthRestore()
+    {
+        healthRestoreBar.gameObject.SetActive(true);
+        healthRestore_BorderBar.gameObject.SetActive(true);
+
+
+    }
+
+    public void HideHealthRestore()
+    {
+        healthRestoreBar.gameObject.SetActive(false);
+        healthRestore_BorderBar.gameObject.SetActive(false);
+
+
     }
 
     public void HighlightWeaponSlot(WeaponSlotButton slotButton)

@@ -300,12 +300,7 @@ public class MercenaryEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        int time1 = Hypatios.TimeTick;
 
-        if (_lastDamageToken != null)
-        {
-            if (time1 <= _lastDamageToken.timeAttack) return;
-        }
 
         if (token.damageType == DamageToken.DamageType.Explosion)
         {

@@ -127,7 +127,7 @@ public class KatakisZombiWeapon : GunScript
         token.damage = damage + Random.Range(0, variableAdditionalDamage);
         token.repulsionForce = 0.1f;
         if (Hypatios.Player.BonusDamageMelee.Value != 0) token.damage *= Hypatios.Player.BonusDamageMelee.Value;
-        damageReceiver.Attacked(token);
+        UniversalDamage.TryDamage(token, damageReceiver.transform, transform);
         if (audio_HitSword) audio_HitSword.Play();
     }
 

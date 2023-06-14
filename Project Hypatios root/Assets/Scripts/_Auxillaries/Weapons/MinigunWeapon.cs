@@ -108,7 +108,7 @@ public class MinigunWeapon : GunScript
             if (Time.time >= nextAttackTime)
             {
                 FireWeapon();
-                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.03f;
                 curAmmo--;
             }
         }
@@ -182,7 +182,7 @@ public class MinigunWeapon : GunScript
                 if (damageReceiver != null)
                 {
                     damageToken.damage = damage * Hypatios.Player.BonusDamageGun.Value + variableDamage; damageToken.repulsionForce = repulsionForce;
-                    damageReceiver.Attacked(damageToken);
+                    UniversalDamage.TryDamage(damageToken, damageReceiver.transform, transform);
                     HandleCrosshairActive(damageReceiver);
                 }
 

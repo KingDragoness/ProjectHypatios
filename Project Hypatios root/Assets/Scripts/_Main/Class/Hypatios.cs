@@ -359,7 +359,7 @@ public class Hypatios : MonoBehaviour
     public static int UnixTimeStart { get => _unixTimeStart;  }
 
     public static float Time { get => Game.UNIX_Timespan; }
-    public static int TimeTick { get => Mathf.RoundToInt(UnityEngine.Time.time * 20f); } //20 times per second, oh no this fucking useless (32 % 10 == 0, will cause 3 times in the same frame time)
+    public static int TimeTick { get => Mathf.RoundToInt(UnityEngine.Time.time * 20f); } 
     public static int TimeTickForStupidConstructor { get => _tickTime; }
     public static float Total_Time { get => Game.Total_UNIX_Timespan; }
 

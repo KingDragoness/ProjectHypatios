@@ -245,7 +245,7 @@ public static class IsopatiosUtility
 
     public static T Clone<T>(this T source)
     {
-        var serialized = JsonConvert.SerializeObject(source);
+        var serialized = JsonConvert.SerializeObject(source, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         return JsonConvert.DeserializeObject<T>(serialized);
     }
 

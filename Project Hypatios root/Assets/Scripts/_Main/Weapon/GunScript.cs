@@ -157,7 +157,7 @@ public class GunScript : BaseWeaponScript
                 isMeleeing = false;
                 hasHit = false;
                 KatanaSlash();
-                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.03f;
             }
         }
     }
@@ -206,7 +206,7 @@ public class GunScript : BaseWeaponScript
             if (Time.time >= nextAttackTime)
             {
                 FireWeapon();
-                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.05f;
+                nextAttackTime = Time.time + 1f / bulletPerSecond + 0.03f;
                 curAmmo--;
             }
         }
@@ -329,7 +329,7 @@ public class GunScript : BaseWeaponScript
             if (damageReceiver != null)
             {
                 damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value / 5f) + variableDamage; damageToken.repulsionForce = repulsionForce;
-                damageReceiver.Attacked(damageToken);
+                UniversalDamage.TryDamage(damageToken, hit.collider.transform, transform);
                 HandleCrosshairActive(damageReceiver);
             }
 
@@ -396,7 +396,7 @@ public class GunScript : BaseWeaponScript
                 if (damageReceiver != null)
                 {
                     damageToken.damage = damage * Hypatios.Player.BonusDamageGun.Value + variableDamage; damageToken.repulsionForce = repulsionForce;
-                    damageReceiver.Attacked(damageToken);
+                    UniversalDamage.TryDamage(damageToken, hit.collider.transform, transform);
                     HandleCrosshairActive(damageReceiver);
                 }
 
@@ -462,7 +462,7 @@ public class GunScript : BaseWeaponScript
                     if (damageReceiver != null)
                     {
                         damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value / 2f) + variableDamage; damageToken.repulsionForce = repulsionForce;
-                        damageReceiver.Attacked(damageToken);
+                        UniversalDamage.TryDamage(damageToken, hit.collider.transform, transform);
                         HandleCrosshairActive(damageReceiver);
                     }
 

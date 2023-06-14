@@ -35,7 +35,6 @@ public class EnemyStats
     public UnitType UnitType;
     public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
-    public bool AllowMultipleHitSameFrame = true;
     [Tooltip("By default, all enemies is targetable. This is only for hackable gates.")] public bool IsTargetable = true;
     [Tooltip("Allowed by default. When false, it prevent enemies from attacking the same enemy type, even if the alliance is differ.")] public bool AllowTargetSameType = true;
 

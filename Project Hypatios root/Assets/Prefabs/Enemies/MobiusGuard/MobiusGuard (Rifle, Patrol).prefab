@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 24
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -855,6 +856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 23
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -1018,6 +1020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 26
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -1184,6 +1187,75 @@ Transform:
   m_Father: {fileID: 7888057563104194047}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2217310997173439982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3466815232190244722}
+  - component: {fileID: 4983321306613112165}
+  - component: {fileID: 1033479407285004740}
+  m_Layer: 0
+  m_Name: Head.collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3466815232190244722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217310997173439982}
+  m_LocalRotation: {x: 0.2212443, y: -3.3006536e-15, z: 8.047522e-13, w: 0.9752185}
+  m_LocalPosition: {x: -0.000012333465, y: 4.620003, z: 2.5999856}
+  m_LocalScale: {x: 6.7524085, y: 6.7524085, z: 6.7524085}
+  m_Children: []
+  m_Father: {fileID: 1128458159959791374}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 25.564001, y: 0, z: 0}
+--- !u!65 &4983321306613112165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217310997173439982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1033479407285004740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217310997173439982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10795a6f401ac144da68e40c368dc98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyScript: {fileID: 7755749872402453196}
+  destructibleScript: {fileID: 0}
+  bodyType: 20
+  isCriticalHit: 1
+  multiplier: 1
+  isPrintDebug: 0
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2326713284726680595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 24
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -1816,6 +1889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 23
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -1949,6 +2023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 26
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -2081,6 +2156,66 @@ Transform:
   m_Father: {fileID: 6421483409938856195}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4621541100816906331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7881825594757791382}
+  - component: {fileID: 4430595609000773935}
+  m_Layer: 0
+  m_Name: MAIB_Hurt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7881825594757791382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621541100816906331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7755749871390608468}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4430595609000773935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4621541100816906331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdafca0b41988814fb98f5cc8ccbf7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobiusGuardScript: {fileID: 7755749872402453196}
+  isExclusive: 0
+  cannotBeSelectedByDecision: 1
+  OnEnableBehaviour:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisableBehaviour:
+    m_PersistentCalls:
+      m_Calls: []
+  allowPreviousBehaviours: []
+  unallowPreviousBehaviours:
+  - {fileID: 7755749872232197361}
+  - {fileID: 7755749871314439648}
+  basePriority: -100
+  currentPriorityLevel: 0
+  TimeToRecover: 0.6
+  triggerName: Hit
 --- !u!1 &4664869319553647700
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,6 +2712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 25
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -2741,6 +2877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 25
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -2871,6 +3008,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4066372057675610577}
+  - {fileID: 3466815232190244722}
   m_Father: {fileID: 1547339879533197260}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3032,6 +3170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 23
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -3379,6 +3518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 24
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -3625,6 +3765,7 @@ MonoBehaviour:
   - {fileID: 7755749872232197361}
   - {fileID: 7755749871314439648}
   - {fileID: 7755749872733693504}
+  - {fileID: 4430595609000773935}
   audio_Dead: {fileID: 5567122927846132567}
   _standupClipName: Zombie Stand Up
   _standupFaceDownClipName: Standing Up
@@ -3692,7 +3833,7 @@ MonoBehaviour:
       executedInEditor: 0
       IKPosition: {x: -9.365026, y: 0.086067125, z: -21.317335}
       IKPositionWeight: 0
-      root: {fileID: 7794407244747584814}
+      root: {fileID: 1196718648824358320}
       target: {fileID: 0}
       IKRotationWeight: 0
       IKRotation: {x: 0.080862805, y: 0.4887538, z: 0.8686414, w: -0.0065881745}
@@ -3736,7 +3877,7 @@ MonoBehaviour:
       executedInEditor: 0
       IKPosition: {x: -9.094972, y: 0.08606644, z: -21.317337}
       IKPositionWeight: 0
-      root: {fileID: 7794407244747584814}
+      root: {fileID: 1196718648824358320}
       target: {fileID: 0}
       IKRotationWeight: 0
       IKRotation: {x: -0.07910517, y: 0.4939745, z: 0.86584896, w: 0.006101204}
@@ -3781,7 +3922,7 @@ MonoBehaviour:
       executedInEditor: 0
       IKPosition: {x: -10.033668, y: 1.8055298, z: -21.346691}
       IKPositionWeight: 0
-      root: {fileID: 7794407244747584814}
+      root: {fileID: 1196718648824358320}
       target: {fileID: 0}
       IKRotationWeight: 0
       IKRotation: {x: -0.47243625, y: 0.50983524, z: -0.5311101, w: -0.4845556}
@@ -3825,7 +3966,7 @@ MonoBehaviour:
       executedInEditor: 0
       IKPosition: {x: -8.426374, y: 1.8055296, z: -21.346075}
       IKPositionWeight: 0
-      root: {fileID: 7794407244747584814}
+      root: {fileID: 1196718648824358320}
       target: {fileID: 7755749871906093314}
       IKRotationWeight: 0
       IKRotation: {x: -0.4676924, y: -0.45937595, z: 0.53756267, w: -0.53034323}
@@ -4078,6 +4219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Animancer: {fileID: 7449126111370899353}
+  _HybridAnimancer: {fileID: 0}
   defaultClip:
     _FadeDuration: 0.25
     _Events:
@@ -4241,6 +4383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 21
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -4550,6 +4693,7 @@ Transform:
   - {fileID: 7755749871382947778}
   - {fileID: 7755749872232197362}
   - {fileID: 7755749871314439655}
+  - {fileID: 7881825594757791382}
   - {fileID: 7755749872733693511}
   m_Father: {fileID: 7794407244747584814}
   m_RootOrder: 3
@@ -5541,7 +5685,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7755749871390608468}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7755749872733693504
 MonoBehaviour:
@@ -6283,6 +6427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 22
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -6694,6 +6839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 26
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -6857,6 +7003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 7755749872402453196}
   destructibleScript: {fileID: 0}
+  bodyType: 25
   isCriticalHit: 0
   multiplier: 0.8
   isPrintDebug: 0
@@ -7015,27 +7162,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c6c4e1d960547f41bfe5ec0409806b3, type: 3}
---- !u!198 &8383516351176885283 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5120115179148106986, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3699273974864582857}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8383516350971684874 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3699273974864582857}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8383516350971684875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120115178288853186, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
     type: 3}
   m_PrefabInstance: {fileID: 3699273974864582857}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &8383516351176885283 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5120115179148106986, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3699273974864582857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8383516351176885294 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5120115179148106983, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3699273974864582857}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8383516350971684874 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
     type: 3}
   m_PrefabInstance: {fileID: 3699273974864582857}
   m_PrefabAsset: {fileID: 0}

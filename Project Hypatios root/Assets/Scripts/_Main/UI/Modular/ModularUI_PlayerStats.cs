@@ -17,6 +17,7 @@ public class ModularUI_PlayerStats : MonoBehaviour
     [ShowIf("showStatusEffects", true, true)] public RPG_CharPerkButton StatusMonoButton;
     [ShowIf("showStatusEffects", true, true)] public Transform parentPerks;
 
+
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
     private List<RPG_CharPerkButton> _allStatusMonoButtons = new List<RPG_CharPerkButton>();
 

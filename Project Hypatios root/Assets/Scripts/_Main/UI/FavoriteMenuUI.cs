@@ -25,7 +25,8 @@ public class FavoriteMenuUI : MonoBehaviour
     [FoldoutGroup("Item List")] public FavItemButton prefabItemButton;
     [FoldoutGroup("Item List")] public Text itemStat_Title;
     [FoldoutGroup("Item List")] public Text itemStat_Description;
-
+    [FoldoutGroup("HP", true)] public Slider healthRestoreBar;
+    [FoldoutGroup("HP", true)] public Slider healthRestore_BorderBar;
     [ReadOnly] public float currentAngle = 0;
 
     private Vector3 mousePos;
@@ -34,9 +35,14 @@ public class FavoriteMenuUI : MonoBehaviour
     private List<FavItemButton> allFavButtons = new List<FavItemButton>();
     private FavItemButton _currentFavItemButton;
 
+    private float _timeSlider = 0f;
+    private ItemInventory prevItemClass;
+
     private void OnEnable()
     {
         ResetUI();
+        HideHealthRestore();
+
     }
 
     private void ResetUI()
@@ -87,13 +93,47 @@ public class FavoriteMenuUI : MonoBehaviour
         }
         else if (currentMode == Mode.SelectItems)
         {
-
+            HandlePreview();
         }
 
         if (Hypatios.Input.Fire2.triggered)
         {
             ChangeMode(Mode.SelectCategory);
         }
+    }
+
+    private void HandlePreview()
+    {
+        if (_currentFavItemButton == null) return;
+        if (healthRestoreBar.gameObject.activeInHierarchy == false) return;
+        var itemClass = _currentFavItemButton.GetItemInventory();
+
+        if (itemClass == null) return;
+        if (itemClass.category != ItemInventory.Category.Consumables) return;
+        if (prevItemClass != itemClass) _timeSlider = 0f;
+
+        float healSpeed = itemClass.consume_HealAmount / itemClass.consume_HealTime;
+        float targetHeal = Hypatios.Player.Health.curHealth + _timeSlider;
+
+        _timeSlider += Time.unscaledDeltaTime * healSpeed * (Hypatios.Player.Health.digestion.Value);
+
+        if (_timeSlider > itemClass.consume_HealAmount)
+        {
+            _timeSlider = 0;
+        }
+
+        if (Hypatios.Player.Health.curHealth + _timeSlider > Hypatios.Player.Health.maxHealth.Value)
+        {
+            _timeSlider = 0f;
+        }
+
+        healthRestoreBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
+        healthRestoreBar.value = targetHeal;
+        healthRestore_BorderBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
+        healthRestore_BorderBar.value = Hypatios.Player.Health.curHealth + itemClass.consume_HealAmount;
+
+        prevItemClass = itemClass;
+
     }
 
     private void UpdateSelectItem()
@@ -265,6 +305,22 @@ public class FavoriteMenuUI : MonoBehaviour
         itemStatUI.gameObject.SetActive(true);
         itemStat_Title.text = itemClass.GetDisplayText();
         itemStat_Description.text = itemClass.Description;
+        ShowPreviewHealthRestore();
     }
 
+    public void ShowPreviewHealthRestore()
+    {
+        healthRestoreBar.gameObject.SetActive(true);
+        healthRestore_BorderBar.gameObject.SetActive(true);
+
+
+    }
+
+    public void HideHealthRestore()
+    {
+        healthRestoreBar.gameObject.SetActive(false);
+        healthRestore_BorderBar.gameObject.SetActive(false);
+
+
+    }
 }

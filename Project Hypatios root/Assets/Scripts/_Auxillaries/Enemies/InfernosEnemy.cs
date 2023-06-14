@@ -109,11 +109,6 @@ public class InfernosEnemy : EnemyScript
 
     public override void Attacked(DamageToken token)
     {
-        int time1 = Hypatios.TimeTick;
-        if (_lastDamageToken != null)
-        {
-            if (time1 <= _lastDamageToken.timeAttack) return;
-        }
 
         hasSeenPlayer = true;
         _lastDamageToken = token;

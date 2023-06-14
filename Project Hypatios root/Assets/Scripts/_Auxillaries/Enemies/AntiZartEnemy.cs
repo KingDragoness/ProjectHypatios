@@ -194,7 +194,7 @@ public class AntiZartEnemy : EnemyScript
         var token = new DamageToken();
         token.damage = laser_Damage;
         token.origin = DamageToken.DamageOrigin.Enemy;
-        damageReceiver.Attacked(token);
+        UniversalDamage.TryDamage(token, damageReceiver.transform, transform);
         var damageSpark1 = Instantiate(damageSpark);
         damageSpark1.transform.position = damageReceiver.transform.position;
         damageSpark1.gameObject.SetActive(true);

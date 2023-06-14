@@ -35,14 +35,10 @@ public class DamageToken
     public bool isPoison = false;
     public bool allowPlayerIndicator = false;
     public EnemyScript originEnemy;
+    public Vector3 originAttackPosition;
     public DamageType damageType = DamageType.Generic;
     public DamageOrigin origin = DamageOrigin.Player;
-    public int timeAttack;
 
-    public DamageToken()
-    {
-        timeAttack = Hypatios.TimeTickForStupidConstructor;
-    }
 }
 
 public class UniversalDamage
@@ -51,6 +47,7 @@ public class UniversalDamage
     {
         var damageReceiver = hit.gameObject.GetComponent<damageReceiver>();
         var health = hit.gameObject.GetComponent<PlayerHealth>();
+        token.originAttackPosition = origin.position;
 
         if (damageReceiver != null)
         {
@@ -64,21 +61,24 @@ public class UniversalDamage
 
         if (health != null)
         {
-            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Brutal)
+            if (token.origin != DamageToken.DamageOrigin.Player)
             {
-                token.damage *= 1.6f; token.healthSpeed *= 1.5f;
-            }
-            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Normal)
-            {
-                token.damage *= 0.8f; token.healthSpeed *= 0.9f;
-            }
-            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Casual)
-            {
-                token.damage *= 0.3f; token.healthSpeed *= 0.4f;
-            }
-            if (Hypatios.Difficulty == Hypatios.GameDifficulty.Peaceful)
-            {
-                token.damage *= 0f; token.healthSpeed *= 0.7f;
+                if (Hypatios.Difficulty == Hypatios.GameDifficulty.Brutal)
+                {
+                    token.damage *= 1.6f; token.healthSpeed *= 1.5f;
+                }
+                if (Hypatios.Difficulty == Hypatios.GameDifficulty.Normal)
+                {
+                    token.damage *= 0.8f; token.healthSpeed *= 0.9f;
+                }
+                if (Hypatios.Difficulty == Hypatios.GameDifficulty.Casual)
+                {
+                    token.damage *= 0.3f; token.healthSpeed *= 0.4f;
+                }
+                if (Hypatios.Difficulty == Hypatios.GameDifficulty.Peaceful)
+                {
+                    token.damage *= 0f; token.healthSpeed *= 0.7f;
+                }
             }
 
             Hypatios.UI.SpawnIndicator.Spawn(origin);
@@ -99,8 +99,23 @@ public class MyFloatEvent : UnityEvent<float>
 
 public class damageReceiver : MonoBehaviour
 {
+
+    public enum BodyType
+    {
+        Default,
+        CriticalSpot,
+        Head = 20,
+        Chest,
+        LowerBody,
+        LeftArm,
+        RightArm,
+        LeftLeg,
+        RightLeg
+    }
+
     public EnemyScript enemyScript;
     public Destructibles destructibleScript;
+    public BodyType bodyType;
     public bool isCriticalHit = false;
     [Tooltip("> 1 for weak spots. < 1 for resistant spots.")]
     public float multiplier = 1f;
@@ -111,7 +126,7 @@ public class damageReceiver : MonoBehaviour
     [HideInInspector] public MyFloatEvent m_MyEvent;
 
 
-    public void Attacked(DamageToken token)
+    internal void Attacked(DamageToken token)
     {
         if (isPrintDebug) Debug.Log(token.damage);
         token.damage *= multiplier;

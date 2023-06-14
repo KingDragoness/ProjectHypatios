@@ -104,7 +104,7 @@ public class KatanaScript : BaseWeaponScript
         var token = new DamageToken();
         token.damage = damage + Random.Range(0, variableAdditionalDamage);
         token.repulsionForce = 0.1f;
-        damageReceiver.Attacked(token);
+        UniversalDamage.TryDamage(token, damageReceiver.transform, transform);
         if (audio_HitSword) audio_HitSword.Play();
     }
 

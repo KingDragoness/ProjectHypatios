@@ -226,11 +226,12 @@ public class MobiusGuardEnemy : EnemyScript
     [FoldoutGroup("Debug")]
     [Button("Trigger Ragdoll")]
 
-    public void TriggerRagdoll(Vector3 force)
+    public void TriggerRagdoll(Vector3 force, Vector3 originOfAttack = new Vector3())
     {
         EnableRagdoll();
         IsAiming = false;
-        Vector3 hitpoint = Debug_RagdollForceorigin.position;
+        Vector3 hitpoint = Vector3.Normalize(originOfAttack - transform.position);
+        hitpoint = transform.position + hitpoint;
         Rigidbody hitRigidbody = FindRigidbodyNearest(hitpoint);
 
         hitRigidbody.AddForceAtPosition(force, hitpoint, ForceMode.Impulse);
@@ -680,9 +681,15 @@ public class MobiusGuardEnemy : EnemyScript
 
             if (token.damage > 30f)
             {
-                float repulsionPower = Mathf.Clamp(token.damage, 30f, 1000f) * 0.1f;
+                float repulsionPower = Mathf.Clamp(token.damage, 30f, 1000f) * 15f;
                 TriggerRagdoll(-transform.forward * 30f * repulsionPower);
             }
+        }
+        else if (token.damage >= 20)
+        {
+            if (isRagdoll == false && currentBehaviour is MAIB_Wakeup == false)
+                ChangeAIBehaviour_Type<MAIB_Hurt>();
+
         }
 
 
