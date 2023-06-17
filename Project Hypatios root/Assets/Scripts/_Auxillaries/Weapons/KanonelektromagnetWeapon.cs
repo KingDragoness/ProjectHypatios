@@ -22,15 +22,18 @@ public class KanonelektromagnetWeapon : GunScript
     [FoldoutGroup("Kanonelektromagnetik")] public UnityEvent OnSwitchBarrelMode;
 
     private MainGameHUDScript hudScript;
+    private bool hasStarted = false;
 
     public override void Start()
     {
         base.Start();
+        hasStarted = true;
     }
 
     public override void Update()
     {
         base.Update();
+        if (Time.timeScale <= 0) return;
         HandleBarrelGun();
     }
 
@@ -39,6 +42,8 @@ public class KanonelektromagnetWeapon : GunScript
         hudScript = MainGameHUDScript.Instance;
         CrosshairChange(currentMode);
     }
+
+    private bool pressedFire = false;
 
     private void HandleBarrelGun()
     {
@@ -51,19 +56,27 @@ public class KanonelektromagnetWeapon : GunScript
             barrelAnimator.SetBool("isHorizontal", false);
         }
 
-        if (Hypatios.Input.Fire2.triggered)
+        if (Hypatios.Input.Fire2.IsPressed())
         {
-            if (currentMode == WeaponMode.Horizontal)
+            if (pressedFire == false)
             {
-                currentMode = WeaponMode.Vertical;
-                CrosshairChange(WeaponMode.Vertical);
+                if (currentMode == WeaponMode.Horizontal)
+                {
+                    currentMode = WeaponMode.Vertical;
+                    CrosshairChange(WeaponMode.Vertical);
+                }
+                else if (currentMode == WeaponMode.Vertical)
+                {
+                    currentMode = WeaponMode.Horizontal;
+                    CrosshairChange(WeaponMode.Horizontal);
+                }
+                OnSwitchBarrelMode?.Invoke();
             }
-            else if (currentMode == WeaponMode.Vertical)
-            {
-                currentMode = WeaponMode.Horizontal;
-                CrosshairChange(WeaponMode.Horizontal);
-            }
-            OnSwitchBarrelMode?.Invoke();
+            pressedFire = true;
+        }
+        else
+        {
+            pressedFire = false;
         }
     }
 
