@@ -11,6 +11,8 @@ public class GenericBossUI : MonoBehaviour
     public Slider sliderHitpoint;
     public Text labelHitpoint;
     public Text labelBossName;
+    public GameObject portraitEnemy;
+    public Image portraitImageEnemy;
 
     private void Start()
     {
@@ -39,6 +41,16 @@ public class GenericBossUI : MonoBehaviour
         sliderHitpoint.value = currentEnemy.Stats.CurrentHitpoint;
         sliderHitpoint.maxValue = currentEnemy.Stats.MaxHitpoint.Value;
         labelBossName.text = $"{currentEnemy.EnemyName}";
+
+        if (currentEnemy.EnemySprite != null)
+        {
+            portraitEnemy.gameObject.SetActive(true);
+            portraitImageEnemy.sprite = currentEnemy.EnemySprite;
+        }
+        else
+        {
+            portraitEnemy.gameObject.SetActive(false);
+        }
     }
 
     private void HideUI()

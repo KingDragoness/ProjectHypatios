@@ -17,6 +17,7 @@ public abstract class EnemyScript : Entity
 
 
     public EnemyStats Stats { get => _stats; }
+    public Sprite EnemySprite { get => _baseStat.enemySprite; }
     public string EnemyName { get => _baseStat.name; }
     public RaycastHit HitDetection { get => _hitDetection;  }
     public Transform EyeLocation { get => eyeLocation; }

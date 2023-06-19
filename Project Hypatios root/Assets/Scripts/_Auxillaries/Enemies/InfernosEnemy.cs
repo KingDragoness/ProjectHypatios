@@ -110,6 +110,12 @@ public class InfernosEnemy : EnemyScript
     public override void Attacked(DamageToken token)
     {
 
+        if (token.originEnemy == this) return;
+        if (token.originEnemy != null)
+        {
+            if (token.originEnemy.GetType() == typeof(InfernosEnemy)) return;
+        }
+
         hasSeenPlayer = true;
         _lastDamageToken = token;
         Stats.CurrentHitpoint -= token.damage;

@@ -7,5 +7,6 @@ using Sirenix.OdinInspector;
 public class BaseEnemyStats : ScriptableObject
 {
     public EnemyStats Stats;
+    public Sprite enemySprite;
 
 }
