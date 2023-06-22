@@ -18,6 +18,7 @@ public class Chamber_ZombieHorde : MonoBehaviour
     }
 
     [FoldoutGroup("UI")] public Text label_TimeRound;
+    [FoldoutGroup("UI")] public Slider slider_TimeCount;
     [FoldoutGroup("References")] public AudioSource audio_CompletedChamber;
     [FoldoutGroup("Parameters")] public float RoundTimer = 600f;
     [FoldoutGroup("Parameters")] public float SpawnTimeRefresh = 4f;
@@ -32,10 +33,11 @@ public class Chamber_ZombieHorde : MonoBehaviour
 
     private float _timerSpawn = 4f;
     private bool _hasFinished = false;
+    private float _startingTimer = 0f;
 
     private void Start()
     {
-        
+        _startingTimer = RoundTimer;
     }
 
     private void Update()
@@ -105,7 +107,8 @@ public class Chamber_ZombieHorde : MonoBehaviour
         if (rt <= 0) rt = 0;
         var dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(rt, true);
         label_TimeRound.text = $"{ dateTime.Minute.ToString("00")}:{ dateTime.Second.ToString("00")}";
-
+        slider_TimeCount.value = RoundTimer;
+        slider_TimeCount.maxValue = _startingTimer;
     }
 
     private void SpawnZombies()

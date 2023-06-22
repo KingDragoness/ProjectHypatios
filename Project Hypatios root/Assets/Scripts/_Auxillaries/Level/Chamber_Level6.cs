@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
+using UnityEngine.UI;
 
 public class Chamber_Level6 : MonoBehaviour
 {
@@ -65,6 +66,9 @@ public class Chamber_Level6 : MonoBehaviour
     [FoldoutGroup("Audio")] public AudioSource Audio_foodDelivered;
     [FoldoutGroup("Audio")] public AudioSource Audio_newCustomer;
 
+    [FoldoutGroup("UI")] public Text label_TimeRound;
+    [FoldoutGroup("UI")] public Slider slider_TimeCount;
+
     public int remainingCustomers = 24;
     public int customerServed = 0;
     public Gamemode currentGamemode = Gamemode.NotPlay;
@@ -79,6 +83,7 @@ public class Chamber_Level6 : MonoBehaviour
     [ReadOnly] private List<EnemyScript> enemies = new List<EnemyScript>();
 
     private static Chamber_Level6 instance;
+    private int _startingCustomer = 0;
 
     public static Chamber_Level6 Instance { set => instance = value; }
 
@@ -91,6 +96,7 @@ public class Chamber_Level6 : MonoBehaviour
 
     void Start()
     {
+        _startingCustomer = remainingCustomers;
         mainPiring.gameObject.SetActive(false);
         Hypatios.Enemy.OnEnemyDied += Enemy_onKilled;
         piringList.Add(mainPiring);
@@ -256,8 +262,18 @@ public class Chamber_Level6 : MonoBehaviour
             {
                 EndTheGame();
             }
+
+            UpdateTimeUI();
         }
     }
+
+    private void UpdateTimeUI()
+    {
+        label_TimeRound.text = $"{remainingCustomers + allCustomers.Count}";
+        slider_TimeCount.value = remainingCustomers + allCustomers.Count;
+        slider_TimeCount.maxValue = _startingCustomer;
+    }
+
 
     private void AttemptSpawnSpider()
     {

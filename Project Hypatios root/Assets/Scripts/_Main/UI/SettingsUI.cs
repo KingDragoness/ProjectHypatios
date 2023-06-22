@@ -23,6 +23,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Gameplay")] public Text value_FOV;
     [FoldoutGroup("Gameplay")] public Slider slider_FOV;
     [FoldoutGroup("Video")] public Toggle toggle_VSync;
+    [FoldoutGroup("Video")] public Toggle toggle_Fullscreen;
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
     [FoldoutGroup("Video")] public Toggle toggle_AntiAliasing;
     [FoldoutGroup("Video")] public Toggle toggle_DynamicUIScaling;
@@ -73,6 +74,7 @@ public class SettingsUI : MonoBehaviour
         slider_FPSCap.SetValueWithoutNotify(Hypatios.Settings.MAXIMUM_FRAMERATE);
         slider_UIScaling.SetValueWithoutNotify(Hypatios.Settings.UI_SCALING);
         toggle_VSync.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.VSYNC));
+        toggle_Fullscreen.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.FULLSCREEN));
         toggle_DynamicUIScaling.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.DYNAMIC_UI_SCALING));
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
@@ -94,11 +96,9 @@ public class SettingsUI : MonoBehaviour
 
     public void SetSomething()
     {
-        Debug.Log("test set 44");
 
         PlayerPrefs.Save();
         RefreshUI();
-        Debug.Log("test set");
 
     }
 
@@ -143,6 +143,7 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.TV_EFFECT_UI = toggle_UITVEffect.isOn ? 1 : 0;
             //Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
             Hypatios.Settings.VSYNC = toggle_VSync.isOn ? 1 : 0;
+            Hypatios.Settings.FULLSCREEN = toggle_Fullscreen.isOn ? 1 : 0;
             Hypatios.Settings.MOUSE_SENSITIVITY = slider_MouseSensitivity.value;
             Hypatios.Settings.MUSIC_VOLUME = slider_Music.value;
             Hypatios.Settings.SFX_VOLUME = slider_SFX.value;
@@ -161,6 +162,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetInt("SETTINGS.ANTIALIASING", Hypatios.Settings.ANTIALIASING);
             //PlayerPrefs.SetInt("SETTINGS.DYNAMIC_UI_SCALING", Hypatios.Settings.DYNAMIC_UI_SCALING);
             PlayerPrefs.SetInt("SETTINGS.VSYNC", Hypatios.Settings.VSYNC);
+            PlayerPrefs.SetInt("SETTINGS.FULLSCREEN", Hypatios.Settings.FULLSCREEN);
             PlayerPrefs.SetFloat("SETTINGS.MOUSE_SENSITIVITY", Hypatios.Settings.MOUSE_SENSITIVITY);
             PlayerPrefs.SetInt("SETTINGS.QUALITY_LEVEL", Hypatios.Settings.QUALITY_LEVEL);
 

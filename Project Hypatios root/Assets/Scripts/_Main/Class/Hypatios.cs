@@ -30,6 +30,7 @@ public class Hypatios : MonoBehaviour
         public static int VISUAL_TEMPERATURE = 0;
         public static int VISUAL_TINT = 0;
         public static int VSYNC = 0;
+        public static int FULLSCREEN = 0;
         public static int MOTIONBLUR = 0;
         public static int ANTIALIASING = 1;
         public static int TV_EFFECT_UI = 0;
@@ -86,6 +87,7 @@ public class Hypatios : MonoBehaviour
             MUSIC_VOLUME = AssignValuePref("SETTINGS.MUSIC_VOLUME", 1);
             QUALITY_LEVEL = LoadPrefKeyInt("SETTINGS.QUALITY_LEVEL", 1);
             VSYNC = PlayerPrefs.GetInt("SETTINGS.VSYNC");
+            FULLSCREEN = LoadPrefKeyInt("SETTINGS.FULLSCREEN", 0);
 
             {
 
@@ -103,14 +105,19 @@ public class Hypatios : MonoBehaviour
 
         public void RefreshSettings()
         {
-
+            bool isFullscreen = false;
             var resolution = resolutions[RESOLUTION];
 
             if (MAXIMUM_FRAMERATE >= 201)
                 Application.targetFrameRate = -1; else Application.targetFrameRate = MAXIMUM_FRAMERATE;
 
+            if (FULLSCREEN == 0)
+                isFullscreen = false;
+            else 
+                isFullscreen = true;
+
             if (RESOLUTION != -1)
-                Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+                Screen.SetResolution(resolution.width, resolution.height, isFullscreen);
 
             if (VSYNC == 0)
                 QualitySettings.vSyncCount = 0; else QualitySettings.vSyncCount = 1;

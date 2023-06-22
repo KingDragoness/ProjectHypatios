@@ -13,6 +13,7 @@ public class ReflectionProbeUpdator : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale <= 0) return;
 
         if (timer > 0)
         {
@@ -21,7 +22,14 @@ public class ReflectionProbeUpdator : MonoBehaviour
         else
         {
             reflectionProbe.RenderProbe();
-            timer = CooldownUpdateProbe;
+            if (QualitySettings.GetQualityLevel() != 0)
+            {
+                timer = CooldownUpdateProbe;
+            }
+            else
+            {
+                timer = CooldownUpdateProbe * 1.5f;
+            }
         }
     }
 }

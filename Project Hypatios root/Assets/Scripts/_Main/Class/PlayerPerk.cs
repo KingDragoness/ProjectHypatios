@@ -136,9 +136,9 @@ public class PlayerPerk
 
     public static float GetValue_Dashcooldown(int level)
     {
-        if (level == 0) return 3;
+        if (level == 0) return 4;
 
-        float cooldown = 3 - (level * 0.25f);
+        float cooldown = 4 - (level * 0.25f);
         return cooldown;
     }
 

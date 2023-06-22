@@ -28,6 +28,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7865052214374665303, guid: c2735efe19ffa5446981e47b46a34190, type: 3}
+--- !u!208 &3119625692412149462
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035624606782210810}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.7, y: 0.7, z: 0.71900004}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -0.28100002}
+  m_TimeToStationary: 0.5
 --- !u!1 &4165808266560790715
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,12 +414,22 @@ MonoBehaviour:
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
     randomChance: 0.1
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
   - conditionType: 21
     trivia: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
     randomChance: 0.16
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
   conditionForTrue: 2
   OnTriggerStart:
     m_PersistentCalls:
@@ -429,6 +455,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isStartImmediately: 1
+  constantTriggerCheck: 0
 --- !u!1 &8357272909968290326
 GameObject:
   m_ObjectHideFlags: 0
