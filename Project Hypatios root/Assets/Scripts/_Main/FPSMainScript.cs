@@ -683,10 +683,15 @@ public class FPSMainScript : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 22-06-2023: 
+    /// Elena levels removed from the game to reduce scope.
+    /// Now straight to Aldrich level.
+    /// </summary>
     //Load player cutscene char select
     public void Menu_StartPlayGame()
     {
-        int index = gameSelectionScene.Index;
+        int index = aldrichScene.Index;
         Application.LoadLevel(index);
     }
 

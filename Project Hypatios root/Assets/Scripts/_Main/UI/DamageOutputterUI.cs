@@ -19,6 +19,17 @@ public class DamageOutputterUI : MonoBehaviour
 
     public void DisplayText(float number)
     {
+        CreateOutput(Mathf.RoundToInt(number).ToString());
+    }
+
+    public void DisplayText(string _string)
+    {
+        CreateOutput(_string);
+    }
+
+
+    private void CreateOutput(string s)
+    {
         var prefab1 = Instantiate(textPrefabUI, transform);
         var rt1 = prefab1.GetComponent<RectTransform>();
 
@@ -28,10 +39,12 @@ public class DamageOutputterUI : MonoBehaviour
 
         rt1.localScale = Vector3.one;
         rt1.anchoredPosition = v1;
-        prefab1.text.text = Mathf.RoundToInt(number).ToString();
+        prefab1.text.text = s;
         prefab1.gameObject.SetActive(true);
 
         Destroy(prefab1, 3f);
+
+
     }
 
 }

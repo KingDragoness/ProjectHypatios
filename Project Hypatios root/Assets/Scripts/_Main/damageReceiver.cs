@@ -146,6 +146,8 @@ public class damageReceiver : MonoBehaviour
         if (isCriticalHit && token.origin == DamageToken.DamageOrigin.Player)
         {
             soundManagerScript.instance.Play("bingo");
+            DamageOutputterUI.instance.DisplayText("CRIT!");
+
         }
 
         if (token.origin == DamageToken.DamageOrigin.Player)

@@ -16,6 +16,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Stats")] public CharacterStat BonusDamageGun; //percentage only
     [FoldoutGroup("Stats")] public BaseStatValue stat_jumps;
     [FoldoutGroup("Stats")] public BaseStatValue stat_dash;
+    [FoldoutGroup("Stats")] public BaseStatusEffectObject ailment_BrokenLeg;
 
     private dashParticleManager dashManager;
     public Rigidbody rb;
@@ -68,6 +69,8 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] bool inAir = false;
     [FoldoutGroup("Physics")] public bool isGrounded;
     [FoldoutGroup("Physics")] public bool isCrouching = false;
+    [FoldoutGroup("Physics")] public float thresholdFallHeight = 20f;
+    [FoldoutGroup("Physics")] public float chanceBrokenLeg = 0.3f;
 
     //Slope & Stair Detection
     [FoldoutGroup("Physics")] RaycastHit slopeHit;
@@ -827,6 +830,8 @@ public class CharacterScript : Entity
         }
     }
 
+    private float _highestHeight = -99f;
+
     void Jumping()
     {
 
@@ -884,6 +889,8 @@ public class CharacterScript : Entity
                 netDir.y = netDir.y - _slopeHit.point.y;
                 rb.AddForce(netDir, ForceMode.Acceleration);
             }
+
+          
         }
         else
         {
@@ -896,6 +903,24 @@ public class CharacterScript : Entity
                 Hypatios.Game.Increment_PlayerStat(stat_jumps);
 
             }
+        }
+
+        float y = transform.position.y;
+
+        if (!isGrounded && !_wallRun.isWallRunning)
+        {
+            if (_highestHeight < y)
+                _highestHeight = y;
+        }
+        else
+        {
+            if (y < _highestHeight)
+            {
+                TryFallDamage();
+            }
+            if (IsStatusEffectGroup(ailment_BrokenLeg) == true) isCrouching = true;
+
+            _highestHeight = -100f;
         }
 
         if (isNoGravity)
@@ -921,6 +946,27 @@ public class CharacterScript : Entity
             }
         }
 
+    }
+
+    private void TryFallDamage()
+    {
+        float fallHeight = _highestHeight - transform.position.y;
+
+        if (fallHeight < thresholdFallHeight) return;
+        soundManager.Play("bones");
+
+        float random = Random.Range(0f,1f);
+
+        if (random < chanceBrokenLeg && !isCheatMode)
+        {
+            if (IsStatusEffectGroup(ailment_BrokenLeg) == false)
+            {
+                ailment_BrokenLeg.AddStatusEffectPlayer(9999f);
+                DeadDialogue.PromptNotifyMessage_Mod("Aldrich broke his legs.", 4f);
+                Hypatios.Game.RuntimeTutorialHelp("Fall Damage", "Falling from great heights will have a chance to broke Aldrich's legs.", "curse.falldamage");
+            }
+
+        }
     }
 
     bool onSlope()

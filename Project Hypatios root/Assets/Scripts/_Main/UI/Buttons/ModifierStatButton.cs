@@ -135,7 +135,7 @@ public class ModifierStatButton : MonoBehaviour
         }
         else if (category == ModifierEffectCategory.Recoil)
         {
-            value = Hypatios.Player.GetCharBaseValue(category) - PlayerPerk.GetValue_RecoilUpgrade(PerkData.Perk_LV_WeaponRecoil);
+            value = Hypatios.Player.GetCharBaseValue(category) + PlayerPerk.GetValue_RecoilUpgrade(PerkData.Perk_LV_WeaponRecoil);
         }
         else if (category == ModifierEffectCategory.BonusDamageMelee)
         {

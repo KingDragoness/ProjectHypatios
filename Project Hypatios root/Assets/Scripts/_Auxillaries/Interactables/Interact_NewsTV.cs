@@ -10,7 +10,7 @@ public class Interact_NewsTV : MonoBehaviour
     {
         public int hour = 18;
         public int minute = 54;
-        public SpeechDialogueAsset dialogueAsset;
+        public Interact_MultiDialoguesTrigger dialoguePrefab;
     }
 
     public List<Newsreel> AllNewsReels = new List<Newsreel>();
@@ -44,6 +44,8 @@ public class Interact_NewsTV : MonoBehaviour
     public void Interact()
     {
         var newsreel = GetNewsreel();
-        newsreel.dialogueAsset.TriggerMessage();
+        var objectPrefab1 = Instantiate(newsreel.dialoguePrefab);
+        objectPrefab1.TriggerMessage();
+        Destroy(objectPrefab1, 1f);
     }
 }

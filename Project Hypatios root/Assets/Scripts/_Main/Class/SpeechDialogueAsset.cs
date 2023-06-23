@@ -10,17 +10,21 @@ public class SpeechDialogueAsset : ScriptableObject
     [System.Serializable]
     public class EntryDialogue
     {
+        [HideLabel] public DialogSpeaker dialogSpeaker;
         [TextArea(3, 4)]
         public string Dialogue_Content;
-        public DialogSpeaker dialogSpeaker;
-        public PortraitSpeaker portraitSpeaker;
-        public AudioClip dialogAudioClip;
-        public float Dialogue_Timer = 4;
+        [FoldoutGroup("Show More")] public PortraitSpeaker portraitSpeaker;
+        [FoldoutGroup("Show More")] public AudioClip dialogAudioClip;
+        [FoldoutGroup("Show More")] public float Dialogue_Timer = 4;
+
+
     }
 
-    public List<EntryDialogue> entryDialogues = new List<EntryDialogue>();
+
+    [ListDrawerSettings(DraggableItems = true, Expanded = false, ShowPaging = false, ShowItemCount = false)] public List<EntryDialogue> entryDialogues = new List<EntryDialogue>();
     public bool cannotWhenTalkingToOther = false;
     public bool isImportant = true;
+
 
     [Button("Trigger Message")]
     public void TriggerMessage()

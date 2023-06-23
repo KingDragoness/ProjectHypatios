@@ -113,7 +113,7 @@ public class FavoriteMenuUI : MonoBehaviour
         if (prevItemClass != itemClass) _timeSlider = 0f;
 
         float healSpeed = itemClass.consume_HealAmount / itemClass.consume_HealTime;
-        float targetHeal = Hypatios.Player.Health.curHealth + _timeSlider;
+        float targetHeal = Hypatios.Player.Health.targetHealth + _timeSlider;
 
         _timeSlider += Time.unscaledDeltaTime * healSpeed * (Hypatios.Player.Health.digestion.Value);
 
@@ -122,7 +122,7 @@ public class FavoriteMenuUI : MonoBehaviour
             _timeSlider = 0;
         }
 
-        if (Hypatios.Player.Health.curHealth + _timeSlider > Hypatios.Player.Health.maxHealth.Value)
+        if (Hypatios.Player.Health.targetHealth + _timeSlider > Hypatios.Player.Health.maxHealth.Value)
         {
             _timeSlider = 0f;
         }
@@ -130,7 +130,7 @@ public class FavoriteMenuUI : MonoBehaviour
         healthRestoreBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
         healthRestoreBar.value = targetHeal;
         healthRestore_BorderBar.maxValue = Hypatios.Player.Health.maxHealth.Value;
-        healthRestore_BorderBar.value = Hypatios.Player.Health.curHealth + itemClass.consume_HealAmount;
+        healthRestore_BorderBar.value = Hypatios.Player.Health.targetHealth + itemClass.consume_HealAmount;
 
         prevItemClass = itemClass;
 

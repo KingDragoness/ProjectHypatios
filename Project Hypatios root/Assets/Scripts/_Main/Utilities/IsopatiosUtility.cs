@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 
 public static class StringExtensions
@@ -82,6 +83,20 @@ public static class StringExtensions
 }
 public static class IsopatiosUtility
 {
+
+    public static object GetValue(this MemberInfo memberInfo, object forObject)
+    {
+        switch (memberInfo.MemberType)
+        {
+            case MemberTypes.Field:
+                return ((FieldInfo)memberInfo).GetValue(forObject);
+            case MemberTypes.Property:
+                return ((PropertyInfo)memberInfo).GetValue(forObject);
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
     /// <summary>
     /// returns -1 when to the left, 1 to the right, and 0 for forward/backward
     /// </summary>

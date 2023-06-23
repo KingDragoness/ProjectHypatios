@@ -721,6 +721,13 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     sources: []
+  - name: bones
+    clip: {fileID: 8300000, guid: b717cc0a7acd6134cb40053f201f2358, type: 3}
+    sourceAmount: 2
+    volume: 0.7
+    pitch: 2
+    loop: 0
+    sources: []
   baseSFXMixer: {fileID: 24300002, guid: c9667246a44b5134fb4f529fe2dfb43a, type: 2}
 --- !u!1 &446032468601424502
 GameObject:
@@ -2442,6 +2449,7 @@ MonoBehaviour:
   fallSpeed: 3
   isGrounded: 0
   isCrouching: 0
+  thresholdFallHeight: 20
   dashForce: 77
   dashDuration: 0.2
   timeSinceLastDash: 0
@@ -2465,6 +2473,7 @@ MonoBehaviour:
     Temp_StatusEffect: []
   Inventory:
     allItemDatas: []
+    OnItemAdded: {fileID: 0}
   Health: {fileID: 7949520240911515509}
   isCheatMode: 0
 --- !u!114 &7949520240911515509
@@ -2483,6 +2492,7 @@ MonoBehaviour:
     BaseValue: 100
   healthRegen:
     BaseValue: 0
+  OnPlayerDead: {fileID: 0}
   curHealth: 100
   targetHealth: 100
   HealthSpeed: 10
@@ -2492,6 +2502,8 @@ MonoBehaviour:
   alcoholMeter: 0
   camRecoilDamage: {x: 7, y: 6, z: -8}
   armorRating:
+    BaseValue: 1
+  digestion:
     BaseValue: 1
   isDead: 0
   slow: {fileID: 7949520240911515501}
