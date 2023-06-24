@@ -70,7 +70,8 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] public bool isGrounded;
     [FoldoutGroup("Physics")] public bool isCrouching = false;
     [FoldoutGroup("Physics")] public float thresholdFallHeight = 20f;
-    [FoldoutGroup("Physics")] public float chanceBrokenLeg = 0.3f;
+    [FoldoutGroup("Physics")] public float maxFallHeight = 50f;
+    [FoldoutGroup("Physics")] public float minChanceBrokenLeg = 0.3f;
 
     //Slope & Stair Detection
     [FoldoutGroup("Physics")] RaycastHit slopeHit;
@@ -914,7 +915,7 @@ public class CharacterScript : Entity
         }
         else
         {
-            if (y < _highestHeight)
+            if (y < _highestHeight && !isNoGravity)
             {
                 TryFallDamage();
             }
@@ -956,6 +957,11 @@ public class CharacterScript : Entity
         soundManager.Play("bones");
 
         float random = Random.Range(0f,1f);
+        float f = maxFallHeight - thresholdFallHeight;
+        float t = (fallHeight - thresholdFallHeight)/f;
+        float chanceBrokenLeg = Mathf.Lerp(thresholdFallHeight, maxFallHeight, t);
+        chanceBrokenLeg = chanceBrokenLeg / maxFallHeight;
+        //Debug.Log($"Broken leg chance: {chanceBrokenLeg*100f}%");
 
         if (random < chanceBrokenLeg && !isCheatMode)
         {

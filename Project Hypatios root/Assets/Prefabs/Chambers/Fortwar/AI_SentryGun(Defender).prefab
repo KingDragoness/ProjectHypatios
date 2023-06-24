@@ -81,6 +81,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 13585
+  botScript: {fileID: 0}
 --- !u!1 &1786956776
 GameObject:
   m_ObjectHideFlags: 0
@@ -5216,6 +5217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -24644,6 +24646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.65
   isPrintDebug: 0
@@ -39216,7 +39219,6 @@ MonoBehaviour:
       m_Calls: []
   currentTarget: {fileID: 0}
   hasSeenPlayer: 1
-  canLookAtTarget: 0
   isAIEnabled: 1
   eyeLocation: {fileID: 0}
   debug_FirstPassHit: {fileID: 0}
@@ -39557,6 +39559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3310836332700257337}
   - component: {fileID: 4791473219316785539}
+  - component: {fileID: 139875036788107113}
   m_Layer: 12
   m_Name: TargetWeapon
   m_TagString: Untagged
@@ -39686,6 +39689,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &139875036788107113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3310836332700257342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a10c44bbe814342af80233054cf6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 4791473219316785539}
 --- !u!1 &3310836332919598922
 GameObject:
   m_ObjectHideFlags: 0
@@ -49404,6 +49420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -54363,6 +54380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -59335,6 +59353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -69300,6 +69319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2392288587143870202}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0

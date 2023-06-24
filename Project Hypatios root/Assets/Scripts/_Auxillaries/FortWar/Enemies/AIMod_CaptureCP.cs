@@ -28,8 +28,10 @@ public class AIMod_CaptureCP : FortWar_AIModule
             return;
         }
 
+        var cp = GetFirstUncapturedCP();
+        if (cp == null) return;
 
-        targetPosition = GetFirstUncapturedCP().transform.position;
+        targetPosition = cp.transform.position;
         BotScript.Agent.updateRotation = true;
         BotScript.Agent.stoppingDistance = 2f;
         destinationValid = BotScript.Agent.SetDestination(targetPosition);

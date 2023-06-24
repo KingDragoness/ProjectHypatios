@@ -70,7 +70,8 @@ public class Enemy_FW_SentryGun : EnemyScript
         UpdateTick();
         UpdateVisuals();
 
-  
+        if (_chamberScript.currentStage != Chamber_Level7.Stage.Ongoing)
+            _isAttack = false;
     }
 
     private void UpdateTick()
@@ -96,7 +97,10 @@ public class Enemy_FW_SentryGun : EnemyScript
 
     private void UpdateVisuals()
     {
+        if (Time.timeScale <= 0) return;
+
         RotateToTarget();
+
 
         if (_isAttack)
         {
@@ -142,6 +146,8 @@ public class Enemy_FW_SentryGun : EnemyScript
 
         HandleOverheating();
         _isAttack = isAttacking;
+
+
     }
 
     #region Weaponary

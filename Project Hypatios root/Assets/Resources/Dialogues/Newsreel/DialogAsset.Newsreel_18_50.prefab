@@ -80,7 +80,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5119806899859711361
 MonoBehaviour:
@@ -138,6 +138,7 @@ Transform:
   - {fileID: 1926588901881244191}
   - {fileID: 1508523213366529030}
   - {fileID: 1897807149146940043}
+  - {fileID: 6135443204565239269}
   - {fileID: 5685247935756412749}
   - {fileID: 5006323614932762281}
   - {fileID: 8861743187561531849}
@@ -265,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dialogue_Content: The situation is getting worse. The battle has been raging for
-    5 days and there's no sign of stopping.
+    6 days and there's no sign of stopping.
   dialogSpeaker: {fileID: 11400000, guid: 77c9aca53f439f14fbfe4073cf803fa4, type: 2}
   portraitSpeaker: {fileID: 0}
   dialogAudioClip: {fileID: 0}
@@ -337,7 +338,7 @@ GameObject:
   - component: {fileID: 5685247935756412749}
   - component: {fileID: 8258443597552506023}
   m_Layer: 0
-  m_Name: NewsAnchor.Dialog (4)
+  m_Name: Diane.Dialog (4)
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
   m_NavMeshLayer: 0
@@ -355,7 +356,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8258443597552506023
 MonoBehaviour:
@@ -370,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dialogue_Content: Further more, there's a-
-  dialogSpeaker: {fileID: 11400000, guid: 194c4e367d67c774dad12b98b5303fab, type: 2}
+  dialogSpeaker: {fileID: 11400000, guid: 77c9aca53f439f14fbfe4073cf803fa4, type: 2}
   portraitSpeaker: {fileID: 0}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 3
@@ -564,7 +565,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2704419433809442301
 MonoBehaviour:
@@ -578,11 +579,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Stupid ads interrupting interesting stuffs...
+  Dialogue_Content: Odd timing interruption...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 4
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &8736472267352862298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6135443204565239269}
+  - component: {fileID: 7205064967000151794}
+  m_Layer: 0
+  m_Name: Diane.Dialog (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6135443204565239269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736472267352862298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7205064967000151794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736472267352862298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: A big controversy regarding this project is that deceased people
+    has been used as an identity construct to insert into the Ionis lifeform.
+  dialogSpeaker: {fileID: 11400000, guid: 77c9aca53f439f14fbfe4073cf803fa4, type: 2}
+  portraitSpeaker: {fileID: 0}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []

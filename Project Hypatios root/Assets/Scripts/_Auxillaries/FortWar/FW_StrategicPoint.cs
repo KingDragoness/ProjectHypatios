@@ -60,6 +60,8 @@ public class FW_StrategicPoint : MonoBehaviour
     public bool IsCurrentCP()
     {
         var cp = Chamber_Level7.instance.controlPoint.Find(x => x.isCaptured == false);
+        if (cp == null)
+            return false;
 
         //Debug.Log(cp.CPNumber);
         if (cp.CPNumber == controlPoint)

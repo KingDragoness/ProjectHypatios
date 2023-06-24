@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class Interact_NewsTV : MonoBehaviour
 {
     [System.Serializable]
     public class Newsreel
     {
-        public int hour = 18;
-        public int minute = 54;
+        [HorizontalGroup("1")] public int hour = 18;
+        [HorizontalGroup("1")] [HideLabel] public int minute = 54;
         public Interact_MultiDialoguesTrigger dialoguePrefab;
+
+        [HideInEditorMode]
+        [Button()]
+        public void TriggerMessage()
+        {
+            var objectPrefab1 = Instantiate(dialoguePrefab);
+            objectPrefab1.TriggerMessage();
+            Destroy(objectPrefab1, 1f);
+        }
     }
 
     public List<Newsreel> AllNewsReels = new List<Newsreel>();

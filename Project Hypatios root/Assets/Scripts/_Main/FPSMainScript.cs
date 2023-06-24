@@ -450,7 +450,7 @@ public class FPSMainScript : MonoBehaviour
         Player.Health.targetHealth = Player.Health.maxHealth.Value;
         Player.Health.HealthSpeed = 50f;
         Player.PerkData.Temp_CustomPerk = savedata.AllPerkDatas.Temp_CustomPerk;
-        Player.PerkData.Temp_StatusEffect = savedata.AllPerkDatas.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
+        Player.PerkData.Temp_StatusEffect.RemoveAll(x => x.Time < 9999); // = savedata.AllPerkDatas.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
         everUsed_Paradox = savedata.everUsed_Paradox;
         everUsed_WeaponShop = savedata.everUsed_WeaponShop;
         otherEverUsed = savedata.otherEverUsed;
@@ -478,6 +478,7 @@ public class FPSMainScript : MonoBehaviour
 
         if (hypatiosSave.sceneEntryCache == null) hypatiosSave.sceneEntryCache = new HypatiosSave.EntryCache();
 
+        hypatiosSave.AllPerkDatas = Player.PerkData;
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
@@ -492,12 +493,11 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.persistent_PlayerStat = persistent_PlayerStat;
         hypatiosSave.run_PlayerStat = run_PlayerStat;
         hypatiosSave.AllPerkDatas.Temp_CustomPerk = Player.PerkData.Temp_CustomPerk;
-        hypatiosSave.AllPerkDatas.Temp_StatusEffect = Player.PerkData.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
+        hypatiosSave.AllPerkDatas.Temp_StatusEffect.RemoveAll(x => x.Time < 9999); //= Player.PerkData.Temp_StatusEffect.FindAll(x => x.Time >= 9999);
         hypatiosSave.everUsed_Paradox = everUsed_Paradox;
         hypatiosSave.everUsed_WeaponShop = everUsed_WeaponShop;
         hypatiosSave.otherEverUsed = otherEverUsed;
         hypatiosSave.favoritedItems = favoritedItems;
-        hypatiosSave.AllPerkDatas = Player.PerkData;
 
 
         foreach (var weaponDataResource in Hypatios.Assets.Weapons)

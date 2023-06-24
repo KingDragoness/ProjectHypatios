@@ -131,14 +131,14 @@ public class FW_ControlPoint : MonoBehaviour
 
     }
 
-    public void CaptureCP()
+    public void CaptureCP(bool playAudio = true)
     {
         isCaptured = true;
         OnCaptured?.Invoke();
 
         if (audio_CPCaptured != null && CPNumber != 0)
         {
-            audio_CPCaptured.Play();
+            if (playAudio) audio_CPCaptured.Play();
             DialogueSubtitleUI.instance.QueueDialogue("Attention, a control point has been captured by the red team.", "ANNOUNCER", 8f);
         }
     }
