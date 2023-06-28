@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class Interact_MultiDialoguesTrigger : MonoBehaviour
 {
@@ -105,6 +106,16 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
 
         OnDialogueTriggered?.Invoke();
         alreadyTriggered = true;
+    }
+
+    [Button("Trigger from Prefab")]
+    public void TriggerMessage_Prefab()
+    {
+        if (Application.isPlaying == false) return;
+
+        var objectPrefab1 = Instantiate(this);
+        objectPrefab1.TriggerMessage();
+        Destroy(objectPrefab1, 1f);
     }
 
     public void ManualTriggeredCheck()

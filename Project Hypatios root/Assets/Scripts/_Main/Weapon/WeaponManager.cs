@@ -370,7 +370,7 @@ public class WeaponManager : MonoBehaviour
     private IEnumerator SetCrosshairHitActive()
     {
         MainGameHUDScript hudScript = MainGameHUDScript.Instance;
-
+        hudScript.crosshairHit.gameObject.SetActive(false);
         hudScript.crosshairHit.gameObject.SetActive(true);
         MainGameHUDScript.Instance.audio_CrosshairClick.Play();
         yield return new WaitForSeconds(.2f);
