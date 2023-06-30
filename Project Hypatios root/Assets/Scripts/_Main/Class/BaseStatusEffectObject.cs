@@ -43,6 +43,7 @@ public class BaseStatusEffectObject : ScriptableObject
         if (Hypatios.Player.PerkData.Temp_StatusEffect.Find(x => x.ID == GetID()) == null)
         {
             Hypatios.Player.PerkData.Temp_StatusEffect.Add(statusEffectDat);
+            Hypatios.Event.InvokeStatusEvent(this);
             Hypatios.Player.ReloadStatEffects();
         }
     }

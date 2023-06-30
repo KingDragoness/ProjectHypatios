@@ -10,6 +10,7 @@ public class HypatiosEvents : MonoBehaviour
 {
 
     public gEvent_OnItemAdd OnItemAdd;
+    public gEvent_OnStatusAilment OnStatusAilment;
 
 
     private void Start()
@@ -20,6 +21,8 @@ public class HypatiosEvents : MonoBehaviour
     private void OnDisable()
     {
         OnItemAdd.d_Listeners = null;
+        if (OnStatusAilment.d_Listeners != null)
+            OnStatusAilment.d_Listeners = null;
     }
 
     public void PlayerReceiveItem(ItemInventory itemClass)
@@ -28,6 +31,11 @@ public class HypatiosEvents : MonoBehaviour
         {
             Hypatios.Game.TriviaComplete(itemClass.trivia);
         }
+    }
+
+    public void InvokeStatusEvent(BaseStatusEffectObject ailment)
+    {
+        OnStatusAilment?.d_Listeners.Invoke(ailment);
     }
 }
 

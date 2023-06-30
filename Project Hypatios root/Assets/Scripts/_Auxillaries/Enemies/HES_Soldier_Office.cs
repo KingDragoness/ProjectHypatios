@@ -120,10 +120,10 @@ public class HES_Soldier_Office : EnemyScript
             return;
         }
 
+        UpdateAIState();
         if (currentTarget == null) return;
         AI_Detection();
 
-        UpdateAIState();
     }
 
     private void UpdateRagdolls()

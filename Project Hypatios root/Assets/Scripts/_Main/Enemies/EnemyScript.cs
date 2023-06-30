@@ -25,6 +25,7 @@ public abstract class EnemyScript : Entity
 
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] public Entity currentTarget;
     [FoldoutGroup("AI")] [ShowInInspector] public bool hasSeenPlayer = false;
+    [FoldoutGroup("AI")] [ShowInInspector] public bool useSecondPass = true;
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] private bool _canLookAtTarget = false;
     [FoldoutGroup("AI")] [ShowInInspector] [SerializeField] public bool isAIEnabled = true;
     [FoldoutGroup("AI")] [SerializeField] protected internal Transform eyeLocation;
@@ -250,39 +251,45 @@ public abstract class EnemyScript : Entity
                 var inverseDir = (eyeLocation.transform.position - hit.point).normalized;
 
                 //secondpass
-                RaycastHit secondHit;
-                if (Physics.Raycast(hit.point + inverseDir, inverseDir, out secondHit, hit.distance + 1, Hypatios.Enemy.baseDetectionLayer, QueryTriggerInteraction.Ignore))
+                if (useSecondPass)
                 {
-                   
-                }
-                else
-                {
-                    secondHit.point = hit.point + (inverseDir * (hit.distance + 1f));
-                }
-                if (debug_FirstPassHit != null)
-                {
-                    debug_FirstPassHit.transform.position = hit.point + inverseDir;
-                    debug_FirstPassHit.transform.rotation = Quaternion.LookRotation(inverseDir, Vector3.up);
-                }
-                Debug.DrawLine(eyeLocation.transform.position, hit.point, Color.red);
-                Debug.DrawLine(hit.point, secondHit.point, Color.red);
-
-                var secondDir = (hit.point - secondHit.point).normalized;
-                float limitThreshold = 3f;
-                float dist = Vector3.Distance(secondHit.point, eyeLocation.transform.position);
-                if (debug_SecondPassHit != null)
-                {
-                    if (secondHit.collider != null)
+                    RaycastHit secondHit;
+                    if (Physics.Raycast(hit.point + inverseDir, inverseDir, out secondHit, hit.distance + 1, Hypatios.Enemy.baseDetectionLayer, QueryTriggerInteraction.Ignore))
                     {
-                        debug_SecondPassHit.transform.position = secondHit.point;
-                        debug_SecondPassHit.transform.rotation = Quaternion.LookRotation(secondDir, Vector3.up);
+
                     }
                     else
                     {
-                        debug_SecondPassHit.transform.position = new Vector3(-999f, -999f, -9999f);
+                        secondHit.point = hit.point + (inverseDir * (hit.distance + 1f));
                     }
+                    if (debug_FirstPassHit != null)
+                    {
+                        debug_FirstPassHit.transform.position = hit.point + inverseDir;
+                        debug_FirstPassHit.transform.rotation = Quaternion.LookRotation(inverseDir, Vector3.up);
+                    }
+                    Debug.DrawLine(eyeLocation.transform.position, hit.point, Color.red);
+                    Debug.DrawLine(hit.point, secondHit.point, Color.red);
+
+                    var secondDir = (hit.point - secondHit.point).normalized;
+                    float limitThreshold = 3f;
+                    float dist = Vector3.Distance(secondHit.point, eyeLocation.transform.position);
+                    if (debug_SecondPassHit != null)
+                    {
+                        if (secondHit.collider != null)
+                        {
+                            debug_SecondPassHit.transform.position = secondHit.point;
+                            debug_SecondPassHit.transform.rotation = Quaternion.LookRotation(secondDir, Vector3.up);
+                        }
+                        else
+                        {
+                            debug_SecondPassHit.transform.position = new Vector3(-999f, -999f, -9999f);
+                        }
+                    }
+
+                    if (dist <= limitThreshold) secondPassSucceed = true;
                 }
-                if (dist <= limitThreshold) secondPassSucceed = true;
+                else
+                    secondPassSucceed = true;
 
                 if (firstPassSucceed && secondPassSucceed)
                 {            

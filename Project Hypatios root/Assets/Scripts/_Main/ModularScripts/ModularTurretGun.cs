@@ -26,6 +26,7 @@ public class ModularTurretGun : MonoBehaviour
     [FoldoutGroup("References")] public Transform outWeaponTransform;
     [FoldoutGroup("References")] public GameObject flashWeapon;
     [FoldoutGroup("References")] public GameObject tracerLaser;
+    [FoldoutGroup("References")] [Tooltip("This is currently used by Force fielder.")] public GameObject prefabCreate;
 
     private Entity targetEnemy;
     private float nextAttackTime = 0f;
@@ -234,19 +235,29 @@ public class ModularTurretGun : MonoBehaviour
             var damageReceiver = hit.collider.GetComponent<damageReceiver>();
 
             if (damageReceiver == null)
-                return;
-
-            if (damageReceiver.enemyScript == null)
-                return;
-
-            if (damageReceiver.enemyScript.Stats.IsDead)
-                return;
-
-            if (mySelf != null)
             {
-                if (damageReceiver.enemyScript.Stats.MainAlliance == mySelf.Stats.MainAlliance)
+                if (originToken == DamageToken.DamageOrigin.Enemy && hit.collider.transform == Hypatios.Player.transform)
+                {
+
+                }
+                else
                     return;
             }
+            else
+            {
+                if (damageReceiver.enemyScript == null)
+                    return;
+
+                if (damageReceiver.enemyScript.Stats.IsDead)
+                    return;
+
+                if (mySelf != null)
+                {
+                    if (damageReceiver.enemyScript.Stats.MainAlliance == mySelf.Stats.MainAlliance)
+                        return;
+                }
+            }
+        
         }
 
 
@@ -301,6 +312,12 @@ public class ModularTurretGun : MonoBehaviour
             points[1] = hit.point;
             var lr = laserLine.GetComponent<LineRenderer>();
             lr.SetPositions(points);
+        }
+
+        if (prefabCreate != null)
+        {
+            var newPrefab = Instantiate(prefabCreate, hit.point, prefabCreate.transform.rotation);
+            newPrefab.gameObject.SetActive(true);
         }
     }
 

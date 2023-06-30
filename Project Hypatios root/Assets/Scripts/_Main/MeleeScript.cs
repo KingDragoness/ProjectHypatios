@@ -10,6 +10,7 @@ public class MeleeScript : MonoBehaviour
     public float meleeRange;
     public AudioSource audio_HitAttacked;
     public AudioSource audio_Swing;
+    public Vector3 recoilVector;
     float meleeFrame = 15f;
     float meleeTime;
     float curMeleeTime;
@@ -17,6 +18,8 @@ public class MeleeScript : MonoBehaviour
     Animator meleeAnim;
     bool hasMeleed;
     public bool IsOnMeleeAttack = false;
+
+    protected internal Recoil gunRecoil;
 
     WeaponManager WeaponManager;
 
@@ -28,6 +31,8 @@ public class MeleeScript : MonoBehaviour
         meleeAnim = GetComponent<Animator>();
         meleeTime = meleeFrame / 30f;
         curMeleeTime = meleeTime;
+        gunRecoil = WeaponManager.Recoil;
+
     }
 
     // Update is called once per frame
@@ -88,6 +93,7 @@ public class MeleeScript : MonoBehaviour
         RaycastHit hit;
         Vector3 raycastDir = new Vector3(cam.transform.forward.x, cam.transform.forward.y, cam.transform.forward.z);
         audio_Swing.Play();
+        WeaponManager.Recoil.CustomRecoil(recoilVector);
 
         if (Physics.Raycast(cam.transform.position, raycastDir, out hit, meleeRange, Hypatios.Enemy.baseSolidLayer, QueryTriggerInteraction.Ignore))
         {
