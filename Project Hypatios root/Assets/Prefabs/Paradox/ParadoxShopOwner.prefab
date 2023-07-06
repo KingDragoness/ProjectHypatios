@@ -96,7 +96,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.42168993, b: 0, a: 1}
-  m_Intensity: 6.23
+  m_Intensity: 3
   m_Range: 8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -177,6 +177,23 @@ MonoBehaviour:
   materialIndex: 0
   uvAnimationRate: {x: 0.1, y: 0}
   render: {fileID: 1104507723597599081}
+  textureName: _MainTex
+  isDeltaTime: 0
+--- !u!114 &1599310503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464518272463464836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffd03dea83454a429fb4f96224978fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialIndex: 0
+  uvAnimationRate: {x: 0.1, y: 0}
+  render: {fileID: 1104507723584587857}
   textureName: _MainTex
   isDeltaTime: 0
 --- !u!114 &2008290379
@@ -445,23 +462,6 @@ MonoBehaviour:
   triggerEvent: {fileID: 3392015388042873299}
   selectedParadox: {fileID: 0}
   DEBUG_AlwaysOn: 0
---- !u!114 &1599310503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464518272463464836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dffd03dea83454a429fb4f96224978fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  materialIndex: 0
-  uvAnimationRate: {x: 0.1, y: 0}
-  render: {fileID: 1104507723584587857}
-  textureName: _MainTex
-  isDeltaTime: 0
 --- !u!1 &3392015388042873325
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,10 +585,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  triggerStayEvents:
+    m_PersistentCalls:
+      m_Calls: []
   triggerExitEvents:
     m_PersistentCalls:
       m_Calls: []
   objectToCompare: {fileID: 0}
+  usePlayer: 0
 --- !u!1 &3392015388825179861
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,13 +636,13 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.56360126, b: 0.17647058, a: 1}
-  m_Intensity: 13.32
-  m_Range: 6.27
+  m_Intensity: 3
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1

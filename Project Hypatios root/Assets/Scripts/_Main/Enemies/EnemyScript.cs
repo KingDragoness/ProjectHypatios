@@ -158,7 +158,29 @@ public abstract class EnemyScript : Entity
     private void Died()
     {
         Hypatios.Enemy.OnEnemyDied?.Invoke(this, _lastDamageToken);
+        if (_baseStat.lootDrop != null) DropLoot();
         Stats.IsDead = true;
+    }
+
+    private void DropLoot()
+    {
+        Inventory inventory = new Inventory();
+        var lootTable = _baseStat.lootDrop;
+        int roll = Random.Range(lootTable.minRoll - 1, lootTable.maxRoll);
+
+        for (int x = 0; x < roll; x++)
+        {
+            var item = _baseStat.lootDrop.GetEntry(Hypatios.GetSeed()).item;
+
+            inventory.AddItem(item, 1);
+        }
+
+        foreach(var itemDat in inventory.allItemDatas)
+        {
+            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+            Hypatios.Player.Inventory.AddItem(itemClass);
+            MainGameHUDScript.Instance.lootItemUI.NotifyItemLoot(itemDat);
+        }
     }
 
     #endregion

@@ -16,6 +16,10 @@ public class BaseModifierEffectObject : ScriptableObject
     [Tooltip("More like there's a status effect that can this at realtime rather very rigid perk upgrade like subway shortcut or soul bonus.")] public bool hasPerkUpgrade = false;
     [TextArea(3,6)] [SerializeField] private string DescriptionModifier;
 
+    [FoldoutGroup("Essence")] public float baseValue = 0.1f;
+    [FoldoutGroup("Essence")] public bool craftableEssence = false;
+    [FoldoutGroup("Essence")] [ShowIf("craftableEssence")] public List<Recipe> requirementCrafting = new List<Recipe>();
+
     [SerializeField] private LocalizedString loc_TitlePerk;
     [SerializeField] private LocalizedString loc_DescriptionModifier;
 

@@ -429,6 +429,20 @@ public class ConsoleCommand : MonoBehaviour
             materials.Add("Material_NuclearMaterial");
             materials.Add("Material_RareMetal");
 
+            materials.Add("Material_ExoticCore");
+            materials.Add("Material_MercArm");
+            materials.Add("Material_RadioactiveWing");
+            materials.Add("Material_Reactant");
+            materials.Add("Material_RegenCore");
+            materials.Add("Material_SentinelCore");
+            materials.Add("Material_SpiderLeg");
+            materials.Add("Material_SpiderEye");
+            materials.Add("Material_Titansteel");
+            materials.Add("Material_ZombieArm");
+            materials.Add("Material_DecaStabilization");
+            materials.Add("Material_EssenceBottle");
+            materials.Add("PropFood_Corpse");
+
 
             foreach (var mat in materials)
             {

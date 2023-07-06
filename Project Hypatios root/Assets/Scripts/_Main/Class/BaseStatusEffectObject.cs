@@ -14,6 +14,8 @@ public class BaseStatusEffectObject : ScriptableObject
     [TextArea(3, 5)] [SerializeField] private string _description = "";
     public Sprite PerkSprite;
     [InfoBox("'Origin' left it blank, it will be filled using ID's (e.g: 'playerStatusEffect_bleeding')")] public List<PerkCustomEffect> allStatusEffects = new List<PerkCustomEffect>();
+    [FoldoutGroup("Essence")] public bool craftableEssence = false;
+    [FoldoutGroup("Essence")] [ShowIf("craftableEssence")] public List<Recipe> requirementCrafting = new List<Recipe>();
     public string Description { get => _description; }
 
     public string GetID()
@@ -42,9 +44,15 @@ public class BaseStatusEffectObject : ScriptableObject
         statusEffectDat.Time = Time;
         if (Hypatios.Player.PerkData.Temp_StatusEffect.Find(x => x.ID == GetID()) == null)
         {
+            if (allStatusEffects.Find(x => x.statusCategoryType == ModifierEffectCategory.Poison) != null)
+            {
+                Hypatios.Player.Poison();
+            }
             Hypatios.Player.PerkData.Temp_StatusEffect.Add(statusEffectDat);
             Hypatios.Event.InvokeStatusEvent(this);
             Hypatios.Player.ReloadStatEffects();
+
+         
         }
     }
 }

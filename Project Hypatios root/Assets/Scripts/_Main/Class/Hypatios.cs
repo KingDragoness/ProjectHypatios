@@ -111,9 +111,8 @@ public class Hypatios : MonoBehaviour
             if (MAXIMUM_FRAMERATE >= 201)
                 Application.targetFrameRate = -1; else Application.targetFrameRate = MAXIMUM_FRAMERATE;
 
-            if (FULLSCREEN == 0)
-                isFullscreen = false;
-            else 
+            //Now the game is permanently windowed
+            //if (FULLSCREEN == 0) isFullscreen = false; else 
                 isFullscreen = true;
 
             if (RESOLUTION != -1)
@@ -311,6 +310,9 @@ public class Hypatios : MonoBehaviour
     private AssetStorageDatabase _assetStorage;
 
     [SerializeField]
+    private PlayerRPG _playerRPG;
+
+    [SerializeField]
     private MainUI _ui;
 
     [SerializeField]
@@ -342,6 +344,7 @@ public class Hypatios : MonoBehaviour
     public static ConsoleCommand ConsoleCommand { get => Instance._cc; }
     public static CharacterScript Player { get => Instance._characterScript; }
     public static AssetStorageDatabase Assets { get => Instance._assetStorage; }
+    public static PlayerRPG RPG { get => Instance._playerRPG; }
     public static MainUI UI { get => Instance._ui; }
     public static Camera MainCamera { get => Instance._mainCamera; }
     public static cameraScript MainCameraScript { get => Instance._mainCameraScript; }

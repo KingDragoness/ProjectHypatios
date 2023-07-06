@@ -24,7 +24,8 @@ public class Inventory
         ItemDataSave itemDataSave = null;
 
 
-        if (SearchByID(itemInventory.GetID()) != null && itemInventory.category != ItemInventory.Category.Weapon)
+        if (SearchByID(itemInventory.GetID()) != null && itemInventory.category != ItemInventory.Category.Weapon
+            && itemInventory.isGenericItem == false)
         {
             itemDataSave = SearchByID(itemInventory.GetID());
             itemDataSave.count += count;
@@ -38,6 +39,39 @@ public class Inventory
             itemDataSave.count = count;
             if (itemDataSave.category == ItemInventory.Category.Weapon) itemDataSave.GenerateWeaponData();
             allItemDatas.Add(itemDataSave);
+        }
+
+        OnItemAdded?.Raise(itemInventory);
+        return itemDataSave;
+    }
+
+    public ItemDataSave AddItemGenericSafe(ItemInventory itemInventory, ItemDataSave _itemDat, int count = 1)
+    {
+        ItemDataSave itemDataSave = null;
+
+
+        if (SearchByID(itemInventory.GetID()) != null 
+            && itemInventory.category != ItemInventory.Category.Weapon)
+        {
+            itemDataSave = SearchByID(itemInventory.GetID());
+            itemDataSave.count += count;
+
+        }
+        else
+        {
+            if (_itemDat.isGenericItem == false)
+            {
+                itemDataSave = new ItemDataSave();
+                itemDataSave.ID = itemInventory.GetID();
+                itemDataSave.category = itemInventory.category;
+                itemDataSave.count = count;
+                if (itemDataSave.category == ItemInventory.Category.Weapon) itemDataSave.GenerateWeaponData();
+                allItemDatas.Add(itemDataSave);
+            }
+            else
+            {
+                allItemDatas.Add(_itemDat);
+            }
         }
 
         OnItemAdded?.Raise(itemInventory);
@@ -165,19 +199,45 @@ public class HypatiosSave
     {
         public string ID = "";
     }
-  
+
+    public enum EssenceType
+    {
+        Modifier,
+        Ailment
+    }
+
     [System.Serializable]
     public class ItemDataSave
     {
+
+
         public string ID = "";
         public int count = 0;
         public ItemInventory.Category category;
         public WeaponDataSave weaponData; //only for weapon
+
+        //Generic items
+        public bool isGenericItem = false;
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public string SERUM_CUSTOM_NAME = "Some Serum";
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_TIME = 4f;
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_ALCOHOL = 0f;
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public List<PerkCustomEffect> SERUM_CUSTOM_EFFECTS = new List<PerkCustomEffect>();
+        [ShowIf("GENERIC_ESSENCE_POTION", true)] public ModifierEffectCategory ESSENCE_CATEGORY = ModifierEffectCategory.ArmorRating;
+        [ShowIf("GENERIC_ESSENCE_POTION", true)] public string ESSENCE_STATUSEFFECT_GROUP = ""; //Depression, Bleeding
+        [ShowIf("GENERIC_ESSENCE_POTION", true)] public EssenceType ESSENCE_TYPE;
+        [ShowIf("isGenericItem", true)] public bool GENERIC_KTHANID_SERUM = false;
+        [ShowIf("isGenericItem", true)] public bool GENERIC_ESSENCE_POTION = false;
+
+
         public bool IsFavorite
         {
             get
             {
                 if (category == ItemInventory.Category.Weapon)
+                {
+                    return isFavorited;
+                }
+                else if (isGenericItem)
                 {
                     return isFavorited;
                 }
@@ -190,6 +250,10 @@ public class HypatiosSave
             set
             {
                 if (category == ItemInventory.Category.Weapon)
+                {
+                    isFavorited = value;
+                }
+                else if (isGenericItem)
                 {
                     isFavorited = value;
                 }
@@ -208,6 +272,10 @@ public class HypatiosSave
         public bool IsItemFavorited()
         { 
             if (category == ItemInventory.Category.Weapon)
+            {
+                return isFavorited;
+            }
+            else if (isGenericItem)
             {
                 return isFavorited;
             }

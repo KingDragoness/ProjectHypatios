@@ -171,59 +171,7 @@ public class FavoriteMenuUI : MonoBehaviour
         var itemData = button.GetItemData();
 
 
-        if (itemCLass.category == ItemInventory.Category.Weapon)
-        {
-            if (Hypatios.Player.Weapon.GetGunScript(itemCLass.attachedWeapon.nameWeapon) == null
-                && Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count <= 3)
-            {
-                Hypatios.Game.currentWeaponStat.Add(itemData.weaponData);
-                Hypatios.Player.Weapon.TransferAllInventoryAmmoToOneItemData(ref itemData);
-                Hypatios.Player.Weapon.RefreshWeaponLoadout(itemData.ID);
-                Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
-
-                itemData.weaponData.currentAmmo = 0;
-            }
-            else
-            {
-                Debug.LogError("Cannot use same weapon/tto many weapons equipped");
-                return;
-            }
-        }
-        else if (itemCLass.category == ItemInventory.Category.Consumables)
-        {
-            float healSpeed = itemCLass.consume_HealAmount / itemCLass.consume_HealTime;
-
-            soundManagerScript.instance.PlayOneShot("consume");
-            Hypatios.Player.Health.Heal((int)itemCLass.consume_HealAmount, healSpeed);
-            Hypatios.Player.Health.alcoholMeter += itemCLass.consume_AlcoholAmount;
-
-            if (itemCLass.isInstantDashRefill)
-            {
-                Hypatios.Player.timeSinceLastDash = 10f;
-            }
-            if (itemCLass.statusEffect != null)
-            {
-                itemCLass.statusEffect.AddStatusEffectPlayer(itemCLass.statusEffectTime);
-            }
-            if (itemCLass.statusEffectToRemove.Count > 0)
-            {
-                foreach (var sg in itemCLass.statusEffectToRemove)
-                {
-                    if (sg == null) continue;
-                    Hypatios.Player.RemoveStatusEffectGroup(sg);
-                }
-            }
-
-            Hypatios.Player.Inventory.RemoveItem(itemData);
-        }
-
-        {
-            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>();
-            foreach (var weaponSlot in weaponSlots)
-            {
-                weaponSlot.RefreshUI();
-            }
-        }
+        Hypatios.RPG.UseItem(itemCLass, itemData);
 
         RefreshUIContainer();
     }
@@ -303,8 +251,8 @@ public class FavoriteMenuUI : MonoBehaviour
         if (itemClass == null) return;
 
         itemStatUI.gameObject.SetActive(true);
-        itemStat_Title.text = itemClass.GetDisplayText();
-        itemStat_Description.text = itemClass.Description;
+        itemStat_Title.text = Hypatios.RPG.GetPreviewFav_Description(itemClass, itemDat);
+        itemStat_Description.text = Hypatios.RPG.GetPreviewFav_Title(itemClass, itemDat);
         ShowPreviewHealthRestore();
     }
 

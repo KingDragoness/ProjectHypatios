@@ -18,7 +18,7 @@ public class FavItemButton : MonoBehaviour
         var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 
-        Name_label.text = itemClass.GetDisplayText();
+        Name_label.text = Hypatios.RPG.GetItemName(itemClass, itemDat);
         Count_label.text = itemDat.count.ToString();
 
 

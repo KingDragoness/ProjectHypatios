@@ -33,6 +33,7 @@ public class ItemInventory : ScriptableObject
         Drinks,
         Key = 40,
         Weapon = 50,
+        Essence
     }
 
     [InfoBox("If DisplayName is empty, it will use ID's")] [SerializeField] private string _displayName = "";
@@ -40,16 +41,19 @@ public class ItemInventory : ScriptableObject
     public Category category;
     public SubiconCategory subCategory;
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
-    [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;
-    [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
-    public bool isTriggerTrivia = false;
-    [ShowIf("isTriggerTrivia", true)] public Trivia trivia;
-    [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
-    [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
-    [ShowIf("category", Category.Consumables)] public BaseStatusEffectObject statusEffect;
-    [ShowIf("category", Category.Consumables)] public List<BaseStatusEffectObject> statusEffectToRemove;
-    [ShowIf("statusEffect", true)] public float statusEffectTime = 5;
-    [ShowIf("category", Category.Consumables)] [Range(0.1f,30f)] public float consume_HealTime = 5; //this is different from speed (higher heal time means longer heal time)
+    public bool isGenericItem = false;
+    [ShowIf("isGenericItem", true)] public bool GENERIC_KTHANID_SERUM = false;
+    [ShowIf("isGenericItem", true)] public bool GENERIC_ESSENCE_POTION = false;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
+    [HideIf("isGenericItem", true)] public bool isTriggerTrivia = false;
+    [HideIf("isGenericItem", true)] [ShowIf("isTriggerTrivia", true)] public Trivia trivia;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public BaseStatusEffectObject statusEffect;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public List<BaseStatusEffectObject> statusEffectToRemove;
+    [HideIf("isGenericItem", true)] [ShowIf("statusEffect", true)] public float statusEffectTime = 5;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] [Range(0.1f,30f)] public float consume_HealTime = 5; //this is different from speed (higher heal time means longer heal time)
 
     public string Description { get => _description;  }
 

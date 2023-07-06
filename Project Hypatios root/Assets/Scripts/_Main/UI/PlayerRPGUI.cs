@@ -334,63 +334,17 @@ public class PlayerRPGUI : MonoBehaviour
         var itemData = button.GetItemData();
 
 
-        if (itemCLass.category == ItemInventory.Category.Weapon)
-        {
-            if (Hypatios.Player.Weapon.GetGunScript(itemCLass.attachedWeapon.nameWeapon) == null
-                && Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count <= 3)
-            {
-                Hypatios.Game.currentWeaponStat.Add(itemData.weaponData);
-                Hypatios.Player.Weapon.TransferAllInventoryAmmoToOneItemData(ref itemData);
-                Hypatios.Player.Weapon.RefreshWeaponLoadout(itemData.ID);
-                Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
-
-                itemData.weaponData.currentAmmo = 0;
-            }
-            else
-            {
-                Debug.LogError("Cannot use same weapon/tto many weapons equipped");
-                return;
-            }
-        }
-        else if (itemCLass.category == ItemInventory.Category.Consumables)
-        {
-            float healSpeed = itemCLass.consume_HealAmount / itemCLass.consume_HealTime;
-
-            soundManagerScript.instance.PlayOneShot("consume");
-            Hypatios.Player.Health.Heal((int)itemCLass.consume_HealAmount, healSpeed); 
-            Hypatios.Player.Health.alcoholMeter += itemCLass.consume_AlcoholAmount;
-
-            if (itemCLass.isInstantDashRefill)
-            {
-                Hypatios.Player.timeSinceLastDash = 10f;
-            }
-            if (itemCLass.statusEffect != null)
-            {
-                itemCLass.statusEffect.AddStatusEffectPlayer(itemCLass.statusEffectTime);
-            }
-            if (itemCLass.statusEffectToRemove.Count > 0)
-            {
-                foreach(var sg in itemCLass.statusEffectToRemove)
-                {
-                    if (sg == null) continue;
-                    Hypatios.Player.RemoveStatusEffectGroup(sg);
-                }
-            }
-
-            Hypatios.Player.Inventory.RemoveItem(itemData);
-        }
+        Hypatios.RPG.UseItem(itemCLass, itemData);
 
         {
-            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>();
+            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>(); //lol what
             foreach (var weaponSlot in weaponSlots)
             {
                 weaponSlot.RefreshUI();
             }
         }
 
-
         RefreshUI();
-
 
         perkTooltipScript.gameObject.SetActive(false);
         itemTooltipScript.gameObject.SetActive(false);
@@ -450,72 +404,25 @@ public class PlayerRPGUI : MonoBehaviour
     {
         var itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
-        string sLeft = "";
-        string sRight = "";
-        string s_interaction = "";
+        string sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, itemDat);
+        string sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, itemDat);
 
         if (itemClass.category == ItemInventory.Category.Weapon)
         {
             var weaponClass = itemClass.attachedWeapon;
             var weaponSave = itemDat.weaponData;
-            _currentHighlightedWeaponData = weaponSave;
-            var weaponStat = weaponClass.GetFinalStat(weaponSave.allAttachments);
-            int totalAmmoOfType = Hypatios.Player.Weapon.GetTotalAmmoOfWeapon(weaponClass.nameWeapon);
-            string s_allAttachments = "";
-            string s_Description = $"{itemClass.Description}";
-
-            bool isSimilarWeaponEquipped = false;
-            bool isTooManyEqupped = false;
-
-            if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) != null) isSimilarWeaponEquipped = true;
-            if (Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count >= 4) isTooManyEqupped = true;
-
-            foreach (var attachment in weaponSave.allAttachments)
-            {
-                s_allAttachments += $"{weaponClass.GetAttachmentName(attachment)}, ";
-            }
-
-            if (!isSimilarWeaponEquipped && !isTooManyEqupped)
-            {
-                s_interaction = "[LMB to equip weapon] [X to discard] [F to favorite]";
-            }
-            else
-            {
-                s_interaction = "[X to discard] [F to favorite]";
-            }
-
-
-            sLeft += $"Damage\n";
-            sLeft += $"Fire rate\n";
-            sLeft += $"Mag size\n";
-            sLeft += $"Ammo Left\n";
-            sLeft += $"\n<size=14>{s_Description}</size>\n";
-            sLeft += $"\n<size=14>{s_interaction}</size>\n";
-            //sLeft += $"\n<size=14>{s_allAttachments}</size>";
-
-            sRight += $"{weaponStat.damage}\n";
-            sRight += $"{weaponStat.cooldown} per sec\n";
-            sRight += $"{weaponStat.magazineSize}\n";
-            sRight += $"{totalAmmoOfType}\n";
-
+            _currentHighlightedWeaponData = weaponSave;     
             PreviewWeapon(weaponClass, weaponSave);
         }
         else
         {
             if (itemClass.category != ItemInventory.Category.Consumables)
             {
-                s_interaction = "[X to discard] [F to favorite]";
             }
             else
             {
-                s_interaction = "[LMB to consume] [X to discard] [F to favorite]";
                 ShowPreviewHealthRestore();
-            }
-
-            sLeft += $"{itemClass.GetDisplayText()}\n";
-            sLeft += $"\n{itemClass.Description}\n";
-            sLeft += $"\n<size=14>{s_interaction}</size>\n";
-            sRight += $"({itemDat.count})\n";
+            }     
         }
 
         itemTooltip_LeftHandedLabel.text = sLeft;
@@ -679,7 +586,7 @@ public class PlayerRPGUI : MonoBehaviour
 
 
         perkTooltip_LeftHandedLabel.text = $"{baseStat.GetTitlePerk()}";
-        perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(charStatButton.category1, value1);
+        perkTooltip_RightHandedLabel.text = Hypatios.RPG.GetDescription(charStatButton.category1, value1);
 
         Hypatios.UI.ShowTooltipSmall(charStatButton.GetComponent<RectTransform>());
     }
@@ -708,7 +615,7 @@ public class PlayerRPGUI : MonoBehaviour
             }
             else
             {
-                perkTooltip_RightHandedLabel.text = RPG_CharPerkButton.GetDescription(_currentPerk.statusEffect.category, value);
+                perkTooltip_RightHandedLabel.text = Hypatios.RPG.GetDescription(_currentPerk.statusEffect.category, value);
             }
 
             Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>());
@@ -722,7 +629,7 @@ public class PlayerRPGUI : MonoBehaviour
             foreach(var modifier in statEffectGroup.allStatusEffects)
             {
                 var baseModifier = Hypatios.Assets.GetStatusEffect(modifier.statusCategoryType);
-                str2 += $"[{baseModifier.GetTitlePerk()}] [{RPG_CharPerkButton.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
+                str2 += $"[{baseModifier.GetTitlePerk()}] [{Hypatios.RPG.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
             }
             str2 = ""; //scrapped modifier text
             bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";

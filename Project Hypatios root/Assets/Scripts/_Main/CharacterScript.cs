@@ -288,10 +288,28 @@ public class CharacterScript : Entity
         foreach (var customPerk in PerkData.Temp_CustomPerk)
         {
             var category = customPerk.statusCategoryType;
-            var effectObject = GetGenericEffect(category, $"{customPerk.origin}-TempPerk");
+            GenericStatus effectObject = GetGenericEffect(category, $"{customPerk.origin}-TempPerk");
+
+            if (customPerk.isPermanent)
+            {
+                
+            }
+            else
+            {
+                effectObject = GetGenericEffect(category, $"SERUM-{customPerk.origin}");
+            }
 
             if (effectObject == null)
-                CreatePersistentStatusEffect(category, customPerk.Value, $"{customPerk.origin}-TempPerk");
+            {
+                if (customPerk.isPermanent)
+                {
+                    CreatePersistentStatusEffect(category, customPerk.Value, $"{customPerk.origin}-TempPerk");
+                }
+                else
+                {
+                    CreateTimerStatusEffect(category, customPerk.Value, customPerk.timer, $"SERUM-{customPerk.origin}", allowDuplicate: true);
+                }
+            }
             else
             {
                 effectObject.Value = customPerk.Value;

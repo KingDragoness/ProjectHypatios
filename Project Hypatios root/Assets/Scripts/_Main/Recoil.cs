@@ -76,12 +76,13 @@ public class Recoil : MonoBehaviour
         var magnitude = recoilRange.magnitude * (1f / Hypatios.ExtraAttackSpeedModifier());
         recoilRange *= FinalValue(baseRecoil.Value);
         targetRot += recoilRange;
-        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * playerKnockPhysics * magnitude);
+       
+        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * NoGravityMultiplier * playerKnockPhysics * magnitude);
     }
 
     public void AddCustomKnockbackForce(Vector3 dir, float multiplier)
     {
-        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * dir * multiplier * 60f);
+        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * dir * NoGravityMultiplier * multiplier * 60f);
     }
 
     public void CustomRecoil(Vector3 rot, float multiplier = 1, RecoilType type = RecoilType.MovementLand)
@@ -92,9 +93,22 @@ public class Recoil : MonoBehaviour
         if (type == RecoilType.TakeDamage)
         {
             recoilRange *= FinalValue(knockbackResistance.Value);
-            Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * playerKnockPhysics * magnitude * hurtKnockMultiplier);
+            Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * playerKnockPhysics * NoGravityMultiplier * magnitude * hurtKnockMultiplier);
         }
         targetRot += recoilRange;
+    }
+
+    public float NoGravityMultiplier
+    {
+        get
+        {
+            if (Hypatios.Player.isNoGravity)
+            {
+                return 8f;
+            }
+
+            return 1f;
+        }
     }
 
 }

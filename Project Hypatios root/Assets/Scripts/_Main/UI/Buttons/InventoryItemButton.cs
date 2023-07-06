@@ -20,7 +20,7 @@ public class InventoryItemButton : MonoBehaviour
         var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 
-        Name_label.text = itemClass.GetDisplayText();
+        Name_label.text = Hypatios.RPG.GetItemName(itemClass, itemDat);
         Count_label.text = itemDat.count.ToString();
 
         if (itemDat.IsFavorite)     
@@ -51,6 +51,9 @@ public class InventoryItemButton : MonoBehaviour
 
     public ItemInventory GetItemInventory()
     {
+        if (Hypatios.Player.Inventory.allItemDatas.Count <= index)
+            return null;
+
         var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
         var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
 

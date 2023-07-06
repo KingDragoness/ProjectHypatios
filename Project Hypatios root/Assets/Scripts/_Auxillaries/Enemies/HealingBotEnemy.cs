@@ -143,6 +143,7 @@ public class HealingBotEnemy : EnemyScript
             corpse1.transform.rotation = transform.rotation;
         }
         Destroy(gameObject);
+        OnDied?.Invoke();
         OnSelfKilled?.Invoke();
         Stats.IsDead = true;
     }

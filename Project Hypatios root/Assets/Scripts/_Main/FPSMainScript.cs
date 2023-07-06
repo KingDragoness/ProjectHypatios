@@ -14,14 +14,8 @@ using static HypatiosSave;
 public class FPSMainScript : MonoBehaviour
 {
 
-    public enum CurrentGamemode
-    {
-        Aldrich,
-        Elena,
-        TutorialMode
-    }
 
-    public CurrentGamemode currentGamemode = CurrentGamemode.Aldrich;
+    public Hypatios_Gamemode currentGamemode;
     [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
     [FoldoutGroup("Story Selection")] public SceneReference level1_Scene;
@@ -544,12 +538,10 @@ public class FPSMainScript : MonoBehaviour
 
     public void PlayerDie()
     {
-        //If elena mode do nothing
-        if (currentGamemode == CurrentGamemode.Elena)
-        {
-            //instance.BufferSaveData();
+        if (currentGamemode.character != Hypatios_Gamemode.MainCharacter.Aldrich)
             return;
-        }
+        if (currentGamemode.canSaveGame == false)
+            return;
 
         //On Aldrich mode, the player start from beginning
 

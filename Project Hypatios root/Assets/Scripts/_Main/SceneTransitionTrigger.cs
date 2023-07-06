@@ -46,9 +46,9 @@ public class SceneTransitionTrigger : MonoBehaviour
             target = Application.loadedLevel + additiveAmount;
         }
 
-        if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode) Hypatios.Game.SaveGame(targetLevel: target);
+        if (Hypatios.Game.currentGamemode.canSaveGame) Hypatios.Game.SaveGame(targetLevel: target);
         yield return new WaitForSeconds(2.2f);
-        if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode) Hypatios.Game.BufferSaveData();
+        if (Hypatios.Game.currentGamemode.canSaveGame) Hypatios.Game.BufferSaveData();
 
 
 

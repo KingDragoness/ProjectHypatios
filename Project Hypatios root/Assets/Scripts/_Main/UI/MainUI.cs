@@ -23,7 +23,8 @@ public class MainUI : MonoBehaviour
         Cinematic,
         FreecamMode,
         Trivia,
-        Favorite
+        Favorite,
+        kThanidLab
     }
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
@@ -36,6 +37,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
     [FoldoutGroup("References")] public GameObject CutsceneHUD_UI;
     [FoldoutGroup("References")] public GameObject CraftingWeapon_UI;
+    [FoldoutGroup("References")] public GameObject kThanidLab_UI;
     [FoldoutGroup("References")] public GameObject DefaultHUD_UI;
     [FoldoutGroup("References")] public GameObject FavoriteHUD_UI;
     [FoldoutGroup("References")] public GameObject Console_UI;
@@ -248,6 +250,7 @@ public class MainUI : MonoBehaviour
                 Shop_Weapon_UI.gameObject.SetActive(false);
                 Shop_Paradox_UI.gameObject.SetActive(false);
                 CraftingWeapon_UI.gameObject.SetActive(false);
+                kThanidLab_UI.gameObject.SetActive(false);
                 TriviaMap.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(false);
                 FavoriteHUD_UI.gameObject.SetActive(false);
@@ -266,7 +269,7 @@ public class MainUI : MonoBehaviour
             }
 
 
-            if (current_UI == UIMode.Crafting | current_UI == UIMode.Paradox | current_UI == UIMode.Weapon | current_UI == UIMode.Shop | current_UI == UIMode.Cinematic
+            if (current_UI == UIMode.Crafting | current_UI == UIMode.kThanidLab | current_UI == UIMode.Paradox | current_UI == UIMode.Weapon | current_UI == UIMode.Shop | current_UI == UIMode.Cinematic
                 | current_UI == UIMode.FreecamMode)
             {
                 isIdlePlayer = true;
@@ -334,6 +337,11 @@ public class MainUI : MonoBehaviour
                 if (current_UI == UIMode.Crafting)
                 {
                     CraftingWeapon_UI.gameObject.SetActive(true);
+                }
+
+                if (current_UI == UIMode.kThanidLab)
+                {
+                    kThanidLab_UI.gameObject.SetActive(true);
                 }
 
                 if (current_UI == UIMode.Cinematic)
@@ -488,8 +496,7 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.TutorialMode
-            && Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
+        if (Hypatios.Game.currentGamemode.canSaveGame)
         {
             //Hypatios.Game.SaveGame(targetLevel: Application.loadedLevel);
             if (FPSMainScript.CheckSaveFileExist()) Hypatios.Game.BufferSaveData();

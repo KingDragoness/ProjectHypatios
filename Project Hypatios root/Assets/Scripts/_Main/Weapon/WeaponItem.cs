@@ -11,6 +11,12 @@ public enum UpgradeWeaponType
     Cooldown
 }
 
+[System.Serializable]
+public class Recipe
+{
+    [HorizontalGroup] [HideLabel] public ItemInventory inventory;
+    [HorizontalGroup] [LabelWidth(40)] public int count = 1;
+}
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Weapon", order = 1)]
 public class WeaponItem : ScriptableObject
@@ -35,12 +41,6 @@ public class WeaponItem : ScriptableObject
         }
     }
 
-    [System.Serializable]
-    public class Recipe
-    {
-        [HorizontalGroup] [HideLabel] public ItemInventory inventory;
-        [HorizontalGroup] [LabelWidth(40)] public int count = 1;
-    }
 
     [System.Serializable]
     public class Attachment

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 //PlayerPerks needs to be removed from the game
 public enum PlayerPerks
@@ -17,6 +18,10 @@ public class PerkCustomEffect
     public ModifierEffectCategory statusCategoryType = ModifierEffectCategory.Nothing;
     public string origin = "DeathPerk";
     public float Value = 0.1f;
+
+    //Only for serum mode
+    public bool isPermanent = true;
+    [HideIf("isPermanent")] public float timer = 9999f;
 
     public void Generate(string _origin)
     {

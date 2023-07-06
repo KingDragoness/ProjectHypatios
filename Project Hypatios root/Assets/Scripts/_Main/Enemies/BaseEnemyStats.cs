@@ -8,5 +8,6 @@ public class BaseEnemyStats : ScriptableObject
 {
     public EnemyStats Stats;
     public Sprite enemySprite;
+    public LootTable lootDrop;
 
 }

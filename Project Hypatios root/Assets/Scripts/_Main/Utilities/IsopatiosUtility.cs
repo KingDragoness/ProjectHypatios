@@ -123,6 +123,11 @@ public static class IsopatiosUtility
         }
     }
 
+    public static int RandomSign()
+    {
+        return UnityEngine.Random.value < 0.5f ? 1 : -1;
+    }
+
     public static bool CheckNavMeshWalkable(Vector3 center, float range, out Vector3 result, int tries = 20)
     {
         for (int i = 0; i < tries; i++)

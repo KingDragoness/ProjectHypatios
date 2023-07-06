@@ -202,6 +202,7 @@ public class MobiusExplorerEnemy : EnemyScript
             corpse1.transform.rotation = transform.rotation;
         }
         Destroy(gameObject);
+        OnDied?.Invoke();
         OnSelfKilled?.Invoke();
     }
 

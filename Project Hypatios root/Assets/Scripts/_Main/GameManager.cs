@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         CharacterScript characterScript = FindObjectOfType<CharacterScript>();
 
         //Restart the level for non-Aldrich levels
-        if (Hypatios.Game.currentGamemode == FPSMainScript.CurrentGamemode.Aldrich)
+        if (Hypatios.Game.currentGamemode.character == Hypatios_Gamemode.MainCharacter.Aldrich)
         {
             SceneManager.LoadScene(Hypatios.Game.deadScene.Index);
         }
