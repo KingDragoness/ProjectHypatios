@@ -55,6 +55,8 @@ public class PlayerRPG : MonoBehaviour
             }
             else if (itemClass.isGenericItem && itemClass.GENERIC_KTHANID_SERUM)
             {
+                Hypatios.Player.Health.alcoholMeter += itemData.SERUM_ALCOHOL;
+
                 foreach (var effect in itemData.SERUM_CUSTOM_EFFECTS)
                 {
                     PerkCustomEffect perkOfType = new PerkCustomEffect();
@@ -64,6 +66,11 @@ public class PlayerRPG : MonoBehaviour
                     perkOfType.isPermanent = false;
                     perkOfType.timer = effect.timer;
                     Hypatios.Player.PerkData.Temp_CustomPerk.Add(perkOfType);
+                }
+                foreach (var ailment in itemData.SERUM_AILMENTS)
+                {
+                    var ailmentClass = Hypatios.Assets.GetStatusEffect(ailment);
+                    ailmentClass.AddStatusEffectPlayer(itemData.SERUM_TIME);
                 }
 
                 Hypatios.Player.ReloadStatEffects();
@@ -116,19 +123,40 @@ public class PlayerRPG : MonoBehaviour
     }
 
 
-    private string GetSerumCustomDescription(HypatiosSave.ItemDataSave itemDataList)
+    public string GetSerumCustomDescription(HypatiosSave.ItemDataSave itemDataList)
     {
         string s1 = "Gain ";
+        List<string> allEntries = new List<string>();
+        int effectCount = 0;
 
         for(int x = 0; x < itemDataList.SERUM_CUSTOM_EFFECTS.Count; x++)
         {
             var effect = itemDataList.SERUM_CUSTOM_EFFECTS[x];
             var modifier = Hypatios.Assets.GetStatusEffect(effect.statusCategoryType);
             if (modifier == null) continue;
-            s1 += $"{GetDescription(modifier.category, effect.Value, true)} {modifier.GetTitlePerk()}";
 
-            if (x < itemDataList.SERUM_CUSTOM_EFFECTS.Count - 2) s1 += ", ";
-            else if (x <= itemDataList.SERUM_CUSTOM_EFFECTS.Count - 2) s1 += " and ";
+            allEntries.Add($"{GetDescription(modifier.category, effect.Value, true)} {modifier.GetTitlePerk()}");
+            effectCount++;
+
+            //if (x < itemDataList.SERUM_CUSTOM_EFFECTS.Count - 2) s1 += ", ";
+            //else if (x <= itemDataList.SERUM_CUSTOM_EFFECTS.Count - 2) s1 += " and ";
+        }
+
+        foreach (var ailment in itemDataList.SERUM_AILMENTS)
+        {
+            var ailmentClass = Hypatios.Assets.GetStatusEffect(ailment);
+            allEntries.Add($"{ailmentClass.GetDisplayText()}");
+            effectCount++;
+        }
+
+        for (int x = 0; x < allEntries.Count; x++)
+        {
+            string s2 = allEntries[x];
+
+            if (x < allEntries.Count - 2) s2 += ", ";
+            else if (x <= allEntries.Count - 2) s2 += " and ";
+
+            s1 += s2;
         }
 
         s1 += $" for {itemDataList.SERUM_TIME}s but gain {itemDataList.SERUM_ALCOHOL}% alcohol.";

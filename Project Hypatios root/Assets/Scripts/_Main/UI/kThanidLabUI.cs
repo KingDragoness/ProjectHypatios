@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Sirenix.OdinInspector;
 
 public class kThanidLabUI : MonoBehaviour
@@ -23,23 +24,39 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_MyItemButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ExtractorButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ResultButton;
+    private List<CreateEssenceButton> all_Essence_MyItemButtons = new List<CreateEssenceButton>();
+    private List<CreateEssenceButton> all_Essence_ExtractorButtons = new List<CreateEssenceButton>();
+    private List<CreateEssenceButton> all_Essence_ResultButtons = new List<CreateEssenceButton>();
+
+
+    [FoldoutGroup("Fabricator")] public kThanidUI_SerumCreator SerumCreator;
+    [FoldoutGroup("Fabricator")] public RectTransform rt_Serum_MyInventoryParent;
+    [FoldoutGroup("Fabricator")] public RectTransform rt_Serum_FabricatorParent;
+    [FoldoutGroup("Fabricator")] public FabricateSerumButton prefab_Serum_MyItemButton;
+    [FoldoutGroup("Fabricator")] public FabricateSerumButton prefab_Serum_FabricatorButton;
+    private List<FabricateSerumButton> all_Serum_MyItemButtons = new List<FabricateSerumButton>();
+    private List<FabricateSerumButton> all_Serum_FabricatorButtons = new List<FabricateSerumButton>();
 
 
     [FoldoutGroup("DEBUG")] [HideInEditorMode] public string DEBUG_SERUM_CUSTOM_NAME = "Pathetic Serum";
     [FoldoutGroup("DEBUG")] [HideInEditorMode] public List<PerkCustomEffect> DEBUG_SERUM_CUSTOM_EFFECTS = new List<PerkCustomEffect>();
+    [FoldoutGroup("DEBUG")] [HideInEditorMode] public List<BaseStatusEffectObject> DEBUG_SERUM_AILMENTS = new List<BaseStatusEffectObject>();
     [FoldoutGroup("DEBUG")] [HideInEditorMode] public float DEBUG_SERUM_TIME = 4f;
     [FoldoutGroup("DEBUG")] [HideInEditorMode] public float DEBUG_SERUM_ALCOHOL = 0f;
     [FoldoutGroup("DEBUG")] [HideInEditorMode] [ShowIf("ESSENCE_TYPE", HypatiosSave.EssenceType.Modifier)] public ModifierEffectCategory DEBUG_ESSENCE_CATEGORY = ModifierEffectCategory.ArmorRating;
     [FoldoutGroup("DEBUG")] [HideInEditorMode] [ShowIf("ESSENCE_TYPE", HypatiosSave.EssenceType.Ailment)] public string DEBUG_ESSENCE_STATSGROUP = "";
     [FoldoutGroup("DEBUG")] [HideInEditorMode] public HypatiosSave.EssenceType DEBUG_ESSENCE_TYPE;
 
-    private List<CreateEssenceButton> all_Essence_MyItemButtons = new List<CreateEssenceButton>();
-    private List<CreateEssenceButton> all_Essence_ExtractorButtons = new List<CreateEssenceButton>();
-    private List<CreateEssenceButton> all_Essence_ResultButtons = new List<CreateEssenceButton>();
 
     [ShowInInspector] [ReadOnly] private Inventory extractorInventory = new Inventory();
+    [ShowInInspector] [ReadOnly] private Inventory fabricatorInventory = new Inventory();
 
     public Inventory ExtractorInventory { get => extractorInventory; }
+    public Inventory FabricatorInventory { get => fabricatorInventory; }
+    public List<int> Index_AntiPotions { get => index_AntiPotions; }
+
+    [ShowInInspector] [ReadOnly] private List<int> index_AntiPotions = new List<int>();
+    private List<int> index_PrevAntiPotions = new List<int>();
 
     private bool hasStarted = false;
 
@@ -48,6 +65,8 @@ public class kThanidLabUI : MonoBehaviour
         prefab_Essence_MyItemButton.gameObject.SetActive(false);
         prefab_Essence_ExtractorButton.gameObject.SetActive(false);
         prefab_Essence_ResultButton.gameObject.SetActive(false);
+        prefab_Serum_MyItemButton.gameObject.SetActive(false);
+        prefab_Serum_FabricatorButton.gameObject.SetActive(false);
         hasStarted = true;
     }
 
@@ -82,6 +101,10 @@ public class kThanidLabUI : MonoBehaviour
             dupeEffect.timer = DEBUG_SERUM_TIME;
             itemDat.SERUM_CUSTOM_EFFECTS.Add(dupeEffect);
         }
+        foreach(var ailment in DEBUG_SERUM_AILMENTS)
+        {
+            itemDat.SERUM_AILMENTS.Add(ailment.GetID());
+        }
         itemDat.SERUM_TIME = DEBUG_SERUM_TIME;
         Hypatios.Player.Inventory.allItemDatas.Add(itemDat);
     }
@@ -112,12 +135,16 @@ public class kThanidLabUI : MonoBehaviour
 
     #region Refresh UI
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
 
         RefreshButton_Inventory();
         RefreshButton_Extractor();
+        RefreshButton_Fabricator();
         RefreshButton_Result();
+        ModifyAntiPotionIndex();
+        SerumCreator.Refresh();
+
     }
 
     private void RefreshButton_Inventory()
@@ -127,10 +154,15 @@ public class kThanidLabUI : MonoBehaviour
         {
             Destroy(button.gameObject);
         }
+        foreach (var button in all_Serum_MyItemButtons)
+        {
+            Destroy(button.gameObject);
+        }
 
         all_Essence_MyItemButtons.Clear();
+        all_Serum_MyItemButtons.Clear();
 
-        //refresh inventories
+        //refresh inventories in Essence
         {
             List<int> indexes = new List<int>();
             var All_Items = Hypatios.Player.Inventory.allItemDatas;
@@ -170,6 +202,49 @@ public class kThanidLabUI : MonoBehaviour
                 newButton.Refresh();
                 newButton.Subicon.sprite = subicon.sprite;
                 all_Essence_MyItemButtons.Add(newButton);
+            }
+        }
+
+        //refresh inventories in Serum
+        {
+            List<int> indexes = new List<int>();
+            var All_Items = Hypatios.Player.Inventory.allItemDatas;
+
+
+            for (int x = 0; x < All_Items.Count; x++)
+            {
+                var itemData = All_Items[x];
+                var itemClass = Hypatios.Assets.GetItem(itemData.ID);
+                bool allowFilter = false;
+
+                if (itemData.category == ItemInventory.Category.Normal && itemClass.subCategory == ItemInventory.SubiconCategory.Essence)
+                {
+                    allowFilter = true;
+                }
+
+                if (itemData.category == ItemInventory.Category.Consumables && itemClass.subCategory == ItemInventory.SubiconCategory.Alcohol && itemData.isGenericItem == false)
+                {
+                    allowFilter = true;
+                }
+
+                if (allowFilter)
+                {
+                    indexes.Add(x);
+                }
+            }
+
+            foreach (var index in indexes)
+            {
+                var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
+                var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+                AssetStorageDatabase.SubiconIdentifier subicon = Hypatios.Assets.GetSubcategoryItemIcon(itemClass.subCategory);
+                var newButton = Instantiate(prefab_Serum_MyItemButton, rt_Serum_MyInventoryParent);
+                newButton.gameObject.SetActive(true);
+                newButton.index = index;
+                newButton.Refresh();
+                newButton.Subicon.sprite = subicon.sprite;
+                all_Serum_MyItemButtons.Add(newButton);
             }
         }
     }
@@ -259,6 +334,76 @@ public class kThanidLabUI : MonoBehaviour
         }
     }
 
+    private void RefreshButton_Fabricator()
+    {
+        //refresh all my inventory buttons
+        foreach (var button in all_Serum_FabricatorButtons)
+        {
+            Destroy(button.gameObject);
+        }
+
+        all_Serum_FabricatorButtons.Clear();
+
+        //refresh inventories
+        {
+            List<int> indexes = new List<int>();
+            var All_Items = fabricatorInventory.allItemDatas;
+
+
+            for (int x = 0; x < All_Items.Count; x++)
+            {
+                var itemData = All_Items[x];
+                var itemClass = Hypatios.Assets.GetItem(itemData.ID);
+                bool allowFilter = false;
+
+                if (itemData.category == ItemInventory.Category.Normal && itemClass.subCategory == ItemInventory.SubiconCategory.Essence)
+                {
+                    allowFilter = true;
+                }
+
+                if (itemData.category == ItemInventory.Category.Consumables && itemClass.subCategory == ItemInventory.SubiconCategory.Alcohol && itemData.isGenericItem == false)
+                {
+                    allowFilter = true;
+                }
+
+                if (allowFilter)
+                {
+                    indexes.Add(x);
+                }
+            }
+
+            foreach (var index in indexes)
+            {
+                var itemDat = fabricatorInventory.allItemDatas[index];
+                var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+                AssetStorageDatabase.SubiconIdentifier subicon = Hypatios.Assets.GetSubcategoryItemIcon(itemClass.subCategory);
+                var newButton = Instantiate(prefab_Serum_FabricatorButton, rt_Serum_FabricatorParent);
+                newButton.gameObject.SetActive(true);
+                newButton.index = index;
+                if (Index_AntiPotions.Contains(index)) newButton.isAntiPotion = true;
+                newButton.Refresh();
+                newButton.Subicon.sprite = subicon.sprite;
+                all_Serum_FabricatorButtons.Add(newButton);
+            }
+        }
+    }
+
+    //This is absolutely fucking retarded
+    private void ModifyAntiPotionIndex()
+    {
+
+        foreach(var fabricatorButton in all_Serum_FabricatorButtons)
+        {
+            if (fabricatorButton.IsValidItemForAntiPotion() == false)
+            {
+                Index_AntiPotions.Remove(fabricatorButton.index);
+            }
+        }
+
+        index_PrevAntiPotions = Index_AntiPotions;
+    }
+
     public List<BaseModifierEffectObject> GetCraftableModifiers()
     {
         List<BaseModifierEffectObject> listModifiers = new List<BaseModifierEffectObject>();
@@ -319,6 +464,9 @@ public class kThanidLabUI : MonoBehaviour
 
     #endregion
 
+
+    #region Extractor-Essences
+
     public void TransferToExtractor(CreateEssenceButton button)
     {
         var itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
@@ -342,6 +490,7 @@ public class kThanidLabUI : MonoBehaviour
         RefreshUI();
 
     }
+
 
     public void CraftEssence(CreateEssenceButton button)
     {
@@ -393,11 +542,59 @@ public class kThanidLabUI : MonoBehaviour
         if (itemDat.ESSENCE_CATEGORY != ModifierEffectCategory.Nothing)
         {
             itemDat.ESSENCE_TYPE = HypatiosSave.EssenceType.Modifier;
+            DeadDialogue.PromptNotifyMessage_Mod($"Crafted {Hypatios.RPG.GetEssenceName(itemDat.ESSENCE_CATEGORY)}.", 4f);
         }
-        else itemDat.ESSENCE_TYPE = HypatiosSave.EssenceType.Ailment;
+        else
+        {
+            itemDat.ESSENCE_TYPE = HypatiosSave.EssenceType.Ailment;
+            DeadDialogue.PromptNotifyMessage_Mod($"Crafted {Hypatios.RPG.GetEssenceName(itemDat.ESSENCE_STATUSEFFECT_GROUP)}.", 4f);
+        }
 
         Hypatios.Player.Inventory.allItemDatas.Add(itemDat);
     }
+
+    #endregion
+
+    #region Fabricator Serum
+
+    public void TransferToFabricator(FabricateSerumButton button)
+    {
+        var itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
+        var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        //remove from my inventory
+        //onDisable, return all of it to the player back from extractor
+        fabricatorInventory.AddItemGenericSafe(itemClass, itemDat);
+        Hypatios.Player.Inventory.RemoveItem(itemDat);
+        RefreshUI();
+
+    }
+
+    public void TransferToMyInventory(FabricateSerumButton button)
+    {
+        var itemDat = fabricatorInventory.allItemDatas[button.index];
+        var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat);
+        fabricatorInventory.RemoveItem(itemDat);
+        RefreshUI();
+
+    }
+
+    public void ToggleAntiPotion(FabricateSerumButton button)
+    {
+        if (Index_AntiPotions.Contains(button.index) == false)
+        {
+            Index_AntiPotions.Add(button.index);
+        }
+        else
+        {
+            Index_AntiPotions.Remove(button.index);
+        }
+        RefreshUI();
+    }
+
+    #endregion
 
     private void OnDisable()
     {
@@ -409,7 +606,15 @@ public class kThanidLabUI : MonoBehaviour
             Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
         }
 
+        foreach (var itemDat in fabricatorInventory.allItemDatas)
+        {
+            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
+        }
+
         extractorInventory.allItemDatas.Clear();
+        fabricatorInventory.allItemDatas.Clear();
     }
 
     #region Modes

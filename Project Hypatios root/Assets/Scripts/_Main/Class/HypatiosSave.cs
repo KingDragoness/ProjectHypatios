@@ -51,7 +51,8 @@ public class Inventory
 
 
         if (SearchByID(itemInventory.GetID()) != null 
-            && itemInventory.category != ItemInventory.Category.Weapon)
+            && itemInventory.category != ItemInventory.Category.Weapon
+            && _itemDat.isGenericItem == false)
         {
             itemDataSave = SearchByID(itemInventory.GetID());
             itemDataSave.count += count;
@@ -70,7 +71,7 @@ public class Inventory
             }
             else
             {
-                allItemDatas.Add(_itemDat);
+                allItemDatas.Add(_itemDat.Clone());
             }
         }
 
@@ -222,7 +223,9 @@ public class HypatiosSave
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_TIME = 4f;
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_ALCOHOL = 0f;
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public List<PerkCustomEffect> SERUM_CUSTOM_EFFECTS = new List<PerkCustomEffect>();
-        [ShowIf("GENERIC_ESSENCE_POTION", true)] public ModifierEffectCategory ESSENCE_CATEGORY = ModifierEffectCategory.ArmorRating;
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public List<string> SERUM_AILMENTS = new List<string>();
+
+        [ShowIf("GENERIC_ESSENCE_POTION", true)] public ModifierEffectCategory ESSENCE_CATEGORY = ModifierEffectCategory.Nothing;
         [ShowIf("GENERIC_ESSENCE_POTION", true)] public string ESSENCE_STATUSEFFECT_GROUP = ""; //Depression, Bleeding
         [ShowIf("GENERIC_ESSENCE_POTION", true)] public EssenceType ESSENCE_TYPE;
         [ShowIf("isGenericItem", true)] public bool GENERIC_KTHANID_SERUM = false;

@@ -16,6 +16,7 @@ public class BaseStatusEffectObject : ScriptableObject
     [InfoBox("'Origin' left it blank, it will be filled using ID's (e.g: 'playerStatusEffect_bleeding')")] public List<PerkCustomEffect> allStatusEffects = new List<PerkCustomEffect>();
     [FoldoutGroup("Essence")] public bool craftableEssence = false;
     [FoldoutGroup("Essence")] [ShowIf("craftableEssence")] public List<Recipe> requirementCrafting = new List<Recipe>();
+    [FoldoutGroup("Essence")] [ShowIf("craftableEssence")] public bool isNegativeAilment = false;
     public string Description { get => _description; }
 
     public string GetID()

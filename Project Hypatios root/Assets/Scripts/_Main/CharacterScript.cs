@@ -517,7 +517,9 @@ public class CharacterScript : Entity
 
     private void HandleDash_Update()
     {
-        if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldown.Value)
+        float dashCooldownLimit = Mathf.Clamp(dashCooldown.Value, 0.2f, 99f); //Dash cooldown can never reach under 0.2 second
+
+        if (Hypatios.Input.Dash.triggered && timeSinceLastDash > dashCooldownLimit)
         {
             b_triggerDash = true;
         }
@@ -535,7 +537,7 @@ public class CharacterScript : Entity
             return;
         }
 
-        float dashCooldownLimit = Mathf.Clamp(dashCooldown.Value, 0.05f, 99f); //Dash cooldown can never reach under 0.05 second
+        float dashCooldownLimit = Mathf.Clamp(dashCooldown.Value, 0.2f, 99f); //Dash cooldown can never reach under 0.2 second
         if (timeSinceLastDash > dashCooldownLimit)
         {
             MainGameHUDScript.Instance.dashOk.gameObject.SetActive(true);
