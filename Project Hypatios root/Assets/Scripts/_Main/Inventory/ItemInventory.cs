@@ -44,7 +44,7 @@ public class ItemInventory : ScriptableObject
     public bool isGenericItem = false;
     [HideIf("isGenericItem", true)] [ShowIf("subCategory", SubiconCategory.Essence)] public bool IS_REACTANT = false;
     [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 100)] public float Reactant_ReduceAlcohol = 30;
-    [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 100)] public float Reactant_ReduceEfficiency = 20;
+    [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 1000)] public float Reactant_BonusEfficiency = 20;
     [ShowIf("isGenericItem", true)] public bool GENERIC_KTHANID_SERUM = false;
     [ShowIf("isGenericItem", true)] public bool GENERIC_ESSENCE_POTION = false;
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public bool isKillerPill = false;

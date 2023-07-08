@@ -14,7 +14,8 @@ public class Conditioner : MonoBehaviour
         TriviaCompleted = 20, //Trivia complete check
         Randomization, //Randomize 0f-1f
         EnemyClearance,
-        DistanceCheck
+        DistanceCheck,
+        ConditionerCheck
     }
 
     public enum FulfillCondition
@@ -38,6 +39,8 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.DistanceCheck)] public Transform t2;
         [ShowIf("conditionType", ConditionType.DistanceCheck)] public float distMin = 5f;
         [ShowIf("conditionType", ConditionType.DistanceCheck)] public float distMax = 20f;
+        [ShowIf("conditionType", ConditionType.ConditionerCheck)] public Conditioner conditioner;
+        [ShowIf("conditionType", ConditionType.ConditionerCheck)] public bool dontTriggerConditioner;
 
         public bool IsConditionChecked()
         {
@@ -82,6 +85,14 @@ public class Conditioner : MonoBehaviour
                 if (distMin < dist && distMax > dist)
                     return true;
             }
+            else if (conditionType == ConditionType.ConditionerCheck)
+            {
+                if (conditioner.GetEvaluateResult() && dontTriggerConditioner == false)
+                    return true;
+
+                if (conditioner.GetEvaluateResult() == false && dontTriggerConditioner == true)
+                    return true;
+            }
 
             return false;
         }
@@ -98,6 +109,8 @@ public class Conditioner : MonoBehaviour
     public bool constantTriggerCheck = false;
 
     private bool _isTriggered = false;
+
+    public bool IsTriggered { get => _isTriggered;  }
 
     private void Start()
     {

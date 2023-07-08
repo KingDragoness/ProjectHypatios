@@ -62,6 +62,7 @@ public class MainGameHUDScript : MonoBehaviour
 
     public ChargeStationUI chargeStationUI;
     public CraftingWorkstationUI craftingUI;
+    public kThanidLabUI kthanidUI;
     public LootedItemNotifyUI lootItemUI;
     public PlayerRPGUI rpgUI;
 

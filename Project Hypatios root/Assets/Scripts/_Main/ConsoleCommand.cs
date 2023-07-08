@@ -212,6 +212,10 @@ public class ConsoleCommand : MonoBehaviour
                 ParadoxListAll(args);
                 break;
 
+            case "alcond":
+                AllConditionReport(args);
+                break;
+
             case "res":
                 Restore(args);
                 break;
@@ -261,9 +265,30 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
-
-
     #region Commands
+
+    private void AllConditionReport(string[] args)
+    {
+
+        try
+        {
+            var conditioners = FindObjectsOfType<Conditioner>();
+
+            foreach(var conditioner in conditioners)
+            {
+                SendConsoleMessage($"{conditioner.Title}: {conditioner.IsTriggered}");
+
+            }
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! alcond");
+        }
+    }
+
+
+
     protected void CommandCheat(string[] args)
     {
 
@@ -1119,6 +1144,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'alcohol' to add alcohol meter");
             helpCommands.Add("'additem' to add items");
             helpCommands.Add("'addstatus' to add status effect");
+            helpCommands.Add("'alcond' to list all conditioners in the current scene");
             helpCommands.Add("'cc' to use extra commands");
             helpCommands.Add("'changelocale' to change language");
             helpCommands.Add("'giveammos' to give ammos");

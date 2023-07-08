@@ -58,6 +58,16 @@ public class kThanidLabUI : MonoBehaviour
     [ShowInInspector] [ReadOnly] private List<int> index_AntiPotions = new List<int>();
     private List<int> index_PrevAntiPotions = new List<int>();
 
+    private CraftingkThanidLabTrigger _currentBench;
+
+    public CraftingkThanidLabTrigger CurrentWorkbench { get => _currentBench; set => _currentBench = value; }
+
+    public void SetShopScript(CraftingkThanidLabTrigger _shop)
+    {
+        _currentBench = _shop;
+    }
+
+
     private bool hasStarted = false;
 
     private void Start()
@@ -67,6 +77,7 @@ public class kThanidLabUI : MonoBehaviour
         prefab_Essence_ResultButton.gameObject.SetActive(false);
         prefab_Serum_MyItemButton.gameObject.SetActive(false);
         prefab_Serum_FabricatorButton.gameObject.SetActive(false);
+        if (hasStarted == false) RefreshUI();
         hasStarted = true;
     }
 

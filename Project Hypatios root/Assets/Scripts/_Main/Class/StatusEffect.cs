@@ -169,6 +169,18 @@ public abstract class BaseModifierEffect : MonoBehaviour
             target.AllStatusInEffect.RemoveAll(x => x == null);
             target.AllStatusInEffect.Remove(this);
         }
+
+        var playerScript = target as CharacterScript;
+        if (playerScript != null)
+        {
+          
+            var dupedPerk = playerScript.PerkData.Temp_CustomPerk.Find(x => $"SERUM-{x.origin}" == SourceID && x.isPermanent == false);
+
+            if (dupedPerk != null)
+            {
+                playerScript.PerkData.Temp_CustomPerk.Remove(dupedPerk);
+            }
+        }
     }
 
     public virtual void OnDestroy()

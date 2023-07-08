@@ -116,9 +116,14 @@ public class InfernosEnemy : EnemyScript
             if (token.originEnemy.GetType() == typeof(InfernosEnemy)) return;
         }
 
+
         hasSeenPlayer = true;
         _lastDamageToken = token;
-        Stats.CurrentHitpoint -= token.damage;
+
+        if (token.damageType == DamageToken.DamageType.Fire)
+        {
+            Stats.CurrentHitpoint += token.damage;
+        } else Stats.CurrentHitpoint -= token.damage;
 
 
         Rigidbody rb = GetComponent<Rigidbody>();

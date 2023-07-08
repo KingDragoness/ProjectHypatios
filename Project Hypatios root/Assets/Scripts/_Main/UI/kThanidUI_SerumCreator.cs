@@ -81,8 +81,8 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
                     if (itemClass.IS_REACTANT)
                     {
-                        SerumAlcoholAmount *= (100f - itemClass.Reactant_ReduceAlcohol * itemDat.count) * 0.01f;
-                        SerumPotency *= (100f - itemClass.Reactant_ReduceEfficiency * itemDat.count) * 0.01f ;
+                        SerumAlcoholAmount *=  Mathf.Pow(1f - itemClass.Reactant_ReduceAlcohol * 0.01f, itemDat.count);
+                        SerumPotency *= Mathf.Pow(1f + itemClass.Reactant_BonusEfficiency * 0.01f, itemDat.count);
                     }
                 }
 
@@ -117,6 +117,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
             }
 
+            SerumAlcoholAmount = Mathf.RoundToInt(SerumAlcoholAmount * 100f) / 100;
             int i1 = 0;
 
             foreach (var itemDat in kthanidUI.FabricatorInventory.allItemDatas)
@@ -135,13 +136,13 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
                         if (antiPotion == false)
                         {
-                            modifier.Value = modifierClass.baseValue * SerumAlcoholAmount;
+                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * SerumAlcoholAmount * SerumPotency * 1000f)/1000f;
                             if (negativeEssence > 0) modifier.Value *= (negativeEssence + 1f);
                             if (positiveEssence > 0) modifier.Value *= 1f / (positiveEssence);
                         }
                         else
                         {
-                            modifier.Value = modifierClass.baseValue * SerumAlcoholAmount / EssenceCount;
+                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * SerumAlcoholAmount * SerumPotency / EssenceCount * 1000f)/1000f;
                         }
 
                         if (antiPotion) modifier.Value *= -1;
@@ -219,6 +220,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         }
 
         if (SerumAlcoholAmount >= 50) alcoholOver50 = true;
+        if (SerumAlcoholAmount <= 0) isAlcohol = false;
 
         if (input_SerumName.text != "" | string.IsNullOrEmpty(input_SerumName.text) == false)
         {
@@ -249,7 +251,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         {
             s1 += $"<color=#{ColorUtility.ToHtmlStringRGB(color_warningText)}>( ! ) Your current serum can be crafted but same modifiers are not stackable upon use.</color>\n";
         }
-
+   
         if (isAlcohol && isNamed && isEssence)
         {
             isSerumValid = true;

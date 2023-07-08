@@ -278,6 +278,34 @@ public class FPSMainScript : MonoBehaviour
         Game_Trivias.Add(triviaEntry);
     }
 
+    public void SetParadoxEntity(string key, string value)
+    {
+        var entity = Hypatios.Game.paradoxEntities.Find(x => x.ID == key);
+
+        if (entity == null)
+        {
+            entity = new ParadoxEntity();
+            entity.ID = key;
+            entity.value = value;
+            paradoxEntities.Add(entity);
+        }
+        else
+        {
+            entity.value = value;
+        }
+
+        Debug.Log($"{entity.ID} has been set value: {entity.value}");
+    }
+
+    public string GetParadoxEntityValue(string key)
+    {
+        var entity = Hypatios.Game.paradoxEntities.Find(x => x.ID == key);
+
+        if (entity == null)
+            return "";
+
+        return entity.value;
+    }
 
     public bool Check_EverUsed(string key)
     {
