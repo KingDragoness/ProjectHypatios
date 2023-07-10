@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3612937198682594670
 MonoBehaviour:
@@ -43,11 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Your lifeform will inevitably took over the universe.
+  Dialogue_Content: These modern tribes rather than killing, compete in attacking
+    each in social media. The advocatees all used as a meatshield, a henchman, simply
+    a minion of the political movement.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 5
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -94,11 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Are we fated to a certain doom?
+  Dialogue_Content: In this world, we are presented with a world with a bunch of
+    problems. Political movements emerged as each of them claimed could solve 'all
+    problems in the world'.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 4
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -131,10 +135,10 @@ Transform:
   m_LocalScale: {x: 3.058839, y: 2.7155268, z: 2.4643865}
   m_Children:
   - {fileID: 1230502053353723732}
-  - {fileID: 4268893956458711632}
   - {fileID: 1910395715749330450}
   - {fileID: 2047058132782600478}
   - {fileID: 106711981379562945}
+  - {fileID: 1141396794947703131}
   - {fileID: 5744686705495542625}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -165,6 +169,60 @@ MonoBehaviour:
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
   alreadyTriggered: 0
+--- !u!1 &3804376719763355485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1141396794947703131}
+  - component: {fileID: 352029449439547253}
+  m_Layer: 0
+  m_Name: HEV.Dialog (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1141396794947703131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3804376719763355485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &352029449439547253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3804376719763355485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: When people advocating for policies like 'banning assault weapon
+    in space', 'ban Sixtusian vaccines' or 'ban child genetic modification' most
+    of these people are not actually really supporting it but rather parroting others
+    in the same tribe.
+  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 9
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3821230671055630843
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,63 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Not Ionis because Emperor wants to destroy it.... but- but I
-    got your point.
+  Dialogue_Content: RIght...I got your point.
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 6
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &6877879305774481134
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4268893956458711632}
-  - component: {fileID: 6101136846501643799}
-  m_Layer: 0
-  m_Name: Aldrich.Dialog (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4268893956458711632
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877879305774481134}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6101136846501643799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6877879305774481134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: What do you mean?
-  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 3
+  Dialogue_Timer: 4
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -297,7 +303,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1873909776070363088
 MonoBehaviour:
@@ -311,12 +317,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: I don't think within the next century that the biological race
-    in the universe will survive against the inevitable Ionis rise.
+  Dialogue_Content: Every religion, ideology, political party each believes that
+    joining them would be the best interest of the world.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 8
+  Dialogue_Timer: 6
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -349,7 +355,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1978254497610673260
 MonoBehaviour:
@@ -363,14 +369,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Even if we destroy this lab, then there will be other to make
-    it. The value proposition is simply too high, it ends suffering, superior surviveability,
-    superior intelligence, immortal, internal heaven server, total transparency with
-    its telepathic ability. It simply too superior.
+  Dialogue_Content: But these movements and different groups emerges because of overpopulation,
+    too many people were born in this world hence they build their own reservoirs
+    or creating a new tribe.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 10
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []

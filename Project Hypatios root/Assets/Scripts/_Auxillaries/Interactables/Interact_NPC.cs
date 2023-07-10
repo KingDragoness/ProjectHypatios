@@ -51,6 +51,7 @@ public class Interact_NPC : MonoBehaviour
         var objectPrefab1 = Instantiate(dialogue);
         objectPrefab1.TriggerMessage();
         Destroy(objectPrefab1, 1f);
+        Debug.Log(objectPrefab1.gameObject.name);
     }
 
     private void Speak_Incremental()
@@ -71,6 +72,7 @@ public class Interact_NPC : MonoBehaviour
         var objectPrefab1 = Instantiate(dialogue);
         objectPrefab1.TriggerMessage();
         Destroy(objectPrefab1, 1f);
+        Debug.Log(objectPrefab1.gameObject.name);
         i++;
         Hypatios.Game.SetParadoxEntity($"NPC.{Paradox_Key}", i.ToString());
     }

@@ -70,7 +70,7 @@ public class DialogueSubtitleUI : MonoBehaviour
             if (dialogueSpeeches.Count > 0)
             {
                 dialogueSpeeches.Dequeue();
-                Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
+                //Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
                 if (dialogueSpeeches.Count > 0) DisplayThisDialogue(dialogueSpeeches.Peek());
             }
             else
