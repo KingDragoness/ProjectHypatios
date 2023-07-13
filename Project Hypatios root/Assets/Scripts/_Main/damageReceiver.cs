@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 [System.Serializable]
 public class DamageToken
@@ -125,6 +126,13 @@ public class damageReceiver : MonoBehaviour
     public UnityEvent OnHit;
     [HideInInspector] public MyFloatEvent m_MyEvent;
 
+
+    [Button("Manual trigger")]
+    public void BlankAttack()
+    {
+        DamageToken token = new DamageToken();
+        Attacked(token);
+    }
 
     internal void Attacked(DamageToken token)
     {

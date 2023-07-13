@@ -251,8 +251,8 @@ public class FavoriteMenuUI : MonoBehaviour
         if (itemClass == null) return;
 
         itemStatUI.gameObject.SetActive(true);
-        itemStat_Title.text = Hypatios.RPG.GetPreviewFav_Description(itemClass, itemDat);
-        itemStat_Description.text = Hypatios.RPG.GetPreviewFav_Title(itemClass, itemDat);
+        itemStat_Title.text = Hypatios.RPG.GetPreviewFav_Title(itemClass, itemDat);
+        itemStat_Description.text = Hypatios.RPG.GetPreviewFav_Description(itemClass, itemDat); 
         ShowPreviewHealthRestore();
     }
 

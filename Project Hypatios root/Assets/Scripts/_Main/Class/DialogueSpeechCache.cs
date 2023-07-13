@@ -20,12 +20,13 @@ public class DialogueSpeechCache
     public float timer1;
     public bool isImportant = false;
     public int priority = 0;
+    public int ID = 0;
     public Sprite charPortrait = null;
     public AudioClip audioClip = null;
     public UnityEvent dialogEvent;
 
     public DialogueSpeechCache(string dialogue, string speakerName, float timer1, Sprite charPortrait = null, AudioClip audioClip = null, int priority = 0
-        , bool _isImportant = false, UnityEvent _dialogEvent = null)
+        , bool _isImportant = false, UnityEvent _dialogEvent = null, int _ID = 0)
     {
         this.dialogue = dialogue;
         this.speakerName = speakerName;
@@ -35,5 +36,6 @@ public class DialogueSpeechCache
         this.isImportant = _isImportant;
         this.priority = priority;
         this.dialogEvent = _dialogEvent;
+        this.ID = _ID;
     }
 }

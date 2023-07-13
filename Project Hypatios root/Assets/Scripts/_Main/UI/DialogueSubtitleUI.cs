@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     public static DialogueSubtitleUI instance;
 
-    [SerializeField] private Queue<DialogueSpeechCache> dialogueSpeeches = new Queue<DialogueSpeechCache>();
+    [SerializeField] private List<DialogueSpeechCache> _currentDialogueList = new List<DialogueSpeechCache>();
     [SerializeField] private List<DialogueSpeechCache> allDialogueHistory = new List<DialogueSpeechCache>();
      private float timer = 2f;
     private bool isClosed = true;
@@ -33,7 +34,7 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     public bool IsTalking()
     {
-        if (dialogueSpeeches.Count == 0)
+        if (_currentDialogueList.Count == 0)
             return false;
 
         return true;
@@ -61,17 +62,17 @@ public class DialogueSubtitleUI : MonoBehaviour
         }
         else
         {
-            if (isClosed && dialogueSpeeches.Count > 0)
+            if (isClosed && _currentDialogueList.Count > 0)
             {
-                DisplayThisDialogue(dialogueSpeeches.Peek());
+                DisplayThisDialogue(_currentDialogueList[0]);
                 return;
             }
 
-            if (dialogueSpeeches.Count > 0)
+            if (_currentDialogueList.Count > 0)
             {
-                dialogueSpeeches.Dequeue();
+                _currentDialogueList.RemoveAt(0);
                 //Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
-                if (dialogueSpeeches.Count > 0) DisplayThisDialogue(dialogueSpeeches.Peek());
+                if (_currentDialogueList.Count > 0) DisplayThisDialogue(_currentDialogueList[0]);
             }
             else
             {
@@ -102,23 +103,23 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     //Full set
     public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
-        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null)
+        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null, int _ID = 0)
     {
-        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent);
+        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent, _ID);
 
         if (shouldOverride == false)
         {
-            if (dialogueSpeeches.Count != 0)
+            if (_currentDialogueList.Count != 0)
             {
-                if (!dialogueSpeeches.Peek().isImportant && dialogue1.isImportant)
+                if (!_currentDialogueList[0].isImportant && dialogue1.isImportant)
                 {
                     OverrideDialogue(dialogue1);
                 }
-                else if (dialogueSpeeches.Peek().isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
+                else if (_currentDialogueList[0].isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
                 {
                     //EnqueueDialogue(dialogue1);
                 }
-                else if (dialogueSpeeches.Peek().isImportant)
+                else if (_currentDialogueList[0].isImportant)
                 {
                     EnqueueDialogue(dialogue1);
                 }
@@ -133,6 +134,11 @@ public class DialogueSubtitleUI : MonoBehaviour
         {
             OverrideDialogue(dialogue1);
         }
+    }
+
+    public void ForceDisplay()
+    {
+        DisplayThisDialogue(_currentDialogueList[0]);
     }
 
 
@@ -165,14 +171,14 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     private void EnqueueDialogue(DialogueSpeechCache dialogueSpeech)
     {
-        dialogueSpeeches.Enqueue(dialogueSpeech);
+        _currentDialogueList.Add(dialogueSpeech);
     }
 
     private void OverrideDialogue(DialogueSpeechCache dialogueSpeech)
     {
-        dialogueSpeeches.Clear();
-        dialogueSpeeches.Enqueue(dialogueSpeech);
-        DisplayThisDialogue(dialogueSpeech);
+        _currentDialogueList.RemoveAll(x => x.ID != dialogueSpeech.ID);
+        _currentDialogueList.Add(dialogueSpeech);
+        Debug.Log($"{dialogueSpeech.speakerName} {_currentDialogueList.Count}");
     }
 
 

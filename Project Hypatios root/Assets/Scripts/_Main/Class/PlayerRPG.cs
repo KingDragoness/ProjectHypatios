@@ -301,7 +301,14 @@ public class PlayerRPG : MonoBehaviour
     {
         string s1 = "";
 
-        s1 += $"{GetSerumCustomDescription(itemData)}";
+        if (itemClass.GENERIC_KTHANID_SERUM)
+        {
+            s1 += $"{GetSerumCustomDescription(itemData)}";
+        }
+        else
+        {
+            s1 += $"\n{itemClass.Description}\n";
+        }
 
         return s1;
     }

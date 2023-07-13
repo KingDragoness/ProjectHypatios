@@ -74,11 +74,13 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
         }
     }
 
-    [ContextMenu("Trigger Message")]
+    [Button("Trigger Manual")]
     public void TriggerMessage()
     {
         if (alreadyTriggered) return;
         ScanDialogues();
+        int ID1 = Random.Range(-9999, 9999);
+
 
         foreach (var dialog in allDialogues)
         {
@@ -100,9 +102,11 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 dialog.dialogAudioClip, priorityLevel: 100,
                 isImportant: isImportant,
                 shouldOverride: shouldOverride, 
-                entryEvent: dialog.OnDialogTriggered);
+                entryEvent: dialog.OnDialogTriggered,
+                _ID: ID1);
                 
         }
+        if (shouldOverride) DialogueSubtitleUI.instance.ForceDisplay();
 
         OnDialogueTriggered?.Invoke();
         alreadyTriggered = true;

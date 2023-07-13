@@ -15,7 +15,8 @@ public class Conditioner : MonoBehaviour
         Randomization, //Randomize 0f-1f
         EnemyClearance,
         DistanceCheck,
-        ConditionerCheck
+        ConditionerCheck,
+        ItemOwned = 100
     }
 
     public enum FulfillCondition
@@ -41,6 +42,8 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.DistanceCheck)] public float distMax = 20f;
         [ShowIf("conditionType", ConditionType.ConditionerCheck)] public Conditioner conditioner;
         [ShowIf("conditionType", ConditionType.ConditionerCheck)] public bool dontTriggerConditioner;
+        [ShowIf("conditionType", ConditionType.ItemOwned)] public ItemInventory itemNeeded;
+        [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
 
         public bool IsConditionChecked()
         {
@@ -92,6 +95,12 @@ public class Conditioner : MonoBehaviour
 
                 if (conditioner.GetEvaluateResult() == false && dontTriggerConditioner == true)
                     return true;
+            }
+            else if (conditionType == ConditionType.ItemOwned)
+            {
+                if (Hypatios.Player.Inventory.Count(itemNeeded) >= itemCount)
+                   return true;
+
             }
 
             return false;

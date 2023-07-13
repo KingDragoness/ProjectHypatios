@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class OnTriviaTriggered : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class OnTriviaTriggered : MonoBehaviour
             OnTriviaNotActive?.Invoke();
     }
 
+    [Button("Sanity check")]
     public void EnforceTrigger()
     {
         bool allow = CheckTriviaValid();
