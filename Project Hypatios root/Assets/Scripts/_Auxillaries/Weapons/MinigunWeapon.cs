@@ -188,6 +188,7 @@ public class MinigunWeapon : GunScript
 
                 points[1] = hit.point;//cam.transform.position + cam.transform.forward * hit.distance;
                 trace.GetComponent<LineRenderer>().SetPositions(points);
+
                 if (hit.transform.gameObject.layer != 13 &&
                         hit.transform.gameObject.layer != 12)
                 {
@@ -218,6 +219,7 @@ public class MinigunWeapon : GunScript
             {
                 points[1] = cam.ViewportToWorldPoint(new Vector3(.5f + spreadX, .5f + spreadY, 100f));
                 trace.GetComponent<LineRenderer>().SetPositions(points);
+                Hypatios.ObjectPool.SummonDustTracerParticle(points);
             }
 
             yield return new WaitForSeconds(IntervalPerBarrel);

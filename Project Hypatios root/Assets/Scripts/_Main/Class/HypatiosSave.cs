@@ -201,6 +201,14 @@ public class HypatiosSave
         public string ID = "";
     }
 
+    //Share company
+    [System.Serializable]
+    public class ShareCompanySave
+    {
+        public string ID = "WING";
+        public int shares = 0;
+    }
+
     public enum EssenceType
     {
         Modifier,

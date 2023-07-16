@@ -183,6 +183,15 @@ public class DynamicObjectPool : MonoBehaviour
         return instance;
     }
 
+    public GameObject SummonDustTracerParticle(Vector3[] points)
+    {
+        var tracer = SummonParticle(CategoryParticleEffect.UseableBulletDustTracer, true);
+        tracer.GetComponent<LineRenderer>().SetPositions(points);
+
+
+        return tracer;
+    }
+
 
 
     private bool IsPoolAlreadyRegistered(GameObject prefab)

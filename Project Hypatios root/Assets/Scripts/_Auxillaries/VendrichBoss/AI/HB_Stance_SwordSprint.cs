@@ -14,8 +14,10 @@ public class HB_Stance_SwordSprint : HB_AIPackage
     public ClipTransition flying;
     public float chaseSpeed = 6f;
     public float distanceToTarget = 10f;
+    public float maxDistanceAttack = 20f;
     public float rotateSpeed = 40f;
     public float maxY_Fly = 4f;
+    public int weightValue = 100;
 
 
     public override void Run(MechHeavenblazerEnemy _mech)
@@ -128,6 +130,9 @@ public class HB_Stance_SwordSprint : HB_AIPackage
         if (dist < distanceToTarget)
             return 0;
 
-        return 9999;
+        if (dist > maxDistanceAttack)
+            return 0;
+
+        return weightValue;
     }
 }

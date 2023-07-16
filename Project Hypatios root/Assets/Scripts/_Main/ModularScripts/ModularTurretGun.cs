@@ -305,13 +305,22 @@ public class ModularTurretGun : MonoBehaviour
 
         var points = new Vector3[2];
         points[0] = outWeaponTransform.transform.position;
-        var currentLaser = tracerLaser;
-        GameObject laserLine = Instantiate(currentLaser, outWeaponTransform.transform.position, Quaternion.identity);
 
+        if (tracerLaser != null)
+        {
+            var currentLaser = tracerLaser;
+            GameObject laserLine = Instantiate(currentLaser, outWeaponTransform.transform.position, Quaternion.identity);
+
+            {
+                points[1] = hit.point;
+                var lr = laserLine.GetComponent<LineRenderer>();
+                lr.SetPositions(points);
+            }
+        }
+        else
         {
             points[1] = hit.point;
-            var lr = laserLine.GetComponent<LineRenderer>();
-            lr.SetPositions(points);
+            Hypatios.ObjectPool.SummonDustTracerParticle(points);
         }
 
         if (prefabCreate != null)

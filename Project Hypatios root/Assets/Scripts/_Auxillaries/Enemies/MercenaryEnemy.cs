@@ -306,6 +306,10 @@ public class MercenaryEnemy : EnemyScript
         {
             token.damage *= 0.2f;
         }
+        if (token.origin == DamageToken.DamageOrigin.Enemy)
+        {
+            token.damage *= 0.1f;
+        }
         _lastDamageToken = token;
 
         Stats.CurrentHitpoint -= token.damage;

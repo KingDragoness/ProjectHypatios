@@ -114,7 +114,7 @@ public class MechHeavenblazerEnemy : EnemyScript
             if (CurrentAI.category == HB_AIPackage.Category.PatrolIdle) FiringRockets();
             if (CurrentAI is HB_Stance_Laser) FireLaser();
             if (currentStage == Stage.Stage3_Ascend) StartEngineJet(); else NotEngineJet();
-            if (currentStage == Stage.Stage4_LastMessage) StartLastMessage(); else NotLastMessage();
+            if (currentStage == Stage.Stage2_Dust) StartLastMessage(); else NotLastMessage();
             ControlLimbs();
         }
     }
@@ -324,7 +324,8 @@ public class MechHeavenblazerEnemy : EnemyScript
         if (jetFX.activeSelf == true) jetFX.SetActive(false);
 
     }
-
+    
+    //changed to dust
     private void StartLastMessage()
     {
         if (lastMessageSword.activeSelf == false) lastMessageSword.SetActive(true);
@@ -395,6 +396,10 @@ public class MechHeavenblazerEnemy : EnemyScript
     {
         float damageProcessed = token.damage;
 
+        if (token.origin == DamageToken.DamageOrigin.Enemy)
+            damageProcessed *= 0.1f;
+        if (token.damageType == DamageToken.DamageType.Explosion)
+            damageProcessed *= 0.1f;
 
         Stats.CurrentHitpoint -= damageProcessed;
         _lastDamageToken = token;
@@ -445,5 +450,10 @@ public class MechHeavenblazerEnemy : EnemyScript
     public void ForceChangeStage(Stage _newStage)
     {
         currentStage = _newStage;
+    }
+
+    public void ForceChangeStage(int _newStage)
+    {
+        currentStage = (Stage)_newStage;
     }
 }
