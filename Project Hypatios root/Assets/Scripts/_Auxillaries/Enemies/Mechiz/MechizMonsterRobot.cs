@@ -29,7 +29,6 @@ public class MechizMonsterRobot : EnemyScript
     [FoldoutGroup("Param")] public float flyingSpeed = 10f;
     [FoldoutGroup("Param")] public float flying_rotateSpeed = 10f;
 
-    [FoldoutGroup("References")] public Transform elenaTransform;
     [FoldoutGroup("References")] public GameObject flyingModeEffect;
     [FoldoutGroup("References")] public GameObject sawModeEffect;
     [FoldoutGroup("References")] public MechizPatternRobot patternRobot;
@@ -174,9 +173,9 @@ public class MechizMonsterRobot : EnemyScript
 
         targetPos.y -= Mathf.Clamp(distance * 0.5f, 0, 3f);
 
-        if (target == elenaTransform)
+        if (target == Hypatios.Player.transform)
         {
-            targetPos.y = elenaTransform.position.y + 6;
+            targetPos.y = Hypatios.Player.transform.position.y + 6;
             speed *= 0.35f;
 
             if (target.transform.position.y < 2.3f)
@@ -186,8 +185,8 @@ public class MechizMonsterRobot : EnemyScript
 
             if (distance < 5f)
             {
-                targetPos.x = elenaTransform.position.x + 3;
-                targetPos.y = elenaTransform.position.y + 6;
+                targetPos.x = Hypatios.Player.transform.position.x + 3;
+                targetPos.y = Hypatios.Player.transform.position.y + 6;
             }
         }
 

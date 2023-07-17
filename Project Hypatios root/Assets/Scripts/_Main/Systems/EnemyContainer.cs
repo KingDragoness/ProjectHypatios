@@ -363,7 +363,7 @@ public class EnemyContainer : MonoBehaviour
         foreach (var enemy1 in AllEnemies) enemiesTempList2.Add(enemy1);
         enemiesTempList2.RemoveAll(x => x == null);
         enemiesTempList2.RemoveAll(x => x.gameObject.activeInHierarchy == false);
-        enemiesTempList2.RemoveAll(x => x.Stats.IsTargetable == false);
+        enemiesTempList2.RemoveAll(x => x.Stats.IsHackableGate == false);
         enemiesTempList2.RemoveAll(x => x.Stats.MainAlliance == mySelf.Stats.MainAlliance);
         enemiesTempList2.RemoveAll(x => x.Stats.UnitType == UnitType.Projectile);
         enemiesTempList2.RemoveAll(x => Vector3.Distance(mySelf.transform.position, x.transform.position) > maxDistance);
@@ -464,7 +464,7 @@ public class EnemyContainer : MonoBehaviour
     /// <param name="myPos">Finder's current world position.</param>
     /// <param name="chanceSelectAlly">Recommended value 0.1-1</param>
     /// <returns></returns>
-    public Entity FindEnemyEntity(Alliance alliance, UnitType unitType, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f)
+    public Entity FindEnemyEntity(Alliance alliance, UnitType unitType, Vector3 myPos = new Vector3(), float chanceSelectAlly = 0.3f, float maxDistance = 1000f, bool isHackableGate = false)
     {
         tempList_NearestEnemy.Clear();
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
@@ -474,7 +474,7 @@ public class EnemyContainer : MonoBehaviour
         tempList_NearestEnemy.RemoveAll(x => Vector3.Distance(myPos, x.transform.position) > maxDistance);
         tempList_NearestEnemy.RemoveAll(x => x.Stats.UnitType != unitType);
 
-        return FindEnemyEntity(alliance, chanceSelectAlly);
+        return FindEnemyEntity(alliance, chanceSelectAlly, isHackableGate: isHackableGate);
     }
 
     /// <summary>
@@ -521,11 +521,11 @@ public class EnemyContainer : MonoBehaviour
     }
 
 
-    private Entity FindEnemyEntity(Alliance alliance, float chanceSelectAlly = 0.3f, EnemyScript mySelf = null)
+    private Entity FindEnemyEntity(Alliance alliance, float chanceSelectAlly = 0.3f, EnemyScript mySelf = null, bool isHackableGate = false)
     {
         //base enemy entity searcher
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
-        tempList_NearestEnemy.RemoveAll(x => x.Stats.IsTargetable == false);
+        if (isHackableGate == false) tempList_NearestEnemy.RemoveAll(x => x.Stats.IsHackableGate == false);
 
         if (alliance != Alliance.Player)
         {

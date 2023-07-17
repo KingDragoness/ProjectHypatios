@@ -257,7 +257,7 @@ public class HackingDeviceWeapon : GunScript
     {
         float signalRange = GetFinalValue("SignalRange");
 
-        var enemyScript = Hypatios.Enemy.FindEnemyEntity(Alliance.Player, UnitType.Mechanical, myPos: transform.position, maxDistance: signalRange);
+        var enemyScript = Hypatios.Enemy.FindEnemyEntity(Alliance.Player, UnitType.Mechanical, myPos: transform.position, maxDistance: signalRange, isHackableGate: true);
 
         if (enemyScript != null)
             currentEnemyScript = enemyScript as EnemyScript;

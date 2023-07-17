@@ -35,15 +35,12 @@ public class EnemyStats
     public UnitType UnitType;
     public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
-    [Tooltip("By default, all enemies is targetable. This is only for hackable gates.")] public bool IsTargetable = true;
+    [Tooltip("This is for hackable pseudo enemies. This is only for hackable gates enemy types.")] public bool IsHackableGate = false;
     [Tooltip("Allowed by default. When false, it prevent enemies from attacking the same enemy type, even if the alliance is differ.")] public bool AllowTargetSameType = true;
 
     [Header("Runtime Only")]
     [ReadOnly] public float CurrentHitpoint;
     [ReadOnly] public bool IsDead = false;
-    [ReadOnly] public float Fire = -1; //Timer until status run out
-    [ReadOnly] public float Poison = -1; 
-    [ReadOnly] public float Paralyze = -1; 
 
 
     public void Initialize()

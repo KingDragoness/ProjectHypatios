@@ -90,10 +90,10 @@ public class Conditioner : MonoBehaviour
             }
             else if (conditionType == ConditionType.ConditionerCheck)
             {
-                if (conditioner.GetEvaluateResult() && dontTriggerConditioner == false)
+                if (conditioner.IsTriggered && dontTriggerConditioner == false)
                     return true;
 
-                if (conditioner.GetEvaluateResult() == false && dontTriggerConditioner == true)
+                if (conditioner.IsTriggered == false && dontTriggerConditioner == true)
                     return true;
             }
             else if (conditionType == ConditionType.ItemOwned)
