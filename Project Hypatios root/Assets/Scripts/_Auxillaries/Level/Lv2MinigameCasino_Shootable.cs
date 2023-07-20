@@ -89,7 +89,7 @@ public class Lv2MinigameCasino_Shootable : EnemyScript
             {
                 casinoScript.PenalizedPlay(4);
                 MainGameHUDScript.Instance.audio_Error.Play();
-                DialogueSubtitleUI.instance.QueueDialogue($"Don't shoot civilians!", "SYSTEM", 5f);
+                Hypatios.Dialogue.QueueDialogue($"Don't shoot civilians!", "SYSTEM", 5f);
             }
             //die
         }

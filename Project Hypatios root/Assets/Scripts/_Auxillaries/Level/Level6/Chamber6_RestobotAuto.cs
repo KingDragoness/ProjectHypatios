@@ -129,7 +129,7 @@ public class Chamber6_RestobotAuto : MonoBehaviour
 
         if (listValid.Count == 0)
         {
-            //DialogueSubtitleUI.instance.QueueDialogue("There's no valid order.", "SYSTEM", 3);
+            //Hypatios.Dialogue.QueueDialogue("There's no valid order.", "SYSTEM", 3);
             return;
         }
 
@@ -159,7 +159,7 @@ public class Chamber6_RestobotAuto : MonoBehaviour
 
         if (chamberScript.mainPiring.HasIngredient(Chamber_Level6.Ingredient.Rice))
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Empty your plate first.", "SYSTEM", 3);
+            Hypatios.Dialogue.QueueDialogue("Empty your plate first.", "SYSTEM", 3);
             return;
         }
 

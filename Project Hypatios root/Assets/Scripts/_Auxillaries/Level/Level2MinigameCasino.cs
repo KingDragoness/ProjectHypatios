@@ -28,7 +28,7 @@ public class Level2MinigameCasino : MonoBehaviour
     public void StartGame()
     {
         hasStartedGame = true;
-        DialogueSubtitleUI.instance.QueueDialogue("Shoot Em' Up has started. Shoot those terrorists and avoid shooting civilians.", "SYSTEM", 10f);
+        Hypatios.Dialogue.QueueDialogue("Shoot Em' Up has started. Shoot those terrorists and avoid shooting civilians.", "SYSTEM", 10f);
     }
 
     private void Update()
@@ -87,7 +87,7 @@ public class Level2MinigameCasino : MonoBehaviour
             collectedSoul += PlayerPerk.GetBonusSouls();
         }
 
-        DialogueSubtitleUI.instance.QueueDialogue($"Shoot Em' Up has ended! You have been rewarded: {collectedSoul} souls", "SYSTEM", 10f);
+        Hypatios.Dialogue.QueueDialogue($"Shoot Em' Up has ended! You have been rewarded: {collectedSoul} souls", "SYSTEM", 10f);
         Hypatios.Game.SoulPoint += collectedSoul;
         hasStartedGame = false;
         score = 0;

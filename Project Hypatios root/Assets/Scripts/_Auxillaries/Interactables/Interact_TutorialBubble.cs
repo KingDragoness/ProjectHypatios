@@ -72,7 +72,7 @@ public class Interact_TutorialBubble : MonoBehaviour
 
     public  void TriggerMessage()
     {
-        DialogueSubtitleUI.instance.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer, shouldOverride: shouldOverride);
+        Hypatios.Dialogue.QueueDialogue(Dialogue_Content, Dialogue_SpeakerName, Dialogue_Timer, shouldOverride: shouldOverride);
         OnSpeechBubble?.Invoke();
 
         bAlreadyInside = true;

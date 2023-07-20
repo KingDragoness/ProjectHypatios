@@ -30,6 +30,7 @@ public class Hypatios : MonoBehaviour
         public static int VISUAL_TEMPERATURE = 0;
         public static int VISUAL_TINT = 0;
         public static int VSYNC = 0;
+        public static int AUTO_DIALOGUE = 1;
         public static int FULLSCREEN = 0;
         public static int MOTIONBLUR = 0;
         public static int ANTIALIASING = 1;
@@ -77,6 +78,7 @@ public class Hypatios : MonoBehaviour
             RESOLUTION = LoadPrefKeyInt("SETTINGS.RESOLUTION", resolutions.Length - 1);
             MOUSE_SENSITIVITY = LoadPrefKeyFloat("SETTINGS.MOUSE_SENSITIVITY", 10f);
             MOTIONBLUR = LoadPrefKeyInt("SETTINGS.MOTIONBLUR", 1);
+            AUTO_DIALOGUE = LoadPrefKeyInt("SETTINGS.AUTO_DIALOGUE", 1);
             VISUAL_TEMPERATURE = LoadPrefKeyInt("SETTINGS.VISUAL_TEMPERATURE", 0);
             VISUAL_TINT = LoadPrefKeyInt("SETTINGS.VISUAL_TINT", 0);
             UI_SCALING = LoadPrefKeyFloat("SETTINGS.UI_SCALING", 1f);
@@ -139,6 +141,11 @@ public class Hypatios : MonoBehaviour
 
             mixerSFX.SetFloat("Master", Mathf.Log10(SFX_VOLUME) * 20);
             mixerMusic.SetFloat("Master", Mathf.Log10(MUSIC_VOLUME) * 20);
+
+            if (AUTO_DIALOGUE == 0)
+                Hypatios.Dialogue.autoDialogueSkip = false;
+            else 
+                Hypatios.Dialogue.autoDialogueSkip = true;
 
             if (realtimeReflections != null)
             {
@@ -318,6 +325,9 @@ public class Hypatios : MonoBehaviour
     private Camera _mainCamera;
 
     [SerializeField]
+    private DialogueSubtitleUI _dialogue;
+
+    [SerializeField]
     private cameraScript _mainCameraScript;
 
     [SerializeField]
@@ -346,6 +356,7 @@ public class Hypatios : MonoBehaviour
     public static PlayerRPG RPG { get => Instance._playerRPG; }
     public static MainUI UI { get => Instance._ui; }
     public static Camera MainCamera { get => Instance._mainCamera; }
+    public static DialogueSubtitleUI Dialogue { get => Instance._dialogue; }
     public static cameraScript MainCameraScript { get => Instance._mainCameraScript; }
     public static DynamicObjectPool ObjectPool { get => Instance._dynamicObjectPool; }
     public static EnemyContainer Enemy { get => Instance._enemyContainer; }

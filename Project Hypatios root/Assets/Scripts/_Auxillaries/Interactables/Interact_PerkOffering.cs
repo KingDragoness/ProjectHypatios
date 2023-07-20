@@ -64,12 +64,12 @@ public class Interact_PerkOffering : MonoBehaviour
 
         if (price > Hypatios.Game.SoulPoint)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"Not enough souls!", "SYSTEM", 6f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"Not enough souls!", "SYSTEM", 6f, shouldOverride: true);
             MainGameHUDScript.Instance.audio_Error.Play(); 
             return;
         }
 
-        DialogueSubtitleUI.instance.QueueDialogue($"{perk1.TitlePerk} purchased for {price} souls.", "SYSTEM", 6f, shouldOverride: true);
+        Hypatios.Dialogue.QueueDialogue($"{perk1.TitlePerk} purchased for {price} souls.", "SYSTEM", 6f, shouldOverride: true);
         Hypatios.Player.PerkData.Temp_CustomPerk.Add(_cauldron.perkCustomEffect);
         Hypatios.Player.ReloadStatEffects();
         Hypatios.Game.SoulPoint -= price;
@@ -91,7 +91,7 @@ public class Interact_PerkOffering : MonoBehaviour
     {
         var perk1 = PlayerPerk.GetBasePerk(_cauldron.statusType);
 
-        DialogueSubtitleUI.instance.QueueDialogue($"Aldrich gained {perk1.TitlePerk} perk.", "SYSTEM", 6f, shouldOverride: true);
+        Hypatios.Dialogue.QueueDialogue($"Aldrich gained {perk1.TitlePerk} perk.", "SYSTEM", 6f, shouldOverride: true);
         Hypatios.Player.PerkData.AddPerkLevel(_cauldron.statusType);
         Hypatios.Player.ReloadStatEffects();
 

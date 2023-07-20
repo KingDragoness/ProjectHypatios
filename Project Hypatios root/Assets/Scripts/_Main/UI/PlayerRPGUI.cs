@@ -22,6 +22,7 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Inventory")] public Text mainTitleLabel;
     [FoldoutGroup("Inventory")] public Text itemTooltip_LeftHandedLabel;
     [FoldoutGroup("Inventory")] public Text itemTooltip_RightHandedLabel;
+    [FoldoutGroup("Inventory")] public InputField input_SearchField;
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
     [FoldoutGroup("Inventory")] public Slider healthRestoreBar;
     [FoldoutGroup("Inventory")] public Slider healthRestore_BorderBar;
@@ -60,6 +61,7 @@ public class PlayerRPGUI : MonoBehaviour
     {
         RefreshUI();
         pauseCanvas = GetComponentInParent<Canvas>();
+        input_SearchField.text = "";
         HideHealthRestore();
     }
 
@@ -100,7 +102,7 @@ public class PlayerRPGUI : MonoBehaviour
         RefreshUI();
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
         foreach (var perkButton in _allCharPerkButtons)
         {
@@ -195,25 +197,45 @@ public class PlayerRPGUI : MonoBehaviour
             for(int x = 0; x < All_Items.Count; x++)
             {
                 var itemData = All_Items[x];
+                var itemClass = Hypatios.Assets.GetItem(itemData.ID);
+                bool matchingSearch = false;
+                bool valid = false;
 
                 if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive == false)
                 {
-                    indexes.Add(x);
+                    valid = true;
                 }
                 else
                 {
                     if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive && itemData.IsFavorite)
                     {
-                        indexes.Add(x);
+                        valid = true;
                     }
                     else if (itemData.category == filterCategoryType && isFavoriteActive && itemData.IsFavorite)
                     {
-                        indexes.Add(x);
+                        valid = true;
                     }
                     else if (itemData.category == filterCategoryType && !isFavoriteActive)
                     {
-                        indexes.Add(x);
+                        valid = true;
                     }
+                }
+
+                if (string.IsNullOrEmpty(input_SearchField.text)) matchingSearch = true;
+                else
+                {
+                    if (itemClass.GetDisplayText().ToLower().Contains(input_SearchField.text.ToLower()))
+                        matchingSearch = true;
+
+                    if (itemClass.subCategory.ToString().ToLower().Contains(input_SearchField.text.ToLower()))
+                        matchingSearch = true;
+                }
+
+                if (matchingSearch == false) valid = false;
+
+                if (valid)
+                {
+                    indexes.Add(x);
                 }
             }
 

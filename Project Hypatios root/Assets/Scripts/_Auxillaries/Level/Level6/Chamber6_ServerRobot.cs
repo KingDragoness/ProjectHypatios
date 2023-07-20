@@ -56,7 +56,7 @@ public class Chamber6_ServerRobot : MonoBehaviour
 
         if (IsAnyOrderMatch(chamberScript.mainPiring) == false)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"Error! No customer match your plate!", "Zart Bot", 3f);
+            Hypatios.Dialogue.QueueDialogue($"Error! No customer match your plate!", "Zart Bot", 3f);
             targetPiring = null;
             return;
         }
@@ -65,7 +65,7 @@ public class Chamber6_ServerRobot : MonoBehaviour
         targetCustomer = GetCustomerThatMatch(chamberScript.mainPiring);
         targetPiring.OnTransferPlate += TargetPiring_OnTransferPlate;
 
-        DialogueSubtitleUI.instance.QueueDialogue($"Beep! Delivering for Order #{(targetCustomer.tableSeat + 1).ToString("00")}.", "Zart Bot", 3f);
+        Hypatios.Dialogue.QueueDialogue($"Beep! Delivering for Order #{(targetCustomer.tableSeat + 1).ToString("00")}.", "Zart Bot", 3f);
         monitorText.text = $"Order #{(targetCustomer.tableSeat + 1).ToString("00")}";
     }
 

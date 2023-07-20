@@ -59,7 +59,7 @@ public class Interact_OreTrader : MonoBehaviour
 
         if (count < priceList.sellAmount)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"You need at least x{priceList.sellAmount} to be able to sell {priceList.itemClass.GetDisplayText()}. ({count}/{priceList.sellAmount})"
+            Hypatios.Dialogue.QueueDialogue($"You need at least x{priceList.sellAmount} to be able to sell {priceList.itemClass.GetDisplayText()}. ({count}/{priceList.sellAmount})"
                 , "SYSTEM", 5f);
             RefreshMonitor();
 
@@ -82,9 +82,9 @@ public class Interact_OreTrader : MonoBehaviour
         Hypatios.Game.SoulPoint += (bonusReward + baseReward);
 
         if (bonusReward > 0)
-            DialogueSubtitleUI.instance.QueueDialogue($"Sold {priceList.itemClass.GetDisplayText()} ({priceList.sellAmount}) for {baseReward} souls (+{bonusReward} extra souls).", "SYSTEM", 3f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"Sold {priceList.itemClass.GetDisplayText()} ({priceList.sellAmount}) for {baseReward} souls (+{bonusReward} extra souls).", "SYSTEM", 3f, shouldOverride: true);
         else
-            DialogueSubtitleUI.instance.QueueDialogue($"Sold {priceList.itemClass.GetDisplayText()} ({priceList.sellAmount}) for {baseReward} souls.", "SYSTEM", 3f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"Sold {priceList.itemClass.GetDisplayText()} ({priceList.sellAmount}) for {baseReward} souls.", "SYSTEM", 3f, shouldOverride: true);
 
         Hypatios.Player.Inventory.RemoveItem(priceList.itemClass.GetID(), priceList.sellAmount);
         soundManagerScript.instance.Play("reward");

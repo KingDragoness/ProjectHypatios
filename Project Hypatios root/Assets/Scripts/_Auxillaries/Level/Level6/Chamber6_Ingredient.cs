@@ -34,13 +34,13 @@ public class Chamber6_Ingredient : InteractableObject
     public override void Interact()
     {
         if (ChamberScript.currentMode != Chamber_Level6.PiringMode.PiringTaken)
-        { DialogueSubtitleUI.instance.QueueDialogue("You need to have a plate first.", "SYSTEM", 3f); return; }
+        { Hypatios.Dialogue.QueueDialogue("You need to have a plate first.", "SYSTEM", 3f); return; }
 
         if (ingredient != Chamber_Level6.Ingredient.Rice)
         {
             if (ChamberScript.mainPiring.HasIngredient(Chamber_Level6.Ingredient.Rice) == false)
             {
-                DialogueSubtitleUI.instance.QueueDialogue("You need to add rice first.", "SYSTEM", 3f);
+                Hypatios.Dialogue.QueueDialogue("You need to add rice first.", "SYSTEM", 3f);
 
                 return;
             }

@@ -165,7 +165,7 @@ public class HypatiosSave
     public int Game_TotalSouls = 0;
     public int Game_UnixTime = 0;
     public PlayerStatSave persistent_PlayerStat;
-
+    public List<ShareCompanySave> PortfolioShares = new List<ShareCompanySave>();
     [Space]
 
     [Header("Perks")]
@@ -206,7 +206,70 @@ public class HypatiosSave
     public class ShareCompanySave
     {
         public string ID = "WING";
-        public int shares = 0;
+        public List<ChunkShare> chunkShares = new List<ChunkShare>();
+
+        [System.Serializable]
+        public class ChunkShare
+        {
+            public int sharePrice = 101; //soul
+            public int amount = 2;
+            //total investment: 202
+        }
+
+        public int GetTotalShares()
+        {
+            int total = 0;
+            foreach(var chunk in chunkShares)
+            {
+                total += chunk.amount;
+            }
+
+            return total;
+        }
+
+
+        public int GetTotalInvestment()
+        {
+            int total = 0;
+            foreach (var chunk in chunkShares)
+            {
+                total += chunk.amount * chunk.sharePrice;
+            }
+
+            return total;
+        }
+
+        public void BuyShare(int sharePrice, int amount)
+        {
+            ChunkShare newChunk = new ChunkShare();
+            newChunk.sharePrice = sharePrice;
+            newChunk.amount = amount;
+            chunkShares.Add(newChunk);
+        }
+
+        public void RemoveShare(int amount = 1)
+        {
+            ChunkShare currentChunk = chunkShares[0];
+
+            for (int x = 0; x < amount; x++)
+            {
+                currentChunk.amount--;
+
+                if (currentChunk.amount <= 0)
+                {
+                    chunkShares.Remove(currentChunk);
+                }
+
+                if (chunkShares.Count > 0)
+                {
+                    currentChunk = chunkShares[0];
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
     }
 
     public enum EssenceType

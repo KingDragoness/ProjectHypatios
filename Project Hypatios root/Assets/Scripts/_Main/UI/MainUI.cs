@@ -24,8 +24,11 @@ public class MainUI : MonoBehaviour
         FreecamMode,
         Trivia,
         Favorite,
-        kThanidLab
+        kThanidLab,
+        MobiusNet
     }
+
+    public MobiusNetUI Internet;
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
     [FoldoutGroup("References")] public GameObject HUD;
@@ -254,6 +257,7 @@ public class MainUI : MonoBehaviour
                 TriviaMap.gameObject.SetActive(false);
                 CutsceneHUD_UI.gameObject.SetActive(false);
                 FavoriteHUD_UI.gameObject.SetActive(false);
+                Internet.gameObject.SetActive(false);
                 DefaultHUD_UI.gameObject.SetActive(true);
 
                 if (Hypatios.Player.Health.isDead == false)
@@ -270,7 +274,7 @@ public class MainUI : MonoBehaviour
 
 
             if (current_UI == UIMode.Crafting | current_UI == UIMode.kThanidLab | current_UI == UIMode.Paradox | current_UI == UIMode.Weapon | current_UI == UIMode.Shop | current_UI == UIMode.Cinematic
-                | current_UI == UIMode.FreecamMode)
+                | current_UI == UIMode.FreecamMode | current_UI == UIMode.MobiusNet)
             {
                 isIdlePlayer = true;
             }
@@ -342,6 +346,11 @@ public class MainUI : MonoBehaviour
                 if (current_UI == UIMode.kThanidLab)
                 {
                     kThanidLab_UI.gameObject.SetActive(true);
+                }
+
+                if (current_UI == UIMode.MobiusNet)
+                {
+                    Internet.gameObject.SetActive(true);
                 }
 
                 if (current_UI == UIMode.Cinematic)

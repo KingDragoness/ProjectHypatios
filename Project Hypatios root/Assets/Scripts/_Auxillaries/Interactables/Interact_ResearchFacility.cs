@@ -128,7 +128,7 @@ public class Interact_ResearchFacility : MonoBehaviour
         }
             
         audio_researchCompleted?.Play();
-        DialogueSubtitleUI.instance.QueueDialogue($"Research completed: {currentlyUpgrade.GetDisplayText()}.", "SYSTEM", 3f, shouldOverride: true);
+        Hypatios.Dialogue.QueueDialogue($"Research completed: {currentlyUpgrade.GetDisplayText()}.", "SYSTEM", 3f, shouldOverride: true);
         currentlyUpgrade.AddStatusEffectPlayer();
         currentlyUpgrade = null;
     }
@@ -188,13 +188,13 @@ public class Interact_ResearchFacility : MonoBehaviour
 
         if (upgradeableUnit.HasLevelMaxed())
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"Upgrade maxed out.", "SYSTEM", 3f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"Upgrade maxed out.", "SYSTEM", 3f, shouldOverride: true);
             return;
         }
 
         if (allResearchFacilities.Find(x => x.currentlyUpgrade == researchTarget) != null)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"{researchTarget.GetDisplayText()} has already under going research. Select another one.", "SYSTEM", 4f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"{researchTarget.GetDisplayText()} has already under going research. Select another one.", "SYSTEM", 4f, shouldOverride: true);
             return;
         }
 
@@ -202,7 +202,7 @@ public class Interact_ResearchFacility : MonoBehaviour
 
         if (Hypatios.Game.SoulPoint < price)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"Not enough souls! Required: {price} souls.", "SYSTEM", 3f, shouldOverride: true);
+            Hypatios.Dialogue.QueueDialogue($"Not enough souls! Required: {price} souls.", "SYSTEM", 3f, shouldOverride: true);
             return;
         }
 

@@ -45,6 +45,7 @@ public class FPSMainScript : MonoBehaviour
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
     public List<HypatiosSave.TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
     public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
+    public List<HypatiosSave.ShareCompanySave> PortfolioShares = new List<HypatiosSave.ShareCompanySave>();
     public List<string> otherEverUsed = new List<string>();
     public List<string> favoritedItems = new List<string>();
 
@@ -451,6 +452,7 @@ public class FPSMainScript : MonoBehaviour
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
+        PortfolioShares = savedata.PortfolioShares;
         Player.Inventory.allItemDatas = savedata.Player_Inventory;
         persistent_PlayerStat = savedata.persistent_PlayerStat;
         run_PlayerStat = savedata.run_PlayerStat;
@@ -488,6 +490,7 @@ public class FPSMainScript : MonoBehaviour
         favoritedItems = savedata.favoritedItems;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        PortfolioShares = savedata.PortfolioShares;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
         //Player.Inventory = savedata.Player_Inventory;
     }

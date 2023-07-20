@@ -84,7 +84,7 @@ public class Chamber_ZombieHorde : MonoBehaviour
         {
             audio_CompletedChamber.Play();
             OnFinished?.Invoke();
-            DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
+            Hypatios.Dialogue.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
         }
 
         _hasFinished = true;

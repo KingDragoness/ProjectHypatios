@@ -78,13 +78,13 @@ public class Interact_SubwayTrain : MonoBehaviour
     {
         if (NotASingleDestinationActive() == true)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("No destination available right now, come back when you have progressed the game further.", "SYSTEM", 5.5f);
+            Hypatios.Dialogue.QueueDialogue("No destination available right now, come back when you have progressed the game further.", "SYSTEM", 5.5f);
             return;
         }
 
         if (currentDestination == null)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Please select a destination first.", "SYSTEM", 4f);
+            Hypatios.Dialogue.QueueDialogue("Please select a destination first.", "SYSTEM", 4f);
             return;
         }
 
@@ -98,7 +98,7 @@ public class Interact_SubwayTrain : MonoBehaviour
         
         if (priceShortcut.souls > Hypatios.Game.SoulPoint)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"Not enough souls for your destination! Price: {priceShortcut.souls}", "SYSTEM", 4f);
+            Hypatios.Dialogue.QueueDialogue($"Not enough souls for your destination! Price: {priceShortcut.souls}", "SYSTEM", 4f);
             return;
         }
 
@@ -126,7 +126,7 @@ public class Interact_SubwayTrain : MonoBehaviour
         target = currentDestination.sceneTarget.Index;
         Debug.Log($"{currentDestination.sceneTarget.SceneName} = ({currentDestination.sceneTarget.Index})");
 
-        DialogueSubtitleUI.instance.QueueDialogue($"Destination: {currentDestination.sceneTarget.SceneName}. {netPrice} souls has been deducted.", "SYSTEM", 10f);
+        Hypatios.Dialogue.QueueDialogue($"Destination: {currentDestination.sceneTarget.SceneName}. {netPrice} souls has been deducted.", "SYSTEM", 10f);
 
         yield return new WaitForSeconds(2f);
         MainGameHUDScript.Instance.FadeOutSceneTransition.gameObject.SetActive(true);

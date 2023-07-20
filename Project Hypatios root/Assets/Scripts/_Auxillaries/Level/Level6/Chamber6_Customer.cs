@@ -310,7 +310,7 @@ public class Chamber6_Customer : EnemyScript
         chamberScript.customerServed++;
         orderAlreadyTaken = true;
         mode = AIMode.Eating;
-        DialogueSubtitleUI.instance.QueueDialogue($"Beep! Order #{(tableSeat + 1).ToString("00")} has been taken.", "Zart Bot", 3f);
+        Hypatios.Dialogue.QueueDialogue($"Beep! Order #{(tableSeat + 1).ToString("00")} has been taken.", "Zart Bot", 3f);
         UpdateAI();
     }
 
@@ -326,7 +326,7 @@ public class Chamber6_Customer : EnemyScript
     {
         OnDied?.Invoke();
         Stats.IsDead = true;
-        DialogueSubtitleUI.instance.QueueDialogue($"Error! A customer has been killed!", "Zart Bot", 3f);
+        Hypatios.Dialogue.QueueDialogue($"Error! A customer has been killed!", "Zart Bot", 3f);
         MainGameHUDScript.Instance.audio_Error.Play();
         chamberScript.allCustomers.Remove(this);
         var wreckage = Instantiate(customerWreckage.gameObject);

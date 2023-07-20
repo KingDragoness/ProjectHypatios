@@ -130,7 +130,7 @@ public class Chamber_Level7 : MonoBehaviour
             {
                 chamberAudioAnnouncement.Play();
                 OnChamberCompleted?.Invoke();
-                DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
+                Hypatios.Dialogue.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
             }
         }
 

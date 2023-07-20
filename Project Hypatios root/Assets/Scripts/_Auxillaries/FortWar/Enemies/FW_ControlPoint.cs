@@ -139,7 +139,7 @@ public class FW_ControlPoint : MonoBehaviour
         if (audio_CPCaptured != null && CPNumber != 0)
         {
             if (playAudio) audio_CPCaptured.Play();
-            DialogueSubtitleUI.instance.QueueDialogue("Attention, a control point has been captured by the red team.", "ANNOUNCER", 8f);
+            Hypatios.Dialogue.QueueDialogue("Attention, a control point has been captured by the red team.", "ANNOUNCER", 8f);
         }
     }
 

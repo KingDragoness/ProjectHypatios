@@ -149,7 +149,7 @@ public class Chamber_Level6 : MonoBehaviour
     {
         if (currentGamemode == Gamemode.NotPlay)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Ding! Sushi Zart has opened for business!", "SYSTEM", 10f);
+            Hypatios.Dialogue.QueueDialogue("Ding! Sushi Zart has opened for business!", "SYSTEM", 10f);
         }
         if (currentGamemode != Gamemode.NotPlay)
         {
@@ -380,7 +380,7 @@ public class Chamber_Level6 : MonoBehaviour
     {
         if (mainPiring.gameObject.activeInHierarchy == false)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Get your plate first.", "SYSTEM", 3);
+            Hypatios.Dialogue.QueueDialogue("Get your plate first.", "SYSTEM", 3);
             return;
         }
 
@@ -394,7 +394,7 @@ public class Chamber_Level6 : MonoBehaviour
 
         if (listValid.Count == 0)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("There's no valid order.", "SYSTEM", 3);
+            Hypatios.Dialogue.QueueDialogue("There's no valid order.", "SYSTEM", 3);
             return;
         }
 
@@ -403,7 +403,7 @@ public class Chamber_Level6 : MonoBehaviour
 
         if (mainPiring.HasIngredient(Ingredient.Rice))
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Empty your plate first.", "SYSTEM", 3);
+            Hypatios.Dialogue.QueueDialogue("Empty your plate first.", "SYSTEM", 3);
             return;
         }
 
@@ -453,7 +453,7 @@ public class Chamber_Level6 : MonoBehaviour
     {
         if (currentMode != PiringMode.PiringTaken)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("You need to have a plate to deliver the sushi.", "SYSTEM", 3);
+            Hypatios.Dialogue.QueueDialogue("You need to have a plate to deliver the sushi.", "SYSTEM", 3);
             return;
         }
 
@@ -496,7 +496,7 @@ public class Chamber_Level6 : MonoBehaviour
             collectedSoul += customerServed * 10;
 
             Hypatios.Game.SoulPoint += collectedSoul;
-            DialogueSubtitleUI.instance.QueueDialogue($"Attention to all facility users: Chamber completed. Soul rewarded: {collectedSoul}", "ANNOUNCER", 14f);
+            Hypatios.Dialogue.QueueDialogue($"Attention to all facility users: Chamber completed. Soul rewarded: {collectedSoul}", "ANNOUNCER", 14f);
         }
     }
 

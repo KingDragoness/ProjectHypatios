@@ -120,7 +120,7 @@ public class Level5Chamber : MonoBehaviour
 
         hasStarted = true;
         //chamberStartedAudio.Play();
-        DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: The game of 'Calculator' has started.", "ANNOUNCER", 14f);
+        Hypatios.Dialogue.QueueDialogue("Attention to all facility users: The game of 'Calculator' has started.", "ANNOUNCER", 14f);
         timer = TIMER_LIMIT_ANSWER;
         NewSoal();
         SpawnSpider();
@@ -161,7 +161,7 @@ public class Level5Chamber : MonoBehaviour
     {
         if (enemiesToClear.Count > limitEnemy)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Too many enemies in the chamber. Please clear them before continuing to the next question.", "ANNOUNCER", 3f);
+            Hypatios.Dialogue.QueueDialogue("Too many enemies in the chamber. Please clear them before continuing to the next question.", "ANNOUNCER", 3f);
             return;
         }
 
@@ -188,7 +188,7 @@ public class Level5Chamber : MonoBehaviour
         {
             NewSoal();
             jawabanBenarAudio.Play();
-            DialogueSubtitleUI.instance.QueueDialogue("Correct! 7 soul rewarded... Onto the next question...", "ANNOUNCER", 5f);
+            Hypatios.Dialogue.QueueDialogue("Correct! 7 soul rewarded... Onto the next question...", "ANNOUNCER", 5f);
             Hypatios.Game.SoulPoint += 7;
             OnAnswerCorrect?.Invoke();
 
@@ -196,7 +196,7 @@ public class Level5Chamber : MonoBehaviour
         else
         {
             MainGameHUDScript.Instance.audio_Error.Play();
-            DialogueSubtitleUI.instance.QueueDialogue("Wrong answer!", "ANNOUNCER", 3f);
+            Hypatios.Dialogue.QueueDialogue("Wrong answer!", "ANNOUNCER", 3f);
             OnAnswerWrong?.Invoke();
 
         }
@@ -213,7 +213,7 @@ public class Level5Chamber : MonoBehaviour
         }
 
         MainGameHUDScript.Instance.audio_Error.Play();
-        DialogueSubtitleUI.instance.QueueDialogue("Timeout!", "ANNOUNCER", 3f);
+        Hypatios.Dialogue.QueueDialogue("Timeout!", "ANNOUNCER", 3f);
     }
 
     private void NewSoal()
@@ -221,7 +221,7 @@ public class Level5Chamber : MonoBehaviour
 
         if (enemiesToClear.Count > limitEnemy)
         {
-            DialogueSubtitleUI.instance.QueueDialogue("Too many enemies in the chamber. Please clear them before continuing to the next question.", "ANNOUNCER", 3f);
+            Hypatios.Dialogue.QueueDialogue("Too many enemies in the chamber. Please clear them before continuing to the next question.", "ANNOUNCER", 3f);
         }
 
         sisaSoal--;
@@ -275,7 +275,7 @@ public class Level5Chamber : MonoBehaviour
             {
                 chamberAudioAnnouncement.Play();
                 OnChamberCompleted?.Invoke();
-                DialogueSubtitleUI.instance.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
+                Hypatios.Dialogue.QueueDialogue("Attention to all facility users: Chamber completed.", "ANNOUNCER", 14f);
             }
         }
 

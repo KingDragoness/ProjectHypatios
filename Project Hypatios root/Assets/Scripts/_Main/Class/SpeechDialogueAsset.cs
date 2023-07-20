@@ -30,7 +30,7 @@ public class SpeechDialogueAsset : ScriptableObject
     public void TriggerMessage()
     {
 
-        if (DialogueSubtitleUI.instance.IsTalking() && cannotWhenTalkingToOther)
+        if (Hypatios.Dialogue.IsTalking() && cannotWhenTalkingToOther)
         {
             return;
         }
@@ -48,7 +48,7 @@ public class SpeechDialogueAsset : ScriptableObject
                 portrait = dialog.portraitSpeaker.portraitSprite;
             }
 
-            DialogueSubtitleUI.instance.QueueDialogue(dialog.Dialogue_Content,
+            Hypatios.Dialogue.QueueDialogue(dialog.Dialogue_Content,
                 dialog.dialogSpeaker.name,
                 dialog.Dialogue_Timer,
                 portrait,

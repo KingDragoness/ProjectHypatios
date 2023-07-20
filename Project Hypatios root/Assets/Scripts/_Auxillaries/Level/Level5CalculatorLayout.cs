@@ -79,7 +79,7 @@ public class Level5CalculatorLayout : MonoBehaviour
         {
             if (chamberScript.HasStarted == false)
             {
-                DialogueSubtitleUI.instance.QueueDialogue("Press shoot the start button to commence the game.", "ANNOUNCER", 3f);
+                Hypatios.Dialogue.QueueDialogue("Press shoot the start button to commence the game.", "ANNOUNCER", 3f);
                 return;
             }
 

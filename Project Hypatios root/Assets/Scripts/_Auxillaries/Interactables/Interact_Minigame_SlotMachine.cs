@@ -139,7 +139,7 @@ public class Interact_Minigame_SlotMachine : MonoBehaviour
 
         if (Hypatios.Game.SoulPoint < _Targetlevel.soulCost)
         {
-            DialogueSubtitleUI.instance.QueueDialogue($"You don't have enough souls to play this game.", "SYSTEM", 5f);
+            Hypatios.Dialogue.QueueDialogue($"You don't have enough souls to play this game.", "SYSTEM", 5f);
             return;
         }
 

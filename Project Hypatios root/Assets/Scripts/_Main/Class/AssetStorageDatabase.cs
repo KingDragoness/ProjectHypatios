@@ -23,6 +23,8 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<ChamberLevel> AllChamberLevels;
     public List<SubiconIdentifier> AllSubIcons = new List<SubiconIdentifier>();
 
+    [FoldoutGroup("Auxillary")] public List<StockExchange_ProfileObject> AllStockCompanies = new List<StockExchange_ProfileObject>();
+
     private void Awake()
     {
         RefreshDatabase();
@@ -39,6 +41,7 @@ public class AssetStorageDatabase : MonoBehaviour
         var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList();
         var _statistics = Resources.LoadAll("", typeof(BaseStatValue)).Cast<BaseStatValue>().ToList();
         var _levels = Resources.LoadAll("", typeof(ChamberLevel)).Cast<ChamberLevel>().ToList();
+        var _stockProfiles = Resources.LoadAll("", typeof(StockExchange_ProfileObject)).Cast<StockExchange_ProfileObject>().ToList();
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;
@@ -49,8 +52,14 @@ public class AssetStorageDatabase : MonoBehaviour
         AllItems = _itemInventory;
         AllStatEntries = _statistics;
         AllChamberLevels = _levels;
+        AllStockCompanies = _stockProfiles;
     }
 
+
+    public StockExchange_ProfileObject GetCompanyProfile(string ID)
+    {
+        return AllStockCompanies.Find(x => x.indexID == ID);
+    }
     public BaseModifierEffectObject GetStatusEffect(ModifierEffectCategory category)
     {
         return AllModifierEffects.Find(x => x.category == category);

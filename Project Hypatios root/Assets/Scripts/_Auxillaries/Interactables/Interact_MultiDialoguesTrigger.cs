@@ -95,7 +95,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 portrait = dialog.portraitSpeaker.portraitSprite;
             }
 
-            DialogueSubtitleUI.instance.QueueDialogue(dialog.Dialogue_Content,
+            Hypatios.Dialogue.QueueDialogue(dialog.Dialogue_Content,
                 dialog.dialogSpeaker.name,
                 dialog.Dialogue_Timer,
                 portrait,
@@ -106,7 +106,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 _ID: ID1);
                 
         }
-        if (shouldOverride) DialogueSubtitleUI.instance.ForceDisplay();
+        if (shouldOverride) Hypatios.Dialogue.ForceDisplay();
 
         OnDialogueTriggered?.Invoke();
         alreadyTriggered = true;

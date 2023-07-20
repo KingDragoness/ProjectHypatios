@@ -15,15 +15,15 @@ public class DialogueSubtitleUI : MonoBehaviour
     public string DEBUG_SpeakerName;
     public float DEBUG_Timer = 4;
     public Sprite emptySprite;
+    public bool autoDialogueSkip = true;
     [Space]
     public Animator dialogueAnimator;
     public Text Label_DialogueContent;
     public Text Label_SpeakerName;
     public Image Image_SpeakerPortrait;
     public Slider slider_DialogTimer;
+    public GameObject continueButton;
     public AudioSource audioSource;
-
-    public static DialogueSubtitleUI instance;
 
     [SerializeField] private List<DialogueSpeechCache> _currentDialogueList = new List<DialogueSpeechCache>();
     [SerializeField] private List<DialogueSpeechCache> allDialogueHistory = new List<DialogueSpeechCache>();
@@ -40,10 +40,6 @@ public class DialogueSubtitleUI : MonoBehaviour
         return true;
     }
 
-    private void Awake()
-    {
-        instance = this;
-    }
 
     private void Start()
     {
@@ -59,25 +55,46 @@ public class DialogueSubtitleUI : MonoBehaviour
             slider_DialogTimer.value = timer;
             timer -= Time.deltaTime;
             isClosed = false;
+            if (continueButton.activeSelf == true) continueButton.gameObject.SetActive(false);
         }
         else
         {
-            if (isClosed && _currentDialogueList.Count > 0)
+            bool notAllowNextDisplay = false;
+
+            if (autoDialogueSkip == false && Input.GetKey(KeyCode.Return) == false && _currentDialogueList.Count > 0) 
+               
             {
-                DisplayThisDialogue(_currentDialogueList[0]);
-                return;
+                if (continueButton.activeSelf == false) continueButton.gameObject.SetActive(true);
+
+                //Hard-coded; any dialogue without sprite will not be able
+                //to pause even in Auto-Dialogue
+                if (_currentDialogueList[0].charPortrait != null) notAllowNextDisplay = true;
+
+                if (isClosed && _currentDialogueList.Count > 0)
+                {
+                    DisplayThisDialogue(_currentDialogueList[0]);
+                }
             }
 
-            if (_currentDialogueList.Count > 0)
+            if (notAllowNextDisplay == false)
             {
-                _currentDialogueList.RemoveAt(0);
-                //Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
-                if (_currentDialogueList.Count > 0) DisplayThisDialogue(_currentDialogueList[0]);
+                if (continueButton.activeSelf == true) continueButton.gameObject.SetActive(false);
+
+                if (isClosed && _currentDialogueList.Count > 0)
+                {
+                    DisplayThisDialogue(_currentDialogueList[0]);
+                    return;
+                }
+
+                if (_currentDialogueList.Count > 0)
+                {
+                    _currentDialogueList.RemoveAt(0);
+                    //Debug.Log($"test dequeue | Speech Left: [{dialogueSpeeches.Count}]");
+                    if (_currentDialogueList.Count > 0) DisplayThisDialogue(_currentDialogueList[0]);
+                }
             }
-            else
-            {
-                Close();
-            }
+
+            if (_currentDialogueList.Count <= 0) Close();
         }
     }
 

@@ -22,6 +22,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Gameplay")] public Slider slider_Brightness;
     [FoldoutGroup("Gameplay")] public Text value_FOV;
     [FoldoutGroup("Gameplay")] public Slider slider_FOV;
+    [FoldoutGroup("Gameplay")] public Toggle toggle_AutoDialogue;
     [FoldoutGroup("Video")] public Toggle toggle_VSync;
     [FoldoutGroup("Video")] public Toggle toggle_Fullscreen;
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
@@ -76,6 +77,7 @@ public class SettingsUI : MonoBehaviour
         toggle_VSync.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.VSYNC));
         toggle_Fullscreen.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.FULLSCREEN));
         toggle_DynamicUIScaling.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.DYNAMIC_UI_SCALING));
+        toggle_AutoDialogue.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.AUTO_DIALOGUE));
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
         toggle_UITVEffect.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.TV_EFFECT_UI));
@@ -143,6 +145,7 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.TV_EFFECT_UI = toggle_UITVEffect.isOn ? 1 : 0;
             //Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
             Hypatios.Settings.VSYNC = toggle_VSync.isOn ? 1 : 0;
+            Hypatios.Settings.AUTO_DIALOGUE = toggle_AutoDialogue.isOn ? 1 : 0;
             Hypatios.Settings.FULLSCREEN = toggle_Fullscreen.isOn ? 1 : 0;
             Hypatios.Settings.MOUSE_SENSITIVITY = slider_MouseSensitivity.value;
             Hypatios.Settings.MUSIC_VOLUME = slider_Music.value;
@@ -163,6 +166,7 @@ public class SettingsUI : MonoBehaviour
             //PlayerPrefs.SetInt("SETTINGS.DYNAMIC_UI_SCALING", Hypatios.Settings.DYNAMIC_UI_SCALING);
             PlayerPrefs.SetInt("SETTINGS.VSYNC", Hypatios.Settings.VSYNC);
             PlayerPrefs.SetInt("SETTINGS.FULLSCREEN", Hypatios.Settings.FULLSCREEN);
+            PlayerPrefs.SetInt("SETTINGS.AUTO_DIALOGUE", Hypatios.Settings.AUTO_DIALOGUE);
             PlayerPrefs.SetFloat("SETTINGS.MOUSE_SENSITIVITY", Hypatios.Settings.MOUSE_SENSITIVITY);
             PlayerPrefs.SetInt("SETTINGS.QUALITY_LEVEL", Hypatios.Settings.QUALITY_LEVEL);
 
