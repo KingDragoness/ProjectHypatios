@@ -15,7 +15,7 @@ public class CraftingkThanidLabTrigger : MonoBehaviour
         isWorkbenchOpened = true;
         Hypatios.Player.transform.position = movePlayerHere.transform.position;
         kthanidUI.SetShopScript(this);
-        MainUI.Instance.ChangeCurrentMode(9);
+        MainUI.Instance.ChangeCurrentMode(MainUI.UIMode.kThanidLab);
     }
 
     private void Update()

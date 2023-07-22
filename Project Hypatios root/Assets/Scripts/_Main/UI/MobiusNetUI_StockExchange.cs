@@ -152,12 +152,12 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
 
         if (portfolioSave != null)
         {
-            if (portfolioSave.GetTotalShares() == 0)
+            if (portfolioSave.GetTotalShares() == 0 && _shareToBuy < 0)
             {
                 DeadDialogue.PromptNotifyMessage_Mod($"You have zero {CurrentProfile.indexID} stocks to sell.", 4f);
                 return;
             }
-            if (portfolioSave.GetTotalShares() < Mathf.Abs(_shareToBuy))
+            if (portfolioSave.GetTotalShares() < Mathf.Abs(_shareToBuy) && _shareToBuy < 0)
             {
                 DeadDialogue.PromptNotifyMessage_Mod($"You only have {portfolioSave.GetTotalShares()} stocks, when you want to sell x{Mathf.Abs(_shareToBuy)}.", 6f);
                 return;

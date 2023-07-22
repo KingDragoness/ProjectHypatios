@@ -229,6 +229,9 @@ public class PlayerRPGUI : MonoBehaviour
 
                     if (itemClass.subCategory.ToString().ToLower().Contains(input_SearchField.text.ToLower()))
                         matchingSearch = true;
+
+                    if (itemClass.CheckMatchingTags(input_SearchField.text.ToLower()))
+                        matchingSearch = true;
                 }
 
                 if (matchingSearch == false) valid = false;

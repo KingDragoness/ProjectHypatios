@@ -149,7 +149,7 @@ public class ShopScript : MonoBehaviour
         isShopOpened = true;
         Hypatios.Player.transform.position = movePlayerHere.transform.position;
         weaponUI.SetShopScript(this);
-        MainUI.Instance.ChangeCurrentMode(1);
+        MainUI.Instance.ChangeCurrentMode(MainUI.UIMode.Weapon);
     }
 
     private void Update()

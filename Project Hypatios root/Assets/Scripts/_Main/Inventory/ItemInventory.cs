@@ -65,6 +65,35 @@ public class ItemInventory : ScriptableObject
         return name;
     }
 
+    public bool CheckMatchingTags(string input)
+    {
+        if (subCategory.ToString().ToLower().Contains(input))
+        {
+            return true;
+        }
+
+        List<string> additionalTags = new List<string>();
+
+
+        if (subCategory == SubiconCategory.Meds)
+        {
+            additionalTags.Add("drugs");
+            additionalTags.Add("medicines");
+        }
+        if (subCategory == SubiconCategory.Notes)
+        {
+            additionalTags.Add("papers");
+        }
+
+        foreach (var cTag in additionalTags)
+        {
+            if (cTag.ToLower().Contains(input))
+                return true;
+        }
+
+        return false;
+    }
+
     public string GetDisplayText()
     {
         if (_displayName == "")

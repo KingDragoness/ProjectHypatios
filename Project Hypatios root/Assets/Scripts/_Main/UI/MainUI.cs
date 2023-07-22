@@ -119,6 +119,11 @@ public class MainUI : MonoBehaviour
         current_UI = (MainUI.UIMode)i;
 
     }
+    public void ChangeCurrentMode(MainUI.UIMode mode)
+    {
+        current_UI = mode;
+
+    }
 
     public void Unpause()
     {

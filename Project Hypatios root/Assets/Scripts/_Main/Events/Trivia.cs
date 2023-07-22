@@ -9,9 +9,27 @@ public class Trivia : ScriptableObject
 
     public enum TriviaType
     {
-        Normal,
-        MobiusInvestigation,
-        Omniverse //later update
+        MainStory = 0,
+        SideChamber = 20,
+        Facts = 100
+    }
+
+    public static string GetTriviaName(TriviaType type)
+    {
+        if (type == TriviaType.MainStory)
+        {
+            return "Main Story";
+        }
+        else if (type == TriviaType.SideChamber)
+        {
+            return "Side Story";
+        }
+        else if (type == TriviaType.Facts)
+        {
+            return "Facts";
+        }
+
+        return "NULL";
     }
 
     [SerializeField] private string _id = "Chamber1.Completed";

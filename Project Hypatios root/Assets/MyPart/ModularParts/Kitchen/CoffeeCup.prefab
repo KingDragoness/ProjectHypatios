@@ -61,8 +61,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ab8149ec4775284bada96c1b85b4a09, type: 2}
-  - {fileID: 2100000, guid: 2823dc743f301424aab87e50aace7481, type: 2}
+  - {fileID: 2100000, guid: ddba9f08cb93a3b47bcddf6c4d3a686f, type: 2}
+  - {fileID: 2100000, guid: b8b54778792cb954a9d48e7c4742fb59, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,8 +134,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
   interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
   interactDescription: Pick up
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!114 &7392895022982555860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,3 +160,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: f3629ccaedebcbb4abdcd09bc18db03a, type: 2}
   count: 1
+  displayPrompt: 0

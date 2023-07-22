@@ -30,7 +30,7 @@ public class CraftingWorkstationTrigger : MonoBehaviour
         isWorkbenchOpened = true;
         Hypatios.Player.transform.position = movePlayerHere.transform.position;
         craftingUI.SetShopScript(this);
-        MainUI.Instance.ChangeCurrentMode(3);
+        MainUI.Instance.ChangeCurrentMode(MainUI.UIMode.Crafting);
     }
 
     public void RefreshWeaponModels()

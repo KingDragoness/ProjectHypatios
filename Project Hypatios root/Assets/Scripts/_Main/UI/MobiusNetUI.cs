@@ -16,6 +16,16 @@ public class MobiusNetUI : MonoBehaviour
     public Mode currentMode;
     public MobiusNetUI_StockExchange StockExchange;
 
+    private Interact_MobiusNetworkPC _currentBench;
+
+    public Interact_MobiusNetworkPC CurrentWorkbench { get => _currentBench; set => _currentBench = value; }
+
+    public void SetShopScript(Interact_MobiusNetworkPC _shop)
+    {
+        _currentBench = _shop;
+    }
+
+
     private bool hasStarted = false;
 
     private void Start()

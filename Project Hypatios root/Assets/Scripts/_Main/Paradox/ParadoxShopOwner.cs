@@ -45,7 +45,7 @@ public class ParadoxShopOwner : MonoBehaviour
 
     public void OpenParadox()
     {
-        MainUI.Instance.ChangeCurrentMode(2);
+        MainUI.Instance.ChangeCurrentMode(MainUI.UIMode.Paradox);
 
     }
 
