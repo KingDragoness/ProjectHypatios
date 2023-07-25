@@ -9,6 +9,7 @@ public class TriviaMapUI : MonoBehaviour
 {
 
     public TriviaBallButton currentHoveredBall;
+    public TriviaMapCamera triviaCam;
     [Space]
     public TriviaBallButton triviaBall;
     public Wire wire;
@@ -19,18 +20,120 @@ public class TriviaMapUI : MonoBehaviour
     [FoldoutGroup("Preview")] public Image image;
     [FoldoutGroup("Preview")] public Material tvNoiseMat;
     [FoldoutGroup("Preview")] public Sprite cut1BeginningSprite;
+    [FoldoutGroup("Preview")] public Vector3 offsetLook;
     public Transform parentTrivias;
     public Transform parentLineRenders;
+    [FoldoutGroup("Trivia Filters")] public Trivia.TriviaType currentFilter;
+    [FoldoutGroup("Trivia Filters")] public InputField input_SearchFilter;
+    [FoldoutGroup("Trivia Filters")] public Text categoryLabel;
+    [FoldoutGroup("Trivia Filters")] public Transform parentTriviaButtons;
+    [FoldoutGroup("Trivia Filters")] public TriviaShortButton TriviaButtonprefab;
+    [FoldoutGroup("Trivia Filters")] public Color color_TriviaMain;
+    [FoldoutGroup("Trivia Filters")] public Color color_TriviaSide;
+    [FoldoutGroup("Trivia Filters")] public Color color_TriviaFacts;
+
 
     public List<TriviaBallButton> allTriviaButtons = new List<TriviaBallButton>();
     public List<Wire> allLineRenderers = new List<Wire>();
+    [ReadOnly] public List<TriviaShortButton> allTriviaShortButtons = new List<TriviaShortButton>();
 
     private void OnEnable()
     {
+        TriviaButtonprefab.gameObject.SetActive(false);
         UpdateTrivia();
+        UpdateFilterUI();
     }
 
     private void Update()
+    {
+        UpdateTrivia3DMap();
+    }
+
+    #region Trivia UI
+
+    public void ChangeCategory(int _category)
+    {
+        currentFilter = (Trivia.TriviaType)_category;
+        UpdateFilterUI();
+    }
+
+    public void UpdateFilterUI()
+    {
+        categoryLabel.text = Trivia.GetTriviaName(currentFilter).ToUpper();
+
+        foreach(var button in allTriviaShortButtons)
+        {
+            Destroy(button.gameObject);
+        }
+
+        allTriviaShortButtons.Clear();
+
+        foreach(var triviaClass in Hypatios.Assets.AllTrivias)
+        {
+            var triviaDat = Hypatios.Game.Check_TriviaCompleted(triviaClass);
+            if (triviaDat == false) continue;
+            if (currentFilter != Trivia.TriviaType.All)
+            {
+                if (currentFilter != triviaClass.TriviaCategory)
+                    continue;
+            }
+
+            if (IsMatchingSearchIndex(triviaClass) == false)
+                continue;
+
+            var button1 = Instantiate(TriviaButtonprefab, parentTriviaButtons);
+            button1.gameObject.SetActive(true);
+            button1.trivia = triviaClass;
+
+            if (triviaClass.TriviaCategory == Trivia.TriviaType.MainStory)
+                button1.icon.color = color_TriviaMain;
+            else if (triviaClass.TriviaCategory == Trivia.TriviaType.SideChamber)
+                button1.icon.color = color_TriviaSide;
+            else if (triviaClass.TriviaCategory == Trivia.TriviaType.Facts)
+                button1.icon.color = color_TriviaFacts;
+
+            button1.Refresh();
+
+            allTriviaShortButtons.Add(button1);
+        }
+
+       
+
+    }
+
+    public bool IsMatchingSearchIndex(Trivia triviaClass)
+    {
+
+
+        if (string.IsNullOrEmpty(input_SearchFilter.text)) 
+            return true;
+        else
+        {
+            if (triviaClass.Title.ToLower().Contains(input_SearchFilter.text.ToLower()))
+                return true;
+
+            if (triviaClass.TriviaCategory.ToString().ToLower().Contains(input_SearchFilter.text.ToLower()))
+                return true;
+
+
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    public void LookAtTriviaBall(TriviaShortButton triviaButton)
+    {
+        var ball = allTriviaButtons.Find(x => x.trivia == triviaButton.trivia);
+        triviaCam.transform.position = ball.gameObject.transform.position + offsetLook;
+        triviaCam.transform.LookAt(ball.transform);
+        triviaCam.ManualIntervention_Mouse();
+
+    }
+
+    #region Trivia 3d
+    private void UpdateTrivia3DMap()
     {
         if (currentHoveredBall != null)
         {
@@ -158,4 +261,6 @@ public class TriviaMapUI : MonoBehaviour
     {
         return allTriviaButtons.Find(x => x.trivia == currentTrivia.previousTrivia);
     }
+
+    #endregion
 }

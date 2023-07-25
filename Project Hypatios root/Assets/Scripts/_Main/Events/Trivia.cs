@@ -9,6 +9,8 @@ public class Trivia : ScriptableObject
 
     public enum TriviaType
     {
+        None = -10,
+        All = -1, //for category filtering
         MainStory = 0,
         SideChamber = 20,
         Facts = 100
@@ -28,6 +30,10 @@ public class Trivia : ScriptableObject
         {
             return "Facts";
         }
+        else if (type == TriviaType.All)
+        {
+            return "All";
+        }
 
         return "NULL";
     }
@@ -37,7 +43,7 @@ public class Trivia : ScriptableObject
     [SerializeField] private Sprite _spriteIcon;
     [SerializeField] private Sprite _spritePreviewImage;
     [TextArea(2,4)] [SerializeField] private string _description = "I've completed the first chamber of the game.";
-    [SerializeField] private TriviaType _triviaType;
+    [Tooltip("Do not select None/All!")] [SerializeField] private TriviaType _triviaType;
     public bool disableTrivia = false;
     public Trivia previousTrivia;
 

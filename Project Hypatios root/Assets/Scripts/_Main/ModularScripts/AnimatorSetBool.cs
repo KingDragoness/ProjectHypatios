@@ -34,4 +34,9 @@ public class AnimatorSetBool : MonoBehaviour
         animator.SetBool(boolParamName, state);
     }
 
+    public void ToggleBool()
+    {
+        SetBool(!cached_State);
+    }
+
 }

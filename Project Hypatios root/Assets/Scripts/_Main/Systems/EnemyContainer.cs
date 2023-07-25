@@ -525,7 +525,7 @@ public class EnemyContainer : MonoBehaviour
     {
         //base enemy entity searcher
         tempList_NearestEnemy.RemoveAll(x => x.gameObject.activeInHierarchy == false);
-        if (isHackableGate == false) tempList_NearestEnemy.RemoveAll(x => x.Stats.IsHackableGate == false);
+        if (isHackableGate == false) tempList_NearestEnemy.RemoveAll(x => x.Stats.IsHackableGate == true);
 
         if (alliance != Alliance.Player)
         {

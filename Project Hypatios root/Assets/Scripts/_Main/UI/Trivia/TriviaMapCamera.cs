@@ -109,6 +109,14 @@ public class TriviaMapCamera : MonoBehaviour
 
     }
 
+    public void ManualIntervention_Mouse()
+    {
+        lastPanPosition = Input.mousePosition;
+        PanCamera(Input.mousePosition);
+        mouselook.ExecuteFunction();
+
+    }
+
     private bool safetyBoolKeyboard = false;
 
     private void HandleKeyBoard()

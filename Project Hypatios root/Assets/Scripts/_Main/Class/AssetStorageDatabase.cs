@@ -78,6 +78,11 @@ public class AssetStorageDatabase : MonoBehaviour
         return Weapons.Find(x => x.nameWeapon == ID);
     }
 
+    public Trivia GetTrivia(string ID)
+    {
+        return AllTrivias.Find(x => x.ID == ID);
+    }
+
     public ItemInventory GetItem(string ID)
     {
         return AllItems.Find(x => x.GetID() == ID);
