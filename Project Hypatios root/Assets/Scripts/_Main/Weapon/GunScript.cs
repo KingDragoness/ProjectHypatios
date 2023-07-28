@@ -291,6 +291,21 @@ public class GunScript : BaseWeaponScript
 
     private int loopScatterAmount = 0;
 
+    public virtual DamageToken GetDamageToken(RaycastHit hit)
+    {
+        float variableDamage = Random.Range(0, variableAdditionalDamage);
+
+        var damageToken = new DamageToken();
+        damageToken.isBurn = isBurnBullet;
+        damageToken.isPoison = isPoisonBullet;
+        damageToken.origin = DamageToken.DamageOrigin.Player;
+        damageToken.damageType = damageType;
+        damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value) + variableDamage; 
+        damageToken.repulsionForce = repulsionForce;
+
+        return damageToken;
+    }
+
     public void FireAdditionalScatterBullets(float spreadMult = 1f, int amount = 1)
     {
         if (loopScatterAmount > 100)
@@ -310,10 +325,6 @@ public class GunScript : BaseWeaponScript
             return;
         }
 
-        var damageToken = new DamageToken();
-        damageToken.isBurn = isBurnBullet;
-        damageToken.isPoison = isPoisonBullet;
-        damageToken.damageType = DamageToken.DamageType.Ballistic;
 
         RaycastHit hit;
         float spreadX = Random.Range(-spread * spreadMult, spread * spreadMult);
@@ -323,12 +334,13 @@ public class GunScript : BaseWeaponScript
 
         if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
         {
+            var damageToken = GetDamageToken(hit);
+            damageToken.damage /= 5f;
+
             var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
-            float variableDamage = Random.Range(0, variableAdditionalDamage);
 
             if (damageReceiver != null)
             {
-                damageToken.damage = (damage * Hypatios.Player.BonusDamageGun.Value / 5f) + variableDamage; damageToken.repulsionForce = repulsionForce;
                 UniversalDamage.TryDamage(damageToken, hit.collider.transform, transform);
                 HandleCrosshairActive(damageReceiver);
             }
@@ -367,11 +379,7 @@ public class GunScript : BaseWeaponScript
             audioFire.Play();
         }
 
-        var damageToken = new DamageToken();
-        damageToken.isBurn = isBurnBullet;
-        damageToken.isPoison = isPoisonBullet;
-        damageToken.origin = DamageToken.DamageOrigin.Player;
-        damageToken.damageType = damageType;
+
         OnFire?.Invoke();
         OnFireAction?.Invoke($"{weaponName}");
 
@@ -390,12 +398,13 @@ public class GunScript : BaseWeaponScript
 
             if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
             {
+                var damageToken = GetDamageToken(hit);
+
                 var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
                 float variableDamage = Random.Range(0, variableAdditionalDamage);
 
                 if (damageReceiver != null)
                 {
-                    damageToken.damage = damage * Hypatios.Player.BonusDamageGun.Value + variableDamage; damageToken.repulsionForce = repulsionForce;
                     UniversalDamage.TryDamage(damageToken, hit.collider.transform, transform);
                     HandleCrosshairActive(damageReceiver);
                 }
@@ -456,6 +465,8 @@ public class GunScript : BaseWeaponScript
 
                 if (Physics.Raycast(cam.transform.position, raycastDir, out hit, 1000f, Hypatios.Player.Weapon.defaultLayerMask, QueryTriggerInteraction.Ignore))
                 {
+                    var damageToken = GetDamageToken(hit);
+
                     var damageReceiver = hit.collider.gameObject.GetComponentThenChild<damageReceiver>();
                     float variableDamage = Random.Range(0, variableAdditionalDamage);
 

@@ -11,6 +11,10 @@ public class MainGameHUDScript : MonoBehaviour
     public GameObject FadeInSceneTransition;
     public RectTransform mainHUDParent;
 
+    [FoldoutGroup("Title Card")] public UI_Modular_TypewriterText titlecard_Title;
+    [FoldoutGroup("Title Card")] public UI_Modular_TypewriterText titlecard_Description;
+    [FoldoutGroup("Title Card")] public GameObject TitleCard;
+
     [Header("Player")]
     public Text healthPoint;
     public Text soulPoint;
@@ -77,6 +81,41 @@ public class MainGameHUDScript : MonoBehaviour
     private void Awake()
     {
 
+    }
+
+    private void Start()
+    {
+        bool showTitleCard = false;
+        var chamberSO = Hypatios.Chamber.chamberObject;
+
+        if (chamberSO != null)
+        {
+            if (chamberSO.showTitleCard)
+            {
+                titlecard_Title.text_DialogueContent.text = "";
+                titlecard_Description.text_DialogueContent.text = "";
+                StartCoroutine(ActivateTypewriter());
+                showTitleCard = true;
+            }
+        }
+
+        if (showTitleCard)
+        {
+            TitleCard.gameObject.SetActive(true);
+        }
+        else
+        {
+            TitleCard.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator ActivateTypewriter()
+    {
+        yield return new WaitForSeconds(1f);
+        var chamberSO = Hypatios.Chamber.chamberObject;
+
+        titlecard_Title.TypeThisDialogue($"\"{chamberSO.TitleCard_Title.ToUpper()}\"");
+        titlecard_Description.TypeThisDialogue($"{chamberSO.TitleCard_Subtitle}");
     }
 
     private void OnEnable()

@@ -9,15 +9,23 @@ public class UI_Modular_TypewriterText : MonoBehaviour
 
     public Text text_DialogueContent;
     public float secondsPerChar = 0.1f;
+    public bool textInteruptableByDisable = true;
     public string dialogText;
 
     private IEnumerator currentCoroutine;
     private bool disabledCache = false;
+    private string _cachedText = "";
 
     private void OnEnable()
     {
         if (disabledCache)
             TypeThisDialogue(dialogText);
+
+        if (textInteruptableByDisable == false)
+        {
+            currentCoroutine = Typewriter(_cachedText);
+            StartCoroutine(currentCoroutine);
+        }
     }
 
     public void TypeThisDialogue(string text)
@@ -31,6 +39,7 @@ public class UI_Modular_TypewriterText : MonoBehaviour
         }
 
         currentCoroutine = Typewriter(text);
+        _cachedText = text;
         StartCoroutine(currentCoroutine);
     }
 
