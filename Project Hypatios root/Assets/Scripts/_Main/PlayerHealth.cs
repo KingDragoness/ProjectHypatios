@@ -11,6 +11,8 @@ public class PlayerHealth : MonoBehaviour
 
     public CharacterStat maxHealth = new CharacterStat(100);
     public CharacterStat healthRegen = new CharacterStat(0);
+    public int CachedHealCapsules = 0;
+    public int limitCapsule = 5;
     public GameEvent OnPlayerDead;
     public float curHealth;
     public float targetHealth;
@@ -84,6 +86,8 @@ public class PlayerHealth : MonoBehaviour
         MainGameHUDScript.Instance.healthPoint.text = "" + Mathf.RoundToInt(curHealth);
         sliderHealth = MainGameHUDScript.Instance.healthSlider;
         sliderHealthSpeed = MainGameHUDScript.Instance.justDamagedHealthSlider;
+
+        CapsuleHealing();
 
         curHealth = Mathf.MoveTowards(curHealth, targetHealth, HealthSpeed * Time.deltaTime);
 
@@ -166,6 +170,32 @@ public class PlayerHealth : MonoBehaviour
 
        
     }
+
+    #region Capsule Heal
+
+    public void AddCacheCapsule()
+    {
+        CachedHealCapsules++;
+        CachedHealCapsules = Mathf.Clamp(CachedHealCapsules, 0, limitCapsule);
+    }
+
+    public void CapsuleHealing()
+    {
+        int additionalHeal = Mathf.Clamp(Mathf.RoundToInt(maxHealth.Value / 50f), 1, 99);
+        int amountToHeal = 4 * additionalHeal;
+        amountToHeal = Mathf.Clamp(amountToHeal, 10, 100);
+
+        if (CachedHealCapsules > 0 && targetHealth + 0.1f < maxHealth.Value)
+        {
+            Heal(amountToHeal, instantHeal: true);
+            CachedHealCapsules--;
+        }
+
+        CachedHealCapsules = Mathf.Clamp(CachedHealCapsules, 0, limitCapsule);
+
+
+    }
+    #endregion
 
     public void Heal(int healNum, float healthSpeed = 0, bool instantHeal = false)
     {

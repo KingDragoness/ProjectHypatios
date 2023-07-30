@@ -142,10 +142,13 @@ public class Hypatios : MonoBehaviour
             mixerSFX.SetFloat("Master", Mathf.Log10(SFX_VOLUME) * 20);
             mixerMusic.SetFloat("Master", Mathf.Log10(MUSIC_VOLUME) * 20);
 
-            if (AUTO_DIALOGUE == 0)
-                Hypatios.Dialogue.autoDialogueSkip = false;
-            else 
-                Hypatios.Dialogue.autoDialogueSkip = true;
+            if (Hypatios.Dialogue != null)
+            {
+                if (AUTO_DIALOGUE == 0)
+                    Hypatios.Dialogue.autoDialogueSkip = false;
+                else
+                    Hypatios.Dialogue.autoDialogueSkip = true;
+            }
 
             if (realtimeReflections != null)
             {

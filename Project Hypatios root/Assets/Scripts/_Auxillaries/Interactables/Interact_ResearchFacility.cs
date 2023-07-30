@@ -215,6 +215,7 @@ public class Interact_ResearchFacility : MonoBehaviour
         _researchTime = _timeToResearch;
         _originalResearchTime = _timeToResearch;
         _currentIndex = index;
+        MainGameHUDScript.Instance.audio_SuccessfulPayment.Play();
         UpdateUI();
 
     }

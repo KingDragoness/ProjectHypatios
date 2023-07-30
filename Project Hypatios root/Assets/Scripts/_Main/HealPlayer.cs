@@ -5,15 +5,14 @@ using UnityEngine;
 public class HealPlayer : MonoBehaviour
 {
 
-    public int healMin = 1;
-    public int healMax = 5;
-    GameObject player;
+
     public float speed;
     public float distanceToCollect;
     public bool isSpawned = false;
-    PlayerHealth playerHealth;
-    float curHealth;
 
+    private GameObject player;
+    private PlayerHealth playerHealth;
+    private float curHealth;
     private float _TimeSpawned;
 
 
@@ -42,10 +41,7 @@ public class HealPlayer : MonoBehaviour
 
         if (inDistance)
         {
-            bool allowHeal = false;
-            curHealth = playerHealth.targetHealth;
-
-            if (curHealth < playerHealth.maxHealth.Value) allowHeal = true;
+            bool allowHeal = true;
 
             if (allowHeal)
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
@@ -56,10 +52,11 @@ public class HealPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && curHealth < playerHealth.maxHealth.Value && !playerHealth.isDead)
+        if (other.tag == "Player" && !playerHealth.isDead)
         {
-            int additionalHeal = Mathf.Clamp(Mathf.RoundToInt(playerHealth.maxHealth.Value/50f),1, 99);
-            playerHealth.Heal(Random.Range(healMin + additionalHeal, healMax + additionalHeal), instantHeal: true);
+            playerHealth.AddCacheCapsule();
+            //int additionalHeal = Mathf.Clamp(Mathf.RoundToInt(playerHealth.maxHealth.Value/50f),1, 99);
+            //playerHealth.Heal(Random.Range(healMin + additionalHeal, healMax + additionalHeal), instantHeal: true);
             Destroy(gameObject);
         }
     }

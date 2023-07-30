@@ -13,7 +13,7 @@ public class SpawnHeal : MonoBehaviour
     
     public void SpawnHealCapsule(int amount)
     {
-        float capsuleAmount = Random.Range(Mathf.Clamp(amount-3, 2, 10), amount);
+        float capsuleAmount = Random.Range(Mathf.Clamp(amount-3, 1, 10), amount);
         var prefabTemplate = Hypatios.Game.Prefab_SpawnHeal;
 
         if (customCapsule != null)

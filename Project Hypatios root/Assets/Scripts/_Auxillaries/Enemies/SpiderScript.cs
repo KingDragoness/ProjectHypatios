@@ -409,7 +409,7 @@ public class SpiderScript : EnemyScript
 
     private void LootDrop()
     {
-        spawnHeal.SpawnHealCapsule(5);
+        spawnHeal.SpawnHealCapsule(1);
         spawnAmmo.SpawnAmmoCapsule(spawnChance_Ammo);
 
         float randomChanceMoreSoul = Random.Range(0f, 1f);

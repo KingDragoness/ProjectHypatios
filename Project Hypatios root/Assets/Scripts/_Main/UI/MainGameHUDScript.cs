@@ -34,6 +34,7 @@ public class MainGameHUDScript : MonoBehaviour
     public AudioSource audio_Error;
     public AudioSource audio_PurchaseReward;
     public AudioSource audio_interactMonitor;
+    public AudioSource audio_SuccessfulPayment;
 
 
     [Header("Trivias")]

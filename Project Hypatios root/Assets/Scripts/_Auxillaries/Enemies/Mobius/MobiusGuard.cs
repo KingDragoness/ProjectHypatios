@@ -93,7 +93,7 @@ public class MobiusGuard : EnemyScript
         OnDiedEvent?.Invoke();
         OnDied?.Invoke();
         Destroy(gameObject, 5f);
-        spawnHeal.SpawnHealCapsule(1);
+        //spawnHeal.SpawnHealCapsule(1);
         Stats.IsDead = true;
 
     }

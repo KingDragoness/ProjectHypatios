@@ -257,6 +257,7 @@ public class InfernosEnemy : EnemyScript
         if (Stats.IsDead) return;
 
         OnDied?.Invoke();
+        OnSelfKilled?.Invoke();
         Destroy(gameObject);
         var corpse1 = Instantiate(corpse, transform.position, transform.rotation);
         corpse1.gameObject.SetActive(true);

@@ -60,6 +60,18 @@ public class LootTable : ScriptableObject
         return entries[output];
     }
 
+    public float GetPercentage(Entry entry)
+    {
+        if (entries.Find(x => x == entry) == null)
+        {
+            Debug.LogError($"The targeted entry cannot be found in {this.name}.");
+            return -1;
+        }
 
+        var totalWeight = GetTotalWeight();
+        float percent = (float)entry.weight / (float)totalWeight;
+
+        return percent;
+    }
 
 }

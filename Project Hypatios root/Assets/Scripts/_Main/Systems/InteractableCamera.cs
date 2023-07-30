@@ -58,6 +58,8 @@ public class InteractableCamera : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0) return;
+
         if (currentInteractable != null)
         {
             if (Hypatios.Input.Interact.triggered)
