@@ -16,6 +16,7 @@ public class Conditioner : MonoBehaviour
         EnemyClearance,
         DistanceCheck,
         ConditionerCheck,
+        Switch,
         ItemOwned = 100
     }
 
@@ -44,6 +45,7 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ConditionerCheck)] public bool dontTriggerConditioner;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public ItemInventory itemNeeded;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
+        [ShowIf("conditionType", ConditionType.Switch)] public SwitchConditioner switchCondition;
 
         public bool IsConditionChecked()
         {
@@ -100,7 +102,11 @@ public class Conditioner : MonoBehaviour
             {
                 if (Hypatios.Player.Inventory.Count(itemNeeded) >= itemCount)
                    return true;
-
+            }
+            else if (conditionType == ConditionType.Switch)
+            {
+                if (switchCondition.Triggered)
+                    return true;
             }
 
             return false;

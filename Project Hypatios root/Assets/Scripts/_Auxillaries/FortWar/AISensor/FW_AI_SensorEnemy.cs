@@ -12,6 +12,7 @@ public class FW_AI_SensorEnemy : MonoBehaviour
     public Enemy_FW_BotTest botScript;
 
     private Chamber_Level7 _chamberScript;
+    private List<Entity> allBots = new List<Entity>();
 
     public virtual void Awake()
     {
@@ -20,7 +21,7 @@ public class FW_AI_SensorEnemy : MonoBehaviour
 
     public Entity[] GetBotsInSight(EnemyScript mySelf)
     {
-        List<Entity> allBots = new List<Entity>();
+        allBots.Clear();
         var ListAllUnits = Hypatios.Enemy.RetrieveAllEnemies(mySelf);//_chamberScript.RetrieveAllUnitsOfType(enemyForce); DEPRECATED, replaced with the new enemy system
 
         if (mySelf.Stats.MainAlliance != Alliance.Player)

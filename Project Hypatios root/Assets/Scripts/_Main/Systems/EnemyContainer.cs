@@ -363,7 +363,7 @@ public class EnemyContainer : MonoBehaviour
         foreach (var enemy1 in AllEnemies) enemiesTempList2.Add(enemy1);
         enemiesTempList2.RemoveAll(x => x == null);
         enemiesTempList2.RemoveAll(x => x.gameObject.activeInHierarchy == false);
-        enemiesTempList2.RemoveAll(x => x.Stats.IsHackableGate == false);
+        enemiesTempList2.RemoveAll(x => x.Stats.IsHackableGate == true); //FOR FUCK SAKE
         enemiesTempList2.RemoveAll(x => x.Stats.MainAlliance == mySelf.Stats.MainAlliance);
         enemiesTempList2.RemoveAll(x => x.Stats.UnitType == UnitType.Projectile);
         enemiesTempList2.RemoveAll(x => Vector3.Distance(mySelf.transform.position, x.transform.position) > maxDistance);

@@ -273,11 +273,16 @@ public class ConsoleCommand : MonoBehaviour
         try
         {
             var conditioners = FindObjectsOfType<Conditioner>();
+            var switches = FindObjectsOfType<SwitchConditioner>();
 
-            foreach(var conditioner in conditioners)
+            foreach (var conditioner in conditioners)
             {
                 SendConsoleMessage($"{conditioner.Title}: {conditioner.IsTriggered}");
+            }
 
+            foreach (var switchCond in switches)
+            {
+                SendConsoleMessage($"{switchCond.switchName}: {switchCond.Triggered}");
             }
 
         }

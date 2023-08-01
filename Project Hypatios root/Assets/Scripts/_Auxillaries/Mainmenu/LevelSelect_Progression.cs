@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using DevLocker.Utils;
 using UnityEngine.SceneManagement;
 
 public class LevelSelect_Progression : MonoBehaviour
@@ -12,7 +11,6 @@ public class LevelSelect_Progression : MonoBehaviour
     public class LevelPosition
     {
         public Transform spawn;
-        public SceneReference scene;
         public ChamberLevel level;
     }
 
@@ -57,20 +55,22 @@ public class LevelSelect_Progression : MonoBehaviour
         int index = save.Game_LastLevelPlayed;
         LevelPosition levelPos = null;
 
-        foreach (var level in allLevelPositions)
+        foreach (var lvPos in allLevelPositions)
         {
-            int indexLv = level.scene.Index;
+            int indexLv = lvPos.level.scene.Index;
             if (indexLv == index)
             {
-                levelPos = level;
+                levelPos = lvPos;
                 break;
             }
         }
 
-        if (levelPos == null) 
-            return;
+        if (levelPos == null)
+        {
+            LevelWithNoPosition();
+        }
+        else LevelWithPosition(levelPos);
 
-        if (levelPos.spawn != null) legend.transform.position = levelPos.spawn.position;
 
         weapon_Slot2.gameObject.SetActive(false);
         weapon_Slot3.gameObject.SetActive(false);
@@ -87,7 +87,6 @@ public class LevelSelect_Progression : MonoBehaviour
 
             float maxHP = 100;
             maxHP += PlayerPerk.GetValue_MaxHPUpgrade(save.AllPerkDatas.Perk_LV_MaxHitpointUpgrade);
-            label_progress.text = $"{levelPos.level.levelName} | {save.Game_TotalRuns} deaths";
             label_HPMax.text = $"{Mathf.FloorToInt(save.Player_CurrentHP)}/{maxHP}";
             label_HPRegen.text = $"+{PlayerPerk.GetValue_RegenHPUpgrade(save.AllPerkDatas.Perk_LV_RegenHitpointUpgrade)}HP/s";
             label_Alcohol.text = $"{Mathf.FloorToInt(save.Player_AlchoholMeter)}/100%";
@@ -112,6 +111,20 @@ public class LevelSelect_Progression : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void LevelWithNoPosition()
+    {
+        label_progress.text = $"{save.Game_TotalRuns} deaths";
+
+    }
+
+    public void LevelWithPosition(LevelPosition levelPos)
+    {
+        if (levelPos.spawn != null)
+            legend.transform.position = levelPos.spawn.position;
+        label_progress.text = $"{levelPos.level.levelName} | {save.Game_TotalRuns} deaths";
+
     }
 
 }

@@ -156,8 +156,19 @@ public class Enemy_FW_BotTest : Enemy_FW_Bot
     {
         float distToPlayer = Mod_FollowPlayer.DistancePlayer;
         var botsInSight = sensor.GetBotsInSight(this).ToList();
-        bool anyBotsInSight = false; if (botsInSight.Count > 0) anyBotsInSight = true;
+        bool anyBotsInSight = false; if (botsInSight.Count > 0) anyBotsInSight = true; //It returns fucking nothing
         bool isTargetBlocked = false;
+
+        if (DEBUG_Print)
+        {
+            string s1 = "";
+            foreach(var bot in botsInSight)
+            {
+                s1 += $"{bot.gameObject.name},";
+            }
+
+            Debug.Log(s1);
+        }
 
         if (target != null)
         {
