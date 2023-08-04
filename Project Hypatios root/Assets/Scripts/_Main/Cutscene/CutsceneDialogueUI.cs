@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 using Sirenix.OdinInspector;
 
 public class CutsceneDialogueUI : MonoBehaviour
@@ -12,6 +13,7 @@ public class CutsceneDialogueUI : MonoBehaviour
     public Image portrait_Left;
     public Image portrait_Right;
     public GameObject continueButton;
+    public CinemachineBrain cutsceneCamera;
     public float secondsPerChar = 0.1f;
     public AudioSource audio_typeWriter;
     [FoldoutGroup("References")] public Color color_inactiveSpeaker;

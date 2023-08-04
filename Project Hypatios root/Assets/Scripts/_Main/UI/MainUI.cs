@@ -29,6 +29,7 @@ public class MainUI : MonoBehaviour
     }
 
     public MobiusNetUI Internet;
+    public ReadableBookUI readableBookUI;
 
     [FoldoutGroup("References")] public GameObject PauseMenu;
     [FoldoutGroup("References")] public GameObject HUD;

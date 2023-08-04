@@ -78,6 +78,10 @@ public class PlayerRPG : MonoBehaviour
 
             Hypatios.Player.Inventory.RemoveItem(itemData);
         }
+        else if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
+        {
+            Hypatios.UI.readableBookUI.OpenText(itemClass.readableBook);
+        }
     }
 
     public string GetItemName(ItemInventory itemClass, HypatiosSave.ItemDataSave itemData)
@@ -363,7 +367,11 @@ public class PlayerRPG : MonoBehaviour
         }
         else
         {
-            if (itemClass.category != ItemInventory.Category.Consumables)
+            if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
+            {
+                s_interaction = "[LMB to read] [X to discard] [F to favorite]";
+            }
+            else if (itemClass.category != ItemInventory.Category.Consumables)
             {
                 s_interaction = "[X to discard] [F to favorite]";
             }

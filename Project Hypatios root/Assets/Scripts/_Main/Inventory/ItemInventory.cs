@@ -41,6 +41,7 @@ public class ItemInventory : ScriptableObject
     public Category category;
     public SubiconCategory subCategory;
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
+    [ShowIf(nameof(IsABook))] public Item_ReadableBook readableBook;
     public bool isGenericItem = false;
     [HideIf("isGenericItem", true)] [ShowIf("subCategory", SubiconCategory.Essence)] public bool IS_REACTANT = false;
     [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 100)] public float Reactant_ReduceAlcohol = 30;
@@ -59,6 +60,16 @@ public class ItemInventory : ScriptableObject
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] [Range(0.1f,30f)] public float consume_HealTime = 5; //this is different from speed (higher heal time means longer heal time)
 
     public string Description { get => _description;  }
+
+    public bool IsABook => subCategory == SubiconCategory.FictionBook || subCategory == SubiconCategory.Book;
+
+    public bool IsReadable()
+    {
+        if (IsABook == false)
+            return false;
+
+        return readableBook != null;
+    }
 
     public string GetID()
     {

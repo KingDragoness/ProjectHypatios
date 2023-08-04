@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
-
+using Cinemachine;
 
 public class CutsceneObject : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class CutsceneObject : MonoBehaviour
     private List<CutsceneAction> currentActions = new List<CutsceneAction>();
     private bool isPlaying = false;
     CutsceneDialogueUI cutsceneUI;
+    private CinemachineBlendDefinition.Style defaultBlendStyle;
 
     private void Start()
     {
@@ -85,6 +86,7 @@ public class CutsceneObject : MonoBehaviour
     {
         var MainUI1 = MainUI.Instance;
         MainUI1.current_UI = MainUI.UIMode.Cinematic;
+        defaultBlendStyle = cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style;
 
         CloseAllCutsceneInstances();
         cutsceneUI.NewConversation();
@@ -102,6 +104,7 @@ public class CutsceneObject : MonoBehaviour
         MainUI1.current_UI = MainUI.UIMode.Default;
 
         OnCutsceneEnded?.Invoke();
+        cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;
 
         CloseAllCutsceneInstances();
         isPlaying = false;
