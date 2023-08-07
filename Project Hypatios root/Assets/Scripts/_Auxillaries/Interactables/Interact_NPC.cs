@@ -23,9 +23,12 @@ public class Interact_NPC : MonoBehaviour
     [ShowIf("type", ConverseType.Incremental)] [InfoBox("If run out, it'll fallback to random talks from dialoguePrefabs.")] public List<Interact_MultiDialoguesTrigger> incrementDialogue;
 
 
-    private void Start()
+  
+
+    private void OnEnable()
     {
         AnimatorPlayer.PlayAnimation(idleAnimation, 1f);
+
     }
 
     public void Speak()

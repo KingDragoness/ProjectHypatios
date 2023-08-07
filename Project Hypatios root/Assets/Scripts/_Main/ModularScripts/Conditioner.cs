@@ -17,6 +17,7 @@ public class Conditioner : MonoBehaviour
         DistanceCheck,
         ConditionerCheck,
         Switch,
+        TriviaNotCompleted,
         ItemOwned = 100
     }
 
@@ -31,7 +32,7 @@ public class Conditioner : MonoBehaviour
     public class ConditionEvent
     {
         public ConditionType conditionType;
-        [ShowIf("conditionType", ConditionType.TriviaCompleted)] public Trivia trivia;
+        [ShowIf(nameof(IsTriviaConditioner))] public Trivia trivia;
         [ShowIf("conditionType", ConditionType.ParadoxEventChecked)] public string eventKeyName;
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtLeastComplete = 2;
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtMostComplete = 9999;
@@ -47,11 +48,17 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
         [ShowIf("conditionType", ConditionType.Switch)] public SwitchConditioner switchCondition;
 
+        public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
+
         public bool IsConditionChecked()
         {
             if (conditionType == ConditionType.TriviaCompleted)
             {
                 return Hypatios.Game.Check_TriviaCompleted(trivia);
+            }
+            else if (conditionType == ConditionType.TriviaNotCompleted)
+            {
+                return !Hypatios.Game.Check_TriviaCompleted(trivia);
             }
             else if (conditionType == ConditionType.ParadoxEventChecked)
             {
