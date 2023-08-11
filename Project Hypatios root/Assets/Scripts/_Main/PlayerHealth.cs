@@ -182,7 +182,7 @@ public class PlayerHealth : MonoBehaviour
     public void CapsuleHealing()
     {
         int additionalHeal = Mathf.Clamp(Mathf.RoundToInt(maxHealth.Value / 50f), 1, 99);
-        int amountToHeal = 4 * additionalHeal;
+        int amountToHeal = 3 * additionalHeal;
         amountToHeal = Mathf.Clamp(amountToHeal, 10, 100);
 
         if (CachedHealCapsules > 0 && targetHealth + 0.1f < maxHealth.Value)
