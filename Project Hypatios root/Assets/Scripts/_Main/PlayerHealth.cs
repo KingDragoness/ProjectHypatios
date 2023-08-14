@@ -113,8 +113,7 @@ public class PlayerHealth : MonoBehaviour
         if (curHealth <= 0f)
         {
             Die();
-            curHealth = 0;
-            isDead = true;
+     
         }
         else
         {
@@ -280,7 +279,16 @@ public class PlayerHealth : MonoBehaviour
         {
             return;
         }
-        
+        if (ChamberLevelController.Instance.chamberObject.isBanDying)
+        {
+            curHealth = 1f;
+            targetHealth = 1f;
+            return;
+        }
+
+        curHealth = 0;
+        isDead = true;
+
         //postProcess.sharedProfile.TryGet<DepthOfField>(out dof);
         slow.SlowMo();
         if (dof.focalLength.value < 150f)

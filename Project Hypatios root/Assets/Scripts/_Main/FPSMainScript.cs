@@ -513,6 +513,7 @@ public class FPSMainScript : MonoBehaviour
         if (hypatiosSave.sceneEntryCache == null) hypatiosSave.sceneEntryCache = new HypatiosSave.EntryCache();
 
         hypatiosSave.AllPerkDatas = Player.PerkData;
+        hypatiosSave.PortfolioShares = PortfolioShares;
         hypatiosSave.Game_TotalRuns = TotalRuns;
         hypatiosSave.Game_TotalSouls = SoulPoint;
         hypatiosSave.Game_WeaponStats = currentWeaponStat;

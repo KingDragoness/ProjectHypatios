@@ -1,107 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &788220529527877507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1230502053353723732}
-  - component: {fileID: 1252719204799822114}
-  m_Layer: 0
-  m_Name: HEV.Dialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1230502053353723732
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1252719204799822114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: Do you know about communism and its struggles?
-  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 5
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &2200264085829399555
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7823828061476162017}
-  - component: {fileID: 4436073353683368875}
-  m_Layer: 0
-  m_Name: Aldrich.Dialog (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7823828061476162017
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2200264085829399555}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4436073353683368875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2200264085829399555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: I've heard about but never got a clear picture of it.
-  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 5
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2400491733032914134
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,8 +28,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.058839, y: 2.7155268, z: 2.4643865}
   m_Children:
-  - {fileID: 1230502053353723732}
-  - {fileID: 7823828061476162017}
   - {fileID: 1363273825821027455}
   - {fileID: 7226799371595477727}
   - {fileID: 4621043553372968023}
@@ -152,8 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allDialogues:
-  - {fileID: 1252719204799822114}
-  - {fileID: 4436073353683368875}
+  - {fileID: 0}
+  - {fileID: 0}
   ActivatingArea:
   - {fileID: 6137219061834780904}
   OnDialogueTriggered:
@@ -194,7 +90,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2130865237178256832
 MonoBehaviour:
@@ -210,8 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dialogue_Content: This is why stupid people cannot be given power. And this applies
     to democracy too. Democracy cannot be launched during a country's infancy where
-    everyone had a shitty IQs and uneducated retards. It must only be enacted when
-    the people where getting smarter and not moron.
+    everyone are uneducated retards. Cannot have democracy if your society still
+    have 'Do not eat silica gel'.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -248,7 +144,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1379850190170823949
 MonoBehaviour:
@@ -262,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Yeah... maybe.
+  Dialogue_Content: Yeah...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -299,7 +195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7163821074688282764
 MonoBehaviour:
@@ -352,7 +248,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2028262163796551655
 MonoBehaviour:

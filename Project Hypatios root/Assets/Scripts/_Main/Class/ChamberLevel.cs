@@ -13,6 +13,7 @@ public class ChamberLevel : ScriptableObject
     public SceneReference scene;
     public bool isCausingFatigue = true;
     public bool isWIRED = false;
+    public bool isBanDying = false;
 
     public bool showTitleCard = false;
     [FoldoutGroup("Title Card")] public string TitleCard_Title = "Math Lab";
