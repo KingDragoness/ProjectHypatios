@@ -47,11 +47,11 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Console_UI;
     [FoldoutGroup("References")] public GameObject Camera_Cutscene;
     [FoldoutGroup("References")] public GameObject Camera_Main;
+    [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
     [FoldoutGroup("References")] public PromptMessengerUI PromptMessage_UI;
     [FoldoutGroup("References")] public GameObject SavingGameIcon_UI;
     [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
     [FoldoutGroup("References")] public SettingsUI settingsUI;
-    [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
     [FoldoutGroup("References")] public GameObject TriviaMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
@@ -251,6 +251,7 @@ public class MainUI : MonoBehaviour
         {
 
             bool isIdlePlayer = false;
+            bool isUsingCustomCam = false;
 
             if (current_UI == UIMode.Default)
             {
@@ -285,10 +286,16 @@ public class MainUI : MonoBehaviour
                 isIdlePlayer = true;
             }
 
+            if (current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia)
+            {
+                isUsingCustomCam = true;
+            }
+
             if (isIdlePlayer)
             {
                 Camera_Main.gameObject.SetActive(false);
-                Camera_Cutscene.gameObject.SetActive(true);
+                if (isUsingCustomCam == false) Camera_Cutscene.gameObject.SetActive(true); else Camera_Cutscene.gameObject.SetActive(false);
+
 
                 Hypatios.Player.disableInput = true;
                 Hypatios.Player.enabled = false;
@@ -407,6 +414,7 @@ public class MainUI : MonoBehaviour
             if (current_UI == UIMode.Trivia)
             {
                 if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
+                if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
                 if (TriviaMap.activeSelf == false) TriviaMap.gameObject.SetActive(true);
                 if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
             }
