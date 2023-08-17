@@ -204,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 6480548704713604061}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -434,6 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6480548704271758881}
   - component: {fileID: 6480548704271758886}
+  - component: {fileID: 7284154648665229030}
   m_Layer: 12
   m_Name: Audio_AboutAttack
   m_TagString: Untagged
@@ -570,6 +572,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7284154648665229030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480548704271758887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a10c44bbe814342af80233054cf6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 6480548704271758886}
 --- !u!1 &6480548704345867689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5523,11 +5538,15 @@ MonoBehaviour:
   OnPlayerDetected1:
     m_PersistentCalls:
       m_Calls: []
+  currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  useSecondPass: 1
   isAIEnabled: 1
   eyeLocation: {fileID: 6480548704345867688}
   debug_FirstPassHit: {fileID: 0}
   debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 0
+  _timerReady: 0
   laserCharging: {fileID: 6480548704420934655}
   laserChargingRenderer: {fileID: 6480548704420934654}
   laser: {fileID: 3000425260294169686, guid: 2bc4039641ca4eb4a8aedbee88dd6fa4, type: 3}
@@ -5551,7 +5570,6 @@ MonoBehaviour:
   attackRecharge: 0.3
   lockBeforeAttackTime: 0.3
   dieHeight: -0.75
-  onSpawnShouldReady: 0
   spawnChance_Ammo: 0.2
   damping: 2
   spawnHeal: {fileID: 6480548704713604063}
@@ -10446,6 +10464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 6480548704713604061}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 1
   multiplier: 1.5
   isPrintDebug: 0
