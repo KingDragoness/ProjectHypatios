@@ -1,6 +1,6 @@
 Shader "Ciconia Studio/Double Sided/Transparent/Diffuse Bump Cutout" {
     Properties {
-        _Color ("Diffuse Color", Color) = (1,1,1,1)
+        [HDR] _Color ("Diffuse Color", Color) = (1,1,1,1)
         _MainTex ("Diffuse map (Cutout A)", 2D) = "white" {}
         _BumpMap ("Normal map", 2D) = "bump" {}
         _NormalIntensity ("Normal Intensity", Range(0, 2)) = 1
