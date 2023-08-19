@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f8f917ed49bf847b82ce0186cde778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
   touchable: {fileID: 5898074299502029865}
+  rouletteScript: {fileID: 0}
 --- !u!1 &5898074299502029871
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +155,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnInteractEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5898074297978305635}
+        m_MethodName: AddChip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnHoveringEvent:
     m_PersistentCalls:
       m_Calls: []

@@ -24,7 +24,11 @@ public class Interact_Casino_EnsoulhenWager : Interact_Generic_Casino
 
     public void TriggerReward()
     {
+        if (rewardSoul <= 0)
+            return;
+
         Hypatios.Game.SoulPoint += rewardSoul * 2;
+        DeadDialogue.PromptNotifyMessage_Mod($"Congratulations. You have won {rewardSoul * 2} souls from Ensoulhen Wager.", 4f);
     }
 
 }

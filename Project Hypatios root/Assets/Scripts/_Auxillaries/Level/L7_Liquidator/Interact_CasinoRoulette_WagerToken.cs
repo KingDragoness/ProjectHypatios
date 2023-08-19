@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Interact_CasinoRoulette_WagerToken : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public int ID = 0;
+    public Interact_Casino_Roulette rouletteScript;
+
+    public void TakeChip()
     {
-        
+        rouletteScript.RemoveChip(this);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
