@@ -57,12 +57,20 @@ public class Interact_Casino_Roulette : MonoBehaviour
             {
                 string s = "";
 
-                for (int x = 0; x < setOfNumbers.Length; x++)
+                if (setOfNumbers.Length <= 3)
                 {
-                    if (x > 0)
-                        s += ", ";
-                    
-                    s += setOfNumbers[x];
+                    for (int x = 0; x < setOfNumbers.Length; x++)
+                    {
+                        if (x > 0)
+                            s += ", ";
+
+                        s += setOfNumbers[x];
+                    }
+                }
+                else
+                {
+                    int i1 = setOfNumbers[setOfNumbers.Length - 1];
+                    s = $"{setOfNumbers[0]} - {i1}";
                 }
 
                 return s;
@@ -319,6 +327,41 @@ public class Interact_Casino_Roulette : MonoBehaviour
             allGeneratedBet.Add(_betSingle);
         }
 
+        int rowHalf = TOTAL_ROWS / 2;
+
+        //Generate Set of 6
+        for (int x = 0; x < rowHalf; x++)
+        {
+            int _row = x;
+            int[] setNumber = new int[6];
+            setNumber[0] = (_row * 6) + 1;
+            setNumber[1] = (_row * 6) + 2;
+            setNumber[2] = (_row * 6) + 3;
+            setNumber[3] = (_row * 6) + 4;
+            setNumber[4] = (_row * 6) + 5;
+            setNumber[5] = (_row * 6) + 6;
+
+            GameObject spawnT = new GameObject($"Bet_{setNumber[0]}-{setNumber[5]}");
+            spawnT.transform.SetParent(parent_SpawnTouchables);
+            Bet _betSingle = new Bet();
+
+            _betSingle.betType = BetType.SetOf6;
+            _betSingle.setOfNumbers = setNumber;
+            _betSingle.spawn = spawnT.transform;
+            _betSingle.buttonSize = ButtonSize.Street;
+
+            {
+                //int _column = (x % TOTAL_COLUMN);
+                //float zPos = distZ * _column;
+                float xPos = distX * 2f * _row;
+                Vector3 pos = t_startPoint_6Set.position;
+                pos.x += xPos;
+                //pos.z += zPos;
+                spawnT.transform.position = pos;
+            }
+
+            allGeneratedBet.Add(_betSingle);
+        }
     }
 
     public void GenerateButton()
