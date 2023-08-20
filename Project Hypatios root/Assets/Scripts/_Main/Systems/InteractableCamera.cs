@@ -31,8 +31,11 @@ public class InteractableCamera : MonoBehaviour
 
             if (interactable != null)
             {
-                currentInteractable = interactable;
-                noInteract = false;
+                if (interactable.enabled == true)
+                {
+                    currentInteractable = interactable;
+                    noInteract = false;
+                }
             }
         }
 

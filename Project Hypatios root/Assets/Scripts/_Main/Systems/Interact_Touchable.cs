@@ -40,6 +40,7 @@ public class Interact_Touchable : InteractableObject
         DeadDialogue.PromptNotifyMessage_Mod(text_interactPrompt, time_interactPrompt);
     }
 
+
     private void Update()
     {
         if (useHoverEvent == false) return;
