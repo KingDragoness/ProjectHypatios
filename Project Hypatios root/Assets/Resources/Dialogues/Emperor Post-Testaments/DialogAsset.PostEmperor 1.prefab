@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: It is fine by me. It is like recite company's motto every morning,
-    you need to re-iterate the same statement so you can understand properly.
+  Dialogue_Content: "It is the causation theory. You see stock market\u2019s movement
+    are consistent but things inside here are constantly changing."
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -81,7 +81,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6673689542523995253
 MonoBehaviour:
@@ -100,6 +100,58 @@ MonoBehaviour:
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 3
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &2350858536205476948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 869009158260546605}
+  - component: {fileID: 8612360951368749127}
+  m_Layer: 0
+  m_Name: Emperor.Dialog (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &869009158260546605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350858536205476948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8612360951368749127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350858536205476948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: "Stock market\u2019s movement are influenced by millions of people
+    while everything happen in Hypatios can be easily nudged by me."
+  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 6
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -133,6 +185,8 @@ Transform:
   m_Children:
   - {fileID: 8861743187561531849}
   - {fileID: 1230502053353723732}
+  - {fileID: 5626284032652318000}
+  - {fileID: 869009158260546605}
   - {fileID: 3316358316580965950}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -204,12 +258,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Would it be alright to rewind conversation again and again? Or
-    accidentally asks the same question?
+  Dialogue_Content: Why some things are changing while other events stays the same?
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 7
+  Dialogue_Timer: 6
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &8529322492242053694
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5626284032652318000}
+  - component: {fileID: 3748371542065401610}
+  m_Layer: 0
+  m_Name: Emperor.Dialog (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5626284032652318000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529322492242053694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3748371542065401610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8529322492242053694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: My actions easily affects things within the Hypatios Lab but
+    the stock market is too big to be influenced.
+  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 6
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
