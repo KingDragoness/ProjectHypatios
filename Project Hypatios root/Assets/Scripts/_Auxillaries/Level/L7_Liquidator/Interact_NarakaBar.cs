@@ -15,7 +15,6 @@ public class Interact_NarakaBar : MonoBehaviour
         public GameObject modelObject;
     }
 
-    public Material[] materialIcons;
     public List<DrinkList> allDrinkList = new List<DrinkList>();
     public Interact_NarakaBar_Button narakaButtonPrefab;
     public int limitButton = 10;
@@ -98,12 +97,13 @@ public class Interact_NarakaBar : MonoBehaviour
     [Button("Reorder List")]
     public void ReorderDrinkList()
     {
-        allDrinkList = allDrinkList.OrderBy(x => x.item.subCategory).ToList();
+        allDrinkList = allDrinkList.OrderBy(x => x.item.subCategory).ThenBy(x => x.item.GetDisplayText()).ToList();
     }
 
     public void CycleButtonPos(bool isUp)
     {
-        int totalPage = Mathf.FloorToInt(allDrinkList.Count / limitButton);
+        int totalPage = Mathf.CeilToInt((float)allDrinkList.Count / (float)limitButton); //FUCK YOU FOR DIVIDING IN INTEGER
+        //Debug.Log(totalPage);
 
         if (isUp)
         {
@@ -158,11 +158,12 @@ public class Interact_NarakaBar : MonoBehaviour
             var localIndex = i - (_positionMenu * limitButton);
             var currentItem = allDrinkList[i];
             var newButton = Instantiate(narakaButtonPrefab, parent_button);
+            var subIcon = Hypatios.Assets.GetSubcategoryItemIcon(currentItem.item.subCategory);
             Vector3 pos = narakaButtonPrefab.transform.position;
             pos.y -= buttonDistance * localIndex;
             newButton.label_ItemName.text = currentItem.item.GetDisplayText();
             newButton.touchable.interactDescription = $"Buy {currentItem.item.GetDisplayText()}";
-            newButton.iconMesh.material = GetMaterialIcon(currentItem.item.subCategory);
+            newButton.iconMesh.material = subIcon.material;
             newButton.label_Soul.text = $"{currentItem.item.value} Souls";
             newButton.transform.position = pos;
             newButton.index = i;
@@ -171,23 +172,7 @@ public class Interact_NarakaBar : MonoBehaviour
         }
     }
 
-    public Material GetMaterialIcon(ItemInventory.SubiconCategory subIcon)
-    {
-        if (subIcon == ItemInventory.SubiconCategory.Meds)
-        {
-            return materialIcons[0];
-        }
-        else if (subIcon == ItemInventory.SubiconCategory.Alcohol)
-        {
-            return materialIcons[1];
-        }
-        else if (subIcon == ItemInventory.SubiconCategory.Cocktail)
-        {
-            return materialIcons[2];
-        }
 
-        return null;
-    }
 
     public bool BuyDrink(Interact_NarakaBar_Button button)
     {

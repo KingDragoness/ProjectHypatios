@@ -11,6 +11,7 @@ public class AssetStorageDatabase : MonoBehaviour
     {
         public ItemInventory.SubiconCategory categoryIcon;
         public Sprite sprite;
+        public Material material;
     }
 
     public List<Trivia> AllTrivias = new List<Trivia>();
