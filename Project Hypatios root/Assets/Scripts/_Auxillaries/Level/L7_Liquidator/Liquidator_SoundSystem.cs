@@ -35,7 +35,7 @@ public class Liquidator_SoundSystem : MonoBehaviour
 
     private void Update()
     {
-        cooldown -= Time.unscaledDeltaTime;
+        cooldown -= Time.deltaTime;
 
         if (cooldown > 0f)
         {

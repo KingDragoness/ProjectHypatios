@@ -31,6 +31,7 @@ public class ItemInventory : ScriptableObject
         Meds,
         Foods,
         Drinks,
+        Cocktail,
         Key = 40,
         Weapon = 50,
         Essence
@@ -43,6 +44,7 @@ public class ItemInventory : ScriptableObject
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
     [ShowIf(nameof(IsABook))] public Item_ReadableBook readableBook;
     public bool isGenericItem = false;
+    public int value = 10;
     [HideIf("isGenericItem", true)] [ShowIf("subCategory", SubiconCategory.Essence)] public bool IS_REACTANT = false;
     [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 100)] public float Reactant_ReduceAlcohol = 30;
     [ShowIf("subCategory", SubiconCategory.Essence)] [ShowIf("IS_REACTANT", true)] [Range(1f, 1000)] public float Reactant_BonusEfficiency = 20;
@@ -62,6 +64,7 @@ public class ItemInventory : ScriptableObject
     public string Description { get => _description;  }
 
     public bool IsABook => subCategory == SubiconCategory.FictionBook || subCategory == SubiconCategory.Book;
+    public bool IsAlcoholic => subCategory == SubiconCategory.Alcohol || subCategory == SubiconCategory.Cocktail;
 
     public bool IsReadable()
     {

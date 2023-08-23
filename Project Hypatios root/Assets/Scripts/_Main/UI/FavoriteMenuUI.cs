@@ -213,7 +213,11 @@ public class FavoriteMenuUI : MonoBehaviour
                 var itemClass = Hypatios.Assets.GetItem(itemData.ID);
                 if (itemClass == null) continue;
 
-                if (itemClass.subCategory == _currentSubCategory && _currentSubCategory != ItemInventory.SubiconCategory.Default)
+                if (itemClass.subCategory == _currentSubCategory && _currentSubCategory != ItemInventory.SubiconCategory.Default && _currentSubCategory != ItemInventory.SubiconCategory.Alcohol)
+                {
+                    indexes.Add(x);
+                }
+                else if (_currentSubCategory == ItemInventory.SubiconCategory.Alcohol && itemClass.IsAlcoholic)
                 {
                     indexes.Add(x);
                 }
