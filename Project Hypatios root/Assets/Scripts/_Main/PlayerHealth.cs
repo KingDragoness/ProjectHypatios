@@ -9,6 +9,10 @@ using Kryz.CharacterStats;
 public class PlayerHealth : MonoBehaviour
 {
 
+    [FoldoutGroup("Stats")] public BaseStatusEffectObject ailment_DamagedTissue;
+    [FoldoutGroup("Stats")] public float chanceGetting_DamagedTissue = 0.1f;
+    [FoldoutGroup("Stats")] public float damageThreshold_DamagedTissue = 51f;
+
     public CharacterStat maxHealth = new CharacterStat(100);
     public CharacterStat healthRegen = new CharacterStat(0);
     public int CachedHealCapsules = 0;
@@ -266,6 +270,15 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             soundManagerScript.instance.PlayOneShot("hurt.1");
+        }
+
+        if (random < chanceGetting_DamagedTissue && damage > damageThreshold_DamagedTissue)
+        {
+            if (Hypatios.Player.IsStatusEffectGroup(ailment_DamagedTissue) == false)
+            {
+                ailment_DamagedTissue.AddStatusEffectPlayer(30f);
+                DeadDialogue.PromptNotifyMessage_Mod("Aldrich's regeneration tissue has been damaged.", 4f);
+            }
         }
 
         HealthSpeed = speed;

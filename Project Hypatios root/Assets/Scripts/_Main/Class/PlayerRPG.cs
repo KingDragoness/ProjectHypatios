@@ -97,7 +97,15 @@ public class PlayerRPG : MonoBehaviour
                 if (itemData.ESSENCE_TYPE == HypatiosSave.EssenceType.Modifier)
                 {
                     var modifier = Hypatios.Assets.GetStatusEffect(itemData.ESSENCE_CATEGORY);
-                    return $"{modifier.GetTitlePerk()} Essence";
+                    string plus = "";
+
+                    for (int z = 0; z < itemData.ESSENCE_MULTIPLIER; z++)
+                    {
+                        if (z == 0) continue;
+                        plus += "+";
+                    }
+
+                    return $"{plus}{modifier.GetTitlePerk()} Essence";
                 }
                 else
                 {

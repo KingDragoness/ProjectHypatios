@@ -18,6 +18,7 @@ public class kThanidLabUI : MonoBehaviour
     public GameObject UI_Panel_SerumFabricate;
     public Mode currentMode;
     public ItemInventory essenceBottle;
+    public ItemInventory exoticCore;
     [FoldoutGroup("Create Essence")] public RectTransform rt_Essence_MyInventoryParent;
     [FoldoutGroup("Create Essence")] public RectTransform rt_Essence_ExtractorParent;
     [FoldoutGroup("Create Essence")] public RectTransform rt_Essence_ResultParent;
@@ -67,6 +68,10 @@ public class kThanidLabUI : MonoBehaviour
         _currentBench = _shop;
     }
 
+    public int EssenceMultiplierCraft()
+    {
+        return essence_multiplier;
+    }
 
     private bool hasStarted = false;
 
@@ -325,6 +330,7 @@ public class kThanidLabUI : MonoBehaviour
 
         var allCraftableModifiers = GetCraftableModifiers();
         var allCraftableAilments = GetCraftableAilments();
+        Refresh_EssenceMultiplier();
 
         foreach (var craftable in allCraftableModifiers)
         {
@@ -502,6 +508,7 @@ public class kThanidLabUI : MonoBehaviour
 
     }
 
+    private int essence_multiplier = 1;
 
     public void CraftEssence(CreateEssenceButton button)
     {
@@ -532,12 +539,24 @@ public class kThanidLabUI : MonoBehaviour
             }
         }
 
+        Refresh_EssenceMultiplier();
         extractorInventory.RemoveItem(essenceBottle.GetID(), 1);
 
+        if (ExtractorInventory.Count(exoticCore) > 0)
+        {
+            int limitCore = Mathf.Clamp(extractorInventory.Count(exoticCore), 0, 3);
+            extractorInventory.RemoveItem(exoticCore.GetID(), limitCore);
+        }
         CreateEssencePotion(button);
         MainGameHUDScript.Instance.audio_PurchaseReward.Play();
         RefreshUI();
 
+    }
+
+    private void Refresh_EssenceMultiplier()
+    {
+        essence_multiplier = 1 + extractorInventory.Count(exoticCore);
+        essence_multiplier = Mathf.Clamp(essence_multiplier, 0, 3+1);
     }
 
     public void CreateEssencePotion(CreateEssenceButton button)
@@ -548,6 +567,7 @@ public class kThanidLabUI : MonoBehaviour
         itemDat.category = ItemInventory.Category.Normal;
         itemDat.isGenericItem = true;
         itemDat.GENERIC_ESSENCE_POTION = true;
+        itemDat.ESSENCE_MULTIPLIER = essence_multiplier;
         itemDat.ESSENCE_CATEGORY = button.ESSENCE_CATEGORY;
         itemDat.ESSENCE_STATUSEFFECT_GROUP = button.ESSENCE_STATUSEFFECT_GROUP;
         if (itemDat.ESSENCE_CATEGORY != ModifierEffectCategory.Nothing)

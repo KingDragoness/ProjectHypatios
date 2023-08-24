@@ -146,6 +146,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
                         }
 
                         if (antiPotion) modifier.Value *= -1;
+                        modifier.Value *= itemDat.ESSENCE_MULTIPLIER;
                         SerumCustomEffects.Add(modifier);
                     }
                     else

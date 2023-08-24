@@ -298,6 +298,7 @@ public class HypatiosSave
 
         [ShowIf("GENERIC_ESSENCE_POTION", true)] public ModifierEffectCategory ESSENCE_CATEGORY = ModifierEffectCategory.Nothing;
         [ShowIf("GENERIC_ESSENCE_POTION", true)] public string ESSENCE_STATUSEFFECT_GROUP = ""; //Depression, Bleeding
+        [ShowIf("GENERIC_ESSENCE_POTION", true)] public int ESSENCE_MULTIPLIER = 1;
         [ShowIf("GENERIC_ESSENCE_POTION", true)] public EssenceType ESSENCE_TYPE;
         [ShowIf("isGenericItem", true)] public bool GENERIC_KTHANID_SERUM = false;
         [ShowIf("isGenericItem", true)] public bool GENERIC_ESSENCE_POTION = false;

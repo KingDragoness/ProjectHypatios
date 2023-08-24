@@ -45,9 +45,17 @@ public class CreateEssenceButton : MonoBehaviour
         }
         else if (buttonType == Type.Result)
         {
+            string plus = "";
+
+            for (int z = 0; z < kThanidUI.EssenceMultiplierCraft(); z++)
+            {
+                if (z == 0) continue;
+                plus += "+";
+            }
+
             if (ESSENCE_CATEGORY != ModifierEffectCategory.Nothing)
             {
-                Name_label.text = Hypatios.RPG.GetEssenceName(ESSENCE_CATEGORY);
+                Name_label.text = $"{plus}{Hypatios.RPG.GetEssenceName(ESSENCE_CATEGORY)}";
             }
             else
             {
