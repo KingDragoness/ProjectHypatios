@@ -9,7 +9,6 @@ public class RefillAmmoPlayer : MonoBehaviour
     public float distanceToCollect;
     public bool isSpawned = false;
 
-    WeaponManager weaponManager;
     float curHealth;
 
     private float _TimeSpawned;
@@ -20,7 +19,6 @@ public class RefillAmmoPlayer : MonoBehaviour
     {
         _TimeSpawned = Time.time;
         player = Hypatios.Player.gameObject;
-        weaponManager = player.GetComponentInChildren<WeaponManager>();
     }
 
     // Update is called once per frame
@@ -52,15 +50,15 @@ public class RefillAmmoPlayer : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            if (weaponManager.playerMode == Player.Aldrich)
+            if (Hypatios.Player.Weapon.playerMode == Player.Aldrich)
             {
-                var gun = weaponManager.GetRandomGun();
+                var gun = Hypatios.Player.Weapon.GetRandomGun();
                 var weaponData = Hypatios.Assets.GetWeapon(gun.weaponName);
 
                 float randomTime = Random.Range(0f, 1f);
                 int ammoAmount = Mathf.RoundToInt(weaponData.rewardRate.Evaluate(randomTime));
 
-                weaponManager.RefillAmmo(gun, ammoAmount);
+                Hypatios.Player.Weapon.RefillAmmo(gun, ammoAmount);
             } 
 
             Destroy(gameObject);
