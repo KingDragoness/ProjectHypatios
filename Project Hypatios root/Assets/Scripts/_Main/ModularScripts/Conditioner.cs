@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
+// "NOT" HAS NO FUCKING USE
 public class Conditioner : MonoBehaviour
 {
     public enum ConditionType
@@ -175,35 +176,66 @@ public class Conditioner : MonoBehaviour
 
     public bool GetEvaluateResult()
     {
+        bool result = false;
+        string output_str = $"{Title} ";
+
+
         if (conditionForTrue == FulfillCondition.OR)
         {
-            foreach(var condition in AllConditions)
+            result = false;
+
+            foreach (var condition in AllConditions)
             {
+                output_str += $" {condition.conditionType}";
+                output_str += $": {condition.IsConditionChecked()}";
+
                 if (condition.IsConditionChecked())
-                    return true;
+                {
+                    result = true;
+                    break;
+                }
+
+                output_str += $" | ";
             }
         }
         else if (conditionForTrue == FulfillCondition.AND)
         {
+            result = true;
+
             foreach (var condition in AllConditions)
             {
+                output_str += $" {condition.conditionType}";
+                output_str += $": {condition.IsConditionChecked()}";
+
                 if (condition.IsConditionChecked() == false)
-                    return false;
+                {
+                    result = false;
+                    break;
+                }
+
+                output_str += $" | ";
             }
 
-            return true;
         }
         else if (conditionForTrue == FulfillCondition.NOT)
         {
             foreach (var condition in AllConditions)
             {
+                output_str += $" {condition.conditionType}";
+                output_str += $": {condition.IsConditionChecked()}";
+
                 if (condition.IsConditionChecked() == true)
-                    return false;
+                {
+                    result = false;
+                    break;
+                }
+
+                output_str += $" | ";
             }
 
-            return true;
         }
 
-        return false;
+        Debug.Log(output_str);
+        return result;
     }
 }

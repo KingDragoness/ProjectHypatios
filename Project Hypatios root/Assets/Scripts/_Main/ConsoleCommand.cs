@@ -277,12 +277,12 @@ public class ConsoleCommand : MonoBehaviour
 
             foreach (var conditioner in conditioners)
             {
-                SendConsoleMessage($"{conditioner.Title}: {conditioner.IsTriggered}");
+                SendConsoleMessage($"conditioner::{conditioner.Title}: {conditioner.IsTriggered}");
             }
 
             foreach (var switchCond in switches)
             {
-                SendConsoleMessage($"{switchCond.switchName}: {switchCond.Triggered}");
+                SendConsoleMessage($"switch::{switchCond.switchName}: {switchCond.Triggered}");
             }
 
         }
