@@ -144,6 +144,10 @@ public class ConsoleCommand : MonoBehaviour
                 ChangeLanguage(args);
                 break;
 
+            case "hideui":
+                HideUI(args);
+                break;
+
             case "removestatus":
                 RemoveStatus(args);
                 break;
@@ -503,6 +507,22 @@ public class ConsoleCommand : MonoBehaviour
             SendConsoleMessage("Invalid argument! killme");
         }
     }
+
+    private void HideUI(string[] args)
+    {
+        try
+        {
+            Hypatios.UI.canvas_Main.enabled = !Hypatios.UI.canvas_Main.enabled;
+            SendConsoleMessage($"Canvas visibility: {Hypatios.UI.canvas_Main.enabled}");
+
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! hideui");
+        }
+    }
+
 
     protected void NoClipSpeed(string[] args)
     {

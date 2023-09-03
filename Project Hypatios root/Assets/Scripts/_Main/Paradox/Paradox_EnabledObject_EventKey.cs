@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class Paradox_EnabledObject_EventKey : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
     public UnityEvent OnFailed;
     public GameObject targetObject;
 
-    private void Start()
+    public void TriggerCheck()
     {
         bool keyExist = false;
 
@@ -95,5 +96,16 @@ public class Paradox_EnabledObject_EventKey : MonoBehaviour
                 }
             }
         }
+    }
+
+    [Button("Sanity Check - intro")]
+    public void SanityCheck()
+    {
+        TriggerCheck();
+    }
+
+    private void Start()
+    {
+        TriggerCheck();
     }
 }

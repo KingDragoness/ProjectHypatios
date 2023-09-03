@@ -25,7 +25,8 @@ public class MainUI : MonoBehaviour
         Trivia,
         Favorite,
         kThanidLab,
-        MobiusNet
+        MobiusNet,
+        LevelMap
     }
 
     public MobiusNetUI Internet;
@@ -36,6 +37,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public CanvasScaler scaler_Main;
     [FoldoutGroup("References")] public CanvasScaler scaler_Pause;
     [FoldoutGroup("References")] public CanvasScaler scaler_Trivia;
+    [FoldoutGroup("References")] public Canvas canvas_Main;
     [FoldoutGroup("References")] public MainGameHUDScript mainHUDScript;
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
@@ -53,6 +55,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
     [FoldoutGroup("References")] public SettingsUI settingsUI;
     [FoldoutGroup("References")] public GameObject TriviaMap;
+    [FoldoutGroup("References")] public GameObject LevelMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
 
@@ -176,7 +179,7 @@ public class MainUI : MonoBehaviour
         {
             bool allowToggle = false;
 
-            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia)
+            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
                 && Hypatios.Player.Health.isDead == false)
             {
                 allowToggle = true;
@@ -193,7 +196,7 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (current_UI != UIMode.Trivia && current_UI != UIMode.Favorite)
+            if (current_UI != UIMode.LevelMap && current_UI != UIMode.Trivia && current_UI != UIMode.Favorite)
             {
                 if (allowToggle)
                 {
@@ -202,7 +205,7 @@ public class MainUI : MonoBehaviour
                     RefreshPauseState();
                 }
             }
-            else if (current_UI == UIMode.Trivia)
+            else if (current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
             {
                 if (allowToggle)
                 {
@@ -286,7 +289,7 @@ public class MainUI : MonoBehaviour
                 isIdlePlayer = true;
             }
 
-            if (current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia)
+            if (current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
             {
                 isUsingCustomCam = true;
             }
@@ -396,12 +399,12 @@ public class MainUI : MonoBehaviour
             {
                 bool allowToggle = false;
 
-                if ((current_UI == UIMode.Trivia) && Hypatios.Player.Health.isDead == false)
+                if ((current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap) && Hypatios.Player.Health.isDead == false)
                 {
                     allowToggle = true;
                 }        
 
-                if (current_UI == UIMode.Trivia)
+                if (current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
                 {
                     if (allowToggle)
                     {
@@ -416,12 +419,22 @@ public class MainUI : MonoBehaviour
                 if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
                 if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
                 if (TriviaMap.activeSelf == false) TriviaMap.gameObject.SetActive(true);
+                if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
+                if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
+            }
+            else if (current_UI == UIMode.LevelMap)
+            {
+                if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
+                if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
+                if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
+                if (LevelMap.activeSelf == false) LevelMap.gameObject.SetActive(true);
                 if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
             }
             else
             {
                 if (Camera_Main.activeSelf == false) Camera_Main.gameObject.SetActive(true);
                 if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
+                if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
                 if (PauseMenu.activeSelf == false) PauseMenu.gameObject.SetActive(true);
             }
         }

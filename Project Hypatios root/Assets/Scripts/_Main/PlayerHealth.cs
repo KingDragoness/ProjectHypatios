@@ -123,9 +123,9 @@ public class PlayerHealth : MonoBehaviour
         {
             float capPostFX_Health = 100;
 
-            float limitDof = Mathf.Clamp(capPostFX_Health / curHealth, 1, 48);
-            float vignetteIntensity = Mathf.Lerp(0.35f, 0.7f, 1 - curHealth / capPostFX_Health);
-            float vignetteRed = Mathf.Lerp(0f, 1f, 1 - curHealth / capPostFX_Health);
+            float limitDof = Mathf.Clamp(capPostFX_Health / curHealth, 1, 55);
+            float vignetteIntensity = Mathf.Lerp(0.35f, 0.9f, 1 - curHealth / capPostFX_Health);
+            float vignetteRed = Mathf.Lerp(0f, 1f, 1.1f - curHealth / capPostFX_Health);
 
             vignetteColor.r = vignetteRed;
 

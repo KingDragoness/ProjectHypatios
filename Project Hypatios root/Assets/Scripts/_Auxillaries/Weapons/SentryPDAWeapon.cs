@@ -37,8 +37,8 @@ public class SentryPDAWeapon : GunScript
     [FoldoutGroup("Audios")] public AudioSource audio_HackingFailed;
 
     public Fortification_GhostSentry currentSentryGun;
-    public ItemInventory itemCommonMetal;
     public ItemInventory itemRareMetal;
+    public ItemInventory itemMicrochip;
 
     private float _intervalRepair = 2;
     private float _timerToDestroy = 3f;
@@ -260,7 +260,7 @@ public class SentryPDAWeapon : GunScript
                     if (IsBuildCost() == true)
                         Label_Prompt.text = $"<LMB to Build>";
                     else
-                        Label_Prompt.text = $"<Need {cost_metal} common & {cost_raremetal} rare metal!>";
+                        Label_Prompt.text = $"<Need {cost_metal} microchip & {cost_raremetal} rare metal!>";
                 }
             }
             else if (currentMode == Mode.Control)
@@ -299,7 +299,7 @@ public class SentryPDAWeapon : GunScript
 
     public bool IsBuildCost()
     {
-        int commonMetal = Hypatios.Player.Inventory.Count(itemCommonMetal);
+        int commonMetal = Hypatios.Player.Inventory.Count(itemMicrochip);
         int rareMetal = Hypatios.Player.Inventory.Count(itemRareMetal);
 
         if (commonMetal >= cost_metal && rareMetal >= cost_raremetal)
@@ -509,7 +509,7 @@ public class SentryPDAWeapon : GunScript
         _timerToBuild = 2f;
         currentSentryGun = sentry;
         currentSentryGun.pivotObject.target = _mainGround;
-        Hypatios.Player.Inventory.RemoveItem(itemCommonMetal.GetID(), cost_metal);
+        Hypatios.Player.Inventory.RemoveItem(itemMicrochip.GetID(), cost_metal);
         Hypatios.Player.Inventory.RemoveItem(itemRareMetal.GetID(), cost_raremetal);
     }
 

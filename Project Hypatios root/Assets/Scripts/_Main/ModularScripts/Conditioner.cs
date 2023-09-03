@@ -151,6 +151,26 @@ public class Conditioner : MonoBehaviour
         }
     }
 
+    [Button("Sanity Check - Intro")]
+    public void Test_SanityCheck_Intro()
+    {
+        if (GetEvaluateResult())
+        {
+            _isTriggered = true;
+            OnTriggerStart?.Invoke();
+        }
+        else
+        {
+            OnTriggerFail?.Invoke();
+        }
+    }
+
+    [Button("Sanity Check")]
+    public void Test_SanityCheck()
+    {
+        TriggerFunction();
+    }
+
     public void TriggerFunction()
     {
         if (GetEvaluateResult())

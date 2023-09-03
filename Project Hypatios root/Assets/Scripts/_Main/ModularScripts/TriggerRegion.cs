@@ -8,11 +8,18 @@ public class TriggerRegion : MonoBehaviour
     public UnityEvent triggerEvents;
     public List<Transform> ActivatingArea;
     public Transform player;
+    public bool isUsingPlayer = false;
     public bool DEBUG_DrawGizmos = false;
 
     void Start()
     {
-
+        if (isUsingPlayer)
+        {
+            if (player == null)
+            {
+                player = Hypatios.Player.transform;
+            }
+        }
     }
 
     private void OnDrawGizmos()

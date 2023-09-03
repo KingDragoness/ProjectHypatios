@@ -61,7 +61,7 @@ public class ActivatorRegion : MonoBehaviour
         }
 
 
-        if (allowWhenParadoxMode && MainUI.Instance.current_UI == MainUI.UIMode.Paradox)
+        if (allowWhenParadoxMode && (MainUI.Instance.current_UI == MainUI.UIMode.Paradox | MainUI.Instance.current_UI == MainUI.UIMode.LevelMap))
         {
             foreach (GameObject go in TargetObjectRegion)
             {
