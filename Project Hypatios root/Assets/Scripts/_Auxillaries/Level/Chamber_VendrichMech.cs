@@ -7,15 +7,21 @@ using static MechHeavenblazerEnemy;
 public class Chamber_VendrichMech : MonoBehaviour
 {
 
+    [System.Serializable]
+    public class StageParameter
+    {
+        public Stage stage;
+        public float exitTime = 4f;
+        public GameObject stageObject;
+        [InfoBox("'Exit' to trigger animation exit.")]
+        public Animator animator;
+    }
+
+
+    public List<StageParameter> allStageParameters = new List<StageParameter>();
     public MechHeavenblazerEnemy mechEnemy;
     public Chamber_Vendrich_HealingTower healingTower;
     public RandomSpawnArea spawnTowerArea;
-    [FoldoutGroup("Stage Object")] public GameObject Stage0_intro;
-    [FoldoutGroup("Stage Object")] public GameObject Stage1_fightOn;
-    [FoldoutGroup("Stage Object")] public GameObject Stage2_redDust;
-    [FoldoutGroup("Stage Object")] public GameObject Stage3_ascension;
-    [FoldoutGroup("Stage Object")] public GameObject Stage4_lastMessage;
-    [FoldoutGroup("Stage Object")] public GameObject DeathStage;
 
     [FoldoutGroup("Parameters")] public float hTower_distMinimum = 40;
     [FoldoutGroup("Parameters")] public int hTower_limitSpawnTries = 50;
@@ -41,11 +47,25 @@ public class Chamber_VendrichMech : MonoBehaviour
     private bool _isAscensionTriggered = false;
     private bool _isLastMessageTriggered = false;
     private bool _isDeathTriggered = false;
+    private StageParameter _nextStage;
+    private StageParameter _originStage;
+    private StageParameter _prevStage;
+    private bool _isTransitioning = false;
+    private float _transitionClock = 4f;
 
     private void Start()
     {
         _spawnHealingTowerTimer = hTower_TimerSpawn;
         healingTower.gameObject.SetActive(false);
+        
+        //reload all
+        {
+            foreach(var stage in allStageParameters)
+            {
+                stage.stageObject.gameObject.SetActive(false);
+            }
+        }
+
     }
 
 
@@ -57,6 +77,7 @@ public class Chamber_VendrichMech : MonoBehaviour
         CheckConditions();
         RefreshStage();
 
+        #region Healing Tower
         if (_spawnHealingTowerTimer > 0f)
         {
             _spawnHealingTowerTimer -= Time.deltaTime;
@@ -84,6 +105,7 @@ public class Chamber_VendrichMech : MonoBehaviour
             
             _spawnHealingTowerTimer = hTower_TimerSpawn;
         }
+        #endregion
     }
 
     private void CheckConditions()
@@ -115,65 +137,74 @@ public class Chamber_VendrichMech : MonoBehaviour
 
     private void RefreshStage()
     {
-        if (mechEnemy.currentStage == Stage.Stage0_Intro)
+        var currentStage1 = GetStage(mechEnemy.currentStage);
+
+        if (_prevStage != currentStage1)
         {
-            if (Stage0_intro.activeSelf == false) Stage0_intro.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Stage0_intro.activeSelf == true) Stage0_intro.gameObject.SetActive(false);
+            InitiateTransitionStage(mechEnemy.currentStage);
         }
 
-        if (mechEnemy.currentStage == Stage.Stage1_Fight)
+        if (_isTransitioning)
         {
-            if (Stage1_fightOn.activeSelf == false) Stage1_fightOn.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Stage1_fightOn.activeSelf == true) Stage1_fightOn.gameObject.SetActive(false);
+            _transitionClock -= Time.deltaTime;
+            if (_transitionClock <= 0f)
+            {
+                _isTransitioning = false;
+                if (_originStage != null)
+                {
+                    _originStage.stageObject.gameObject.SetActive(false);
+                }
+                _originStage = null;
+                _nextStage = null;
+            }
         }
 
+        _prevStage = currentStage1;
+
+        #region Trigger Event
         if (mechEnemy.currentStage == Stage.Stage2_Dust)
         {
             _isRedDustTriggered = true;
-            if (Stage2_redDust.activeSelf == false) Stage2_redDust.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Stage2_redDust.activeSelf == true) Stage2_redDust.gameObject.SetActive(false);
-        }
+        } 
 
         if (mechEnemy.currentStage == Stage.Stage3_Ascend)
         {
             _isAscensionTriggered = true;
-            if (Stage3_ascension.activeSelf == false) Stage3_ascension.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Stage3_ascension.activeSelf == true) Stage3_ascension.gameObject.SetActive(false);
         }
 
         if (mechEnemy.currentStage == Stage.Stage4_LastMessage)
         {
             _isLastMessageTriggered = true;
-            if (Stage4_lastMessage.activeSelf == false) Stage4_lastMessage.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (Stage4_lastMessage.activeSelf == true) Stage4_lastMessage.gameObject.SetActive(false);
         }
 
         if (mechEnemy.currentStage == Stage.Death)
         {
             _isDeathTriggered = true;
-            if (DeathStage.activeSelf == false) DeathStage.gameObject.SetActive(true);
         }
-        else
+        #endregion
+    }
+
+    public void InitiateTransitionStage(Stage _stage)
+    {
+        _nextStage = GetStage(_stage);
+        _isTransitioning = true;
+        _nextStage.stageObject.gameObject.SetActive(true);
+        _originStage = _prevStage;
+        _transitionClock = _nextStage.exitTime;
+
+        if (_originStage != null)
         {
-            if (DeathStage.activeSelf == true) DeathStage.gameObject.SetActive(false);
+            if (_originStage.animator != null)
+            {
+                _originStage.animator.SetTrigger("Exit");
+            }
         }
     }
 
+    public StageParameter GetStage(Stage _stage)
+    {
+        return allStageParameters.Find(x => x.stage == _stage);
+    }
 
     #region Spawning
 

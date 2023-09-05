@@ -4984,7 +4984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: e2a3d7e8a06c86246ae5995a3c210afe, type: 2}
+  sharedProfile: {fileID: 11400000, guid: a13f8012efa609b4ba1700bf3690f786, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -6697,13 +6697,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491694152}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9191284b058eef549b7108b5f04e1117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensityMultiplier: 0.4
-  generalIntensity: 0.5
+  intensityMultiplier: 1
+  generalIntensity: 1
   blackIntensity: 1
   whiteIntensity: 1
   midGrey: 0.2
@@ -6785,6 +6785,8 @@ GameObject:
   - component: {fileID: 1504926369}
   - component: {fileID: 1504926370}
   - component: {fileID: 1504926371}
+  - component: {fileID: 1504926373}
+  - component: {fileID: 1504926372}
   m_Layer: 0
   m_Name: Wired_Eclipseblazer
   m_TagString: Untagged
@@ -6818,14 +6820,14 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504926368}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: dcd409e3b5dd0fa42967d569c68aff5f,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3da56677ad3f8c344aafb7d2e79d81bd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2536a59b7acfddd4e995518dedbf1fd0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 0.76
+  m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -6926,6 +6928,42 @@ MonoBehaviour:
     clip: {fileID: 0}
   b_side_Track: {fileID: 0}
   playBSideUponStart: 0
+--- !u!114 &1504926372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504926368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a10c44bbe814342af80233054cf6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1504926370}
+--- !u!164 &1504926373
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504926368}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1357
+  m_RoomHF: 0
+  m_DecayTime: 8.39
+  m_DecayHFRatio: 1.39
+  m_ReflectionsLevel: -115
+  m_ReverbLevel: 57
+  m_ReverbDelay: 0.03
+  m_Diffusion: 85.6
+  m_Density: 73.7
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 27
 --- !u!1 &1526987779
 GameObject:
   m_ObjectHideFlags: 0
@@ -9627,12 +9665,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d1abbff130795a14c9975bf0662e5a21,
         type: 2}
-    - target: {fileID: 2002117729863807484, guid: bbec7d86000fe814bbac5d2d2e841787,
-        type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: a51776f80abd77d4585a5b8b959b3e1a,
-        type: 2}
     - target: {fileID: 2002117730324881563, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -10003,7 +10035,7 @@ PrefabInstance:
     - target: {fileID: 4050697859357692351, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -46.71
+      value: -54.57
       objectReference: {fileID: 0}
     - target: {fileID: 4050697859357692351, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
@@ -10013,7 +10045,7 @@ PrefabInstance:
     - target: {fileID: 4050697859357692351, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.99
+      value: -39.8
       objectReference: {fileID: 0}
     - target: {fileID: 4050697859357692351, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}

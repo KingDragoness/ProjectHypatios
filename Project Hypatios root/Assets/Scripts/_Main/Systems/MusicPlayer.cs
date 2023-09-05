@@ -18,6 +18,13 @@ public class MusicPlayer : MonoBehaviour
     public bool playBSideUponStart = false;
 
     public static MusicPlayer Instance;
+    private AudioSource newMusicAudio;
+    private AudioSource oldMusicAudio;
+    private bool isTransitioning = false;
+    private float _transitTime = 2f;
+    private float _transitionClock = 2f;
+    private float _originalVolume = 0f;
+    private float _targetVolume = 0f;
 
     private void Awake()
     {
@@ -56,8 +63,59 @@ public class MusicPlayer : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        if (isTransitioning)
+        {
+            float f = (_transitionClock / _transitTime);
+            float f1 = 1 - f;
+            _transitionClock -= Time.deltaTime;
+
+            oldMusicAudio.volume = f * _originalVolume;
+            newMusicAudio.volume = f1 * _targetVolume;
+
+            if (_transitionClock <= 0)
+            {
+                ChangePrimaryAudioSource();
+                isTransitioning = false;
+            }
+        }
+    }
+
+    private void ChangePrimaryAudioSource()
+    {
+        musicSource = newMusicAudio;
+        newMusicAudio = null;
+        Destroy(oldMusicAudio);
+    }
+
     public void StopMusic()
     {
         if (musicSource != null) musicSource.Stop();
+    }
+
+    public void TransitionMusic(AudioClip musicClip, float transitionTime = 2f, float targetVolume = 1f)
+    {
+        if (newMusicAudio != null)
+        {
+            Destroy(newMusicAudio);
+        }
+
+        AudioSource newSource = gameObject.AddComponent<AudioSource>();
+        newSource.clip = musicClip;
+        newSource.loop = true;
+        newSource.playOnAwake = true;
+        newSource.volume = 0f;
+        newSource.outputAudioMixerGroup = musicSource.outputAudioMixerGroup;
+
+        oldMusicAudio = musicSource;
+        newMusicAudio = newSource;
+        _originalVolume = oldMusicAudio.volume;
+        _targetVolume = targetVolume;
+        newSource.Play();
+
+        isTransitioning = true;
+        _transitTime = transitionTime;
+        _transitionClock = transitionTime;
     }
 }
