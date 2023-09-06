@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c617f9dadf266042bb59980b631925c, type: 3}
+  m_Name: HotWater
+  m_EditorClassIdentifier: 
+  _displayName: Hot Water
+  _description: Warm water brings warm to your body. Player gains +10 HP and 0.2
+    HP per second for 30 seconds.
+  PerkSprite: {fileID: 21300000, guid: fe8e535d2df449843a98e0b50b2c0810, type: 3}
+  allStatusEffects:
+  - statusCategoryType: 50
+    origin: 
+    Value: 0.2
+    isPermanent: 1
+    timer: 9999
+  - statusCategoryType: 6
+    origin: 
+    Value: 10
+    isPermanent: 1
+    timer: 9999
+  craftableEssence: 0
+  requirementCrafting: []
+  isNegativeAilment: 0
