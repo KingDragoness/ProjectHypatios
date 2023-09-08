@@ -78,6 +78,7 @@ public class DeathSweeperEnemy : EnemyScript
     public void AliveState()
     {
         if (currentTarget == null) return;
+        if (Time.timeScale <= 0) return;
         dummyAI.target = currentTarget.transform;
 
         if (currentStateAI == StateAI.Pursue)
