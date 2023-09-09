@@ -1,0 +1,139 @@
+Changelog
+
+V1.5.5
+Addition 0047: Added the Android CPU architecture setting
+Bug Fix 0010: Fixed the headless mode toggle not working
+Bug Fix 0011: Fixed the log path not using dynamic literals
+
+V1.5.4
+Bug Fix 0009: Fixed the Execute Preset Pipeline button being disabled
+
+V1.5.3
+Improved compatibility with Unity 2018, 2019 and 2020
+
+V1.5.1
+Bug Fix 0008: Fixed a bug where formatting rules for #DATA# and #TIME# would be lost
+
+V1.5.0
+Addition 0036: Added the dynamic literal engine
+Addition 0037: Dynamic literal #TIME#
+Addition 0038: Dynamic literal #DATE#
+Addition 0039: Dynamic literal #VERSION#
+Addition 0040: Dynamic literal #APP-ID#
+Addition 0041: Dynamic literal #NET-VER#
+Addition 0042: Dynamic literal #PRODUCT-NAME#
+Addition 0043: Dynamic literal #COMPANY-NAME#
+Addition 0044: Dynamic literal #UNITY-VERSION#
+Addition 0045: Dynamic literal #LICENSE#
+Addition 0046: Added asmdef file for Build Automator
+
+V1.4.6
+Addition 0033: Build Automator can now be opened with shift + alt + b
+Addition 0034: Added C++ compiler confuguration settings to all platforms using IL2CPP
+Addition 0035: Added Xbox One build settings
+Bug Fix 0006: Fixed an issue where certain non BA properties would not be loaded properly
+Bug Fix 0007: Removed Invalid Mono backend for Xbox One
+
+V1.4.5
+Addition 0032: Prefix and suffix is now customisable per platform
+
+V1.4.4
+Addition 0031: Added compression options to the build settings dropdown
+Bug Fix 0004: Fixed bug on macOS when certain editor modules were not present
+Bug Fix 0005: Fixed IO bug that prevented more than one scripting define symbol from being saved
+
+V1.4.3
+Addition 0030: Auto save options now exposed
+
+V1.4.2
+Bug Fix 0003: Fixed bug where scenes were not properly prepared during preset pipeline execution
+Change 0026: Improved detection of user's installation for each platform
+Addition 0029: Added scripting backend toggles to each platform
+
+V1.4.1
+WARNING: Save data from BA 1.0.0 to 1.4.0 will not be compatible with V1.4.1 plus, an unfortunate comprimise to improve the asset going forwards
+Change 0025: New file based save management system
+
+V1.4.0
+Bug Fix 0003: Fixed batch scripts on macOS and Linux
+Change 0023: Disabled decrement buttons when counts are 0
+Change 0024: Improved some of the tooltips
+Addition 0028: Added the new Preset Pipeline system
+
+V1.3.3
+Change 0021: Replaced all OSX targets with macOS on 2017.3+
+Change 0022: Removes Tizen on 2018.1+
+Addition 0027: Added the new logging tool (requires 2018.1+)
+
+V1.3.2
+Change 0019: Unity 2017.2 compatibility
+Change 0020: Moved to plugins folder
+
+V1.3.1
+Change 0014: Scene configuration is now in its own sub menu
+Change 0015: Progress bar has been adjusted
+Change 0016: #regions have been added to the code to increase clarity and organization
+Change 0017: Code has been redistributed amongst several different files and partial classes to improve organization
+Change 0018: Replaced WSA with UWP on 2017.1 and newer to comply with changes
+Addition 0022: Add new preset/template creation system
+Addition 0023: Ability to import Editor scene list
+Addition 0024: Ability to ignore Build Automator's scene list and use the editors
+Addition 0025: Add All Scenes button has been added
+Addition 0026: Scenes can now be removed from the middle of the extra scene list
+
+V1.3.0
+Change 0006: Build order automatically optimised to minimise asset recompilation
+Change 0007: Root path is no longer required
+Change 0008: Improved path handling
+Change 0009: New scene selector; paths are no longer required
+Change 0010: GUI code refactored to be modular and easier to understand
+Change 0011: Further documented code with more XML for ease of use
+Change 0012: GUI is now organised into collapsible drop downs
+Change 0013: Improved error handling and data validation
+Addition 0004: File browser for selecting directories and files
+Addition 0005: Built in buttons to switch Platform inside of Build Automator
+Addition 0006: Build state (Active, Queued, Successful and Unsuccessful) is now displayed for each Platform via background colour
+Addition 0007: Active Platform displayed in Build Automator
+Addition 0008: Added icons for every platform
+Addition 0009: Dynamic tooltips with information and generated details on every field
+Addition 0010: Detects which modules are installed and automatically removes anything that is not supported by your configuration of Unity
+Addition 0011: PS3 Support
+Addition 0012: PS4 Support
+Addition 0013: PS Vita Support
+Addition 0014: Xbox 360 Support
+Addition 0015: Xbox One Support
+Addition 0016: Wii U Support
+Addition 0017: Nintendo 3DS Support
+Addition 0018: Nintendo Switch Support
+Addition 0019: Blackberry Support
+Addition 0020: Blackberry 10 Support
+Addition 0021: Facebook Support
+
+V1.2.1
+Addition 0003: Added manual save button
+
+V1.2.0
+Change 0004: Replaced the architecture toggle with unique platforms for each architecture
+Change 0005: Code refactored to be more easily extendable by end users
+Addition 0002: Added option to give each platform its own output folder
+
+V1.1.3
+Bug Fix 0002: Changed code to comply with 5.4 API change to stop error warning
+Addition 0002: Autosave option added
+Addition 0003: Button added to add current scene
+
+V1.1.2
+Change 0002: Removed WebPlayer on Unity 5.4 and upwards
+Change 0003: Removed WebGL Optimisation Levels for Unity 5.4 and upwards
+
+V1.1.1
+Addition 0001: Configurable output directory
+
+V1.1.0
+Change 0001: Code completely rewritten to be modular
+
+V1.0.2
+Bug Fix 0001: .x86 Linux builds outputted to Name.x86 instead of Name_Linux.x86
+
+V1.0.1
+Initial Release
