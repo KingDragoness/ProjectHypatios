@@ -12,6 +12,11 @@ public class KillZone : MonoBehaviour
     public float DamageShakinessFactor = 0.1f;
     public bool DEBUG_DrawGizmos = false;
     public bool isExplosion = false;
+    public BaseStatusEffectObject statusEffect;
+    public float statusEffectTime = 10f;
+    [Range(0f,1f)] public float statusEffectChance = 0.7f;
+    public bool usePrompt_StatusEffect = false;
+    public string prompt_StatusEffect = "Cursed by Eclipser sword.";
     [ShowIf("isExplosion")] [FoldoutGroup("Enemies")] public Vector3 explosionDir;
     [FoldoutGroup("Enemies")] public EnemyScript originEnemy;
     [FoldoutGroup("Enemies")] public DamageToken.DamageOrigin origin = DamageToken.DamageOrigin.Enemy;
@@ -135,6 +140,19 @@ public class KillZone : MonoBehaviour
         if (isBurn)
         {
             Hypatios.Player.Burn();
+        }
+
+        float chance = Random.Range(0f, 1f);
+
+        if (statusEffect != null && chance < statusEffectChance)
+        {
+            statusEffect.AddStatusEffectPlayer(statusEffectTime);
+
+            if (usePrompt_StatusEffect)
+            {
+                DeadDialogue.PromptNotifyMessage_Mod(prompt_StatusEffect, 5f);
+
+            }
         }
     }
 

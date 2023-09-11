@@ -94,6 +94,27 @@ public class InstantiateRandomObject : MonoBehaviour
         }
     }
 
+    public void SpawnAllFromPrefabsList()
+    {
+        for (int x = 0; x < prefabs.Count; x++)
+        {
+            var go = prefabs[x];
+            if (go == null) continue;
+
+            if (useRandomSpawn)
+            {
+                var go1 = Instantiate(go, randomPositioner.GetAnyPositionInsideBox(), go.transform.rotation);
+                IntializedSpawn(go1);
+            }
+            else
+            {
+                var t = SpawnList[Random.Range(0, SpawnList.Count)];
+                var go1 = Instantiate(go, t.transform.position, t.rotation);
+                IntializedSpawn(go1);
+            }
+        }
+    }
+
     //Because stupid UnityEvent cannot call function with return
     public void SpawnThing1()
     {

@@ -26,6 +26,15 @@ public class EclipseBlaz_AIModule : MonoBehaviour
 
     }
 
+    public virtual void OnExitState()
+    {
+
+    }
+
+    public virtual void OnEnterState()
+    {
+
+    }
 
     public void OnEnterAnimation(AnimancerPlayer AnimatorPlayer)
     {

@@ -60,4 +60,19 @@ public class CopyTransformRagdoll : MonoBehaviour
             i++;
         }
     }
+
+    public void CopyShadow(CopyTransformRagdoll origin)
+    {
+        var copy1 = Instantiate(origin, transform.position, transform.rotation);
+        int i = 0;
+        copy1.gameObject.SetActive(true);
+
+        foreach (var bone in copy1.ragdollTarget)
+        {
+            bone.transform.localPosition = ragdollTarget[i].transform.localPosition;
+            bone.transform.localRotation = ragdollTarget[i].transform.localRotation;
+            i++;
+        }
+    }
+    
 }

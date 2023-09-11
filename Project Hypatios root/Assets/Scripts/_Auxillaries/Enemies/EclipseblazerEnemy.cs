@@ -18,8 +18,8 @@ public class EclipseblazerEnemy : EnemyScript
         Chain_Attack,
         Sword_Attack,
         Mirror_Attack,
-        Sunken_Spear //if there is time, merely just copying mirror attack's AI
-    
+        Sunken_Spear, //if there is time, merely just copying mirror attack's AI
+        GroundStomp
     }
 
 
@@ -89,12 +89,14 @@ public class EclipseblazerEnemy : EnemyScript
 
     private void UpdateAI()
     {
+        var prevStanceClass = GetModule(prevStance);
+        var currentStanceClass = GetModule(currentStance);
+
         if (prevStance != currentStance)
         {
             JustEnterStance();
+            if (prevStanceClass != null) prevStanceClass.OnExitState();
         }
-
-        var currentStanceClass = GetModule(currentStance);
 
         if (currentStanceClass != null)
         {
@@ -108,7 +110,9 @@ public class EclipseblazerEnemy : EnemyScript
     {
         var newStance = GetModule(currentStance);
 
+        if (newStance == null) return;
         newStance.OnEnterAnimation(AnimatorPlayer);
+        newStance.OnEnterState();
 
         if (newStance.objectToSpawn != null)
         {
