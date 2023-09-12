@@ -216,7 +216,7 @@ public class MainUI : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.BackQuote))
+        if (Input.GetKeyUp(KeyCode.BackQuote) && Hypatios.IsDemoMode == false)
         {
             Console_UI.gameObject.SetActive(!Console_UI.gameObject.activeSelf);
         }

@@ -26,6 +26,13 @@ public class GameBuildSettings
 
         return false;
     }
+
+    public static GameBuildSettings GetMainBuildSettings()
+    {
+        var buildSettingDat = JsonConvert.DeserializeObject<GameBuildSettings>(File.ReadAllText(MainBuildPath), FPSMainScript.JsonSettings());
+
+        return buildSettingDat;
+    }
 }
 
 public class GameBuildSetting_FileEdit : MonoBehaviour

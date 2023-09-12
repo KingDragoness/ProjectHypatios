@@ -451,7 +451,7 @@ public class CharacterScript : Entity
             HandleCrouchingState();
             isGrounded = Physics.CheckSphere(groundCheck.position, groundRadiusCheck, player, queryTriggerInteraction: QueryTriggerInteraction.Ignore);
 
-            if (isLimitedIntroMode == false && !disableInput)
+            if (isLimitedIntroMode == false && !disableInput && Hypatios.IsDemoFinished() == false)
                 Jumping();
 
             timeSinceLastDash += Time.deltaTime;
@@ -537,6 +537,11 @@ public class CharacterScript : Entity
             return;
         }
 
+        if (Hypatios.IsDemoFinished())
+        {
+            return;
+        }
+
         float dashCooldownLimit = Mathf.Clamp(dashCooldown.Value, 0.2f, 99f); //Dash cooldown can never reach under 0.2 second
         if (timeSinceLastDash > dashCooldownLimit)
         {
@@ -609,7 +614,7 @@ public class CharacterScript : Entity
 
     void Moving()
     {
-        if (!disableInput)
+        if (!disableInput && !Hypatios.IsDemoFinished())
         {
             var moveVector = Hypatios.Input.Move.ReadValue<Vector2>();
             xMovement = moveVector.x;//Input.GetAxisRaw("Horizontal");

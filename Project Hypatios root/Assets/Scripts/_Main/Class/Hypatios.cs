@@ -301,6 +301,12 @@ public class Hypatios : MonoBehaviour
     [SerializeField] private GameDifficulty _gameDifficulty = GameDifficulty.Hard;
     public static GameDifficulty Difficulty { get => Instance._gameDifficulty; set => Instance._gameDifficulty = value; }
 
+    [SerializeField] private bool _isDemoMode = false;
+    [SerializeField] private int _DemoTrialTimeLimit = 5400;
+    public string buildSettingName = "";
+    public static bool IsDemoMode { get => Instance._isDemoMode; set => Instance._isDemoMode = value; }
+    public static int DemoTrialTimeLimit { get => Instance._DemoTrialTimeLimit; set => Instance._DemoTrialTimeLimit = value; }
+
     #endregion
 
     [SerializeField]
@@ -401,6 +407,7 @@ public class Hypatios : MonoBehaviour
     {
         Instance = this;
         RandomizationIndex = 0;
+        LoadBuildSettings();
         _actionMap = new HypatiosControls();
         _actionMap.Enable();
         Settings1.InitializeAtAwake();
@@ -492,5 +499,25 @@ public class Hypatios : MonoBehaviour
         yield return LocalizationSettings.InitializationOperation;
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
         isChangingLocale = false;
+    }
+
+    [Button("Reload build settings")]
+    public void LoadBuildSettings()
+    {
+        var buildSetting = GameBuildSettings.GetMainBuildSettings();
+        _isDemoMode = buildSetting.DemoBuild;
+        _DemoTrialTimeLimit = buildSetting.TrialTimeLimit;
+        buildSettingName = buildSetting.SettingName;
+    }
+
+    public static bool IsDemoFinished()
+    {
+        if (IsDemoMode == false)
+            return false;
+
+        if (Game.Total_UNIX_Timespan > DemoTrialTimeLimit)
+            return true;
+
+        return false;
     }
 }

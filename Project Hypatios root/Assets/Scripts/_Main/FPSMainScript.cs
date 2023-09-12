@@ -70,7 +70,6 @@ public class FPSMainScript : MonoBehaviour
 
     private void Awake()
     {
-
         if (LoadFromSaveFile)
             LoadFromSaveBuffer();
 

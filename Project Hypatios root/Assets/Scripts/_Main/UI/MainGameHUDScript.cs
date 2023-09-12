@@ -14,54 +14,53 @@ public class MainGameHUDScript : MonoBehaviour
     [FoldoutGroup("Title Card")] public UI_Modular_TypewriterText titlecard_Title;
     [FoldoutGroup("Title Card")] public UI_Modular_TypewriterText titlecard_Description;
     [FoldoutGroup("Title Card")] public GameObject TitleCard;
+    [FoldoutGroup("Demo")] public Text demo_Label_TimeLimit;
+    [FoldoutGroup("Demo")] public GameObject demo_HUD;
+    [FoldoutGroup("Demo")] public GameObject demo_DemoFinished;
 
-    [Header("Player")]
-    public Text healthPoint;
-    public Text soulPoint;
-    public GameObject NoAmmoAlert;
-    public Slider healthSlider;
-    public Slider justDamagedHealthSlider;
-    public Slider dashSlider;
-    public GenericBossUI bossUI;
-    public GameObject dashOk;
-    public GameObject interactPrompt;
-    public GameObject interactContainerPrompt;
-    public Text interactText;
+    [FoldoutGroup("Player")] public Text healthPoint;
+    [FoldoutGroup("Player")] public Text soulPoint;
+    [FoldoutGroup("Player")] public GameObject NoAmmoAlert;
+    [FoldoutGroup("Player")] public Slider healthSlider;
+    [FoldoutGroup("Player")] public Slider justDamagedHealthSlider;
+    [FoldoutGroup("Player")] public Slider dashSlider;
+    [FoldoutGroup("Player")] public GenericBossUI bossUI;
+    [FoldoutGroup("Player")] public GameObject dashOk;
+    [FoldoutGroup("Player")] public GameObject interactPrompt;
+    [FoldoutGroup("Player")] public GameObject interactContainerPrompt;
+    [FoldoutGroup("Player")] public Text interactText;
 
-    [Header("Audio")]
-    public AudioSource audio_DashReady;
-    public AudioSource audio_CrosshairClick;
-    public AudioSource audio_Error;
-    public AudioSource audio_PurchaseReward;
-    public AudioSource audio_interactMonitor;
-    public AudioSource audio_SuccessfulPayment;
+    [FoldoutGroup("Audios")] public AudioSource audio_DashReady;
+    [FoldoutGroup("Audios")] public AudioSource audio_CrosshairClick;
+    [FoldoutGroup("Audios")] public AudioSource audio_Error;
+    [FoldoutGroup("Audios")] public AudioSource audio_PurchaseReward;
+    [FoldoutGroup("Audios")] public AudioSource audio_interactMonitor;
+    [FoldoutGroup("Audios")] public AudioSource audio_SuccessfulPayment;
 
 
-    [Header("Trivias")]
-    public UI_Modular_TypewriterText typewriter_Trivia;
-    public GameObject triviaUI;
+    [FoldoutGroup("Trivias")] public UI_Modular_TypewriterText typewriter_Trivia;
+    [FoldoutGroup("Trivias")] public GameObject triviaUI;
 
-    [Header("Prompt UI")]
-    public Text promptUIText;
-    public Text promptUITitleText;
-    public GameObject promptUIInputNameGroup;
-    public PromptHelperUI promptUIMain;
+    [FoldoutGroup("Prompt")] public Text promptUIText;
+    [FoldoutGroup("Prompt")] public Text promptUITitleText;
+    [FoldoutGroup("Prompt")] public GameObject promptUIInputNameGroup;
+    [FoldoutGroup("Prompt")] public PromptHelperUI promptUIMain;
 
     [Space]
 
     [Header("Weapon")]
-    [ReadOnly] public List<Template_AmmoAddedIcon> AmmoAddedIcons;
-    public Template_AmmoAddedIcon templatePrefab;
-    public Transform parentNewAmmo;
-    public Text currentAmmo;
-    public Text maximumAmmo;
-    public Recoil gunRecoil;
-    public Image crosshairHit;
-    public Image crosshairImage;
-    public Image reloadImageCircle;
-    public UI_Modular_CanvasOpacityController opacityReload;
-    public Image weaponUI;
-    public Sprite defaultCrosshair;
+    [FoldoutGroup("Weapons")] [ReadOnly] public List<Template_AmmoAddedIcon> AmmoAddedIcons;
+    [FoldoutGroup("Weapons")] public Template_AmmoAddedIcon templatePrefab;
+    [FoldoutGroup("Weapons")] public Transform parentNewAmmo;
+    [FoldoutGroup("Weapons")] public Text currentAmmo;
+    [FoldoutGroup("Weapons")] public Text maximumAmmo;
+    [FoldoutGroup("Weapons")] public Recoil gunRecoil;
+    [FoldoutGroup("Weapons")] public Image crosshairHit;
+    [FoldoutGroup("Weapons")] public Image crosshairImage;
+    [FoldoutGroup("Weapons")] public Image reloadImageCircle;
+    [FoldoutGroup("Weapons")] public UI_Modular_CanvasOpacityController opacityReload;
+    [FoldoutGroup("Weapons")] public Image weaponUI;
+    [FoldoutGroup("Weapons")] public Sprite defaultCrosshair;
 
     [Space]
 
@@ -132,6 +131,7 @@ public class MainGameHUDScript : MonoBehaviour
         //justDamagedHealthSlider.value = Mathf.MoveTowards(justDamagedHealthSlider.value, healthSlider.value, drainHealthSpeed * Time.deltaTime);
         HandleInteractable();
         HandleWeaponIcon();
+        DemoUpdate();
     }
 
     private void HandleInteractable()
@@ -219,6 +219,31 @@ public class MainGameHUDScript : MonoBehaviour
         else
         {
             opacityReload.isVisible = false;
+        }
+    }
+
+    private void DemoUpdate()
+    {
+        if (Hypatios.IsDemoMode == false)
+        {
+            if (demo_HUD.gameObject.activeSelf == true) demo_HUD.gameObject.SetActive(false);
+            if (demo_DemoFinished.gameObject.activeSelf == true) demo_DemoFinished.gameObject.SetActive(false);
+            return;
+        }
+
+        if (demo_HUD.gameObject.activeSelf == false) demo_HUD.gameObject.SetActive(true);
+
+        var rt = (Hypatios.DemoTrialTimeLimit - Hypatios.Game.Total_UNIX_Timespan);
+        if (rt <= 0) rt = 0;
+        var dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(rt, true);
+        int extraMinute = (dateTime.Hour * 60) + dateTime.Minute;
+        demo_Label_TimeLimit.text = $"{extraMinute} minutes";
+        //label_Countdown.text = $"{ dateTime.Minute.ToString("00")}:{ dateTime.Second.ToString("00")}";
+
+        if (Hypatios.IsDemoFinished() == true)
+        {
+            if (demo_DemoFinished.gameObject.activeSelf == false) demo_DemoFinished.gameObject.SetActive(true);
+
         }
     }
 
