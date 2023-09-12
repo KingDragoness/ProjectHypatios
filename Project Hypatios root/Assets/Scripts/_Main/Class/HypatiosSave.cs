@@ -160,6 +160,8 @@ public class HypatiosSave
 
 
     #region Persistent
+    public string Game_Version = "1.0.0.0";
+    public bool Game_DemoMode = false;
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;
     public int Game_TotalSouls = 0;

@@ -20,6 +20,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
     [FoldoutGroup("Story Selection")] public SceneReference level1_Scene;
     [FoldoutGroup("Story Selection")] public SceneReference deadScene;
+    [FoldoutGroup("Story Selection")] public SceneReference eclipseBlazerScene;
     [FoldoutGroup("Story Selection")] public SceneReference gameSelectionScene;
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume; //DOF, Motion blur, AO, Vignette
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
@@ -511,6 +512,8 @@ public class FPSMainScript : MonoBehaviour
 
         if (hypatiosSave.sceneEntryCache == null) hypatiosSave.sceneEntryCache = new HypatiosSave.EntryCache();
 
+        hypatiosSave.Game_Version = Application.version;
+        hypatiosSave.Game_DemoMode = Hypatios.IsDemoMode;
         hypatiosSave.AllPerkDatas = Player.PerkData;
         hypatiosSave.PortfolioShares = PortfolioShares;
         hypatiosSave.Game_TotalRuns = TotalRuns;
@@ -567,6 +570,19 @@ public class FPSMainScript : MonoBehaviour
         saturation.value = -90;
     }
 
+    public static void WipeCurrentRunProgress(HypatiosSave hypatiosSave)
+    {
+        hypatiosSave.Player_CurrentHP = 100;
+        hypatiosSave.Player_AlchoholMeter = 0f;
+        hypatiosSave.Player_RunSessionUnixTime = 0;
+        hypatiosSave.Game_LastLevelPlayed = Hypatios.Game.level1_Scene.Index;
+        hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
+        hypatiosSave.AllPerkDatas.Temp_StatusEffect.Clear();
+        hypatiosSave.Player_Inventory = new List<ItemDataSave>();
+        hypatiosSave.run_PlayerStat = new PlayerStatSave();
+        hypatiosSave.Game_WeaponStats.Clear();
+    }
+
     public void PlayerDie()
     {
         if (currentGamemode.character != Hypatios_Gamemode.MainCharacter.Aldrich)
@@ -581,18 +597,10 @@ public class FPSMainScript : MonoBehaviour
         PlayerPrefs.DeleteKey("HIGHSCORE.CHECK");
 
         HypatiosSave hypatiosSave = PackSaveData();
-        hypatiosSave.Player_CurrentHP = 100;
-        hypatiosSave.Player_AlchoholMeter = 0f;
-        hypatiosSave.Player_RunSessionUnixTime = 0;
-        hypatiosSave.Game_LastLevelPlayed = level1_Scene.Index;
-        hypatiosSave.AllPerkDatas.Temp_CustomPerk.Clear();
-        hypatiosSave.AllPerkDatas.Temp_StatusEffect.Clear();
-        hypatiosSave.Player_Inventory = new List<ItemDataSave>();
-        hypatiosSave.run_PlayerStat = new PlayerStatSave();
+        WipeCurrentRunProgress(hypatiosSave);
 
         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
-        hypatiosSave.Game_WeaponStats.Clear();
 
         SaveGame(targetLevel: level1_Scene.Index, hypatiosSave: hypatiosSave);
 

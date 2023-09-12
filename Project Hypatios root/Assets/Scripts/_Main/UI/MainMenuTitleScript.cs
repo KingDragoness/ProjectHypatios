@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using DevLocker.Utils;
 using Newtonsoft.Json;
@@ -18,7 +19,8 @@ public class MainMenuTitleScript : MonoBehaviour
     }
 
     public GameObject resumeButton;
-    public GameObject fileExistPrompt;
+    [FoldoutGroup("Prompt")] public GameObject fileExistPrompt;
+    [FoldoutGroup("Prompt")] public GameObject differentFileVersionPrompt;
     public SceneReference introScene;
     public AudioSource music;
     public Mode currentMode;
@@ -39,6 +41,8 @@ public class MainMenuTitleScript : MonoBehaviour
     [FoldoutGroup("Mainmenu")] public CooldownTimeTriggerEvent timer_StartTransition;
     [FoldoutGroup("Mainmenu")] public CooldownTimeTriggerEvent timer_Resume;
     [FoldoutGroup("Mainmenu")] public CanvasGroup canvasGroup_Transit;
+    [FoldoutGroup("UIs")] public Text label_MainMenuCredit;
+    [FoldoutGroup("UIs")] public Text label_Version;
 
     public bool Debug_EditorPlayIntro = false;
 
@@ -58,6 +62,7 @@ public class MainMenuTitleScript : MonoBehaviour
     private void Start()
     {
         transitResume_UI.gameObject.SetActive(false);
+        label_Version.text = $"PROJECT;HYPATIOS <v.{Application.version}>";
         string pathLoad = "";
         Cursor.lockState = CursorLockMode.None;
         JsonSerializerSettings settings = FPSMainScript.JsonSettings();
@@ -89,6 +94,25 @@ public class MainMenuTitleScript : MonoBehaviour
         if (savefileExist == false)
         {
             resumeButton.gameObject.SetActive(false);
+
+          
+        }
+        else
+        {
+            if (IsSaveFileVersionMatched() == false)
+            {
+                differentFileVersionPrompt.gameObject.SetActive(true);
+                //rewrite file
+                var saveToModify = GetHypatiosSave();
+                FPSMainScript.WipeCurrentRunProgress(saveToModify);
+
+                WriteSaveFile(saveToModify);
+                cachedSaveFile = saveToModify;
+            }
+            else
+            {
+                differentFileVersionPrompt.gameObject.SetActive(false);
+            }
         }
 
         {
@@ -112,6 +136,11 @@ public class MainMenuTitleScript : MonoBehaviour
                 PlayRetardCutscene();
             }
         }
+    }
+
+    public bool IsSaveFileVersionMatched()
+    {
+        return (GetHypatiosSave().Game_Version == Application.version) ? true : false;
     }
 
     public static HypatiosSave GetHypatiosSave()
@@ -141,6 +170,19 @@ public class MainMenuTitleScript : MonoBehaviour
         }
 
         return null;
+    }
+
+    public static void WriteSaveFile(HypatiosSave _newSaveData)
+    {
+        string pathSave = "";
+        pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
+        JsonSerializerSettings settings = FPSMainScript.JsonSettings();
+        _newSaveData.Game_Version = Application.version;
+        _newSaveData.Game_DemoMode = Hypatios.IsDemoMode;
+
+        string jsonTypeNameAll = JsonConvert.SerializeObject(_newSaveData, Formatting.Indented, settings);
+
+        File.WriteAllText(pathSave, jsonTypeNameAll);
     }
 
     [Button("PlayCutscene")]
