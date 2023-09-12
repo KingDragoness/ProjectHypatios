@@ -28,6 +28,7 @@ public class WeaponManager : MonoBehaviour
     public GunScript currentGunHeld;
     public BaseWeaponScript currentWeaponHeld;
     public LayerMask defaultLayerMask;
+    [Tooltip("Ban guns.")] public bool allowWeaponSelect = true; //ONLY FOR LEVELS THAT BAN GUNS
 
     Camera cam;
 
@@ -255,12 +256,19 @@ public class WeaponManager : MonoBehaviour
             return;
         }
 
+        if (allowWeaponSelect == false)
+        {
+            return;
+        }
+
+
         previousWeapon = selectedWeapon;
 
         //IsOnMeleeAttack = meleeWeapon.IsAnimationPlaying();
 
         var mouseVector = Hypatios.Input.SwitchWeapon.ReadValue<float>();
         bool isInteractContainer = InteractableCamera.instance.IsInteractContainer();
+
 
         if (mouseVector > 0f && Hypatios.Input.SwitchWeapon.triggered && !isInteractContainer)
         {
