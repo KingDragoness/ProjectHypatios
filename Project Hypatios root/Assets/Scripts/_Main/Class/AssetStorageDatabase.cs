@@ -104,6 +104,19 @@ public class AssetStorageDatabase : MonoBehaviour
         return AllChamberLevels.Find(x => x.GetID() == ID);
     }
 
+    public ChamberLevel GetLevel(int index)
+    {
+        foreach(var level in AllChamberLevels)
+        {
+            if (level.scene.Index == index)
+            {
+                return level;
+            }
+        }
+
+        return null;
+    }
+
     public ItemInventory GetItemByWeapon(string ID)
     {
         foreach(var item in AllItems)

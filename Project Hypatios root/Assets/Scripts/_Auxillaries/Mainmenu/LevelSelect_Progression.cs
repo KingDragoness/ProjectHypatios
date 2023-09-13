@@ -17,6 +17,8 @@ public class LevelSelect_Progression : MonoBehaviour
 
     public Transform defaultSpawn;
     public Transform legend;
+    public UnityEvent PlayerIsOnEclipseblazerLevel;
+    public UnityEvent PlayerIsOnWIREDLevel;
     public List<LevelPosition> allLevelPositions = new List<LevelPosition>();
     public TextMesh label_progress;
     public TextMesh label_HPMax;
@@ -128,4 +130,39 @@ public class LevelSelect_Progression : MonoBehaviour
 
     }
 
+    public void CheckPlayerIsOnEclipseblazer()
+    {
+        if (save.Game_LastLevelPlayed == Hypatios.Game.eclipseBlazerScene.Index)
+        {
+            PlayerIsOnEclipseblazerLevel?.Invoke();
+        }
+    }
+
+    public void CheckPlayerIsOnWIRED()
+    {
+        var chamber = Hypatios.Assets.GetLevel(save.Game_LastLevelPlayed);
+
+        Debug.Log(chamber.levelName);
+
+        if (save.Game_LastLevelPlayed != Hypatios.Game.eclipseBlazerScene.Index &&
+            chamber.isWIRED)
+        {
+            PlayerIsOnWIREDLevel?.Invoke();
+        }
+    }
+
+    public void StealPlayerPerk()
+    {
+        var hypatiosSave = MainMenuTitleScript.GetHypatiosSave();
+
+        if (hypatiosSave.AllPerkDatas.Perk_LV_MaxHitpointUpgrade > 30)
+            hypatiosSave.AllPerkDatas.Perk_LV_MaxHitpointUpgrade -= 3;
+
+        if (hypatiosSave.AllPerkDatas.Perk_LV_RegenHitpointUpgrade > 15)
+            hypatiosSave.AllPerkDatas.Perk_LV_RegenHitpointUpgrade -= 1;
+
+        MainMenuTitleScript.WriteSaveFile(hypatiosSave);
+        save = MainMenuTitleScript.GetHypatiosSave();
+        InitializeProgress();
+    }
 }

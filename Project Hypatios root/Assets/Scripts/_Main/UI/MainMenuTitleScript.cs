@@ -27,6 +27,7 @@ public class MainMenuTitleScript : MonoBehaviour
     public float transitionTime = 3f;
     public float resumeTimeDelay = 2f;
     public UnityEvent OnTransitEvent;
+    public UnityEvent OnPlayModeActivated;
     [FoldoutGroup("Mainmenu")] public GameObject backlayerCam;
     [FoldoutGroup("Mainmenu")] public GameObject bg_UI;
     [FoldoutGroup("Mainmenu")] public GameObject settingsUI;
@@ -58,6 +59,7 @@ public class MainMenuTitleScript : MonoBehaviour
     {
         AlreadyPlayedCutscene = false;
     }
+
 
     private void Start()
     {
@@ -244,6 +246,7 @@ public class MainMenuTitleScript : MonoBehaviour
         OnTransitEvent?.Invoke();
     }
 
+    private bool _hasTriggeredPlayMode = false;
 
 
     public void ChangeMode(int mode)
@@ -253,6 +256,13 @@ public class MainMenuTitleScript : MonoBehaviour
         {
             if (music.isPlaying == false)
                 music.Play();
+
+
+            if (_hasTriggeredPlayMode == false)
+            {
+                OnPlayModeActivated?.Invoke();
+                _hasTriggeredPlayMode = true;
+            }
         }
     }
 
