@@ -228,6 +228,8 @@ public class FPSMainScript : MonoBehaviour
     {
         UNIX_Timespan += Time.deltaTime;
         Total_UNIX_Timespan += Time.deltaTime;
+
+        if (SoulPoint < 0) SoulPoint = 0;
     }
 
     #region Paradox and tips

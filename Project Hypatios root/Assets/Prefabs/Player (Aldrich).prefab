@@ -1475,6 +1475,7 @@ MonoBehaviour:
   weaponToSwap: {fileID: 0}
   event_currentSwitch: {fileID: 11400000, guid: 330d72212095c29488440d430d43d92a,
     type: 2}
+  event_reloadWeapon: {fileID: 0}
   IsOnMeleeAttack: 0
   previousWeapon: 0
   currentGunHeld: {fileID: 7949520240113609644}
@@ -1482,6 +1483,7 @@ MonoBehaviour:
   defaultLayerMask:
     serializedVersion: 2
     m_Bits: 5393
+  allowWeaponSelect: 1
   currentlyHeldWeapons:
   - {fileID: 7949520240113609644}
   Recoil: {fileID: 7949520239754399040}
@@ -2408,6 +2410,7 @@ MonoBehaviour:
     BaseValue: 1
   stat_jumps: {fileID: 11400000, guid: e8876cf5f56dede4c98562d41de982ab, type: 2}
   stat_dash: {fileID: 11400000, guid: 0032417cff87c8640ba4224c30ab3fdc, type: 2}
+  ailment_BrokenLeg: {fileID: 0}
   rb: {fileID: 0}
   isLimitedIntroMode: 0
   normalMode: 1
@@ -2450,6 +2453,8 @@ MonoBehaviour:
   isGrounded: 0
   isCrouching: 0
   thresholdFallHeight: 20
+  maxFallHeight: 50
+  minChanceBrokenLeg: 0.3
   dashForce: 77
   dashDuration: 0.2
   timeSinceLastDash: 0
@@ -2488,10 +2493,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bd538dae1a38649ba9b826673e5aab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ailment_DamagedTissue: {fileID: 0}
+  chanceGetting_DamagedTissue: 0.1
+  damageThreshold_DamagedTissue: 51
   maxHealth:
     BaseValue: 100
   healthRegen:
     BaseValue: 0
+  CachedHealCapsules: 0
+  limitCapsule: 5
   OnPlayerDead: {fileID: 0}
   curHealth: 100
   targetHealth: 100

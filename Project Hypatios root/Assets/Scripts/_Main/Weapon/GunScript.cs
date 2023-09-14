@@ -183,6 +183,7 @@ public class GunScript : BaseWeaponScript
         {
             OnReloadStart?.Invoke();
             anim.SetTrigger("reload");
+            weaponSystem.event_reloadWeapon.Raise();
             isReloading = true;
 
 

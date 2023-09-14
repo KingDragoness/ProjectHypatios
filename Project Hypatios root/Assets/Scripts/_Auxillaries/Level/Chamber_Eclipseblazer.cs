@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
+using DevLocker.Utils;
 
 public class Chamber_Eclipseblazer : MonoBehaviour
 {
 
     public EclipseblazerEnemy eclipseblazerScript;
+    public SceneReference collateralDreamScene;
+    public SceneReference stadiumScene;
     public AudioSource music;
     public float SurviveTime = 360;
+    public UnityEvent OnRoundTimeUp;
     [FoldoutGroup("UI")] public Text label_Countdown;
     [FoldoutGroup("UI")] public GameObject missionObjectiveUI;
     [FoldoutGroup("UI")] public Slider slider_TimeCount;
 
     private float _survivetime = 360f;
     private bool _hasStarted = false;
+    private bool _hasCompleted = false;
 
     private void Start()
     {
@@ -31,7 +37,24 @@ public class Chamber_Eclipseblazer : MonoBehaviour
             _survivetime -= Time.deltaTime;
 
             UpdateTimeUI();
+            
+            if (_survivetime <= 0f && _hasCompleted == false)
+            {
+                PlayerSurvived();
+            }
         }
+    }
+
+    [FoldoutGroup("DEBUG")] [Button("Modify remaining time")]
+    public void ModifyRoundTime(float time)
+    {
+        _survivetime = time;
+    }
+
+    private void PlayerSurvived()
+    {
+        _hasCompleted = true;
+        OnRoundTimeUp?.Invoke();
     }
 
     private void UpdateTimeUI()
@@ -50,6 +73,15 @@ public class Chamber_Eclipseblazer : MonoBehaviour
         music.enabled = true;
         missionObjectiveUI.gameObject.SetActive(true);
         eclipseblazerScript.TriggerBossFight();
+    }
+
+    public void EndingScene()
+    {
+        Hypatios.Game.PlayerDie();
+        var saveFile = MainMenuTitleScript.GetHypatiosSave();
+        saveFile.Game_LastLevelPlayed = stadiumScene.Index;
+        MainMenuTitleScript.WriteSaveFile(saveFile);
+        Application.LoadLevel(collateralDreamScene.Index);
     }
 
 }

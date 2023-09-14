@@ -23,6 +23,7 @@ public class WeaponManager : MonoBehaviour
     public GameObject weaponNumToSwap;
     public GameObject weaponToSwap;
     public GameEvent event_currentSwitch;
+    public GameEvent event_reloadWeapon;
     public bool IsOnMeleeAttack = false;
     public int previousWeapon;
     public GunScript currentGunHeld;
