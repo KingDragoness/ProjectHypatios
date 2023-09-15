@@ -42,11 +42,12 @@ public class FPSMainScript : MonoBehaviour
     public PlayerStatSave persistent_PlayerStat;
     public PlayerStatSave run_PlayerStat;
 
-    public List<HypatiosSave.WeaponDataSave> currentWeaponStat;
+    public List<WeaponDataSave> currentWeaponStat;
     public List<ParadoxEntity> paradoxEntities = new List<ParadoxEntity>();
-    public List<HypatiosSave.TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
+    public List<TriviaSave> Game_Trivias = new List<HypatiosSave.TriviaSave>();
+    public List<GlobalFlagSave> Game_GlobalFlags = new List<GlobalFlagSave>();
     public List<ChamberDataSave> Game_ChamberSaves = new List<ChamberDataSave>();
-    public List<HypatiosSave.ShareCompanySave> PortfolioShares = new List<HypatiosSave.ShareCompanySave>();
+    public List<ShareCompanySave> PortfolioShares = new List<HypatiosSave.ShareCompanySave>();
     public List<string> otherEverUsed = new List<string>();
     public List<string> favoritedItems = new List<string>();
 
@@ -281,6 +282,32 @@ public class FPSMainScript : MonoBehaviour
         Game_Trivias.Add(triviaEntry);
     }
 
+    public bool Check_FlagTriggered(string flagID)
+    {
+        var triviaEntry = Game_GlobalFlags.Find(x => x.ID == flagID);
+
+        if (triviaEntry != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void TriggerFlag(string flagID, int run)
+    {
+        var flagEntry1 = Game_GlobalFlags.Find(x => x.ID == flagID);
+        if (flagEntry1 != null) return;
+
+        var flagSO = Hypatios.Assets.GetGlobalFlag(flagID);
+        GlobalFlagSave newFlag = new GlobalFlagSave(flagID, run);
+        Instantiate(flagSO.PrefabToSpawn);
+
+        Game_GlobalFlags.Add(newFlag);
+    }
+
     public void SetParadoxEntity(string key, string value)
     {
         var entity = Hypatios.Game.paradoxEntities.Find(x => x.ID == key);
@@ -453,6 +480,7 @@ public class FPSMainScript : MonoBehaviour
         favoritedItems = savedata.favoritedItems;
         paradoxEntities = savedata.Game_ParadoxEntities;
         Game_Trivias = savedata.Game_Trivias;
+        Game_GlobalFlags = savedata.Game_GlobalFlags;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
         PortfolioShares = savedata.PortfolioShares;
         Player.Inventory.allItemDatas = savedata.Player_Inventory;
@@ -491,6 +519,7 @@ public class FPSMainScript : MonoBehaviour
         otherEverUsed = savedata.otherEverUsed;
         favoritedItems = savedata.favoritedItems;
         paradoxEntities = savedata.Game_ParadoxEntities;
+        Game_GlobalFlags = savedata.Game_GlobalFlags;
         Game_Trivias = savedata.Game_Trivias;
         PortfolioShares = savedata.PortfolioShares;
         Game_ChamberSaves = savedata.Game_ChamberSaves;
@@ -523,6 +552,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_WeaponStats = currentWeaponStat;
         hypatiosSave.Game_ParadoxEntities = paradoxEntities;
         hypatiosSave.Game_Trivias = Game_Trivias;
+        hypatiosSave.Game_GlobalFlags = Game_GlobalFlags;
         hypatiosSave.Game_ChamberSaves = Game_ChamberSaves;
         hypatiosSave.Game_UnixTime = Mathf.RoundToInt(Total_UNIX_Timespan);
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
@@ -583,6 +613,13 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Player_Inventory = new List<ItemDataSave>();
         hypatiosSave.run_PlayerStat = new PlayerStatSave();
         hypatiosSave.Game_WeaponStats.Clear();
+
+        foreach(var flag in hypatiosSave.Game_GlobalFlags)
+        {
+            flag.runRemaining--;
+        }
+
+        hypatiosSave.Game_GlobalFlags.RemoveAll(x => x.runRemaining <= 0);
     }
 
     public void PlayerDie()

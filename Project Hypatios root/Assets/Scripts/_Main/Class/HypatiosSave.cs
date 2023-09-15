@@ -192,15 +192,22 @@ public class HypatiosSave
     public int Player_RunSessionUnixTime = 0;
     public EntryCache sceneEntryCache;
     public PlayerStatSave run_PlayerStat;
-    public List<TimelineEventSave> Game_TimelineEvents = new List<TimelineEventSave>(); //Do not clear until wake up/level 1 script
+    public List<GlobalFlagSave> Game_GlobalFlags = new List<GlobalFlagSave>();
     public List<WeaponDataSave> Game_WeaponStats = new List<WeaponDataSave>();
     public List<ItemDataSave> Player_Inventory = new List<ItemDataSave>();
 
-    //Player died
+    //If player died, subtract run by 1. If reached zero, delete the flag.
     [System.Serializable]
-    public class TimelineEventSave
+    public class GlobalFlagSave
     {
         public string ID = "";
+        public int runRemaining = 1;
+
+        public GlobalFlagSave(string iD, int runRemaining)
+        {
+            ID = iD;
+            this.runRemaining = runRemaining;
+        }
     }
 
     //Share company

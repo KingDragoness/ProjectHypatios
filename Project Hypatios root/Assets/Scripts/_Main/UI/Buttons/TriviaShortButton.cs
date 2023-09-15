@@ -9,17 +9,60 @@ public class TriviaShortButton : MonoBehaviour
 
     public TriviaMapUI triviaUI;
     public Trivia trivia;
+    public GlobalFlagSO flagSO;
+    public ButtonType type = ButtonType.Trivia;
     public Text labelName;
     public Image icon;
 
+    public enum ButtonType
+    {
+        Flag,
+        Trivia
+    }
+
     public void Refresh()
     {
-        labelName.text = trivia.Title;
+        if (type == ButtonType.Trivia)
+        {
+            labelName.text = trivia.Title;
+        }
+        else if (type == ButtonType.Flag)
+        {
+            labelName.text = flagSO.DisplayName;
+        }
     }
 
     public void ClickButton()
     {
-        triviaUI.LookAtTriviaBall(this);
-    }    
+        if (type == ButtonType.Trivia)
+        {
+            triviaUI.LookAtTriviaBall(this);
+        }
+    }
 
+    public void Highlight()
+    {
+
+        if (type == ButtonType.Flag)
+        {
+            triviaUI.HighlightWindow(this);
+
+        }
+        else
+        {
+            triviaUI.LookAtTriviaBall(this);
+
+        }
+
+    }
+
+    public void Dehighlight()
+    {
+
+        if (type == ButtonType.Flag)
+        {
+            triviaUI.DehighlightWindow(this);
+        }
+
+    }
 }

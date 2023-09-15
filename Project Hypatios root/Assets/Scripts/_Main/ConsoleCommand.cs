@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
-using System;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class ConsoleCommand : MonoBehaviour
 {
@@ -136,6 +136,10 @@ public class ConsoleCommand : MonoBehaviour
                 Alcohol(args);
                 break;
 
+            case "alcond":
+                AllConditionReport(args);
+                break;
+
             case "cc":
                 CommandCheat(args);
                 break;
@@ -146,10 +150,6 @@ public class ConsoleCommand : MonoBehaviour
 
             case "hideui":
                 HideUI(args);
-                break;
-
-            case "removestatus":
-                RemoveStatus(args);
                 break;
 
             case "mats":
@@ -188,6 +188,10 @@ public class ConsoleCommand : MonoBehaviour
                 ListItem(args);
                 break;
 
+            case "listflag":
+                ListFlags(args);
+                break;
+
             case "loadlevel":
                 LoadLevel(args);
                 break;
@@ -196,12 +200,12 @@ public class ConsoleCommand : MonoBehaviour
                 LoadFile(args);
                 break;
 
-            case "screensize":
-                ScreenSize(args);
-                break;
-
             case "nospeed":
                 NoClipSpeed(args);
+                break;
+
+            case "screensize":
+                ScreenSize(args);
                 break;
 
             case "nextlevel":
@@ -216,8 +220,8 @@ public class ConsoleCommand : MonoBehaviour
                 ParadoxListAll(args);
                 break;
 
-            case "alcond":
-                AllConditionReport(args);
+            case "removestatus":
+                RemoveStatus(args);
                 break;
 
             case "res":
@@ -248,6 +252,10 @@ public class ConsoleCommand : MonoBehaviour
                 Soul(args);
                 break;
 
+            case "triggerflag":
+                TriggerFlag(args);
+                break;
+
             case "ui":
                 ChangeUIMode(args);
                 break;
@@ -268,6 +276,7 @@ public class ConsoleCommand : MonoBehaviour
 
 
     }
+
 
     #region Commands
 
@@ -888,6 +897,43 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+    private void ListFlags(string[] args)
+    {
+        try
+        {
+            {
+                var allFlags = Hypatios.Assets.AllFlagSO;
+                string s = "";
+                int ix = 0;
+                int i = 0;
+
+                foreach (var flag in allFlags)
+                {
+                    s += $"{flag.GetID()} | ";
+                    ix++;
+                    i++;
+                    if (ix >= 10)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        ix = 0;
+                        s = "";
+                    }
+                    else if (i >= allFlags.Count - 1)
+                    {
+                        SendConsoleMessage($"[{s}]");
+                        s = "";
+                    }
+                }
+            }
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! listflag to list every flags.");
+        }
+
+    }
+
     /// <summary>
     /// List all paradox events that ever occured.
     /// </summary>
@@ -1159,6 +1205,31 @@ public class ConsoleCommand : MonoBehaviour
 
     }
 
+
+    private void TriggerFlag(string[] args)
+    {
+        try
+        {
+            string flagID = "";
+            int run = 1;
+            flagID = args[0];
+
+            if (args.Length > 1)
+            {
+                int.TryParse(args[1], out run);
+               
+            }
+
+            Hypatios.Game.TriggerFlag(flagID, run);
+
+        }
+        catch (Exception e)
+        {
+            SendConsoleMessage("Invalid argument! triggerflag [<color=#00cc99dd>string</color> flagID] [<color=#00cc99dd>int</color> run]");
+            Debug.LogError(e.Message);
+        }
+    }
+
     protected void Help(string[] args)
     {
         List<string> helps = new List<string>();
@@ -1180,6 +1251,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'killall' to all enemies");
             helpCommands.Add("'killme' to commit suicide");
             helpCommands.Add("'levelnames' gets every level exists in the current build.");
+            helpCommands.Add("'listflag' gets every flag in the game.");
             helpCommands.Add("'listitem' gets every item in the game. 'help listitem' to see additional info.");
             helpCommands.Add("'loadfile' to load save file");
             helpCommands.Add("'loadlevel' to load level. Resets progress!");
@@ -1196,6 +1268,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'setperk' to set player's temporary perks. 'help setperk' to check perks.");
             helpCommands.Add("'showallpdx' to show all paradoxes.");
             helpCommands.Add("'soul' to get soul");
+            helpCommands.Add("'triggerflag' to trigger flag. 'help triggerflag' to trigger flags.");
             helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");
             helpCommands.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
         }

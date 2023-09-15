@@ -31,7 +31,9 @@ public class TriviaMapUI : MonoBehaviour
     [FoldoutGroup("Trivia Filters")] public Color color_TriviaMain;
     [FoldoutGroup("Trivia Filters")] public Color color_TriviaSide;
     [FoldoutGroup("Trivia Filters")] public Color color_TriviaFacts;
-
+    [FoldoutGroup("Trivia Filters")] public Sprite flagSprite;
+    [FoldoutGroup("Preview Flag")] public GameObject window_PreviewFlag;
+    [FoldoutGroup("Preview Flag")] public Text label_descriptionFlag;
 
     public List<TriviaBallButton> allTriviaButtons = new List<TriviaBallButton>();
     public List<Wire> allLineRenderers = new List<Wire>();
@@ -42,6 +44,12 @@ public class TriviaMapUI : MonoBehaviour
         TriviaButtonprefab.gameObject.SetActive(false);
         UpdateTrivia();
         UpdateFilterUI();
+        window_PreviewFlag.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     private void Update()
@@ -72,6 +80,7 @@ public class TriviaMapUI : MonoBehaviour
         {
             var triviaDat = Hypatios.Game.Check_TriviaCompleted(triviaClass);
             if (triviaDat == false) continue;
+
             if (currentFilter != Trivia.TriviaType.All)
             {
                 if (currentFilter != triviaClass.TriviaCategory)
@@ -82,6 +91,7 @@ public class TriviaMapUI : MonoBehaviour
                 continue;
 
             var button1 = Instantiate(TriviaButtonprefab, parentTriviaButtons);
+            button1.type = TriviaShortButton.ButtonType.Trivia;
             button1.gameObject.SetActive(true);
             button1.trivia = triviaClass;
 
@@ -93,11 +103,33 @@ public class TriviaMapUI : MonoBehaviour
                 button1.icon.color = color_TriviaFacts;
 
             button1.Refresh();
-
             allTriviaShortButtons.Add(button1);
         }
 
-       
+        //for flags
+        foreach (var flagClass in Hypatios.Assets.AllFlagSO)
+        {
+            var flagDat = Hypatios.Game.Check_FlagTriggered(flagClass.GetID());
+            if (flagDat == false) continue;
+
+            if (currentFilter != Trivia.TriviaType.Flags)
+            {
+                continue;
+            }
+
+            if (IsMatchingSearchIndex(flagClass) == false)
+                continue;
+
+            var button1 = Instantiate(TriviaButtonprefab, parentTriviaButtons);
+            button1.type = TriviaShortButton.ButtonType.Flag;
+            button1.gameObject.SetActive(true);
+            button1.flagSO = flagClass;
+            button1.icon.sprite = flagSprite;
+
+
+            button1.Refresh();
+            allTriviaShortButtons.Add(button1);
+        }
 
     }
 
@@ -119,6 +151,38 @@ public class TriviaMapUI : MonoBehaviour
         }
 
         return false;
+    }
+
+    public bool IsMatchingSearchIndex(GlobalFlagSO flagSO)
+    {
+
+
+        if (string.IsNullOrEmpty(input_SearchFilter.text))
+            return true;
+        else
+        {
+            if (flagSO.DisplayName.ToLower().Contains(input_SearchFilter.text.ToLower()))
+                return true;
+
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Highlight Flag
+
+    public void HighlightWindow(TriviaShortButton button)
+    {
+        window_PreviewFlag.gameObject.SetActive(true);
+        label_descriptionFlag.text = button.flagSO.Description;
+    }
+
+    public void DehighlightWindow(TriviaShortButton button)
+    {
+        window_PreviewFlag.gameObject.SetActive(false);
+
     }
 
     #endregion

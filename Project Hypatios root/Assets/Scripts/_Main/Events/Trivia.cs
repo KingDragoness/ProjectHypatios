@@ -12,6 +12,7 @@ public class Trivia : ScriptableObject
         None = -10,
         All = -1, //for category filtering
         MainStory = 0,
+        Flags = 1, //for category filtering
         SideChamber = 20,
         Facts = 100
     }
@@ -29,6 +30,10 @@ public class Trivia : ScriptableObject
         else if (type == TriviaType.Facts)
         {
             return "Facts";
+        }
+        else if (type == TriviaType.Flags)
+        {
+            return "Flags";
         }
         else if (type == TriviaType.All)
         {

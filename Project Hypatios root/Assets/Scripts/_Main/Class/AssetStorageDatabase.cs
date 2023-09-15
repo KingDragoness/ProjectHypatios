@@ -15,6 +15,7 @@ public class AssetStorageDatabase : MonoBehaviour
     }
 
     public List<Trivia> AllTrivias = new List<Trivia>();
+    public List<GlobalFlagSO> AllFlagSO = new List<GlobalFlagSO>();
     public List<BaseModifierEffectObject> AllModifierEffects;
     public List<BaseStatusEffectObject> AllStatusEffects;
     public List<WeaponItem> Weapons = new List<WeaponItem>();
@@ -35,6 +36,7 @@ public class AssetStorageDatabase : MonoBehaviour
     public void RefreshDatabase()
     {
         var _trivias = Resources.LoadAll("", typeof(Trivia)).Cast<Trivia>().ToList();
+        var _flags = Resources.LoadAll("", typeof(GlobalFlagSO)).Cast<GlobalFlagSO>().ToList();
         var _modifiers = Resources.LoadAll("", typeof(BaseModifierEffectObject)).Cast<BaseModifierEffectObject>().ToList();
         var _statusEffects = Resources.LoadAll("", typeof(BaseStatusEffectObject)).Cast<BaseStatusEffectObject>().ToList();
         var _weapons = Resources.LoadAll("", typeof(WeaponItem)).Cast<WeaponItem>().ToList(); 
@@ -46,6 +48,7 @@ public class AssetStorageDatabase : MonoBehaviour
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;
+        AllFlagSO = _flags;
         AllModifierEffects = _modifiers;
         AllStatusEffects = _statusEffects;
         Weapons = _weapons;
@@ -82,6 +85,11 @@ public class AssetStorageDatabase : MonoBehaviour
     public Trivia GetTrivia(string ID)
     {
         return AllTrivias.Find(x => x.ID == ID);
+    }
+
+    public GlobalFlagSO GetGlobalFlag(string ID)
+    {
+        return AllFlagSO.Find(x => x.name == ID);
     }
 
     public ItemInventory GetItem(string ID)
