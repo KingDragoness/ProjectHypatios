@@ -19,6 +19,7 @@ public class Conditioner : MonoBehaviour
         ConditionerCheck,
         Switch,
         TriviaNotCompleted,
+        Flags,
         ItemOwned = 100
     }
 
@@ -48,6 +49,7 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ItemOwned)] public ItemInventory itemNeeded;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
         [ShowIf("conditionType", ConditionType.Switch)] public SwitchConditioner switchCondition;
+        [ShowIf("conditionType", ConditionType.Flags)] public GlobalFlagSO flagEvent;
 
         public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
 
@@ -116,6 +118,11 @@ public class Conditioner : MonoBehaviour
                 if (switchCondition.Triggered)
                     return true;
             }
+            else if (conditionType == ConditionType.Flags)
+            {
+                if (Hypatios.Game.Check_FlagTriggered(flagEvent.GetID()))
+                    return true;
+            }
 
             return false;
         }
@@ -130,6 +137,7 @@ public class Conditioner : MonoBehaviour
     [FoldoutGroup("Events")] public UnityEvent OnTriggerFunctionFailed;
     public bool isStartImmediately = false;
     public bool constantTriggerCheck = false;
+    public bool printOutput = false;
 
     private bool _isTriggered = false;
 
@@ -255,7 +263,7 @@ public class Conditioner : MonoBehaviour
 
         }
 
-        Debug.Log(output_str);
+        if (printOutput) Debug.Log(output_str);
         return result;
     }
 }

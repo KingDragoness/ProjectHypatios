@@ -1,30 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 public class SwitchConditioner : MonoBehaviour
 {
     
 
     public string switchName = "Switch 1";
+    public UnityEvent OnSwitch;
+    
     private bool triggered = false;
 
     public bool Triggered { get => triggered; }
 
     public void Switch()
     {
-        triggered = true;
+        triggered = true; Check();
+
     }
 
     public void Clear()
     {
-        triggered = false;
+        triggered = false; Check();
+
     }
 
     [ContextMenu("Toggle switch")]
     public void Toggle()
     {
-        triggered = !triggered;
+        triggered = !triggered; Check();
+
     }
 
     public void Randomize()
@@ -33,6 +40,16 @@ public class SwitchConditioner : MonoBehaviour
 
         if (f > 0.5f) triggered = true;
         else triggered = false;
+
+        Check();
+    }
+
+    public void Check()
+    {
+        if (triggered)
+        {
+            OnSwitch?.Invoke();
+        }
     }
 
 }
