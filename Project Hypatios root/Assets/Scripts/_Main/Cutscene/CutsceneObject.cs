@@ -111,6 +111,22 @@ public class CutsceneObject : MonoBehaviour
     }
 
 
+    [FoldoutGroup("Tools")]
+    [Button("Copy all dialogue to clippy")]
+    private void CopyDialogueToClipboard()
+    {
+        string s = "";
+        var _dialogueEntries = GetComponentsInChildren<Cutscene_DialogEntry>().ToList();
+
+        foreach (var dialogue in _dialogueEntries)
+        {
+            s += $"{dialogue.dialogSpeaker.name}: {dialogue.Dialogue_Content}\n";
+        }
+
+        GUIUtility.systemCopyBuffer = s;
+    }
+
+
     private void CloseAllCutsceneInstances()
     {
         List<CutsceneObject> allCutsceneObjects = FindObjectsOfType<CutsceneObject>().ToList();
