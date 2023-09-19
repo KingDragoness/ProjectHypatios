@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using Steamworks;
 
 public class ConsoleCommand : MonoBehaviour
 {
@@ -264,6 +265,10 @@ public class ConsoleCommand : MonoBehaviour
                 Weapon(args);
                 break;
 
+            case "stai":
+                SteamAchievement(args);
+                break;
+
             default:
                 if (!success)
                 {
@@ -276,6 +281,26 @@ public class ConsoleCommand : MonoBehaviour
 
 
     }
+
+    #region Steamworks API
+    private void SteamAchievement(string[] args)
+    {
+        try
+        {
+
+            string achieveName = args[0];
+
+            SteamUserStats.SetAchievement(achieveName);
+            SteamUserStats.StoreStats();
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! stai [string achievementID]");
+        }
+    }
+
+    #endregion
 
 
     #region Commands
