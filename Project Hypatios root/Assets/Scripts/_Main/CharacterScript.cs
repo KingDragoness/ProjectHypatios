@@ -1043,14 +1043,17 @@ public class CharacterScript : Entity
         }
 
         if (isNoGravity == false) rb.useGravity = false;
-        rb.AddForce(dashDirection * dashForce * Time.deltaTime * 50f, ForceMode.Impulse);
+        rb.AddForce(dashDirection * dashForce * Time.deltaTime * 50f, ForceMode.Force);
         soundManager.Play("dash");
         dashManager.manageDash();
 
         yield return new WaitForSeconds(dashDuration);
 
         if (!isCheatMode)
+        {
             rb.velocity = dir * moveSpeed;
+
+        }
         else
             rb.velocity = dir * moveSpeed;
 

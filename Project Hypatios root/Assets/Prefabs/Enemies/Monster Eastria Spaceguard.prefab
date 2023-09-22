@@ -3678,6 +3678,7 @@ MonoBehaviour:
       m_Calls: []
   currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  useSecondPass: 1
   isAIEnabled: 1
   eyeLocation: {fileID: 9134219893045585641}
   debug_FirstPassHit: {fileID: 0}
@@ -3963,6 +3964,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  lockY: 0
+  yPosition: 0
   useRotation: 0
 --- !u!1 &7741062845886060809
 GameObject:
@@ -4643,6 +4646,7 @@ MonoBehaviour:
   flashWeapon: {fileID: 8498673808064770905}
   tracerLaser: {fileID: 3000425260294169686, guid: bf858b253e10be24da350ba5e0d57444,
     type: 3}
+  prefabCreate: {fileID: 0}
 --- !u!1 &8498673808064770905
 GameObject:
   m_ObjectHideFlags: 0
@@ -15102,7 +15106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8858990206555012368
 Transform:
   m_ObjectHideFlags: 0
@@ -15626,6 +15630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Herstagen_Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4086531490220240767, guid: caed990c279a2534bbcc83f27d2d36c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: caed990c279a2534bbcc83f27d2d36c3, type: 3}
