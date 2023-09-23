@@ -19,6 +19,7 @@ public abstract class MobiusAIBehaviour : MonoBehaviour, IMAIBGoal
     public MobiusGuardEnemy mobiusGuardScript;
     public bool isExclusive = false;
     public bool cannotBeSelectedByDecision = false;
+    public bool isHostileBehaviour = true;
     public UnityEvent OnEnableBehaviour;
     public UnityEvent OnDisableBehaviour;
     [ShowIf("isExclusive")] public List<MobiusAIBehaviour> allowPreviousBehaviours = new List<MobiusAIBehaviour>();

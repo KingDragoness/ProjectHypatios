@@ -90,6 +90,22 @@ public class Inventory
 
     }
 
+    public void RemoveAllItemByType(ItemInventory.Category category)
+    {
+        var allItemCopyList = new List<ItemDataSave>();
+        allItemCopyList.AddRange(allItemDatas);
+
+        foreach(var item in allItemCopyList)
+        {
+            var itemClass = Hypatios.Assets.GetItem(item.ID);
+
+            if (itemClass.category == category)
+            {
+                allItemDatas.Remove(item);
+            }
+        }
+    }
+
     public void RemoveItem(string ID, int count = 1)
     {
         ItemDataSave targetData = SearchByID(ID);

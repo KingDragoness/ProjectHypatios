@@ -24,6 +24,8 @@ public class MobiusGuardEnemy : EnemyScript
 
     public bool IsAiming = false;
     public bool IsBrainEnabled = false;
+    public bool IsHostileOnStart = true;
+    public bool TriggerOtherGuardWhenProvoked = false;
     public bool DEBUG_ShowAIBehaviour = false;
 
     [FoldoutGroup("References")] public Animator animator;
@@ -59,7 +61,9 @@ public class MobiusGuardEnemy : EnemyScript
     [FoldoutGroup("Audios")] public AudioSource audio_Dead;
 
     private static List<MobiusGuardEnemy> _allActiveGuards = new List<MobiusGuardEnemy>();
+    private static float RANGE_TRIGGER_GUARD = 30;
     private MobiusAIBehaviour previousBehaviour;
+    private bool isHostile = true;
 
     #region Parameter - Ragdolls
 
@@ -133,6 +137,8 @@ public class MobiusGuardEnemy : EnemyScript
         confidenceLevel = Random.Range(-100, 100);
         ScanForEnemies();
         ChangeAIBehaviour(startingBehaviour);
+
+        isHostile = IsHostileOnStart;
     }
 
     public override string Debug_AdditionalString()
@@ -469,8 +475,11 @@ public class MobiusGuardEnemy : EnemyScript
 
         if (isAIEnabled)
         {
-            if (Hypatios.TimeTick % 10 == 0)
-                ScanForEnemies();
+            if (isHostile == true)
+            {
+                if (Hypatios.TimeTick % 10 == 0)
+                    ScanForEnemies();
+            }
 
             if (currentTarget != null)
             {
@@ -593,6 +602,9 @@ public class MobiusGuardEnemy : EnemyScript
             if (currentBehaviour.cannotBeSelectedByDecision && behaviour.isExclusive == false)
                 continue;
 
+            if (isHostile == false && behaviour.isHostileBehaviour)
+                continue;
+
             if (behaviour.isExclusive)
             {
                 var b1 = behaviour.allowPreviousBehaviours.Find(x => x == currentBehaviour);
@@ -658,6 +670,11 @@ public class MobiusGuardEnemy : EnemyScript
 
     private float _lastTimeGotExplosion = 0f;
 
+    public void Provoke()
+    {
+        isHostile = true;
+    }
+
     public override void Attacked(DamageToken token)
     {
 
@@ -696,6 +713,21 @@ public class MobiusGuardEnemy : EnemyScript
 
         _lastDamageToken = token;
         Stats.CurrentHitpoint -= token.damage;
+        isHostile = true;
+
+        if (TriggerOtherGuardWhenProvoked)
+        {
+            foreach (var guard in _allActiveGuards)
+            {
+                float dist = Vector3.Distance(transform.position, guard.transform.position);
+
+                if (dist < RANGE_TRIGGER_GUARD)
+                {
+                    guard.Provoke();
+                }
+            }
+        }
+
         if (!Stats.IsDead && token.origin == DamageToken.DamageOrigin.Player)
             DamageOutputterUI.instance.DisplayText(token.damage);
 
@@ -704,6 +736,7 @@ public class MobiusGuardEnemy : EnemyScript
             Die();
         }
 
+        OnDamaged?.Invoke();
         base.Attacked(token);
     }
 

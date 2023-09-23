@@ -65,6 +65,28 @@ public class WeaponManager : MonoBehaviour
         return CurrentlyHeldWeapons[Random.Range(0, size)] as GunScript;
     }
 
+
+    [FoldoutGroup("Debug")]
+    [Button("Debug-Consficate Weapon")]
+    public void ConsficateAllWeapon()
+    {
+        int index1 = 0;
+        var weaponToRemove = new List<BaseWeaponScript>();
+        weaponToRemove.AddRange(currentlyHeldWeapons);
+
+        foreach (var weapon1 in weaponToRemove)
+        {
+            if (index1 == 0)
+            {
+                index1++;
+                continue;
+            }
+
+            Hypatios.Player.Weapon.RemoveWeapon(weapon1);
+            index1++;
+        } 
+    }
+
     public void RefillAmmo(GunScript gunScript, int amount)
     {
         gunScript.totalAmmo += amount;

@@ -20,6 +20,7 @@ public class Conditioner : MonoBehaviour
         Switch,
         TriviaNotCompleted,
         Flags,
+        SwitchNotCompleted,
         ItemOwned = 100
     }
 
@@ -35,6 +36,7 @@ public class Conditioner : MonoBehaviour
     {
         public ConditionType conditionType;
         [ShowIf(nameof(IsTriviaConditioner))] public Trivia trivia;
+        [ShowIf(nameof(IsSwitchConditioner))] public SwitchConditioner switchCondition;
         [ShowIf("conditionType", ConditionType.ParadoxEventChecked)] public string eventKeyName;
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtLeastComplete = 2;
         [ShowIf("conditionType", ConditionType.ChamberCompleted)] public int chamberAtMostComplete = 9999;
@@ -48,10 +50,10 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ConditionerCheck)] public bool dontTriggerConditioner;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public ItemInventory itemNeeded;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
-        [ShowIf("conditionType", ConditionType.Switch)] public SwitchConditioner switchCondition;
         [ShowIf("conditionType", ConditionType.Flags)] public GlobalFlagSO flagEvent;
 
         public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
+        public bool IsSwitchConditioner => conditionType == ConditionType.Switch || conditionType == ConditionType.SwitchNotCompleted;
 
         public bool IsConditionChecked()
         {
@@ -116,6 +118,11 @@ public class Conditioner : MonoBehaviour
             else if (conditionType == ConditionType.Switch)
             {
                 if (switchCondition.Triggered)
+                    return true;
+            }
+            else if (conditionType == ConditionType.SwitchNotCompleted)
+            {
+                if (switchCondition.Triggered == false)
                     return true;
             }
             else if (conditionType == ConditionType.Flags)
