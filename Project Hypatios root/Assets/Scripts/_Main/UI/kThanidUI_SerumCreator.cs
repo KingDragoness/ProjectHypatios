@@ -9,17 +9,27 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
 
     public kThanidLabUI kthanidUI;
-    public Text label_Description;
-    public Text label_ResultWarning;
-    public Text label_ButtonSerumCreate;
-    public Button buttonSerumCreate;
-    public InputField input_SerumName;
-    public Color color_errorText;
-    public Color color_warningText;
+    [FoldoutGroup("Description")] public Text label_Description;
+    [FoldoutGroup("Description")] public Text label_ResultWarning;
+    [FoldoutGroup("Description")] public Text label_ButtonSerumCreate;
+    [FoldoutGroup("Description")] public Button buttonSerumCreate;
+    [FoldoutGroup("Description")] public InputField input_SerumName;
+    [FoldoutGroup("Description")] public Color color_errorText;
+    [FoldoutGroup("Description")] public Color color_warningText;
+
+    public RectTransform parent_StatusEffects;
+    public SerumFabricator_StatusEffectButton button_StatusEffect;
+    public Text label_EssenceTotal;
+    public Text label_AlcoholAmount;
+    public Text label_Time;
+    public Text label_ModifierNet_Positive;
+    public Text label_ModifierNet_Negative;
+
 
     [Space]
     public HypatiosSave.ItemDataSave resultSerum = new HypatiosSave.ItemDataSave();
 
+    [ReadOnly] [ShowInInspector] private List<SerumFabricator_StatusEffectButton> allStatusEffectButton = new List<SerumFabricator_StatusEffectButton>();
     private string SerumCustomName = "Pathetic Serum";
     private List<PerkCustomEffect> SerumCustomEffects = new List<PerkCustomEffect>();
     private List<string> SerumAilments = new List<string>();
@@ -38,6 +48,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         CalculateSerum();
         UpdateWarningText();
         UpdateDescription();
+        UpdateCalculatorVisualizer();
 
         if (isSerumValid)
         {
@@ -136,13 +147,11 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
                         if (antiPotion == false)
                         {
-                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * SerumAlcoholAmount * SerumPotency * 1000f)/1000f;
-                            if (negativeEssence > 0) modifier.Value *= (negativeEssence + 1f);
-                            if (positiveEssence > 0) modifier.Value *= 1f / (positiveEssence);
+                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * CalculateNetPositivePotency() * 1000f)/1000f;
                         }
                         else
                         {
-                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * SerumAlcoholAmount * SerumPotency / EssenceCount * 1000f)/1000f;
+                            modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * CalculateNetNegativePotency() * 1000f)/1000f;
                         }
 
                         if (antiPotion) modifier.Value *= -1;
@@ -183,6 +192,37 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         }
 
         resultSerum.SERUM_TIME = SerumTime;
+    }
+
+    private void UpdateCalculatorVisualizer()
+    {
+        label_EssenceTotal.text = $"{EssenceCount} essence";
+        label_ModifierNet_Positive.text = $"{CalculateNetPositivePotency()}%";
+        label_ModifierNet_Negative.text = $"{CalculateNetNegativePotency()}%";
+
+    }
+
+
+    /// <summary>
+    /// Don't execute this before calculating serum.
+    /// </summary>
+    /// <returns></returns>
+    public float CalculateNetPositivePotency()
+    {
+        float value = SerumAlcoholAmount * SerumPotency;
+        if (negativeEssence > 0) value *= (negativeEssence + 1f);
+        if (positiveEssence > 0) value *= 1f / (positiveEssence);
+        return value;
+    }
+
+    /// <summary>
+    /// Don't execute this before calculating serum.
+    /// </summary>
+    /// <returns></returns>
+    public float CalculateNetNegativePotency()
+    {
+        float value = SerumAlcoholAmount * SerumPotency / EssenceCount;
+        return value;
     }
 
     private void UpdateDescription()

@@ -12,6 +12,10 @@ public class OnTriggerEnterEvent : MonoBehaviour
     public GameObject objectToCompare;
 
     public bool usePlayer = false;
+    private int currentFrame = 0; 
+    //"currentFrame" prevents a bug where:
+    //trigger enter occurs the same time as exit
+    //trigger enter triggered twice
 
     private void Start()
     {
@@ -29,9 +33,13 @@ public class OnTriggerEnterEvent : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (GetCurrentFrame == currentFrame)
+            return;
+
         if (other.gameObject == objectToCompare)
         {
             triggerEvents?.Invoke();
+            currentFrame = GetCurrentFrame;
         }
 
     }
@@ -50,10 +58,18 @@ public class OnTriggerEnterEvent : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (GetCurrentFrame == currentFrame)
+            return;
+
         if (other.gameObject == objectToCompare)
         {
             triggerExitEvents?.Invoke();
         }
+    }
+
+    public int GetCurrentFrame
+    {
+        get { return Mathf.RoundToInt(Time.time * 10); }
     }
 
 }
