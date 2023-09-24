@@ -25,6 +25,17 @@ public class CreateEssenceButton : MonoBehaviour
     [ShowIf("buttonType", Type.Result)] public string ESSENCE_STATUSEFFECT_GROUP = "";
     public int index = 0;
 
+    public bool IsItemMatch(ItemInventory itemClass)
+    {
+        var itemDat = Hypatios.Player.Inventory.allItemDatas[index];
+        var getItemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        if (getItemClass == itemClass)
+            return true;
+
+        return false;
+    }
+
     public void Refresh()
     {
         if (buttonType == Type.Inventory)

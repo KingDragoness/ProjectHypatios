@@ -369,6 +369,19 @@ public class HypatiosSave
 
         [JsonProperty] private bool isFavorited = false;
 
+        public string Essence_PlusPlusMultiplierString()
+        {
+            string plus = "";
+
+            for (int z = 0; z < ESSENCE_MULTIPLIER; z++)
+            {
+                if (z == 0) continue;
+                plus += "+";
+            }
+
+            return plus;
+        }
+
         public bool IsItemFavorited()
         { 
             if (category == ItemInventory.Category.Weapon)

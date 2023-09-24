@@ -21,6 +21,7 @@ public class PerkCustomEffect
 
     //Only for serum mode
     public bool isPermanent = true;
+    public bool isAntiPotion = false;
     [HideIf("isPermanent")] public float timer = 9999f;
 
     public void Generate(string _origin)

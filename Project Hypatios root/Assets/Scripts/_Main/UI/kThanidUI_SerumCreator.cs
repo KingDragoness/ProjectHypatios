@@ -21,9 +21,13 @@ public class kThanidUI_SerumCreator : MonoBehaviour
     public SerumFabricator_StatusEffectButton button_StatusEffect;
     public Text label_EssenceTotal;
     public Text label_AlcoholAmount;
+    public Text label_Reactant;
     public Text label_Time;
     public Text label_ModifierNet_Positive;
     public Text label_ModifierNet_Negative;
+    public Color color_modPositive;
+    public Color color_modNegative;
+    public Color color_modAilment;
 
 
     [Space]
@@ -37,6 +41,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
     private float SerumAlcoholAmount = 0f;
     private float SerumPotency = 1f;
     private int EssenceCount = 0;
+    private int ReactantCount = 0;
     private bool isSerumValid = false;
     private bool isDuplicateEssences = false;
 
@@ -72,6 +77,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
             SerumAlcoholAmount = 0f;
             SerumPotency = 1f;
             EssenceCount = 0;
+            ReactantCount = 0;
             positiveEssence = 0;
             negativeEssence = 0;
             isDuplicateEssences = false;
@@ -94,6 +100,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
                     {
                         SerumAlcoholAmount *=  Mathf.Pow(1f - itemClass.Reactant_ReduceAlcohol * 0.01f, itemDat.count);
                         SerumPotency *= Mathf.Pow(1f + itemClass.Reactant_BonusEfficiency * 0.01f, itemDat.count);
+                        ReactantCount++;
                     }
                 }
 
@@ -154,7 +161,11 @@ public class kThanidUI_SerumCreator : MonoBehaviour
                             modifier.Value = Mathf.RoundToInt(modifierClass.baseValue * CalculateNetNegativePotency() * 1000f)/1000f;
                         }
 
-                        if (antiPotion) modifier.Value *= -1;
+                        if (antiPotion)
+                        {
+                            modifier.Value *= -1;
+                            modifier.isAntiPotion = true;
+                        }
                         modifier.Value *= itemDat.ESSENCE_MULTIPLIER;
                         SerumCustomEffects.Add(modifier);
                     }
@@ -196,10 +207,67 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
     private void UpdateCalculatorVisualizer()
     {
-        label_EssenceTotal.text = $"{EssenceCount} essence";
-        label_ModifierNet_Positive.text = $"{CalculateNetPositivePotency()}%";
-        label_ModifierNet_Negative.text = $"{CalculateNetNegativePotency()}%";
+        foreach(var button in allStatusEffectButton)
+        {
+            Destroy(button.gameObject);
+        }
 
+        allStatusEffectButton.Clear();
+
+        label_EssenceTotal.text = $"{EssenceCount} essence";
+        label_ModifierNet_Positive.text = $"+{Mathf.RoundToInt(CalculateNetPositivePotency() * 1000f)/1000f}%";
+        label_ModifierNet_Negative.text = $"-{Mathf.RoundToInt(CalculateNetNegativePotency() * 1000f)/1000f}%";
+        label_Reactant.text = $"{ReactantCount} R";
+        label_Time.text = $"{SerumTime}s";
+        label_AlcoholAmount.text = $"{SerumAlcoholAmount}%";
+
+
+        for(int x = 0; x < kthanidUI.FabricatorInventory.allItemDatas.Count; x++)
+        {
+            var itemDat = kthanidUI.FabricatorInventory.allItemDatas[x];
+
+            if (itemDat.isGenericItem == true && itemDat.GENERIC_ESSENCE_POTION)
+            {
+                bool antiPotion = false;
+
+                if (kthanidUI.Index_AntiPotions.Contains(x)) antiPotion = true;
+
+                if (itemDat.ESSENCE_TYPE == HypatiosSave.EssenceType.Modifier)
+                {
+                    var modifierObject = Hypatios.Assets.GetStatusEffect(itemDat.ESSENCE_CATEGORY);
+
+                    Color selectedColor = color_modPositive;
+
+                    if (antiPotion)
+                    {
+                        selectedColor = color_modNegative;
+                    }
+
+                    CreateNewButton(modifierObject.PerkSprite, itemDat.Essence_PlusPlusMultiplierString(), selectedColor);
+                }
+                else
+                {
+                    var ailmentObject = Hypatios.Assets.GetStatusEffect(itemDat.ESSENCE_STATUSEFFECT_GROUP);
+
+                    CreateNewButton(ailmentObject.PerkSprite, "", color_modAilment);
+
+                }
+            }
+
+        }
+
+
+    }
+
+
+    private void CreateNewButton(Sprite _icon, string plusString, Color _color)
+    {
+        var prefab1 = Instantiate(button_StatusEffect, parent_StatusEffects);
+        prefab1.Reload(_icon, plusString, _color);
+        prefab1.gameObject.SetActive(true);
+        prefab1.transform.localScale = Vector3.one;
+
+        allStatusEffectButton.Add(prefab1);
     }
 
 
@@ -212,6 +280,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         float value = SerumAlcoholAmount * SerumPotency;
         if (negativeEssence > 0) value *= (negativeEssence + 1f);
         if (positiveEssence > 0) value *= 1f / (positiveEssence);
+        if (float.IsNaN(value)) value = 0;
         return value;
     }
 
@@ -222,6 +291,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
     public float CalculateNetNegativePotency()
     {
         float value = SerumAlcoholAmount * SerumPotency / EssenceCount;
+        if (float.IsNaN(value)) value = 0;
         return value;
     }
 

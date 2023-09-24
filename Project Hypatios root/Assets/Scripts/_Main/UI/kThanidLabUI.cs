@@ -25,6 +25,9 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_MyItemButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ExtractorButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ResultButton;
+    [FoldoutGroup("Quick Button")] public Button quickButton_AddBottle;
+    [FoldoutGroup("Quick Button")] public Button quickButton_AddExoticCore;
+    [FoldoutGroup("Quick Button")] public Button quickButton_RandomMaterial;
     private List<CreateEssenceButton> all_Essence_MyItemButtons = new List<CreateEssenceButton>();
     private List<CreateEssenceButton> all_Essence_ExtractorButtons = new List<CreateEssenceButton>();
     private List<CreateEssenceButton> all_Essence_ResultButtons = new List<CreateEssenceButton>();
@@ -158,6 +161,7 @@ public class kThanidLabUI : MonoBehaviour
         RefreshButton_Extractor();
         RefreshButton_Fabricator();
         RefreshButton_Result();
+        Reload_QuickButtons();
         ModifyAntiPotionIndex();
         SerumCreator.Refresh();
 
@@ -582,6 +586,116 @@ public class kThanidLabUI : MonoBehaviour
         }
 
         Hypatios.Player.Inventory.allItemDatas.Add(itemDat);
+    }
+
+    #endregion
+
+    #region Essencor Functions
+
+    public void Reload_QuickButtons()
+    {
+        if (Hypatios.Player.Inventory.Count(essenceBottle) <= 0)
+        {
+            quickButton_AddBottle.interactable = false;
+        }
+        else
+        {
+            quickButton_AddBottle.interactable = true;
+        }
+
+        if (Hypatios.Player.Inventory.Count(exoticCore) <= 0)
+        {
+            quickButton_AddExoticCore.interactable = false;
+        }
+        else
+        {
+            quickButton_AddExoticCore.interactable = true;
+        }
+
+    }
+
+    public void Function_AddBottle()
+    {
+        var button_EssenceBottle = GetButtonByItem(essenceBottle);
+
+        if (button_EssenceBottle == null) return;
+
+        TransferToExtractor(button_EssenceBottle);
+    }
+
+    public void Function_AddExoticCore()
+    {
+        var button_Exotic = GetButtonByItem(exoticCore);
+
+        if (button_Exotic == null) return;
+
+        TransferToExtractor(button_Exotic);
+    }
+
+    public void Function_Random()
+    {
+        //search through the perk database and find if item exists
+        int tries = 0; //limit = 32
+        ItemInventory itemGot = null;
+
+        while (tries < 32 && itemGot == null)
+        {
+            itemGot = GetItemToCraft();
+            tries++;
+        }
+
+        if (itemGot == null) return;
+        var button_ItemTarget = GetButtonByItem(itemGot);
+        if (button_ItemTarget == null) return;
+
+        TransferToExtractor(button_ItemTarget);
+    }
+
+    public CreateEssenceButton GetButtonByItem(ItemInventory itemClass)
+    {
+        foreach(var button in all_Essence_MyItemButtons)
+        {
+            if (button.IsItemMatch(itemClass)) return button;
+        }
+
+        return null;
+    }
+
+    public ItemInventory GetItemToCraft()
+    {
+        var list_ModifierEffect = Hypatios.Assets.AllModifierEffects;
+        list_ModifierEffect.Shuffle();
+
+        foreach (var perkModifier in list_ModifierEffect)
+        {
+            if (perkModifier.craftableEssence == false) continue;
+
+            foreach (var craftMat in perkModifier.requirementCrafting)
+            {
+                if (Hypatios.Player.Inventory.Count(craftMat.inventory) > 0)
+                {
+                    return craftMat.inventory;
+                }
+            }
+        }
+
+        var list_StatEffect = Hypatios.Assets.AllStatusEffects;
+        list_StatEffect.Shuffle();
+
+        foreach (var statusEffect in list_StatEffect)
+        {
+            if (statusEffect.craftableEssence == false) continue;
+
+            foreach (var craftMat in statusEffect.requirementCrafting)
+            {
+                if (Hypatios.Player.Inventory.Count(craftMat.inventory) > 0)
+                {
+                    return craftMat.inventory;
+                }
+            }
+        }
+
+        return null;
     }
 
     #endregion
