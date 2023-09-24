@@ -27,9 +27,11 @@ public class Previewer3DWeaponUI : MonoBehaviour
     {
         var meshRenderers = weaponModel.gameObject.GetComponentsInChildren<MeshRenderer>();
 
+
         foreach (var meshRender in meshRenderers)
         {
             meshRender.material = holographicMaterial;
+            meshRender.gameObject.layer = LayerMask.NameToLayer("Map");
         }
     }
 

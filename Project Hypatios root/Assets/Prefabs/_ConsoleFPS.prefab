@@ -158,6 +158,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a0003db9af727d47980b8e78a9361f0, type: 2}
   - {fileID: 11400000, guid: bdf4c659e0fc6ba4fb3b191f107db0b7, type: 2}
   - {fileID: 11400000, guid: ddcfc9267a2091941ac5258d25908640, type: 2}
+  - {fileID: 11400000, guid: 6bb1a68651be048418bd3a935ef6c5f8, type: 2}
   - {fileID: 11400000, guid: 9b98b4e8e9f334a4ea5048b96e5ac516, type: 2}
   - {fileID: 11400000, guid: 682e0230508a23c448d773484f95479d, type: 2}
   - {fileID: 11400000, guid: b3f1c72e5fadc904582edbb3d5c39058, type: 2}
@@ -310,6 +311,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc29983a079f6a94a81071f82959a580, type: 2}
   - {fileID: 11400000, guid: 3c80126c3e677c343b5c54b93fe09d47, type: 2}
   - {fileID: 11400000, guid: 94ef8d9e35ca98742800b5222bb7718f, type: 2}
+  - {fileID: 11400000, guid: fbbe7749afc56f84588fec4481b74dc2, type: 2}
   - {fileID: 11400000, guid: b437ff1697f78ac4d9fa4104610cc212, type: 2}
   - {fileID: 11400000, guid: b901eca74bb5ed341b71f120a3d553d4, type: 2}
   - {fileID: 11400000, guid: 9168cb3ce23bf834c87886d071f25283, type: 2}
@@ -444,6 +446,7 @@ Transform:
   m_Children:
   - {fileID: 5310390733339609108}
   - {fileID: 7984427407571233626}
+  - {fileID: 2603008739886076198}
   m_Father: {fileID: 2419985613021790145}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2475,7 +2478,7 @@ PrefabInstance:
     - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
         type: 3}
       propertyPath: inventory.allItemDatas.Array.data[9].weaponData.totalAmmo
-      value: 21
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
         type: 3}
@@ -2550,7 +2553,7 @@ PrefabInstance:
     - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
         type: 3}
       propertyPath: inventory.allItemDatas.Array.data[9].weaponData.currentAmmo
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
         type: 3}
@@ -2859,4 +2862,794 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
     type: 3}
   m_PrefabInstance: {fileID: 2845199989566202603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7903239639614445719
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 285191540}
+    m_Modifications:
+    - target: {fileID: 3585950788095316655, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0009999275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3585950788095316655, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.15199995
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: ContainerName
+      value: DEV CHEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: shouldGenerateLoot
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].ID
+      value: Stigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].ID
+      value: Rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].ID
+      value: SmartPistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].ID
+      value: SentryPDA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].ID
+      value: GrapplingHook
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].ID
+      value: Punisher
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].ID
+      value: Uzi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].ID
+      value: Kanonelektromagnetik
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].ID
+      value: RetardGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[14].ID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[14].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[14].category
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].SERUM_TIME
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].SERUM_TIME
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].SERUM_CUSTOM_NAME
+      value: Some Serum
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].SERUM_CUSTOM_NAME
+      value: Some Serum
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].ESSENCE_MULTIPLIER
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.weaponID
+      value: Stigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.weaponID
+      value: Rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.weaponID
+      value: SmartPistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.weaponID
+      value: SentryPDA
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.weaponID
+      value: GrapplingHook
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.weaponID
+      value: Punisher
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].weaponData.weaponID
+      value: Uzi
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].weaponData.weaponID
+      value: Kanonelektromagnetik
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].weaponData.weaponID
+      value: RetardGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[14].weaponData.weaponID
+      value: Katakis
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.totalAmmo
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].weaponData.totalAmmo
+      value: 1999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].weaponData.totalAmmo
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].weaponData.totalAmmo
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].weaponData.totalAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].weaponData.totalAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].weaponData.totalAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].weaponData.totalAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[14].weaponData.totalAmmo
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.currentAmmo
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.currentAmmo
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.currentAmmo
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.currentAmmo
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.currentAmmo
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.currentAmmo
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.currentAmmo
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[7].weaponData.currentAmmo
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[8].weaponData.currentAmmo
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[9].weaponData.currentAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[10].weaponData.currentAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[11].weaponData.currentAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[12].weaponData.currentAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[13].weaponData.currentAmmo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.allAttachments.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[0].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[1].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[2].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[3].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[4].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[5].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.allAttachments.Array.data[0]
+      value: Turbo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584176706910609964, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: inventory.allItemDatas.Array.data[6].weaponData.allAttachments.Array.data[1]
+      value: HighCap
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296871620434705590, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296871620434705590, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.63100004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390731793279479, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.006000042
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390731793279479, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.161
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -1.098
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310390732918671794, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_Name
+      value: ChestScifi (WEAPONS) (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[0]
+      value: 203
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[1]
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[2]
+      value: 156
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[3]
+      value: 161
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[4]
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[5]
+      value: 173
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[6]
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[7]
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[8]
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[9]
+      value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[10]
+      value: 94
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[11]
+      value: 241
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[12]
+      value: 172
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[13]
+      value: 199
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[14]
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8172209495821302622, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: serializedGuid.Array.data[15]
+      value: 174
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532330019524202224, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.6589999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532330019524202224, guid: cb678c882a754d04a8369030bf7abe6a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.019000053
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cb678c882a754d04a8369030bf7abe6a, type: 3}
+--- !u!4 &2603008739886076198 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5310390732918671793, guid: cb678c882a754d04a8369030bf7abe6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7903239639614445719}
   m_PrefabAsset: {fileID: 0}
