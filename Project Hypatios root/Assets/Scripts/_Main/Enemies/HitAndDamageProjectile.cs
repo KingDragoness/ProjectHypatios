@@ -59,6 +59,11 @@ public class HitAndDamageProjectile : MonoBehaviour
     private void Update()
     {
         timerDead -= Time.deltaTime;
+
+        if (timerDead < 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void SpawnSomething()
