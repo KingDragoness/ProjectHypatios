@@ -99,14 +99,14 @@ public class SteamManager : MonoBehaviour {
 			if (SteamAPI.RestartAppIfNecessary((AppId_t)2609920)) {
 				Debug.Log("[Steamworks.NET] Shutting down because RestartAppIfNecessary returned true. Steam will restart the application.");
 
-				Application.Quit();
+				//Application.Quit();
 				return;
 			}
 		}
 		catch (System.DllNotFoundException e) { // We catch this exception here, as it will be the first occurrence of it.
 			Debug.LogError("[Steamworks.NET] Could not load [lib]steam_api.dll/so/dylib. It's likely not in the correct location. Refer to the README for more details.\n" + e, this);
 
-			Application.Quit();
+			//Application.Quit();
 			return;
 		}
 
