@@ -19,7 +19,15 @@ public class Interact_Container : InteractableObject
     private void Start()
     {
         if (Guid == null) Guid = gameObject.AddComponent<GuidComponent>();
-        if (shouldGenerateLoot) GenerateLoot();
+        if (shouldGenerateLoot)
+        {
+            float random = Random.Range(0f, 1f);
+
+            if (random > lootTable.chanceNotSpawning)
+            {
+                GenerateLoot();
+            }
+        }
     }
 
     [Button("Reset loot")]

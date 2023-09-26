@@ -13,6 +13,7 @@ public class Level1_IntroScript : MonoBehaviour
     public GameObject specialIntro;
     public GameObject UI_FadeIn;
     public GameObject UI_FadeOut;
+    public GameObject UI_ForceSkip;
 
     [Header("First Run")]
     public VideoPlayer videoPlayer;
@@ -27,6 +28,7 @@ public class Level1_IntroScript : MonoBehaviour
     public UnityEvent OnIntroStarted;
 
     private bool hasStarted = false;
+    private bool _playerGainedHUD = false;
 
     private void Awake()
     {
@@ -38,6 +40,7 @@ public class Level1_IntroScript : MonoBehaviour
         Time.timeScale = 1;
         StartCoroutine(StartIntro());
     }
+
 
     private void OverrideParameters()
     {
@@ -55,15 +58,13 @@ public class Level1_IntroScript : MonoBehaviour
         playerMain.gameObject.SetActive(false);
         specialIntro.gameObject.SetActive(true);
         UI_FadeIn.gameObject.SetActive(false);
+        UI_ForceSkip.gameObject.SetActive(false);
+
         //UI_FadeOut.gameObject.SetActive(true);
 
         if (Hypatios.Game.TotalRuns == 0 && Application.isEditor == false)
         {
-            videoPlayer.gameObject.SetActive(true);
-            cineBrain.gameObject.SetActive(false);
-            fakePlayer.gameObject.SetActive(false);
-            firstRun = true;
-            OnIntroStarted?.Invoke();
+            StartCinematic();
         }
         else
         {
@@ -81,21 +82,50 @@ public class Level1_IntroScript : MonoBehaviour
         playerMain.gameObject.SetActive(false);
         specialIntro.gameObject.SetActive(true);
         UI_FadeIn.gameObject.SetActive(false);
+        StartCinematic();
+        firstRun = true;
+    }
+
+    public void StartCinematic()
+    {
+        Cursor.lockState = CursorLockMode.None;
         videoPlayer.gameObject.SetActive(true);
         cineBrain.gameObject.SetActive(false);
         fakePlayer.gameObject.SetActive(false);
+        UI_ForceSkip.gameObject.SetActive(true);
         firstRun = true;
+        OnIntroStarted?.Invoke();
     }
 
     private void Update()
     {
-        if (Time.timeSinceLevelLoad > 3)
+        if (Time.timeSinceLevelLoad > 3 && hasStarted == false)
         {
             if (videoPlayer.isPlaying == false && !hasStarted && firstRun)
             {
                 StartRealgame();
             }
+
+            if (videoPlayer.isPlaying == true)
+            {
+                Hypatios.UI.SetPauseState(true);
+            }
+            else
+            {
+                Hypatios.UI.SetPauseState(false);
+            }
         }
+
+        if (_playerGainedHUD == false && videoPlayer.isPlaying == false)
+        {
+            Hypatios.UI.SetPauseState(false);
+        }
+
+    }
+
+    public void GainHUD()
+    {
+        _playerGainedHUD = true;
     }
 
     [ContextMenu("StartRealgame")]
@@ -105,6 +135,7 @@ public class Level1_IntroScript : MonoBehaviour
         specialIntro.gameObject.SetActive(false);
         UI_FadeIn.gameObject.SetActive(true);
         videoPlayer.gameObject.SetActive(false);
+        UI_ForceSkip.gameObject.SetActive(false);
         playerMain.transform.eulerAngles = fakePlayer.transform.eulerAngles;
         playerMain.transform.position = fakePlayer.transform.position;
         //mainGame_CanvasGroup.alpha = 1;
@@ -119,6 +150,8 @@ public class Level1_IntroScript : MonoBehaviour
         {
             triggererName.gameObject.SetActive(false);
         }
+
+        Hypatios.UI.SetPauseState(false);
 
     }
 

@@ -60,7 +60,7 @@ public class SettingsUI : MonoBehaviour
             foreach (var res in Hypatios.Settings.Resolutions)
             {
                 Dropdown.OptionData optionData = new Dropdown.OptionData();
-                optionData.text = $"{res.width}, {res.height}";
+                optionData.text = $"{res.width}, {res.height} ({res.refreshRate}Hz)";
                 dropdown_Resolution.options.Add(optionData);
             }
         }

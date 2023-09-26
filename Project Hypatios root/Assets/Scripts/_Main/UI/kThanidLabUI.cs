@@ -25,6 +25,7 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_MyItemButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ExtractorButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ResultButton;
+    [FoldoutGroup("Create Essence")] public GameObject Essence_labelNoItem;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddBottle;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddExoticCore;
     [FoldoutGroup("Quick Button")] public Button quickButton_RandomMaterial;
@@ -38,6 +39,7 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Fabricator")] public RectTransform rt_Serum_FabricatorParent;
     [FoldoutGroup("Fabricator")] public FabricateSerumButton prefab_Serum_MyItemButton;
     [FoldoutGroup("Fabricator")] public FabricateSerumButton prefab_Serum_FabricatorButton;
+    [FoldoutGroup("Create Essence")] public GameObject Fabricator_labelNoItem;
     private List<FabricateSerumButton> all_Serum_MyItemButtons = new List<FabricateSerumButton>();
     private List<FabricateSerumButton> all_Serum_FabricatorButtons = new List<FabricateSerumButton>();
 
@@ -164,7 +166,28 @@ public class kThanidLabUI : MonoBehaviour
         Reload_QuickButtons();
         ModifyAntiPotionIndex();
         SerumCreator.Refresh();
+        RefreshLabel();
+    }
 
+    private void RefreshLabel()
+    {
+        if (all_Essence_MyItemButtons.Count == 0)
+        {
+            Essence_labelNoItem.gameObject.SetActive(true);
+        }
+        else
+        {
+            Essence_labelNoItem.gameObject.SetActive(false);
+        }
+
+        if (all_Serum_MyItemButtons.Count == 0)
+        {
+            Fabricator_labelNoItem.gameObject.SetActive(true);
+        }
+        else
+        {
+            Fabricator_labelNoItem.gameObject.SetActive(false);
+        }
     }
 
     private void RefreshButton_Inventory()
@@ -194,15 +217,10 @@ public class kThanidLabUI : MonoBehaviour
                 var itemClass = Hypatios.Assets.GetItem(itemData.ID);
                 bool allowFilter = false;
 
-                if (itemData.category == ItemInventory.Category.Normal && itemClass.subCategory == ItemInventory.SubiconCategory.Material && itemData.isGenericItem == false)
-                {
-                    allowFilter = true;
-                }
+                //if (itemData.category == ItemInventory.Category.Normal && itemClass.subCategory == ItemInventory.SubiconCategory.Material && itemData.isGenericItem == false)
+                //if (itemData.category == ItemInventory.Category.Consumables && itemData.isGenericItem == false)
 
-                if (itemData.category == ItemInventory.Category.Consumables && itemData.isGenericItem == false)
-                {
-                    allowFilter = true;
-                }
+                if (IsValidEssenceCraftingItem(itemClass)) allowFilter = true;
 
                 if (allowFilter)
                 {
@@ -696,6 +714,41 @@ public class kThanidLabUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    public bool IsValidEssenceCraftingItem(ItemInventory itemInventory)
+    {
+        var list_StatEffect = Hypatios.Assets.AllStatusEffects;
+        var list_ModifierEffect = Hypatios.Assets.AllModifierEffects;
+
+        if (itemInventory == exoticCore) return true;
+        if (itemInventory == essenceBottle) return true;
+
+        foreach (var perkModifier in list_ModifierEffect)
+        {
+            if (perkModifier.craftableEssence == false) continue;
+
+            foreach (var craftMat in perkModifier.requirementCrafting)
+            {
+                if (craftMat.inventory == itemInventory)
+                    return true;
+            }
+        }
+
+        foreach (var statusEffect in list_StatEffect)
+        {
+            if (statusEffect.craftableEssence == false) continue;
+
+            foreach (var craftMat in statusEffect.requirementCrafting)
+            {
+                if (craftMat.inventory == itemInventory)
+                    return true;
+            }
+        }
+
+
+
+        return false;
     }
 
     #endregion

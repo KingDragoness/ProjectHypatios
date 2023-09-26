@@ -62,6 +62,8 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         else buttonSerumCreate.interactable = false;
 
         label_ButtonSerumCreate.text = $"Create {SerumCustomName}";
+
+
     }
 
     private void CalculateSerum()

@@ -118,6 +118,13 @@ public class MainUI : MonoBehaviour
 
     }
 
+    public void SetPauseState(bool pauseState = false)
+    {
+        paused = pauseState;
+        RefreshPauseState();
+
+    }
+
     public void ChangeCurrentMode(int i)
     {
         current_UI = (MainUI.UIMode)i;

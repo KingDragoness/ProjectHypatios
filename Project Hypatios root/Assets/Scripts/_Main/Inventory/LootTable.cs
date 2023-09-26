@@ -19,6 +19,7 @@ public class LootTable : ScriptableObject
     [ProgressBar("minRoll", 100)]
     public int maxRoll = 2;
 
+    [Range(0f,1f)] public float chanceNotSpawning = 0f; //only item container
     public List<Entry> entries = new List<Entry>();
 
     public int GetTotalWeight()

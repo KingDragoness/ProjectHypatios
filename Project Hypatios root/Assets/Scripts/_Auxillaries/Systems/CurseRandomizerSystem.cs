@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 public class CurseRandomizerSystem : MonoBehaviour
 {
 
+    public int TriggerAfterRun = 5;
     [FoldoutGroup("Ailment Stats")] public float timePlayerGetFatigue = 600f;
     [FoldoutGroup("Ailment Stats")] [Range(0f,1f)] public float chancePanicAttack = 0.1f;
     [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceDepressionAttack = 0.02f;
@@ -53,6 +54,13 @@ public class CurseRandomizerSystem : MonoBehaviour
 
     private void Update()
     {
+        int currentRun = Hypatios.Game.TotalRuns;
+
+        if (currentRun < TriggerAfterRun)
+        {
+            return;
+        }
+
         _timeInChamber += Time.deltaTime;
         if (_timerRandomizer > 0f)
         {
