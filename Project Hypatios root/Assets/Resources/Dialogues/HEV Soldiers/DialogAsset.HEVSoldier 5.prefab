@@ -1,58 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &788220529527877507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1230502053353723732}
-  - component: {fileID: 1252719204799822114}
-  m_Layer: 0
-  m_Name: HEV.Dialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1230502053353723732
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1252719204799822114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: Sometimes this world is too cruel for one live. One that lives
-    with disability, unattractive will be a negative perk that one must bear for
-    the rest of their life.
-  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 7
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2200264085829399555
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4436073353683368875
 MonoBehaviour:
@@ -132,8 +79,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.058839, y: 2.7155268, z: 2.4643865}
   m_Children:
-  - {fileID: 1230502053353723732}
-  - {fileID: 8562400583838629671}
   - {fileID: 5832204108004298890}
   - {fileID: 7823828061476162017}
   - {fileID: 287652774231108525}
@@ -156,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allDialogues:
-  - {fileID: 1252719204799822114}
+  - {fileID: 0}
   - {fileID: 4436073353683368875}
   ActivatingArea:
   - {fileID: 6137219061834780904}
@@ -198,7 +143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5138481974834645968
 MonoBehaviour:
@@ -251,7 +196,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1160817813401725395
 MonoBehaviour:
@@ -302,7 +247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9045665282137919222
 MonoBehaviour:
@@ -316,63 +261,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: 'It is a game theory. Sacrifice one group so other will thrive. '
+  Dialogue_Content: 'It is a game theory. Sacrifice one people or a group so the
+    other will thrive. '
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 5
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &6868794952899840495
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8562400583838629671}
-  - component: {fileID: 7004188807609390436}
-  m_Layer: 0
-  m_Name: HEV.Dialog (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8562400583838629671
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868794952899840495}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7004188807609390436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6868794952899840495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: But the worst one is the one related to intelligence and mental
-    disabilities. Degenerate psychopaths, pedophiles cannot be tolerated in the society.
-  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -405,7 +299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9217330548532866423
 MonoBehaviour:
@@ -420,12 +314,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dialogue_Content: In any society, a scapegoat is a necessity to distract people
-    from everyday's stressful problem. We pile our problem into something or someone
-    so we can shake away our stress/depression.
+    from everyday's stressful problem.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 8
+  Dialogue_Timer: 5
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -458,7 +351,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1956884638611842999
 MonoBehaviour:
@@ -472,12 +365,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Our current society is configured to not kill/eliminate them
-    but to let them live. An 'Ad Comparative'.
+  Dialogue_Content: Our current society is configured to let useless people live.
+    An 'Ad Comparative'.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 7
+  Dialogue_Timer: 6
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []

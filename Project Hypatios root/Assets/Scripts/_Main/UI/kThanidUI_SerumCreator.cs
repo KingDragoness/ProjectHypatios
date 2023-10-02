@@ -94,7 +94,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
                     if (itemClass.consume_AlcoholAmount > 0 && itemClass.category == ItemInventory.Category.Consumables)
                     {
-                        SerumTime += itemClass.consume_HealTime * itemDat.count;
+                        SerumTime += itemClass.consume_HealTime * itemDat.count * 2f;
                         SerumAlcoholAmount += itemClass.consume_AlcoholAmount * itemDat.count;
                     }
 

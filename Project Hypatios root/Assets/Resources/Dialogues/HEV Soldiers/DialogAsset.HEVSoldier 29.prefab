@@ -1,57 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &788220529527877507
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1230502053353723732}
-  - component: {fileID: 1252719204799822114}
-  m_Layer: 0
-  m_Name: HEV.Dialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1230502053353723732
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1252719204799822114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 788220529527877507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: There is a lot of political movements these days, we saw ranging
-    from the leftist' progressvism and right wing conservatism...
-  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 5
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1485778846886595608
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4710064966391910622
 MonoBehaviour:
@@ -95,12 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: And then you have demagogue politicians, took advantage by 'aligning'
-    themselves with the 'small people'.
+  Dialogue_Content: Demagogue politicians, took advantage by 'aligning' themselves
+    with the 'small people'. Populist policies enacted for popularity.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 6
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -132,11 +80,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.058839, y: 2.7155268, z: 2.4643865}
   m_Children:
-  - {fileID: 1230502053353723732}
   - {fileID: 322674571424415955}
   - {fileID: 2126031289609061644}
   - {fileID: 8345635098271167888}
-  - {fileID: 2837783628002345941}
   - {fileID: 1314544936630685506}
   - {fileID: 4268893956458711632}
   m_Father: {fileID: 0}
@@ -155,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allDialogues:
-  - {fileID: 1252719204799822114}
+  - {fileID: 0}
   - {fileID: 0}
   ActivatingArea:
   - {fileID: 6137219061834780904}
@@ -168,58 +114,6 @@ MonoBehaviour:
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
   alreadyTriggered: 0
---- !u!1 &2568502806572930727
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2837783628002345941}
-  - component: {fileID: 2516916002731962768}
-  m_Layer: 0
-  m_Name: HEV.Dialog (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2837783628002345941
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568502806572930727}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2516916002731962768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2568502806572930727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: This alignment, identity politics allows abusement of power.
-    True merits will be ignored, only the identity was looked at.
-  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 6
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3184364477594911838
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &165845275110367045
 MonoBehaviour:
@@ -301,7 +195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8859396721030061106
 MonoBehaviour:
@@ -315,8 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: In mass society, weapon that is usually used by the 'small people'
-    that is they are 'small people', the victim of mentality. They are 'poor people'.
+  Dialogue_Content: Proclaiming self as 'small people', is victim mentality. Inferior
+    mentality that destroys will to resist and forces people to be obedient.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -353,7 +247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2452940299885329983
 MonoBehaviour:
@@ -367,9 +261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: All of political movements are just a power grab contest. All
-    these radicalized people only do, is the make their leader rich, powerful and
-    famous. Ideology never mattered.
+  Dialogue_Content: It is all power grab contest. All these radicalized people only
+    do is to make their leader rich, powerful and famous.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -406,7 +299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6101136846501643799
 MonoBehaviour:
