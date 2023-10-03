@@ -141,6 +141,10 @@ public class ConsoleCommand : MonoBehaviour
                 AllConditionReport(args);
                 break;
 
+            case "leveldone":
+                ChamberComplete(args);
+                break;
+
             case "cc":
                 CommandCheat(args);
                 break;
@@ -331,6 +335,30 @@ public class ConsoleCommand : MonoBehaviour
     }
 
 
+    protected void ChamberComplete(string[] args)
+    {
+        try
+        {
+            int completionTime = 0;
+            int.TryParse(args[0], out completionTime);
+
+            Hypatios.Chamber.Debug_SetChamberCompletion(completionTime);
+
+            BaseChamberScript chamberScript = FindObjectOfType<BaseChamberScript>();
+
+            if (chamberScript != null)
+            {
+                chamberScript.OverrideCurrentStat(completionTime);
+                SendConsoleMessage("BaseChamberScript detected. Modifying current chamber's waves.");
+            }
+
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! leveldone [<color=#00cc99dd>int</color> chamberCompleted]");
+        }
+    }
+
 
     protected void CommandCheat(string[] args)
     {
@@ -363,6 +391,8 @@ public class ConsoleCommand : MonoBehaviour
             SendConsoleMessage("Invalid argument! ui [<color=#00cc99dd>int</color> current_UI]");
         }
     }
+
+    
 
 
     private void ChangeLanguage(string[] args)
@@ -1275,6 +1305,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'help status' to look every status effect in the game");
             helpCommands.Add("'killall' to all enemies");
             helpCommands.Add("'killme' to commit suicide");
+            helpCommands.Add("'leveldone' to set chamber completion.");
             helpCommands.Add("'levelnames' gets every level exists in the current build.");
             helpCommands.Add("'listflag' gets every flag in the game.");
             helpCommands.Add("'listitem' gets every item in the game. 'help listitem' to see additional info.");

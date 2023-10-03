@@ -96,28 +96,33 @@ public abstract class BaseChamberScript : MonoBehaviour
         return total;
     }
 
+    private int attempt = 0;
+
     internal Spawner GetEntry(int customSeed = 0)
     {
         int output = 0;
-        var seed = Hypatios.GetSeed() + customSeed;
-        var RandomSys = new System.Random(seed);
-
-        //Getting a random weight value
-        var totalWeight = GetTotalWeight();
-        int rndWeightValue = RandomSys.Next(1, totalWeight + 1);
-
-        //Checking where random weight value falls
-        var processedWeight = 0;
-        int index1 = 0;
-        foreach (var entry in currentStat.AllSpawners)
         {
-            processedWeight += entry.weight;
-            if (rndWeightValue <= processedWeight)
+            //var seed = Hypatios.GetSeed() + customSeed + attempt;
+            //var RandomSys = new System.Random(seed);
+
+            //Getting a random weight value
+            var totalWeight = GetTotalWeight();
+            int rndWeightValue = Random.Range(0, totalWeight);
+
+            //Checking where random weight value falls
+            var processedWeight = 0;
+            int index1 = 0;
+            foreach (var entry in currentStat.AllSpawners)
             {
-                output = index1;
-                break;
+                processedWeight += entry.weight;
+                if (rndWeightValue <= processedWeight)
+                {
+                    output = index1;
+                    break;
+                }
+                attempt++;
+                index1++;
             }
-            index1++;
         }
 
         return currentStat.AllSpawners[output];
@@ -128,6 +133,13 @@ public abstract class BaseChamberScript : MonoBehaviour
     {
         currentStat = _baseStat.Copy();
         chamberScript = GetComponent<StageChamberScript>();
+    }
+
+    [Button("Override Chamber completion")]
+    public void OverrideCurrentStat(int completion)
+    {
+        Hypatios.Chamber.Debug_SetChamberCompletion(completion);
+        CheckCondition();
     }
 
     public virtual void Start()
@@ -205,7 +217,7 @@ public abstract class BaseChamberScript : MonoBehaviour
         if (ignoreCount == false) currentStat.TotalEnemy--;
 
         Spawner _spawnerGroup = GetEntry(currentStat.TotalEnemy);
-        InstantiateRandomObject spawner = _spawnerGroup.enemySpawners[Random.Range(0, _spawnerGroup.enemySpawners.Count - 1)];
+        InstantiateRandomObject spawner = _spawnerGroup.enemySpawners[Random.Range(0, _spawnerGroup.enemySpawners.Count)];
 
         var NewEnemy = spawner.SpawnWithChanceThing().GetComponent<EnemyScript>();
         NewEnemy.gameObject.SetActive(true);

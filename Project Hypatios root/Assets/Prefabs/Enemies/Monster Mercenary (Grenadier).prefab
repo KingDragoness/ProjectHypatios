@@ -800,6 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -949,6 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -1075,6 +1077,7 @@ MonoBehaviour:
       m_Calls: []
   currentTarget: {fileID: 0}
   hasSeenPlayer: 0
+  useSecondPass: 1
   isAIEnabled: 1
   eyeLocation: {fileID: 4561229706204461455}
   debug_FirstPassHit: {fileID: 0}
@@ -1292,6 +1295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 1
   multiplier: 1
   isPrintDebug: 0
@@ -1441,6 +1445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -1652,6 +1657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -1833,6 +1839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -1951,6 +1958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -2131,6 +2139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -2283,6 +2292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -2543,6 +2553,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 4561229705507647208}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.6
   isPrintDebug: 0
@@ -12655,7 +12666,7 @@ PrefabInstance:
         type: 3}
       propertyPath: originEnemy
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4561229705507647208}
     - target: {fileID: 1474609609760732441, guid: 17cc5194e543f9f49a3bf0f5fd413c2e,
         type: 3}
       propertyPath: sphereRadius
@@ -12680,6 +12691,11 @@ PrefabInstance:
         type: 3}
       propertyPath: useEnemyKillzone
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474609609760732441, guid: 17cc5194e543f9f49a3bf0f5fd413c2e,
+        type: 3}
+      propertyPath: sphereLayerMask.m_Bits
+      value: 4096
       objectReference: {fileID: 0}
     - target: {fileID: 1474609609760732443, guid: 17cc5194e543f9f49a3bf0f5fd413c2e,
         type: 3}

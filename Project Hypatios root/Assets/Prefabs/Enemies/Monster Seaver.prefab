@@ -395,7 +395,7 @@ NavMeshAgent:
   avoidancePriority: 50
   m_AngularSpeed: 45
   m_StoppingDistance: 1
-  m_AutoTraverseOffMeshLink: 1
+  m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
@@ -418,7 +418,24 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0.5, z: 0}
     m_Extent: {x: 1.8, y: 1, z: 2}
   _baseStat: {fileID: 11400000, guid: 852f3625afeb86346b19de3bd25296ad, type: 2}
+  OnDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSelfKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerDetected1:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
+  hasSeenPlayer: 0
+  useSecondPass: 1
+  isAIEnabled: 1
   eyeLocation: {fileID: 0}
+  debug_FirstPassHit: {fileID: 0}
+  debug_SecondPassHit: {fileID: 0}
+  onSpawnShouldReady: 1
+  _timerReady: 0
   spawnScarab: {fileID: 5005471305401224061}
   anim: {fileID: 5005471305455020273}
   scarabPrefab: {fileID: 5005471305487148189}
@@ -533,9 +550,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2365537839966261062}
+  destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 0.2
+  isPrintDebug: 0
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4545213050842941929
@@ -915,9 +938,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 2365537839966261062}
+  destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 1
   multiplier: 1
+  isPrintDebug: 0
   OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_MyEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &9176636366567449693
