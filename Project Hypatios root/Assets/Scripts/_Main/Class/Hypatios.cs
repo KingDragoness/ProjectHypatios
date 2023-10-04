@@ -113,8 +113,7 @@ public class Hypatios : MonoBehaviour
             if (MAXIMUM_FRAMERATE >= 201)
                 Application.targetFrameRate = -1; else Application.targetFrameRate = MAXIMUM_FRAMERATE;
 
-            //Now the game is permanently windowed
-            //if (FULLSCREEN == 0) isFullscreen = false; else  isFullscreen = true;
+            if (FULLSCREEN == 0) isFullscreen = false; else  isFullscreen = true;
 
             if (RESOLUTION != -1)
                 Screen.SetResolution(resolution.width, resolution.height, isFullscreen);
