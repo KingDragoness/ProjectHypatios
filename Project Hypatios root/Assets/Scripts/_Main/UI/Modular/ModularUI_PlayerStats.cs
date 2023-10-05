@@ -68,8 +68,7 @@ public class ModularUI_PlayerStats : MonoBehaviour
     {
         var allCurrentPerk = new List<BaseModifierEffect>(); 
         var AllStatusMono = new List<StatusEffectMono>();
-        d_allCurrPerk = allCurrentPerk;
-        d_allStatusMono = AllStatusMono;
+
 
         allCurrentPerk.AddRange(Hypatios.Player.AllStatusInEffect.FindAll(x => x.SourceID != "PermanentPerk"));
         AllStatusMono.AddRange(Hypatios.Player.AllStatusMonos);
@@ -77,6 +76,8 @@ public class ModularUI_PlayerStats : MonoBehaviour
         allCurrentPerk.RemoveAll(x => x.IsTiedToStatusMono == true);
         allCurrentPerk.RemoveAll(x => Hypatios.Assets.GetStatusEffect(x.statusCategoryType) == null);
         AllStatusMono.RemoveAll(x => Hypatios.Assets.GetStatusEffect(x.statusEffect.GetID()) == null);
+        d_allCurrPerk = allCurrentPerk;
+        d_allStatusMono = AllStatusMono;
 
         List<RPG_CharPerkButton> buttonToRemove = new List<RPG_CharPerkButton>();
         //check missing all status monos

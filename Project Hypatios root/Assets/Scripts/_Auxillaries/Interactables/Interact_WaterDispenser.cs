@@ -15,14 +15,17 @@ public class Interact_WaterDispenser : MonoBehaviour
         HotWater
     }
 
+    public GameObject[] availableWaterCups;
     public GameObject prefab_EmptyCup;
     public GameObject prefab_ColdWater;
     public GameObject prefab_HotWater;
     public Stage currentStage = Stage.Empty;
 
+    private int availableCups = 0;
 
     private void Start()
     {
+        availableCups = availableWaterCups.Length;
         RefreshCups();
     }
 
@@ -34,6 +37,8 @@ public class Interact_WaterDispenser : MonoBehaviour
             return;
         }
         currentStage = Stage.EmptyCup;
+        availableCups--;
+        availableWaterCups[availableCups].gameObject.SetActive(false);
         RefreshCups();
     }
 

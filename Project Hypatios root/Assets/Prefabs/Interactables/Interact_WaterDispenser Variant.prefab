@@ -4819,7 +4819,7 @@ Transform:
   m_LocalScale: {x: 0.08547402, y: 0.04379862, z: 0.093262814}
   m_Children: []
   m_Father: {fileID: 4896873702598580965}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &740009626
 MeshFilter:
@@ -5017,138 +5017,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &1699840689
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1699840690}
-  - component: {fileID: 1699840693}
-  - component: {fileID: 1699840692}
-  - component: {fileID: 1699840691}
-  - component: {fileID: 1699840694}
-  m_Layer: 0
-  m_Name: TakeCup.Touchable
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1699840690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699840689}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: -0.058, z: 1.28}
-  m_LocalScale: {x: 0.27762, y: 0.22941, z: 0.13711885}
-  m_Children: []
-  m_Father: {fileID: 4896873702598580965}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1699840693
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699840689}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1699840692
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699840689}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!65 &1699840691
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699840689}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1699840694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699840689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnInteractEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1621899644}
-        m_MethodName: PutCup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnHoveringEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnNotHoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  interactSound: {fileID: 0}
-  useHoverEvent: 0
-  useGenericSound: 0
-  interactDescription: Get a cup
-  text_interactPrompt: A door has been unlocked.
-  time_interactPrompt: 4
 --- !u!1 &1934312757
 GameObject:
   m_ObjectHideFlags: 0
@@ -5181,7 +5049,7 @@ Transform:
   m_LocalScale: {x: 0.08547402, y: 0.04379862, z: 0.093262814}
   m_Children: []
   m_Father: {fileID: 4896873702598580965}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1934312762
 MeshFilter:
@@ -5538,10 +5406,223 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d843fd194d3f24d8064f626a069a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableWaterCups:
+  - {fileID: 4174612366496727385}
+  - {fileID: 4935815232043530332}
+  - {fileID: 4935815231438071342}
+  - {fileID: 4935815231248100827}
   prefab_EmptyCup: {fileID: 5241873431166286569}
   prefab_ColdWater: {fileID: 8085864584743504799}
   prefab_HotWater: {fileID: 8085864585576270473}
   currentStage: 0
+--- !u!64 &1301978645840117720
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4174612366496727385}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8849579028689351621, guid: 117be6dac56e7d94ea1348f0e8b61e6d, type: 3}
+--- !u!114 &943304535700911704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4174612366496727385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1621899644}
+        m_MethodName: PutCup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
+  interactDescription: Get a cup
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
+--- !u!64 &3138211407878541168
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815232043530332}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8849579028689351621, guid: 117be6dac56e7d94ea1348f0e8b61e6d, type: 3}
+--- !u!114 &3701414657908782144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815232043530332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1621899644}
+        m_MethodName: PutCup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
+  interactDescription: Get a cup
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
+--- !u!64 &8721627079276623744
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815231438071342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8849579028689351621, guid: 117be6dac56e7d94ea1348f0e8b61e6d, type: 3}
+--- !u!114 &5773626586971968826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815231438071342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1621899644}
+        m_MethodName: PutCup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
+  interactDescription: Get a cup
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
+--- !u!64 &4899951458561423636
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815231248100827}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8849579028689351621, guid: 117be6dac56e7d94ea1348f0e8b61e6d, type: 3}
+--- !u!114 &2923903246659720303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935815231248100827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9afd753bb4252e14787d39d767820609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1621899644}
+        m_MethodName: PutCup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnHoveringEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnNotHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  interactSound: {fileID: 0}
+  useHoverEvent: 0
+  useGenericSound: 0
+  interactDescription: Get a cup
+  text_interactPrompt: A door has been unlocked.
+  time_interactPrompt: 4
 --- !u!1001 &4935815231648153023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5631,12 +5712,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 040c423cccd3b7f45a27db1c367c6be5, type: 3}
---- !u!1 &8085864585576270473 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3767625244118284086, guid: 040c423cccd3b7f45a27db1c367c6be5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4935815231648153023}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8898288588318249011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4540362478202563980, guid: 040c423cccd3b7f45a27db1c367c6be5,
@@ -5646,6 +5721,12 @@ Transform:
 --- !u!1 &3695616633021250591 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8590333105004872096, guid: 040c423cccd3b7f45a27db1c367c6be5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4935815231648153023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8085864585576270473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3767625244118284086, guid: 040c423cccd3b7f45a27db1c367c6be5,
     type: 3}
   m_PrefabInstance: {fileID: 4935815231648153023}
   m_PrefabAsset: {fileID: 0}
@@ -5873,7 +5954,7 @@ PrefabInstance:
     - target: {fileID: 2571785046055545832, guid: 62fd3c86aa2138444801cdd1184d2ce4,
         type: 3}
       propertyPath: m_Name
-      value: Interact_WaterDispenser
+      value: Interact_WaterDispenser Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2571785046055545839, guid: 62fd3c86aa2138444801cdd1184d2ce4,
         type: 3}
@@ -5932,6 +6013,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62fd3c86aa2138444801cdd1184d2ce4, type: 3}
+--- !u!1 &4935815232043530332 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2571785046882141871, guid: 62fd3c86aa2138444801cdd1184d2ce4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7480295442630639347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4935815231248100827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2571785046100382504, guid: 62fd3c86aa2138444801cdd1184d2ce4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7480295442630639347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4935815231438071342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2571785047353645277, guid: 62fd3c86aa2138444801cdd1184d2ce4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7480295442630639347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4174612366496727385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6782538441399041962, guid: 62fd3c86aa2138444801cdd1184d2ce4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7480295442630639347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4935815231192798491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2571785046055545832, guid: 62fd3c86aa2138444801cdd1184d2ce4,

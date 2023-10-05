@@ -127,16 +127,38 @@ MonoBehaviour:
   AllConditions:
   - conditionType: 20
     trivia: {fileID: 11400000, guid: a33fe67fdea42224291f2a2af4c1b373, type: 2}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
     randomChance: 0.1
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
+    conditioner: {fileID: 0}
+    dontTriggerConditioner: 0
+    itemNeeded: {fileID: 0}
+    itemCount: 1
+    flagEvent: {fileID: 0}
   - conditionType: 21
     trivia: {fileID: 0}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
     randomChance: 0.13
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
+    conditioner: {fileID: 0}
+    dontTriggerConditioner: 0
+    itemNeeded: {fileID: 0}
+    itemCount: 1
+    flagEvent: {fileID: 0}
   conditionForTrue: 2
   OnTriggerStart:
     m_PersistentCalls:
@@ -162,6 +184,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isStartImmediately: 1
+  constantTriggerCheck: 0
+  printOutput: 0
 --- !u!1 &2300411387052289901
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +215,6 @@ Transform:
   m_Children:
   - {fileID: 3205968754585812794}
   - {fileID: 4367917611525620978}
-  - {fileID: 3260401541737612349}
   - {fileID: 2204103105390282127}
   m_Father: {fileID: 1815203470249633267}
   m_RootOrder: 2
@@ -268,6 +291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2204103105390282127}
   - component: {fileID: 7213100018242839272}
+  - component: {fileID: 9070504810962403693}
   m_Layer: 0
   m_Name: Conditioner.After2ndEncounter
   m_TagString: Untagged
@@ -287,7 +311,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1181719314013929153}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7213100018242839272
 MonoBehaviour:
@@ -301,14 +325,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24dd470f2931e3498a512c09bdd3986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Title: 2ndTimer Encounter
+  Title: everTimer Mobius Encounter
   AllConditions:
   - conditionType: 2
     trivia: {fileID: 0}
+    switchCondition: {fileID: 0}
     eventKeyName: EnemyEncounter.MobiusExplorer
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
     randomChance: 0.1
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
+    conditioner: {fileID: 0}
+    dontTriggerConditioner: 0
+    itemNeeded: {fileID: 0}
+    itemCount: 1
+    flagEvent: {fileID: 0}
   conditionForTrue: 0
   OnTriggerStart:
     m_PersistentCalls:
@@ -326,7 +361,29 @@ MonoBehaviour:
         m_CallState: 2
   OnTriggerFail:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3205968754585812798}
+        m_MethodName: TriggerMessage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9070504810962403693}
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTriggerFunction:
     m_PersistentCalls:
       m_Calls: []
@@ -334,6 +391,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isStartImmediately: 1
+  constantTriggerCheck: 0
+  printOutput: 0
+--- !u!114 &9070504810962403693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2544062377606312470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc7acf69e479e3c4782a4e39fea9efcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventKeyName: EnemyEncounter.MobiusExplorer
 --- !u!1 &3205968754378139292
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,8 +746,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dialogue_Content: "That\u2019s a Mobius Explorer. It can cast spells like slowing
     down your movement. You need to bring it down."
-  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 6
   OnDialogTriggered:
@@ -933,107 +1005,6 @@ MonoBehaviour:
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &8794921205057500822
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3260401541737612349}
-  - component: {fileID: 2035793277256345131}
-  - component: {fileID: 7560907969724720229}
-  m_Layer: 0
-  m_Name: Conditioner.FirstTimer
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 162a029e54bb6da4ab1616d67922c368, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3260401541737612349
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8794921205057500822}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1181719314013929153}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2035793277256345131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8794921205057500822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b24dd470f2931e3498a512c09bdd3986, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Title: FirstTimer Encounter
-  AllConditions:
-  - conditionType: 2
-    trivia: {fileID: 0}
-    eventKeyName: EnemyEncounter.MobiusExplorer
-    chamberAtLeastComplete: 2
-    chamberAtMostComplete: 9999
-    randomChance: 0.1
-  conditionForTrue: 1
-  OnTriggerStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3205968754585812798}
-        m_MethodName: TriggerMessage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7560907969724720229}
-        m_MethodName: TriggerEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnTriggerFail:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerFunction:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerFunctionFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  isStartImmediately: 1
---- !u!114 &7560907969724720229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8794921205057500822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc7acf69e479e3c4782a4e39fea9efcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventKeyName: EnemyEncounter.MobiusExplorer
 --- !u!1001 &1573856431387591031
 PrefabInstance:
   m_ObjectHideFlags: 0
