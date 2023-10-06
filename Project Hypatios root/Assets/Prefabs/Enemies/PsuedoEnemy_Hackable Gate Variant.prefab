@@ -48,6 +48,53 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2309490568346013485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7976404326041695653}
+  - component: {fileID: 7114398637339168178}
+  m_Layer: 0
+  m_Name: navmeshObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7976404326041695653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309490568346013485}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1504961228960690664}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &7114398637339168178
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2309490568346013485}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.235, y: 3.57, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 1}
+  m_TimeToStationary: 0.5
 --- !u!1001 &602811560083501139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -118,7 +165,7 @@ PrefabInstance:
     - target: {fileID: 2071426752396546313, guid: d0c9fa9cc4dab4b429c9a22a3a717360,
         type: 3}
       propertyPath: m_Name
-      value: PsuedoEnemy_Hackable Gate
+      value: PsuedoEnemy_Hackable Gate Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5849920131336995635, guid: d0c9fa9cc4dab4b429c9a22a3a717360,
         type: 3}
@@ -145,3 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d78183d6598564586c8302c64722f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1504961228960690664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2071426752578142651, guid: d0c9fa9cc4dab4b429c9a22a3a717360,
+    type: 3}
+  m_PrefabInstance: {fileID: 602811560083501139}
+  m_PrefabAsset: {fileID: 0}

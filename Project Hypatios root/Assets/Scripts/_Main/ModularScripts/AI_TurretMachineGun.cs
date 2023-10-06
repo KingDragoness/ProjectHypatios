@@ -10,6 +10,7 @@ public class AI_TurretMachineGun : MonoBehaviour
     public ModularTurretGun turretGun;
     public Transform primaryPivot;
     public float rotateSpeed = 20f;
+    public float desiredTargetDistLimit = 100f;
     public Alliance Alliance = Alliance.Player;
     public float limitAxisX = 4f;
     public float minAxisY = 4f;
@@ -17,6 +18,7 @@ public class AI_TurretMachineGun : MonoBehaviour
     private Entity targetBot;
     private Vector3 currentPosTargetMove;
     private bool canSeeEnemy = false;
+    private float _cooldownFindTarget = 0.25f;
 
     private void Awake()
     {
@@ -26,8 +28,13 @@ public class AI_TurretMachineGun : MonoBehaviour
     {
         if (Time.timeScale <= 0) return;
 
+        _cooldownFindTarget -= Time.deltaTime;
 
-        FindEnemyTarget();
+        if (_cooldownFindTarget <= 0f)
+        {
+            FindEnemyTarget();
+            _cooldownFindTarget = 0.25f;
+        }
 
         if (targetBot != null)
             MoveAndTarget();
@@ -35,7 +42,7 @@ public class AI_TurretMachineGun : MonoBehaviour
     }
     private void FindEnemyTarget()
     {
-        targetBot = Hypatios.Enemy.FindEnemyEntity(Alliance, transform.position);
+        targetBot = Hypatios.Enemy.FindEnemyEntity(Alliance, transform.position, 0.1f, desiredTargetDistLimit);
     }
 
 
