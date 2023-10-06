@@ -47,7 +47,7 @@ public class wallRun : MonoBehaviour
 
     private void Start()
     {
-        originFPSCam_FOV = FPScam.fieldOfView;
+        //originFPSCam_FOV = FPScam.fieldOfView;
         wallRunGravity = baseWallRunGravity;
     }
 
@@ -222,7 +222,18 @@ public class wallRun : MonoBehaviour
         wallRunGravity = baseWallRunGravity;
 
         if (isScoping == false) cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunFovTime * Time.deltaTime);
-        if (isScoping == false) FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView, originFPSCam_FOV, wallRunFovTime * Time.deltaTime);
+        if (isScoping == false) FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView, FPSCamera_FOV(), wallRunFovTime * Time.deltaTime);
         tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
+    }
+
+    public float FPSCamera_FOV()
+    {
+        float fov = originFPSCam_FOV;
+        float min_FOV = 60f;
+        float delta_fov = originFPSCam_FOV - min_FOV;
+
+        fov = min_FOV + (delta_fov * 3f / 4f);
+
+        return fov;
     }
 }
