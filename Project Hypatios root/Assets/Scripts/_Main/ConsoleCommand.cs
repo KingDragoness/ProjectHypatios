@@ -273,6 +273,10 @@ public class ConsoleCommand : MonoBehaviour
                 SteamAchievement(args);
                 break;
 
+            case "unlockpdx":
+                UnlockAllParadox(args);
+                break;
+
             default:
                 if (!success)
                 {
@@ -1130,6 +1134,22 @@ public class ConsoleCommand : MonoBehaviour
         }
     }
 
+    protected void UnlockAllParadox(string[] args)
+    {
+        try
+        {
+            var gameScript = Hypatios.Game;
+            gameScript.DEBUG_UnlockAllParadox = !gameScript.DEBUG_UnlockAllParadox;
+            SendConsoleMessage($"Unlock All Paradox: {gameScript.DEBUG_UnlockAllParadox}");
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! unlockpdx");
+
+        }
+    }
+
+
 
     protected void ScreenSize(string[] args)
     {
@@ -1326,6 +1346,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'soul' to get soul");
             helpCommands.Add("'triggerflag' to trigger flag. 'help triggerflag' to trigger flags.");
             helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");
+            helpCommands.Add("'unlockpdx' to temporarily unlock all paradoxes.");
             helpCommands.Add("'wstat' to stat world objects. 'help wstat' to show more wstat commands");
         }
 

@@ -10,6 +10,13 @@ public class ThrowProjectileEnemy : MonoBehaviour
     public float variableForce;
     public HitAndDamageProjectile projectile;
 
+    public void SpawnProjectile()
+    {
+        var prefab1 = FireProjectile();
+        prefab1.gameObject.SetActive(true);
+
+    }
+
     public HitAndDamageProjectile FireProjectile()
     {
         var projectile1 = Instantiate(projectile, origin.transform.position, origin.transform.rotation);

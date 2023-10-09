@@ -7,6 +7,7 @@ public class Level2MinigameCasino : MonoBehaviour
 {
 
     public float casinoTimerLimit = 90;
+    public float cooldownSpawnEnemy = 3f;
     public int score = 0;
 
     [Space]
@@ -40,10 +41,19 @@ public class Level2MinigameCasino : MonoBehaviour
             text_score.text = score.ToString();
             text_roundTimer.text = $"{Mathf.Round(f_timerCasino*10)/10f}/{casinoTimerLimit}s".ToString();
             OnGameStarted?.Invoke();
+            float timerPercentage = f_timerCasino / casinoTimerLimit;
 
             if (f_timerCasino < casinoTimerLimit - 1)
             {
-                if (f_timerSpawnShootable > 3)
+                if (f_timerSpawnShootable > cooldownSpawnEnemy)
+                {
+                    TrySpawnShootable();
+                }
+            }
+
+            if (timerPercentage > 0.5f)
+            {
+                if (f_timerSpawnShootable > (cooldownSpawnEnemy /2f))
                 {
                     TrySpawnShootable();
                 }
@@ -60,6 +70,7 @@ public class Level2MinigameCasino : MonoBehaviour
     private void TrySpawnShootable()
     {
         float chance = Random.Range(0, 1f);
+
 
         if (chance > 0.1f)
         {

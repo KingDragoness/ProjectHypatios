@@ -22,40 +22,76 @@ public class P_EnableObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
         foreach(var eo in enableObjects)
         {
-            if (eo.key != paradoxLevel.GetValue())
+            if (Hypatios.Game.DEBUG_UnlockAllParadox == false)
             {
-                foreach (var go in eo.allObjects)
+                if (eo.key != paradoxLevel.GetValue())
                 {
-                    if (go == null) continue;
-
-                    if (go.gameObject.activeSelf)
+                    foreach (var go in eo.allObjects)
                     {
-                        go.gameObject.SetActive(false);
+                        DeactivateObject(go);
+                    }
+
+                }
+                else
+                {
+                    if (paradoxLevel.isPreviewing && eo.dontPreviewThis)
+                    {
+                        continue;
+                    }
+
+                    foreach (var go in eo.allObjects)
+                    {
+                        EnableObject(go);
                     }
                 }
-
-                continue;
             }
-
-            if (paradoxLevel.isPreviewing && eo.dontPreviewThis)
+            else
             {
-                continue;
-            }
-
-            foreach(var go in eo.allObjects)
-            {
-                if (go == null) continue;
-
-                if (!go.gameObject.activeSelf)
+                if (paradoxLevel.isPreviewing && eo.dontPreviewThis)
                 {
-                    go.gameObject.SetActive(true);
+                    continue;
                 }
-            }    
+
+                if (eo.key != paradoxLevel.buyTargetValue)
+                {
+                    foreach (var go in eo.allObjects)
+                    {
+                        DeactivateObject(go);
+                    }
+
+                }
+                else
+                {
+                    foreach (var go in eo.allObjects)
+                    {
+                        EnableObject(go);
+                    }
+                }
+            }
+     
         }
 
     }
 
+    public void DeactivateObject(GameObject go)
+    {
+        if (go == null) return;
+
+        if (go.gameObject.activeSelf)
+        {
+            go.gameObject.SetActive(false);
+        }
+    }
+    public void EnableObject(GameObject go)
+    {
+        if (go == null) return;
+
+        if (!go.gameObject.activeSelf)
+        {
+            go.gameObject.SetActive(true);
+        }
+    }
 }
