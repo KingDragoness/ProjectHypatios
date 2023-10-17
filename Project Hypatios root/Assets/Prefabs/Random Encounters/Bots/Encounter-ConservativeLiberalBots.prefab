@@ -81,6 +81,7 @@ MonoBehaviour:
   AllConditions:
   - conditionType: 20
     trivia: {fileID: 11400000, guid: a33fe67fdea42224291f2a2af4c1b373, type: 2}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
@@ -94,8 +95,10 @@ MonoBehaviour:
     dontTriggerConditioner: 0
     itemNeeded: {fileID: 0}
     itemCount: 1
+    flagEvent: {fileID: 0}
   - conditionType: 21
     trivia: {fileID: 0}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
@@ -109,7 +112,8 @@ MonoBehaviour:
     dontTriggerConditioner: 0
     itemNeeded: {fileID: 0}
     itemCount: 1
-  conditionForTrue: 0
+    flagEvent: {fileID: 0}
+  conditionForTrue: 2
   OnTriggerStart:
     m_PersistentCalls:
       m_Calls:
@@ -146,6 +150,7 @@ MonoBehaviour:
       m_Calls: []
   isStartImmediately: 1
   constantTriggerCheck: 0
+  printOutput: 0
 --- !u!1 &6416419209167749509
 GameObject:
   m_ObjectHideFlags: 0
