@@ -10,6 +10,7 @@ public class BaseStatValue : ScriptableObject
     public string ID = "total_Enemy_Killed";
     public string displayText = "Total Kills";
     public bool overallOnly = false; //For total deaths and total Theratios killed
+    public bool disableStat = false; //Theratios disabled
 
     public string GetID()
     {

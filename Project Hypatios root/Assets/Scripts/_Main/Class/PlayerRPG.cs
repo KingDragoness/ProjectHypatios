@@ -51,7 +51,10 @@ public class PlayerRPG : MonoBehaviour
                         Hypatios.Player.RemoveStatusEffectGroup(sg);
                     }
                 }
-
+                if (itemClass.isTriggerFlag && itemClass.flag != null)
+                {
+                    itemClass.flag.TriggerFlag(itemClass.runLastFlag);
+                }
             }
             else if (itemClass.isGenericItem && itemClass.GENERIC_KTHANID_SERUM)
             {
@@ -75,6 +78,7 @@ public class PlayerRPG : MonoBehaviour
 
                 Hypatios.Player.ReloadStatEffects();
             }
+
 
             Hypatios.Player.Inventory.RemoveItem(itemData);
         }

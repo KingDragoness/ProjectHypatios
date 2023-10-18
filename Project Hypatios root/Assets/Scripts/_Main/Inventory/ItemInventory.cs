@@ -54,6 +54,9 @@ public class ItemInventory : ScriptableObject
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public bool isInstantDashRefill = false;
     [HideIf("isGenericItem", true)] public bool isTriggerTrivia = false;
     [HideIf("isGenericItem", true)] [ShowIf("isTriggerTrivia", true)] public Trivia trivia;
+    [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public bool isTriggerFlag = false;
+    [HideIf("isGenericItem", true)] [ShowIf("isTriggerFlag", true)] public GlobalFlagSO flag;
+    [HideIf("isGenericItem", true)] [ShowIf("isTriggerFlag", true)] [Range(1,100)] public int runLastFlag = 1;
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public float consume_HealAmount = 10;
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public float consume_AlcoholAmount = 0;
     [HideIf("isGenericItem", true)] [ShowIf("category", Category.Consumables)] public BaseStatusEffectObject statusEffect;

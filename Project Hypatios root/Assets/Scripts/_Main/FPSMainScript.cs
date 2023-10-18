@@ -304,7 +304,7 @@ public class FPSMainScript : MonoBehaviour
 
         var flagSO = Hypatios.Assets.GetGlobalFlag(flagID);
         GlobalFlagSave newFlag = new GlobalFlagSave(flagID, run);
-        Instantiate(flagSO.PrefabToSpawn);
+        if (flagSO.PrefabToSpawn != null) Instantiate(flagSO.PrefabToSpawn);
 
         Game_GlobalFlags.Add(newFlag);
     }

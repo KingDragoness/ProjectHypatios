@@ -28,4 +28,9 @@ public class GlobalFlagSO : ScriptableObject
     {
         Hypatios.Game.TriggerFlag(name, _run);
     }
+
+    public bool IsFlagTriggered()
+    {
+        return Hypatios.Game.Check_FlagTriggered(GetID());
+    }
 }

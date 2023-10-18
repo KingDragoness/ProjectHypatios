@@ -33,7 +33,8 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
 
     public void Inspect()
     {
-        dialogInspect.TriggerMessage();
+        //dialogInspect.TriggerMessage();
+        DeadDialogue.PromptNotifyMessage_Mod(dialogInspect.Dialogue_Content, 5f);
     }
 
     public void BuyPerk()

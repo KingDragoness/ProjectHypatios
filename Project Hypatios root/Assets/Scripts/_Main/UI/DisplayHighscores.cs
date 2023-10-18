@@ -85,6 +85,9 @@ public class DisplayHighscores : MonoBehaviour
             if (entry.overallOnly && !isPersistent)
                 continue;
 
+            if (entry.disableStat)
+                continue;
+
             var prefab1 = Instantiate(statButton, parentPlayerStat);
             prefab1.gameObject.SetActive(true);
             prefab1.isPersistent = isPersistent;
