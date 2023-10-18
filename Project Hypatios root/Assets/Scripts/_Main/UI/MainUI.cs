@@ -20,7 +20,7 @@ public class MainUI : MonoBehaviour
         Paradox,
         Crafting,
         Shop,
-        Cinematic,
+        Cinematic, //please note if bool "is_CachedCinematicMode" is not checked then it will fallback to Default
         FreecamMode,
         Trivia,
         Favorite,
@@ -58,6 +58,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject LevelMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
+    [FoldoutGroup("References")] public GameObject postProcessUI;
 
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
     [FoldoutGroup("Tooltips")] public RectTransform tooltipBig;
@@ -69,7 +70,8 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("Events")] public GameEvent event_GamePause;
     [FoldoutGroup("Events")] public GameEvent event_GameResume;
 
-    public UIMode current_UI = UIMode.Default;
+    public UIMode CurrentUI { get => current_UI; set => current_UI = value; }
+
     [Range(0f, 1f)] public float UI_Scaling = 1f;
     private bool paused = false;
 
@@ -78,8 +80,10 @@ public class MainUI : MonoBehaviour
     private CanvasGroup cg_Shop;
     private CanvasGroup cg_defaultHUD;
     private CanvasGroup cg_Paradox;
+    private UIMode current_UI = UIMode.Default;
 
     private bool tempoPause = false;
+    private bool is_CachedCinematicMode = false;
 
     private void Awake()
     {
@@ -127,12 +131,12 @@ public class MainUI : MonoBehaviour
 
     public void ChangeCurrentMode(int i)
     {
-        current_UI = (MainUI.UIMode)i;
+        CurrentUI = (MainUI.UIMode)i;
 
     }
     public void ChangeCurrentMode(MainUI.UIMode mode)
     {
-        current_UI = mode;
+        CurrentUI = mode;
 
     }
 
@@ -140,6 +144,8 @@ public class MainUI : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    
 
     public void ShowTooltipBig(RectTransform currentSelection)
     {
@@ -179,6 +185,7 @@ public class MainUI : MonoBehaviour
 
     private bool b_OnActivateNoClipMode = false;
 
+
     void Update()
     {
         //Escape when Trivia Map mode = go back to main menu
@@ -186,16 +193,16 @@ public class MainUI : MonoBehaviour
         {
             bool allowToggle = false;
 
-            if ((current_UI == UIMode.Default | current_UI == UIMode.Cinematic | current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
+            if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
                 && Hypatios.Player.Health.isDead == false)
             {
                 allowToggle = true;
             }
-            else if (current_UI != UIMode.Favorite)
+            else if (CurrentUI != UIMode.Favorite)
             {
                 if (!paused)
                 {
-                    current_UI = UIMode.Default;
+                    CurrentUI = UIMode.Default;
                 }
                 else
                 {
@@ -203,7 +210,7 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (current_UI != UIMode.LevelMap && current_UI != UIMode.Trivia && current_UI != UIMode.Favorite)
+            if (CurrentUI != UIMode.LevelMap && CurrentUI != UIMode.Trivia && CurrentUI != UIMode.Favorite)
             {
                 if (allowToggle)
                 {
@@ -212,12 +219,12 @@ public class MainUI : MonoBehaviour
                     RefreshPauseState();
                 }
             }
-            else if (current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
+            else if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
             {
                 if (allowToggle)
                 {
                     //back to main menu or reset whatever last set
-                    current_UI = UIMode.Default;
+                    CurrentUI = UIMode.Default;
                 }
             }
 
@@ -239,31 +246,32 @@ public class MainUI : MonoBehaviour
             Hypatios.DebugObjectStat.gameObject.SetActive(!b);
         }
 
-        if (current_UI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
+        if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
         {
             if (Input.GetKeyUp(KeyCode.Tab))
             {
-                current_UI = UIMode.Favorite;
+                CurrentUI = UIMode.Favorite;
                 SetTempoPause(true);
             }
         }
-        else if (current_UI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
+        else if (CurrentUI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
         {
-            current_UI = UIMode.Default;
+            CurrentUI = UIMode.Default;
             SetTempoPause(false);
         }
 
-        {
-            RefreshUI_Resolutions();
-        }
+
+        RefreshUI_Resolutions();
+
 
         if (!paused)
         {
 
             bool isIdlePlayer = false;
             bool isUsingCustomCam = false;
+            bool enable_PostFXUI = false;
 
-            if (current_UI == UIMode.Default)
+            if (CurrentUI == UIMode.Default)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -289,14 +297,27 @@ public class MainUI : MonoBehaviour
                 DefaultHUD_UI.gameObject.SetActive(false);
             }
 
+            //Cutscene mode
+            {
+                if (CurrentUI == UIMode.Cinematic && is_CachedCinematicMode == false)
+                {
+                    CurrentUI = UIMode.Default;
+                    ConsoleCommand.Instance.SendConsoleMessage("Cache cinematic mode safety bool is false. Reverting back to default.");
+                }
 
-            if (current_UI == UIMode.Crafting | current_UI == UIMode.kThanidLab | current_UI == UIMode.Paradox | current_UI == UIMode.Weapon | current_UI == UIMode.Shop | current_UI == UIMode.Cinematic
-                | current_UI == UIMode.FreecamMode | current_UI == UIMode.MobiusNet)
+                if (is_CachedCinematicMode == true)
+                {
+                    CurrentUI = UIMode.Cinematic;
+                }
+            }
+
+            if (CurrentUI == UIMode.Crafting | CurrentUI == UIMode.kThanidLab | CurrentUI == UIMode.Paradox | CurrentUI == UIMode.Weapon | CurrentUI == UIMode.Shop | CurrentUI == UIMode.Cinematic
+                | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.MobiusNet)
             {
                 isIdlePlayer = true;
             }
 
-            if (current_UI == UIMode.FreecamMode | current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
+            if (CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
             {
                 isUsingCustomCam = true;
             }
@@ -325,10 +346,9 @@ public class MainUI : MonoBehaviour
 
             //custom modes
             {
-                if (current_UI == UIMode.FreecamMode)
+                if (CurrentUI == UIMode.FreecamMode)
                 {
                     Camera_Noclip.gameObject.SetActive(true);
-
 
                     if (b_OnActivateNoClipMode == false)
                     {
@@ -343,9 +363,10 @@ public class MainUI : MonoBehaviour
                     b_OnActivateNoClipMode = false;
                 }
 
-                if (current_UI == UIMode.Paradox)
+                if (CurrentUI == UIMode.Paradox)
                 {
                     Shop_Paradox_UI.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
 
                     if (ParadoxShopOwner.Instance != null)
                         ParadoxShopOwner.Instance.EnableStateParadox();
@@ -356,35 +377,41 @@ public class MainUI : MonoBehaviour
                         ParadoxShopOwner.Instance.DisableStateParadox();
                 }
 
-                if (current_UI == UIMode.Weapon)
+                if (CurrentUI == UIMode.Weapon)
                 {
                     Shop_Weapon_UI.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
                 }
 
-                if (current_UI == UIMode.Crafting)
+                if (CurrentUI == UIMode.Crafting)
                 {
                     CraftingWeapon_UI.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
                 }
 
-                if (current_UI == UIMode.kThanidLab)
+                if (CurrentUI == UIMode.kThanidLab)
                 {
                     kThanidLab_UI.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
                 }
 
-                if (current_UI == UIMode.MobiusNet)
+                if (CurrentUI == UIMode.MobiusNet)
                 {
                     Internet.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
                 }
 
-                if (current_UI == UIMode.Cinematic)
+                if (CurrentUI == UIMode.Cinematic)
                 {
                     CutsceneHUD_UI.gameObject.SetActive(true);
+                    enable_PostFXUI = true;
                 }
 
-                if (current_UI == UIMode.Favorite)
+                if (CurrentUI == UIMode.Favorite)
                 {
                     FavoriteHUD_UI.gameObject.SetActive(true);
                     Hypatios.Player.disableInput = true;
+                    enable_PostFXUI = true;
                 }
 
             }
@@ -398,30 +425,41 @@ public class MainUI : MonoBehaviour
             else
             {
             }
+
+            if (enable_PostFXUI)
+            {
+                postProcessUI.gameObject.SetActive(true);
+            }
+            else
+            {
+                postProcessUI.gameObject.SetActive(false);
+            }
         }
 
         if (paused)
         {
+            postProcessUI.gameObject.SetActive(true);
+
             if (Hypatios.Input.Pause.triggered)
             {
                 bool allowToggle = false;
 
-                if ((current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap) && Hypatios.Player.Health.isDead == false)
+                if ((CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap) && Hypatios.Player.Health.isDead == false)
                 {
                     allowToggle = true;
                 }        
 
-                if (current_UI == UIMode.Trivia | current_UI == UIMode.LevelMap)
+                if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
                 {
                     if (allowToggle)
                     {
-                        current_UI = UIMode.Default;
+                        CurrentUI = UIMode.Default;
                     }
                 }
 
             }
 
-            if (current_UI == UIMode.Trivia)
+            if (CurrentUI == UIMode.Trivia)
             {
                 if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
                 if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
@@ -429,7 +467,7 @@ public class MainUI : MonoBehaviour
                 if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
                 if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
             }
-            else if (current_UI == UIMode.LevelMap)
+            else if (CurrentUI == UIMode.LevelMap)
             {
                 if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
                 if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
@@ -447,7 +485,22 @@ public class MainUI : MonoBehaviour
         }
     }
 
-  
+    #region Cinematics
+    public void OpenCinematic()
+    {
+        is_CachedCinematicMode = true;
+        CurrentUI = UIMode.Cinematic;
+    }
+
+    public void CloseCinematic()
+    {
+        is_CachedCinematicMode = false;
+        CurrentUI = UIMode.Default;
+
+    }
+
+    #endregion
+
     public void RefreshUI_Resolutions()
     {
         var refResolution = scaler_Main.referenceResolution;

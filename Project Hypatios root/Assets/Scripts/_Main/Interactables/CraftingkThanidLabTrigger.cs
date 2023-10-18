@@ -24,7 +24,7 @@ public class CraftingkThanidLabTrigger : MonoBehaviour
         {
             previewNormalView.gameObject.SetActive(true);
 
-            if (Hypatios.UI.current_UI != MainUI.UIMode.kThanidLab)
+            if (Hypatios.UI.CurrentUI != MainUI.UIMode.kThanidLab)
             {
                 CloseShop();
             }

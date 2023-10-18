@@ -7,6 +7,8 @@ using Sirenix.OdinInspector;
 public class PerkSelectionUI : MonoBehaviour
 {
 
+    [FoldoutGroup("Event Flag")] public GlobalFlagSO flag_KillerPill;
+
     public DeathScreenScript deathScreenScript;
     public DieUI_PerkButton prefabPerkButton;
     public DieUI_PerkButton selectedPerkButton;
@@ -70,10 +72,8 @@ public class PerkSelectionUI : MonoBehaviour
             newButton.gameObject.SetActive(true);
             bool generateTempPerk = false;
 
-            if (chance1 > 0.66f)
-            {
-                generateTempPerk = true;
-            }
+            if (CheckFlagExist(flag_KillerPill)) chance1 = 0.9f;
+            if (chance1 > 0.66f) generateTempPerk = true;
 
             if (generateTempPerk)
             {
@@ -104,6 +104,17 @@ public class PerkSelectionUI : MonoBehaviour
             newButton.RefreshPerk();
             allPerkButtons.Add(newButton);
         }
+    }
+
+    public bool CheckFlagExist(GlobalFlagSO flag)
+    {
+        var saveData = Hypatios.GetHypatiosSave();
+        var flagDat = saveData.Game_GlobalFlags.Find(x => x.ID == flag.GetID());
+
+        if (flagDat != null)
+            return true;
+
+        return false;
     }
 
     public bool IsDuplicatePerkSelect(ModifierEffectCategory _category)

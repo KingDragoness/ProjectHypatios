@@ -118,7 +118,7 @@ public class CraftingWorkstationTrigger : MonoBehaviour
             }
 
 
-            if (Hypatios.UI.current_UI != MainUI.UIMode.Crafting)
+            if (Hypatios.UI.CurrentUI != MainUI.UIMode.Crafting)
             {
                 CloseShop();
             }

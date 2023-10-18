@@ -61,7 +61,7 @@ public class ActivatorRegion : MonoBehaviour
         }
 
 
-        if (allowWhenParadoxMode && (MainUI.Instance.current_UI == MainUI.UIMode.Paradox | MainUI.Instance.current_UI == MainUI.UIMode.LevelMap))
+        if (allowWhenParadoxMode && (MainUI.Instance.CurrentUI == MainUI.UIMode.Paradox | MainUI.Instance.CurrentUI == MainUI.UIMode.LevelMap))
         {
             foreach (GameObject go in TargetObjectRegion)
             {
@@ -69,7 +69,7 @@ public class ActivatorRegion : MonoBehaviour
             }
         }
 
-        if (MainUI.Instance.current_UI != MainUI.UIMode.Paradox)
+        if (MainUI.Instance.CurrentUI != MainUI.UIMode.Paradox)
         {
             foreach (GameObject go in TargetObjectRegion)
             {

@@ -225,11 +225,11 @@ public class BasePerk : ScriptableObject
         }
         else if (category == ModifierEffectCategory.BonusDamageMelee)
         {
-            return $"\"Increases melee damage by +{Value}%, remember only lasts 1 run.\"";
+            return $"\"Increases melee damage by +{Value * 100}%, remember only lasts 1 run.\"";
         }
         else if (category == ModifierEffectCategory.BonusDamageGun)
         {
-            return $"\"Increases gun damage by +{Value}%, remember only lasts 1 run.\"";
+            return $"\"Increases gun damage by +{Value * 100}%, remember only lasts 1 run.\"";
         }
 
 

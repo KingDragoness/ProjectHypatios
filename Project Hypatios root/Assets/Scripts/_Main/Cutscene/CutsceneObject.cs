@@ -85,7 +85,7 @@ public class CutsceneObject : MonoBehaviour
     public void StartCutscene()
     {
         var MainUI1 = MainUI.Instance;
-        MainUI1.current_UI = MainUI.UIMode.Cinematic;
+        MainUI1.OpenCinematic();
         defaultBlendStyle = cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style;
 
         CloseAllCutsceneInstances();
@@ -101,7 +101,7 @@ public class CutsceneObject : MonoBehaviour
     private void StopCutscene()
     {
         var MainUI1 = MainUI.Instance;
-        MainUI1.current_UI = MainUI.UIMode.Default;
+        MainUI1.CloseCinematic();
 
         OnCutsceneEnded?.Invoke();
         cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;

@@ -188,7 +188,7 @@ public class ShopScript : MonoBehaviour
                 previewNormalView.gameObject.SetActive(true);
             }
 
-            if (Hypatios.UI.current_UI != MainUI.UIMode.Weapon)
+            if (Hypatios.UI.CurrentUI != MainUI.UIMode.Weapon)
             {
                 CloseShop();
             }

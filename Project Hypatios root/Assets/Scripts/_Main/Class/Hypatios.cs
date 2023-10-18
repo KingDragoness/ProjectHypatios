@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
@@ -8,7 +11,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Sirenix.OdinInspector;
-using System.Linq;
+
 
 public class Hypatios : MonoBehaviour
 {
@@ -374,9 +377,40 @@ public class Hypatios : MonoBehaviour
     public static HypatiosEvents Event { get => Instance._event; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
 
-    #region Systems (ecs, System)
+    #region Systems
 
+    public static HypatiosSave GetHypatiosSave()
+    {
+        string pathSave = "";
+        pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
+        JsonSerializerSettings settings = FPSMainScript.JsonSettings();
 
+        HypatiosSave hypatiosSave = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathSave), settings);
+
+        return hypatiosSave;
+    }
+
+    /// <summary>
+    /// Save game manually. Needs to type the 'SafetyProtocolCode' to allow safe saving.
+    /// </summary>
+    /// <param name="hypatiosSave"></param>
+    /// <param name="SafetyProtocolCode">Enter "CONFIRM" to allow manual safe.</param>
+    public static void ManualSave(HypatiosSave hypatiosSave, string SafetyProtocolCode, string strData)
+    {
+        bool _check = false;
+
+        if (SafetyProtocolCode == "CONFIRM") _check = true;
+        if (_check == false) return;
+
+        string pathSave = "";
+        pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
+
+        File.WriteAllText(pathSave, strData);
+        if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
+
+        FPSMainScript.savedata = hypatiosSave;
+        FPSMainScript.LoadFromSaveFile = true;
+    }
 
 
 

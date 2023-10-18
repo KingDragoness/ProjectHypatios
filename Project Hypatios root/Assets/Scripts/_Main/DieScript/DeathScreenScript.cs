@@ -40,6 +40,7 @@ public class DeathScreenScript : MonoBehaviour
     public FPSMainScript fpsMainScript;
     [Space]
 
+
     [Header("Cutscene Special")]
     public int DEBUG_CutsceneTest = 0;
     public float speedMultiplierTime = 1;
@@ -175,7 +176,9 @@ public class DeathScreenScript : MonoBehaviour
     {
         string s = "Reaper: ";
 
-        if (FPSMainScript.savedata.Game_TotalRuns == 10)
+        if (perkSelection.CheckFlagExist(perkSelection.flag_KillerPill))
+            s = $"{s} \"Killer Pill will prevent you from permanent kThanid administration.\"";
+        else if (FPSMainScript.savedata.Game_TotalRuns == 10)
             s = $"{s} \"10th death. I've counted it.\"";
         else if (FPSMainScript.savedata.Game_TotalRuns == 1)
             s = $"{s} \"Welcome to the afterlife.\"";
@@ -213,12 +216,7 @@ public class DeathScreenScript : MonoBehaviour
 
     public void LoadTransition()
     {
-        string pathSave = "";
-        pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
-        JsonSerializerSettings settings = FPSMainScript.JsonSettings();
-
-        //overload savefile
-        HypatiosSave hypatiosSave = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(pathSave), settings);
+        HypatiosSave hypatiosSave = Hypatios.GetHypatiosSave();
 
         bool isTemp = false;
 
@@ -232,31 +230,17 @@ public class DeathScreenScript : MonoBehaviour
         else
         {
             hypatiosSave.AllPerkDatas.AddPerkLevel(perkSelection.selectedPerkButton.status);
-
-            //hypatiosSave.Perk_LV_RegenHitpointUpgrade = Perk_LV_RegenHitpointUpgrade;
-            //hypatiosSave.Perk_LV_Soulbonus = Perk_LV_Soulbonus;
-            //hypatiosSave.Perk_LV_ShortcutDiscount = Perk_LV_ShortcutDiscount;
-            //hypatiosSave.Perk_LV_KnockbackRecoil = Perk_LV_KnockbackRecoil;
-            //hypatiosSave.Perk_LV_DashCooldown = Perk_LV_DashCooldown;
-            //hypatiosSave.Perk_LV_IncreaseMeleeDamage = Perk_LV_IncreaseMeleeDamage;
         }
 
-        string jsonTypeNameAll = JsonConvert.SerializeObject(hypatiosSave, Formatting.Indented, new JsonSerializerSettings
-        {
-            TypeNameHandling = TypeNameHandling.All,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore
-        });
+        string jsonTypeNameAll = JsonConvert.SerializeObject(hypatiosSave, Formatting.Indented, FPSMainScript.JsonSettings());
 
-
-        File.WriteAllText(pathSave, jsonTypeNameAll);
-        if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
-        FPSMainScript.savedata = hypatiosSave;
-        FPSMainScript.LoadFromSaveFile = true;
+        Hypatios.ManualSave(hypatiosSave, "CONFIRM", jsonTypeNameAll);
+        //File.WriteAllText(pathSave, jsonTypeNameAll);
+        //if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
+        //FPSMainScript.savedata = hypatiosSave;
+        //FPSMainScript.LoadFromSaveFile = true;
         currentStage = CurrentStage.TransitionLevel;
     }
-
 
     private void FixedUpdate()
     {
@@ -302,6 +286,13 @@ public class DeathScreenScript : MonoBehaviour
             triggered = true;
         }
     }
+
+    #region Save Game
+
+
+
+
+    #endregion
 
     IEnumerator LoadDelay()
     {

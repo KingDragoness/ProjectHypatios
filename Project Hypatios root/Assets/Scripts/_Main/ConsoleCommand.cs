@@ -387,7 +387,7 @@ public class ConsoleCommand : MonoBehaviour
 
             var MainUI1 = MainUI.Instance;
 
-            MainUI1.current_UI = (MainUI.UIMode)enum1;
+            MainUI1.CurrentUI = (MainUI.UIMode)enum1;
 
         }
         catch
