@@ -9,7 +9,7 @@ public class CurseRandomizerSystem : MonoBehaviour
     public int TriggerAfterRun = 5;
     [FoldoutGroup("Ailment Stats")] public float timePlayerGetFatigue = 600f;
     [FoldoutGroup("Ailment Stats")] [Range(0f,1f)] public float chancePanicAttack = 0.1f;
-    [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceDepressionAttack = 0.02f;
+    [FoldoutGroup("Ailment Stats")] [SerializeField] private float chanceDepressionAttack = 0.02f; //Now handled by a script
     [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceBurnDegree = 0.1f;
     [FoldoutGroup("Ailment Stats")] public int tickThreshold_Degree2 = 200;
     [FoldoutGroup("Ailment Stats")] public int tickThreshold_Degree3 = 500;
@@ -88,13 +88,34 @@ public class CurseRandomizerSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Depression only occurs after run 20. 2% per level transition
+    /// Depression only occurs after run 10. 
+    /// 10-50 runs: +0.2% per death
+    /// 50-200 runs: +0.3%/death + 8%
     /// </summary>
+    /// 
+    [FoldoutGroup("DEBUG")] [Button("Sanity Check - Depression")]
     private void CheckDepression()
     {
         if (Hypatios.Player.IsStatusEffectGroup(depression)) return;
         if (isAntiDepressant) return;
-        if (Hypatios.Game.TotalRuns < 20) return;
+        if (Hypatios.Game.TotalRuns < 10) return;
+
+        {
+            float baseChance = 0f;
+
+            if (Hypatios.Game.TotalRuns < 50)
+            {
+                baseChance += 0.2f * (Hypatios.Game.TotalRuns - 10f) * 0.01f;
+            }
+            if (Hypatios.Game.TotalRuns >= 50)
+            {
+                baseChance += 0.3f * (Hypatios.Game.TotalRuns - 50f) * 0.01f;
+            }
+            if (baseChance >= 0.5f) baseChance = 0.5f;
+
+            chanceDepressionAttack = baseChance;
+        }
+
         float c = Random.Range(0f, 1f);
         if (c >= chanceDepressionAttack) return;
 

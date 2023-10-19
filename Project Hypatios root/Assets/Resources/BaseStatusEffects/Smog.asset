@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c617f9dadf266042bb59980b631925c, type: 3}
+  m_Name: Smog
+  m_EditorClassIdentifier: 
+  _displayName: Smog
+  _description: A very thick smog has distrupt Aldrich's air ventilation system.
+    Player suffers -7% movement speed and +2s dash cooldown.
+  PerkSprite: {fileID: 21300000, guid: e4f5dd44f2fb2d54e9990674399c0e14, type: 3}
+  allStatusEffects:
+  - statusCategoryType: 53
+    origin: 
+    Value: 2
+    isPermanent: 1
+    isAntiPotion: 0
+    timer: 9999
+  - statusCategoryType: 5
+    origin: 
+    Value: -0.07
+    isPermanent: 1
+    isAntiPotion: 0
+    timer: 9999
+  craftableEssence: 1
+  requirementCrafting:
+  - inventory: {fileID: 11400000, guid: f5b7365243e23964fb060efb94e26c52, type: 2}
+    count: 1
+  isNegativeAilment: 1
