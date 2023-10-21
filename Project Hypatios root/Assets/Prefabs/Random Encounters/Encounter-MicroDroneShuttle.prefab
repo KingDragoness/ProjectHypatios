@@ -410,6 +410,7 @@ MonoBehaviour:
   AllConditions:
   - conditionType: 20
     trivia: {fileID: 11400000, guid: a33fe67fdea42224291f2a2af4c1b373, type: 2}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
@@ -423,9 +424,10 @@ MonoBehaviour:
     dontTriggerConditioner: 0
     itemNeeded: {fileID: 0}
     itemCount: 1
-    switchCondition: {fileID: 0}
+    flagEvent: {fileID: 0}
   - conditionType: 21
     trivia: {fileID: 0}
+    switchCondition: {fileID: 0}
     eventKeyName: 
     chamberAtLeastComplete: 2
     chamberAtMostComplete: 9999
@@ -439,7 +441,7 @@ MonoBehaviour:
     dontTriggerConditioner: 0
     itemNeeded: {fileID: 0}
     itemCount: 1
-    switchCondition: {fileID: 0}
+    flagEvent: {fileID: 0}
   conditionForTrue: 2
   OnTriggerStart:
     m_PersistentCalls:
@@ -466,6 +468,7 @@ MonoBehaviour:
       m_Calls: []
   isStartImmediately: 1
   constantTriggerCheck: 0
+  printOutput: 0
 --- !u!1 &8357272909968290326
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8357272910373834503
 Transform:
   m_ObjectHideFlags: 0
@@ -600,7 +603,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8357272910373834502}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d071670479bcd9f4db5ed36797e07f6c, type: 3}
   m_Name: 

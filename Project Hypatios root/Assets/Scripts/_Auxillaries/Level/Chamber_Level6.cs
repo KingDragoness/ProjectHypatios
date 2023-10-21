@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
@@ -48,6 +49,13 @@ public class Chamber_Level6 : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public class SpawnParameter
+    {
+        public int thresholdRemainingCustomer = 10;
+        public int limitCustomer = 5;
+    }
+
     [FoldoutGroup("Setup")] public Chamber6_Ingredient prefab_Ingredient;
     [FoldoutGroup("Setup")] public Chamber6_Customer prefab_Customer;
     [FoldoutGroup("Setup")] public EnemyScript prefab_Spider;
@@ -70,6 +78,8 @@ public class Chamber_Level6 : MonoBehaviour
     [FoldoutGroup("UI")] public Slider slider_TimeCount;
 
     public int remainingCustomers = 24;
+    [FoldoutGroup("Parameter Spawn")] public List<SpawnParameter> spawnParameters = new List<SpawnParameter>();
+    [FoldoutGroup("Parameter Spawn")] public float spawnTime = 2f;
     public int customerServed = 0;
     public Gamemode currentGamemode = Gamemode.NotPlay;
     public UnityEvent OnCustomerLeaving;
@@ -102,6 +112,7 @@ public class Chamber_Level6 : MonoBehaviour
         piringList.Add(mainPiring);
         chamberText.textMesh.text = "0";
         Initialization();
+        spawnParameters = spawnParameters.OrderBy(x => x.thresholdRemainingCustomer).ToList();
     }
 
     private void OnDestroy()
@@ -189,46 +200,27 @@ public class Chamber_Level6 : MonoBehaviour
 
                 //customer spawns
                 {
-                    if (remainingCustomers > 16)
+                    if (remainingCustomers > 0)
                     {
+                        SpawnParameter param = GetCurrentSpawnParameter();
+
                         if (allCustomers.Count <= 0)
                         {
                             spawn = true;
                         }
-                        else if (chance > 0.4f && allCustomers.Count <= 3)
+                        
+                        if (param != null)
+                        {
+                            if (param.limitCustomer > allCustomers.Count)
+                            {
+                                spawn = true;
+                            }
+                        }
+                        else
                         {
                             spawn = true;
                         }
-                    }
-                    else if (remainingCustomers > 8)
-                    {
-                        if (allCustomers.Count <= 0)
-                        {
-                            spawn = true;
-                        }
-                        else if (chance > 0.6f && allCustomers.Count <= 3)
-                        {
-                            spawn = true;
-                        }
-                        else if (chance > 0.3f && allCustomers.Count <= 6)
-                        {
-                            spawn = true;
-                        }
-                    }
-                    else if (remainingCustomers > 0)
-                    {
-                        if (allCustomers.Count <= 0)
-                        {
-                            spawn = true;
-                        }
-                        else if (chance > 0.6f && allCustomers.Count <= 4)
-                        {
-                            spawn = true;
-                        }
-                        else if (chance > 0.4f && allCustomers.Count <= 9)
-                        {
-                            spawn = true;
-                        }
+
                     }
 
                     if (spawn)
@@ -252,7 +244,7 @@ public class Chamber_Level6 : MonoBehaviour
                     SpawnSeaver();
                 }
 
-                _cooldownSpawnBots = 2f + Random.Range(0f, 2f);
+                _cooldownSpawnBots = spawnTime + Random.Range(0f, 2f);
             }
         }
 
@@ -308,6 +300,21 @@ public class Chamber_Level6 : MonoBehaviour
     #endregion
 
     #region Actions
+
+    public SpawnParameter GetCurrentSpawnParameter()
+    {
+        SpawnParameter result = null;
+
+        foreach (var spawnParam in spawnParameters)
+        {
+            if (remainingCustomers <= spawnParam.thresholdRemainingCustomer)
+            {
+                return spawnParam;
+            }
+        }
+
+        return result;
+    }
 
     public int CountDecabot()
     {

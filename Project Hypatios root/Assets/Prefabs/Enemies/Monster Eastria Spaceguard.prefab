@@ -3612,6 +3612,7 @@ GameObject:
   - component: {fileID: 7063214558928281377}
   - component: {fileID: 8858990205079309005}
   - component: {fileID: 2730450616723950758}
+  - component: {fileID: 1928730579195716167}
   m_Layer: 12
   m_Name: Monster Eastria Spaceguard
   m_TagString: Untagged
@@ -3672,7 +3673,18 @@ MonoBehaviour:
       m_Calls: []
   OnSelfKilled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1928730579195716167}
+        m_MethodName: SpawnSoulCapsule
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPlayerDetected1:
     m_PersistentCalls:
       m_Calls: []
@@ -3715,6 +3727,19 @@ MonoBehaviour:
   Audio_FireShockwave: {fileID: 8495371713908150459}
   Audio_Voice_ContactInbound: {fileID: 1108100669695734025}
   speed: 0.25
+--- !u!114 &1928730579195716167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588077827295659419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3023b9fe18eea834da4fcd48d88240a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soulAmount: 75
 --- !u!1 &7699779258646949478
 GameObject:
   m_ObjectHideFlags: 0

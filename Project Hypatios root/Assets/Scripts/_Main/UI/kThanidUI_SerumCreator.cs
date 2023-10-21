@@ -9,11 +9,12 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
 
     public kThanidLabUI kthanidUI;
-    [FoldoutGroup("Description")] public Text label_Description;
+    [FoldoutGroup("Description")] public Text label_Description; //placeholder
     [FoldoutGroup("Description")] public Text label_ResultWarning;
     [FoldoutGroup("Description")] public Text label_ButtonSerumCreate;
     [FoldoutGroup("Description")] public Button buttonSerumCreate;
     [FoldoutGroup("Description")] public InputField input_SerumName;
+    [FoldoutGroup("Description")] public InputField input_SerumDescription;
     [FoldoutGroup("Description")] public Color color_errorText;
     [FoldoutGroup("Description")] public Color color_warningText;
 
@@ -45,6 +46,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
     private bool isSerumValid = false;
     private bool isDuplicateEssences = false;
 
+    private string cached_description = "";
     private int positiveEssence = 0;
     private int negativeEssence = 0;
 
@@ -187,6 +189,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         resultSerum.isGenericItem = true;
         resultSerum.GENERIC_KTHANID_SERUM = true;
         resultSerum.SERUM_CUSTOM_NAME = SerumCustomName;
+        resultSerum.SERUM_CUSTOM_DESCRIPTION = cached_description;
         resultSerum.SERUM_CUSTOM_EFFECTS = new List<PerkCustomEffect>();
         resultSerum.SERUM_AILMENTS = new List<string>();
         resultSerum.SERUM_ALCOHOL = SerumAlcoholAmount;
@@ -194,7 +197,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         foreach (var effect in SerumCustomEffects)
         {
             var dupeEffect = effect.Clone();
-            dupeEffect.origin = resultSerum.SERUM_CUSTOM_NAME;
+            dupeEffect.origin =$"{resultSerum.SERUM_CUSTOM_NAME}-{Hypatios.TimeTick}";
             dupeEffect.isPermanent = false;
             dupeEffect.timer = SerumTime;
             resultSerum.SERUM_CUSTOM_EFFECTS.Add(dupeEffect);
@@ -299,13 +302,21 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
     private void UpdateDescription()
     {
+        string str = "";
+
         if (isSerumValid == false)
         {
-            label_Description.text = "Cannot craft serum. You need an essence and an alcohol.";
-            return;
+            str = "Cannot craft serum. You need an essence and an alcohol.";
         }
 
-        label_Description.text = $"{Hypatios.RPG.GetSerumCustomDescription(resultSerum)}";
+        cached_description = input_SerumDescription.text;
+
+        if (cached_description == "" | string.IsNullOrWhiteSpace(cached_description))
+        {
+            str = $"{Hypatios.RPG.GetSerumCustomDescription(resultSerum)}";
+        }
+
+        label_Description.text = str;
     }
 
     private void UpdateWarningText()

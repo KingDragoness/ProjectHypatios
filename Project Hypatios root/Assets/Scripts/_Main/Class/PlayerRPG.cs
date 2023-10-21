@@ -141,6 +141,9 @@ public class PlayerRPG : MonoBehaviour
 
     public string GetSerumCustomDescription(HypatiosSave.ItemDataSave itemDataList)
     {
+        if (itemDataList.SERUM_CUSTOM_DESCRIPTION != "")
+            return itemDataList.SERUM_CUSTOM_DESCRIPTION;
+
         string s1 = "Gain ";
         List<string> allEntries = new List<string>();
         int effectCount = 0;

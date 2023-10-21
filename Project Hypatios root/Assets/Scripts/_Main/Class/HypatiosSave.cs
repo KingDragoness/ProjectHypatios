@@ -316,6 +316,7 @@ public class HypatiosSave
         //Generic items
         public bool isGenericItem = false;
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public string SERUM_CUSTOM_NAME = "Some Serum";
+        [ShowIf("GENERIC_KTHANID_SERUM", true)] public string SERUM_CUSTOM_DESCRIPTION = ""; //empty for default description
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_TIME = 4f;
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public float SERUM_ALCOHOL = 0f;
         [ShowIf("GENERIC_KTHANID_SERUM", true)] public List<PerkCustomEffect> SERUM_CUSTOM_EFFECTS = new List<PerkCustomEffect>();

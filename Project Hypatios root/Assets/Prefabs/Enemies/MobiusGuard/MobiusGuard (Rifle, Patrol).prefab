@@ -3882,6 +3882,7 @@ MonoBehaviour:
   IsAiming: 1
   IsBrainEnabled: 1
   IsHostileOnStart: 1
+  TriggerOtherGuardWhenProvoked: 0
   DEBUG_ShowAIBehaviour: 0
   animator: {fileID: 4236586265989148500}
   bipedIk: {fileID: 7449126111370899355}
@@ -7317,12 +7318,17 @@ PrefabInstance:
     - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: useSecondPass
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: bulletPerSecond
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
+        type: 3}
+      propertyPath: dontFireIfBlocked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178662583337, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}

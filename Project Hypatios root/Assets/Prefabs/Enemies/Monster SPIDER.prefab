@@ -683,6 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 5564195316736043916}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 0
   multiplier: 1
   isPrintDebug: 0
@@ -1062,7 +1063,7 @@ MonoBehaviour:
       m_Calls: []
   currentTarget: {fileID: 0}
   hasSeenPlayer: 0
-  canLookAtTarget: 0
+  useSecondPass: 1
   isAIEnabled: 1
   eyeLocation: {fileID: 5564195318639927960}
   debug_FirstPassHit: {fileID: 0}
@@ -1122,7 +1123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3023b9fe18eea834da4fcd48d88240a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soulAmount: 1
+  soulAmount: 2
 --- !u!1 &5564195316822464967
 GameObject:
   m_ObjectHideFlags: 0
@@ -11903,6 +11904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 5564195316736043916}
   destructibleScript: {fileID: 0}
+  bodyType: 0
   isCriticalHit: 1
   multiplier: 3
   isPrintDebug: 0
