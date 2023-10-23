@@ -564,6 +564,11 @@ public class MobiusGuardEnemy : EnemyScript
         if (_timerBehaviour < 0f)
         {
             _timerBehaviour = EvaluateTimer;
+
+            if (currentBehaviour != null)
+            {
+                _timerBehaviour += currentBehaviour.TimeBufferEvaluate;
+            }
         }
         else return;
 

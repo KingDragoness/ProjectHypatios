@@ -22,6 +22,7 @@ public abstract class MobiusAIBehaviour : MonoBehaviour, IMAIBGoal
     public bool isHostileBehaviour = true;
     public UnityEvent OnEnableBehaviour;
     public UnityEvent OnDisableBehaviour;
+    public float TimeBufferEvaluate = 0.1f;
     [ShowIf("isExclusive")] public List<MobiusAIBehaviour> allowPreviousBehaviours = new List<MobiusAIBehaviour>();
     [HideIf("isExclusive")] public List<MobiusAIBehaviour> unallowPreviousBehaviours = new List<MobiusAIBehaviour>();
     public int basePriority = 0;

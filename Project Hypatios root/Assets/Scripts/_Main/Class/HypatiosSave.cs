@@ -203,6 +203,7 @@ public class HypatiosSave
     #endregion
 
     #region Single run only
+    public int Total_Level_Passed = 0;
     public float Player_CurrentHP = 100;
     public float Player_AlchoholMeter = 0f;
     public int Player_RunSessionUnixTime = 0;

@@ -9,6 +9,7 @@ public class TriviaMapCamera : MonoBehaviour
     public Vector3 maximumExtend;
     public Vector3 center;
     public MouseLook mouselook;
+    public float damping = 5f;
     public float x, y;
     public float PanSpeed = 20f; public float PanSpeedKey = 20f;
     [FoldoutGroup("Raycast")] public LayerMask triviaMapLayermask;
@@ -22,6 +23,7 @@ public class TriviaMapCamera : MonoBehaviour
     private bool isMouse = false;
     private bool isKeyboard = false;
     private Vector3 lastPanPosition;
+    private Vector3 _cameraTargetPos = Vector3.zero;
 
     private void OnDrawGizmosSelected()
     {
@@ -31,15 +33,27 @@ public class TriviaMapCamera : MonoBehaviour
 
     }
 
+    public void OverrideCameraTargetPos(Vector3 _newPos)
+    {
+        _cameraTargetPos = _newPos;
+    }
+
     private void Update()
     {
         isMouse = false;
         isKeyboard = false;
+        var step = damping * Time.unscaledDeltaTime;
 
         HandleKeyBoard();
         HandleMouse();
         CorrectPosition();
         RaycastTrivia();
+
+        float distVector = Vector3.Distance(transform.position, _cameraTargetPos);
+        distVector /= 5f;
+        distVector = Mathf.Clamp(distVector, 0.1f, 10f);
+        transform.position = Vector3.MoveTowards(transform.position, _cameraTargetPos, step * distVector); //damping
+
     }
 
 
@@ -86,11 +100,11 @@ public class TriviaMapCamera : MonoBehaviour
 
             if (enableLook)
             {
-                mouselook.enabled = true;
+                mouselook.disableInput = false;
             }
             else
             {
-                mouselook.enabled = false;
+                mouselook.disableInput = true;
             }
         }
 
@@ -112,7 +126,7 @@ public class TriviaMapCamera : MonoBehaviour
     public void ManualIntervention_Mouse()
     {
         lastPanPosition = Input.mousePosition;
-        PanCamera(Input.mousePosition);
+        //PanCamera(Input.mousePosition);
         mouselook.ExecuteFunction();
 
     }
@@ -150,13 +164,14 @@ public class TriviaMapCamera : MonoBehaviour
 
     void CorrectPosition()
     {
-        Vector3 correctedPosition = transform.position;
+        Vector3 correctedPosition = _cameraTargetPos;
 
         correctedPosition.x = Mathf.Clamp(correctedPosition.x, center.x - maximumExtend.x, center.x + maximumExtend.x);
         correctedPosition.y = Mathf.Clamp(correctedPosition.y, center.y - maximumExtend.y, center.y + maximumExtend.y);
         correctedPosition.z = Mathf.Clamp(correctedPosition.z, center.z - maximumExtend.z, center.z + maximumExtend.z);
 
-        transform.position = correctedPosition;
+
+        _cameraTargetPos = correctedPosition;
     }
 
     void PanCamera(Vector3 newPanPosition)
@@ -174,7 +189,8 @@ public class TriviaMapCamera : MonoBehaviour
         baitTransformCam.eulerAngles = eulerCam;
 
         // Perform the movement
-        transform.Translate(move, baitTransformCam);
+        //transform.Translate(move, baitTransformCam);
+        _cameraTargetPos += baitTransformCam.TransformDirection(move);
 
         // Cache the position
         lastPanPosition = newPanPosition;
@@ -194,7 +210,8 @@ public class TriviaMapCamera : MonoBehaviour
         baitTransformCam.eulerAngles = eulerCam;
 
         // Perform the movement
-        transform.Translate(move, baitTransformCam);
+        //transform.Translate(move, baitTransformCam);
+        _cameraTargetPos += baitTransformCam.TransformDirection(move);
 
         // Cache the position
         lastPanPosition = newPanPosition;

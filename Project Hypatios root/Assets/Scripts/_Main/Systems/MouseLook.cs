@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Sirenix.OdinInspector;
 
 /// MouseLook rotates the transform based on the mouse delta.
 /// Minimum and Maximum values can be used to constrain the possible rotation
@@ -20,6 +21,9 @@ public class MouseLook : MonoBehaviour {
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
     public bool useDeltaTime = false;
+    public bool useDamping = false;
+    [ShowIf("useDamping", optionalValue: true)] public float damping = 10f;
+    public bool disableInput = false;
 	public float sensitivityX = 15F;
 	public float sensitivityY = 15F;
 
@@ -30,11 +34,12 @@ public class MouseLook : MonoBehaviour {
 	public float maximumY = 60F;
 
 	float rotationY = 0F;
-
+    float rotationX = 0F;
     private const string MouseXInput = "Mouse X";
     private const string MouseYInput = "Mouse Y";
     private const string MouseScrollInput = "Mouse ScrollWheel";
 
+    private Vector3 targetRot;
 
     void Start()
     {
@@ -47,8 +52,23 @@ public class MouseLook : MonoBehaviour {
     void Update ()
 	{
         if (Input.GetKey(KeyCode.F)) return;
-        ExecuteFunction();
 
+        if (disableInput == false) ExecuteFunction();
+        if (useDamping)
+        {
+            float distVector = Vector3.Distance(transform.localEulerAngles, targetRot);
+            Debug.Log(distVector);
+            distVector = Mathf.Clamp(distVector, 0.01f, 10f);
+
+            float step = damping * Time.unscaledDeltaTime * distVector;
+            if (useDeltaTime) step = damping * Time.deltaTime;
+
+            float angleX = Mathf.MoveTowardsAngle(transform.localEulerAngles.x, targetRot.x, step);
+            float angleY = Mathf.MoveTowardsAngle(transform.localEulerAngles.y, targetRot.y, step);
+
+
+            transform.localEulerAngles = new Vector3(angleX, angleY, transform.localEulerAngles.z);
+        }
     }
 
     public void ExecuteFunction()
@@ -64,12 +84,19 @@ public class MouseLook : MonoBehaviour {
                 _strengthY = Time.deltaTime * _strengthY * 20;
             }
 
-            float rotationX = transform.localEulerAngles.y + GetInputAxisRight() * _strengthX;
+            rotationX = transform.localEulerAngles.y + GetInputAxisRight() * _strengthX;
             rotationY += GetInputAxisUp() * _strengthY;
 
             rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            if (useDamping == false) //for now only this
+            {
+                transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            }
+            else
+            {
+                targetRot = new Vector3(-rotationY, rotationX, 0);
+            }
         }
         else if (axes == RotationAxes.MouseX)
         {

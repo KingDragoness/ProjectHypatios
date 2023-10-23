@@ -35,6 +35,7 @@ public class FPSMainScript : MonoBehaviour
     [Header("Saves")]
     public int SoulPoint = 0;
     public int TotalRuns = 0;
+    public int TotalLevelPassed = 0; //reset per run
     public float UNIX_Timespan = 0;
     public float Total_UNIX_Timespan = 0;
     public bool everUsed_Paradox = false;
@@ -223,6 +224,15 @@ public class FPSMainScript : MonoBehaviour
             cheatContainer.gameObject.SetActive(true);
             cheatContainer.transform.position = Hypatios.Player.transform.position + Hypatios.Player.transform.forward;
 
+        }
+        if (cheatName == "tt")
+        {
+            for (int x = 0; x < 30; x++)
+            {
+                var trivia = Hypatios.Assets.AllTrivias[x];
+                if (trivia.disableTrivia) continue;
+                trivia.TriggerTrivia();
+            }
         }
     }
 
@@ -452,6 +462,45 @@ public class FPSMainScript : MonoBehaviour
     }
 
 
+
+    #region Transit Level Save System
+    public void SaveGame_TransitLevel(string objectJson)
+    {
+        string pathSave = $"{GameSavePath}/saveLevel_{TotalLevelPassed}.save";
+        File.WriteAllText(pathSave, objectJson);
+        if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"Level transit save file #{TotalLevelPassed.ToString("D2")} has been saved to {pathSave}");
+    }
+
+    [FoldoutGroup("DEBUG")] [Button("Test Transit Level save")]
+    public void DEBUG_TestTransitLvSaves()
+    {
+        var levelFiles = GetAllTransitLevelSaves();
+
+        foreach(var lv in levelFiles)
+        {
+            Debug.Log(lv);
+        }
+    }
+
+
+    public List<string> GetAllTransitLevelSaves()
+    {
+        List<string> listResult = new List<string>();
+        DirectoryInfo d = new DirectoryInfo($"{GameSavePath}");
+        FileInfo[] Files = d.GetFiles("*.save");
+
+        foreach (FileInfo file in Files)
+        {
+            if (file.Name.StartsWith("saveLevel")) listResult.Add(file.FullName);
+        }
+
+
+        return listResult;
+    }
+
+    #endregion
+
+
     #region Save System
     private void LoadFromSaveBuffer()
     {
@@ -467,6 +516,7 @@ public class FPSMainScript : MonoBehaviour
 
         TotalRuns = savedata.Game_TotalRuns;
         SoulPoint = savedata.Game_TotalSouls;
+        TotalLevelPassed = savedata.Total_Level_Passed;
         UNIX_Timespan = savedata.Player_RunSessionUnixTime;
         Total_UNIX_Timespan = savedata.Game_UnixTime;
         currentWeaponStat = savedata.Game_WeaponStats;
@@ -557,6 +607,7 @@ public class FPSMainScript : MonoBehaviour
         hypatiosSave.Game_ChamberSaves = Game_ChamberSaves;
         hypatiosSave.Game_UnixTime = Mathf.RoundToInt(Total_UNIX_Timespan);
         hypatiosSave.Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
+        hypatiosSave.Total_Level_Passed = TotalLevelPassed;
         hypatiosSave.Player_CurrentHP = Player.Health.curHealth;
         hypatiosSave.Player_AlchoholMeter = Player.Health.alcoholMeter;
         hypatiosSave.Player_Inventory = Player.Inventory.allItemDatas;
@@ -605,6 +656,7 @@ public class FPSMainScript : MonoBehaviour
 
     public static void WipeCurrentRunProgress(HypatiosSave hypatiosSave)
     {
+        hypatiosSave.Total_Level_Passed = 0;
         hypatiosSave.Player_CurrentHP = 100;
         hypatiosSave.Player_AlchoholMeter = 0f;
         hypatiosSave.Player_RunSessionUnixTime = 0;
@@ -641,7 +693,6 @@ public class FPSMainScript : MonoBehaviour
 
         Player_RunSessionUnixTime = Mathf.RoundToInt(UNIX_Timespan);
 
-
         SaveGame(targetLevel: level1_Scene.Index, hypatiosSave: hypatiosSave);
 
         string pathLoad = "";
@@ -662,14 +713,17 @@ public class FPSMainScript : MonoBehaviour
 
     public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null, HypatiosSave.EntryCache EntryToken = null)
     {
-        string pathSave = "";
+        string pathSave = path;
+        bool isSameLevel = true;
 
-        if (path == "")
-        {
-            pathSave = GameSavePath + "/defaultSave.save";
-        }
+        if (path == "") pathSave = GameSavePath + "/defaultSave.save";
 
         print(pathSave);
+        if (Application.loadedLevel != targetLevel)
+        {
+            TotalLevelPassed++;
+            isSameLevel = false;
+        }
 
         var _saveData = PackSaveData(targetLevel);
 
@@ -681,7 +735,6 @@ public class FPSMainScript : MonoBehaviour
 
         if (EntryToken != null)
         {
-
             _saveData.sceneEntryCache = EntryToken;
         }
         else
@@ -700,10 +753,10 @@ public class FPSMainScript : MonoBehaviour
 
         MainUI.Instance.SavingGameIcon_UI.gameObject.SetActive(true);
         File.WriteAllText(pathSave, jsonTypeNameAll);
+        if (isSameLevel == false) SaveGame_TransitLevel(jsonTypeNameAll);
         if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
 
     }
-
 
     public void BufferSaveData(string path = "")
     {

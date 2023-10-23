@@ -2360,6 +2360,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours:
   - {fileID: 7755749872232197361}
@@ -3909,7 +3910,7 @@ MonoBehaviour:
   startingBehaviour: {fileID: 7755749871382947777}
   survivalEngageLevel: 0
   confidenceLevel: 0
-  EvaluateTimer: 0.6
+  EvaluateTimer: 0.25
   currentBehaviour: {fileID: 0}
   currentAvailableNextBehaviour: []
   allBehaviours:
@@ -4601,6 +4602,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours:
   - {fileID: 7755749872232197361}
   unallowPreviousBehaviours: []
@@ -4811,6 +4813,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: 0
@@ -5206,6 +5209,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: -100
@@ -5403,10 +5407,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: 30
   currentPriorityLevel: 0
+  minimumRange: 5
+  minimumRange_priority: -10
   multiplierPriority: 0.4
 --- !u!1 &7755749872387733946
 GameObject:
@@ -5812,6 +5819,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: 0
@@ -5869,6 +5877,7 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 0.1
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: 0
@@ -5937,14 +5946,18 @@ MonoBehaviour:
   OnDisableBehaviour:
     m_PersistentCalls:
       m_Calls: []
+  TimeBufferEvaluate: 4
   allowPreviousBehaviours: []
   unallowPreviousBehaviours: []
   basePriority: 5
   currentPriorityLevel: 0
-  move_Speed: 8
+  minimumRange: 5
+  nearPlayerRadius: 10
+  minimumRange_priority: 20
+  move_Speed: 9
   animFloatParam_Speed: 0.9
   multiplier_FloatParam_Speed: 0.2
-  distanceRandomSphere: 30
+  distanceRandomSphere: 50
   cooldownFindNewEscapePoint: 5
   distThresholdLimit: 5
   dangerousWeapons:
@@ -5979,7 +5992,7 @@ Transform:
   m_GameObject: {fileID: 7755749872747352298}
   m_LocalRotation: {x: -0.028937787, y: 0.027610868, z: 0.69753814, w: 0.7154306}
   m_LocalPosition: {x: -0.0138, y: 0.1036, z: 0.0019}
-  m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
+  m_LocalScale: {x: 0.11, y: 0.11, z: 0.11}
   m_Children:
   - {fileID: 7755749872602468350}
   - {fileID: 7755749872296710501}
@@ -7238,17 +7251,17 @@ PrefabInstance:
     - target: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -0.0176
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2839
+      value: 0.2249
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178288853187, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
@@ -7328,7 +7341,7 @@ PrefabInstance:
     - target: {fileID: 5120115178288853188, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}
       propertyPath: dontFireIfBlocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5120115178662583337, guid: 5c6c4e1d960547f41bfe5ec0409806b3,
         type: 3}

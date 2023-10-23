@@ -5,6 +5,10 @@ using UnityEngine;
 public class MAIB_Escape : MobiusAIBehaviour
 {
 
+    public float minimumRange = 3f;
+    public float nearPlayerRadius = 12f;
+    public int minimumRange_priority = -50;
+    [Space]
     public float move_Speed = 2f;
     public float animFloatParam_Speed = 0.9f;
     public float multiplier_FloatParam_Speed = 0.2f;
@@ -19,11 +23,22 @@ public class MAIB_Escape : MobiusAIBehaviour
 
     public override int CalculatePriority()
     {
+        float dist = 999f;
+
+        if (mobiusGuardScript.currentTarget != null)
+        {
+            dist = Vector3.Distance(mobiusGuardScript.transform.position, mobiusGuardScript.currentTarget.transform.position);
+        }
+
         int priority = -(int)mobiusGuardScript.survivalEngageLevel + basePriority;
 
         if (IsWeaponDangerous())
         {
             priority += 20;
+        }
+        if (minimumRange > dist)
+        {
+            return minimumRange_priority;
         }
 
         return priority;
@@ -83,6 +98,23 @@ public class MAIB_Escape : MobiusAIBehaviour
         {
             escapePos = IsopatiosUtility.RandomNavSphere(mobiusGuardScript.transform.position, distanceRandomSphere, -1);
             cooldown = cooldownFindNewEscapePoint;
+        }
+
+        //if escape pos too near with the player, rapidly search again
+        float distPlayer_esc = 999f;
+
+        if (mobiusGuardScript.currentTarget != null)
+        {
+            distPlayer_esc = Vector3.Distance(escapePos, mobiusGuardScript.currentTarget.transform.position);
+        }
+
+        int tries = 0;
+
+        while(tries < 5 && distPlayer_esc < nearPlayerRadius)
+        {
+            escapePos = IsopatiosUtility.RandomNavSphere(mobiusGuardScript.transform.position, distanceRandomSphere, -1);
+            distPlayer_esc = Vector3.Distance(escapePos, mobiusGuardScript.currentTarget.transform.position);
+            tries++;
         }
 
         float paramSpeed = mobiusGuardScript.agent.velocity.magnitude * multiplier_FloatParam_Speed;

@@ -190,7 +190,8 @@ public class TriviaMapUI : MonoBehaviour
     public void LookAtTriviaBall(TriviaShortButton triviaButton)
     {
         var ball = allTriviaButtons.Find(x => x.trivia == triviaButton.trivia);
-        triviaCam.transform.position = ball.gameObject.transform.position + offsetLook;
+        triviaCam.OverrideCameraTargetPos(ball.gameObject.transform.position + offsetLook);
+        //triviaCam.transform.position = ball.gameObject.transform.position + offsetLook;
         triviaCam.transform.LookAt(ball.transform);
         triviaCam.ManualIntervention_Mouse();
 
