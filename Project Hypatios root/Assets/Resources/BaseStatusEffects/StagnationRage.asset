@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c617f9dadf266042bb59980b631925c, type: 3}
+  m_Name: StagnationRage
+  m_EditorClassIdentifier: 
+  _displayName: Stagnation Rage
+  _description: Outraged by the slow of progress, Aldrich gains melee damage 100%,
+    movement speed +25%, armor rating +1.
+  PerkSprite: {fileID: 21300000, guid: b6d39fb82c314224eb2d270f4183aa67, type: 3}
+  allStatusEffects:
+  - statusCategoryType: 99
+    origin: 
+    Value: 1
+    isPermanent: 1
+    isAntiPotion: 0
+    timer: 9999
+  - statusCategoryType: 5
+    origin: 
+    Value: 0.25
+    isPermanent: 1
+    isAntiPotion: 0
+    timer: 9999
+  - statusCategoryType: 9
+    origin: 
+    Value: 1
+    isPermanent: 1
+    isAntiPotion: 0
+    timer: 9999
+  craftableEssence: 1
+  requirementCrafting:
+  - inventory: {fileID: 11400000, guid: bb281aab414d15b4d9a2e51ae9d09503, type: 2}
+    count: 1
+  isNegativeAilment: 0

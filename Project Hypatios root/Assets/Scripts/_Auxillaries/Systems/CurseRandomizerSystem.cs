@@ -8,6 +8,8 @@ public class CurseRandomizerSystem : MonoBehaviour
 
     public int TriggerAfterRun = 5;
     [FoldoutGroup("Ailment Stats")] public float timePlayerGetFatigue = 600f;
+    [FoldoutGroup("Ailment Stats")] public float unixTime_GetStagnationRage = 1500f; //25 minutes
+    [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceStagnationRage = 0.05f;
     [FoldoutGroup("Ailment Stats")] [Range(0f,1f)] public float chancePanicAttack = 0.1f;
     [FoldoutGroup("Ailment Stats")] [SerializeField] private float chanceDepressionAttack = 0.02f; //Now handled by a script
     [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceBurnDegree = 0.1f;
@@ -18,6 +20,7 @@ public class CurseRandomizerSystem : MonoBehaviour
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject panicAttack;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject chamberFatigue;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject antiDepressant;
+    [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject stagnationRage;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fireRetardant;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree2;
     [FoldoutGroup("Status Effects")] [SerializeField] private BaseStatusEffectObject fire_degree3;
@@ -74,6 +77,7 @@ public class CurseRandomizerSystem : MonoBehaviour
         CheckFatigue();
         CheckBurning();
         CheckPanic();
+        CheckRage();
     }
 
     #region Ailments
@@ -85,6 +89,20 @@ public class CurseRandomizerSystem : MonoBehaviour
         if (timePlayerGetFatigue > _timeInChamber) return;
 
         Fatigue();
+    }
+
+    private void CheckRage()
+    {
+        if (Hypatios.Player.IsStatusEffectGroup(stagnationRage)) return;
+        if (isAntiDepressant) return;
+        if (unixTime_GetStagnationRage > Hypatios.Game.UNIX_Timespan) return;
+        if (_tick % 10 != 0) return;
+        if (_timeInChamber < 60) return;
+        float c = Random.Range(0f, 1f);
+        if (c >= chanceStagnationRage) return;
+
+        Rage();
+
     }
 
     /// <summary>
@@ -171,7 +189,7 @@ public class CurseRandomizerSystem : MonoBehaviour
     {
         depression.AddStatusEffectPlayer(9999f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from depression.", 4f);
-        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
+        Prompt_Tutorial();
     }
 
     [FoldoutGroup("DEBUG")] [Button("Add Fatigue")]
@@ -180,17 +198,32 @@ public class CurseRandomizerSystem : MonoBehaviour
 
         chamberFatigue.AddStatusEffectPlayer(3000f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from chamber fatigue.", 4f);
-        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
+        Prompt_Tutorial();
     }
 
     [FoldoutGroup("DEBUG")]
     [Button("Add Panic")]
     public void Panic()
     {
-
         panicAttack.AddStatusEffectPlayer(25f);
         DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from panic attack.", 4f);
-        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
+        Prompt_Tutorial();
+
+    }
+
+    [FoldoutGroup("DEBUG")]
+    [Button("Add Rage")]
+    public void Rage()
+    {
+        stagnationRage.AddStatusEffectPlayer(240f); //4 minutes
+        DeadDialogue.PromptNotifyMessage_Mod("Aldrich becomes enraged with the lack of progression in the current, gaining 'Stagnation Rage' ailment.", 4f);
+        Prompt_Tutorial();
+    }
+
+    private void Prompt_Tutorial()
+    {
+        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue, Rage and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
+
     }
 
     /// <summary>

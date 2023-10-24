@@ -380,6 +380,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25398885}
   m_CullTransparentMesh: 0
+--- !u!1 &34803745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34803746}
+  - component: {fileID: 34803747}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &34803746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34803745}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34803747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34803745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: Now suddenly you contemplate your decision, what's the sudden
+    change? Is the Ionis really bad?
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &39510051
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,6 +1006,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1295998378}
+        m_MethodName: TriggerTrivia
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &106454557
 Transform:
   m_ObjectHideFlags: 0
@@ -967,9 +1033,9 @@ Transform:
   - {fileID: 915150247}
   - {fileID: 637224511}
   - {fileID: 528130807}
-  - {fileID: 315021136}
+  - {fileID: 1295998377}
   m_Father: {fileID: 726420391}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &107709210
 GameObject:
@@ -1219,6 +1285,62 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 134802907}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &139204653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 139204654}
+  - component: {fileID: 139204655}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (11)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &139204654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139204653}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &139204655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139204653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: A complex enough 'complex system' with feedback, non-linearity
+    and moving parts will give birth to 'life'. Things seemingly stupid will become
+    smart if multiplied to millions.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &156857848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1294,6 +1416,60 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 156857848}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &167550076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167550077}
+  - component: {fileID: 167550078}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &167550077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167550076}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &167550078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167550076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: The hell is this?
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &169784505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1663,7 @@ Transform:
   - {fileID: 1835641738}
   - {fileID: 1576131823}
   m_Father: {fileID: 726420391}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &187499232
 Rigidbody:
@@ -2323,6 +2499,61 @@ MonoBehaviour:
   lockY: 1
   yPosition: 0
   useRotation: 0
+--- !u!1 &273098478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 273098479}
+  - component: {fileID: 273098480}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &273098479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273098478}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &273098480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273098478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: '''Bringing forbidden knowledge from the future''. Timekeeper''s
+    tenet.'
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &286237109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,8 +2756,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315021135}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 437.99, y: 55, z: 39.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 14027242}
@@ -2542,9 +2773,63 @@ Transform:
   - {fileID: 107709211}
   - {fileID: 893280134}
   - {fileID: 601307073}
-  m_Father: {fileID: 106454557}
+  m_Father: {fileID: 1449769540}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &322908794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322908795}
+  - component: {fileID: 322908796}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &322908795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322908794}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &322908796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322908794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: What?
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &324726428
 GameObject:
   m_ObjectHideFlags: 0
@@ -2970,6 +3255,61 @@ MonoBehaviour:
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &349560697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 349560698}
+  - component: {fileID: 349560699}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (12)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &349560698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349560697}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349560699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349560697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: However, the Ionis is simply unacceptable to the masses as of
+    now. It is the right technology at the wrong time.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &349618404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,6 +3487,61 @@ MonoBehaviour:
       m_Calls: []
   objectToCompare: {fileID: 0}
   usePlayer: 1
+--- !u!1 &358413647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 358413648}
+  - component: {fileID: 358413649}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &358413648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358413647}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &358413649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358413647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: Is it the unablement of the mass society to handle Kaiser's mad
+    narrative that cause the backlash against him?
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &386031013
 GameObject:
   m_ObjectHideFlags: 0
@@ -3530,7 +3925,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 726420391}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &434641016
 MonoBehaviour:
@@ -3576,7 +3971,7 @@ Transform:
   m_Children:
   - {fileID: 1718741862}
   m_Father: {fileID: 726420391}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &443088740
 MonoBehaviour:
@@ -4623,6 +5018,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  useTimescale: 1
 --- !u!1 &588665422
 GameObject:
   m_ObjectHideFlags: 0
@@ -4661,11 +5057,11 @@ MonoBehaviour:
   m_LookAt: {fileID: 2865509264932309535}
   m_Follow: {fileID: 2865509264932309535}
   m_Lens:
-    FieldOfView: 4
+    FieldOfView: 6
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 300
-    Dutch: 12
+    Dutch: -1
     LensShift: {x: 0, y: 0}
   m_Transitions:
     m_BlendHint: 0
@@ -4830,7 +5226,7 @@ Transform:
   - {fileID: 885360587}
   - {fileID: 1427577851}
   m_Father: {fileID: 726420391}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &621116507
 MonoBehaviour:
@@ -5013,7 +5409,23 @@ Transform:
   - {fileID: 915869927}
   - {fileID: 241734197}
   - {fileID: 1407796543}
+  - {fileID: 167550077}
   - {fileID: 660778035}
+  - {fileID: 322908795}
+  - {fileID: 273098479}
+  - {fileID: 2008216457}
+  - {fileID: 2120026485}
+  - {fileID: 34803746}
+  - {fileID: 1057213438}
+  - {fileID: 2097647060}
+  - {fileID: 1613727485}
+  - {fileID: 139204654}
+  - {fileID: 349560698}
+  - {fileID: 1287500499}
+  - {fileID: 1930059835}
+  - {fileID: 358413648}
+  - {fileID: 1443091154}
+  - {fileID: 1159805780}
   m_Father: {fileID: 106454557}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5283,7 +5695,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 637224511}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &660778036
 MonoBehaviour:
@@ -5298,7 +5710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentCutscene: {fileID: 0}
-  Dialogue_Content: I should be the one who asked you the question.
+  Dialogue_Content: I repeat the same mistake. Same mistake.
   dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -5671,6 +6083,7 @@ Transform:
   m_Children:
   - {fileID: 888475032}
   - {fileID: 1684281136}
+  - {fileID: 1449769540}
   - {fileID: 106454557}
   - {fileID: 621116506}
   - {fileID: 187499231}
@@ -6468,7 +6881,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 726420391}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &825113959
 MonoBehaviour:
@@ -8119,6 +8532,62 @@ Transform:
   m_Father: {fileID: 1465880375}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1057213437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1057213438}
+  - component: {fileID: 1057213439}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1057213438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057213437}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1057213439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057213437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: In creating a new perfect immortal lifeform that knows no boundary.
+    No hatred, no political bullshit, no feudalism. The destruction of legacy biological
+    properties.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1086093113
 GameObject:
   m_ObjectHideFlags: 0
@@ -8480,6 +8949,61 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 5
+--- !u!1 &1159805779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1159805780}
+  - component: {fileID: 1159805781}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1159805780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159805779}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1159805781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159805779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: These Timekeeper information are information that are obviously
+    distanced from reality. Only relevant to Timekeepers.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1160244790
 GameObject:
   m_ObjectHideFlags: 0
@@ -9154,6 +9678,105 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278399430}
   m_Mesh: {fileID: -3088276705344221229, guid: e6d39263bb916f64ea3cd05789bd5d1f, type: 3}
+--- !u!1 &1287500498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287500499}
+  - component: {fileID: 1287500500}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (13)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1287500499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287500498}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1287500500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287500498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: The prematureness of the society is unable to see the valuableness
+    of Ionis. It is to bring intelligence lifeform to next stage.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1295998376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1295998377}
+  - component: {fileID: 1295998378}
+  m_Layer: 0
+  m_Name: Trivia.Eclipseblazer
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: ab07bc1da4621114da55c91aca912ea8, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1295998377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295998376}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -507.86, y: -61.5, z: -134.39}
+  m_LocalScale: {x: 1.4938, y: 1, z: 0.6308}
+  m_Children: []
+  m_Father: {fileID: 106454557}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1295998378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295998376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df366eb18d996d4b9a51999bce853d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trivia: {fileID: 11400000, guid: 980a2a1bfcc06dc4794b3e77a6213448, type: 2}
 --- !u!1 &1309653784
 GameObject:
   m_ObjectHideFlags: 0
@@ -9938,6 +10561,7 @@ GameObject:
   - component: {fileID: 1379722043}
   - component: {fileID: 1379722042}
   - component: {fileID: 1379722041}
+  - component: {fileID: 1379722044}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -9972,7 +10596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: -2.07, y: 1, z: 39.82}
+  m_FollowOffset: {x: 28.4, y: -0.9, z: -20.5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -10020,6 +10644,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1379722044
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379722039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 46965f9cbaf525742a6da4c2172a99cd, type: 2}
+  m_AmplitudeGain: 0.12
+  m_FrequencyGain: 0.8
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1390760686
 GameObject:
   m_ObjectHideFlags: 0
@@ -10118,7 +10758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentCutscene: {fileID: 0}
-  Dialogue_Content: What is this?
+  Dialogue_Content: ...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -10598,6 +11238,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431952680}
   m_Mesh: {fileID: -3088276705344221229, guid: e6d39263bb916f64ea3cd05789bd5d1f, type: 3}
+--- !u!1 &1443091153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1443091154}
+  - component: {fileID: 1443091155}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1443091154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443091153}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1443091155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443091153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: Kaiser carried too much 'Timekeeper' information.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1449769539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1449769540}
+  m_Layer: 0
+  m_Name: DeletedCutscenDialogues
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1449769540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449769539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 315021136}
+  m_Father: {fileID: 726420391}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449879036
 GameObject:
   m_ObjectHideFlags: 0
@@ -11828,6 +12553,62 @@ MonoBehaviour:
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 4
   OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1613727484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1613727485}
+  - component: {fileID: 1613727486}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1613727485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613727484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1613727486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613727484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: Lust, love, emotions, cry and happy are all just chemical reaction.
+    And these can be simulated with just numbers. It is deconstructed to simpler
+    form.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1653681911
@@ -13507,6 +14288,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1930059834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930059835}
+  - component: {fileID: 1930059836}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1930059835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930059834}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930059836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930059834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: The Timekeepers and the Kaiser...
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 3fb50c779c90fb941a35df132db6f206, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1947969808
 GameObject:
   m_ObjectHideFlags: 0
@@ -13781,6 +14616,61 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006593744}
   m_Mesh: {fileID: -3088276705344221229, guid: e6d39263bb916f64ea3cd05789bd5d1f, type: 3}
+--- !u!1 &2008216456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008216457}
+  - component: {fileID: 2008216458}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2008216457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008216456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2008216458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008216456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: You attempt to upset the timeline, a paradox by bringing an information
+    that one supposedly shouldn't know.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2016658421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14360,6 +15250,116 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078523262}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2097647059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2097647060}
+  - component: {fileID: 2097647061}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2097647060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097647059}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2097647061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097647059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: Then the WIRED network... all will be connected with no physical
+    ego, no pain, no boundaries. All will be binded as brothers and sisters.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &2120026484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2120026485}
+  - component: {fileID: 2120026486}
+  m_Layer: 0
+  m_Name: Vendrich.Dialog (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 9854004c7a402ff4a9340797352fa07a, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2120026485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120026484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.09, y: 0.75, z: -40.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 637224511}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2120026486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120026484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03e5797f4c5ff549a493516cb108f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCutscene: {fileID: 0}
+  Dialogue_Content: And I bring the extinction of the biological race with the Ionis
+    program. A forbidden technology.
+  dialogSpeaker: {fileID: 11400000, guid: f55d0e0b7e1e33942954b54981841d4e, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 0174da7fe0ee025468a0b0a391e90389, type: 2}
+  dialogAudioClip: {fileID: 0}
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDoneDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2131579191
 GameObject:
   m_ObjectHideFlags: 0
@@ -15741,7 +16741,7 @@ PrefabInstance:
     - target: {fileID: 3992815148980252355, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -152.00002
+      value: -152.00003
       objectReference: {fileID: 0}
     - target: {fileID: 3992815149081343448, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
@@ -17164,7 +18164,7 @@ PrefabInstance:
     - target: {fileID: 4488935927435631476, guid: 32ffd24e400f60341b2a413441b57915,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4488935927435631476, guid: 32ffd24e400f60341b2a413441b57915,
         type: 3}
