@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Sirenix.OdinInspector.Editor;
 
 namespace WaypointsFree.WFEditor
 {
     [CustomEditor(typeof(WaypointsGroup))]
-    public class WaypointsGroupEditor : Editor
+    public class WaypointsGroupEditor : OdinEditor
     {
         WaypointsGroup waypointsGroup;
         List<Waypoint> waypoints;
+        Transform targetTransform;
 
         Waypoint selectedWaypoint = null;
 
@@ -118,6 +120,9 @@ namespace WaypointsFree.WFEditor
                 dorepaint = true;
 
             }
+
+
+
 
             EditorGUILayout.EndVertical();
             if (dorepaint)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace WaypointsFree
 {
@@ -9,6 +10,8 @@ namespace WaypointsFree
         public PositionConstraint XYZConstraint = PositionConstraint.XYZ;
         [HideInInspector]
         public List<Waypoint> waypoints;   // The waypoint components controlled by this WaypointsGroupl IMMEDIATE children only
+
+        [HideInInspector] public Transform t_Target;
 
         private void Awake()
         {
@@ -60,6 +63,8 @@ namespace WaypointsFree
                 waypoints.Insert(ndx, wp);
             wp.SetWaypointGroup(this);
         }
+
+   
 
     }
 }
