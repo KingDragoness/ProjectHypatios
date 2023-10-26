@@ -71,6 +71,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] public bool isCrouching = false;
     [FoldoutGroup("Physics")] public float thresholdFallHeight = 20f;
     [FoldoutGroup("Physics")] public float maxFallHeight = 50f;
+    [FoldoutGroup("Physics")] public float thresholdFallVelocity = -3f;
     [FoldoutGroup("Physics")] public float minChanceBrokenLeg = 0.3f;
 
     //Slope & Stair Detection
@@ -110,6 +111,9 @@ public class CharacterScript : Entity
         }
     }
     private float airTime = 0;
+    private List<float> fallVelocityList_Y = new List<float>();
+    private float netFallVelocity = 0f;
+    private int fallVelocityList_Count = 50;
 
     //Scope
     float scopingSpeed = 6f;
@@ -397,7 +401,7 @@ public class CharacterScript : Entity
 
 
     void Start()
-    {   
+    {
         moveSpeed = runSpeed;
         _wallRun = GetComponent<wallRun>();
         rb = GetComponent<Rigidbody>();
@@ -531,6 +535,7 @@ public class CharacterScript : Entity
     void FixedUpdate()
     {
         Moving();
+        CalculateFallVelocity();
 
         if (isLimitedIntroMode)
         {
@@ -568,6 +573,56 @@ public class CharacterScript : Entity
             b_triggerDash = false;
         }
 
+    }
+
+    private void CalculateFallVelocity()
+    {
+        float y = transform.position.y;
+        fallVelocityList_Y.Insert(0, y);
+
+        {
+            var thisIsStupid_List = new List<float>();
+            thisIsStupid_List.AddRange(fallVelocityList_Y);
+
+            int index = 0;
+
+            foreach (var _yPos in thisIsStupid_List)
+            {
+                if (index >= fallVelocityList_Count)
+                {
+                    fallVelocityList_Y.RemoveAt(index);
+                }
+
+                index++;
+            }
+        }
+
+        CalcualtedNetFallVelocity();
+    }
+
+    private void CalcualtedNetFallVelocity()
+    {
+        if (fallVelocityList_Y.Count <= 1)
+        {
+            netFallVelocity = 0f;
+            return;
+        }
+
+        float sum = 0;
+        float net = 0;
+
+        int index = 0;
+
+        foreach (var _yPos in fallVelocityList_Y)
+        {
+            if (index != 0) sum -= _yPos;
+            index++;
+        }
+
+        net = sum / (fallVelocityList_Y.Count - 1);
+        net += fallVelocityList_Y[0];
+        net /= 2f;
+        netFallVelocity = net;
     }
 
     public void HandleCrouchingState()
@@ -684,6 +739,11 @@ public class CharacterScript : Entity
         else if (!isGrounded)
         {
             rb.AddForce(dir.normalized * speed * speedMultiplier.Value * jumpSpeedMultiplier, ForceMode.Acceleration);
+
+            if (isNoGravity == false)
+            {
+                rb.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+            }
         }
         else if (isGrounded && onSlope())
         {
@@ -979,6 +1039,7 @@ public class CharacterScript : Entity
         float fallHeight = _highestHeight - transform.position.y;
 
         if (fallHeight < thresholdFallHeight) return;
+        if (thresholdFallVelocity <= netFallVelocity) return;
         soundManager.Play("bones");
 
         float random = Random.Range(0f,1f);

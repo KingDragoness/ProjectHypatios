@@ -69,7 +69,7 @@ public class Interact_Minishop : MonoBehaviour
         int price = 0;
         foreach(var item in itemInCart)
         {
-            price += item.priceList;
+            price += item.addItemScript.item.value;
         }
 
         _totalSoulPrice = price;

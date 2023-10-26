@@ -10,7 +10,6 @@ public class Interact_Minishop_Buyable : MonoBehaviour
     public Interact_Minishop shopScript;
     public Interact_Touchable touchable;
     public PlayerAddItemScript addItemScript;
-    public int priceList = 5;
 
     private Vector3 originalPosition;
 
@@ -24,7 +23,7 @@ public class Interact_Minishop_Buyable : MonoBehaviour
 
     private void Mode_Buy()
     {
-        touchable.interactDescription = $"{addItemScript.item.GetDisplayText()} ({priceList} souls)";
+        touchable.interactDescription = $"{addItemScript.item.GetDisplayText()} ({addItemScript.item.value} souls)";
         touchable.OnInteractEvent.RemoveAllListeners();
         touchable.OnInteractEvent.AddListener(AddToCart);
     }

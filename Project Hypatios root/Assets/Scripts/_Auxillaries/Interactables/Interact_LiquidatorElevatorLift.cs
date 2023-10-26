@@ -8,6 +8,7 @@ public class Interact_LiquidatorElevatorLift : MonoBehaviour
 
 
     public List<Interact_LiquidLift_ExitPoint> allExitPoints = new List<Interact_LiquidLift_ExitPoint>();
+    public AudioSource audio_ElevatorDoor;
     [FoldoutGroup("Lift")] public Transform platformLift;
     [FoldoutGroup("Lift")] public float thresholdArrive = 0.05f;
     [FoldoutGroup("Lift")] public float elevatorSpeed = 5f;
@@ -36,6 +37,8 @@ public class Interact_LiquidatorElevatorLift : MonoBehaviour
 
     }
 
+    bool _prevDoorStateOpened = false;
+
     private void Update()
     {
         if (Time.timeScale <= 0f) return;
@@ -62,10 +65,19 @@ public class Interact_LiquidatorElevatorLift : MonoBehaviour
         {
             currentTarget.OpenLift();
             myLiftAnimScript.SetBool(true);
+
+            if (_prevDoorStateOpened == false)
+            {
+                audio_ElevatorDoor?.Play();
+            }
+
+            _prevDoorStateOpened = true; //opened
         }
         else
         {
             myLiftAnimScript.SetBool(false);
+
+            _prevDoorStateOpened = false;
         }
 
 
