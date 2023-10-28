@@ -17,6 +17,7 @@ public class WeaponManager : MonoBehaviour
 
 
 
+    public bool disableInput = false;
     public int selectedWeapon = 0;
     public Player playerMode = Player.Aldrich;
     public GameObject weaponHolder;
@@ -238,7 +239,7 @@ public class WeaponManager : MonoBehaviour
 
         WeaponUI();
 
-        InputSwitchWeapon();
+        if (disableInput == false) InputSwitchWeapon();
 
         if (previousWeapon != selectedWeapon)
         {

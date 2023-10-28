@@ -12,6 +12,8 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
     public StockExchange_ProfileObject CurrentProfile;
     public ModularUI_LineGraph lineGraph;
     public InputField input_ShareBuySell;
+    public BaseStatValue stat_investmentProfit;
+    public BaseStatValue stat_invested;
     public int dotTotal = 18;
     public float RefreshRate = 1f; //every second updates
 
@@ -172,7 +174,9 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
 
         if (_shareToBuy > 0)
         {
-            Hypatios.Game.SoulPoint -= _shareToBuy * sharePrice_Soul;
+            int soul = _shareToBuy * sharePrice_Soul;
+            Hypatios.Game.SoulPoint -= soul;
+            Hypatios.Game.Add_PlayerStat(stat_invested, soul);
             portfolioSave.BuyShare(sharePrice_Soul, Mathf.Abs(_shareToBuy));
             DeadDialogue.PromptNotifyMessage_Mod($"Bought x{Mathf.Abs(_shareToBuy)} {CurrentProfile.indexID} stocks for {_shareToBuy * sharePrice_Soul} Souls.", 6f);
             soundManagerScript.instance.Play("reward");
@@ -180,8 +184,10 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
         else
         {
             int sellAmount = Mathf.Abs(_shareToBuy);
-            Hypatios.Game.SoulPoint += sellAmount * sharePrice_Soul;
+            int soul = sellAmount * sharePrice_Soul;
+            Hypatios.Game.SoulPoint += soul;
             portfolioSave.RemoveShare(sellAmount);
+            Hypatios.Game.Add_PlayerStat(stat_investmentProfit, soul);
             DeadDialogue.PromptNotifyMessage_Mod($"Sold x{Mathf.Abs(_shareToBuy)} {CurrentProfile.indexID} stocks for {sellAmount * sharePrice_Soul} Souls.", 6f);
             soundManagerScript.instance.Play("reward");
 

@@ -26,7 +26,8 @@ public class MainUI : MonoBehaviour
         Favorite,
         kThanidLab,
         MobiusNet,
-        LevelMap
+        LevelMap,
+        MachineOfMadness
     }
 
     public MobiusNetUI Internet;
@@ -56,6 +57,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public SettingsUI settingsUI;
     [FoldoutGroup("References")] public GameObject TriviaMap;
     [FoldoutGroup("References")] public GameObject LevelMap;
+    [FoldoutGroup("References")] public MachineOfMadnessUI MachineOfMadnessMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
     [FoldoutGroup("References")] public GameObject postProcessUI;
@@ -193,7 +195,7 @@ public class MainUI : MonoBehaviour
         {
             bool allowToggle = false;
 
-            if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
+            if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | current_UI == UIMode.MachineOfMadness)
                 && Hypatios.Player.Health.isDead == false)
             {
                 allowToggle = true;
@@ -210,7 +212,7 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (CurrentUI != UIMode.LevelMap && CurrentUI != UIMode.Trivia && CurrentUI != UIMode.Favorite)
+            if (CurrentUI != UIMode.LevelMap && CurrentUI != UIMode.Trivia && CurrentUI != UIMode.Favorite && CurrentUI != UIMode.MachineOfMadness)
             {
                 if (allowToggle)
                 {
@@ -219,7 +221,7 @@ public class MainUI : MonoBehaviour
                     RefreshPauseState();
                 }
             }
-            else if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
+            else if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness)
             {
                 if (allowToggle)
                 {
@@ -317,7 +319,7 @@ public class MainUI : MonoBehaviour
                 isIdlePlayer = true;
             }
 
-            if (CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
+            if (CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness)
             {
                 isUsingCustomCam = true;
             }
@@ -414,6 +416,11 @@ public class MainUI : MonoBehaviour
                     enable_PostFXUI = true;
                 }
 
+                if (CurrentUI == UIMode.MachineOfMadness)
+                {
+                    paused = true;
+                    RefreshPauseState();
+                }
             }
 
             if (tempoPause)
@@ -444,12 +451,12 @@ public class MainUI : MonoBehaviour
             {
                 bool allowToggle = false;
 
-                if ((CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap) && Hypatios.Player.Health.isDead == false)
+                if ((CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness) && Hypatios.Player.Health.isDead == false)
                 {
                     allowToggle = true;
                 }        
 
-                if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap)
+                if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness)
                 {
                     if (allowToggle)
                     {
@@ -466,6 +473,7 @@ public class MainUI : MonoBehaviour
                 if (TriviaMap.activeSelf == false) TriviaMap.gameObject.SetActive(true);
                 if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
                 if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
+                if (MachineOfMadnessMap.gameObject.activeSelf == true) MachineOfMadnessMap.gameObject.SetActive(false);
             }
             else if (CurrentUI == UIMode.LevelMap)
             {
@@ -474,15 +482,38 @@ public class MainUI : MonoBehaviour
                 if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
                 if (LevelMap.activeSelf == false) LevelMap.gameObject.SetActive(true);
                 if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
+                if (MachineOfMadnessMap.gameObject.activeSelf == true) MachineOfMadnessMap.gameObject.SetActive(false);
+
+            }
+            else if (CurrentUI == UIMode.MachineOfMadness)
+            {
+                if (Camera_Main.activeSelf == true) Camera_Main.gameObject.SetActive(false);
+                if (Camera_Noclip.gameObject.activeSelf == true) Camera_Noclip.gameObject.SetActive(false);
+                if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
+                if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
+                if (PauseMenu.activeSelf == true) PauseMenu.gameObject.SetActive(false);
+                if (MachineOfMadnessMap.gameObject.activeSelf == false) MachineOfMadnessMap.gameObject.SetActive(true);
+
             }
             else
             {
+                //COPY to else (!pause)
                 if (Camera_Main.activeSelf == false) Camera_Main.gameObject.SetActive(true);
                 if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
                 if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
                 if (PauseMenu.activeSelf == false) PauseMenu.gameObject.SetActive(true);
+                if (MachineOfMadnessMap.gameObject.activeSelf == true) MachineOfMadnessMap.gameObject.SetActive(false);
+
             }
         }
+        //controlling machine of madness transition
+        else
+        {
+            if (TriviaMap.activeSelf == true) TriviaMap.gameObject.SetActive(false);
+            if (LevelMap.activeSelf == true) LevelMap.gameObject.SetActive(false);
+            if (MachineOfMadnessMap.gameObject.activeSelf == true) MachineOfMadnessMap.gameObject.SetActive(false);
+        }
+
     }
 
     #region Cinematics

@@ -55,6 +55,7 @@ public class FPSMainScript : MonoBehaviour
     [Space]
     public bool DEBUG_ShowTutorial = false;
     public bool DEBUG_ShowAllParadox = false;
+    public bool DEBUG_ShowAllSaves = false;
     public bool DEBUG_UnlockAllParadox = false;
 
     public static bool LoadFromSaveFile = false;
@@ -474,7 +475,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("DEBUG")] [Button("Test Transit Level save")]
     public void DEBUG_TestTransitLvSaves()
     {
-        var levelFiles = GetAllTransitLevelSaves();
+        var levelFiles = GetListLevelTransitSave();
 
         foreach(var lv in levelFiles)
         {
@@ -483,7 +484,7 @@ public class FPSMainScript : MonoBehaviour
     }
 
 
-    public List<string> GetAllTransitLevelSaves()
+    public List<string> GetListLevelTransitSave()
     {
         List<string> listResult = new List<string>();
         DirectoryInfo d = new DirectoryInfo($"{GameSavePath}");
@@ -494,6 +495,23 @@ public class FPSMainScript : MonoBehaviour
             if (file.Name.StartsWith("saveLevel")) listResult.Add(file.FullName);
         }
 
+
+        return listResult;
+    }
+
+    public List<HypatiosSave> GetAllLevelSaves()
+    {
+        List<HypatiosSave> listResult = new List<HypatiosSave>();
+        var allPath = GetListLevelTransitSave();
+
+        foreach(var path in allPath)
+        {
+            HypatiosSave saveFile = UnpackSaveFile(path);
+            if (saveFile != null)
+            {
+                listResult.Add(saveFile);
+            }
+        }
 
         return listResult;
     }
@@ -916,6 +934,24 @@ public class FPSMainScript : MonoBehaviour
         }
 
 
+    }
+
+    public HypatiosSave UnpackSaveFile(string path)
+    {
+        HypatiosSave result = null;
+        JsonSerializerSettings settings = JsonSettings();
+
+        try
+        {
+            result = JsonConvert.DeserializeObject<HypatiosSave>(File.ReadAllText(path), settings);
+        }
+        catch
+        {
+            Debug.LogError("Failed load!");
+            ConsoleCommand.Instance.SendConsoleMessage("Save file cannot be loaded!");
+        }
+
+        return result;
     }
 
     public static void CacheLoadSave(string path = "")

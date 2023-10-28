@@ -127,6 +127,7 @@ public class WeaponItem : ScriptableObject
     [FoldoutGroup("Charge Station")] public int buy_AmmoSoulPrice = 2;
     [FoldoutGroup("Charge Station")] public int buy_SoulPrice = 2;
     public bool isCraftable = false;
+    public bool isMachineOfMadness = false;
     public int defaultDamage;
     public int defaultMagazineSize;
     public float defaultCooldown;

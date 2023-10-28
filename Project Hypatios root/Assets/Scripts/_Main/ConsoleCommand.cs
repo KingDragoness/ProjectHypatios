@@ -253,6 +253,10 @@ public class ConsoleCommand : MonoBehaviour
                 ShowAllParadox(args);
                 break;
 
+            case "showallsaves":
+                ShowAllSaves(args);
+                break;
+
             case "soul":
                 Soul(args);
                 break;
@@ -1134,6 +1138,22 @@ public class ConsoleCommand : MonoBehaviour
         }
     }
 
+    protected void ShowAllSaves(string[] args)
+    {
+        try
+        {
+            var gameScript = Hypatios.Game;
+            gameScript.DEBUG_ShowAllSaves = !gameScript.DEBUG_ShowAllSaves;
+            SendConsoleMessage($"Show All Saves: {gameScript.DEBUG_ShowAllSaves}");
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! showallpdx");
+
+        }
+    }
+    
+
     protected void UnlockAllParadox(string[] args)
     {
         try
@@ -1343,6 +1363,7 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'setfov' to set camera's FOV");
             helpCommands.Add("'setperk' to set player's temporary perks. 'help setperk' to check perks.");
             helpCommands.Add("'showallpdx' to show all paradoxes.");
+            helpCommands.Add("'showallsaves' to show all save files in Machine of Madness.");
             helpCommands.Add("'soul' to get soul");
             helpCommands.Add("'triggerflag' to trigger flag. 'help triggerflag' to trigger flags.");
             helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");
