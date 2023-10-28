@@ -30,6 +30,7 @@ public class MainUI : MonoBehaviour
         MachineOfMadness
     }
 
+    public bool disableInput = false;
     public MobiusNetUI Internet;
     public ReadableBookUI readableBookUI;
 
@@ -191,43 +192,61 @@ public class MainUI : MonoBehaviour
     void Update()
     {
         //Escape when Trivia Map mode = go back to main menu
-        if (Hypatios.Input.Pause.triggered)
+        if (disableInput == false)
         {
-            bool allowToggle = false;
+            if (Hypatios.Input.Pause.triggered)
+            {
+                bool allowToggle = false;
 
-            if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | current_UI == UIMode.MachineOfMadness)
-                && Hypatios.Player.Health.isDead == false)
-            {
-                allowToggle = true;
-            }
-            else if (CurrentUI != UIMode.Favorite)
-            {
-                if (!paused)
-                {
-                    CurrentUI = UIMode.Default;
-                }
-                else
+                if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | current_UI == UIMode.MachineOfMadness)
+                    && Hypatios.Player.Health.isDead == false)
                 {
                     allowToggle = true;
                 }
+                else if (CurrentUI != UIMode.Favorite)
+                {
+                    if (!paused)
+                    {
+                        CurrentUI = UIMode.Default;
+                    }
+                    else
+                    {
+                        allowToggle = true;
+                    }
+                }
+
+                if (CurrentUI != UIMode.LevelMap && CurrentUI != UIMode.Trivia && CurrentUI != UIMode.Favorite && CurrentUI != UIMode.MachineOfMadness)
+                {
+                    if (allowToggle)
+                    {
+                        paused = !paused;
+                        tempoPause = false;
+                        RefreshPauseState();
+                    }
+                }
+                else if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness)
+                {
+                    if (allowToggle)
+                    {
+                        //back to main menu or reset whatever last set
+                        CurrentUI = UIMode.Default;
+                    }
+                }
+
             }
 
-            if (CurrentUI != UIMode.LevelMap && CurrentUI != UIMode.Trivia && CurrentUI != UIMode.Favorite && CurrentUI != UIMode.MachineOfMadness)
+            if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
             {
-                if (allowToggle)
+                if (Input.GetKeyUp(KeyCode.Tab))
                 {
-                    paused = !paused;
-                    tempoPause = false;
-                    RefreshPauseState();
+                    CurrentUI = UIMode.Favorite;
+                    SetTempoPause(true);
                 }
             }
-            else if (CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | CurrentUI == UIMode.MachineOfMadness)
+            else if (CurrentUI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
             {
-                if (allowToggle)
-                {
-                    //back to main menu or reset whatever last set
-                    CurrentUI = UIMode.Default;
-                }
+                CurrentUI = UIMode.Default;
+                SetTempoPause(false);
             }
 
         }
@@ -248,19 +267,6 @@ public class MainUI : MonoBehaviour
             Hypatios.DebugObjectStat.gameObject.SetActive(!b);
         }
 
-        if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
-        {
-            if (Input.GetKeyUp(KeyCode.Tab))
-            {
-                CurrentUI = UIMode.Favorite;
-                SetTempoPause(true);
-            }
-        }
-        else if (CurrentUI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
-        {
-            CurrentUI = UIMode.Default;
-            SetTempoPause(false);
-        }
 
 
         RefreshUI_Resolutions();

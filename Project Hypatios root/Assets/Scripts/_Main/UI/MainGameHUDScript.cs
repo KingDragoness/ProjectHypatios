@@ -279,6 +279,7 @@ public class MainGameHUDScript : MonoBehaviour
         foreach (var weapon in Hypatios.Player.Weapon.CurrentlyHeldWeapons)
         {
             var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
+            if (weaponClass.UI_TemplateAmmoAdded == null) continue;
             var prefabAmmo = Instantiate(weaponClass.UI_TemplateAmmoAdded, parentNewAmmo); //dasar engine kimak
             if (prefabAmmo == null) continue;
             AmmoAddedIcons.Add(prefabAmmo);

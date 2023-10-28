@@ -62,8 +62,11 @@ public class WeaponManager : MonoBehaviour
 
     public GunScript GetRandomGun()
     {
-        int size = CurrentlyHeldWeapons.Count;
-        return CurrentlyHeldWeapons[Random.Range(0, size)] as GunScript;
+        List<BaseWeaponScript> validWeapons = new List<BaseWeaponScript>();
+        validWeapons.AddRange(currentlyHeldWeapons);
+        validWeapons.RemoveAll(x => x.isAmmoUnlimited == true);
+        int size = validWeapons.Count;
+        return validWeapons[Random.Range(0, size)] as GunScript;
     }
 
 

@@ -6,6 +6,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.PostProcessing;
 using UnityStandardAssets.ImageEffects;
 using DevLocker.Utils;
@@ -16,6 +17,7 @@ public class FPSMainScript : MonoBehaviour
 
 
     public Hypatios_Gamemode currentGamemode;
+    public UnityEvent OnLoadFromMachineMadness;
     [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
     [FoldoutGroup("Story Selection")] public SceneReference level1_Scene;
@@ -59,6 +61,7 @@ public class FPSMainScript : MonoBehaviour
     public bool DEBUG_UnlockAllParadox = false;
 
     public static bool LoadFromSaveFile = false;
+    public static bool LoadFromMachineMadness = false;
     public static int Player_RunSessionUnixTime;
 
     public static readonly string GameSavePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/Hypatios/Saves";
@@ -90,7 +93,14 @@ public class FPSMainScript : MonoBehaviour
         bloom_.active = false;
 
         //MainUI.Instance.settingsUI.inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
+
+        if (LoadFromMachineMadness)
+        {
+            OnLoadFromMachineMadness?.Invoke();
+            LoadFromMachineMadness = false;
+        }
     }
+
 
 
     private void BuildSaveFolder()
@@ -727,6 +737,26 @@ public class FPSMainScript : MonoBehaviour
             Debug.LogError("Failed load!");
             ConsoleCommand.Instance.SendConsoleMessage("Save file cannot be loaded!");
         }
+    }
+
+    public void MachineMadnessSave(HypatiosSave targetSaveFile)
+    {
+        var _currentSave = PackSaveData();
+
+        _currentSave.Total_Level_Passed = targetSaveFile.Total_Level_Passed;
+        _currentSave.Player_CurrentHP = targetSaveFile.Player_CurrentHP;
+        _currentSave.Player_AlchoholMeter = targetSaveFile.Player_AlchoholMeter;
+        _currentSave.Player_RunSessionUnixTime = targetSaveFile.Player_RunSessionUnixTime;
+        _currentSave.Game_LastLevelPlayed = targetSaveFile.Game_LastLevelPlayed;
+        _currentSave.AllPerkDatas = targetSaveFile.AllPerkDatas;
+        _currentSave.Player_Inventory = targetSaveFile.Player_Inventory;
+        _currentSave.run_PlayerStat = targetSaveFile.run_PlayerStat;
+        _currentSave.Game_WeaponStats = targetSaveFile.Game_WeaponStats;
+
+        SaveGame(hypatiosSave: _currentSave);
+        savedata = _currentSave;
+        LoadFromSaveFile = true;
+        LoadFromMachineMadness = true;
     }
 
     public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null, HypatiosSave.EntryCache EntryToken = null)

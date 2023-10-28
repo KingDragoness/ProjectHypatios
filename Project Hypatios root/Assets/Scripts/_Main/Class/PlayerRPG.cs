@@ -446,8 +446,8 @@ public class PlayerRPG : MonoBehaviour
 
             sRight += $"{weaponStat.damage}\n";
             sRight += $"{weaponStat.cooldown} per sec\n";
-            sRight += $"{weaponStat.magazineSize}\n";
-            sRight += $"{totalAmmoOfType}\n";
+            if (weaponClass.isMachineOfMadness) { sRight += $"∞"; } else { sRight += $"{weaponStat.magazineSize}\n"; }
+            if (weaponClass.isMachineOfMadness) { sRight += $"∞"; } else { sRight += $"{totalAmmoOfType}\n"; }
 
         }
         else

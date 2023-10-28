@@ -109,7 +109,9 @@ public class MachineOfMadnessUI : MonoBehaviour
         Hypatios.UI.ChangeCurrentMode(0);
         Hypatios.UI.SetPauseState(false);
         Hypatios.UI.canvas_Main.enabled = false;
+        Hypatios.UI.disableInput = true;
         Hypatios.Player.Weapon.disableInput = true;
+        MachineMadnessWeapon.Instance.InitiateTimeVortex(GetSave(selectedButton.index));
         g_TimeVortexEvent?.Raise();
         OnTimeVortexEvent?.Invoke();
     }

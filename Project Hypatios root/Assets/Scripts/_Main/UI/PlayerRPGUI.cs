@@ -570,7 +570,14 @@ public class PlayerRPGUI : MonoBehaviour
         weaponPreview_Label.text = itemclass.GetDisplayText();
         if (isWeaponSlot == false)
         {
-            weaponPreview_AmmoCount.text = $"{weaponData.currentAmmo} / {weaponData.totalAmmo}";
+            if (weaponItem.isMachineOfMadness)
+            {
+                weaponPreview_AmmoCount.text = $"∞/∞";
+            }
+            else
+            {
+                weaponPreview_AmmoCount.text = $"{weaponData.currentAmmo} / {weaponData.totalAmmo}";
+            }
         }
         else
         {
