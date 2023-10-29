@@ -114,6 +114,11 @@ public class MachineOfMadnessUI : MonoBehaviour
         MachineMadnessWeapon.Instance.InitiateTimeVortex(GetSave(selectedButton.index));
         g_TimeVortexEvent?.Raise();
         OnTimeVortexEvent?.Invoke();
+
+        if (MusicPlayer.Instance != null)
+        {
+            MusicPlayer.Instance.StopMusic();
+        }
     }
 
     #endregion
