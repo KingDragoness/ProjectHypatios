@@ -753,13 +753,13 @@ public class FPSMainScript : MonoBehaviour
         _currentSave.run_PlayerStat = targetSaveFile.run_PlayerStat;
         _currentSave.Game_WeaponStats = targetSaveFile.Game_WeaponStats;
 
-        SaveGame(hypatiosSave: _currentSave);
+        SaveGame(hypatiosSave: _currentSave, dontSaveTransit: true);
         savedata = _currentSave;
         LoadFromSaveFile = true;
         LoadFromMachineMadness = true;
     }
 
-    public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null, HypatiosSave.EntryCache EntryToken = null)
+    public void SaveGame(string path = "", int targetLevel = -1, HypatiosSave hypatiosSave = null, HypatiosSave.EntryCache EntryToken = null, bool dontSaveTransit = false)
     {
         string pathSave = path;
         bool isSameLevel = true;
@@ -801,7 +801,7 @@ public class FPSMainScript : MonoBehaviour
 
         MainUI.Instance.SavingGameIcon_UI.gameObject.SetActive(true);
         File.WriteAllText(pathSave, jsonTypeNameAll);
-        if (isSameLevel == false) SaveGame_TransitLevel(jsonTypeNameAll);
+        if (isSameLevel == false && dontSaveTransit == false) SaveGame_TransitLevel(jsonTypeNameAll);
         if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
 
     }

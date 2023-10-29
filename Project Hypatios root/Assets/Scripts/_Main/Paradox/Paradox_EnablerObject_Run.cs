@@ -14,6 +14,18 @@ public class Paradox_EnablerObject_Run : MonoBehaviour
 
     private void Start()
     {
+        CheckCondition();
+
+    }
+
+    [Button("Sanity Check")]
+    public void SanityCheck()
+    {
+        CheckCondition();
+    }
+
+    public void CheckCondition()
+    {
         currentRun = Hypatios.Game.TotalRuns;
 
         if (activateMinRange == activateMaxRange)

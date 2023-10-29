@@ -48,6 +48,7 @@ public class MachineOfMadnessUI : MonoBehaviour
         if (!Hypatios.Game.DEBUG_ShowAllSaves)
         {
             allSaveFiles.RemoveAll(x => x.Game_TotalRuns != Hypatios.Game.TotalRuns);
+            allSaveFiles.RemoveAll(x => x.Total_Level_Passed > Hypatios.Game.TotalLevelPassed);
         }
 
         int index = 0;

@@ -384,15 +384,15 @@ public class PlayerRPG : MonoBehaviour
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                s_interaction = "[LMB to read] [X to discard] [F to favorite]";
+                s_interaction = "[LMB to read] [X to destroy item] [F to favorite]";
             }
             else if (itemClass.category != ItemInventory.Category.Consumables)
             {
-                s_interaction = "[X to discard] [F to favorite]";
+                s_interaction = "[X to destroy item] [F to favorite]";
             }
             else
             {
-                s_interaction = "[LMB to consume] [X to discard] [F to favorite]";
+                s_interaction = "[LMB to consume] [X to destroy item] [F to favorite]";
             }
 
             if (itemData.isGenericItem == false)
