@@ -117,6 +117,7 @@ public class Chamber_Boss : MonoBehaviour
         corpseNPC.transform.position = hyperchadEnemy.transform.position;
 
         OnBossKilled?.Invoke();
+        trigger_BossDied = true;
     }
 
     IEnumerator DismantlePlatform()
