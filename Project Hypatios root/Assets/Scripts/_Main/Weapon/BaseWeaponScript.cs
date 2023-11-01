@@ -31,6 +31,7 @@ public abstract class BaseWeaponScript : MonoBehaviour
     public Animator anim;
     public string weaponName;
     public Image crosshairHit;
+    public string attachedItemID = "";
 
 
     [FoldoutGroup("Weapon Stat")] public List<string> allAttachments = new List<string>();
