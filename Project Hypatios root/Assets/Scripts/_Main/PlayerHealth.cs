@@ -241,7 +241,12 @@ public class PlayerHealth : MonoBehaviour
                 isHealing = true;
 
             if (isHealing)
-                targetHealth = curHealth;
+            {
+                float reduceHealingValue = targetHealth - curHealth;
+                reduceHealingValue *= 0.2f; //remove 20% total healing effect per damage
+                reduceHealingValue = Mathf.Clamp(reduceHealingValue, 0f, (2f * damage / armorRating.Value));
+                targetHealth = targetHealth - (reduceHealingValue);
+            }
 
             targetHealth -= (damage / armorRating.Value);
         }
