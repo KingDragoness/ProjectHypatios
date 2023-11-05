@@ -15,10 +15,8 @@ public class ModularUI_ClockTime : MonoBehaviour
 
         if (ChamberLevelController.Instance.chamberObject.isWIRED)
         {
-            if (FPSMainScript.savedata != null)
-            {
-                dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(FPSMainScript.savedata.Player_RunSessionUnixTime + Hypatios.UnixTimeStart);
-            }
+            dateTime = ClockTimerDisplay.UnixTimeStampToDateTime(Hypatios.Game.GetUnixTime_WIRED() + Hypatios.UnixTimeStart);
+
         }
 
         time_label.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";

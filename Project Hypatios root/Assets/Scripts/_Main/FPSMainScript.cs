@@ -84,6 +84,8 @@ public class FPSMainScript : MonoBehaviour
         BuildSaveFolder();
     }
 
+    private float originalTimeUnix = 0; //for WIRED
+
     private void Start()
     {
         var colorGrading_ = Hypatios.Game.postProcessVolume.profile.GetSetting<ColorGrading>();
@@ -99,7 +101,14 @@ public class FPSMainScript : MonoBehaviour
             OnLoadFromMachineMadness?.Invoke();
             LoadFromMachineMadness = false;
         }
+
+        originalTimeUnix = UNIX_Timespan;
     }
+
+    public float GetUnixTime_WIRED()
+    {
+        return Hypatios.Game.originalTimeUnix;
+    }    
 
 
 

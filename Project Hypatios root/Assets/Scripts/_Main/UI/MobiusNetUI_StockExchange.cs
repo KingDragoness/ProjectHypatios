@@ -28,6 +28,8 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
     [FoldoutGroup("Info")] public Text labelInfo_TotalInvestment;
     [FoldoutGroup("Info")] public Text labelInfo_ShareOwned;
     [FoldoutGroup("Info")] public Text labelInfo_LastChange;
+    [FoldoutGroup("Info")] public Image image_CompanyLogo;
+    [FoldoutGroup("Info")] public Sprite blankSprite;
     [FoldoutGroup("Info")] public Color color_lastChange_Down;
     [FoldoutGroup("Info")] public Color color_lastChange_Up;
 
@@ -109,6 +111,15 @@ public class MobiusNetUI_StockExchange : MonoBehaviour
 
             label_title.text = $"{CurrentProfile.companyDisplayName} [{CurrentProfile.indexID}]";
             label_Description.text = $"{CurrentProfile.companyDescription}\n\nMarket Cap: €{string.Format("{0:0,0}", CurrentProfile.marketCap)} billion";
+            
+            if (CurrentProfile.companyLogo != null)
+            {
+                image_CompanyLogo.sprite = CurrentProfile.companyLogo;
+            }
+            else
+            {
+                image_CompanyLogo.sprite = blankSprite;
+            }
         }
     }
 
