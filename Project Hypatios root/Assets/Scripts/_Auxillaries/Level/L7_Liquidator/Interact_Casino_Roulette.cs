@@ -159,6 +159,18 @@ public class Interact_Casino_Roulette : MonoBehaviour
                 if (number % 2 == 0)
                     return true;
             }
+            else if (betType == BetType.Red)
+            {
+                var listRed = Interact_Casino_Roulette.GetRedNumbers().ToList();
+
+                return listRed.Contains(number);
+            }
+            else if (betType == BetType.Black)
+            {
+                var listBlack = Interact_Casino_Roulette.GetBlackNumbers().ToList();
+
+                return listBlack.Contains(number);
+            }
             else if (betType == BetType._1to18)
             {
                 if (number >= 1 && number <= 18)
@@ -260,6 +272,25 @@ public class Interact_Casino_Roulette : MonoBehaviour
         GenerateSpawn();
         GenerateButton();
     }
+
+    public static int[] GetRedNumbers()
+    {
+        int[] listNumbers = new int[18]
+            { 32,19,21,25,34,27,36,30,23,5,16,1,14,9,18,7,12,3 };
+
+
+        return listNumbers;
+    }
+
+    public static int[] GetBlackNumbers()
+    {
+        int[] listNumbers = new int[18]
+            { 15,4,2,17,6,13,11,8,10,24,33,20,31,22,29,28,35,6 };
+
+
+        return listNumbers;
+    }
+
 
     public void GenerateSpawn()
     {
@@ -497,7 +528,7 @@ public class Interact_Casino_Roulette : MonoBehaviour
             return false;
         }
 
-        Hypatios.Dialogue.QueueDialogue($"Sixtusian Roulette [{_totalSoul} souls]. Spinning the ball...", "SYSTEM", 5f, shouldOverride: true);
+        DeadDialogue.PromptNotifyMessage_Mod($"Sixtusian Roulette [{_totalSoul} souls]. Spinning the ball...", 5f);
 
         Hypatios.Game.Add_PlayerStat(stat_SoulSpentGambling, _totalSoul);
         _isBetLocked = true;
@@ -594,7 +625,7 @@ public class Interact_Casino_Roulette : MonoBehaviour
         }
 
         Hypatios.Game.SoulPoint += totalSoulReward;
-        Hypatios.Dialogue.QueueDialogue($"Sixtusian Roulette won: [{totalSoulReward} souls].", "SYSTEM", 5f, shouldOverride: true);
+        DeadDialogue.PromptNotifyMessage_Mod($"Sixtusian Roulette won: [{totalSoulReward} souls].", 5f);
 
     }
 

@@ -21,6 +21,8 @@ public class TriviaMapUI : MonoBehaviour
     [FoldoutGroup("Preview")] public Material tvNoiseMat;
     [FoldoutGroup("Preview")] public Sprite cut1BeginningSprite;
     [FoldoutGroup("Preview")] public Vector3 offsetLook;
+    public float radius_MissingTrivia = 18f;
+    public float threshold_Distance = 1.5f;
     public Transform parentTrivias;
     public Transform parentLineRenders;
     [FoldoutGroup("Trivia Filters")] public Trivia.TriviaType currentFilter;
@@ -252,8 +254,30 @@ public class TriviaMapUI : MonoBehaviour
         int i = 0;
         foreach(var _trivia in allMissingTrivias)
         {
-            var pos = new Vector3(farlandPoint.transform.position.x, farlandPoint.position.y, farlandPoint.position.z);
-            pos.x += (i * 1.5f);
+            Vector3 pos = new Vector3(farlandPoint.transform.position.x, farlandPoint.position.y, farlandPoint.position.z);
+            int tries = 0;
+            bool succeed = false;
+
+            while (succeed == false && tries < 50f)
+            {
+                Vector3 _newPos = farlandPoint.position;
+                _newPos.x += Random.Range(-radius_MissingTrivia, radius_MissingTrivia);
+                _newPos.z += Random.Range(-radius_MissingTrivia, radius_MissingTrivia);
+                
+                if (IsTriviaBallColliding(_newPos) == false)
+                {
+                    succeed = true;
+                }
+
+                if (succeed)
+                {
+                    pos = _newPos;
+                    break;
+                }
+
+                tries++;
+            }
+            
             var newButton = Instantiate(triviaBall, parentTrivias);
             newButton.gameObject.transform.position = pos;
             newButton.trivia = _trivia;
@@ -262,6 +286,21 @@ public class TriviaMapUI : MonoBehaviour
             allTriviaButtons.Add(newButton);
             i++;
         }
+    }
+
+    public bool IsTriviaBallColliding(Vector3 pos)
+    {
+        foreach (var button in allTriviaButtons)
+        {
+            float dist = Vector3.Distance(pos, button.transform.position);
+
+            if (dist < threshold_Distance)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     [Button("Editor - Update trivia menu")]
