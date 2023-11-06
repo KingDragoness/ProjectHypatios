@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Sirenix.OdinInspector;
 using Newtonsoft.Json;
 
@@ -16,7 +18,8 @@ public class DeathScreenScript : MonoBehaviour
         TimeRemainingShow,
         TransitionLevel,
         CutsceneRun1,
-        CutsceneRun3
+        CutsceneRun3,
+        CustomCutscene
     }
 
     public enum ReaperStage
@@ -32,6 +35,7 @@ public class DeathScreenScript : MonoBehaviour
     [FoldoutGroup("References")] public Animator anim_Transition;
     [FoldoutGroup("References")] public DeadDialogue deadDialogue;
     [FoldoutGroup("References")] public PerkSelectionUI perkSelection;
+    [FoldoutGroup("References")] public VideoPlayer videoPlayer;
     [Space]
     public CurrentStage currentStage;
     public ReaperStage currentReaperStage = ReaperStage.Main;
@@ -45,19 +49,24 @@ public class DeathScreenScript : MonoBehaviour
     public int DEBUG_CutsceneTest = 0;
     public float speedMultiplierTime = 1;
     public bool DEBUG_NoKey = false;
-    [FoldoutGroup("References")] public GameObject VC_MainMode;
-    [FoldoutGroup("References")] public GameObject VC_SelectPerks;
-    [FoldoutGroup("References")] public GameObject MainUI_MainMode;
-    [FoldoutGroup("References")] public GameObject MainUI_SelectPerks;
-    [FoldoutGroup("References")] public GameObject defaultUI;
-    [FoldoutGroup("References")] public GameObject defaultSetting;
-    [FoldoutGroup("References")] public GameObject runCutscene_1;
-    [FoldoutGroup("References")] public GameObject run1_Setting;
-    [FoldoutGroup("References")] public GameObject runCutscene_3;
-    [FoldoutGroup("References")] public GameObject run3_Setting;
+    [FoldoutGroup("UI_References")] public GameObject VC_MainMode;
+    [FoldoutGroup("UI_References")] public GameObject VC_SelectPerks;
+    [FoldoutGroup("UI_References")] public GameObject MainUI_MainMode;
+    [FoldoutGroup("UI_References")] public GameObject MainUI_SelectPerks;
+    [FoldoutGroup("UI_References")] public GameObject defaultUI;
+    [FoldoutGroup("UI_References")] public GameObject defaultSetting;
+    [FoldoutGroup("UI_References")] public GameObject customSetting;
+    [FoldoutGroup("Run_Specific")] public GameObject runCutscene_1;
+    [FoldoutGroup("Run_Specific")] public GameObject run1_Setting;
+    [FoldoutGroup("Run_Specific")] public GameObject runCutscene_3;
+    [FoldoutGroup("Run_Specific")] public GameObject run3_Setting;
 
+    public static DeathScreenScript Instance;
     private bool triggered = false;
-    private int fakeMilisecond = 999;
+    private bool triggered_CustomCutscene = false;
+    private DeathScreen_Cutscene currentCustomCutscene;
+    private int _miliSecondMockup = 999;
+    private float _minimumTime_CutsceneClose = 1f;
 
     private void Start()
     {
@@ -71,6 +80,7 @@ public class DeathScreenScript : MonoBehaviour
         UNIX_Remaining += test_UNIX_Start;
         Time.timeScale = 1;
         FPSMainScript.CacheLoadSave();
+        Instance = this;
 
         if (FPSMainScript.savedata != null)
         { SaveDataCheck(); }
@@ -95,6 +105,7 @@ public class DeathScreenScript : MonoBehaviour
         CutsceneRun();
     }
 
+    //Set CurrentStage
     [ContextMenu("RunTest_Debug")]
     public void RunTest_Debug()
     {
@@ -110,6 +121,7 @@ public class DeathScreenScript : MonoBehaviour
 
  
 
+    //also refresh UI, cutscenes, etc
     private void CutsceneRun()
     {
         run1_Setting.gameObject.SetActive(false);
@@ -119,9 +131,31 @@ public class DeathScreenScript : MonoBehaviour
         runCutscene_1.gameObject.SetActive(false);
         runCutscene_3.gameObject.SetActive(false);
         defaultUI.gameObject.SetActive(false);
+        customSetting.gameObject.SetActive(false);
 
+        DeathScreen_Cutscene customCutscene = AnyCutsceneAvailableToPlay();
 
-        if (currentStage == CurrentStage.CutsceneRun1)
+        if (triggered_CustomCutscene == false)
+        {
+            if (customCutscene != null)
+            {
+                currentStage = CurrentStage.CustomCutscene;
+                currentCustomCutscene = customCutscene;
+            }
+        }
+        else
+        {
+            currentStage = CurrentStage.TimeRemainingShow;
+        }
+
+        if (currentStage == CurrentStage.CustomCutscene)
+        {
+            customCutscene.LaunchScene();
+            _minimumTime_CutsceneClose = 1f;
+            triggered_CustomCutscene = true;
+            customSetting.gameObject.SetActive(true);
+        }
+        else if (currentStage == CurrentStage.CutsceneRun1)
         {
             runCutscene_1.gameObject.SetActive(true);
             run1_Setting.gameObject.SetActive(true);
@@ -141,12 +175,54 @@ public class DeathScreenScript : MonoBehaviour
         }
     }
 
+    private DeathScreen_Cutscene AnyCutsceneAvailableToPlay()
+    {
+        DeathScreen_Cutscene result = null;
+
+        foreach(var cutscene in allCutscenes)
+        {
+            if (cutscene.HasCutsceneAlreadyPlayed())
+            {
+                continue;
+            }
+
+            if (cutscene.GetEvaluateResult() == true)
+            {
+                result = cutscene;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    [FoldoutGroup("DEBUG")] [Button("Refresh all cutscene objects")]
+    public void GetAllCutsceneObjects()
+    {
+        allCutscenes = FindObjectsOfType<DeathScreen_Cutscene>().ToList();
+        allCutscenes = allCutscenes.OrderBy(x => x.priorityOrder).ToList();
+    }
+
     private void Update()
     {
         if (currentStage == CurrentStage.CutsceneRun1 | currentStage == CurrentStage.CutsceneRun3)
         {
             MainUI_SelectPerks.SetActive(false);
             MainUI_MainMode.SetActive(false);
+        }
+        else if (currentStage == CurrentStage.CustomCutscene)
+        {
+            MainUI_SelectPerks.SetActive(false);
+            MainUI_MainMode.SetActive(false);
+            _minimumTime_CutsceneClose -= Time.deltaTime;
+
+            if (currentCustomCutscene.cutsceneType == DeathScreen_Cutscene.CutsceneType.Video)
+            {
+                if (_minimumTime_CutsceneClose < 0f && videoPlayer.isPlaying == false)
+                {
+                    RunTest(1);
+                }
+            }
         }
         else 
         {
@@ -235,10 +311,6 @@ public class DeathScreenScript : MonoBehaviour
         string jsonTypeNameAll = JsonConvert.SerializeObject(hypatiosSave, Formatting.Indented, FPSMainScript.JsonSettings());
 
         Hypatios.ManualSave(hypatiosSave, "CONFIRM", jsonTypeNameAll);
-        //File.WriteAllText(pathSave, jsonTypeNameAll);
-        //if (ConsoleCommand.Instance != null) ConsoleCommand.Instance.SendConsoleMessage($"File has been saved to {pathSave}");
-        //FPSMainScript.savedata = hypatiosSave;
-        //FPSMainScript.LoadFromSaveFile = true;
         currentStage = CurrentStage.TransitionLevel;
     }
 
@@ -253,13 +325,13 @@ public class DeathScreenScript : MonoBehaviour
 
                 if (currentReaperStage == ReaperStage.Done) UNIX_Remaining -= Mathf.RoundToInt(speed) * 2;
 
-                if (fakeMilisecond <= 0)
+                if (_miliSecondMockup <= 0)
                 {
-                    fakeMilisecond = 999;
+                    _miliSecondMockup = 999;
                 }
                 else
                 {
-                    fakeMilisecond -= 99 + UnityEngine.Random.Range(1, 7);
+                    _miliSecondMockup -= 99 + UnityEngine.Random.Range(1, 7);
                 }
             }
             else
@@ -271,7 +343,7 @@ public class DeathScreenScript : MonoBehaviour
 
             var dateTime = UnixTimeStampToDateTime(UNIX_Remaining);
 
-            lastPlayedTime_Text.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}.{fakeMilisecond.ToString("000")}";
+            lastPlayedTime_Text.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}.{_miliSecondMockup.ToString("000")}";
         }
         else if (currentStage == CurrentStage.TransitionLevel)
         {
@@ -280,7 +352,7 @@ public class DeathScreenScript : MonoBehaviour
                 pressAny_Text.gameObject.SetActive(false);
                 var dateTime = UnixTimeStampToDateTime(test_UNIX_Start);
 
-                lastPlayedTime_Text.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}.{fakeMilisecond.ToString("000")}";
+                lastPlayedTime_Text.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}.{_miliSecondMockup.ToString("000")}";
                 StartCoroutine(LoadDelay());
             }
             triggered = true;
