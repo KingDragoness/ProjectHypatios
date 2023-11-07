@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 public class MemoNoteDeveloper : MonoBehaviour
 {
 
-    [TextArea(3, 6)]
+    [TextArea(3, 12)]
     public string memoNote;
 
 }
