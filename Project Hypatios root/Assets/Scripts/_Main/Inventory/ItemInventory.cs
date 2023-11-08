@@ -16,6 +16,8 @@ public class ItemInventory : ScriptableObject
         Quest,
         Key,
         Weapon,
+        Materials = 100, //for category filter
+        Readables = 101,
         None = 999 //For inventory filter
     }
 
@@ -69,6 +71,8 @@ public class ItemInventory : ScriptableObject
 
     public bool IsABook => subCategory == SubiconCategory.FictionBook || subCategory == SubiconCategory.Book;
     public bool IsAlcoholic => subCategory == SubiconCategory.Alcohol || subCategory == SubiconCategory.Cocktail;
+    public bool IsReadableText => subCategory == SubiconCategory.FictionBook || subCategory == SubiconCategory.Book || subCategory == SubiconCategory.Notes;
+    public bool IsMaterials => subCategory == SubiconCategory.Default || subCategory == SubiconCategory.Material || subCategory == SubiconCategory.Essence;
 
     public bool IsReadable()
     {

@@ -205,6 +205,28 @@ public class PlayerRPGUI : MonoBehaviour
                 {
                     valid = true;
                 }
+                else if (filterCategoryType == ItemInventory.Category.Materials | filterCategoryType == ItemInventory.Category.Readables)
+                {
+                    bool correctFilter = false;
+
+                    if (filterCategoryType == ItemInventory.Category.Readables && itemClass.IsReadableText == true)
+                    {
+                        correctFilter = true;
+                    }
+                    else if (filterCategoryType == ItemInventory.Category.Materials && itemClass.IsMaterials == true)
+                    {
+                        correctFilter = true;
+                    }
+
+                    if (correctFilter && isFavoriteActive && itemData.IsFavorite)
+                    {
+                        valid = true;
+                    }
+                    else if (correctFilter && !isFavoriteActive)
+                    {
+                        valid = true;
+                    }
+                }
                 else
                 {
                     if (filterCategoryType == ItemInventory.Category.None && isFavoriteActive && itemData.IsFavorite)
