@@ -26,6 +26,8 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
     [FoldoutGroup("Inventory")] public Slider healthRestoreBar;
     [FoldoutGroup("Inventory")] public Slider healthRestore_BorderBar;
+    [FoldoutGroup("Inventory")] public GameObject tooltip_IconInventory;
+    [FoldoutGroup("Inventory")] public Image tooltip_IconInventoryImage;
     [FoldoutGroup("Inventory")] public ItemInventory.Category filterCategoryType = ItemInventory.Category.None;
     [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
     [FoldoutGroup("Weapon Preview")] public Previewer3DWeaponUI previewerWeapon;
@@ -452,6 +454,7 @@ public class PlayerRPGUI : MonoBehaviour
         itemTooltip_RightHandedLabel.text = sRight;
         currentItemButton = button;
 
+        RefreshInventoryIcon(itemClass.GetSprite());
         Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
 
     }
@@ -467,7 +470,6 @@ public class PlayerRPGUI : MonoBehaviour
         healthRestoreBar.gameObject.SetActive(true);
         healthRestore_BorderBar.gameObject.SetActive(true);
 
-
     }
 
     public void HideHealthRestore()
@@ -475,7 +477,18 @@ public class PlayerRPGUI : MonoBehaviour
         healthRestoreBar.gameObject.SetActive(false);
         healthRestore_BorderBar.gameObject.SetActive(false);
 
+    }
 
+    public void RefreshInventoryIcon(Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            tooltip_IconInventory.gameObject.SetActive(false);
+            return;
+        }
+
+        tooltip_IconInventory.gameObject.SetActive(true);
+        tooltip_IconInventoryImage.sprite = sprite;
     }
 
     public void HighlightWeaponSlot(WeaponSlotButton slotButton)

@@ -8,10 +8,32 @@ public class ClockTimerDisplay : MonoBehaviour
 
     public TextMesh clockTimeText;
     public int unixTimeStart = 1640087660;
+    public bool manualInternalTime = false;
+
+    private float _internalTimeClock = 0;
+
+    private void Start()
+    {
+        if (manualInternalTime)
+        {
+            _internalTimeClock = 0;
+        }
+    }
+
+    public void ResetClock()
+    {
+        _internalTimeClock = 0;
+    }
 
     private void Update()
     {
         var dateTime = UnixTimeStampToDateTime(Hypatios.Game.UNIX_Timespan + unixTimeStart);
+
+        if (manualInternalTime)
+        {
+            _internalTimeClock += Time.deltaTime;
+            dateTime = UnixTimeStampToDateTime(_internalTimeClock + unixTimeStart);
+        }
 
         clockTimeText.text = $"{dateTime.Hour}:{dateTime.Minute.ToString("00")}:{dateTime.Second.ToString("00")}";
     }

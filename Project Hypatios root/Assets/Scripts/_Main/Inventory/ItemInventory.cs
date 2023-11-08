@@ -39,6 +39,7 @@ public class ItemInventory : ScriptableObject
 
     [InfoBox("If DisplayName is empty, it will use ID's")] [SerializeField] private string _displayName = "";
     [TextArea(3,5)] [SerializeField] private string _description = "";
+    [SerializeField] private Sprite itemSprite;
     public Category category;
     public SubiconCategory subCategory;
     [ShowIf("category", Category.Weapon)] public WeaponItem attachedWeapon;
@@ -80,6 +81,11 @@ public class ItemInventory : ScriptableObject
     public string GetID()
     {
         return name;
+    }
+
+    public Sprite GetSprite()
+    {
+        return itemSprite;
     }
 
     public bool CheckMatchingTags(string input)

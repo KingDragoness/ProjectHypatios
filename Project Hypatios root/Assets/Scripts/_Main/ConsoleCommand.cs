@@ -257,6 +257,10 @@ public class ConsoleCommand : MonoBehaviour
                 ShowAllSaves(args);
                 break;
 
+            case "skipcut":
+                SkipCutscene(args);
+                break;
+
             case "soul":
                 Soul(args);
                 break;
@@ -1188,6 +1192,21 @@ public class ConsoleCommand : MonoBehaviour
 
         }
     }
+
+    protected void SkipCutscene(string[] args)
+    {
+        try
+        {
+            Hypatios.UI.CloseCinematic();
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! skipcut");
+
+        }
+    }
+
+
 
 
     protected void GodMode(string[] args)
