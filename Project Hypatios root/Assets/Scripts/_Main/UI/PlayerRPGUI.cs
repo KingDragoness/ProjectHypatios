@@ -422,6 +422,7 @@ public class PlayerRPGUI : MonoBehaviour
         itemTooltip_LeftHandedLabel.text = sLeft;
         itemTooltip_RightHandedLabel.text = sRight;
         Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
+        MainGameHUDScript.Instance.rpgUI.RefreshInventoryIcon(null);
 
     }
 
@@ -463,6 +464,7 @@ public class PlayerRPGUI : MonoBehaviour
     {
         currentItemButton = null;
         HideHealthRestore();
+        RefreshInventoryIcon(null);
     }
 
     public void ShowPreviewHealthRestore()
@@ -678,6 +680,8 @@ public class PlayerRPGUI : MonoBehaviour
             bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";
             bigTooltip_RightHandedLabel.text = "";
             Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>());
+            MainGameHUDScript.Instance.rpgUI.RefreshInventoryIcon(null);
+
 
         }
     }

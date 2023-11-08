@@ -364,11 +364,11 @@ public class PlayerRPG : MonoBehaviour
 
             if (!isSimilarWeaponEquipped && !isTooManyEqupped)
             {
-                s_interaction = "[LMB to equip weapon] [X to discard] [F to favorite]";
+                s_interaction = "<'LMB' to equip weapon>\n<'X' to discard>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "[X to discard] [F to favorite]";
+                s_interaction = "<'X' to discard>\n<'F' to favorite>";
             }
 
 
@@ -376,23 +376,23 @@ public class PlayerRPG : MonoBehaviour
             sLeft += $"Fire rate\n";
             sLeft += $"Mag size\n";
             sLeft += $"Ammo Left\n";
-            sLeft += $"\n<size=14>{s_Description}</size>\n";
-            sLeft += $"\n<size=14>{s_interaction}</size>\n";
+            sLeft += $"\n<size=13>{s_Description}</size>\n";
+            sLeft += $"\n<size=13>{s_interaction}</size>\n";
 
         }
         else
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                s_interaction = "[LMB to read] [X to destroy item] [F to favorite]";
+                s_interaction = "<'LMB' to read>\n<'X' to destroy item>\n<'F' to favorite>";
             }
             else if (itemClass.category != ItemInventory.Category.Consumables)
             {
-                s_interaction = "[X to destroy item] [F to favorite]";
+                s_interaction = "<'X' to destroy item>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "[LMB to consume] [X to destroy item] [F to favorite]";
+                s_interaction = "<'LMB' to consume>\n<'X' to destroy item>\n<'F' to favorite>";
             }
 
             if (itemData.isGenericItem == false)
@@ -416,7 +416,7 @@ public class PlayerRPG : MonoBehaviour
             }
             
 
-            sLeft += $"\n<size=14>{s_interaction}</size>\n";
+            sLeft += $"\n<size=13>{s_interaction}</size>\n";
         }
 
         return sLeft;

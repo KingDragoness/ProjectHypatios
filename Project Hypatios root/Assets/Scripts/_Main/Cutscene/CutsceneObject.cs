@@ -88,7 +88,7 @@ public class CutsceneObject : MonoBehaviour
         MainUI1.OpenCinematic();
         defaultBlendStyle = cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style;
 
-        CloseAllCutsceneInstances();
+        CloseAllCutsceneInstances(this);
         cutsceneUI.NewConversation();
         virtualCam.gameObject.SetActive(true);
         currentActions.AddRange(allActionEntries);
@@ -100,14 +100,7 @@ public class CutsceneObject : MonoBehaviour
     [FoldoutGroup("Tools")] [Button("Stop All Cutscene")]
     private void StopCutscene()
     {
-        var MainUI1 = MainUI.Instance;
-        MainUI1.CloseCinematic();
-
-        OnCutsceneEnded?.Invoke();
-        cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;
-
         CloseAllCutsceneInstances();
-        isPlaying = false;
     }
 
 
@@ -127,12 +120,14 @@ public class CutsceneObject : MonoBehaviour
     }
 
 
-    private void CloseAllCutsceneInstances()
+    public static void CloseAllCutsceneInstances(CutsceneObject ignoreCutscene = null)
     {
         List<CutsceneObject> allCutsceneObjects = FindObjectsOfType<CutsceneObject>().ToList();
 
         foreach (var cutscene in allCutsceneObjects)
         {
+            if (cutscene == ignoreCutscene) continue;
+
             cutscene.CloseCutscene();
         }
     }
@@ -141,6 +136,9 @@ public class CutsceneObject : MonoBehaviour
 
     private void CloseCutscene()
     {
+        var MainUI1 = MainUI.Instance;
+        MainUI1.CloseCinematic();
+
         virtualCam.gameObject.SetActive(false);
         additionalVirtualCams.RemoveAll(x => x == null);
         foreach (var go in allActionEntries)
@@ -148,5 +146,9 @@ public class CutsceneObject : MonoBehaviour
 
         foreach (var vc in additionalVirtualCams)
             vc.gameObject.SetActive(false);
+
+        OnCutsceneEnded?.Invoke();
+        cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;
+        isPlaying = false;
     }
 }

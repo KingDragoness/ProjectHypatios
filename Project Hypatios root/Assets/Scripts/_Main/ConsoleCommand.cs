@@ -1197,6 +1197,9 @@ public class ConsoleCommand : MonoBehaviour
     {
         try
         {
+            var MainUI1 = MainUI.Instance;
+            MainUI1.CloseCinematic();
+            CutsceneObject.CloseAllCutsceneInstances();
             Hypatios.UI.CloseCinematic();
         }
         catch

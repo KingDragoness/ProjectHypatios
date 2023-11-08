@@ -38,7 +38,7 @@ public class InventoryItemButton : MonoBehaviour
     public void DehighlightButton()
     {
         Hypatios.UI.CloseAllTooltip();
-
+        rpgUI.DehighlightItem();
     }
 
     public void ClickButton()

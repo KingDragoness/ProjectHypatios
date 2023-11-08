@@ -141,6 +141,7 @@ public class PlayerStatusUI : MonoBehaviour
             bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";
             bigTooltip_RightHandedLabel.text = "";
             Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>());
+            MainGameHUDScript.Instance.rpgUI.RefreshInventoryIcon(null);
 
         }
     }
