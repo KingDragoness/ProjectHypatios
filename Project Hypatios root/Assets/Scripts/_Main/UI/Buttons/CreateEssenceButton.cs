@@ -104,7 +104,8 @@ public class CreateEssenceButton : MonoBehaviour
         if (ESSENCE_CATEGORY != ModifierEffectCategory.Nothing)
         {
             var statusEffect = Hypatios.Assets.GetStatusEffect(ESSENCE_CATEGORY);
-            str += $"{Hypatios.RPG.GetEssenceName(ESSENCE_CATEGORY)}: {statusEffect.baseValue * mutliplier}";
+            string str_Modifier = Hypatios.RPG.GetDescription(ESSENCE_CATEGORY, statusEffect.baseValue * (float)mutliplier, true);
+            str += $"{Hypatios.RPG.GetEssenceName(ESSENCE_CATEGORY)}: {str_Modifier}";
         }
         else
         {

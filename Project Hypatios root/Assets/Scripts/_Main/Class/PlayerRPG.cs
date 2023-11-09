@@ -211,7 +211,7 @@ public class PlayerRPG : MonoBehaviour
         }
         else if (statusEffect == ModifierEffectCategory.RegenHPPercentage)
         {
-            s += $"{Mathf.RoundToInt(value * 100)}%";
+            s += $"{Mathf.FloorToInt(value * 1000f)/10f}%";
         }
         else if (statusEffect == ModifierEffectCategory.MaxHitpointBonus)
         {
@@ -220,7 +220,7 @@ public class PlayerRPG : MonoBehaviour
         }
         else if (statusEffect == ModifierEffectCategory.MaxHPPercentage)
         {
-            s += $"{Mathf.RoundToInt(value * 100)}%";
+            s += $"{Mathf.FloorToInt(value * 1000f) / 10f}%";
         }
         else if (statusEffect == ModifierEffectCategory.Recoil)
         {
