@@ -14,6 +14,7 @@ public class ReadableBookUI : MonoBehaviour
     public Text prefab_TextEntry;
     public BookChapterButton prefab_ChapterBook;
     public Item_ReadableBook currentBook;
+    public int fontSize_Subchapter = 22;
     public int currentChapter = -1;
 
     [ShowInInspector] private List<Text> allTextEntries = new List<Text>();
@@ -36,7 +37,7 @@ public class ReadableBookUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        label_MainTitle.text = currentBook.Title;
+        label_MainTitle.text = currentBook.Title.ToUpper();
         Item_ReadableBook.Chapter chapter = currentBook.GetChapter(currentChapter);
 
         foreach(var entry in allTextEntries)
@@ -56,7 +57,7 @@ public class ReadableBookUI : MonoBehaviour
 
         if (chapter != null)
         {
-            string newContent1 = $"{chapter.chapterName}\n\n" + chapter.content;
+            string newContent1 = $"<size={fontSize_Subchapter.ToString()}><b>{chapter.chapterName}</b></size>\n\n" + chapter.content;
             string[] lines = newContent1.Split(
                 new string[] { System.Environment.NewLine }, StringSplitOptions.None
             );
@@ -66,7 +67,7 @@ public class ReadableBookUI : MonoBehaviour
             {
                 Text t = Instantiate(prefab_TextEntry, parentTextContent);
                 t.gameObject.SetActive(true);
-                t.text = line;
+                t.text = $"{line}\n";
                 allTextEntries.Add(t);
             }
         }

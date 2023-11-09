@@ -26,6 +26,7 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ExtractorButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ResultButton;
     [FoldoutGroup("Create Essence")] public GameObject Essence_labelNoItem;
+    [FoldoutGroup("Create Essence")] public Color spriteColor;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddBottle;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddExoticCore;
     [FoldoutGroup("Quick Button")] public Button quickButton_RandomMaterial;
@@ -98,6 +99,29 @@ public class kThanidLabUI : MonoBehaviour
         RefreshUI();
     }
 
+    private void OnDisable()
+    {
+        //return all item back
+        foreach (var itemDat in extractorInventory.allItemDatas)
+        {
+            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
+        }
+
+        foreach (var itemDat in fabricatorInventory.allItemDatas)
+        {
+            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
+        }
+
+        extractorInventory.allItemDatas.Clear();
+        fabricatorInventory.allItemDatas.Clear();
+        Hypatios.UI.CloseAllTooltip();
+    }
+
+
     #region Create Debug
 
     [FoldoutGroup("DEBUG")]
@@ -167,6 +191,8 @@ public class kThanidLabUI : MonoBehaviour
         ModifyAntiPotionIndex();
         SerumCreator.Refresh();
         RefreshLabel();
+        Hypatios.UI.CloseAllTooltip();
+
     }
 
     private void RefreshLabel()
@@ -794,32 +820,125 @@ public class kThanidLabUI : MonoBehaviour
 
     #endregion
 
-    private void OnDisable()
+    #region Highlight Buttons
+
+    public void HighlightButton(CreateEssenceButton button)
     {
-        //return all item back
-        foreach(var itemDat in extractorInventory.allItemDatas)
-        {
-            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+        string sLeft = "";
+        string sRight = "";
+        string sInteraction = "\n";
 
-            Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
+        HypatiosSave.ItemDataSave itemDat = null;
+        ItemInventory itemClass = null;
+
+        if (button.buttonType == CreateEssenceButton.Type.Inventory)
+        {
+            itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
+            itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+            sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, itemDat, true);
+            sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, itemDat);
+
+            sInteraction += "<'LMB' to add to Extractor>\n";
+        }
+        else if (button.buttonType == CreateEssenceButton.Type.Extractor)
+        {
+            itemDat = extractorInventory.allItemDatas[button.index];
+            itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, itemDat, true);
+            sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, itemDat);
+
+            sInteraction += "<'LMB' to return to Inventory>\n";
+
+        }
+        else if (button.buttonType == CreateEssenceButton.Type.Result)
+        {
+            sLeft = button.GetString_Highlight();
+
         }
 
-        foreach (var itemDat in fabricatorInventory.allItemDatas)
-        {
-            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>(), sLeft + sInteraction, sRight);
 
-            Hypatios.Player.Inventory.AddItemGenericSafe(itemClass, itemDat, itemDat.count);
+        if (itemClass != null)
+        {
+            Hypatios.UI.RefreshInventoryIcon(itemClass.GetSprite());
+        }
+        else
+        {
+            Hypatios.UI.RefreshInventoryIcon(null);
+
         }
 
-        extractorInventory.allItemDatas.Clear();
-        fabricatorInventory.allItemDatas.Clear();
+        if (button.buttonType == CreateEssenceButton.Type.Result)
+        {
+            Hypatios.UI.RefreshInventoryIcon(button.GetSprite(), spriteColor);
+
+        }
     }
+
+    public void HighlightButton(FabricateSerumButton button)
+    {
+        string sLeft = "";
+        string sRight = "";
+        string sInteraction = "\n";
+
+        HypatiosSave.ItemDataSave itemDat = null;
+        ItemInventory itemClass = null;
+
+        if (button.buttonType == FabricateSerumButton.Type.Inventory)
+        {
+            itemDat = Hypatios.Player.Inventory.allItemDatas[button.index];
+            itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+            sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, itemDat, true);
+            sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, itemDat);
+
+            sInteraction += "<'LMB' to add to Fabricator>\n";
+
+        }
+        else if (button.buttonType == FabricateSerumButton.Type.Fabricator)
+        {
+            itemDat = fabricatorInventory.allItemDatas[button.index];
+            itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, itemDat, true);
+            sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, itemDat);
+
+            sInteraction += "<'LMB' to return to Inventory>\n";
+
+        }
+
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>(), sLeft + sInteraction, sRight);
+
+        if (itemClass != null)
+        {
+            if (itemDat.GENERIC_ESSENCE_POTION == true)
+                Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(itemDat), spriteColor);
+            else
+            {
+                Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(itemDat));
+            }
+        }
+        else
+        {
+            Hypatios.UI.RefreshInventoryIcon(null);
+
+        }
+    }
+
+    public void DehighlightButton()
+    {
+        Hypatios.UI.RefreshInventoryIcon(null);
+    }
+
+    #endregion
+
 
     #region Modes
 
     public void ChangeMode(int _mode)
     {
         currentMode = (Mode)_mode;
+        Hypatios.UI.CloseAllTooltip();
         UpdateMode();
     }
 

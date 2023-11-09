@@ -275,6 +275,23 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         allStatusEffectButton.Add(prefab1);
     }
 
+    public void HighlightResultButton(RectTransform t)
+    {
+        var itemClass = Hypatios.Assets.GetItem(resultSerum.ID);
+        string sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, resultSerum, true);
+        string sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, resultSerum);
+
+        Hypatios.UI.ShowTooltipBig(t, sLeft, sRight);
+        Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(resultSerum));
+
+    }
+
+    public void Dehighlight()
+    {
+        Hypatios.UI.CloseAllTooltip();
+        Hypatios.UI.RefreshInventoryIcon(null);
+    }
+
 
     /// <summary>
     /// Don't execute this before calculating serum.
@@ -391,6 +408,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
         kthanidUI.FabricatorInventory.allItemDatas.Clear();
         DeadDialogue.PromptNotifyMessage_Mod($"Crafted {resultSerum.SERUM_CUSTOM_NAME}.", 4f);
         kthanidUI.RefreshUI();
+        Hypatios.UI.CloseAllTooltip();
 
     }
 }

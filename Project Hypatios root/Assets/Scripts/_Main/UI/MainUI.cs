@@ -64,11 +64,17 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject postProcessUI;
 
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
-    [FoldoutGroup("Tooltips")] public RectTransform tooltipBig;
-    [FoldoutGroup("Tooltips")] public RectTransform tooltipSmall;
+    [FoldoutGroup("Tooltips")] public RectTransform tooltipBig_rect;
+    [FoldoutGroup("Tooltips")] public RectTransform tooltipSmall_rect;
     [FoldoutGroup("Tooltips")] public RectTransform testingTooltipPos;
+    [FoldoutGroup("Tooltips")] public ToolTip TooltipBig;
+    [FoldoutGroup("Tooltips")] public ToolTip TooltipSmall;
+    [FoldoutGroup("Tooltips")] public Text bigTooltip_LeftHandedLabel;
+    [FoldoutGroup("Tooltips")] public Text bigTooltip_RightHandedLabel;
     [FoldoutGroup("Tooltips")] public Text smallTooltip_LeftHandedLabel;
     [FoldoutGroup("Tooltips")] public Text smallTooltip_RightHandedLabel;
+    [FoldoutGroup("Tooltips")] public GameObject tooltip_IconInventory;
+    [FoldoutGroup("Tooltips")] public Image tooltip_IconInventoryImage;
 
     [FoldoutGroup("Events")] public GameEvent event_GamePause;
     [FoldoutGroup("Events")] public GameEvent event_GameResume;
@@ -148,30 +154,61 @@ public class MainUI : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    
 
-    public void ShowTooltipBig(RectTransform currentSelection)
+
+    #endregion
+
+
+    #region TOOLTIPS
+
+    public void ShowTooltipBig(RectTransform currentSelection, string leftText = "$%", string rightText = "$%")
     {
-        tooltipBig.gameObject.SetActive(true);
+        tooltipBig_rect.gameObject.SetActive(true);
         var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
-        tooltipBig.position = v3;
+        tooltipBig_rect.position = v3;
         testingTooltipPos.position = v3;
+
+        if (leftText != "$%")
+        {
+            bigTooltip_LeftHandedLabel.text = leftText;
+        }
+
+        if (rightText != "$%")
+        {
+            bigTooltip_RightHandedLabel.text = rightText;
+
+        }
     }
 
     public void ShowTooltipSmall(RectTransform currentSelection)
     {
-        tooltipSmall.gameObject.SetActive(true);
+        tooltipSmall_rect.gameObject.SetActive(true);
         var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
-        tooltipSmall.position = v3;
+        tooltipSmall_rect.position = v3;
         testingTooltipPos.position = v3;
+    }
+
+
+    public void RefreshInventoryIcon(Sprite sprite, Color? _color = null)
+    {
+        if (sprite == null)
+        {
+            tooltip_IconInventory.gameObject.SetActive(false);
+            return;
+        }
+
+        tooltip_IconInventory.gameObject.SetActive(true);
+        tooltip_IconInventoryImage.sprite = sprite;
+        tooltip_IconInventoryImage.color = _color ?? Color.white;
+
     }
 
 
     public void ShowTooltipSmall(RectTransform currentSelection, string str_left, string str_right)
     {
-        tooltipSmall.gameObject.SetActive(true);
+        tooltipSmall_rect.gameObject.SetActive(true);
         var v3 = screenPosChecker.GetPositionScreenForTooltip(currentSelection);
-        tooltipSmall.position = v3;
+        tooltipSmall_rect.position = v3;
         testingTooltipPos.position = v3;
         smallTooltip_LeftHandedLabel.text = str_left;
         smallTooltip_RightHandedLabel.text = str_right;
@@ -179,11 +216,10 @@ public class MainUI : MonoBehaviour
 
     public void CloseAllTooltip()
     {
-        tooltipBig.gameObject.SetActive(false);
-        tooltipSmall.gameObject.SetActive(false);
+        tooltipBig_rect.gameObject.SetActive(false);
+        tooltipSmall_rect.gameObject.SetActive(false);
 
     }
-
     #endregion
 
     private bool b_OnActivateNoClipMode = false;

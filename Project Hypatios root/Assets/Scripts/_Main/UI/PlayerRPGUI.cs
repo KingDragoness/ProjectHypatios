@@ -11,25 +11,18 @@ public class PlayerRPGUI : MonoBehaviour
     
 
     [FoldoutGroup("Perk Tooltip")] public RectTransform perktooltipUI;
-    [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_LeftHandedLabel;
-    [FoldoutGroup("Perk Tooltip")] public Text perkTooltip_RightHandedLabel;
-    [FoldoutGroup("Perk Tooltip")] public Text bigTooltip_LeftHandedLabel;
-    [FoldoutGroup("Perk Tooltip")] public Text bigTooltip_RightHandedLabel;
     [FoldoutGroup("Perk Tooltip")] public Vector3 offsetTooltip;
     [FoldoutGroup("Perk Tooltip")] public ToolTip perkTooltipScript;
 
     [FoldoutGroup("Inventory")] public RectTransform parentInventory;
     [FoldoutGroup("Inventory")] public Text mainTitleLabel;
-    [FoldoutGroup("Inventory")] public Text itemTooltip_LeftHandedLabel;
-    [FoldoutGroup("Inventory")] public Text itemTooltip_RightHandedLabel;
     [FoldoutGroup("Inventory")] public InputField input_SearchField;
     [FoldoutGroup("Inventory")] public ToolTip itemTooltipScript;
     [FoldoutGroup("Inventory")] public Slider healthRestoreBar;
     [FoldoutGroup("Inventory")] public Slider healthRestore_BorderBar;
-    [FoldoutGroup("Inventory")] public GameObject tooltip_IconInventory;
-    [FoldoutGroup("Inventory")] public Image tooltip_IconInventoryImage;
     [FoldoutGroup("Inventory")] public ItemInventory.Category filterCategoryType = ItemInventory.Category.None;
     [FoldoutGroup("Inventory")] public bool isFavoriteActive = false;
+    [FoldoutGroup("Inventory")] public Color spriteColor;
     [FoldoutGroup("Weapon Preview")] public Previewer3DWeaponUI previewerWeapon;
     [FoldoutGroup("Weapon Preview")] public RectTransform parentAttachmentButtons;
     [FoldoutGroup("Weapon Preview")] public GameObject weaponPreviewerUI;
@@ -441,10 +434,8 @@ public class PlayerRPGUI : MonoBehaviour
 
         sLeft = $"<size=14>{weaponMod.Description}</size>";
 
-        itemTooltip_LeftHandedLabel.text = sLeft;
-        itemTooltip_RightHandedLabel.text = sRight;
-        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
-        MainGameHUDScript.Instance.rpgUI.RefreshInventoryIcon(null);
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>(), sLeft, sRight);
+        Hypatios.UI.RefreshInventoryIcon(null);
 
     }
 
@@ -473,12 +464,16 @@ public class PlayerRPGUI : MonoBehaviour
             }     
         }
 
-        itemTooltip_LeftHandedLabel.text = sLeft;
-        itemTooltip_RightHandedLabel.text = sRight;
         currentItemButton = button;
 
-        RefreshInventoryIcon(itemClass.GetSprite());
-        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>());
+        if (itemDat.GENERIC_ESSENCE_POTION == true)
+            Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(itemDat), spriteColor);
+        else
+        {
+            Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(itemDat));
+        }
+
+        Hypatios.UI.ShowTooltipBig(button.GetComponent<RectTransform>(), sLeft, sRight);
 
     }
 
@@ -486,7 +481,7 @@ public class PlayerRPGUI : MonoBehaviour
     {
         currentItemButton = null;
         HideHealthRestore();
-        RefreshInventoryIcon(null);
+        Hypatios.UI.RefreshInventoryIcon(null);
     }
 
     public void ShowPreviewHealthRestore()
@@ -503,17 +498,6 @@ public class PlayerRPGUI : MonoBehaviour
 
     }
 
-    public void RefreshInventoryIcon(Sprite sprite)
-    {
-        if (sprite == null)
-        {
-            tooltip_IconInventory.gameObject.SetActive(false);
-            return;
-        }
-
-        tooltip_IconInventory.gameObject.SetActive(true);
-        tooltip_IconInventoryImage.sprite = sprite;
-    }
 
     public void HighlightWeaponSlot(WeaponSlotButton slotButton)
     {
@@ -541,10 +525,9 @@ public class PlayerRPGUI : MonoBehaviour
         { sLeft = $"<size=14>{s_interaction}</size>"; }
         else if (slotButton.equipIndex == 0) 
         { sLeft = $"<size=14>Cannot unequip Pistol.</size>"; }
-        perkTooltip_LeftHandedLabel.text = sLeft;
-        perkTooltip_RightHandedLabel.text = sRight;
+
         PreviewWeapon(WeaponClass, weaponSave, isWeaponSlot: true);
-        Hypatios.UI.ShowTooltipSmall(slotButton.GetComponent<RectTransform>());
+        Hypatios.UI.ShowTooltipSmall(slotButton.GetComponent<RectTransform>(), sLeft, sRight);
     }
 
     public void DehighlightWeaponSlot()
@@ -651,11 +634,11 @@ public class PlayerRPGUI : MonoBehaviour
             value1 -= 1;
         }
 
+        string sLeft = $"{baseStat.GetTitlePerk()}";
+        string sRight = Hypatios.RPG.GetDescription(charStatButton.category1, value1);
 
-        perkTooltip_LeftHandedLabel.text = $"{baseStat.GetTitlePerk()}";
-        perkTooltip_RightHandedLabel.text = Hypatios.RPG.GetDescription(charStatButton.category1, value1);
 
-        Hypatios.UI.ShowTooltipSmall(charStatButton.GetComponent<RectTransform>());
+        Hypatios.UI.ShowTooltipSmall(charStatButton.GetComponent<RectTransform>(), sLeft, sRight);
     }
 
     public void DehighlightStat()
@@ -674,35 +657,40 @@ public class PlayerRPGUI : MonoBehaviour
         if (_currentPerk.type == RPG_CharPerkButton.Type.TemporaryModifier)
         {
             var value = currentPerkButton.attachedStatusEffectGO.Value;
-            perkTooltip_LeftHandedLabel.text = $"{currentPerkButton.statusEffect.GetTitlePerk()} {timerString}";
+            string sLeft = "";
+            string sRight = "";
+
+            sLeft = $"{currentPerkButton.statusEffect.GetTitlePerk()} {timerString}";
 
             if (value == 0 | value == -1)
             {
-                perkTooltip_RightHandedLabel.text = "";
+                sRight = "";
             }
             else
             {
-                perkTooltip_RightHandedLabel.text = Hypatios.RPG.GetDescription(_currentPerk.statusEffect.category, value);
+                sRight = Hypatios.RPG.GetDescription(_currentPerk.statusEffect.category, value);
             }
 
-            Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>());
+            Hypatios.UI.ShowTooltipSmall(_currentPerk.GetComponent<RectTransform>(), sLeft, sRight);
         }
         else
         {
             var statEffectGroup = _currentPerk.baseStatusEffectGroup;
             string str1 = $"{statEffectGroup.GetDisplayText()} <size=13>{timerString}</size>\n<size=13>{statEffectGroup.Description}</size>";
             string str2 = "";
+            string sLeft = "";
+            string sRight = "";
 
-            foreach(var modifier in statEffectGroup.allStatusEffects)
+            foreach (var modifier in statEffectGroup.allStatusEffects)
             {
                 var baseModifier = Hypatios.Assets.GetStatusEffect(modifier.statusCategoryType);
                 str2 += $"[{baseModifier.GetTitlePerk()}] [{Hypatios.RPG.GetDescription(modifier.statusCategoryType, modifier.Value)}]\n";
             }
             str2 = ""; //scrapped modifier text
-            bigTooltip_LeftHandedLabel.text = $"{str1}\n<size=13>{str2}</size>";
-            bigTooltip_RightHandedLabel.text = "";
-            Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>());
-            MainGameHUDScript.Instance.rpgUI.RefreshInventoryIcon(null);
+            sLeft = $"{str1}\n<size=13>{str2}</size>";
+            sRight = "";
+            Hypatios.UI.ShowTooltipBig(_currentPerk.GetComponent<RectTransform>(), sLeft, sRight);
+            Hypatios.UI.RefreshInventoryIcon(null);
 
 
         }

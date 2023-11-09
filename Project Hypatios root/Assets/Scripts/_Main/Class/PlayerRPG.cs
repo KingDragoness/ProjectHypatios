@@ -337,7 +337,7 @@ public class PlayerRPG : MonoBehaviour
         return GetItemName(itemClass, itemData);
     }
 
-    public string GetPreviewItemLeftSide(ItemInventory itemClass, HypatiosSave.ItemDataSave itemData)
+    public string GetPreviewItemLeftSide(ItemInventory itemClass, HypatiosSave.ItemDataSave itemData, bool ignoreInteractTooltip = false)
     {
         string sLeft = "";
         string s_interaction = "";
@@ -400,7 +400,7 @@ public class PlayerRPG : MonoBehaviour
                 sLeft += $"{itemClass.GetDisplayText()}\n";
                 sLeft += $"\n{itemClass.Description}\n";
             }
-            else 
+            else
             {
                 if (itemData.GENERIC_KTHANID_SERUM == true)
                 {
@@ -414,9 +414,12 @@ public class PlayerRPG : MonoBehaviour
                     //sLeft += $"\n{GetSerumCustomDescription(itemData)}\n";
                 }
             }
-            
 
-            sLeft += $"\n<size=13>{s_interaction}</size>\n";
+
+            if (ignoreInteractTooltip == false)
+            {
+                sLeft += $"\n<size=13>{s_interaction}</size>\n";
+            }
         }
 
         return sLeft;
@@ -465,5 +468,28 @@ public class PlayerRPG : MonoBehaviour
         return sRight;
 
     }
+
+    public Sprite GetSprite_StatusEffect(HypatiosSave.ItemDataSave itemDat)
+    {
+        var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+        if (itemDat.GENERIC_ESSENCE_POTION == true)
+        {
+            if (itemDat.ESSENCE_CATEGORY != ModifierEffectCategory.Nothing)
+            {
+                var statusEffect = Hypatios.Assets.GetStatusEffect(itemDat.ESSENCE_CATEGORY);
+                return statusEffect.PerkSprite;
+            }
+            else
+            {
+                var statusEffectGroup = Hypatios.Assets.GetStatusEffect(itemDat.ESSENCE_STATUSEFFECT_GROUP);
+                return statusEffectGroup.PerkSprite;
+            }
+        }
+        else
+        {
+            return itemClass.GetSprite();
+        }
+    }    
 
 }

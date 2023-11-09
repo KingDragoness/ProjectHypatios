@@ -13,6 +13,7 @@ public class FabricateSerumButton : MonoBehaviour
         Fabricator
     }
 
+    public TooltipTrigger tooltipTrigger;
     public kThanidLabUI kThanidUI;
     public Type buttonType;
     public Text Name_label;
@@ -22,6 +23,27 @@ public class FabricateSerumButton : MonoBehaviour
     public GameObject antiPotionIcon;
     public int index = 0;
     public bool isAntiPotion = false;
+
+
+    private void OnEnable()
+    {
+        if (tooltipTrigger == null)
+            tooltipTrigger = GetComponent<TooltipTrigger>();
+
+        tooltipTrigger.currentToolTip = Hypatios.UI.TooltipBig;
+    }
+
+    public void HighlightButton()
+    {
+        kThanidUI.HighlightButton(this);
+    }
+
+    public void DehighlightButton()
+    {
+        Hypatios.UI.CloseAllTooltip();
+        kThanidUI.DehighlightButton();
+    }
+
 
     public void Refresh()
     {

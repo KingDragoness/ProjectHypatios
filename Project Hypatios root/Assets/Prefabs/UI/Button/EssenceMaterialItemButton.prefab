@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3578728544537726711}
   - component: {fileID: 4205970717658669102}
   - component: {fileID: 2316462279453168108}
+  - component: {fileID: 5386318805509104130}
   m_Layer: 5
   m_Name: EssenceMaterialItemButton
   m_TagString: Untagged
@@ -176,7 +177,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 2316462279453168108}
           m_MethodName: HighlightButton
           m_Mode: 1
           m_Arguments:
@@ -213,6 +214,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2316462279453168108}
+          m_MethodName: DehighlightButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &2316462279453168108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,11 +242,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kThanidUI: {fileID: 0}
+  tooltipTrigger: {fileID: 5386318805509104130}
   buttonType: 0
   Name_label: {fileID: 1681986581642169214}
   Count_label: {fileID: 1681986581715636906}
   Subicon: {fileID: 1681986580428378480}
+  ESSENCE_CATEGORY: 0
+  ESSENCE_STATUSEFFECT_GROUP: 
   index: 0
+--- !u!114 &5386318805509104130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246412719438394995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe02588cca16964c8571b21eefea5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentToolTip: {fileID: 0}
+  text: 
+  tooltipPositioningType: 1
+  offset: {x: 35, y: 0, z: 0}
 --- !u!1 &1681986580428378478
 GameObject:
   m_ObjectHideFlags: 0
