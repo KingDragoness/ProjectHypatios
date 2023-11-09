@@ -65,6 +65,7 @@ public class kThanidUI_SerumCreator : MonoBehaviour
 
         label_ButtonSerumCreate.text = $"Create {SerumCustomName}";
 
+        kthanidUI.retardedGO_CloseTooltip.gameObject.SetActive(true);
 
     }
 
@@ -278,11 +279,17 @@ public class kThanidUI_SerumCreator : MonoBehaviour
     public void HighlightResultButton(RectTransform t)
     {
         var itemClass = Hypatios.Assets.GetItem(resultSerum.ID);
-        string sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, resultSerum, true);
-        string sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, resultSerum);
+        string sLeft = "";  
+        string sRight = "";  
+
+        if (itemClass != null)
+        {
+            sLeft = Hypatios.RPG.GetPreviewItemLeftSide(itemClass, resultSerum, true);
+            sRight = Hypatios.RPG.GetPreviewItemRightSide(itemClass, resultSerum);
+            Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(resultSerum));
+        }
 
         Hypatios.UI.ShowTooltipBig(t, sLeft, sRight);
-        Hypatios.UI.RefreshInventoryIcon(Hypatios.RPG.GetSprite_StatusEffect(resultSerum));
 
     }
 

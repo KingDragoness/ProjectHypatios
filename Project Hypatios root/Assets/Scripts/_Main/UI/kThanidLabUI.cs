@@ -16,6 +16,7 @@ public class kThanidLabUI : MonoBehaviour
 
     public GameObject UI_Panel_Essence;
     public GameObject UI_Panel_SerumFabricate;
+    public GameObject retardedGO_CloseTooltip;
     public Mode currentMode;
     public ItemInventory essenceBottle;
     public ItemInventory exoticCore;
@@ -191,7 +192,8 @@ public class kThanidLabUI : MonoBehaviour
         ModifyAntiPotionIndex();
         SerumCreator.Refresh();
         RefreshLabel();
-        Hypatios.UI.CloseAllTooltip();
+        retardedGO_CloseTooltip.gameObject.SetActive(true);
+        //Hypatios.UI.CloseAllTooltip();
 
     }
 
@@ -928,6 +930,11 @@ public class kThanidLabUI : MonoBehaviour
     public void DehighlightButton()
     {
         Hypatios.UI.RefreshInventoryIcon(null);
+    }
+
+    public void Retarded_CloseTooltip()
+    {
+        Hypatios.UI.CloseAllTooltip();
     }
 
     #endregion
