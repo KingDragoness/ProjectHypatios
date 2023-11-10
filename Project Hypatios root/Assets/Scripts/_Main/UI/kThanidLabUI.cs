@@ -19,6 +19,7 @@ public class kThanidLabUI : MonoBehaviour
     public GameObject retardedGO_CloseTooltip;
     public Mode currentMode;
     public ItemInventory essenceBottle;
+    public ItemInventory filled_EssenceBottle;
     public ItemInventory exoticCore;
     [FoldoutGroup("Create Essence")] public RectTransform rt_Essence_MyInventoryParent;
     [FoldoutGroup("Create Essence")] public RectTransform rt_Essence_ExtractorParent;
@@ -266,7 +267,7 @@ public class kThanidLabUI : MonoBehaviour
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
                 newButton.Refresh();
-                newButton.Subicon.sprite = subicon.sprite;
+                newButton.Subicon.sprite = itemClass.GetSprite();
                 all_Essence_MyItemButtons.Add(newButton);
             }
         }
@@ -309,7 +310,7 @@ public class kThanidLabUI : MonoBehaviour
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
                 newButton.Refresh();
-                newButton.Subicon.sprite = subicon.sprite;
+                newButton.Subicon.sprite = itemClass.GetSprite();
                 all_Serum_MyItemButtons.Add(newButton);
             }
         }
@@ -362,7 +363,7 @@ public class kThanidLabUI : MonoBehaviour
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
                 newButton.Refresh();
-                newButton.Subicon.sprite = subicon.sprite;
+                newButton.Subicon.sprite = itemClass.GetSprite();
                 all_Essence_ExtractorButtons.Add(newButton);
             }
         }
@@ -388,6 +389,7 @@ public class kThanidLabUI : MonoBehaviour
             newButton.gameObject.SetActive(true);
             newButton.ESSENCE_CATEGORY = craftable.category;
             newButton.Refresh();
+            newButton.Subicon.sprite = filled_EssenceBottle.GetSprite();
             all_Essence_ResultButtons.Add(newButton);
         }
 
@@ -397,6 +399,7 @@ public class kThanidLabUI : MonoBehaviour
             newButton.gameObject.SetActive(true);
             newButton.ESSENCE_STATUSEFFECT_GROUP = craftable.GetID();
             newButton.Refresh();
+            newButton.Subicon.sprite = filled_EssenceBottle.GetSprite();
             all_Essence_ResultButtons.Add(newButton);
         }
     }
@@ -450,7 +453,7 @@ public class kThanidLabUI : MonoBehaviour
                 newButton.index = index;
                 if (Index_AntiPotions.Contains(index)) newButton.isAntiPotion = true;
                 newButton.Refresh();
-                newButton.Subicon.sprite = subicon.sprite;
+                newButton.Subicon.sprite = itemClass.GetSprite();
                 all_Serum_FabricatorButtons.Add(newButton);
             }
         }
@@ -612,7 +615,7 @@ public class kThanidLabUI : MonoBehaviour
     public void CreateEssencePotion(CreateEssenceButton button)
     {
         HypatiosSave.ItemDataSave itemDat = new HypatiosSave.ItemDataSave();
-        itemDat.ID = "Essence_Potion";
+        itemDat.ID = filled_EssenceBottle.GetID();
         itemDat.count = 1;
         itemDat.category = ItemInventory.Category.Normal;
         itemDat.isGenericItem = true;

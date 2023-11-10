@@ -9,6 +9,8 @@ public class InventoryItemButton : MonoBehaviour
 {
 
     public PlayerRPGUI rpgUI;
+    public Slider consumeProgress_slider;
+    public Slider discardProgress_slider;
     public Text Name_label;
     public Text Count_label;
     public Image FavoriteIcon;
@@ -39,14 +41,16 @@ public class InventoryItemButton : MonoBehaviour
     {
         Hypatios.UI.CloseAllTooltip();
         rpgUI.DehighlightItem();
+        consumeProgress_slider.value = 0f;
+        discardProgress_slider.value = 0f;
     }
 
     public void ClickButton()
     {
-        rpgUI.UseItem(this);
+        if (GetItemInventory().category != ItemInventory.Category.Consumables) rpgUI.UseItem(this);
         var button = GetComponent<Button>();
-        var selectable1 = button.FindSelectableOnDown();
-        selectable1.Select();
+        //var selectable1 = button.FindSelectableOnDown();
+        //selectable1.Select();
     }
 
     public ItemInventory GetItemInventory()

@@ -31,6 +31,8 @@ public class PlayerRPGUI : MonoBehaviour
     [FoldoutGroup("Weapon Preview")] public Text weaponPreview_WeaponStats;
     [FoldoutGroup("Weapon Preview")] public Image weaponPreview_AmmoIcon;
 
+    public float TimeToConsumePress = 2f;
+    public float TimeToDiscardPress = 1.5f;
     public RPG_CharPerkButton PerkButton;
     public RPG_CharPerkButton StatusMonoButton;
     public AttachmentWeaponButton WeaponModButton;
@@ -51,6 +53,9 @@ public class PlayerRPGUI : MonoBehaviour
     private InventoryItemButton currentItemButton;
     private float _timeSlider = 0f;
     private ItemInventory prevItemClass;
+
+    private float _timePressConsume = 0f;
+    private float _timePressDiscard = 0f;
 
     private void OnEnable()
     {
@@ -286,6 +291,7 @@ public class PlayerRPGUI : MonoBehaviour
         HandleDiscardItem();
         HandleFavoriteItem();
         HandlePreview();
+        HandleConsumeItem();
     }
 
 
@@ -344,11 +350,34 @@ public class PlayerRPGUI : MonoBehaviour
 
     private void HandleDiscardItem()
     {
-        if (currentItemButton == null)
-            return;
+        {
+            bool isFailed = false;
 
-        if (Input.GetKeyUp(KeyCode.X) == false)
+            if (currentItemButton == null)
+            {
+                _timePressDiscard = 0f;
+                return;
+            }
+
+            if (Input.GetKey(KeyCode.X) == false) isFailed = true;
+
+
+            if (isFailed)
+            {
+                _timePressDiscard = 0f;
+                currentItemButton.discardProgress_slider.value = 0f;
+                return;
+            }
+        }
+
+        _timePressDiscard += Time.unscaledDeltaTime;
+        currentItemButton.discardProgress_slider.value = (_timePressDiscard / TimeToDiscardPress);
+
+
+        if (_timePressDiscard < TimeToDiscardPress)
+        {
             return;
+        }
 
         var button = currentItemButton;
         var itemData = button.GetItemData();
@@ -366,6 +395,46 @@ public class PlayerRPGUI : MonoBehaviour
         perkTooltipScript.gameObject.SetActive(false);
         itemTooltipScript.gameObject.SetActive(false);
         currentItemButton = null;
+        _timePressDiscard = 0f;
+
+    }
+
+
+    private void HandleConsumeItem()
+    {
+        {
+            bool isFailed = false;
+
+            if (currentItemButton == null)
+            {
+                _timePressConsume = 0f;
+                return;
+            }
+
+            if (Hypatios.Input.Fire1.IsPressed() == false) isFailed = true;
+
+            var itemDat = currentItemButton.GetItemData();
+
+            if (itemDat.category != ItemInventory.Category.Consumables)
+            {
+                isFailed = true;
+            }
+
+            if (isFailed)
+            {
+                _timePressConsume = 0f;
+                return;
+            }
+        }
+
+        _timePressConsume += Time.unscaledDeltaTime;
+        currentItemButton.consumeProgress_slider.value = (_timePressConsume / TimeToConsumePress);
+
+        if (_timePressConsume >= TimeToConsumePress)
+        {
+            UseItem(currentItemButton);
+            _timePressConsume = 0;
+        }
     }
 
     public void UseItem(InventoryItemButton button)
@@ -377,7 +446,7 @@ public class PlayerRPGUI : MonoBehaviour
         Hypatios.RPG.UseItem(itemCLass, itemData);
 
         {
-            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>(); //lol what
+            var weaponSlots = GetComponentsInChildren<WeaponSlotButton>(); 
             foreach (var weaponSlot in weaponSlots)
             {
                 weaponSlot.RefreshUI();
@@ -513,7 +582,7 @@ public class PlayerRPGUI : MonoBehaviour
         string s_allAttachments = "";
         string sLeft = "";
         string sRight = "";
-        string s_interaction = "[LMB to unequip]";
+        string s_interaction = "<'LMB' to unequip>";
 
 
         foreach (var attachment in weaponSave.allAttachments)

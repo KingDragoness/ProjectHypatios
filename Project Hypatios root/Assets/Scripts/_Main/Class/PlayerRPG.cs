@@ -364,11 +364,11 @@ public class PlayerRPG : MonoBehaviour
 
             if (!isSimilarWeaponEquipped && !isTooManyEqupped)
             {
-                s_interaction = "<'LMB' to equip weapon>\n<'X' to discard>\n<'F' to favorite>";
+                s_interaction = "<'LMB' to equip weapon>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "<'X' to discard>\n<'F' to favorite>";
+                s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
 
 
@@ -384,15 +384,15 @@ public class PlayerRPG : MonoBehaviour
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                s_interaction = "<'LMB' to read>\n<'X' to destroy item>\n<'F' to favorite>";
+                s_interaction = "<'LMB' to read>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else if (itemClass.category != ItemInventory.Category.Consumables)
             {
-                s_interaction = "<'X' to destroy item>\n<'F' to favorite>";
+                s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "<'LMB' to consume>\n<'X' to destroy item>\n<'F' to favorite>";
+                s_interaction = "<Hold 'LMB' to consume>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
 
             if (itemData.isGenericItem == false)

@@ -21,10 +21,13 @@ public class FavoriteMenuUI : MonoBehaviour
     public GameObject itemStatUI;
     public CanvasGroup cg;
     [FoldoutGroup("Item List")] public Text title;
+    [FoldoutGroup("Item List")] public Image itemIcon;
     [FoldoutGroup("Item List")] public Transform parentItems;
     [FoldoutGroup("Item List")] public FavItemButton prefabItemButton;
     [FoldoutGroup("Item List")] public Text itemStat_Title;
     [FoldoutGroup("Item List")] public Text itemStat_Description;
+    [FoldoutGroup("Item List")] public float TimeToConsumePress = 2f;
+
     [FoldoutGroup("HP", true)] public Slider healthRestoreBar;
     [FoldoutGroup("HP", true)] public Slider healthRestore_BorderBar;
     [ReadOnly] public float currentAngle = 0;
@@ -36,6 +39,7 @@ public class FavoriteMenuUI : MonoBehaviour
     private FavItemButton _currentFavItemButton;
 
     private float _timeSlider = 0f;
+    private float _timePressConsume = 0f;
     private ItemInventory prevItemClass;
 
     private void OnEnable()
@@ -74,7 +78,7 @@ public class FavoriteMenuUI : MonoBehaviour
                 cg.alpha = 0.4f;
             }
         }
-
+        _currentFavItemButton = null;
         currentMode = _mode;
     }
 
@@ -94,6 +98,7 @@ public class FavoriteMenuUI : MonoBehaviour
         else if (currentMode == Mode.SelectItems)
         {
             HandlePreview();
+            HandleConsume();
         }
 
         if (Hypatios.Input.Fire2.triggered)
@@ -134,6 +139,43 @@ public class FavoriteMenuUI : MonoBehaviour
 
         prevItemClass = itemClass;
 
+    }
+
+    private void HandleConsume()
+    {
+        {
+            bool isFailed = false;
+
+            if (_currentFavItemButton == null)
+            {
+                _timePressConsume = 0f;
+                return;
+            }
+
+            if (Hypatios.Input.Fire1.IsPressed() == false) isFailed = true;
+
+            var itemDat = _currentFavItemButton.GetItemData();
+
+            if (itemDat.category != ItemInventory.Category.Consumables)
+            {
+                isFailed = true;
+            }
+
+            if (isFailed)
+            {
+                _timePressConsume = 0f;
+                return;
+            }
+        }
+
+        _timePressConsume += Time.unscaledDeltaTime;
+        _currentFavItemButton.consumeProgress_slider.value = (_timePressConsume / TimeToConsumePress);
+
+        if (_timePressConsume >= TimeToConsumePress)
+        {
+            UseItem(_currentFavItemButton);
+            _timePressConsume = 0;
+        }
     }
 
     private void UpdateSelectItem()
@@ -240,7 +282,7 @@ public class FavoriteMenuUI : MonoBehaviour
                 newButton.gameObject.SetActive(true);
                 newButton.index = index;
                 newButton.Refresh();
-                newButton.imageIcon.sprite = subicon.sprite;
+                newButton.imageIcon.sprite = itemClass.GetSprite(); //subicon.sprite;
                 allFavButtons.Add(newButton);
             }
 
@@ -255,6 +297,7 @@ public class FavoriteMenuUI : MonoBehaviour
         if (itemClass == null) return;
 
         itemStatUI.gameObject.SetActive(true);
+        itemIcon.sprite = itemClass.GetSprite();
         itemStat_Title.text = Hypatios.RPG.GetPreviewFav_Title(itemClass, itemDat);
         itemStat_Description.text = Hypatios.RPG.GetPreviewFav_Description(itemClass, itemDat); 
         ShowPreviewHealthRestore();

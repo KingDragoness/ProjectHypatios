@@ -10,6 +10,7 @@ public class FavItemButton : MonoBehaviour
     public FavoriteMenuUI favUI;
     public Text Name_label;
     public Text Count_label;
+    public Slider consumeProgress_slider;
     public Image imageIcon;
     public int index = 0;
 
@@ -37,7 +38,7 @@ public class FavItemButton : MonoBehaviour
 
     public void ClickButton()
     {
-        favUI.UseItem(this);
+        //favUI.UseItem(this);
         var button = GetComponent<Button>();
         //var selectable1 = button.FindSelectableOnDown();
         //selectable1.Select();
