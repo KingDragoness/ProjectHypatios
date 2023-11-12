@@ -104,7 +104,7 @@ public class Recoil : MonoBehaviour
         {
             if (Hypatios.Player.isNoGravity)
             {
-                return 8f;
+                return 3.5f;
             }
 
             return 1f;

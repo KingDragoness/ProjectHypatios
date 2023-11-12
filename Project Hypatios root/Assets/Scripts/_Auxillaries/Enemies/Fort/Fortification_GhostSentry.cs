@@ -12,11 +12,14 @@ public class Fortification_GhostSentry : EnemyScript
     [FoldoutGroup("References")] public ModularTurretGun turretGun;
     [FoldoutGroup("References")] public ModularTurretGun turretGun1;
     [FoldoutGroup("References")] public Transform v_target_Turret;
+    [FoldoutGroup("References")] public Animator animTurret;
+    [FoldoutGroup("References")] public Transform v_targetDebug;
+
     [FoldoutGroup("Sentry")] public GameObject Smoke50HP;
     [FoldoutGroup("Sentry")] public GameObject Smoke25HP;
     [FoldoutGroup("Sentry")] public GameObject botCorpse;    
     [FoldoutGroup("Sentry")] public DynamicObjectPivot pivotObject;
-    [FoldoutGroup("Sentry")] public AimConstraint aimConstraint;
+    [FoldoutGroup("Sentry")] public GameObject turretObject;
     [FoldoutGroup("Sentry")] public Text UI_label_HP;
     [FoldoutGroup("Sentry")] public Text UI_label_Ammo;
     [FoldoutGroup("Sentry")] public Slider UI_slider_HP;
@@ -28,6 +31,7 @@ public class Fortification_GhostSentry : EnemyScript
     public int sentryAmmo = 200;
     public int maxSentryAmmo = 200;
     public float maxDistance = 50f;
+    public float rotationSpeed = 10f;
     public bool manualControl = false;
 
     public static Fortification_GhostSentry Instance;
@@ -82,7 +86,7 @@ public class Fortification_GhostSentry : EnemyScript
             if (_timerInitialize <= 0)
             {
                 _hasInitialized = true;
-                aimConstraint.enabled = true;
+                animTurret.enabled = false;
             }
         }
 
@@ -93,7 +97,7 @@ public class Fortification_GhostSentry : EnemyScript
             Stats.CurrentHitpoint = 0;
         }
 
-        if (Mathf.RoundToInt(Time.time) % 5 == 0)
+        if (Mathf.RoundToInt(Time.time * 10) % 5 == 0)
             ScanForEnemies(maxDistance: maxDistance);
 
         if (Time.timeScale == 0) return;
@@ -104,6 +108,8 @@ public class Fortification_GhostSentry : EnemyScript
         CheckEnableTurret();
         RunAI();
         UpdateUI();
+        turretObject.transform.rotation = v_target_Turret.transform.rotation;
+
     }
 
     private void UpdateUI()
@@ -155,6 +161,9 @@ public class Fortification_GhostSentry : EnemyScript
         RotateToTarget();
     }
 
+    float _timerBodyPartTargeting = 1f;
+    Vector3 _targetedBodyPartPos;
+
     private void RotateToTarget()
     {
         if (currentTarget == null)
@@ -162,13 +171,66 @@ public class Fortification_GhostSentry : EnemyScript
 
         if (manualControl == true) return;
 
-        Vector3 posTarget = currentTarget.OffsetedBoundWorldPosition;
-        v_target_Turret.LookAt(posTarget);
+        //changes and search body parts
+        _timerBodyPartTargeting -= Time.deltaTime;
+
+        if (_timerBodyPartTargeting <= 0f)
+        {
+            var availableTargets = currentTarget.GetComponentsInChildren<damageReceiver>();
+
+            if (availableTargets.Length != 0)
+            {
+                Vector3 offset = new Vector3();
+                offset.x = Random.Range(-0.35f, 0.35f);
+                offset.y = Random.Range(-0.7f, 0.7f);
+                offset.z = Random.Range(-0.35f, 0.35f);
+
+                damageReceiver randomPart = availableTargets[Random.Range(0, availableTargets.Length - 1)];
+                _targetedBodyPartPos = randomPart.transform.position + offset;
+            }
+            else
+            {
+                _targetedBodyPartPos = currentTarget.OffsetedBoundWorldPosition;
+            }
+
+            _timerBodyPartTargeting = 1f;
+        }
+
+        Vector3 posTarget = _targetedBodyPartPos;
+        v_targetDebug.transform.position = posTarget;
+        Vector3 relativePos = posTarget - v_target_Turret.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        v_target_Turret.transform.rotation = Quaternion.Lerp(v_target_Turret.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
+        {
+            turretGun.gameObject.transform.LookAt(posTarget);
+            turretGun1.gameObject.transform.LookAt(posTarget);
+        }
+
+        float chance = Random.Range(0f, 10f);
+
+        if ((turretGun.IsHittingTarget == true | turretGun1.IsHittingTarget == true) && chance > 0.01f && _timerBodyPartTargeting < 0.2f)
+        {
+            _timerBodyPartTargeting = 0.4f;
+        }
+
+        if (turretGun.IsHittingTarget == false && turretGun1.IsHittingTarget == false && _timerBodyPartTargeting > 0.2f)
+        {
+            _timerBodyPartTargeting = 0.2f;
+        }
+
     }
 
     public void OverrideTarget(Vector3 target)
     {
-        v_target_Turret.LookAt(target);
+        Vector3 relativePos = target - v_target_Turret.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        v_target_Turret.transform.rotation = Quaternion.Lerp(v_target_Turret.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
+        {
+            turretGun.gameObject.transform.LookAt(target);
+            turretGun1.gameObject.transform.LookAt(target);
+        }
     }
 
     public void FireSentry()

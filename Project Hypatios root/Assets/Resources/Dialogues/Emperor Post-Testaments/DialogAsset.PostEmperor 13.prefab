@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &54784664677056668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2226689917032010805}
+  - component: {fileID: 893565538759890927}
+  m_Layer: 0
+  m_Name: Emperor.Dialog (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2226689917032010805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54784664677056668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &893565538759890927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54784664677056668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: All of the fantasies depicted in the holy books or culture are
+    realized. It is a self-fulfilling prophecy. WIRED is the prophet machine.
+  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 7
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &788220529527877507
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,8 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: At a planet's inception, all of the atoms were unorganized, boring,
-    dull. It is only by the creation of a being, a border between individuals...
+  Dialogue_Content: People went to the church, baptization by the means of 'scanning'
+    themselves to the WIRED. Madness has engulfs the world.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -133,7 +185,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3548863083225914119
 MonoBehaviour:
@@ -147,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: ...
+  Dialogue_Content: Baptized to the WIRED?
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -187,10 +239,12 @@ Transform:
   - {fileID: 1230502053353723732}
   - {fileID: 4657465668212205416}
   - {fileID: 3667726750845017712}
-  - {fileID: 1133006518934598173}
-  - {fileID: 425714960540155563}
-  - {fileID: 1536677530744135114}
   - {fileID: 1948872104180500756}
+  - {fileID: 15259751228951659}
+  - {fileID: 2226689917032010805}
+  - {fileID: 4935320686771746426}
+  - {fileID: 2918424275282629884}
+  - {fileID: 8701446195807590708}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -218,7 +272,7 @@ MonoBehaviour:
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
   alreadyTriggered: 0
---- !u!1 &4326670834149034039
+--- !u!1 &4933646935087807589
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,8 +280,110 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1536677530744135114}
-  - component: {fileID: 8491978309669622139}
+  - component: {fileID: 4935320686771746426}
+  - component: {fileID: 6452045958918566813}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4935320686771746426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933646935087807589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6452045958918566813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933646935087807589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: What...
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 3
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &5917208245909623856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8701446195807590708}
+  - component: {fileID: 6798290653029510075}
+  m_Layer: 0
+  m_Name: Aldrich.Dialog (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8701446195807590708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5917208245909623856}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6798290653029510075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5917208245909623856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: ...
+  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 3
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &6179547316281498671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2918424275282629884}
+  - component: {fileID: 4383097574464588692}
   m_Layer: 0
   m_Name: Emperor.Dialog (5)
   m_TagString: Untagged
@@ -235,42 +391,42 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1536677530744135114
+--- !u!4 &2918424275282629884
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326670834149034039}
+  m_GameObject: {fileID: 6179547316281498671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8491978309669622139
+--- !u!114 &4383097574464588692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4326670834149034039}
+  m_GameObject: {fileID: 6179547316281498671}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Reducing complexity of society and the prevent of emergence.
-    With it, the color of society will be desatured.
+  Dialogue_Content: This is not the worst of Mobius. I believe there's other worse
+    things.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 7
+  Dialogue_Timer: 5
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &6495549978687944908
+--- !u!1 &8205849175779145600
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,8 +434,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1133006518934598173}
-  - component: {fileID: 7869603818756639816}
+  - component: {fileID: 15259751228951659}
+  - component: {fileID: 5370183674130912318}
   m_Layer: 0
   m_Name: Emperor.Dialog (3)
   m_TagString: Untagged
@@ -287,66 +443,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1133006518934598173
+--- !u!4 &15259751228951659
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6495549978687944908}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7869603818756639816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6495549978687944908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: ...will there be an organized lifeform. Individuals are separate
-    from each other so that it can focus on itself. Improve on itself. To be the
-    greatest version of itself.
-  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 8
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &6645755209638970344
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 425714960540155563}
-  - component: {fileID: 5304248674902213641}
-  m_Layer: 0
-  m_Name: Emperor.Dialog (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &425714960540155563
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6645755209638970344}
+  m_GameObject: {fileID: 8205849175779145600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -354,24 +457,25 @@ Transform:
   m_Father: {fileID: 6137219061834780904}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5304248674902213641
+--- !u!114 &5370183674130912318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6645755209638970344}
+  m_GameObject: {fileID: 8205849175779145600}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: The moment you shatter the walls, the egos is when you destroy
-    the complex system.
+  Dialogue_Content: Every catholics, every muslims, every religion that believes
+    in the afterlife are all stored in stasis in the WIRED. A cultural preservation
+    thing.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 6
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -469,8 +573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: The claim that it'll be all liberation from suffering, 'everyone
-    is now my brother and sisters', the concept of heaven is ridiculous.
+  Dialogue_Content: Mobius idiots proclaim liberation of suffering, shatter of ego
+    and eternal freedom. Religious organization uploads people to the WIRED.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}

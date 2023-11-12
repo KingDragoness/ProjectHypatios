@@ -37,6 +37,8 @@ public class ModularTurretGun : MonoBehaviour
 
     private DamageToken cachedToken;
 
+    public bool IsHittingTarget { get => isHittingTarget;  }
+
     private void Update()
     {
         if (Time.timeScale <= 0) return;

@@ -104,7 +104,7 @@ public class SentryPDAWeapon : GunScript
 
         if (Time.timeScale <= 0) return;
 
-        if (Hypatios.Input.Fire2.triggered && !isReloading && IsRecentlyPaused())
+        if (Hypatios.Input.Fire2.WasReleasedThisFrame() && !isReloading && IsRecentlyPaused())
             CycleMode();
 
         DisplaySentryMonitor();
