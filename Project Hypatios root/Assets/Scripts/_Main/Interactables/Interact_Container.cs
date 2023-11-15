@@ -10,6 +10,7 @@ public class Interact_Container : InteractableObject
     public GuidComponent Guid;
     public string ContainerName = "Container";
     public bool shouldGenerateLoot = true;
+    public bool resetOnEnabled = false;
     public LootTable lootTable;
     public Inventory inventory;
     [FoldoutGroup("DEBUG")] public bool printRandomSeed = false;
@@ -27,6 +28,15 @@ public class Interact_Container : InteractableObject
             {
                 GenerateLoot();
             }
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (Guid == null) return;
+        if (resetOnEnabled == true)
+        {
+            ResetLoot();
         }
     }
 

@@ -220,6 +220,7 @@ public abstract class BaseChamberScript : MonoBehaviour
         InstantiateRandomObject spawner = _spawnerGroup.enemySpawners[Random.Range(0, _spawnerGroup.enemySpawners.Count)];
 
         var NewEnemy = spawner.SpawnWithChanceThing().GetComponent<EnemyScript>();
+
         NewEnemy.gameObject.SetActive(true);
         chamberScript.AddEnemy(NewEnemy);
     }

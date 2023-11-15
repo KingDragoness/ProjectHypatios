@@ -295,12 +295,29 @@ public class SpiderScript : EnemyScript
         }   
     }
 
+    private bool isValidPosition = false;
+    private float _timerInvalidPos = 0f;
+
     void FindPosition()
     {
         isWalking = true;
         isAttacking = false;
         if (isWalking)
-            enemyAI.SetDestination(currentTarget.transform.position);
+        {
+            _timerInvalidPos += Time.deltaTime;
+            isValidPosition = enemyAI.SetDestination(currentTarget.transform.position);
+        
+            if (isValidPosition == true)
+            {
+                _timerInvalidPos = 0f;
+            }
+
+            if (_timerInvalidPos > 5f)
+            {
+                Die();
+            }
+        }
+
     }
 
     public override void Attacked(DamageToken token)

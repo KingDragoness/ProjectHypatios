@@ -25,6 +25,12 @@ public enum UnitType
 public class EnemyStats
 {
 
+    public enum SpawnType
+    {
+        Air, //spider (not ready) is allowed
+        Ground //infernos, decabot, etc
+    }
+
     [BoxGroup("Stats")] public CharacterStat BaseDamage;
     [BoxGroup("Stats")] public CharacterStat VariableDamage;
     [BoxGroup("Stats")] [Tooltip("Recommended values: 0 - 150 (IQ)")] public CharacterStat Intelligence;
@@ -33,6 +39,7 @@ public class EnemyStats
     [BoxGroup("Stats")] public CharacterStat MovementBonus;
     public Alliance MainAlliance = Alliance.Mobius;
     public UnitType UnitType;
+    public SpawnType spawnType;
     public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
     [Tooltip("This is for hackable pseudo enemies. This is only for hackable gates enemy types.")] public bool IsHackableGate = false;

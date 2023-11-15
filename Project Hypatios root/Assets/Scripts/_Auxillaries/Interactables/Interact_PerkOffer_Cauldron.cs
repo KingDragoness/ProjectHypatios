@@ -29,6 +29,11 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
             if (activeMode.gameObject.activeSelf) activeMode.gameObject.SetActive(false);
             if (unactiveMode.gameObject.activeSelf == false) unactiveMode.gameObject.SetActive(true);
         }
+        else
+        {
+            if (activeMode.gameObject.activeSelf == false) activeMode.gameObject.SetActive(true);
+            if (unactiveMode.gameObject.activeSelf) unactiveMode.gameObject.SetActive(false);
+        }
     }
 
     public void Inspect()
@@ -45,6 +50,13 @@ public class Interact_PerkOffer_Cauldron : MonoBehaviour
     public void RewardPerk()
     {
         offerPerkScript.RewardPerk(this);
+    }
+
+    public void ResetState()
+    {
+        isDeactive = false;
+        activeMode.gameObject.SetActive(true);
+        unactiveMode.gameObject.SetActive(false);
     }
 
     public void Deactivate()

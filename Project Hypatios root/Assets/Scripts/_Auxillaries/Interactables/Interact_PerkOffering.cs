@@ -16,6 +16,15 @@ public class Interact_PerkOffering : MonoBehaviour
         GeneratePerks();
     }
 
+    public void ResetGenerate()
+    {
+        GeneratePerks();
+        foreach (var cauldron in allCauldrons)
+        {
+            cauldron.ResetState();
+        }
+    }
+
     [Button("Refresh perks")]
     private void GeneratePerks()
     {

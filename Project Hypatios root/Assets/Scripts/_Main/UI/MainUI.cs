@@ -661,6 +661,12 @@ public class MainUI : MonoBehaviour
         Application.LoadLevel(level);
     }
 
+    public void Demo_PlayLevel(ChamberLevel chamber)
+    {
+        Application.LoadLevel(chamber.scene.Index);
+    }
+
+
     public void Demo_Restart()
     {
         Time.timeScale = 1;

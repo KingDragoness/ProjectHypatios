@@ -30,11 +30,16 @@ public class ShopScript : MonoBehaviour
 
     private void Start()
     {
+        ShopScriptIndex++;
         OnTriggerEnterEvent enterEvent = GetComponent<OnTriggerEnterEvent>();
-        enterEvent.objectToCompare = FindObjectOfType<CharacterScript>().gameObject;
+        enterEvent.objectToCompare = Hypatios.Player.gameObject;
+        ResetShop();
+    }
+
+    public void ResetShop()
+    {
         GenerateBuyableWeapons();
         RefreshWeaponModels();
-        ShopScriptIndex++;
     }
 
     private void GenerateBuyableWeapons()
@@ -54,7 +59,7 @@ public class ShopScript : MonoBehaviour
 
             while (valid == false)
             {
-                var weapon1 = lootTable.GetEntry(Application.loadedLevel + ShopScriptIndex + count).item;
+                var weapon1 = lootTable.GetEntry(Application.loadedLevel + ShopScriptIndex + count + Hypatios.StaticGauntletSeed()).item;
                 if (IsDuplicate(weapon1.attachedWeapon) == false)
                 {
                     storage.AddItem(weapon1);

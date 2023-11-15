@@ -21,6 +21,7 @@ public abstract class EnemyScript : Entity
     public string EnemyName { get => _baseStat.name; }
     public RaycastHit HitDetection { get => _hitDetection;  }
     public Transform EyeLocation { get => eyeLocation; }
+    public BaseEnemyStats GetRawBaseStat { get => _baseStat; }
     public float LastTimeSeenPlayer { get => _lastTimeSeenPlayer; set => _lastTimeSeenPlayer = value; }
 
     [FoldoutGroup("AI")] [ShowInInspector] [ReadOnly] public Entity currentTarget;

@@ -486,6 +486,8 @@ public class Hypatios : MonoBehaviour
         int seed = Hypatios.Game.TotalRuns + Mathf.RoundToInt(Hypatios.Game.Total_UNIX_Timespan);
         seed += SystemInfo.graphicsDeviceID + SystemInfo.graphicsDeviceVendorID + i1 + SystemInfo.graphicsMemorySize;
         seed += unicodeValue(SystemInfo.deviceName);
+        seed += StaticGauntletSeed();
+
 
         return seed;
     }
@@ -511,11 +513,27 @@ public class Hypatios : MonoBehaviour
     public static float GetRandomChance()
     {
         int seed = GetSeed() + RandomizationIndex;
+
+        if (Hypatios.Game.currentGamemode.randomizedSeed)
+        {
+            seed += Random.Range(-100, 100);
+        }
+
         var RandomSys = new System.Random(seed);
         float random = (RandomSys.Next(0, 100)) / 100f;
         RandomizationIndex++;
 
         return random;
+    }
+
+    public static int StaticGauntletSeed()
+    {
+        if (Hypatios.Game.currentGamemode.randomizedSeed)
+        {
+            return Random.Range(-1000, 1000);
+        }
+
+        return 0;
     }
 
     private bool isChangingLocale = false;
