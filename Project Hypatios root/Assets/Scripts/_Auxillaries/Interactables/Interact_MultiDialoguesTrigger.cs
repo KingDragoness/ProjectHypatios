@@ -18,6 +18,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
     public bool AutoScanDialogues = false;
     public bool DEBUG_DrawGizmos = false;
 
+    public bool ignoreTrigger = false;
     [SerializeField] private bool alreadyTriggered = false;
 
     void Start()
@@ -77,7 +78,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
     [Button("Trigger Manual")]
     public void TriggerMessage()
     {
-        if (alreadyTriggered) return;
+        if (alreadyTriggered && ignoreTrigger == false) return;
         ScanDialogues();
         int ID1 = Random.Range(-9999, 9999);
 

@@ -22,10 +22,36 @@ public class ChamberSewers_MiningRockGen : MonoBehaviour
 
     public Transform parent;
     public List<Entry> entries = new List<Entry>();
+    public bool regenerateOnEnable = false;
+    [ReadOnly] public List<GameObject> rocks = new List<GameObject>();
+    private bool hasStarted = false;
 
     private void Start()
     {
         GenerateRocks();
+        hasStarted = true;
+    }
+
+    private void OnEnable()
+    {
+        if (hasStarted == false)
+        {
+            return;
+        }
+
+        if (regenerateOnEnable)
+        {
+            rocks.RemoveAll(x => x == null);
+
+            foreach(var rock in rocks)
+            {
+                if (rock == null) continue;
+                Destroy(rock.gameObject);
+            }
+            rocks.RemoveAll(x => x == null);
+
+            GenerateRocks();
+        }
     }
 
     private void GenerateRocks()
@@ -48,6 +74,7 @@ public class ChamberSewers_MiningRockGen : MonoBehaviour
                 prefab1.transform.localScale *= Random.Range(entry.minScaleMultiplier, entry.maxScaleMultiplier);
                 prefab1.SetActive(true);
                 prefab1.transform.SetParent(parent);
+                rocks.Add(prefab1);
             }
         }
     }

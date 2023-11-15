@@ -89,8 +89,9 @@ public class SpiderScript : EnemyScript
             NavMeshAgent meshAgent = GetComponent<NavMeshAgent>();
             meshAgent.enabled = false;
             Rigidbody rb = gameObject.AddComponent<Rigidbody>();
-            rb.drag = 0.15f;
-            rb.angularDrag = 0.21f;
+            rb.drag = 0.2f;
+            rb.mass = 200f;
+            rb.angularDrag = 0.3f;
             ready = false;
         }
 

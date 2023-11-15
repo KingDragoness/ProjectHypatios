@@ -168,7 +168,6 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
         {
             OnChamberCompleted?.Invoke();
             DeadDialogue.PromptNotifyMessage_Mod($"Wave {gauntletScript.wave} completed. Proceed to the door.", 5f);
-            Hypatios.Dialogue.QueueDialogue($"Attention to all gauntlet runners: Wave {gauntletScript.wave} has been completed. Go to the door to proceed the next wave.", "ANNOUNCER", 7f);
 
         }
 
