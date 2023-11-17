@@ -273,6 +273,11 @@ public class FPSMainScript : MonoBehaviour
             return;
         }
 
+        if (currentGamemode.allowTipsAndHints == false)
+        {
+            return;
+        }
+
         if (Hypatios.Game.Check_EverUsed(key) == false)
         {
             MainGameHUDScript.Instance.ShowPromptUI(about, description, false);

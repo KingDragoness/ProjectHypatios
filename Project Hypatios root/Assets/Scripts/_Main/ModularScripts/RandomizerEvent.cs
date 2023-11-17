@@ -16,6 +16,11 @@ public class RandomizerEvent : MonoBehaviour
 
     private void Start()
     {
+        Randomized();
+    }
+
+    public void Randomized()
+    {
         var random = Hypatios.GetRandomChance();
         var seed = Hypatios.GetSeed();
 

@@ -120,7 +120,6 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
                 entry.weight = gauntletScript.GetSpawnStat(enemyPrefab).weight;
 
                 spawner.enemySpawner.prefabsWithChance.Add(entry);
-                break;
             }
         }
     }

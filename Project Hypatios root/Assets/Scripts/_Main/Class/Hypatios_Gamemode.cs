@@ -17,6 +17,7 @@ public class Hypatios_Gamemode : ScriptableObject
 
     public MainCharacter character;
     public bool randomizedSeed = false;
+    public bool allowTipsAndHints = true;
     public bool canSaveGame = false; //for tutorial and gauntlet
 
 }
