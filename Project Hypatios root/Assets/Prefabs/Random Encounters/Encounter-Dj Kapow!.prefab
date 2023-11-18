@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1579170218155125385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1579170218155125384}
+  - component: {fileID: 1579170218155125391}
+  m_Layer: 0
+  m_Name: Encounter-Dj Kapow!
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579170218155125384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579170218155125385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -40.57, y: 25, z: -55.94}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1579170218746934798}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1579170218155125391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579170218155125385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24dd470f2931e3498a512c09bdd3986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Title: DJ Kapow! Spawn
+  AllConditions:
+  - conditionType: 20
+    trivia: {fileID: 11400000, guid: 713df63f6828deb4ebc0415031871976, type: 2}
+    switchCondition: {fileID: 0}
+    eventKeyName: 
+    chamberAtLeastComplete: 2
+    chamberAtMostComplete: 9999
+    randomChance: 0.1
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
+    conditioner: {fileID: 0}
+    dontTriggerConditioner: 0
+    itemNeeded: {fileID: 0}
+    itemCount: 1
+    flagEvent: {fileID: 0}
+  - conditionType: 21
+    trivia: {fileID: 0}
+    switchCondition: {fileID: 0}
+    eventKeyName: 
+    chamberAtLeastComplete: 2
+    chamberAtMostComplete: 9999
+    randomChance: 0.2
+    allEnemiesToClear: []
+    t1: {fileID: 0}
+    t2: {fileID: 0}
+    distMin: 5
+    distMax: 20
+    conditioner: {fileID: 0}
+    dontTriggerConditioner: 0
+    itemNeeded: {fileID: 0}
+    itemCount: 1
+    flagEvent: {fileID: 0}
+  conditionForTrue: 2
+  OnTriggerStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1579170218746934799}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnTriggerFail:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTriggerFunction:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTriggerFunctionFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  isStartImmediately: 1
+  constantTriggerCheck: 0
+  printOutput: 0
+--- !u!1 &1579170218746934799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1579170218746934798}
+  m_Layer: 0
+  m_Name: Group-Enabled(DJ Kapow)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1579170218746934798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1579170218746934799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1324321688182154503}
+  m_Father: {fileID: 1579170218155125384}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &225365186418933606
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1579170218746934798}
+    m_Modifications:
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.95881975
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.28401536
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -113.54301
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876760051998015707, guid: 2bd061a5e4cc9454b88458386173e7be,
+        type: 3}
+      propertyPath: m_Name
+      value: Monster DJ Kapow!
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2bd061a5e4cc9454b88458386173e7be, type: 3}
+--- !u!4 &1324321688182154503 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1243072655436552801, guid: 2bd061a5e4cc9454b88458386173e7be,
+    type: 3}
+  m_PrefabInstance: {fileID: 225365186418933606}
+  m_PrefabAsset: {fileID: 0}

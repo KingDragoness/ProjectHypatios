@@ -53,6 +53,7 @@ public class PlayerPerk
         var ListPerk = new List<BasePerk>();
         foreach (var entry in Hypatios.Assets.AllBasePerks) ListPerk.Add(entry);
         ListPerk.RemoveAll(fx => fx.CheckLevelMaxed());
+        { ListPerk.RemoveAll(e => e.BannedInGauntlet == true && Hypatios.Game.currentGamemode.isGauntlet == true); }
 
         int[] allProbability = new int [ListPerk.Count];
 

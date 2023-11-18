@@ -134,7 +134,11 @@ public class KillZone : MonoBehaviour
 
         if (isExplosion)
         {
-            Hypatios.Player.Weapon.Recoil.AddCustomKnockbackForce(explosionDir, 1f);
+            float multiplier = explosionDir.magnitude;
+            Vector3 knockbackDir = Hypatios.Player.transform.position - transform.position;
+            knockbackDir.Normalize();
+            knockbackDir *= multiplier;
+            Hypatios.Player.Weapon.Recoil.AddCustomKnockbackForce(knockbackDir, 1f);
         }
 
         if (isBurn)

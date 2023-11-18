@@ -120,6 +120,16 @@ public class EnemyContainer : MonoBehaviour
         {
             var listNonplayer = AllEnemies.FindAll(x => x.Stats.MainAlliance != Alliance.Player);
             if (listNonplayer.Count() > 0) CheckCalculate(listNonplayer[Random.Range(0, listNonplayer.Count)]);
+            foreach(var enemy in AllEnemies)
+            {
+                if (enemy.Stats.UnitType == UnitType.Boss) continue;
+
+                if (enemy.transform.position.y < -100f)
+                {
+                    enemy.Die();
+                }
+            }
+
             _cooldownPlayerNavMeshValid = 0.1f;
         }
 

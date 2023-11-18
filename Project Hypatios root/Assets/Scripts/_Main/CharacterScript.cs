@@ -396,6 +396,12 @@ public class CharacterScript : Entity
             effectObject.ApplyEffect();
         }
     }
+
+    public override void Heal(float healAmount)
+    {
+        Health.curHealth += healAmount;
+        Health.targetHealth += healAmount;
+    }
     #endregion
 
 

@@ -17,6 +17,7 @@ public class BasePerk : ScriptableObject
     public bool TemporaryPerkOverLimit = false;
     public bool NoTemporaryPerk = false;
     public bool NoPermanentPerk = false;
+    public bool BannedInGauntlet = false;
     public float Commonness = 100; //100 is very common generate
     public ModifierEffectCategory category;
 
