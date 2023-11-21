@@ -286,6 +286,7 @@ MonoBehaviour:
   anim: {fileID: 9030260937273200558}
   weaponName: SmartPistol
   crosshairHit: {fileID: 0}
+  attachedItemID: 
   allAttachments: []
   CustomVariables: []
   damage: 20
@@ -304,6 +305,7 @@ MonoBehaviour:
   recoilMultiplier: 1
   bulletPerSecond: 20
   damageType: 1
+  UseTutorialHint: 0
   repulsionForce: 0.3
   isFiring: 0
   isReloading: 0
@@ -641,6 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCopy: {fileID: 863725561148901998}
+  useLateUpdate: 0
 --- !u!1 &9030260935965280327
 GameObject:
   m_ObjectHideFlags: 0
@@ -5751,6 +5754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCopy: {fileID: 7571156276744322175}
+  useLateUpdate: 0
 --- !u!1 &9030260937563973061
 GameObject:
   m_ObjectHideFlags: 0
@@ -10570,21 +10574,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8852765180606294072}
     m_Modifications:
-    - target: {fileID: 1343678510790997694, guid: 11c84667980e01049ae5a69331aa553a,
+    - target: {fileID: 1143121617477759588, guid: 11c84667980e01049ae5a69331aa553a,
         type: 3}
       propertyPath: targetCopy
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2479573901431898323, guid: 11c84667980e01049ae5a69331aa553a,
-        type: 3}
-      propertyPath: targetCopy
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3074506606162099536, guid: 11c84667980e01049ae5a69331aa553a,
-        type: 3}
-      propertyPath: gunScript
-      value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9030260936854371677}
     - target: {fileID: 5438157104021380728, guid: 11c84667980e01049ae5a69331aa553a,
         type: 3}
       propertyPath: m_RootOrder
@@ -10644,6 +10638,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmartPistol_Attachments
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075574048016383158, guid: 11c84667980e01049ae5a69331aa553a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8964636458494696644, guid: 11c84667980e01049ae5a69331aa553a,
         type: 3}
@@ -10972,7 +10971,7 @@ PrefabInstance:
     - target: {fileID: -2834850823531513406, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -2734154232073083104, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
@@ -11002,7 +11001,7 @@ PrefabInstance:
     - target: {fileID: -2021178655527167927, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -997427498275638734, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
@@ -11179,6 +11178,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2419778020956921957, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2479543071680110598, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_Layer
@@ -11239,6 +11243,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4831018558786363571, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4893046527710507279, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_Layer
@@ -11294,6 +11303,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5583283331389334309, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5589823930752471886, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_Layer
@@ -11347,7 +11361,7 @@ PrefabInstance:
     - target: {fileID: 6303818255995492756, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6425099088627973563, guid: 3d16c74560b1b8e4bab2fb6f2556baf0,
         type: 3}

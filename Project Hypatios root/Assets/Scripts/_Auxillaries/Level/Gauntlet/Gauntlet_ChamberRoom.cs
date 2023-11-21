@@ -27,6 +27,8 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
     public Transform spawnPoint;
     public Transform enemyContainer;
     public Type dungeonType;
+    [Space]
+    public int weight = 100;
     public List<Spawner> allSpawners = new List<Spawner>();
     [FoldoutGroup("Enemy Stat")] public int EnemyLeft = 13;
     [FoldoutGroup("Enemy Stat")] public int MaxEnemyCount = 5;
@@ -147,6 +149,8 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
 
         if (_cooldownCheck < 0)
         {
+            totalWeightTest = GetTotalWeight();
+
             HandleSpawn();
             _cooldownCheck = CooldownCheck;
             chamberText.SetTextContent(enemiesToClear.Count.ToString());
@@ -244,14 +248,25 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
     internal int GetTotalWeight()
     {
         int total = 0;
-        foreach (var entry1 in ValidSpawners())
+        var entries = new List<InstantiateRandomObject.Entry>();
+        foreach (var spawner in allSpawners)
         {
-            total += entry1.weight;
+            if (spawner.enemySpawner.prefabsWithChance.Count == 0) continue;
+            entries.AddRange(spawner.enemySpawner.prefabsWithChance);
+            total += spawner.weight; //Spawner's weight
+            total += spawner.enemySpawner.GetTotalWeight();
+        }
+
+        foreach (var entry1 in entries)
+        {
+            //total += entry1.weight; //enemy entry's weight
         }
         return total;
     }
 
+
     private int attempt = 0;
+    private int totalWeightTest = 0;
     public List<Spawner> ValidSpawners()
     {
         List<Spawner> result = new List<Spawner>();
@@ -265,6 +280,9 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
         return result;
     }
 
+
+    //Spawn's weight + Prefabs with chance
+    //
     internal Spawner GetEntry(int customSeed = 0)
     {
         int output = 0;
@@ -281,7 +299,7 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
             int index1 = 0;
             foreach (var entry in ValidSpawners())
             {
-                processedWeight += entry.weight;
+                processedWeight += entry.weight + entry.enemySpawner.GetTotalWeight();
                 if (rndWeightValue <= processedWeight)
                 {
                     output = index1;

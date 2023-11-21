@@ -71,6 +71,52 @@ public class GauntletScript : MonoBehaviour
         currentChamber.DEBUG_InstantComplete();
     }
 
+    public void ChamberSuccessful()
+    {
+        wave++;
+        OnGauntletCompleted?.Invoke();
+    }
+
+    #region Chamber Selection
+
+    internal int GetTotalWeight()
+    {
+        int result = 0;
+
+        foreach(var dungeonRoom in allChamberRooms)
+        {
+            result += dungeonRoom.weight;
+        }
+
+        return result;
+    }
+
+    internal Gauntlet_ChamberRoom GetEntry(int customSeed = 0)
+    {
+        int output = 0;
+        {
+            //Getting a random weight value
+            var totalWeight = GetTotalWeight();
+            int rndWeightValue = Random.Range(0, totalWeight);
+
+            //Checking where random weight value falls
+            var processedWeight = 0;
+            int index1 = 0;
+            foreach (var entry in allChamberRooms)
+            {
+                processedWeight += entry.weight;
+                if (rndWeightValue <= processedWeight)
+                {
+                    output = index1;
+                    break;
+                }
+                index1++;
+            }
+        }
+
+        return allChamberRooms[output];
+    }
+
     public void ProceedNextChamber()
     {
         foreach (var dungeon in allChamberRooms)
@@ -78,42 +124,57 @@ public class GauntletScript : MonoBehaviour
             dungeon.gameObject.SetActive(false);
         }
 
-        Gauntlet_ChamberRoom chamberRoom = allChamberRooms[Random.Range(0, allChamberRooms.Count)];
+        Gauntlet_ChamberRoom chamberRoom = GetEntry(Mathf.RoundToInt(Time.time));
         int attempt = 0;
         bool success = false;
 
-        while (wave == 1 && attempt < 100)
         {
-            if (chamberRoom.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse)
+            while (wave == 1 && attempt < 100)
             {
-                chamberRoom = allChamberRooms[Random.Range(0, allChamberRooms.Count)];
-            }
-            else
-            {
-                break;
-            }
-
-            attempt++;
-        }
-
-        while (attempt < 100 && success == false)
-        {
-            if (previousChambers.Count == 0) break;
-            if (previousChambers.Count >= 1)
-            {
-                if (previousChambers[0] == chamberRoom)
+                if (chamberRoom.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse)
                 {
-                    chamberRoom = allChamberRooms[Random.Range(0, allChamberRooms.Count)];
+                    chamberRoom = GetEntry(Mathf.RoundToInt(Time.time + attempt));
                 }
                 else
                 {
-                    success = true;
+                    break;
+                }
+
+                attempt++;
+            }
+            //safehouse
+            {
+                float random = Random.Range(0f, 1f);
+
+                if (random < 0.8f && Is_nextRoom_Safehouse())
+                {
+                    var safehouses = new List<Gauntlet_ChamberRoom>();
+                    safehouses.AddRange(allChamberRooms.FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
+
+                    chamberRoom = safehouses[Random.Range(0, safehouses.Count)];
                 }
             }
 
-            attempt++;
-        }
+            attempt = 0;
 
+            while (attempt < 100 && success == false)
+            {
+                if (previousChambers.Count == 0) break;
+                if (previousChambers.Count >= 1)
+                {
+                    if (previousChambers[0] == chamberRoom)
+                    {
+                        chamberRoom = GetEntry(Mathf.RoundToInt(Time.time + attempt));
+                    }
+                    else
+                    {
+                        success = true;
+                    }
+                }
+
+                attempt++;
+            }
+        }
 
         int enemyAmount = startingEnemyCount + Mathf.RoundToInt(wave * 1.4f);
         int enemyMax = startingEnemyMax + Mathf.RoundToInt(wave * 0.8f);
@@ -137,10 +198,54 @@ public class GauntletScript : MonoBehaviour
         chamberRoom.StartChamber(enemiesToSpawn, _maxEnemyCount: enemyMax, _enemyAmount: enemyAmount);
     }
 
-    public void ChamberSuccessful()
+    [FoldoutGroup("DEBUG")] [Button("Safehouse test")]
+    public void TEST_injectSafehouseTest()
     {
-        wave++;
-        OnGauntletCompleted?.Invoke();
+        float random = Random.Range(0f, 1f);
+
+        if (random < 1f && Is_nextRoom_Safehouse())
+        {
+            var safehouses = new List<Gauntlet_ChamberRoom>();
+            safehouses.AddRange(allChamberRooms.FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
+
+            var chamberRoom = safehouses[Random.Range(0, safehouses.Count)];
+            Debug.Log(chamberRoom.gameObject.name);
+        }
     }
+
+    //CHECKS
+
+    /// <summary>
+    /// 3 dungeon rooms in the row
+    /// </summary>
+    /// <returns></returns>
+    public bool Is_nextRoom_Safehouse()
+    {
+        if (previousChambers.Count <= 3)
+            return false;
+
+        int normalRoomCount = 0;
+
+        for (int x = 0; x < 3; x++)
+        {
+            var dungeon = previousChambers[x];
+            if (dungeon.dungeonType == Gauntlet_ChamberRoom.Type.Dungeon)
+            {
+                normalRoomCount++;
+            }
+            if (dungeon.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse)
+            {
+                //there's already a safehouse, ignore
+                return false;
+            }
+        }
+
+        if (normalRoomCount >= 2) return true;
+
+        return false;
+    }
+
+    #endregion
+
 
 }

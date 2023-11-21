@@ -33,7 +33,7 @@ public class CraftingWorkstationTrigger : MonoBehaviour
         MainUI.Instance.ChangeCurrentMode(MainUI.UIMode.Crafting);
     }
 
-    public void RefreshWeaponModels()
+    public void RefreshWeaponModels(HypatiosSave.WeaponDataSave weaponSave = null)
     {
         var craftingUI = MainGameHUDScript.Instance.craftingUI;
 
@@ -51,7 +51,11 @@ public class CraftingWorkstationTrigger : MonoBehaviour
         var currentWeapon = craftingUI.GetCurrentWeaponOnTable();
         if (currentWeapon != null)
         {
-            var weaponSave = Hypatios.Game.GetWeaponSave(currentWeapon.weaponName);
+            if (weaponSave == null)
+            {
+                weaponSave = Hypatios.Game.GetWeaponSave(currentWeapon.weaponName);
+            }
+
             var weapon1 = Hypatios.Assets.GetWeapon(weaponSave.weaponID);
             int order = 0;
 
@@ -84,6 +88,7 @@ public class CraftingWorkstationTrigger : MonoBehaviour
             }
         }
     }
+
 
     private void Update()
     {

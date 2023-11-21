@@ -51,9 +51,12 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ItemOwned)] public ItemInventory itemNeeded;
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
         [ShowIf("conditionType", ConditionType.Flags)] public GlobalFlagSO flagEvent;
+        [ShowIf("conditionType", ConditionType.Flags)] public bool dontTriggerFlag;
 
         public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
         public bool IsSwitchConditioner => conditionType == ConditionType.Switch || conditionType == ConditionType.SwitchNotCompleted;
+
+        private float STORE_FUCKING_RANDOM_NUMBER = -1f;
 
         public bool IsConditionChecked()
         {
@@ -78,8 +81,8 @@ public class Conditioner : MonoBehaviour
             }
             else if (conditionType == ConditionType.Randomization)
             {
-                float random = Hypatios.GetRandomChance();
-                if (random < randomChance)
+                if (STORE_FUCKING_RANDOM_NUMBER == -1f) STORE_FUCKING_RANDOM_NUMBER = Hypatios.GetRandomChance();
+                if (STORE_FUCKING_RANDOM_NUMBER < randomChance)
                     return true;
 
             }
@@ -127,7 +130,10 @@ public class Conditioner : MonoBehaviour
             }
             else if (conditionType == ConditionType.Flags)
             {
-                if (Hypatios.Game.Check_FlagTriggered(flagEvent.GetID()))
+                if (Hypatios.Game.Check_FlagTriggered(flagEvent.GetID()) && dontTriggerFlag == false)
+                    return true;
+
+                if (Hypatios.Game.Check_FlagTriggered(flagEvent.GetID()) == false && dontTriggerFlag == true)
                     return true;
             }
 
@@ -227,6 +233,7 @@ public class Conditioner : MonoBehaviour
                 if (condition.IsConditionChecked())
                 {
                     result = true;
+                    if (printOutput) Debug.Log($"{condition.conditionType}: Success.");
                     break;
                 }
 
@@ -245,6 +252,7 @@ public class Conditioner : MonoBehaviour
                 if (condition.IsConditionChecked() == false)
                 {
                     result = false;
+                    if (printOutput) Debug.Log($"{condition.conditionType}: Fail.");
                     break;
                 }
 
@@ -270,7 +278,7 @@ public class Conditioner : MonoBehaviour
 
         }
 
-        if (printOutput) Debug.Log(output_str);
+        if (printOutput) Debug.Log($"{output_str} [FINAL: {result}]");
         return result;
     }
 }

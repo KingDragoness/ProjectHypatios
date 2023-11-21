@@ -109,6 +109,16 @@ public class CraftingWorkstationUI : MonoBehaviour
         stat_Title_Label.text = $"{weaponMod.Name}";
         stat_Description_Label.text = $"{weaponMod.Description}";
 
+        {
+            //temporary highlight preview
+            var currentWeapon = GetCurrentWeaponOnTable();
+            HypatiosSave.WeaponDataSave weaponSave = null;
+
+            weaponSave = Hypatios.Game.GetWeaponSave(currentWeapon.weaponName).Clone<HypatiosSave.WeaponDataSave>();
+            weaponSave.AddAttachment(_button.weaponModID);
+
+            CurrentWorkbench.RefreshWeaponModels(weaponSave);
+        }
     }
 
     public void HighlightAmmo()

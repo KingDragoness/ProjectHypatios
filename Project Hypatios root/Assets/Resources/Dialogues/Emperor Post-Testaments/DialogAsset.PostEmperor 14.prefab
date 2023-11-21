@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: "Some enemies you\u2019re fighting especially that dissolves
-    after its death, are only felt by an Ionis."
+  Dialogue_Content: '''Min en Falk Enstiania'' is a Sixtusian phrase meant ''we are
+    just a common folk''. Acceptance of who we are.'
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -81,7 +81,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3548863083225914119
 MonoBehaviour:
@@ -132,9 +132,10 @@ Transform:
   m_LocalScale: {x: 3.058839, y: 2.7155268, z: 2.4643865}
   m_Children:
   - {fileID: 1230502053353723732}
-  - {fileID: 8861743187561531849}
   - {fileID: 4799831354263357162}
   - {fileID: 4585992606247048551}
+  - {fileID: 8748224164176097976}
+  - {fileID: 1079717776387629789}
   - {fileID: 1948872104180500756}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -162,6 +163,7 @@ MonoBehaviour:
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!1 &4432654648889180880
 GameObject:
@@ -192,7 +194,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &475390582395989942
 MonoBehaviour:
@@ -206,11 +208,116 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: "There are drones and robots. But still many aren\u2019t."
+  Dialogue_Content: When you are born, you will accept things as is. You'll melt
+    together into an ocean of the masses.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 5
+  Dialogue_Timer: 7
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &4722547073474433873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079717776387629789}
+  - component: {fileID: 6348006417546755581}
+  m_Layer: 0
+  m_Name: Emperor.Dialog (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079717776387629789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722547073474433873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6348006417546755581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722547073474433873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: With it, the feudal system binds us to the box. Naive... naive
+    is good because sometimes the truth did not matter, only good narrative.
+  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 8
+  OnDialogTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &7126095453062306114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8748224164176097976}
+  - component: {fileID: 4343118294071525840}
+  m_Layer: 0
+  m_Name: Emperor.Dialog (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8748224164176097976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7126095453062306114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6137219061834780904}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4343118294071525840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7126095453062306114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Dialogue_Content: Our consciousness is stripped. Knowledge is confined. False consciousness
+    is a must to prevent a revolt.
+  dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
+  portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
+  dialogAudioClip: {fileID: 0}
+  Dialogue_Timer: 7
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
@@ -243,7 +350,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4161005929893388665
 MonoBehaviour:
@@ -257,64 +364,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: This is why the WIRED is dangerous. The line of reality and fiction
-    is blurred. Death is not physical but artificial.
+  Dialogue_Content: We are surrendering ourselves to the upper class. To have our
+    bodies and our perception of the world be dictated by the higher ups.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 7
-  OnDialogTriggered:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!1 &8435845988768374534
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8861743187561531849}
-  - component: {fileID: 2704419433809442301}
-  m_Layer: 0
-  m_Name: Aldrich.Dialog
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: 3d6def14ace091c41bc378914b6a0f84, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8861743187561531849
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8435845988768374534}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6137219061834780904}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2704419433809442301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8435845988768374534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Dialogue_Content: "Wait, you\u2019re telling me that all this time, I got killed
-    out of thin air?"
-  dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
-  portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
-  dialogAudioClip: {fileID: 0}
-  Dialogue_Timer: 4
   OnDialogTriggered:
     m_PersistentCalls:
       m_Calls: []
