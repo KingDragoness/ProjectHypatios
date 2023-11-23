@@ -397,13 +397,23 @@ public class MobiusGuardEnemy : EnemyScript
 
     #region Behaviour Sets
 
+    private float aimingWeight = 0f;
+
+    public void Aiming()
+    {
+        if (aimingWeight <= 1f)
+        {
+            aimingWeight += Time.deltaTime;
+            bipedIk.solvers.aim.IKPositionWeight = aimingWeight;
+        }
+    }
+
     public void Set_EnableAiming()
     {
 
         if (IsAiming == false) IsAiming = true;
 
         bipedIk.enabled = true;
-        bipedIk.solvers.aim.IKPositionWeight = 1f;
         baitTarget.transform.position = currentTarget.OffsetedBoundWorldPosition;
         bipedIk.solvers.aim.target = baitTarget.transform;
     }
@@ -431,6 +441,7 @@ public class MobiusGuardEnemy : EnemyScript
         if (IsAiming == true) IsAiming = false;
 
         bipedIk.enabled = false;
+        aimingWeight = 0f;
         bipedIk.solvers.aim.IKPositionWeight = 0f;
     }
 
@@ -442,7 +453,12 @@ public class MobiusGuardEnemy : EnemyScript
             agent.Stop();
         }
 
-        animator.SetFloat("Speed", 0f);
+        float speedv = animator.GetFloat("Speed");
+        float speedh = animator.GetFloat("HorizontalSpeed");
+
+        animator.SetFloat("Speed", Mathf.MoveTowards(speedv, 0f, Time.deltaTime));
+        animator.SetFloat("HorizontalSpeed", Mathf.MoveTowards(speedh, 0f, Time.deltaTime));
+
     }
 
     public void Set_StartMoving(float moveSpeed, float animSpeed)
@@ -453,6 +469,17 @@ public class MobiusGuardEnemy : EnemyScript
             animator.SetFloat("Speed", animSpeed);
         }
         else animator.SetFloat("Speed", Mathf.MoveTowards(animator.GetFloat("Speed"), 0f, Time.deltaTime));
+
+        {
+            //horizontal speed
+            var relatveDir = transform.InverseTransformDirection(agent.velocity.normalized);
+
+            float f = animator.GetFloat("HorizontalSpeed");
+            float target = relatveDir.x * animSpeed;
+
+            animator.SetFloat("HorizontalSpeed", Mathf.MoveTowards(f, target, Time.deltaTime));
+
+        }
 
         agent.speed = moveSpeed;
 

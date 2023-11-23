@@ -1061,7 +1061,7 @@ public class CharacterScript : Entity
             {
                 ailment_BrokenLeg.AddStatusEffectPlayer(9999f);
                 DeadDialogue.PromptNotifyMessage_Mod("Aldrich broke his legs.", 4f);
-                Hypatios.Game.RuntimeTutorialHelp("Fall Damage", "Falling from great heights will have a chance to broke Aldrich's legs.", "curse.falldamage");
+                Hypatios.Game.RuntimeTutorialHelp(Hypatios.CodexList.FallDamage);
             }
 
         }

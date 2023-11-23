@@ -276,6 +276,65 @@ public class Hypatios : MonoBehaviour
         #endregion
     }
 
+    [System.Serializable]
+    public class CodexList
+    {
+        [SerializeField] private CodexHintTipsSO _harderChamber;
+        [SerializeField] private CodexHintTipsSO _fallDamage;
+        [SerializeField] private CodexHintTipsSO _container;
+        [SerializeField] private CodexHintTipsSO _diseasesAilment;
+        [SerializeField] private CodexHintTipsSO _chargeStation;
+        [SerializeField] private CodexHintTipsSO _paradoxShop;
+
+
+        public static CodexHintTipsSO HarderChamber
+        {
+            get
+            {
+                return Codex._harderChamber;
+            }
+        }
+        public static CodexHintTipsSO FallDamage
+        {
+            get
+            {
+                return Codex._fallDamage;
+            }
+        }
+
+        public static CodexHintTipsSO Container
+        {
+            get
+            {
+                return Codex._container;
+            }
+        }
+
+        public static CodexHintTipsSO DiseasesAilment
+        {
+            get
+            {
+                return Codex._diseasesAilment;
+            }
+        }
+
+        public static CodexHintTipsSO ChargeStation
+        {
+            get
+            {
+                return Codex._chargeStation;
+            }
+        }
+
+        public static CodexHintTipsSO ParadoxShop
+        {
+            get
+            {
+                return Codex._paradoxShop;
+            }
+        }
+
+    }
 
     public enum GameDifficulty
     {
@@ -359,7 +418,11 @@ public class Hypatios : MonoBehaviour
     [SerializeField]
     private Settings _settings;
 
+    [SerializeField]
+    private CodexList _codexList;
 
+
+    private static CodexList Codex { get => Instance._codexList; }
     public static FPSMainScript Game { get => Instance._fpsMainScript; }
     public static ConsoleCommand ConsoleCommand { get => Instance._cc; }
     public static CharacterScript Player { get => Instance._characterScript; }

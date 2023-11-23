@@ -75,7 +75,7 @@ public class GunScript : BaseWeaponScript
     public virtual void Start()
     {
         var item = Hypatios.Assets.GetItemByWeapon(weaponName);
-        Hypatios.Game.RuntimeTutorialHelp(item.GetDisplayText(), item.Description, $"Weapon.{weaponName}");
+        //Hypatios.Game.RuntimeTutorialHelp(item.GetDisplayText(), item.Description, $"Weapon.{weaponName}");
         weaponSystem = GameObject.FindGameObjectWithTag("GunHolder").GetComponent<WeaponManager>();
 
         if (!isMelee)

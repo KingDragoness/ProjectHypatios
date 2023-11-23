@@ -18,6 +18,7 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<GlobalFlagSO> AllFlagSO = new List<GlobalFlagSO>();
     public List<BaseModifierEffectObject> AllModifierEffects;
     public List<BaseStatusEffectObject> AllStatusEffects;
+    public List<CodexHintTipsSO> AllCodexHints;
     public List<WeaponItem> Weapons = new List<WeaponItem>();
     public List<BasePerk> AllBasePerks;
     public List<ItemInventory> AllItems;
@@ -39,6 +40,7 @@ public class AssetStorageDatabase : MonoBehaviour
         var _flags = Resources.LoadAll("", typeof(GlobalFlagSO)).Cast<GlobalFlagSO>().ToList();
         var _modifiers = Resources.LoadAll("", typeof(BaseModifierEffectObject)).Cast<BaseModifierEffectObject>().ToList();
         var _statusEffects = Resources.LoadAll("", typeof(BaseStatusEffectObject)).Cast<BaseStatusEffectObject>().ToList();
+        var _codexHints = Resources.LoadAll("", typeof(CodexHintTipsSO)).Cast<CodexHintTipsSO>().ToList();
         var _weapons = Resources.LoadAll("", typeof(WeaponItem)).Cast<WeaponItem>().ToList(); 
         var _basePerks = Resources.LoadAll("", typeof(BasePerk)).Cast<BasePerk>().ToList(); 
         var _itemInventory = Resources.LoadAll("", typeof(ItemInventory)).Cast<ItemInventory>().ToList();
@@ -51,6 +53,7 @@ public class AssetStorageDatabase : MonoBehaviour
         AllFlagSO = _flags;
         AllModifierEffects = _modifiers;
         AllStatusEffects = _statusEffects;
+        AllCodexHints = _codexHints;
         Weapons = _weapons;
         AllBasePerks = _basePerks;
         AllItems = _itemInventory;
@@ -81,6 +84,12 @@ public class AssetStorageDatabase : MonoBehaviour
     {
         return Weapons.Find(x => x.nameWeapon == ID);
     }
+
+    public CodexHintTipsSO GetCodexHint(string ID)
+    {
+        return AllCodexHints.Find(x => x.RawID == ID);
+    }
+
 
     public Trivia GetTrivia(string ID)
     {

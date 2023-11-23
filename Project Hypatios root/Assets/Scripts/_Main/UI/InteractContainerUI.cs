@@ -34,7 +34,7 @@ public class InteractContainerUI : MonoBehaviour
 
         if (_interact1 != null)
         {
-            Hypatios.Game.RuntimeTutorialHelp("Containers", "You can loot items which you can access in your inventory in the pause menu.", "interact.container");
+            Hypatios.Game.RuntimeTutorialHelp(Hypatios.CodexList.Container);
             if (_interact1 != currentContainer)
             {
                 currentContainer = _interact1;

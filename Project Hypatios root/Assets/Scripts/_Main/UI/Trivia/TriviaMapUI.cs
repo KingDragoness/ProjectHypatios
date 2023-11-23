@@ -40,6 +40,7 @@ public class TriviaMapUI : MonoBehaviour
     public List<TriviaBallButton> allTriviaButtons = new List<TriviaBallButton>();
     public List<Wire> allLineRenderers = new List<Wire>();
     [ReadOnly] public List<TriviaShortButton> allTriviaShortButtons = new List<TriviaShortButton>();
+    [ReadOnly] public List<TriviaShortButton> allCodexButtons = new List<TriviaShortButton>();
 
     private void OnEnable()
     {
@@ -75,10 +76,15 @@ public class TriviaMapUI : MonoBehaviour
         {
             Destroy(button.gameObject);
         }
+        foreach (var button in allCodexButtons)
+        {
+            Destroy(button.gameObject);
+        }
 
         allTriviaShortButtons.Clear();
+        allCodexButtons.Clear();
 
-        foreach(var triviaClass in Hypatios.Assets.AllTrivias)
+        foreach (var triviaClass in Hypatios.Assets.AllTrivias)
         {
             var triviaDat = Hypatios.Game.Check_TriviaCompleted(triviaClass);
             if (triviaDat == false) continue;
@@ -133,6 +139,30 @@ public class TriviaMapUI : MonoBehaviour
             allTriviaShortButtons.Add(button1);
         }
 
+        foreach (var codexClass in Hypatios.Assets.AllCodexHints)
+        {
+            var flagDat = Hypatios.Game.Check_CodexHintDone(codexClass);
+            if (flagDat == false) continue;
+
+            if (currentFilter != Trivia.TriviaType.Codex)
+            {
+                continue;
+            }
+
+            if (IsMatchingSearchIndex(codexClass) == false)
+                continue;
+
+            var button1 = Instantiate(TriviaButtonprefab, parentTriviaButtons);
+            button1.type = TriviaShortButton.ButtonType.Codex;
+            button1.gameObject.SetActive(true);
+            button1.codexSO = codexClass;
+            button1.icon.sprite = flagSprite;
+
+
+            button1.Refresh();
+            allCodexButtons.Add(button1);
+        }
+
     }
 
     public bool IsMatchingSearchIndex(Trivia triviaClass)
@@ -171,6 +201,22 @@ public class TriviaMapUI : MonoBehaviour
         return false;
     }
 
+    public bool IsMatchingSearchIndex(CodexHintTipsSO codexSO)
+    {
+
+
+        if (string.IsNullOrEmpty(input_SearchFilter.text))
+            return true;
+        else
+        {
+            if (codexSO.Title.ToLower().Contains(input_SearchFilter.text.ToLower()))
+                return true;
+
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region Highlight Flag
@@ -178,7 +224,18 @@ public class TriviaMapUI : MonoBehaviour
     public void HighlightWindow(TriviaShortButton button)
     {
         window_PreviewFlag.gameObject.SetActive(true);
-        label_descriptionFlag.text = button.flagSO.Description;
+
+        if (button.type == TriviaShortButton.ButtonType.Flag)
+        {
+            label_descriptionFlag.text = button.flagSO.Description;
+        }
+        else if (button.type == TriviaShortButton.ButtonType.Codex)
+        {
+            string str = "";
+            str += $"<b>{button.codexSO.Title}</b> \n\n";
+            str += $"{button.codexSO.Description}";
+            label_descriptionFlag.text = str;
+        }
     }
 
     public void DehighlightWindow(TriviaShortButton button)

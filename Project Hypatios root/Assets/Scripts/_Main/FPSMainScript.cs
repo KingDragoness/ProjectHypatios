@@ -266,7 +266,7 @@ public class FPSMainScript : MonoBehaviour
 
     #region Paradox and tips
 
-    public void RuntimeTutorialHelp(string about, string description, string key)
+    public void RuntimeTutorialHelp(CodexHintTipsSO codex)
     {
         if (Application.isEditor && DEBUG_ShowTutorial == false)
         {
@@ -278,13 +278,24 @@ public class FPSMainScript : MonoBehaviour
             return;
         }
 
-        if (Hypatios.Game.Check_EverUsed(key) == false)
+        if (Check_CodexHintDone(codex) == false)
         {
-            MainGameHUDScript.Instance.ShowPromptUI(about, description, false);
+            MainGameHUDScript.Instance.ShowPromptUI(codex.Title, codex.Description, false);
             //MainUI.Instance.SetTempoPause(true);
-            Hypatios.Game.TryAdd_EverUsed(key);
+            Hypatios.Game.TryAdd_EverUsed(codex.GetID());
         }
     }
+
+    public bool Check_CodexHintDone(CodexHintTipsSO codexObject)
+    {
+        if (Hypatios.Game.Check_EverUsed(codexObject.GetID()) == true)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
     public bool Check_TriviaCompleted(Trivia triviaTarget)
     {

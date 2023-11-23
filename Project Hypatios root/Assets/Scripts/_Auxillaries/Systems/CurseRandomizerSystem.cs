@@ -7,6 +7,7 @@ public class CurseRandomizerSystem : MonoBehaviour
 {
 
     public int TriggerAfterRun = 5;
+    public CodexHintTipsSO burnInjuryCodex;
     [FoldoutGroup("Ailment Stats")] public float timePlayerGetFatigue = 600f;
     [FoldoutGroup("Ailment Stats")] public float unixTime_GetStagnationRage = 1500f; //25 minutes
     [FoldoutGroup("Ailment Stats")] [Range(0f, 1f)] public float chanceStagnationRage = 0.05f;
@@ -222,7 +223,9 @@ public class CurseRandomizerSystem : MonoBehaviour
 
     private void Prompt_Tutorial()
     {
-        Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue, Rage and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
+        Hypatios.Game.RuntimeTutorialHelp(Hypatios.CodexList.DiseasesAilment);
+
+        //Hypatios.Game.RuntimeTutorialHelp("Diseases and Ailments", "At random times, Aldrich can suffer from Depression, Fatigue, Rage and Panic Attack ailments. To prevent you need to find and consume anti-depressant pills.", "curse.ailments");
 
     }
 
@@ -251,7 +254,9 @@ public class CurseRandomizerSystem : MonoBehaviour
             DeadDialogue.PromptNotifyMessage_Mod("Aldrich suffers from fourth-degree burn injury.", 4f);
         }
 
-        Hypatios.Game.RuntimeTutorialHelp("Burn Injury", "Despite Aldrich's high endurance and damage resistance, fire can cause severe injury to Aldrich. Try not to get on fire too long.", "curse.burninjurydegree");
+        Hypatios.Game.RuntimeTutorialHelp(burnInjuryCodex);
+
+        //Hypatios.Game.RuntimeTutorialHelp("Burn Injury", "Despite Aldrich's high endurance and damage resistance, fire can cause severe injury to Aldrich. Try not to get on fire too long.", "curse.burninjurydegree");
     }
 
     #endregion

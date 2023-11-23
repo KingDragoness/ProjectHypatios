@@ -11,6 +11,7 @@ public class LootTable : ScriptableObject
     public class Entry
     {
         public ItemInventory item;
+        public Trivia trivia;
         public int weight = 10;
     }
 
@@ -25,7 +26,7 @@ public class LootTable : ScriptableObject
     public int GetTotalWeight()
     {
         int total = 0;
-        foreach(var entry1 in entries)
+        foreach(var entry1 in GetValidEntries())
         {
             total += entry1.weight;
         }
@@ -47,7 +48,7 @@ public class LootTable : ScriptableObject
         //Checking where random weight value falls
         var processedWeight = 0;
         int index1 = 0;
-        foreach (var entry in entries)
+        foreach (var entry in GetValidEntries())
         {
             processedWeight += entry.weight;
             if (rndWeightValue <= processedWeight)
@@ -58,12 +59,31 @@ public class LootTable : ScriptableObject
             index1++;
         }
 
-        return entries[output];
+        return GetValidEntries()[output];
+    }
+
+    public List<Entry> GetValidEntries()
+    {
+        List<Entry> result = new List<Entry>();
+
+        foreach (var entry1 in entries)
+        {
+            if (entry1.trivia != null)
+            {
+                if(Hypatios.Game.Check_TriviaCompleted(entry1.trivia) == false)
+                {
+                    continue;
+                }
+            }
+            result.Add(entry1);
+        }
+
+        return result;
     }
 
     public float GetPercentage(Entry entry)
     {
-        if (entries.Find(x => x == entry) == null)
+        if (GetValidEntries().Find(x => x == entry) == null)
         {
             Debug.LogError($"The targeted entry cannot be found in {this.name}.");
             return -1;

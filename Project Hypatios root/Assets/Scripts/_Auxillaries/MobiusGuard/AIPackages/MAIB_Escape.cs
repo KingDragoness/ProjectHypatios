@@ -96,7 +96,17 @@ public class MAIB_Escape : MobiusAIBehaviour
 
         if (cooldown < 0f)
         {
-            escapePos = IsopatiosUtility.RandomNavSphere(mobiusGuardScript.transform.position, distanceRandomSphere, -1);
+            var activeGuards = MobiusGuardEnemy.AllActiveGuards;
+            if (activeGuards.Count > 0)
+            {
+                var randomGuard = activeGuards[Random.Range(0, activeGuards.Count)];
+                escapePos = IsopatiosUtility.RandomNavSphere(randomGuard.transform.position, 5f, -1);
+                cooldown += 2f;
+            }
+            else
+            {
+                escapePos = IsopatiosUtility.RandomNavSphere(mobiusGuardScript.transform.position, distanceRandomSphere, -1);
+            }
             cooldown = cooldownFindNewEscapePoint;
         }
 

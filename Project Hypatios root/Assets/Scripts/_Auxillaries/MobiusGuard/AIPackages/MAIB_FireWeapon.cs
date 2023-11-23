@@ -11,6 +11,7 @@ public class MAIB_FireWeapon : MobiusAIBehaviour
     public float minimumRange = 3f;
     public int minimumRange_priority = -50;
     public float multiplierPriority = 0.4f;
+    public float angleTooBigThreshold = 5f;
 
     public override int CalculatePriority()
     {
@@ -60,7 +61,31 @@ public class MAIB_FireWeapon : MobiusAIBehaviour
         if (mobiusGuardScript.IsAiming == false)
             mobiusGuardScript.IsAiming = true;
 
-        mobiusGuardScript.Set_StopMoving();
+        bool isPlayer90Degrees = !AngleTooBig();
+
+
+
+        if (isPlayer90Degrees)
+        {
+            mobiusGuardScript.Set_StopMoving();
+        }
+        else
+        {
+            mobiusGuardScript.Set_StartMoving(0.3f, 0.15f);
+            mobiusGuardScript.agent.SetDestination(mobiusGuardScript.currentTarget.transform.position);
+        }
+
         mobiusGuardScript.OverrideAimingTarget();
+    }
+
+    public bool AngleTooBig()
+    {
+        Vector3 targetDir = mobiusGuardScript.currentTarget.transform.position - transform.position;
+        float angle = Vector3.Angle(targetDir, transform.forward);
+
+        if (angle < angleTooBigThreshold)
+            return false;
+
+        return true;
     }
 }

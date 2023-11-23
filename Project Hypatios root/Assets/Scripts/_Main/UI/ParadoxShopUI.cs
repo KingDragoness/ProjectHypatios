@@ -53,7 +53,8 @@ public class ParadoxShopUI : MonoBehaviour
 
         if (Hypatios.Game.everUsed_Paradox == false)
         {
-            MainGameHUDScript.Instance.ShowPromptUI("PARADOX SHOP", helperString, false);
+            Hypatios.Game.RuntimeTutorialHelp(Hypatios.CodexList.ParadoxShop);
+            //MainGameHUDScript.Instance.ShowPromptUI("PARADOX SHOP", helperString, false);
             Hypatios.Game.everUsed_Paradox = true;
         }
 

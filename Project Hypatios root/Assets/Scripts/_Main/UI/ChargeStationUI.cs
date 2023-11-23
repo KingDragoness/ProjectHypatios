@@ -36,7 +36,8 @@ public class ChargeStationUI : MonoBehaviour
     {
         if (Hypatios.Game.everUsed_WeaponShop == false)
         {
-            MainGameHUDScript.Instance.ShowPromptUI("CHARGE STATION", helperString, false) ;
+            Hypatios.Game.RuntimeTutorialHelp(Hypatios.CodexList.ChargeStation);
+            //MainGameHUDScript.Instance.ShowPromptUI("CHARGE STATION", helperString, false) ;
             Hypatios.Game.everUsed_WeaponShop = true;
         }
 

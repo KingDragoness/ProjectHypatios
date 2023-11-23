@@ -105,7 +105,6 @@ public class PlayerHealth : MonoBehaviour
         if ((targetHealth / maxHealth.Value) < 0.2f)
         {
             //if (Hypatios.Game.currentGamemode != FPSMainScript.CurrentGamemode.Elena)
-                Hypatios.Game.RuntimeTutorialHelp("Your health is low", "Your health is low, you need to find the green glowing capsule to heal yourself.", "20%LowHealth");
         }
 
         if (alcoholMeter >= 99f)
