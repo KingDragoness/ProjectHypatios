@@ -18,6 +18,8 @@ public class FPSMainScript : MonoBehaviour
 
     public Hypatios_Gamemode currentGamemode;
     public UnityEvent OnLoadFromMachineMadness;
+    [FoldoutGroup("Extra")] [SerializeField] private UnityEvent OnLowPoly;
+    [FoldoutGroup("Extra")] [SerializeField] private UnityEvent OnLowPoly_disabled;
     [FoldoutGroup("Story Selection")] public SceneReference elenaScene;
     [FoldoutGroup("Story Selection")] public SceneReference aldrichScene;
     [FoldoutGroup("Story Selection")] public SceneReference level1_Scene;
@@ -219,6 +221,12 @@ public class FPSMainScript : MonoBehaviour
 
     public void CommandCheat(string cheatName)
     {
+        List<string> helpers = new List<string>();
+        helpers.Add("'sentry': add items related sentry PDA");
+        helpers.Add("'tt': trigger most trivias");
+        helpers.Add("'lv5/lv10': mid/high level perk");
+        helpers.Add("'lowpoly': shittiest graphic possible");
+
         if (cheatName == "sentry")
         {
             ConsoleCommand.Instance.CommandInput("mats");
@@ -252,6 +260,33 @@ public class FPSMainScript : MonoBehaviour
                 var trivia = Hypatios.Assets.AllTrivias[x];
                 if (trivia.disableTrivia) continue;
                 trivia.TriggerTrivia();
+            }
+        }
+        if (cheatName == "help")
+        {
+            foreach(var helpCommand in helpers)
+            {
+                ConsoleCommand.Instance.SendConsoleMessage(helpCommand);
+            }
+        }
+        if (cheatName == "lowpoly")
+        {
+            postProcessLayer_Player.enabled = !postProcessLayer_Player.enabled;
+            postProcessLayer_UI.enabled = !postProcessLayer_UI.enabled;
+            postProcessVolume.enabled = !postProcessVolume.enabled;
+
+            if (postProcessLayer_Player.enabled)
+            {
+                QualitySettings.masterTextureLimit = 0;
+                OnLowPoly_disabled?.Invoke();
+                Hypatios.MainCameraScript.DisableLowPolyRT();
+            }
+            else
+            {
+                QualitySettings.masterTextureLimit = 2;
+                QualitySettings.shadows = ShadowQuality.Disable;
+                OnLowPoly?.Invoke();
+                Hypatios.MainCameraScript.LowPolyRT();
             }
         }
     }

@@ -28,6 +28,7 @@ public class MainMenuTitleScript : MonoBehaviour
     public float resumeTimeDelay = 2f;
     public UnityEvent OnTransitEvent;
     public UnityEvent OnPlayModeActivated;
+    public UnityEvent OnResetProgression;
     [FoldoutGroup("Mainmenu")] public GameObject backlayerCam;
     [FoldoutGroup("Mainmenu")] public GameObject bg_UI;
     [FoldoutGroup("Mainmenu")] public GameObject settingsUI;
@@ -104,12 +105,7 @@ public class MainMenuTitleScript : MonoBehaviour
             if (IsSaveFileVersionMatched() == false)
             {
                 differentFileVersionPrompt.gameObject.SetActive(true);
-                //rewrite file
-                var saveToModify = GetHypatiosSave();
-                FPSMainScript.WipeCurrentRunProgress(saveToModify);
-
-                WriteSaveFile(saveToModify);
-                cachedSaveFile = saveToModify;
+   
             }
             else
             {
@@ -140,10 +136,27 @@ public class MainMenuTitleScript : MonoBehaviour
         }
     }
 
+
+    #region Save File Different
     public bool IsSaveFileVersionMatched()
     {
         return (GetHypatiosSave().Game_Version == Application.version) ? true : false;
     }
+
+    public void WipeCurrentRunProgress()
+    {
+        //rewrite file
+        var saveToModify = GetHypatiosSave();
+        FPSMainScript.WipeCurrentRunProgress(saveToModify);
+
+        WriteSaveFile(saveToModify);
+        cachedSaveFile = saveToModify;
+
+        //restart level
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    #endregion
 
     public static HypatiosSave GetHypatiosSave()
     {

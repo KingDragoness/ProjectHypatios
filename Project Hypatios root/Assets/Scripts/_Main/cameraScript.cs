@@ -12,6 +12,9 @@ public class cameraScript : MonoBehaviour
     public bool isLimitedIntroMode = false;
 
     [Space]
+    public Camera fpsCamera;
+    public RenderTexture lowpoly_rt;
+    public RenderTexture lowpoly_fps_rt;
     public wallRun wallRunScript;
     public float mouseSensitivity = 200f;
     public float aimAssistSensitivity = 5f;
@@ -40,6 +43,20 @@ public class cameraScript : MonoBehaviour
     private void BaitTest1()
     {
         Texture texture = null;
+    }
+
+    public void LowPolyRT()
+    {
+        cam.targetTexture = lowpoly_rt;
+        fpsCamera.targetTexture = lowpoly_fps_rt;
+        fpsCamera.clearFlags = CameraClearFlags.SolidColor;
+    }
+
+    public void DisableLowPolyRT()
+    {
+        cam.targetTexture = null;
+        fpsCamera.targetTexture = null;
+        fpsCamera.clearFlags = CameraClearFlags.Depth;
     }
 
     // Start is called before the first frame update

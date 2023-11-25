@@ -75,8 +75,10 @@ public class CharacterScript : Entity
     [FoldoutGroup("Physics")] public float minChanceBrokenLeg = 0.3f;
 
     //Slope & Stair Detection
-    [FoldoutGroup("Physics")] RaycastHit slopeHit;
-    [FoldoutGroup("Physics")] Vector3 slopeDirection;
+    [FoldoutGroup("Physics")] private RaycastHit slopeHit;
+    [FoldoutGroup("Physics")] private Vector3 slopeDirection;
+    [FoldoutGroup("Physics")] public Vector3 recoil_Fall = new Vector3(33f, 10f, 6f);
+    [FoldoutGroup("Physics")] public Vector3 recoil_Jump = new Vector3(60f, 25f, 15f);
 
     //Dashing
     [FoldoutGroup("Dashing")] Vector3 dashDirection;
@@ -492,8 +494,9 @@ public class CharacterScript : Entity
                     Anim.SetBool("inAir", false);
 
                     {
-                        float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 3);
-                        Weapon.Recoil.CustomRecoil(new Vector3(6, -13f, 6f), multiplierAir);
+                        float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 5);
+                        multiplierAir *= 2f;
+                        Weapon.Recoil.CustomRecoil(recoil_Fall, multiplierAir);
                     }
                     airTime = 0;
 
@@ -948,6 +951,7 @@ public class CharacterScript : Entity
 
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 rb.AddForce(dirJump, ForceMode.Impulse);
+                Weapon.Recoil.CustomRecoil(recoil_Jump, 1f);
                 soundManager.Play("jumping");
                 Anim.SetTrigger("jumping");
                 Hypatios.Game.Increment_PlayerStat(stat_jumps);
@@ -1110,6 +1114,7 @@ public class CharacterScript : Entity
         }
 
         if (isNoGravity == false) rb.useGravity = false;
+        Weapon.Recoil.CustomRecoil(dashDirection, 30f);
         rb.AddForce(dashDirection * dashForce * Time.deltaTime * 50f, ForceMode.Force);
         soundManager.Play("dash");
         dashManager.manageDash();

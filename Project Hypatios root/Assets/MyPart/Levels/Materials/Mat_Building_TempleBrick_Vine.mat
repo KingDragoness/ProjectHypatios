@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mat_Building_TempleBrick_Vine
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _DETAIL_MULX2 _NORMALMAP
+  m_Shader: {fileID: 47, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _DETAIL_MULX2 _NORMALMAP _PARALLAXMAP _SPECGLOSSMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,12 +20,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: ad4d80146ebe0a14496432a8123dc340, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3392e9a97a2312f4b9445557a395a6ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 5af5d4dfcdd034c46b134842db46337f, type: 3}
-        m_Scale: {x: 0.22, y: 0.22}
+        m_Texture: {fileID: 2800000, guid: 60e6f098c4a90624d89590289c773513, type: 3}
+        m_Scale: {x: 0.12, y: 0.12}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -37,11 +37,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0.7, y: 0.7}
+        m_Scale: {x: 0.6, y: 0.6}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7171243dafe832343868b190f82af1ff, type: 3}
-        m_Scale: {x: 0.7, y: 0.7}
+        m_Texture: {fileID: 2800000, guid: c52e0bdec2f4b104aad279c4633fbe45, type: 3}
+        m_Scale: {x: 0.6, y: 0.6}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -52,21 +52,25 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d778acb722d85e74286fa7b285a4bc46, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 2800000, guid: c0413118f53d5eb4fbba69d109b9952f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpScale: 0.14
+    - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DetailNormalMapScale: 0.09
+    - _DetailNormalMapScale: 0.23
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _OcclusionStrength: 0
+    - _Parallax: 0.03
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
