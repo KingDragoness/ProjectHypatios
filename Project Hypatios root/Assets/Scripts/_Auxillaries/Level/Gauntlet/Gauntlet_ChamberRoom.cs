@@ -10,7 +10,8 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
     public enum Type
     {
         Dungeon,
-        Safehouse
+        Safehouse,
+        BonusRoom
     }
 
 
@@ -26,9 +27,11 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
 
     public Transform spawnPoint;
     public Transform enemyContainer;
+    [Header("Selection")]
     public Type dungeonType;
-    [Space]
+    public bool accessibleByCorridors = true;
     public int weight = 100;
+    [Space]
     public List<Spawner> allSpawners = new List<Spawner>();
     [FoldoutGroup("Enemy Stat")] public int EnemyLeft = 13;
     [FoldoutGroup("Enemy Stat")] public int MaxEnemyCount = 5;
@@ -53,6 +56,14 @@ public class Gauntlet_ChamberRoom : MonoBehaviour
         {
             return GauntletScript.Instance;
         }
+    }
+
+
+    [FoldoutGroup("DEBUG")]
+    [Button("Enter Chamber")]
+    public void EnterChamber()
+    {
+        gauntletScript.GoToChamber(this);
     }
 
 

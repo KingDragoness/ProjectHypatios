@@ -18,7 +18,7 @@ public class InteractableCamera : MonoBehaviour
     {
         bool noInteract = true;
         RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(Hypatios.MainCamera.transform.position, Hypatios.MainCamera.transform.forward); //Camera.main.ScreenPointToRay(new Vector3(Screen.width/2f, Screen.height/2f,0));
 
         if (Physics.Raycast(ray, out hit, 6f))
         {

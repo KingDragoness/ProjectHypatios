@@ -31,6 +31,7 @@ public class Interact_NPC : MonoBehaviour
 
     }
 
+    [FoldoutGroup("DEBUG")] [Button("Speak")]
     public void Speak()
     {
         if (type == ConverseType.Random)
@@ -47,7 +48,7 @@ public class Interact_NPC : MonoBehaviour
 
     private void Speak_Random()
     {
-        int _index = Random.Range(0, dialoguePrefabs.Count - 1);
+        int _index = Random.Range(0, dialoguePrefabs.Count);
         int count = 0;
 
         Interact_MultiDialoguesTrigger dialogue = dialoguePrefabs[_index];

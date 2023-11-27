@@ -83,7 +83,7 @@ public class GauntletScript : MonoBehaviour
     {
         int result = 0;
 
-        foreach(var dungeonRoom in allChamberRooms)
+        foreach(var dungeonRoom in GetChambersRooms())
         {
             result += dungeonRoom.weight;
         }
@@ -102,7 +102,7 @@ public class GauntletScript : MonoBehaviour
             //Checking where random weight value falls
             var processedWeight = 0;
             int index1 = 0;
-            foreach (var entry in allChamberRooms)
+            foreach (var entry in GetChambersRooms())
             {
                 processedWeight += entry.weight;
                 if (rndWeightValue <= processedWeight)
@@ -114,15 +114,43 @@ public class GauntletScript : MonoBehaviour
             }
         }
 
-        return allChamberRooms[output];
+        return GetChambersRooms()[output];
     }
 
-    public void ProceedNextChamber()
+    public void GoToChamber(Gauntlet_ChamberRoom room)
     {
         foreach (var dungeon in allChamberRooms)
         {
             dungeon.gameObject.SetActive(false);
         }
+
+        int enemyAmount = startingEnemyCount + Mathf.RoundToInt(wave * 1.4f);
+        int enemyMax = startingEnemyMax + Mathf.RoundToInt(wave * 0.8f);
+
+        List<EnemyScript> enemiesToSpawn = new List<EnemyScript>();
+
+        foreach (var enemyStat in enemyMasterlist)
+        {
+            if (wave < enemyStat.minimumLevel) continue;
+            enemiesToSpawn.Add(enemyStat.enemy);
+        }
+
+        if (hasGauntletStarted == false)
+        {
+            OnGauntletStarted?.Invoke();
+        }
+
+        previousChambers.Insert(0, room);
+        room.StartChamber(enemiesToSpawn, _maxEnemyCount: enemyMax, _enemyAmount: enemyAmount);
+        OnResetChamber?.Raise();
+        hasGauntletStarted = true;
+    }
+
+    public void ProceedNextChamber()
+    {
+  
+
+        ConsoleCommand.Instance.CommandInput("killall"); //clear all enemies
 
         Gauntlet_ChamberRoom chamberRoom = GetEntry(Mathf.RoundToInt(Time.time));
         int attempt = 0;
@@ -149,7 +177,7 @@ public class GauntletScript : MonoBehaviour
                 if (random < 0.8f && Is_nextRoom_Safehouse())
                 {
                     var safehouses = new List<Gauntlet_ChamberRoom>();
-                    safehouses.AddRange(allChamberRooms.FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
+                    safehouses.AddRange(GetChambersRooms().FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
 
                     chamberRoom = safehouses[Random.Range(0, safehouses.Count)];
                 }
@@ -176,26 +204,10 @@ public class GauntletScript : MonoBehaviour
             }
         }
 
-        int enemyAmount = startingEnemyCount + Mathf.RoundToInt(wave * 1.4f);
-        int enemyMax = startingEnemyMax + Mathf.RoundToInt(wave * 0.8f);
 
-        List<EnemyScript> enemiesToSpawn = new List<EnemyScript>();
+        GoToChamber(chamberRoom);
 
-        foreach(var enemyStat in enemyMasterlist)
-        {
-            if (wave < enemyStat.minimumLevel) continue;
-            enemiesToSpawn.Add(enemyStat.enemy);
-        }
 
-        if (hasGauntletStarted == false)
-        {
-            OnGauntletStarted?.Invoke();
-        }
-
-        OnResetChamber?.Raise();
-        previousChambers.Insert(0, chamberRoom);
-        hasGauntletStarted = true;
-        chamberRoom.StartChamber(enemiesToSpawn, _maxEnemyCount: enemyMax, _enemyAmount: enemyAmount);
     }
 
     [FoldoutGroup("DEBUG")] [Button("Safehouse test")]
@@ -206,11 +218,30 @@ public class GauntletScript : MonoBehaviour
         if (random < 1f && Is_nextRoom_Safehouse())
         {
             var safehouses = new List<Gauntlet_ChamberRoom>();
-            safehouses.AddRange(allChamberRooms.FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
+            safehouses.AddRange(GetChambersRooms().FindAll(x => x.dungeonType == Gauntlet_ChamberRoom.Type.Safehouse));
 
             var chamberRoom = safehouses[Random.Range(0, safehouses.Count)];
             Debug.Log(chamberRoom.gameObject.name);
         }
+    }
+
+
+    /// <summary>
+    /// All the dungeons rooms that were selectable via randomization.
+    /// </summary>
+    /// <returns></returns>
+    public List<Gauntlet_ChamberRoom> GetChambersRooms()
+    {
+        List<Gauntlet_ChamberRoom> results = new List<Gauntlet_ChamberRoom>();
+
+        foreach(var room in allChamberRooms)
+        {
+            if (room.accessibleByCorridors == false) continue;
+
+            results.Add(room);
+        }
+
+        return results;
     }
 
     //CHECKS

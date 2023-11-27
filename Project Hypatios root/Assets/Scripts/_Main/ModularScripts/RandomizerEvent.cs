@@ -10,13 +10,23 @@ public class RandomizerEvent : MonoBehaviour
     public float chanceSpawn = 0;
     public UnityEvent OnSpawn;
     public UnityEvent OnFailed;
-
+    public bool randomizeOnEnabled = false;
 
     private bool shouldSpawn = false;
+    private bool initialized = false;
 
     private void Start()
     {
         Randomized();
+        initialized = true;
+    }
+
+    private void OnEnable()
+    {
+        if (randomizeOnEnabled && initialized == true)
+        {
+            Randomized();
+        }
     }
 
     public void Randomized()

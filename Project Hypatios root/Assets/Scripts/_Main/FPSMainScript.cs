@@ -30,6 +30,7 @@ public class FPSMainScript : MonoBehaviour
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolume_2; //Color grading, bloom
     [FoldoutGroup("References")] public PostProcessVolume postProcessVolumeUI; //UI TV effects, lens distortion
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_Player;
+    [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_FPS;
     [FoldoutGroup("References")] public PostProcessLayer postProcessLayer_UI;
     [FoldoutGroup("References")] public RefillAmmoPlayer Prefab_SpawnAmmo;
     [FoldoutGroup("References")] public SoulCapsulePlayer Prefab_SpawnSoul;
@@ -219,6 +220,10 @@ public class FPSMainScript : MonoBehaviour
 
     #endregion
 
+
+    private LayerMask cachedPlayerLayer;
+    private bool cachedLayer = false;
+
     public void CommandCheat(string cheatName)
     {
         List<string> helpers = new List<string>();
@@ -271,15 +276,24 @@ public class FPSMainScript : MonoBehaviour
         }
         if (cheatName == "lowpoly")
         {
-            postProcessLayer_Player.enabled = !postProcessLayer_Player.enabled;
+            //postProcessLayer_Player.enabled = !postProcessLayer_Player.enabled;
             postProcessLayer_UI.enabled = !postProcessLayer_UI.enabled;
             postProcessVolume.enabled = !postProcessVolume.enabled;
 
-            if (postProcessLayer_Player.enabled)
+            if (cachedLayer == false)
+            {
+                cachedPlayerLayer = postProcessLayer_Player.volumeLayer;
+                cachedLayer = true;
+            }
+
+            if (postProcessVolume.enabled)
             {
                 QualitySettings.masterTextureLimit = 0;
                 OnLowPoly_disabled?.Invoke();
                 Hypatios.MainCameraScript.DisableLowPolyRT();
+                postProcessLayer_Player.volumeLayer = cachedPlayerLayer;
+
+
             }
             else
             {
@@ -287,6 +301,7 @@ public class FPSMainScript : MonoBehaviour
                 QualitySettings.shadows = ShadowQuality.Disable;
                 OnLowPoly?.Invoke();
                 Hypatios.MainCameraScript.LowPolyRT();
+                postProcessLayer_Player.volumeLayer = postProcessLayer_FPS.volumeLayer;
             }
         }
     }
