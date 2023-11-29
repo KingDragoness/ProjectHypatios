@@ -332,7 +332,7 @@ public class FPSMainScript : MonoBehaviour
         {
             MainGameHUDScript.Instance.ShowPromptUI(codex.Title, codex.Description, false);
             //MainUI.Instance.SetTempoPause(true);
-            Hypatios.Game.TryAdd_EverUsed(codex.GetID());
+            TryAdd_EverUsed(codex.GetID());
         }
     }
 

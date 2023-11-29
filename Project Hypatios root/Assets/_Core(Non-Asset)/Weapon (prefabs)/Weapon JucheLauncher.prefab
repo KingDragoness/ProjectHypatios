@@ -93,6 +93,83 @@ Transform:
   m_Father: {fileID: 1372985092932761809}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 89.98021, y: -0.000013660382, z: 0}
+--- !u!1 &379114982361723618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8972607039810975701}
+  - component: {fileID: 5139183372823479270}
+  - component: {fileID: 6357140368774474038}
+  m_Layer: 9
+  m_Name: AchievementTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8972607039810975701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379114982361723618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8051600471019890767}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5139183372823479270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379114982361723618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719cf22f70c29e84aab20b6e2c09500d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievementSO: {fileID: 11400000, guid: 55175a31989886341a446ab9c79f997d, type: 2}
+  useConditioner: 0
+  conditioner: {fileID: 0}
+  cooldownCheck: 0.5
+--- !u!114 &6357140368774474038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379114982361723618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1ce77fea8cc5e468329299e3a8eb4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerEvents:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5139183372823479270}
+        m_MethodName: TriggerAchievement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ondisableEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &386809852028608042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2459,6 +2536,7 @@ Transform:
   - {fileID: 3503563803609626214}
   - {fileID: 4368342777511777835}
   - {fileID: 7694914530660722171}
+  - {fileID: 8972607039810975701}
   m_Father: {fileID: 7509680384141506449}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.734, y: 7.03, z: 0}
@@ -2478,6 +2556,7 @@ MonoBehaviour:
   anim: {fileID: 7275239006092292852}
   weaponName: JucheLauncher
   crosshairHit: {fileID: 0}
+  attachedItemID: 
   allAttachments: []
   CustomVariables: []
   damage: 1

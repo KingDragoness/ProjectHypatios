@@ -377,6 +377,9 @@ public class Hypatios : MonoBehaviour
     private ConsoleCommand _cc;
 
     [SerializeField]
+    private AchievementWrapper _achievement;
+
+    [SerializeField]
     private FPSMainScript _fpsMainScript;
 
     [SerializeField]
@@ -423,6 +426,7 @@ public class Hypatios : MonoBehaviour
 
 
     private static CodexList Codex { get => Instance._codexList; }
+    public static AchievementWrapper Achievement { get => Instance._achievement; }
     public static FPSMainScript Game { get => Instance._fpsMainScript; }
     public static ConsoleCommand ConsoleCommand { get => Instance._cc; }
     public static CharacterScript Player { get => Instance._characterScript; }

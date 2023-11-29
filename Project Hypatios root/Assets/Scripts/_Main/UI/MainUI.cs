@@ -53,6 +53,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Camera_Main;
     [FoldoutGroup("References")] public NoclipCamera Camera_Noclip;
     [FoldoutGroup("References")] public PromptMessengerUI PromptMessage_UI;
+    [FoldoutGroup("References")] public AchievementNotifyUI AchievementNotify_UI;
     [FoldoutGroup("References")] public GameObject SavingGameIcon_UI;
     [FoldoutGroup("References")] public CutsceneDialogueUI cutsceneUI;
     [FoldoutGroup("References")] public SettingsUI settingsUI;

@@ -36,6 +36,7 @@ public class MainGameHUDScript : MonoBehaviour
     [FoldoutGroup("Audios")] public AudioSource audio_PurchaseReward;
     [FoldoutGroup("Audios")] public AudioSource audio_interactMonitor;
     [FoldoutGroup("Audios")] public AudioSource audio_SuccessfulPayment;
+    [FoldoutGroup("Audios")] public AudioSource audio_achievement;
 
 
     [FoldoutGroup("Trivias")] public UI_Modular_TypewriterText typewriter_Trivia;

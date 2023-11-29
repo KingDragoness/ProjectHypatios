@@ -97,6 +97,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (transform.position.y < -100)
         {
+            Hypatios.Achievement.TriggerAchievement(Hypatios.Achievement.ToTheAbyss);
             Die();
             curHealth = 0;
             isDead = true;
@@ -111,6 +112,7 @@ public class PlayerHealth : MonoBehaviour
         {
             curHealth = -1f;
             targetHealth = -1f;
+            Hypatios.Achievement.TriggerAchievement(Hypatios.Achievement.Blackout);
         }
 
         if (curHealth <= 0f)

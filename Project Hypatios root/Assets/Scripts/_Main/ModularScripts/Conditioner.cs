@@ -21,7 +21,9 @@ public class Conditioner : MonoBehaviour
         TriviaNotCompleted,
         Flags,
         SwitchNotCompleted,
-        ItemOwned = 100
+        Stats,
+        ItemOwned = 100,
+        Ailment = 110
     }
 
     public enum FulfillCondition
@@ -29,6 +31,11 @@ public class Conditioner : MonoBehaviour
         OR,
         NOT,
         AND
+    }
+
+    public static bool IsWIREDChamber()
+    {
+        return Hypatios.Chamber.chamberObject.isWIRED;
     }
 
     [System.Serializable]
@@ -52,6 +59,10 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.ItemOwned)] public int itemCount = 1;
         [ShowIf("conditionType", ConditionType.Flags)] public GlobalFlagSO flagEvent;
         [ShowIf("conditionType", ConditionType.Flags)] public bool dontTriggerFlag;
+        [ShowIf("conditionType", ConditionType.Ailment)] public BaseStatusEffectObject ailment;
+        [ShowIf("conditionType", ConditionType.Stats)] public BaseStatValue statEntry;
+        [ShowIf("conditionType", ConditionType.Stats)] public int statValueTarget = 10;
+
 
         public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
         public bool IsSwitchConditioner => conditionType == ConditionType.Switch || conditionType == ConditionType.SwitchNotCompleted;
@@ -135,6 +146,22 @@ public class Conditioner : MonoBehaviour
 
                 if (Hypatios.Game.Check_FlagTriggered(flagEvent.GetID()) == false && dontTriggerFlag == true)
                     return true;
+            }
+            else if (conditionType == ConditionType.Ailment)
+            {
+                if (Hypatios.Player.IsStatusEffectGroup(ailment))
+                    return true;
+            }
+            else if (conditionType == ConditionType.Stats)
+            {
+                var statValue = Hypatios.Game.Get_StatEntryData(statEntry);
+
+                if (statValue == null) return false;
+
+                if (statValue.value_int >= statValueTarget)
+                {
+                    return true;
+                }
             }
 
             return false;
