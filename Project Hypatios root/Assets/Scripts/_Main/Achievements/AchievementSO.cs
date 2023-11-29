@@ -12,6 +12,7 @@ public class AchievementSO : ScriptableObject
     public string Title = "Forbidden Knowledge";
     public Sprite unlockedSprite;
     public Sprite lockedSprite;
+    public bool dontShowLocked = false; //dont' show for spoilers and plot-related.
 
     [TextArea(3, 6)] public string Description = "Gains the first trivia.";
 

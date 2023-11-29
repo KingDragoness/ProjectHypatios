@@ -9,13 +9,25 @@ using System;
 public class DisplayHighscores : MonoBehaviour 
 {
 
+    public enum StatMode
+    {
+        CurrentRun,
+        AllRun,
+        Achievements
+    }
+
+
     public HighscoreRankTemplateButtonUI buttonUI;
     public StatEntryButton statButton;
     public TalkHistory_EntryButton talkButton;
+    public StatMode mode;
     public Transform parentHighscores;
     public Transform parentConversation;
     public Transform parentPlayerStat;
-    public bool isPersistent = false;
+    public GameObject scrollView_Achievement;
+    public GameObject scrollView_RunStats;
+
+    public AchievementsUI achievementUI;
     HighScores myScores;
 
     [SerializeField] private List<HighscoreRankTemplateButtonUI> pooledButtons = new List<HighscoreRankTemplateButtonUI>();
@@ -45,9 +57,9 @@ public class DisplayHighscores : MonoBehaviour
         StartCoroutine("RefreshHighscores");
     }
 
-    public void ChangeModeStat(bool _isPersist)
+    public void ChangeModeStat(int _mode)
     {
-        isPersistent = _isPersist;
+        mode = (StatMode)_mode;
         RefreshStats();
     }
 
@@ -60,6 +72,17 @@ public class DisplayHighscores : MonoBehaviour
 
     public void RefreshStats()
     {
+        if (mode == StatMode.Achievements)
+        {
+            scrollView_Achievement.gameObject.SetActive(true);
+            scrollView_RunStats.gameObject.SetActive(false);
+        }
+        else
+        {
+            scrollView_Achievement.gameObject.SetActive(false);
+            scrollView_RunStats.gameObject.SetActive(true);
+        }
+
         foreach (var button in pooledStatButtons)
         {
             if (button != null)
@@ -70,7 +93,7 @@ public class DisplayHighscores : MonoBehaviour
 
         var allStatEntries = Hypatios.Assets.AllStatEntries;
 
-        if (isPersistent)
+        if (mode == StatMode.AllRun)
         {
             int bonusButton = 2;
             //add bonus buttons for multiple runs
@@ -82,13 +105,20 @@ public class DisplayHighscores : MonoBehaviour
 
         foreach (var entry in allStatEntries)
         {
-            if (entry.overallOnly && !isPersistent)
+            if (entry.overallOnly && mode == StatMode.CurrentRun)
                 continue;
 
             if (entry.disableStat)
                 continue;
 
             var prefab1 = Instantiate(statButton, parentPlayerStat);
+            bool isPersistent = false;
+
+            if (mode == StatMode.AllRun)
+            {
+                isPersistent = true;
+            }
+
             prefab1.gameObject.SetActive(true);
             prefab1.isPersistent = isPersistent;
             prefab1.ID = entry.ID;
@@ -96,7 +126,10 @@ public class DisplayHighscores : MonoBehaviour
             pooledStatButtons.Add(prefab1);
         }
 
-        GenerateDialogueEntries(); 
+        GenerateDialogueEntries();
+
+        //refresh achievement
+        achievementUI.Refresh();
     }
 
     private void GenerateDialogueEntries()
