@@ -16,6 +16,8 @@ public class DialogueSubtitleUI : MonoBehaviour
     public float DEBUG_Timer = 4;
     public Sprite emptySprite;
     public bool autoDialogueSkip = true;
+    [FoldoutGroup("Special-Aldrich")] public BaseStatusEffectObject ailmentNoSpeak;
+    [FoldoutGroup("Special-Aldrich")] public DialogSpeaker speaker;
     [Space]
     public Animator dialogueAnimator;
     public Text Label_DialogueContent;
@@ -158,15 +160,32 @@ public class DialogueSubtitleUI : MonoBehaviour
         DisplayThisDialogue(_currentDialogueList[0]);
     }
 
+    [FoldoutGroup("DEBUG")] [Button("Skip Conversation")]
+    public void SkipConversation()
+    {
+        timer = 0f;
+        foreach (var dialogue in _currentDialogueList)
+        {
+            dialogue.timer1 = 0.25f;
+        }
+    }
+
 
     private void DisplayThisDialogue(DialogueSpeechCache dialogueSpeech)
     {
         dialogueAnimator.SetBool("Close", false);
-        Label_DialogueContent.text = dialogueSpeech.dialogue;
         Label_SpeakerName.text = dialogueSpeech.speakerName;
-        timer = dialogueSpeech.timer1;
-        slider_DialogTimer.maxValue = timer;
         dialogueSpeech.dialogEvent?.Invoke();
+
+        bool hasCustomDialogueAilment = CustomAilment_Dialogue(dialogueSpeech);
+
+        if (hasCustomDialogueAilment == false)
+        {
+            Label_DialogueContent.text = dialogueSpeech.dialogue;
+            timer = dialogueSpeech.timer1;
+            slider_DialogTimer.maxValue = timer;
+            AllDialogueHistory.Add(dialogueSpeech);
+        }
 
         if (dialogueSpeech.charPortrait != null)
         {
@@ -183,8 +202,35 @@ public class DialogueSubtitleUI : MonoBehaviour
             audioSource.Play();
         }
 
-        AllDialogueHistory.Add(dialogueSpeech);
+
     }
+
+    private bool CustomAilment_Dialogue(DialogueSpeechCache originalDialogue)
+    {
+        DialogueSpeechCache dialogueSpeech = new DialogueSpeechCache(originalDialogue.dialogue, originalDialogue.speakerName, originalDialogue.timer1, originalDialogue.charPortrait, originalDialogue.audioClip, originalDialogue.priority, originalDialogue.isImportant, originalDialogue.dialogEvent, originalDialogue.ID);
+        bool anyAilment = false;
+
+        if (Hypatios.Player.GetStatusEffectGroup(ailmentNoSpeak) && originalDialogue.speakerName == speaker.name)
+        {
+            dialogueSpeech.dialogue = "...";
+            dialogueSpeech.timer1 = 3f;
+            anyAilment = true;
+        }
+
+        if (anyAilment == false)
+        {
+            return false;
+        }
+
+        Label_DialogueContent.text = dialogueSpeech.dialogue;
+        timer = dialogueSpeech.timer1;
+        slider_DialogTimer.maxValue = timer;
+
+
+        AllDialogueHistory.Add(dialogueSpeech);
+        return true;
+    }
+
 
     private void EnqueueDialogue(DialogueSpeechCache dialogueSpeech)
     {

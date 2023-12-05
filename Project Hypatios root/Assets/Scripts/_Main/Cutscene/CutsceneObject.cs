@@ -101,6 +101,7 @@ public class CutsceneObject : MonoBehaviour
     private void StopCutscene()
     {
         CloseAllCutsceneInstances();
+        CloseCutsceneUI();
     }
 
 
@@ -128,17 +129,22 @@ public class CutsceneObject : MonoBehaviour
         {
             if (cutscene == ignoreCutscene) continue;
 
-            cutscene.CloseCutscene();
+            cutscene.CleanupAndClose();
         }
     }
 
 
 
-    private void CloseCutscene()
+    private void CloseCutsceneUI()
     {
         var MainUI1 = MainUI.Instance;
         MainUI1.CloseCinematic();
 
+
+    }
+
+    private void CleanupAndClose()
+    {
         virtualCam.gameObject.SetActive(false);
         additionalVirtualCams.RemoveAll(x => x == null);
         foreach (var go in allActionEntries)

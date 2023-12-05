@@ -10,6 +10,16 @@ public class CutsceneDialogCache
     public Sprite charPortrait = null;
     public AudioClip audioClip = null;
     public UnityEvent dialogEvent;
+
+    public void CutsceneDialogueEntry(string _dialogue, string _speakerName, Sprite _charPortrait, AudioClip _audioClip, UnityEvent _dialogEvent)
+    {
+        dialogue = _dialogue;
+        speakerName = _speakerName;
+        charPortrait = _charPortrait;
+        audioClip = _audioClip;
+        dialogEvent = _dialogEvent;
+    }
+
 }
 
 [System.Serializable]

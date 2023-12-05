@@ -35,6 +35,9 @@ public class Conditioner : MonoBehaviour
 
     public static bool IsWIREDChamber()
     {
+        if (Hypatios.Chamber == null)
+            return false;
+
         return Hypatios.Chamber.chamberObject.isWIRED;
     }
 

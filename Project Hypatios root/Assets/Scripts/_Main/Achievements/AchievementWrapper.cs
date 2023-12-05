@@ -37,6 +37,9 @@ public class AchievementWrapper : MonoBehaviour
 
     private void Update()
     {
+        //If it is not default level, return
+        if (Hypatios.Chamber == null) return;
+
         timerCheck -= Time.deltaTime;
 
         if (timerCheck <= 0f)

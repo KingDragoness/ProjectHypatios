@@ -261,6 +261,10 @@ public class ConsoleCommand : MonoBehaviour
                 SkipCutscene(args);
                 break;
 
+            case "skiptalk":
+                SkipConversation(args);
+                break;
+
             case "soul":
                 Soul(args);
                 break;
@@ -1193,6 +1197,8 @@ public class ConsoleCommand : MonoBehaviour
         }
     }
 
+    //SkipConversation
+
     protected void SkipCutscene(string[] args)
     {
         try
@@ -1209,7 +1215,19 @@ public class ConsoleCommand : MonoBehaviour
         }
     }
 
+    protected void SkipConversation(string[] args)
+    {
+        try
+        {
+            var MainUI1 = MainUI.Instance;
+            Hypatios.Dialogue.SkipConversation();
+        }
+        catch
+        {
+            SendConsoleMessage("Invalid argument! skiptalk");
 
+        }
+    }
 
 
     protected void GodMode(string[] args)
@@ -1386,6 +1404,8 @@ public class ConsoleCommand : MonoBehaviour
             helpCommands.Add("'setperk' to set player's temporary perks. 'help setperk' to check perks.");
             helpCommands.Add("'showallpdx' to show all paradoxes.");
             helpCommands.Add("'showallsaves' to show all save files in Machine of Madness.");
+            helpCommands.Add("'skipcut' to skip cutscene.");
+            helpCommands.Add("'skiptalk' to skip conversation.");
             helpCommands.Add("'soul' to get soul");
             helpCommands.Add("'triggerflag' to trigger flag. 'help triggerflag' to trigger flags.");
             helpCommands.Add("'ui' to change UI mode. 'help ui' to get more info on UI options.");

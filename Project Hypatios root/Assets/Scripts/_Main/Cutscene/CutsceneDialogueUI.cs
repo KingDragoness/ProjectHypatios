@@ -99,7 +99,14 @@ public class CutsceneDialogueUI : MonoBehaviour
 
     public void DisplayDialog(CutsceneDialogCache dialogEntry)
     {
-        TypeThisDialogue(dialogEntry.dialogue);
+        var dialogueCustom = CustomAilment_Dialogue(dialogEntry);
+
+        if (dialogueCustom != null)
+        {
+            TypeThisDialogue(dialogueCustom.dialogue);
+        }
+        else TypeThisDialogue(dialogEntry.dialogue);
+
         text_SpeakerName.text = dialogEntry.speakerName;
         dialogEntry.dialogEvent?.Invoke();
 
@@ -121,6 +128,25 @@ public class CutsceneDialogueUI : MonoBehaviour
         if (greyRightPortrait)
             portrait_Right.color = color_inactiveSpeaker;
         else portrait_Right.color = color_activeSpeaker;
+    }
+
+    private CutsceneDialogCache CustomAilment_Dialogue(CutsceneDialogCache originalDialogue)
+    {
+        CutsceneDialogCache dialogueSpeech = new CutsceneDialogCache();
+        dialogueSpeech.CutsceneDialogueEntry(originalDialogue.dialogue, originalDialogue.speakerName, originalDialogue.charPortrait, originalDialogue.audioClip, originalDialogue.dialogEvent);
+
+        bool anyAilment = false;
+
+        if (Hypatios.Player.GetStatusEffectGroup(Hypatios.Dialogue.ailmentNoSpeak) && originalDialogue.speakerName == Hypatios.Dialogue.speaker.name)
+        {
+            dialogueSpeech.dialogue = "...";
+        }
+        else
+        {
+            return null;
+        }
+
+        return dialogueSpeech;
     }
 
     #endregion

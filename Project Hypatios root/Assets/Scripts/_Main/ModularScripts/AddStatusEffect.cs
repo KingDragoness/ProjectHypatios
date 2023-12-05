@@ -23,4 +23,9 @@ public class AddStatusEffect : MonoBehaviour
         }
     }
 
+    public void RemoveStatus()
+    {
+        Hypatios.Player.RemoveStatusEffectGroup(statusEffect);
+    }
+
 }
