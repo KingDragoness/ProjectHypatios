@@ -102,6 +102,7 @@ public class CutsceneObject : MonoBehaviour
     {
         CloseAllCutsceneInstances();
         CloseCutsceneUI();
+        OnCutsceneEnded?.Invoke();
     }
 
 
@@ -153,7 +154,6 @@ public class CutsceneObject : MonoBehaviour
         foreach (var vc in additionalVirtualCams)
             vc.gameObject.SetActive(false);
 
-        OnCutsceneEnded?.Invoke();
         cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;
         isPlaying = false;
     }
