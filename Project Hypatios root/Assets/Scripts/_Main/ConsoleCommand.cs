@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using Steamworks;
 
 public class ConsoleCommand : MonoBehaviour
 {
@@ -310,8 +309,6 @@ public class ConsoleCommand : MonoBehaviour
 
             string achieveName = args[0];
 
-            SteamUserStats.SetAchievement(achieveName);
-            SteamUserStats.StoreStats();
 
         }
         catch

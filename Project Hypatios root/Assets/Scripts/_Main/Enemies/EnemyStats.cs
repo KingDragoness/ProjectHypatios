@@ -42,6 +42,8 @@ public class EnemyStats
     public SpawnType spawnType;
     public bool IsDeadObject = false; //For fortification!
     public bool IsDamagableBySameType = false;
+    public bool IsFireImmune = false;
+    public bool IsPoisonImmune = false;
     [Tooltip("This is for hackable pseudo enemies. This is only for hackable gates enemy types.")] public bool IsHackableGate = false;
     [Tooltip("Allowed by default. When false, it prevent enemies from attacking the same enemy type, even if the alliance is differ.")] public bool AllowTargetSameType = true;
 
