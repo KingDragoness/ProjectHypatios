@@ -30,6 +30,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Modes")] public bool tutorialMode = false;
     [FoldoutGroup("Modes")] public bool isNoGravity = false;
 
+
     [Space]
     [Header("Movement States")]
     public float crouchSpeed = 3f;
@@ -37,6 +38,8 @@ public class CharacterScript : Entity
     public float collider_heightCrouching = 0.3f;
     public float camera_heightDefault = 0.9f;
     public float camera_heightCrouching = 0.3f;
+    [FoldoutGroup("Modes")] [ShowIf("isNoGravity", optionalValue: true)] public float noGrav_descendSpeed = 6f;
+    [FoldoutGroup("Modes")] [ShowIf("isNoGravity", optionalValue: true)] public float noGrav_ascendSpeed = 3f;
     public GameObject cameraHolder;
 
     [Space]
@@ -479,7 +482,7 @@ public class CharacterScript : Entity
                 {
                     inAir = true;
                     airTime += Time.deltaTime;
-                    Anim.SetBool("inAir", true);
+                    if (isNoGravity == false) Anim.SetBool("inAir", true);
                 }
                 else if (_wallRun.isWallRunning)
                 {
@@ -490,9 +493,10 @@ public class CharacterScript : Entity
                 if (inAir && isGrounded)
                 {
                     inAir = false;
-                    if (airTime > 0.3f) soundManager.Play("falling");
+                    if (airTime > 0.3f && isNoGravity == false) soundManager.Play("falling");
                     Anim.SetBool("inAir", false);
 
+                    if (isNoGravity == false)
                     {
                         float multiplierAir = Mathf.Clamp(airTime * 0.6f, 0.2f, 5);
                         multiplierAir *= 2f;
@@ -540,6 +544,8 @@ public class CharacterScript : Entity
     }
 
     private bool b_triggerDash = false;
+    private bool b_noGrav_Descend = false;
+    private bool b_noGrav_Ascend = false;
 
     void FixedUpdate()
     {
@@ -582,6 +588,25 @@ public class CharacterScript : Entity
             b_triggerDash = false;
         }
 
+        FixedUp_NoGravity();
+
+    }
+
+    private void FixedUp_NoGravity()
+    {
+        if (b_noGrav_Ascend)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(transform.up * noGrav_ascendSpeed * speedMultiplier.BaseValue, ForceMode.Impulse);
+            b_noGrav_Ascend = false;
+        }
+
+        if (b_noGrav_Descend)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(transform.up * -noGrav_descendSpeed * speedMultiplier.BaseValue, ForceMode.Impulse);
+            b_noGrav_Descend = false;
+        }
     }
 
     private void CalculateFallVelocity()
@@ -761,7 +786,7 @@ public class CharacterScript : Entity
 
         if (isLimitedIntroMode == false)
         {
-            if (isGrounded && dir.magnitude > 0f)
+            if (isGrounded && isNoGravity == false && dir.magnitude > 0f)
             {
                 if (!runningAudioPlaying)
                 {
@@ -1023,14 +1048,14 @@ public class CharacterScript : Entity
         {
             if (Hypatios.Input.Jump.IsPressed())
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight * 0.15f, ForceMode.Impulse);
+                b_noGrav_Ascend = true;
+
             }
+   
 
             if (Hypatios.Input.Crouch.IsPressed())
             {
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(transform.up * jumpHeight * -0.25f, ForceMode.Impulse);
+                b_noGrav_Descend = true;
             }
 
             if (isCheatMode)
