@@ -22,11 +22,31 @@ public class ModularUI_PlayerStats : MonoBehaviour
     private float _refreshTimer = 1f;
     private List<RPG_CharPerkButton> _allCharPerkButtons = new List<RPG_CharPerkButton>();
     private List<RPG_CharPerkButton> _allStatusMonoButtons = new List<RPG_CharPerkButton>();
+    public static List<ModularUI_PlayerStats> AllPlayerStat = new List<ModularUI_PlayerStats>();
 
     private void OnEnable()
     {
         RefreshUI();
         _refreshTimer = 1f / RefreshRate;
+        AllPlayerStat.Add(this);
+
+    }
+
+    public static void ForceRefreshAll()
+    {
+        foreach (var statUI in AllPlayerStat)
+        {
+            if (statUI == null) continue;
+            statUI.RefreshUI();
+        }
+
+    }
+
+
+    private void OnDisable()
+    {
+        AllPlayerStat.Remove(this);
+
     }
 
     public void RefreshUI()

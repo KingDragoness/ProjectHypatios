@@ -12,6 +12,8 @@ public class CharStatButton : MonoBehaviour
     public ModifierEffectCategory category1;
     public Text statLabel;
 
+    public static List<CharStatButton> AllCharStatusButtons = new List<CharStatButton>();
+
 
     public void HighlightPerk()
     {
@@ -28,6 +30,22 @@ public class CharStatButton : MonoBehaviour
     private void OnEnable()
     {
         PerkInitialize(category1);
+        AllCharStatusButtons.Add(this);
+    }
+
+    private void OnDisable()
+    {
+        AllCharStatusButtons.Remove(this);
+    }
+
+    public static void ForceRefreshAll()
+    {
+        foreach(var button in AllCharStatusButtons)
+        {
+            if (button == null) continue;
+            button.ForceRefresh();
+        }
+
     }
 
     public void ForceRefresh()

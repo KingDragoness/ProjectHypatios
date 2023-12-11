@@ -242,6 +242,8 @@ public class FavoriteMenuUI : MonoBehaviour
             Destroy(button.gameObject);
         }
         allFavButtons.Clear();
+        CharStatButton.ForceRefreshAll();
+        ModularUI_PlayerStats.ForceRefreshAll();
 
         //Refresh inventories
         {
