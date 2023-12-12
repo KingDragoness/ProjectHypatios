@@ -7,6 +7,8 @@ public class KillZone : MonoBehaviour
 {
 
     public List<Transform> ActivatingArea;
+    public bool IsCustomCooldown = false;
+    [ShowIf("IsCustomCooldown", optionalValue: true)] public float CustomCooldown = 0.2f;
     public float DamagePerSecond = 10;
     public float DamageSpeedOverride = 20;
     public float DamageShakinessFactor = 0.1f;
@@ -108,7 +110,11 @@ public class KillZone : MonoBehaviour
         }
         else
         {
-            cooldown = COOLDOWN_DAMAGE;
+            if (IsCustomCooldown)
+            {
+                cooldown = CustomCooldown;
+            }
+            else cooldown = COOLDOWN_DAMAGE;
         }
 
         bool activate = false;
