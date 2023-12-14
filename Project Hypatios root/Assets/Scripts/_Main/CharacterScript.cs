@@ -33,6 +33,7 @@ public class CharacterScript : Entity
 
     [Space]
     [Header("Movement States")]
+    public float maintainMomentumStrength = 5f;
     public float crouchSpeed = 3f;
     public float collider_heightDefault = 0.9f;
     public float collider_heightCrouching = 0.3f;
@@ -116,9 +117,21 @@ public class CharacterScript : Entity
         }
     }
     private float airTime = 0;
-    private List<float> fallVelocityList_Y = new List<float>();
+
     private float netFallVelocity = 0f;
+    private float netVelocityMagnitude;
+    private Vector3 netVelocityDirection;
+
+    private List<float> fallVelocityList_Y = new List<float>();
     private int fallVelocityList_Count = 50;
+
+    //for maintaining velocity
+    private List<Vector3> VelocityDirectionList = new List<Vector3>();
+    private int velocityDirectionList_Count = 10;
+
+    private List<float> VelocityMagnitudeList = new List<float>();
+    private List<Vector3> prevPositions_ForVelocity = new List<Vector3>();
+    private int velocityMagnitudeList_Count = 20;
 
     //Scope
     float scopingSpeed = 6f;
@@ -421,6 +434,7 @@ public class CharacterScript : Entity
         timeSinceLastDash = dashCooldown.Value;
         soundManager = FindObjectOfType<soundManagerScript>();
         cc = GetComponent<CapsuleCollider>();
+        prevPositions_ForVelocity = new List<Vector3>(velocityMagnitudeList_Count);
 
         {
             Vector3 v3 = stepCheckHigh.transform.position;
@@ -551,6 +565,8 @@ public class CharacterScript : Entity
     {
         Moving();
         CalculateFallVelocity();
+        CalculateVelocity();
+        CalculateVelocityDir();
 
         if (isLimitedIntroMode)
         {
@@ -609,6 +625,7 @@ public class CharacterScript : Entity
         }
     }
 
+    #region Velocity
     private void CalculateFallVelocity()
     {
         float y = transform.position.y;
@@ -634,6 +651,7 @@ public class CharacterScript : Entity
         CalcualtedNetFallVelocity();
     }
 
+
     private void CalcualtedNetFallVelocity()
     {
         if (fallVelocityList_Y.Count <= 1)
@@ -657,6 +675,147 @@ public class CharacterScript : Entity
         net += fallVelocityList_Y[0];
         net /= 2f;
         netFallVelocity = net;
+    }
+
+
+    private void CalculateVelocityDir()
+    {
+        Vector3 dir = prevPositions_ForVelocity[1] - transform.position;
+        dir.Normalize();
+        VelocityDirectionList.Insert(0, dir);
+
+        {
+            var thisIsStupid_List = new List<Vector3>();
+            thisIsStupid_List.AddRange(VelocityDirectionList);
+
+            int index = 0;
+
+            foreach (var _velocity in thisIsStupid_List)
+            {
+                if (index >= velocityDirectionList_Count)
+                {
+                    VelocityDirectionList.RemoveAt(index);
+                }
+
+                index++;
+            }
+        }
+
+        CalcualtedNetVelocityDir();
+    }
+
+    private void CalcualtedNetVelocityDir()
+    {
+        if (VelocityDirectionList.Count <= 1)
+        {
+            netVelocityDirection = transform.forward;
+            return;
+        }
+
+        Vector3 sum = transform.forward;
+        Vector3 net = transform.forward;
+
+        int index = 0;
+
+        foreach (var _velocity in VelocityDirectionList)
+        {
+            if (index != 0)
+            {
+                sum += _velocity;
+            }
+            index++;
+        }
+
+        net = sum / (VelocityDirectionList.Count - 1);
+        //net += VelocityList[0];
+        //net /= 2f;
+        netVelocityDirection = net;
+        netVelocityDirection.y = 0; //no vertical speed momentum
+
+    }
+
+
+
+    private void CalculateVelocity()
+    {
+        float velocity = 0f;
+        if (VelocityMagnitudeList.Count >= 2)
+        {
+            Vector3 _velocity = prevPositions_ForVelocity[1] - transform.position;
+            velocity = _velocity.magnitude / Time.deltaTime; //it checks every Time.deltaTime
+        }
+
+        VelocityMagnitudeList.Insert(0, velocity);
+        prevPositions_ForVelocity.Insert(0, transform.position);
+
+        {
+            var thisIsStupid_List = new List<float>();
+            thisIsStupid_List.AddRange(VelocityMagnitudeList);
+
+            int index = 0;
+
+            foreach (var _yPos in thisIsStupid_List)
+            {
+                if (index >= velocityMagnitudeList_Count)
+                {
+                    VelocityMagnitudeList.RemoveAt(index);
+                }
+
+                index++;
+            }
+
+            var thisIsStupid_List2 = new List<Vector3>();
+            thisIsStupid_List2.AddRange(prevPositions_ForVelocity);
+            int indexZ = 0;
+
+            foreach (var _yPos in thisIsStupid_List2)
+            {
+                if (indexZ >= velocityMagnitudeList_Count)
+                {
+                    prevPositions_ForVelocity.RemoveAt(indexZ);
+                }
+
+                indexZ++;
+            }
+        }
+
+        CalcualtedNetVelocity();
+    }
+
+
+    private void CalcualtedNetVelocity()
+    {
+        if (VelocityMagnitudeList.Count <= 1)
+        {
+            netVelocityMagnitude = 0f;
+            return;
+        }
+
+        float sum = 0;
+        float net = 0;
+
+        int index = 0;
+
+        foreach (var _yPos in VelocityMagnitudeList)
+        {
+            if (index != 0) sum += _yPos;
+            index++;
+        }
+
+        net = sum / (VelocityMagnitudeList.Count - 1);
+        net += VelocityMagnitudeList[0];
+        net /= 2f;
+        netVelocityMagnitude = Mathf.Abs(net);
+    }
+    #endregion
+
+
+    /// <summary>
+    /// Exclusively for maintain momentum direction
+    /// </summary>
+    public void MaintainMomentum()
+    {
+        rb.AddForce(-netVelocityDirection * netVelocityMagnitude * maintainMomentumStrength);
     }
 
     public void HandleCrouchingState()

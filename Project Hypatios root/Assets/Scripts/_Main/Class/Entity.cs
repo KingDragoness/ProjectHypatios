@@ -7,6 +7,7 @@ public abstract class Entity : MonoBehaviour
 {
 
     [FoldoutGroup("Base")] [SerializeField] private Bounds boundingBox;
+    [FoldoutGroup("Base")] [SerializeField] private Transform overrideParticleParent;
     [FoldoutGroup("Base")] [ShowInInspector] private List<BaseModifierEffect> _allStatusInEffect = new List<BaseModifierEffect>();
     public List<BaseModifierEffect> AllStatusInEffect { get => _allStatusInEffect; }
     public List<StatusEffectMono> AllStatusMonos { get 
@@ -76,7 +77,15 @@ public abstract class Entity : MonoBehaviour
         var statusObject = CreateGenericStatusEffect(ModifierEffectCategory.Fire, -1f, 5f);
         var fireStatus = statusObject.gameObject.AddComponent<FireStatus>();
         fireStatus.damageType = FireStatus.DamageType.Fire;
+
+        if (overrideParticleParent != null) SetParticleAttachment(FireParticle);
         FireParticle.transform.SetParent(statusObject.transform);
+    }
+
+    internal void SetParticleAttachment(GameObject particle)
+    {
+        TransformAttacher attacher = particle.AddComponent<TransformAttacher>();
+        attacher.targetCopy = overrideParticleParent;
     }
 
     [HorizontalGroup("Status1")]
@@ -90,16 +99,18 @@ public abstract class Entity : MonoBehaviour
             return;
         }
 
-        var FireParticle = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.PoisonEffect, false);
-        var particleFX = FireParticle.GetComponent<ParticleFXResizer>();
-        FireParticle.transform.position = OffsetedBoundWorldPosition;
-        FireParticle.transform.localEulerAngles = Vector3.zero;
+        var Particle = Hypatios.ObjectPool.SummonParticle(CategoryParticleEffect.PoisonEffect, false);
+        var particleFX = Particle.GetComponent<ParticleFXResizer>();
+        Particle.transform.position = OffsetedBoundWorldPosition;
+        Particle.transform.localEulerAngles = Vector3.zero;
 
         particleFX.ResizeParticle(OffsetedBoundScale.magnitude);
         var statusObject = CreateGenericStatusEffect(ModifierEffectCategory.Poison, -1f, 5f);
         var poisonStatus = statusObject.gameObject.AddComponent<FireStatus>();
         poisonStatus.damageType = FireStatus.DamageType.Poison;
-        FireParticle.transform.SetParent(statusObject.transform);
+
+        if (overrideParticleParent != null) SetParticleAttachment(Particle);
+        Particle.transform.SetParent(statusObject.transform);
 
     }
 

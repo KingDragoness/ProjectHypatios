@@ -46,7 +46,7 @@ public class Interact_PerkOffering : MonoBehaviour
                 cauldron.label_Title.text = perk1.TitlePerk;
                 cauldron.label_Description.text = description;
                 cauldron.touch_TakePerk.interactDescription = $"Take perk";
-                cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {description}";
+                cauldron.dialogInspect.Dialogue_Content = $"{perk1.TitlePerk}: {description} (Hover at the keyboard to take the perk.)";
 
             }
             else
@@ -61,7 +61,7 @@ public class Interact_PerkOffering : MonoBehaviour
                 cauldron.icon.sprite = perk1.PerkSprite;
                 cauldron.label_Title.text = perk1.TitlePerk;
                 cauldron.label_Description.text = perk1.GetDescriptionTempPerk(cauldron.perkCustomEffect.Value);
-                cauldron.dialogInspect.Dialogue_Content = $"{s1} Price: {price} souls";
+                cauldron.dialogInspect.Dialogue_Content = $"{s1} Price: {price} souls (Hover at the keyboard to take the perk.)";
             }
         }
     }

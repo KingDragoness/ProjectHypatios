@@ -29,6 +29,8 @@ public class Interact_AutoPivotPlatforming : MonoBehaviour
         }
 
         Hypatios.Player.transform.SetParent(null);
+        Hypatios.Player.MaintainMomentum(); //maintain momentum
+
         Destroy(cachedObjectPivot.gameObject);
         Destroy(cachedObjectPivot.transform.parent.gameObject);
     }
