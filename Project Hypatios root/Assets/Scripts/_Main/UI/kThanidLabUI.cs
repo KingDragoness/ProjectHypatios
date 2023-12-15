@@ -11,11 +11,13 @@ public class kThanidLabUI : MonoBehaviour
     {
         None,
         Essence,
-        SerumFabricate
+        SerumFabricate,
+        HelpTutorial
     }
 
     public GameObject UI_Panel_Essence;
     public GameObject UI_Panel_SerumFabricate;
+    public GameObject UI_Panel_SerumHelp;
     public GameObject retardedGO_CloseTooltip;
     public Mode currentMode;
     public ItemInventory essenceBottle;
@@ -28,6 +30,9 @@ public class kThanidLabUI : MonoBehaviour
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ExtractorButton;
     [FoldoutGroup("Create Essence")] public CreateEssenceButton prefab_Essence_ResultButton;
     [FoldoutGroup("Create Essence")] public GameObject Essence_labelNoItem;
+    [FoldoutGroup("Create Essence")] public Text label_EssencorRequirement;
+    [FoldoutGroup("Create Essence")] public Color color_errorText;
+    [FoldoutGroup("Create Essence")] public Color color_warningText;
     [FoldoutGroup("Create Essence")] public Color spriteColor;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddBottle;
     [FoldoutGroup("Quick Button")] public Button quickButton_AddExoticCore;
@@ -68,6 +73,7 @@ public class kThanidLabUI : MonoBehaviour
     private List<int> index_PrevAntiPotions = new List<int>();
 
     private CraftingkThanidLabTrigger _currentBench;
+    private bool hasStarted = false;
 
     public CraftingkThanidLabTrigger CurrentWorkbench { get => _currentBench; set => _currentBench = value; }
 
@@ -81,7 +87,6 @@ public class kThanidLabUI : MonoBehaviour
         return essence_multiplier;
     }
 
-    private bool hasStarted = false;
 
     private void Start()
     {
@@ -193,6 +198,7 @@ public class kThanidLabUI : MonoBehaviour
         ModifyAntiPotionIndex();
         SerumCreator.Refresh();
         RefreshLabel();
+        UpdateWarningText();
         retardedGO_CloseTooltip.gameObject.SetActive(true);
         //Hypatios.UI.CloseAllTooltip();
 
@@ -369,6 +375,10 @@ public class kThanidLabUI : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// All craftable essence
+    /// </summary>
     private void RefreshButton_Result()
     {
         //refresh all my inventory buttons
@@ -662,6 +672,51 @@ public class kThanidLabUI : MonoBehaviour
         }
 
     }
+
+    private void UpdateWarningText()
+    {
+        bool isMaterial = false;
+        bool isBottle = false;
+        bool isExoticCore = false;
+        string s1 = "";
+
+        if (extractorInventory.Count(essenceBottle.GetID()) >= 1)
+        {
+            isBottle = true;
+        }
+
+        if (extractorInventory.Count(exoticCore.GetID()) >= 1 | Hypatios.Player.Inventory.Count(exoticCore.GetID()) >= 1)
+        {
+            isExoticCore = true;
+        }
+
+        foreach (var itemDat in extractorInventory.allItemDatas)
+        {
+            var itemClass = Hypatios.Assets.GetItem(itemDat.ID);
+
+            if (IsValidEssenceCraftingItem(itemClass) == true)
+            {
+                isMaterial = true;
+                break;
+            }
+        }
+
+        if (isMaterial == false)
+        {
+            s1 += $"<color=#{ColorUtility.ToHtmlStringRGB(color_errorText)}>[ ! ] NO CRAFTING MATERIAL</color>\n";
+        }
+        if (isBottle == false)
+        {
+            s1 += $"<color=#{ColorUtility.ToHtmlStringRGB(color_errorText)}>[ ! ] NO BOTTLE</color>\n";
+        }
+        if (isExoticCore)
+        {
+            s1 += $"<color=#{ColorUtility.ToHtmlStringRGB(color_warningText)}>( ! ) You can use exotic core to increase the essence's potency.</color>\n";
+        }
+
+        label_EssencorRequirement.text = $"{s1}";
+    }
+
 
     public void Function_AddBottle()
     {
@@ -958,6 +1013,7 @@ public class kThanidLabUI : MonoBehaviour
         {
             UI_Panel_Essence.gameObject.SetActive(false);
             UI_Panel_SerumFabricate.gameObject.SetActive(false);
+            UI_Panel_SerumHelp.gameObject.SetActive(false);
         }
 
         if (currentMode == Mode.Essence)
@@ -976,6 +1032,15 @@ public class kThanidLabUI : MonoBehaviour
         else
         {
             UI_Panel_SerumFabricate.gameObject.SetActive(false);
+        }
+
+        if (currentMode == Mode.HelpTutorial)
+        {
+            if (UI_Panel_SerumHelp.activeSelf == false) UI_Panel_SerumHelp.gameObject.SetActive(true);
+        }
+        else
+        {
+            UI_Panel_SerumHelp.gameObject.SetActive(false);
         }
     }
 

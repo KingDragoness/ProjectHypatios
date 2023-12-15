@@ -680,6 +680,11 @@ public class CharacterScript : Entity
 
     private void CalculateVelocityDir()
     {
+        if (prevPositions_ForVelocity.Count < 2)
+        {
+            return;
+        }
+
         Vector3 dir = prevPositions_ForVelocity[1] - transform.position;
         dir.Normalize();
         VelocityDirectionList.Insert(0, dir);
