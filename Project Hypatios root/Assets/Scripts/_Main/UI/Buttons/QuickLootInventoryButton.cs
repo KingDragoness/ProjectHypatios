@@ -10,6 +10,7 @@ public class QuickLootInventoryButton : MonoBehaviour
 
     public Text nameLabel;
     public Text countLabel;
+    public Image inventoryIcon;
     public Selectable selectable;
 
 }

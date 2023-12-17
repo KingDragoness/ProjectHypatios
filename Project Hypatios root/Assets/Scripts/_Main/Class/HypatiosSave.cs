@@ -177,6 +177,7 @@ public class HypatiosSave
 
     #region Persistent
     public string Game_Version = "1.0.0.0";
+    public int LastVersion_TotalLevel = 45; //this prevents the game from prompting 'Kill Aldrich' every damn update.
     public bool Game_DemoMode = false;
     public int Game_LastLevelPlayed = 0;
     public int Game_TotalRuns = 1;

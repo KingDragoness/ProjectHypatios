@@ -27,6 +27,7 @@ public class CharacterScript : Entity
     [FoldoutGroup("Modes")] public bool isLimitedIntroMode = false;
     [FoldoutGroup("Modes")] public bool normalMode = true;
     [FoldoutGroup("Modes")] public bool disableInput = false;
+    [FoldoutGroup("Modes")] public bool isVehicleMode = false;
     [FoldoutGroup("Modes")] public bool tutorialMode = false;
     [FoldoutGroup("Modes")] public bool isNoGravity = false;
 
@@ -563,6 +564,11 @@ public class CharacterScript : Entity
 
     void FixedUpdate()
     {
+        if (isVehicleMode == true)
+        {
+            return;
+        }
+
         Moving();
         CalculateFallVelocity();
         CalculateVelocity();

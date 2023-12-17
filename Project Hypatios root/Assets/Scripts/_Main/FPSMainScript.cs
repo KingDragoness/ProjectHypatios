@@ -698,6 +698,7 @@ public class FPSMainScript : MonoBehaviour
         if (hypatiosSave.sceneEntryCache == null) hypatiosSave.sceneEntryCache = new HypatiosSave.EntryCache();
 
         hypatiosSave.Game_Version = Application.version;
+        hypatiosSave.LastVersion_TotalLevel = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         hypatiosSave.Game_DemoMode = Hypatios.IsDemoMode;
         hypatiosSave.AllPerkDatas = Player.PerkData;
         hypatiosSave.PortfolioShares = PortfolioShares;

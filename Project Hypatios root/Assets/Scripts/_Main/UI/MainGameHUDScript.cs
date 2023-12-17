@@ -177,12 +177,12 @@ public class MainGameHUDScript : MonoBehaviour
             try
             {
                 var descript = InteractableCamera.instance.currentInteractable.GetDescription();
-                interactText.text = $"[E] - {descript}";
+                interactText.text = $"{descript}";
 
             }
             catch
             {
-                interactText.text = "[E] - Interact";
+                interactText.text = "Interact";
             }
         }
 

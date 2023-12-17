@@ -131,7 +131,9 @@ public class InteractContainerUI : MonoBehaviour
             newButton.gameObject.SetActive(true);
             newButton.nameLabel.text = itemClass.GetDisplayText();
             newButton.countLabel.text = itemDat.count.ToString();
-            
+            newButton.inventoryIcon.sprite = Hypatios.Assets.GetSubcategoryItemIcon(itemClass.subCategory).sprite;
+
+
             if (lastIndexSelected == count && b == false)
             {
                 index = lastIndexSelected;

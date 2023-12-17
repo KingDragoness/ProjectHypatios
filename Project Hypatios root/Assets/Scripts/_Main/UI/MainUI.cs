@@ -181,6 +181,12 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    public void PromptNotifyMessage(string text, float time)
+    {
+        DeadDialogue.PromptNotifyMessage_Mod(text, time);
+    }
+
+
     public void ShowTooltipSmall(RectTransform currentSelection)
     {
         tooltipSmall_rect.gameObject.SetActive(true);
@@ -385,7 +391,7 @@ public class MainUI : MonoBehaviour
                 Camera_Cutscene.gameObject.SetActive(false);
                 Hypatios.Player.disableInput = false;
                 Hypatios.Player.enabled = true;
-                Hypatios.Player.rb.isKinematic = false;
+                if (Hypatios.Player.isVehicleMode == false) Hypatios.Player.rb.isKinematic = false; else Hypatios.Player.rb.isKinematic = true; //THIS IS FUCKING STUPID
                 Hypatios.Player.Health.enabled = true;
             }
 

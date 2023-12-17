@@ -102,7 +102,7 @@ public class MainMenuTitleScript : MonoBehaviour
         }
         else
         {
-            if (IsSaveFileVersionMatched() == false)
+            if (IsSaveFileVersionMatched() == false && IsWipingSaveFileNeeded() == true)
             {
                 differentFileVersionPrompt.gameObject.SetActive(true);
    
@@ -142,6 +142,19 @@ public class MainMenuTitleScript : MonoBehaviour
     {
         return (GetHypatiosSave().Game_Version == Application.version) ? true : false;
     }
+
+    public bool IsWipingSaveFileNeeded()
+    {
+        int totalLevelInBuild = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+
+        if (GetHypatiosSave().LastVersion_TotalLevel != totalLevelInBuild)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
     public void WipeCurrentRunProgress()
     {
@@ -193,6 +206,7 @@ public class MainMenuTitleScript : MonoBehaviour
         pathSave = FPSMainScript.GameSavePath + "/defaultSave.save";
         JsonSerializerSettings settings = FPSMainScript.JsonSettings();
         _newSaveData.Game_Version = Application.version;
+        _newSaveData.LastVersion_TotalLevel = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         _newSaveData.Game_DemoMode = Hypatios.IsDemoMode;
 
         string jsonTypeNameAll = JsonConvert.SerializeObject(_newSaveData, Formatting.Indented, settings);
