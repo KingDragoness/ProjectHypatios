@@ -583,17 +583,18 @@ public class MainUI : MonoBehaviour
 
     public void RefreshUI_Resolutions()
     {
+        //now becomes 866 px the vertical minimum
         var refResolution = scaler_Main.referenceResolution;
-        var UIScaling_Y = Mathf.Lerp(820f, 1080f, UI_Scaling);
-        float absoluteMaxY = Mathf.Lerp(820f, 1080f, UI_Scaling * 1.5f);
+        var UIScaling_Y = Mathf.Lerp(866f, 1080f, UI_Scaling);
+        float absoluteMaxY = Mathf.Lerp(866f, 1080f, UI_Scaling * 1.5f);
 
         //if (Screen.height < UIScaling_Y)
         //    refResolution.y = Screen.height;
         //else
             refResolution.y = UIScaling_Y;
 
-        if (refResolution.y < 820f)
-            refResolution.y = 820f;
+        if (refResolution.y < 866f)
+            refResolution.y = 866f;
 
         scaler_Main.referenceResolution = refResolution;
         scaler_Pause.referenceResolution = refResolution;

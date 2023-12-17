@@ -13,10 +13,22 @@ public class ButtonBaseUI : MonoBehaviour
         soundManagerScript.instance.Play("ui.hover");
     }
 
+    public static void static_SoundHover()
+    {
+        soundManagerScript.instance.Play("ui.hover");
+    }
+
+
     public void Sound_Click()
     {
         soundManagerScript.instance.Play("ui.click");
     }
+
+    public static void static_SoundClick()
+    {
+        soundManagerScript.instance.Play("ui.click");
+    }
+
 
     public void Button_Anim(string triggerName)
     {

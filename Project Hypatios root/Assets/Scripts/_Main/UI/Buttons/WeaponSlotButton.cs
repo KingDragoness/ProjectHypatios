@@ -10,6 +10,7 @@ public class WeaponSlotButton : MonoBehaviour
     public PlayerRPGUI rpgUI;
     public Text WeaponName_Label;
     public Image WeaponIcon;
+    public ButtonBaseUI baseButton;
     public int equipIndex = 0;
 
     private Selectable selectable;
@@ -40,6 +41,11 @@ public class WeaponSlotButton : MonoBehaviour
     {
         //deequip
         rpgUI.DeequipWeapon(this);
+
+        if (equipIndex != 0)
+        {
+            ButtonBaseUI.static_SoundClick();
+        }
     }
 
     public void RefreshUI()
