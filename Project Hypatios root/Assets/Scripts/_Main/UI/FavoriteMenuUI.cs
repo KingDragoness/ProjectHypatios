@@ -213,7 +213,7 @@ public class FavoriteMenuUI : MonoBehaviour
         var itemData = button.GetItemData();
 
 
-        Hypatios.RPG.UseItem(itemCLass, itemData);
+        Hypatios.RPG.UseItem(itemData);
 
         RefreshUIContainer();
     }

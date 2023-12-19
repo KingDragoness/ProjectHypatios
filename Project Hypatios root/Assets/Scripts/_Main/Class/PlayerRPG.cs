@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ContextCommandElement = ContextMenuUI.ContextCommandElement;
+using contextMenuCommand = ContextMenuUI.contextMenuCommand;
 
 public class PlayerRPG : MonoBehaviour
 {
-   
-    public void UseItem(ItemInventory itemClass, HypatiosSave.ItemDataSave itemData)
+
+    public void UseItem(HypatiosSave.ItemDataSave itemData)
     {
+        ItemInventory itemClass = Hypatios.Assets.GetItem(itemData.ID);
+
         if (itemClass.category == ItemInventory.Category.Weapon)
         {
             if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) == null
@@ -148,7 +152,7 @@ public class PlayerRPG : MonoBehaviour
         List<string> allEntries = new List<string>();
         int effectCount = 0;
 
-        for(int x = 0; x < itemDataList.SERUM_CUSTOM_EFFECTS.Count; x++)
+        for (int x = 0; x < itemDataList.SERUM_CUSTOM_EFFECTS.Count; x++)
         {
             var effect = itemDataList.SERUM_CUSTOM_EFFECTS[x];
             var modifier = Hypatios.Assets.GetStatusEffect(effect.statusCategoryType);
@@ -211,7 +215,7 @@ public class PlayerRPG : MonoBehaviour
         }
         else if (statusEffect == ModifierEffectCategory.RegenHPPercentage)
         {
-            s += $"{Mathf.FloorToInt(value * 1000f)/10f}%";
+            s += $"{Mathf.FloorToInt(value * 1000f) / 10f}%";
         }
         else if (statusEffect == ModifierEffectCategory.MaxHitpointBonus)
         {
@@ -337,10 +341,154 @@ public class PlayerRPG : MonoBehaviour
         return GetItemName(itemClass, itemData);
     }
 
+    #region Interactions
+    //Param[0]: index item
+
+    public void Command_DeleteItem(string[] param)
+    {
+        int itemIndex = 0;
+
+        try
+        {
+            int.TryParse(param[0], out itemIndex);
+        }
+        catch
+        {
+            Debug.LogError("Command Delete Item: Invalid argument!");
+            return;
+        }
+
+        HypatiosSave.ItemDataSave itemData = Hypatios.Player.Inventory.allItemDatas[itemIndex];
+
+        var itemCLass = Hypatios.Assets.GetItem(itemData.ID);
+
+        if (itemCLass.category == ItemInventory.Category.Weapon)
+        {
+            Hypatios.Player.Weapon.TransferAmmo_PrepareDelete(itemData);
+        }
+
+        Hypatios.Player.Inventory.allItemDatas.Remove(itemData);
+        PlayerRPGUI.RetardedWayRefreshingRpgUI();
+
+    }
+
+    public void Command_FavoriteItem(string[] param)
+    {
+        int itemIndex = 0;
+
+        try
+        {
+            int.TryParse(param[0], out itemIndex);
+        }
+        catch
+        {
+            Debug.LogError("Command Favorite Item: Invalid argument!");
+            return;
+        }
+
+        HypatiosSave.ItemDataSave itemData = Hypatios.Player.Inventory.allItemDatas[itemIndex];
+
+        itemData.IsFavorite = !itemData.IsFavorite;
+        PlayerRPGUI.RetardedWayRefreshingRpgUI();
+
+
+    }
+
+    //this simply a wrapper
+    public void Command_UseItem(string[] param)
+    {
+        int itemIndex = 0;
+
+        try
+        {
+            int.TryParse(param[0], out itemIndex);
+        }
+        catch
+        {
+            Debug.LogError("Command Use Item: Invalid argument!");
+            return;
+        }
+
+        HypatiosSave.ItemDataSave itemData = Hypatios.Player.Inventory.allItemDatas[itemIndex];
+
+        UseItem(itemData);
+        PlayerRPGUI.RetardedWayRefreshingRpgUI();
+
+    }
+    #endregion
+
+    public List<ContextCommandElement> GetItemCommands(HypatiosSave.ItemDataSave itemData)
+    {
+        string[] param = new string[2];
+        param[0] = Hypatios.Player.Inventory.allItemDatas.IndexOf(itemData).ToString(); //index of player's inventory item
+
+        List<ContextCommandElement> listCommands = new List<ContextCommandElement>();
+        ItemInventory itemClass = Hypatios.Assets.GetItem(itemData.ID);
+        
+        if (itemClass == null) return listCommands;
+
+        //every item is destroyable
+        {
+            ContextCommandElement ce_DeleteItem = new ContextCommandElement(Command_DeleteItem, "Discard");
+            ce_DeleteItem.param = param;
+            listCommands.Add(ce_DeleteItem);
+        }
+
+        //every item is favoritable
+        {
+            ContextCommandElement ce_FavItem = new ContextCommandElement(Command_FavoriteItem, "Favorite/Unfavorite");
+            ce_FavItem.param = param;
+            listCommands.Add(ce_FavItem);
+        }
+
+
+        if (itemClass.category == ItemInventory.Category.Weapon)
+        {
+            var weaponClass = itemClass.attachedWeapon;
+            var weaponSave = itemData.weaponData;
+
+            bool isSimilarWeaponEquipped = false;
+            bool isTooManyEqupped = false;
+
+            if (Hypatios.Player.Weapon.GetGunScript(itemClass.attachedWeapon.nameWeapon) != null) isSimilarWeaponEquipped = true;
+            if (Hypatios.Player.Weapon.CurrentlyHeldWeapons.Count >= 4) isTooManyEqupped = true;
+
+            if (!isSimilarWeaponEquipped && !isTooManyEqupped)
+            {
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Equip");
+                ce_GenericUse.param = param;
+                listCommands.Add(ce_GenericUse);
+            }
+
+
+        }
+        else
+        {
+            if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
+            {
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Read");
+                ce_GenericUse.param = param;
+                listCommands.Add(ce_GenericUse);
+
+            }
+            else if (itemClass.category == ItemInventory.Category.Consumables)
+            {
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Consume Item");
+                ce_GenericUse.param = param;
+                listCommands.Add(ce_GenericUse);
+            }
+
+        }
+
+
+
+        return listCommands;
+    }
+
     public string GetPreviewItemLeftSide(ItemInventory itemClass, HypatiosSave.ItemDataSave itemData, bool ignoreInteractTooltip = false)
     {
         string sLeft = "";
-        string s_interaction = "";
+        string s_interaction = "<RMB to open command>";
 
         if (itemClass.category == ItemInventory.Category.Weapon)
         {
@@ -364,11 +512,11 @@ public class PlayerRPG : MonoBehaviour
 
             if (!isSimilarWeaponEquipped && !isTooManyEqupped)
             {
-                s_interaction = "<'LMB' to equip weapon>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
+                //s_interaction = "<'LMB' to equip weapon>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
+                //s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
 
 
@@ -384,15 +532,15 @@ public class PlayerRPG : MonoBehaviour
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                s_interaction = "<'LMB' to read>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
+                //s_interaction = "<'LMB' to read>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else if (itemClass.category != ItemInventory.Category.Consumables)
             {
-                s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
+                //s_interaction = "<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
             else
             {
-                s_interaction = "<Hold 'LMB' to consume>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
+                //s_interaction = "<Hold 'LMB' to consume>\n<Hold 'X' to destroy item>\n<'F' to favorite>";
             }
 
             if (itemData.isGenericItem == false)

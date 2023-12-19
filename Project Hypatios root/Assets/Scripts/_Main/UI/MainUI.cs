@@ -62,6 +62,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public MachineOfMadnessUI MachineOfMadnessMap;
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
+    [FoldoutGroup("References")] public ContextMenuUI ContextMenuUI;
     [FoldoutGroup("References")] public GameObject postProcessUI;
 
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
@@ -181,6 +182,11 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    public void ShowContextMenu(Vector2 positionMouse, List<ContextMenuUI.ContextCommandElement> commands)
+    {
+        ContextMenuUI.ShowContextMenu(positionMouse, commands);
+
+    }
     public void PromptNotifyMessage(string text, float time)
     {
         DeadDialogue.PromptNotifyMessage_Mod(text, time);
@@ -601,6 +607,19 @@ public class MainUI : MonoBehaviour
         if (scaler_Trivia != null) scaler_Trivia.referenceResolution = refResolution; //remember title screen
     }
 
+    public Vector3 GetMousePositionScaled()
+    {
+        Vector3 MousePos = Input.mousePosition;
+
+        float width = Screen.width;
+        float height = Screen.height;
+
+        float ratio = scaler_Main.referenceResolution.y / height;
+        //Debug.Log($"Mouse pos ratio: {ratio}");
+
+        return MousePos * ratio;
+    }
+
     public void SetTempoPause(bool pause)
     {
         tempoPause = pause;
@@ -616,6 +635,7 @@ public class MainUI : MonoBehaviour
             Time.timeScale = 1;
             event_GameResume?.Raise();
             HUD.gameObject.SetActive(true);
+            ContextMenuUI.CloseContextMenu();
         }
         else
         {

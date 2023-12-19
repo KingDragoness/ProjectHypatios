@@ -47,7 +47,8 @@ public class InventoryItemButton : MonoBehaviour
 
     public void ClickButton()
     {
-        if (GetItemInventory().category != ItemInventory.Category.Consumables) rpgUI.UseItem(this);
+        //if (GetItemInventory().category != ItemInventory.Category.Consumables)
+        rpgUI.UseItem(this);
         var button = GetComponent<Button>();
         //var selectable1 = button.FindSelectableOnDown();
         //selectable1.Select();

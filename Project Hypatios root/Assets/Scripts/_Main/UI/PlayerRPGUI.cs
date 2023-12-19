@@ -76,6 +76,21 @@ public class PlayerRPGUI : MonoBehaviour
         _timeSlider = 0f;
     }
 
+    public static void RetardedWayRefreshingRpgUI()
+    {
+        PlayerRPGUI rpgUI = FindObjectOfType<PlayerRPGUI>();
+        if (rpgUI == null) return;
+        rpgUI.RefreshUI();
+
+        {
+            var weaponSlots = rpgUI.GetComponentsInChildren<WeaponSlotButton>();
+            foreach (var weaponSlot in weaponSlots)
+            {
+                weaponSlot.RefreshUI();
+            }
+        }
+    }
+
     public void FavoriteMode()
     {
         isFavoriteActive = !isFavoriteActive;
@@ -288,10 +303,10 @@ public class PlayerRPGUI : MonoBehaviour
 
     private void Update()
     {
-        HandleDiscardItem();
-        HandleFavoriteItem();
+        //HandleDiscardItem();
+        //HandleFavoriteItem();
+        //HandleConsumeItem();
         HandlePreview();
-        HandleConsumeItem();
     }
 
 
@@ -331,6 +346,8 @@ public class PlayerRPGUI : MonoBehaviour
 
     private void HandleFavoriteItem()
     {
+
+        #region Obsolete
         if (currentItemButton == null)
             return;
 
@@ -346,10 +363,15 @@ public class PlayerRPGUI : MonoBehaviour
 
         perkTooltipScript.gameObject.SetActive(false);
         itemTooltipScript.gameObject.SetActive(false);
+        #endregion
+
+
     }
 
     private void HandleDiscardItem()
     {
+        #region Obsolete
+
         {
             bool isFailed = false;
 
@@ -396,45 +418,53 @@ public class PlayerRPGUI : MonoBehaviour
         itemTooltipScript.gameObject.SetActive(false);
         currentItemButton = null;
         _timePressDiscard = 0f;
-
+        #endregion
     }
 
 
     private void HandleConsumeItem()
     {
-        {
-            bool isFailed = false;
 
-            if (currentItemButton == null)
-            {
-                _timePressConsume = 0f;
-                return;
-            }
+        #region Obsolete
+        //{
+        //    bool isFailed = false;
 
-            if (Hypatios.Input.Fire1.IsPressed() == false) isFailed = true;
+        //    if (currentItemButton == null)
+        //    {
+        //        _timePressConsume = 0f;
+        //        return;
+        //    }
 
-            var itemDat = currentItemButton.GetItemData();
+        //    if (Hypatios.Input.Fire1.IsPressed() == false) isFailed = true;
 
-            if (itemDat.category != ItemInventory.Category.Consumables)
-            {
-                isFailed = true;
-            }
+        //    var itemDat = currentItemButton.GetItemData();
 
-            if (isFailed)
-            {
-                _timePressConsume = 0f;
-                return;
-            }
-        }
+        //    if (itemDat.category != ItemInventory.Category.Consumables)
+        //    {
+        //        isFailed = true;
+        //    }
 
-        _timePressConsume += Time.unscaledDeltaTime;
-        currentItemButton.consumeProgress_slider.value = (_timePressConsume / TimeToConsumePress);
+        //    if (isFailed)
+        //    {
+        //        _timePressConsume = 0f;
+        //        return;
+        //    }
+        //}
 
-        if (_timePressConsume >= TimeToConsumePress)
-        {
-            UseItem(currentItemButton);
-            _timePressConsume = 0;
-        }
+        //_timePressConsume += Time.unscaledDeltaTime;
+        //currentItemButton.consumeProgress_slider.value = (_timePressConsume / TimeToConsumePress);
+
+        //if (_timePressConsume >= TimeToConsumePress)
+        //{
+        //    UseItem(currentItemButton);
+        //    _timePressConsume = 0;
+        //}
+        #endregion
+    }
+
+    public void ContextMenuItem()
+    {
+
     }
 
     public void UseItem(InventoryItemButton button)
@@ -443,7 +473,9 @@ public class PlayerRPGUI : MonoBehaviour
         var itemData = button.GetItemData();
 
 
-        Hypatios.RPG.UseItem(itemCLass, itemData);
+        //Hypatios.RPG.UseItem(itemData);
+        Debug.Log(Hypatios.UI.GetMousePositionScaled());
+        Hypatios.UI.ShowContextMenu(Hypatios.UI.GetMousePositionScaled(), Hypatios.RPG.GetItemCommands(itemData));
 
         {
             var weaponSlots = GetComponentsInChildren<WeaponSlotButton>(); 
