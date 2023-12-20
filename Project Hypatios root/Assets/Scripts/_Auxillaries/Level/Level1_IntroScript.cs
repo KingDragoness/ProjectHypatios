@@ -62,7 +62,8 @@ public class Level1_IntroScript : MonoBehaviour
 
         //UI_FadeOut.gameObject.SetActive(true);
 
-        if (Hypatios.Game.TotalRuns == 0 && Application.isEditor == false)
+        //never play the damn intro cutscene again
+        if (Hypatios.Game.TotalRuns == 9999999 && Application.isEditor == false)
         {
             StartCinematic();
         }

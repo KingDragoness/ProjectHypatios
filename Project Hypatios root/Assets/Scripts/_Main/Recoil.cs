@@ -77,7 +77,7 @@ public class Recoil : MonoBehaviour
         recoilRange *= FinalValue(baseRecoil.Value);
         targetRot += recoilRange;
        
-        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * NoGravityMultiplier * playerKnockPhysics * magnitude);
+        Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * NoGravityMultiplier * playerKnockPhysics * magnitude /2f);
     }
 
     public void AddCustomKnockbackForce(Vector3 dir, float multiplier)
@@ -93,6 +93,7 @@ public class Recoil : MonoBehaviour
         if (type == RecoilType.TakeDamage)
         {
             recoilRange *= FinalValue(knockbackResistance.Value);
+            recoilRange *= 0.4f;
             Hypatios.Player.rb.AddRelativeForce(FinalValue(knockbackResistance.Value) * playerKnockPhysics * NoGravityMultiplier * magnitude * hurtKnockMultiplier);
         }
         targetRot += recoilRange;
