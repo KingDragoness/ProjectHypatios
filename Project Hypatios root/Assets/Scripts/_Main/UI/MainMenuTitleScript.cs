@@ -68,6 +68,7 @@ public class MainMenuTitleScript : MonoBehaviour
         label_Version.text = $"PROJECT;HYPATIOS <v.{Application.version}>";
         string pathLoad = "";
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         JsonSerializerSettings settings = FPSMainScript.JsonSettings();
 
         pathLoad = FPSMainScript.GameSavePath + "/defaultSave.save";

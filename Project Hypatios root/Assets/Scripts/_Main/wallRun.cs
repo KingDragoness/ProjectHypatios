@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class wallRun : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class wallRun : MonoBehaviour
     RaycastHit rightWallHit;
 
     //Camera
-    public Camera cam;
+    public CinemachineVirtualCamera vCam;
     public Camera FPScam;
     [SerializeField] float aimFov = 45;
     [SerializeField] float aimFPSFov = 50;
@@ -127,7 +128,7 @@ public class wallRun : MonoBehaviour
 
         if (isScoping)
         {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, aimFov, 10f * Time.deltaTime);
+            vCam.m_Lens.FieldOfView = Mathf.Lerp(vCam.m_Lens.FieldOfView, aimFov, 10f * Time.deltaTime);
             FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView, aimFPSFov, 10f * Time.deltaTime);
         }
 
@@ -163,7 +164,7 @@ public class wallRun : MonoBehaviour
         isWallRunning = true;
         rb.useGravity = false;
 
-        if (isScoping == false) cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
+        if (isScoping == false) vCam.m_Lens.FieldOfView = Mathf.Lerp(vCam.m_Lens.FieldOfView, wallRunFov, wallRunFovTime * Time.deltaTime);
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
         wallRunGravity += Time.deltaTime * 3f;
 
@@ -221,7 +222,7 @@ public class wallRun : MonoBehaviour
         rb.useGravity = true;
         wallRunGravity = baseWallRunGravity;
 
-        if (isScoping == false) cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunFovTime * Time.deltaTime);
+        if (isScoping == false) vCam.m_Lens.FieldOfView = Mathf.Lerp(vCam.m_Lens.FieldOfView, fov, wallRunFovTime * Time.deltaTime);
         if (isScoping == false) FPScam.fieldOfView = Mathf.Lerp(FPScam.fieldOfView, FPSCamera_FOV(), wallRunFovTime * Time.deltaTime);
         tilt = Mathf.Lerp(tilt, 0, camTiltTime * Time.deltaTime);
     }

@@ -23,6 +23,7 @@ public class SettingsUI : MonoBehaviour
     [FoldoutGroup("Gameplay")] public Text value_FOV;
     [FoldoutGroup("Gameplay")] public Slider slider_FOV;
     [FoldoutGroup("Gameplay")] public Toggle toggle_AutoDialogue;
+    [FoldoutGroup("Gameplay")] public Toggle toggle_RunInBackground;
     [FoldoutGroup("Video")] public Toggle toggle_VSync;
     [FoldoutGroup("Video")] public Toggle toggle_Fullscreen;
     [FoldoutGroup("Video")] public Toggle toggle_MotionBlur;
@@ -81,6 +82,7 @@ public class SettingsUI : MonoBehaviour
         toggle_MotionBlur.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.MOTIONBLUR));
         toggle_AntiAliasing.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.ANTIALIASING));
         toggle_UITVEffect.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.TV_EFFECT_UI));
+        toggle_RunInBackground.SetIsOnWithoutNotify(Hypatios.Settings.IntToBool(Hypatios.Settings.RUN_IN_BACKGROUND));
         dropdown_Resolution.SetValueWithoutNotify(Hypatios.Settings.RESOLUTION);
         dropdown_Quality.SetValueWithoutNotify(Hypatios.Settings.QUALITY_LEVEL);
         //inputfield_Name.SetTextWithoutNotify(Hypatios.Settings.MY_NAME);
@@ -145,6 +147,7 @@ public class SettingsUI : MonoBehaviour
             Hypatios.Settings.TV_EFFECT_UI = toggle_UITVEffect.isOn ? 1 : 0;
             //Hypatios.Settings.DYNAMIC_UI_SCALING = toggle_DynamicUIScaling.isOn ? 1 : 0;      
             Hypatios.Settings.VSYNC = toggle_VSync.isOn ? 1 : 0;
+            Hypatios.Settings.RUN_IN_BACKGROUND = toggle_RunInBackground.isOn ? 1 : 0;
             Hypatios.Settings.AUTO_DIALOGUE = toggle_AutoDialogue.isOn ? 1 : 0;
             Hypatios.Settings.FULLSCREEN = toggle_Fullscreen.isOn ? 1 : 0;
             Hypatios.Settings.MOUSE_SENSITIVITY = slider_MouseSensitivity.value;
@@ -160,6 +163,7 @@ public class SettingsUI : MonoBehaviour
             PlayerPrefs.SetInt("SETTINGS.VISUAL_TEMPERATURE", Hypatios.Settings.VISUAL_TEMPERATURE);
             PlayerPrefs.SetInt("SETTINGS.VISUAL_TINT", Hypatios.Settings.VISUAL_TINT);
             PlayerPrefs.SetInt("SETTINGS.TV_EFFECT_UI", Hypatios.Settings.TV_EFFECT_UI);
+            PlayerPrefs.SetInt("SETTINGS.RUN_IN_BACKGROUND", Hypatios.Settings.RUN_IN_BACKGROUND);
             PlayerPrefs.SetFloat("SETTINGS.FOV", Hypatios.Settings.FOV);
             PlayerPrefs.SetInt("SETTINGS.MOTIONBLUR", Hypatios.Settings.MOTIONBLUR);
             PlayerPrefs.SetInt("SETTINGS.ANTIALIASING", Hypatios.Settings.ANTIALIASING);

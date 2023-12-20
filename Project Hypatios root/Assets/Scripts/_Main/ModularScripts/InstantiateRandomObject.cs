@@ -73,6 +73,11 @@ public class InstantiateRandomObject : MonoBehaviour
         }
     }
 
+    public void SPAWN_WITH_FUCKING_CHANCELIST()
+    {
+        SpawnWithChanceThing();
+    }
+
     #endregion
 
     public GameObject SpawnThing()
