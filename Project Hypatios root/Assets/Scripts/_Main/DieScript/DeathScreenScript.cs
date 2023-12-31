@@ -30,6 +30,7 @@ public class DeathScreenScript : MonoBehaviour
     }
 
     public List<DeathScreen_Cutscene> allCutscenes = new List<DeathScreen_Cutscene>();
+    public List<ReaperDialogueEntry> allReaperDialogues = new List<ReaperDialogueEntry>();
     [FoldoutGroup("References")] public Text lastPlayedTime_Text;
     [FoldoutGroup("References")] public Text pressAny_Text;
     [FoldoutGroup("References")] public Animator anim_Transition;
@@ -200,6 +201,7 @@ public class DeathScreenScript : MonoBehaviour
     public void GetAllCutsceneObjects()
     {
         allCutscenes = FindObjectsOfType<DeathScreen_Cutscene>().ToList();
+        allReaperDialogues = FindObjectsOfType<ReaperDialogueEntry>().ToList();
         allCutscenes = allCutscenes.OrderBy(x => x.priorityOrder).ToList();
     }
 
@@ -259,7 +261,10 @@ public class DeathScreenScript : MonoBehaviour
         else if (FPSMainScript.savedata.Game_TotalRuns == 1)
             s = $"{s} \"Welcome to the afterlife.\"";
         else
-            s = $"{s} \"Welcome back.\"";
+        {
+            string s1 = allReaperDialogues[UnityEngine.Random.Range(0, allReaperDialogues.Count)].dialogueEntry;
+            s = $"{s} \"{s1}\"";
+        }
 
         deadDialogue.TestText(s);
 

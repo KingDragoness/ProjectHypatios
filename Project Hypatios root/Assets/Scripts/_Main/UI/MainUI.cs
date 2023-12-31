@@ -284,20 +284,23 @@ public class MainUI : MonoBehaviour
 
             }
 
-            if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
-            {
-                if (Input.GetKeyUp(KeyCode.Tab))
-                {
-                    CurrentUI = UIMode.Favorite;
-                    SetTempoPause(true);
-                }
-            }
-            else if (CurrentUI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
-            {
-                CurrentUI = UIMode.Default;
-                SetTempoPause(false);
-            }
 
+            //Favorite menu is now removed from the game.
+            {
+                //if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
+                //{
+                //    if (Input.GetKeyUp(KeyCode.Tab))
+                //    {
+                //        CurrentUI = UIMode.Favorite;
+                //        SetTempoPause(true);
+                //    }
+                //}
+                //else if (CurrentUI == UIMode.Favorite && (Input.GetKeyUp(KeyCode.Tab) | Hypatios.Input.Pause.triggered))
+                //{
+                //    CurrentUI = UIMode.Default;
+                //    SetTempoPause(false);
+                //}
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.BackQuote) && Hypatios.IsDemoMode == false)

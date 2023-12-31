@@ -57,7 +57,7 @@ public class MouseLook : MonoBehaviour {
         if (useDamping)
         {
             float distVector = Vector3.Distance(transform.localEulerAngles, targetRot);
-            Debug.Log(distVector);
+            //Debug.Log(distVector);
             distVector = Mathf.Clamp(distVector, 0.01f, 10f);
 
             float step = damping * Time.unscaledDeltaTime * distVector;

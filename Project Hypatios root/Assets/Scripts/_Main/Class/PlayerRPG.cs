@@ -427,12 +427,7 @@ public class PlayerRPG : MonoBehaviour
         
         if (itemClass == null) return listCommands;
 
-        //every item is destroyable
-        {
-            ContextCommandElement ce_DeleteItem = new ContextCommandElement(Command_DeleteItem, "Discard");
-            ce_DeleteItem.param = param;
-            listCommands.Add(ce_DeleteItem);
-        }
+
 
         //every item is favoritable
         {
@@ -441,6 +436,12 @@ public class PlayerRPG : MonoBehaviour
             listCommands.Add(ce_FavItem);
         }
 
+        //every item is destroyable
+        {
+            ContextCommandElement ce_DeleteItem = new ContextCommandElement(Command_DeleteItem, "Discard");
+            ce_DeleteItem.param = param;
+            listCommands.Add(ce_DeleteItem);
+        }
 
         if (itemClass.category == ItemInventory.Category.Weapon)
         {
