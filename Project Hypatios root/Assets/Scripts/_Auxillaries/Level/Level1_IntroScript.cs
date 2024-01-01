@@ -117,9 +117,10 @@ public class Level1_IntroScript : MonoBehaviour
             }
         }
 
+        //Jan 2024: only the HUD is disabled. Pause menu is still active.
         if (_playerGainedHUD == false && videoPlayer.isPlaying == false)
         {
-            Hypatios.UI.SetPauseState(false);
+            //Hypatios.UI.SetPauseState(false);
         }
 
     }
