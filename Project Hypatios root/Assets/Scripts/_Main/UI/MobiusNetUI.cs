@@ -14,6 +14,7 @@ public class MobiusNetUI : MonoBehaviour
     }
 
     public Mode currentMode;
+    public AudioSource audio_ClickMouse;
     public MobiusNetUI_StockExchange StockExchange;
 
     private Interact_MobiusNetworkPC _currentBench;
@@ -42,6 +43,14 @@ public class MobiusNetUI : MonoBehaviour
         RefreshUI();
     }
 
+
+    private void Update()
+    {
+        if (Hypatios.Input.Fire1.triggered && Hypatios.Input.Fire1.IsPressed())
+        {
+            audio_ClickMouse?.Play();
+        }
+    }
 
     #region Refresh UI
 

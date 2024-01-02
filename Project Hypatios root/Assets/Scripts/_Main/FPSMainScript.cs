@@ -84,7 +84,6 @@ public class FPSMainScript : MonoBehaviour
         if (LoadFromSaveFile)
             LoadFromSaveBuffer();
 
-        BuildSaveFolder();
     }
 
     private float originalTimeUnix = 0; //for WIRED
@@ -115,10 +114,6 @@ public class FPSMainScript : MonoBehaviour
 
 
 
-    private void BuildSaveFolder()
-    {
-        System.IO.Directory.CreateDirectory(GameSavePath);
-    }
 
     #region Weapon Stats
     public HypatiosSave.WeaponDataSave GetWeaponSave(string ID)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.IO;
+using System;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using Sirenix.OdinInspector;
-
+using Random = UnityEngine.Random;
 
 public class Hypatios : MonoBehaviour
 {
@@ -448,6 +449,10 @@ public class Hypatios : MonoBehaviour
     public static HypatiosEvents Event { get => Instance._event; }
     public static Settings Settings1 { get => Instance._settings; set => Instance._settings = value; }
 
+    public static readonly string Path_MobiusOS = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/Hypatios/Mobius OS";
+    public static readonly string Path_MobiusOS_Music = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/Hypatios/Mobius OS/Musics";
+    public static readonly string Path_MobiusOS_Background = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/My Games/Hypatios/Mobius OS/Background";
+
     #region Systems
 
     public static HypatiosSave GetHypatiosSave()
@@ -515,6 +520,7 @@ public class Hypatios : MonoBehaviour
         _actionMap = new HypatiosControls();
         _actionMap.Enable();
         Settings1.InitializeAtAwake();
+        BuildFolders();
         HackFixForEditorPlayModeDelay();
     }
 
@@ -642,4 +648,17 @@ public class Hypatios : MonoBehaviour
 
         return false;
     }
+
+    #region Folder Setup
+
+
+    public void BuildFolders()
+    {
+        Directory.CreateDirectory(FPSMainScript.GameSavePath);
+        Directory.CreateDirectory(Path_MobiusOS);
+        Directory.CreateDirectory(Path_MobiusOS_Music);
+        Directory.CreateDirectory(Path_MobiusOS_Background);
+    }
+
+    #endregion
 }
