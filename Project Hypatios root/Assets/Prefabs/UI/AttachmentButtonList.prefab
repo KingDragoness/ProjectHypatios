@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8679245, g: 0.31523672, b: 0.41116312, a: 1}
+  m_Color: {r: 0.24563903, g: 0.754717, b: 0.68538713, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 405d34d01be7fd0498e089909be78351, type: 3}
+    m_Font: {fileID: 12800000, guid: 2901c7d9026fe44438393c2f0d75c6c2, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -77,7 +77,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Torpedo Launcher
+  m_Text: Advanced Receiver
 --- !u!1 &6282247092063427720
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3753915527537010568}
   - component: {fileID: 6918489013811196499}
   - component: {fileID: 1446533769492234527}
+  - component: {fileID: 1322320032}
   m_Layer: 5
   m_Name: AttachmentButtonList
   m_TagString: Untagged
@@ -106,7 +107,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6282247092063427720}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2627451, g: 0.043137252, b: 0.06347741, a: 0.06666667}
+  m_Color: {r: 0.043137252, g: 0.2627451, b: 0.252423, a: 0.06666667}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -173,7 +174,29 @@ MonoBehaviour:
   - eventID: 0
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 0
+        - m_Target: {fileID: 1446533769492234527}
+          m_MethodName: TriggerTooltip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6918489013811196499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,10 +222,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rpgUI: {fileID: 0}
-  tooltipTrigger: {fileID: 0}
-  weaponName: Rifle
-  attachmentID: IonCapacitor
+  tooltipTrigger: {fileID: 1322320032}
+  weaponName: TEMPLATE
+  attachmentID: TEST
   label: {fileID: 6282247091959015651}
+--- !u!114 &1322320032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282247092063427720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe02588cca16964c8571b21eefea5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentToolTip: {fileID: 0}
+  text: 
+  tooltipPositioningType: 3
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &6670849462427303853
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.83137256, g: 0.12156862, b: 0.25095206, a: 0.3882353}
+  m_Color: {r: 0.12156862, g: 0.83137256, b: 0.6446139, a: 0.3882353}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
