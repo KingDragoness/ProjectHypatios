@@ -4,16 +4,25 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
+public abstract class MobiusApp : MonoBehaviour
+{
+
+    public virtual void OpenWindow()
+    {
+        gameObject.EnableGameobject(true);
+    }
+
+    public virtual void CloseWindow()
+    {
+        gameObject.EnableGameobject(false);
+    }
+}
+
 public class MobiusNetUI : MonoBehaviour
 {
 
-    public enum Mode
-    {
-        None,
-        StockExchange
-    }
 
-    public Mode currentMode;
+    public List<MobiusApp> all_IntegratedApp = new List<MobiusApp>();
     public AudioSource audio_ClickMouse;
     public MobiusNetUI_StockExchange StockExchange;
 
@@ -38,10 +47,19 @@ public class MobiusNetUI : MonoBehaviour
 
     private void OnEnable()
     {
+        ResetAppWindows();
         if (hasStarted == false) return;
-        ChangeMode(0);
         RefreshUI();
     }
+
+    private void ResetAppWindows()
+    {
+        foreach(var window in all_IntegratedApp)
+        {
+            window.CloseWindow();
+        }
+    }
+
 
 
     private void Update()
@@ -60,30 +78,13 @@ public class MobiusNetUI : MonoBehaviour
 
     }
 
-    #endregion
-
-    #region Modes
-
-    public void ChangeMode(int _mode)
+    public void OpenWindowApp()
     {
-        currentMode = (Mode)_mode;
-        UpdateMode();
-    }
 
-    private void UpdateMode()
-    {
-        if (currentMode == Mode.None)
-        {
-            StockExchange.gameObject.SetActive(false);
-        }
-
-        if (currentMode == Mode.StockExchange)
-        {
-            if (StockExchange.gameObject.activeSelf == false) StockExchange.gameObject.SetActive(true);
-        }
-     
     }
 
     #endregion
+
+   
 
 }

@@ -92,6 +92,14 @@ public class ItemInventory : ScriptableObject
         return itemSprite;
     }
 
+    public Sprite GetSubcategorySprite()
+    {
+        var subcategory = Hypatios.Assets.GetSubcategoryItemIcon(subCategory);
+
+        return subcategory.sprite;
+    }
+
+
     public bool CheckMatchingTags(string input)
     {
         if (subCategory.ToString().ToLower().Contains(input))

@@ -196,7 +196,7 @@ public class GunScript : BaseWeaponScript
 
     public override void FireInput()
     {
-        if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && isAutomatic && !isReloading)
+        if (Hypatios.Input.Fire1.IsPressed() && curAmmo > 0 && isAutomatic && !isReloading && IsRecentlyPaused())
         {
             if (!isFiring)
             {
@@ -220,7 +220,7 @@ public class GunScript : BaseWeaponScript
             }
 
         }
-        if (Hypatios.Input.Fire1.triggered && curAmmo > 0 && !isAutomatic && !isReloading)
+        if (Hypatios.Input.Fire1.triggered && curAmmo > 0 && !isAutomatic && !isReloading && IsRecentlyPaused())
         {
 
             if (Time.time >= nextAttackTime)

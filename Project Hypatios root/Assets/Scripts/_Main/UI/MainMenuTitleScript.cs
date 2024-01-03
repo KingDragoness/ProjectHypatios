@@ -15,7 +15,8 @@ public class MainMenuTitleScript : MonoBehaviour
         Menu,
         Settings,
         PlaySelect,
-        TransitLevel
+        TransitLevel,
+        Credits
     }
 
     public GameObject resumeButton;
@@ -32,6 +33,7 @@ public class MainMenuTitleScript : MonoBehaviour
     [FoldoutGroup("Mainmenu")] public GameObject backlayerCam;
     [FoldoutGroup("Mainmenu")] public GameObject bg_UI;
     [FoldoutGroup("Mainmenu")] public GameObject settingsUI;
+    [FoldoutGroup("Mainmenu")] public GameObject creditsUI;
     [FoldoutGroup("Mainmenu")] public GameObject Camera_SettingsMode;
     [FoldoutGroup("Mainmenu")] public GameObject Camera_PlayMode;
     [FoldoutGroup("Mainmenu")] public GameObject mainMenu_UI;
@@ -244,13 +246,38 @@ public class MainMenuTitleScript : MonoBehaviour
         {
             Mode_Menu();
         }
-        else if (currentMode == Mode.PlaySelect)
+        else
+        {
+
+        }
+
+        if (currentMode == Mode.PlaySelect)
         {
             Mode_PlaySelect();
         }
-        else if (currentMode == Mode.Settings)
+        else
+        {
+            scene_Mainmenu.EnableGameobject(true);
+            scene_Playmode.EnableGameobject(false);
+        }
+
+        if (currentMode == Mode.Settings)
         {
             Mode_Settings();
+        }
+        else
+        {
+            settingsUI.EnableGameobject(false);
+        }
+
+        if (currentMode == Mode.Credits)
+        {
+            Mode_Credits();
+        }
+        else
+        {
+            creditsUI.EnableGameobject(false);
+
         }
     }
 
@@ -297,19 +324,16 @@ public class MainMenuTitleScript : MonoBehaviour
   
     private void Mode_Menu()
     {
-        settingsUI.EnableGameobject(false);
         bg_UI.EnableGameobject(true);
         Camera_SettingsMode.EnableGameobject(false);
         Camera_PlayMode.EnableGameobject(false);
         playMode_UI.EnableGameobject(false);
-        scene_Mainmenu.EnableGameobject(true);
-        scene_Playmode.EnableGameobject(false);
+
 
     }
 
     private void Mode_PlaySelect()
     {
-        settingsUI.EnableGameobject(false);
         bg_UI.EnableGameobject(false);
         Camera_SettingsMode.EnableGameobject(false);
         Camera_PlayMode.EnableGameobject(true);
@@ -317,7 +341,6 @@ public class MainMenuTitleScript : MonoBehaviour
         playMode_UI.EnableGameobject(true);
         scene_Mainmenu.EnableGameobject(false);
         scene_Playmode.EnableGameobject(true);
-
 
     }
 
@@ -328,8 +351,17 @@ public class MainMenuTitleScript : MonoBehaviour
         Camera_SettingsMode.EnableGameobject(true);
         Camera_PlayMode.EnableGameobject(false);
         playMode_UI.EnableGameobject(false);
-        scene_Mainmenu.EnableGameobject(true);
-        scene_Playmode.EnableGameobject(false);
+
+
+    }
+
+    private void Mode_Credits()
+    {
+        creditsUI.EnableGameobject(true);
+        bg_UI.EnableGameobject(false);
+        Camera_SettingsMode.EnableGameobject(true);
+        Camera_PlayMode.EnableGameobject(false);
+        playMode_UI.EnableGameobject(false);
 
 
     }

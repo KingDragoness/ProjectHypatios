@@ -31,7 +31,7 @@ public class PauseRestartGameButton : MonoBehaviour
 
     private void OnEnable()
     {
-        currentPauseMenu = _cachedPauseMenu;
+        currentPauseMenu = PauseMenuType.None; //no longer cached
 
         if (Hypatios.Player.isGrounded)
         {

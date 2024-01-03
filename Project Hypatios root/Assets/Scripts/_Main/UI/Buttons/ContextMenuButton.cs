@@ -8,6 +8,7 @@ public class ContextMenuButton : MonoBehaviour
 {
 
     public Text labelButton;
+    public Image icon;
     public ContextMenuUI contextMenuUI;
 
     private List<string> paramList = new List<string>();

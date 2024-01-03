@@ -11,11 +11,13 @@ public class ContextMenuUI : MonoBehaviour
         public contextMenuCommand delegateCommand;
         public string[] param;
         public string commandContextName;
+        public Sprite sprite;
 
-        public ContextCommandElement(contextMenuCommand delegateCommand, string commandContextName)
+        public ContextCommandElement(contextMenuCommand delegateCommand, string commandContextName, Sprite _sprite = null)
         {
             this.delegateCommand = delegateCommand;
             this.commandContextName = commandContextName;
+            this.sprite = _sprite;
         }
     }
 
@@ -66,6 +68,16 @@ public class ContextMenuUI : MonoBehaviour
             button1.labelButton.text = command.commandContextName;
             button1.contextCommand = command;
             button1.gameObject.SetActive(true);
+            if (command.sprite != null)
+            {
+                button1.icon.gameObject.EnableGameobject(true);
+                button1.icon.sprite = command.sprite;
+            }
+            else
+            {
+                button1.icon.gameObject.EnableGameobject(false);
+
+            }
             instance.allContextButtons.Add(button1);
         }
 

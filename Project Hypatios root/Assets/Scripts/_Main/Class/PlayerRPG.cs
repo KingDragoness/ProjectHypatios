@@ -7,6 +7,11 @@ using contextMenuCommand = ContextMenuUI.contextMenuCommand;
 public class PlayerRPG : MonoBehaviour
 {
 
+    public Sprite spriteIcon_Discard;
+    public Sprite spriteIcon_Equip;
+    public Sprite spriteIcon_Consume;
+    public Sprite spriteIcon_Favorite;
+
     public void UseItem(HypatiosSave.ItemDataSave itemData)
     {
         ItemInventory itemClass = Hypatios.Assets.GetItem(itemData.ID);
@@ -431,14 +436,14 @@ public class PlayerRPG : MonoBehaviour
 
         //every item is favoritable
         {
-            ContextCommandElement ce_FavItem = new ContextCommandElement(Command_FavoriteItem, "Favorite/Unfavorite");
+            ContextCommandElement ce_FavItem = new ContextCommandElement(Command_FavoriteItem, "Favorite/Unfavorite", spriteIcon_Favorite);
             ce_FavItem.param = param;
             listCommands.Add(ce_FavItem);
         }
 
         //every item is destroyable
         {
-            ContextCommandElement ce_DeleteItem = new ContextCommandElement(Command_DeleteItem, "Discard");
+            ContextCommandElement ce_DeleteItem = new ContextCommandElement(Command_DeleteItem, "Discard", spriteIcon_Discard);
             ce_DeleteItem.param = param;
             listCommands.Add(ce_DeleteItem);
         }
@@ -456,7 +461,7 @@ public class PlayerRPG : MonoBehaviour
 
             if (!isSimilarWeaponEquipped && !isTooManyEqupped)
             {
-                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Equip");
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, $"Equip {itemClass.GetDisplayText()}", spriteIcon_Equip);
                 ce_GenericUse.param = param;
                 listCommands.Add(ce_GenericUse);
             }
@@ -467,14 +472,20 @@ public class PlayerRPG : MonoBehaviour
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Read");
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, $"Read {itemClass.GetDisplayText()}");
                 ce_GenericUse.param = param;
                 listCommands.Add(ce_GenericUse);
 
             }
             else if (itemClass.category == ItemInventory.Category.Consumables)
             {
-                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, "Consume Item");
+                string consumeEffect = "";
+                if (itemClass.consume_HealAmount > 0)
+                {
+                    consumeEffect = $"(+{itemClass.consume_HealAmount} HP)";
+                }
+
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, $"Consume {consumeEffect}", itemClass.GetSubcategorySprite());
                 ce_GenericUse.param = param;
                 listCommands.Add(ce_GenericUse);
             }

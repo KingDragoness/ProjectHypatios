@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class MobiusNetUI_StockExchange : MonoBehaviour
+public class MobiusNetUI_StockExchange : MobiusApp
 {
 
     public StockExchange_ProfileObject CurrentProfile;
