@@ -51,6 +51,7 @@ public class PlayerRPGUI : MonoBehaviour
     private HypatiosSave.WeaponDataSave _currentHighlightedWeaponData;
 
     private InventoryItemButton currentItemButton;
+    private InventoryItemButton clickedItemButton;
     private float _timeSlider = 0f;
     private ItemInventory prevItemClass;
 
@@ -307,6 +308,17 @@ public class PlayerRPGUI : MonoBehaviour
         //HandleFavoriteItem();
         //HandleConsumeItem();
         HandlePreview();
+
+        if (ContextMenuUI.instance.gameObject.activeInHierarchy == false)
+        {
+            if (clickedItemButton != null) clickedItemButton.Button.interactable = true;
+            clickedItemButton = null;
+        }
+        else if (clickedItemButton != null)
+        {
+            clickedItemButton.Button.interactable = false;
+        }
+
     }
 
 
@@ -476,6 +488,13 @@ public class PlayerRPGUI : MonoBehaviour
         //Hypatios.RPG.UseItem(itemData);
         Debug.Log(Hypatios.UI.GetMousePositionScaled());
         Hypatios.UI.ShowContextMenu(Hypatios.UI.GetMousePositionScaled(), Hypatios.RPG.GetItemCommands(itemData));
+        if (clickedItemButton != null)
+        {
+            clickedItemButton.Button.interactable = true;
+        }
+
+        clickedItemButton = button;
+        clickedItemButton.Button.interactable = false;
 
         {
             var weaponSlots = GetComponentsInChildren<WeaponSlotButton>(); 
@@ -485,7 +504,7 @@ public class PlayerRPGUI : MonoBehaviour
             }
         }
 
-        RefreshUI();
+        //RefreshUI();
 
         perkTooltipScript.gameObject.SetActive(false);
         itemTooltipScript.gameObject.SetActive(false);

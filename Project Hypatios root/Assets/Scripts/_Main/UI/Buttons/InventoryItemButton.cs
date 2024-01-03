@@ -17,6 +17,17 @@ public class InventoryItemButton : MonoBehaviour
     public Image Subicon;
     public int index = 0;
 
+    private Button _button;
+
+    public Button Button
+    {
+        get
+        {
+            if (_button == null) _button = GetComponent<Button>();
+            return _button;
+        }
+    }
+
     public void Refresh()
     {
         var itemDat = Hypatios.Player.Inventory.allItemDatas[index];

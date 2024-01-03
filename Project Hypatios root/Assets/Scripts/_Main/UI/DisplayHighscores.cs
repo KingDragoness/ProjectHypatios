@@ -13,7 +13,8 @@ public class DisplayHighscores : MonoBehaviour
     {
         CurrentRun,
         AllRun,
-        Achievements
+        Achievements,
+        Conversation
     }
 
 
@@ -26,6 +27,7 @@ public class DisplayHighscores : MonoBehaviour
     public Transform parentPlayerStat;
     public GameObject scrollView_Achievement;
     public GameObject scrollView_RunStats;
+    public GameObject scrollView_Conversations;
 
     public AchievementsUI achievementUI;
     HighScores myScores;
@@ -75,13 +77,33 @@ public class DisplayHighscores : MonoBehaviour
         if (mode == StatMode.Achievements)
         {
             scrollView_Achievement.gameObject.SetActive(true);
-            scrollView_RunStats.gameObject.SetActive(false);
         }
         else
         {
             scrollView_Achievement.gameObject.SetActive(false);
+
+        }
+
+        if (mode == StatMode.AllRun | mode == StatMode.CurrentRun)
+        {
             scrollView_RunStats.gameObject.SetActive(true);
         }
+        else
+        {
+            scrollView_RunStats.gameObject.SetActive(false);
+
+        }
+
+        if (mode == StatMode.Conversation)
+        {
+            scrollView_Conversations.gameObject.SetActive(true);
+        }
+        else
+        {
+            scrollView_Conversations.gameObject.SetActive(false);
+
+        }
+
 
         foreach (var button in pooledStatButtons)
         {
