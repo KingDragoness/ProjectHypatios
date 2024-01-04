@@ -10,10 +10,16 @@ public class ParadoxSectionButtonUI : MonoBehaviour
     public Button buttonBuy;
     public ParadoxShopUI parentUI;
     public ParadoxLevelScript attachedParadox;
+    public Animator buttonAnimator;
 
     public void Hover()
     {
         parentUI.HoverThis(this);
+    }
+
+    public void Hover_VisibleButton()
+    {
+        buttonAnimator.SetBool("Highlighted", true);
     }
 
     public void HoverBuyButton()
@@ -24,11 +30,13 @@ public class ParadoxSectionButtonUI : MonoBehaviour
     public void Preview()
     {
         parentUI.TogglePreview();
+        buttonAnimator.SetBool("Highlighted", true);
     }
 
     public void Dehover()
     {
-        parentUI.Unpreview();
+        //parentUI.Unpreview();
+
     }
 
     public void AttemptBuy()

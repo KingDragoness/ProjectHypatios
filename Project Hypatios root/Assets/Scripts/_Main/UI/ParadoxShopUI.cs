@@ -41,6 +41,7 @@ public class ParadoxShopUI : MonoBehaviour
 
     private void Start()
     {
+        buttonParadoxTemplate.gameObject.SetActive(false);
         buttonParadoxUpgradeTemplate.gameObject.SetActive(false);
     }
 
@@ -83,6 +84,20 @@ public class ParadoxShopUI : MonoBehaviour
     {
         if (buttonParadoxTemplate == null)
         {
+        }
+
+        foreach (var STUPIDBUTTON in allParadoxUIs)
+        {
+            if (currentParadoxButton == STUPIDBUTTON) continue;
+
+            if (STUPIDBUTTON.attachedParadox.isPreviewing == true)
+            {
+                STUPIDBUTTON.buttonAnimator.SetBool("Highlighted", true);
+            }
+            else
+            {
+                STUPIDBUTTON.buttonAnimator.SetBool("Highlighted", false);
+            }
         }
     }
 
