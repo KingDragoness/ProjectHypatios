@@ -9,6 +9,7 @@ public class TriviaMapUI : MonoBehaviour
 {
 
     public TriviaBallButton currentHoveredBall;
+    public TriviaBallButton currentSelectedBall;
     public TriviaMapCamera triviaCam;
     [Space]
     public TriviaBallButton triviaBall;
@@ -34,6 +35,7 @@ public class TriviaMapUI : MonoBehaviour
     [FoldoutGroup("Trivia Filters")] public Color color_TriviaSide;
     [FoldoutGroup("Trivia Filters")] public Color color_TriviaFacts;
     [FoldoutGroup("Trivia Filters")] public Sprite flagSprite;
+    [FoldoutGroup("Trivia Filters")] public Sprite codexSprite;
     [FoldoutGroup("Preview Flag")] public GameObject window_PreviewFlag;
     [FoldoutGroup("Preview Flag")] public Text label_descriptionFlag;
 
@@ -45,6 +47,7 @@ public class TriviaMapUI : MonoBehaviour
     private void OnEnable()
     {
         TriviaButtonprefab.gameObject.SetActive(false);
+        currentSelectedBall = null;
         UpdateTrivia();
         UpdateFilterUI();
         window_PreviewFlag.gameObject.SetActive(false);
@@ -129,10 +132,11 @@ public class TriviaMapUI : MonoBehaviour
                 continue;
 
             var button1 = Instantiate(TriviaButtonprefab, parentTriviaButtons);
-            button1.type = TriviaShortButton.ButtonType.Flag;
+            button1.type = TriviaShortButton.ButtonType.Encounters;
             button1.gameObject.SetActive(true);
             button1.flagSO = flagClass;
             button1.icon.sprite = flagSprite;
+            button1.icon.color = color_TriviaFacts;
 
 
             button1.Refresh();
@@ -156,7 +160,8 @@ public class TriviaMapUI : MonoBehaviour
             button1.type = TriviaShortButton.ButtonType.Codex;
             button1.gameObject.SetActive(true);
             button1.codexSO = codexClass;
-            button1.icon.sprite = flagSprite;
+            button1.icon.sprite = codexSprite;
+            button1.icon.color = color_TriviaFacts;
 
 
             button1.Refresh();
@@ -225,7 +230,7 @@ public class TriviaMapUI : MonoBehaviour
     {
         window_PreviewFlag.gameObject.SetActive(true);
 
-        if (button.type == TriviaShortButton.ButtonType.Flag)
+        if (button.type == TriviaShortButton.ButtonType.Encounters)
         {
             label_descriptionFlag.text = button.flagSO.Description;
         }
@@ -241,7 +246,11 @@ public class TriviaMapUI : MonoBehaviour
     public void DehighlightWindow(TriviaShortButton button)
     {
         window_PreviewFlag.gameObject.SetActive(false);
+    }
 
+    public void SelectedBall(TriviaShortButton triviaButton)
+    {
+        currentSelectedBall = allTriviaButtons.Find(x => x.trivia == triviaButton.trivia);
     }
 
     #endregion
@@ -249,9 +258,14 @@ public class TriviaMapUI : MonoBehaviour
     public void LookAtTriviaBall(TriviaShortButton triviaButton)
     {
         var ball = allTriviaButtons.Find(x => x.trivia == triviaButton.trivia);
-        triviaCam.OverrideCameraTargetPos(ball.gameObject.transform.position + offsetLook);
+        var dir_1 = ball.transform.position - triviaCam.transform.position;
+        dir_1.Normalize();
+        dir_1.y = 0f;
+
+        triviaCam.OverrideCameraTargetPos(ball.gameObject.transform.position + offsetLook + (dir_1 * -10f));
         //triviaCam.transform.position = ball.gameObject.transform.position + offsetLook;
-        triviaCam.transform.LookAt(ball.transform);
+        //triviaCam.transform.LookAt(ball.transform);
+        triviaCam.mouselook.OverrideDirecionLook(ball.transform);
         triviaCam.ManualIntervention_Mouse();
 
     }
@@ -261,7 +275,7 @@ public class TriviaMapUI : MonoBehaviour
     {
         if (currentHoveredBall != null)
         {
-            if (previewDescriptionPanel.gameObject.activeSelf == false) previewDescriptionPanel.SetActive(true);
+            previewDescriptionPanel.EnableGameobject(true);
             bool completed = Hypatios.Game.Check_TriviaCompleted(currentHoveredBall.trivia);
 
             if (completed)
@@ -269,6 +283,28 @@ public class TriviaMapUI : MonoBehaviour
                 titleLabel.text = currentHoveredBall.trivia.Title;
                 descriptionLabel.text = currentHoveredBall.trivia.Description;
                 image.sprite = currentHoveredBall.trivia.PreviewSprite;
+                image.material = null;
+            }
+            else
+            {
+                titleLabel.text = "???";
+                descriptionLabel.text = "???";
+                image.sprite = cut1BeginningSprite;
+                image.material = tvNoiseMat;
+            }
+        }
+        else if (currentSelectedBall != null)
+        {
+            triviaCam.mouselook.OverrideDirecionLook(currentSelectedBall.transform);
+
+            previewDescriptionPanel.EnableGameobject(true);
+            bool completed = Hypatios.Game.Check_TriviaCompleted(currentSelectedBall.trivia);
+
+            if (completed)
+            {
+                titleLabel.text = currentSelectedBall.trivia.Title;
+                descriptionLabel.text = currentSelectedBall.trivia.Description;
+                image.sprite = currentSelectedBall.trivia.PreviewSprite;
                 image.material = null;
             }
             else

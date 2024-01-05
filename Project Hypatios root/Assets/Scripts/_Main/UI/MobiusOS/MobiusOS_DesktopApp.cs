@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Sirenix.OdinInspector;
+
 
 public class MobiusOS_DesktopApp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public MobiusNetUI mobiusUI;
+    public MobiusApp_SO mobiusSO;
+
+    public void OpenMobiusApp()
     {
-        
+        mobiusUI.OpenWindowApp(mobiusSO);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

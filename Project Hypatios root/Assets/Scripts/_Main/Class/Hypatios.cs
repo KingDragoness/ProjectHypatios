@@ -9,8 +9,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Audio;
 using UnityEngine.Rendering.PostProcessing;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using Sirenix.OdinInspector;
 using Random = UnityEngine.Random;
 
@@ -623,10 +621,11 @@ public class Hypatios : MonoBehaviour
 
     IEnumerator SetLocale(int _localeID)
     {
-        isChangingLocale = true;
-        yield return LocalizationSettings.InitializationOperation;
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
-        isChangingLocale = false;
+        yield return null;
+        //isChangingLocale = true;
+        //yield return LocalizationSettings.InitializationOperation;
+        //LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[_localeID];
+        //isChangingLocale = false;
     }
 
     [Button("Reload build settings")]

@@ -34,7 +34,7 @@ public class Trivia : ScriptableObject
         }
         else if (type == TriviaType.Flags)
         {
-            return "Flags";
+            return "Encounters";
         }
         else if (type == TriviaType.Codex)
         {

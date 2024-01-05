@@ -28,6 +28,7 @@ public class AssetStorageDatabase : MonoBehaviour
     public List<SubiconIdentifier> AllSubIcons = new List<SubiconIdentifier>();
 
     [FoldoutGroup("Auxillary")] public List<StockExchange_ProfileObject> AllStockCompanies = new List<StockExchange_ProfileObject>();
+    [FoldoutGroup("Auxillary")] public List<MobiusApp_SO> AllMobiusApp = new List<MobiusApp_SO>();
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class AssetStorageDatabase : MonoBehaviour
         var _statistics = Resources.LoadAll("", typeof(BaseStatValue)).Cast<BaseStatValue>().ToList();
         var _levels = Resources.LoadAll("", typeof(ChamberLevel)).Cast<ChamberLevel>().ToList();
         var _stockProfiles = Resources.LoadAll("", typeof(StockExchange_ProfileObject)).Cast<StockExchange_ProfileObject>().ToList();
+        var _mobiusApps = Resources.LoadAll("", typeof(MobiusApp_SO)).Cast<MobiusApp_SO>().ToList();
 
         _trivias.RemoveAll(x => x.disableTrivia == true);
         AllTrivias = _trivias;
@@ -63,9 +65,18 @@ public class AssetStorageDatabase : MonoBehaviour
         AllStatEntries = _statistics;
         AllChamberLevels = _levels;
         AllStockCompanies = _stockProfiles;
+        AllMobiusApp = _mobiusApps;
     }
 
 
+    public MobiusApp_SO GetMobiusApp(string ID)
+    {
+        return AllMobiusApp.Find(x => x.appID == ID);
+    }
+    public MobiusApp_SO GetMobiusApp(MobiusApp_SO.DefaultApp appType)
+    {
+        return AllMobiusApp.Find(x => x.defaultAppType == appType);
+    }
     public StockExchange_ProfileObject GetCompanyProfile(string ID)
     {
         return AllStockCompanies.Find(x => x.indexID == ID);
@@ -92,7 +103,6 @@ public class AssetStorageDatabase : MonoBehaviour
     {
         return AllCodexHints.Find(x => x.RawID == ID);
     }
-
 
     public Trivia GetTrivia(string ID)
     {

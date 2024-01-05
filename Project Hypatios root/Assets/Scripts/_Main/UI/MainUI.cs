@@ -40,6 +40,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public CanvasScaler scaler_Pause;
     [FoldoutGroup("References")] public CanvasScaler scaler_Trivia;
     [FoldoutGroup("References")] public Canvas canvas_Main;
+    [FoldoutGroup("References")] public PauseRestartGameButton pauseGameSystem;
     [FoldoutGroup("References")] public MainGameHUDScript mainHUDScript;
     [FoldoutGroup("References")] public GameObject Shop_Weapon_UI;
     [FoldoutGroup("References")] public GameObject Shop_Paradox_UI;
@@ -243,9 +244,15 @@ public class MainUI : MonoBehaviour
         //Escape when Trivia Map mode = go back to main menu
         if (disableInput == false)
         {
-            if (Hypatios.Input.Pause.triggered)
+            if (Hypatios.Input.Pause.triggered | Input.GetKeyUp(KeyCode.Tab))
             {
                 bool allowToggle = false;
+
+
+                if (Input.GetKeyUp(KeyCode.Tab))
+                {
+                    pauseGameSystem.SetMenuType(2);
+                }
 
                 if ((CurrentUI == UIMode.Default | CurrentUI == UIMode.Cinematic | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.Trivia | CurrentUI == UIMode.LevelMap | current_UI == UIMode.MachineOfMadness)
                     && Hypatios.Player.Health.isDead == false)
@@ -285,8 +292,9 @@ public class MainUI : MonoBehaviour
             }
 
 
-            //Favorite menu is now removed from the game.
-            {
+
+                //Favorite menu is now removed from the game.
+                {
                 //if (CurrentUI == UIMode.Default && Hypatios.Player.Health.isDead == false && paused == false)
                 //{
                 //    if (Input.GetKeyUp(KeyCode.Tab))

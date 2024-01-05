@@ -6,9 +6,10 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-public class MobiusNetUI_StockExchange : MobiusApp
+public class MobiusNetUI_StockExchange : MonoBehaviour
 {
 
+    public MobiusApp_Generic mobiusApp_Generic;
     public StockExchange_ProfileObject CurrentProfile;
     public ModularUI_LineGraph lineGraph;
     public InputField input_ShareBuySell;
@@ -41,13 +42,16 @@ public class MobiusNetUI_StockExchange : MobiusApp
     private int _shareToBuy = 0;
     private List<StockCompanyButton> allStockCompanyButtons = new List<StockCompanyButton>();
 
-    private void Start()
+
+
+    public void Start()
     {
         buttonPrefab.gameObject.SetActive(false);
     }
 
-    void Update()
+    public void Update()
     {
+
         _refreshTime -= Time.deltaTime;
 
         if (_refreshTime < 0f)

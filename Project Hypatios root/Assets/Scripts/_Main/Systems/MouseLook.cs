@@ -22,6 +22,7 @@ public class MouseLook : MonoBehaviour {
 	public RotationAxes axes = RotationAxes.MouseXAndY;
     public bool useDeltaTime = false;
     public bool useDamping = false;
+    public float targetingDampingSpeed = 10f;
     [ShowIf("useDamping", optionalValue: true)] public float damping = 10f;
     public bool disableInput = false;
 	public float sensitivityX = 15F;
@@ -40,6 +41,7 @@ public class MouseLook : MonoBehaviour {
     private const string MouseScrollInput = "Mouse ScrollWheel";
 
     private Vector3 targetRot;
+    private Transform targetLook;
 
     void Start()
     {
@@ -49,6 +51,11 @@ public class MouseLook : MonoBehaviour {
             GetComponent<Rigidbody>().freezeRotation = true;
     }
 
+    public void OverrideDirecionLook(Transform _target)
+    {
+        targetLook = _target;
+    }
+
     void Update ()
 	{
         if (Input.GetKey(KeyCode.F)) return;
@@ -56,7 +63,14 @@ public class MouseLook : MonoBehaviour {
         if (disableInput == false) ExecuteFunction();
         if (useDamping)
         {
+            Quaternion dirLook = Quaternion.identity;
+            if (targetLook != null)
+            {
+                dirLook = Quaternion.LookRotation(targetLook.transform.position - transform.position);
+            }
             float distVector = Vector3.Distance(transform.localEulerAngles, targetRot);
+
+
             //Debug.Log(distVector);
             distVector = Mathf.Clamp(distVector, 0.01f, 10f);
 
@@ -67,7 +81,15 @@ public class MouseLook : MonoBehaviour {
             float angleY = Mathf.MoveTowardsAngle(transform.localEulerAngles.y, targetRot.y, step);
 
 
-            transform.localEulerAngles = new Vector3(angleX, angleY, transform.localEulerAngles.z);
+            if (targetLook == null)
+            {
+                transform.localEulerAngles = new Vector3(angleX, angleY, transform.localEulerAngles.z);
+            }
+            else
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, dirLook, Time.unscaledDeltaTime * targetingDampingSpeed);
+            }
+
         }
     }
 
@@ -75,6 +97,7 @@ public class MouseLook : MonoBehaviour {
     {
         if (axes == RotationAxes.MouseXAndY)
         {
+            targetLook = null;
             float _strengthX = sensitivityX;
             float _strengthY = sensitivityY;
 

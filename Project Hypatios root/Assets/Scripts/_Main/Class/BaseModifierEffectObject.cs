@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
+
 
 [CreateAssetMenu(fileName = "Fire", menuName = "Hypatios/BaseModifierEffectObject", order = 1)]
 public class BaseModifierEffectObject : ScriptableObject
@@ -20,17 +19,17 @@ public class BaseModifierEffectObject : ScriptableObject
     [FoldoutGroup("Essence")] public bool craftableEssence = false;
     [FoldoutGroup("Essence")] [ShowIf("craftableEssence")] public List<Recipe> requirementCrafting = new List<Recipe>();
 
-    [SerializeField] private LocalizedString loc_TitlePerk;
-    [SerializeField] private LocalizedString loc_DescriptionModifier;
+    //[SerializeField] private LocalizedString loc_TitlePerk;
+    //[SerializeField] private LocalizedString loc_DescriptionModifier;
 
     public string GetTitlePerk()
     {
-        return loc_TitlePerk.GetString(TitlePerk);
+        return TitlePerk;  //loc_TitlePerk.GetString(TitlePerk);
     }
 
     public string GetDescriptionPerk()
     {
-        return loc_DescriptionModifier.GetString(DescriptionModifier);
+        return DescriptionModifier; // loc_DescriptionModifier.GetString(DescriptionModifier);
 
     }
 

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
+//using UnityEngine.Localization;
+//using UnityEngine.Localization.Settings;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -37,49 +37,49 @@ public static class StringExtensions
         return count;
     }
 
-    public static string GetString(this LocalizedString _locString, string defaultText)
-    {
-        bool isInvalid = false;
+    //public static string GetString(this LocalizedString _locString, string defaultText)
+    //{
+    //    bool isInvalid = false;
     
-        if (_locString == null)
-        {
-            isInvalid = true;
-        }
-        else if (string.IsNullOrEmpty(_locString.TableReference.TableCollectionName) | _locString.TableEntryReference.KeyId == 0)
-        {
-            isInvalid = true;
-        }
+    //    if (_locString == null)
+    //    {
+    //        isInvalid = true;
+    //    }
+    //    else if (string.IsNullOrEmpty(_locString.TableReference.TableCollectionName) | _locString.TableEntryReference.KeyId == 0)
+    //    {
+    //        isInvalid = true;
+    //    }
 
-        if (isInvalid == false)
-        {
-            var sd = LocalizationSettings.StringDatabase;
-            var table = sd.GetTable(_locString.TableReference.TableCollectionName);
+    //    if (isInvalid == false)
+    //    {
+    //        var sd = LocalizationSettings.StringDatabase;
+    //        var table = sd.GetTable(_locString.TableReference.TableCollectionName);
 
-            if (table == null)
-                isInvalid = true;
-            else
-            {
-                var entry = table.GetEntry(_locString.TableEntryReference.KeyId);
+    //        if (table == null)
+    //            isInvalid = true;
+    //        else
+    //        {
+    //            var entry = table.GetEntry(_locString.TableEntryReference.KeyId);
 
-                if (entry == null)
-                {
-                    isInvalid = true;
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(entry.GetLocalizedString()))
-                    {
-                        isInvalid = true;
-                    }
-                }
-            }
-        }
+    //            if (entry == null)
+    //            {
+    //                isInvalid = true;
+    //            }
+    //            else
+    //            {
+    //                if (string.IsNullOrEmpty(entry.GetLocalizedString()))
+    //                {
+    //                    isInvalid = true;
+    //                }
+    //            }
+    //        }
+    //    }
 
-        if (isInvalid)
-            return defaultText;
-        else
-            return _locString.GetLocalizedString();
-    }
+    //    if (isInvalid)
+    //        return defaultText;
+    //    else
+    //        return _locString.GetLocalizedString();
+    //}
 }
 public static class IsopatiosUtility
 {

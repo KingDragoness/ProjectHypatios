@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class ConsoleCommand : MonoBehaviour
@@ -1469,7 +1468,7 @@ public class ConsoleCommand : MonoBehaviour
                 helps.Add(" =============== HELP [changelocale] =============== ");
                 helps.Add("Press ENTER to execute command");
                 helps.Add("Press ~ key to toggle console");
-                StartCoroutine(CheckAndListLanguages());
+                //StartCoroutine(CheckAndListLanguages());
 
                 helps.Add(" ");
             }
@@ -1642,21 +1641,21 @@ public class ConsoleCommand : MonoBehaviour
     #endregion
 
     #region Operations
-    IEnumerator CheckAndListLanguages()
-    {
-        // Wait for the localization system to initialize, loading Locales, preloading etc.
-        yield return LocalizationSettings.InitializationOperation;
+    //IEnumerator CheckAndListLanguages()
+    //{
+    //    // Wait for the localization system to initialize, loading Locales, preloading etc.
+    //    yield return LocalizationSettings.InitializationOperation;
 
-        // Generate list of available Locales
-        int selected = 0;
-        for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; ++i)
-        {
-            var locale = LocalizationSettings.AvailableLocales.Locales[i];
-            if (LocalizationSettings.SelectedLocale == locale)
-                selected = i;
+    //    // Generate list of available Locales
+    //    int selected = 0;
+    //    for (int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; ++i)
+    //    {
+    //        var locale = LocalizationSettings.AvailableLocales.Locales[i];
+    //        if (LocalizationSettings.SelectedLocale == locale)
+    //            selected = i;
 
-            SendConsoleMessage($"{i} | {locale.LocaleName}");
-        }
-    }
+    //        SendConsoleMessage($"{i} | {locale.LocaleName}");
+    //    }
+    //}
     #endregion
 }

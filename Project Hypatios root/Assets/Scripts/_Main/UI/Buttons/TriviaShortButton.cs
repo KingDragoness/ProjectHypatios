@@ -17,7 +17,7 @@ public class TriviaShortButton : MonoBehaviour
 
     public enum ButtonType
     {
-        Flag,
+        Encounters,
         Trivia,
         Codex
     }
@@ -28,7 +28,7 @@ public class TriviaShortButton : MonoBehaviour
         {
             labelName.text = trivia.Title;
         }
-        else if (type == ButtonType.Flag)
+        else if (type == ButtonType.Encounters)
         {
             labelName.text = flagSO.DisplayName;
         }
@@ -43,13 +43,14 @@ public class TriviaShortButton : MonoBehaviour
         if (type == ButtonType.Trivia)
         {
             triviaUI.LookAtTriviaBall(this);
+            triviaUI.SelectedBall(this);
         }
     }
 
     public void Highlight()
     {
 
-        if (type == ButtonType.Flag)
+        if (type == ButtonType.Encounters)
         {
             triviaUI.HighlightWindow(this);
 
@@ -61,7 +62,7 @@ public class TriviaShortButton : MonoBehaviour
         }
         else
         {
-            triviaUI.LookAtTriviaBall(this);
+            //triviaUI.LookAtTriviaBall(this);
 
         }
 
@@ -70,10 +71,11 @@ public class TriviaShortButton : MonoBehaviour
     public void Dehighlight()
     {
 
-        if (type == ButtonType.Flag)
+        if (type == ButtonType.Encounters)
         {
             triviaUI.DehighlightWindow(this);
         }
+
 
     }
 }

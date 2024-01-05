@@ -50,8 +50,8 @@ public class TriviaMapCamera : MonoBehaviour
         RaycastTrivia();
 
         float distVector = Vector3.Distance(transform.position, _cameraTargetPos);
-        distVector /= 5f;
-        distVector = Mathf.Clamp(distVector, 0.1f, 10f);
+        distVector /= 7.5f;
+        distVector = Mathf.Clamp(distVector, 0.1f, 8f);
         transform.position = Vector3.MoveTowards(transform.position, _cameraTargetPos, step * distVector); //damping
 
     }
@@ -81,13 +81,18 @@ public class TriviaMapCamera : MonoBehaviour
 
         if (noBall)
         {
+            //dehighlight 3d trivia ball to hide preview description
+            //if (triviaScript.currentSelectedBall == triviaScript.currentHoveredBall)
+            //{
+            //    triviaScript.currentSelectedBall = null;
+            //}
+
             triviaScript.currentHoveredBall = null;
         }
     }
 
     private void HandleMouse()
     {
-        //Handle mouselook
         {
             if (Input.GetMouseButton(1))
             {
@@ -127,7 +132,7 @@ public class TriviaMapCamera : MonoBehaviour
     {
         lastPanPosition = Input.mousePosition;
         //PanCamera(Input.mousePosition);
-        mouselook.ExecuteFunction();
+        //mouselook.ExecuteFunction();
 
     }
 
