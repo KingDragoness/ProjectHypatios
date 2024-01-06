@@ -15,6 +15,7 @@ public class MobiusApp_SO : ScriptableObject
     }
 
     public Sprite appLogo;
+    public Sprite appLogo_32px;
     public bool useCustomMinSize = false;
     [ShowIf("useCustomMinSize", true)] public Vector2 minimumWindowSize = new Vector2(1100f, 600f);
     public string appID = "StockExchange";

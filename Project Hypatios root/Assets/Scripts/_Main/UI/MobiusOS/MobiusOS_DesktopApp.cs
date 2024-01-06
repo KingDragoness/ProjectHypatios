@@ -10,6 +10,8 @@ public class MobiusOS_DesktopApp : MonoBehaviour
 
     public MobiusNetUI mobiusUI;
     public MobiusApp_SO mobiusSO;
+    public Image appIcon;
+    public Text label;
 
     public void OpenMobiusApp()
     {
