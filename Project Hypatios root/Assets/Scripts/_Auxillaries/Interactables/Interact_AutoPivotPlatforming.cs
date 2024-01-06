@@ -29,7 +29,7 @@ public class Interact_AutoPivotPlatforming : MonoBehaviour
         }
 
         Hypatios.Player.transform.SetParent(null);
-        Hypatios.Player.MaintainMomentum(); //maintain momentum
+        //Hypatios.Player.MaintainMomentum(); //maintain momentum //temporarily removed because the bug 
 
         Destroy(cachedObjectPivot.gameObject);
         Destroy(cachedObjectPivot.transform.parent.gameObject);
