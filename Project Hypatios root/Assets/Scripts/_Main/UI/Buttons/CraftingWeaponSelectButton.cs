@@ -58,7 +58,7 @@ public class CraftingWeaponSelectButton : MonoBehaviour
             var weaponClass = Hypatios.Assets.GetWeapon(weapon.weaponName);
             var itemClass = Hypatios.Assets.GetItemByWeapon(weapon.weaponName);
 
-            label.text = $"{itemClass.GetDisplayText()}";
+            label.text = $"{itemClass.GetDisplayText().ToUpper()}";
 
         }
     }

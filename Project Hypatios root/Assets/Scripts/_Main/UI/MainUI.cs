@@ -64,6 +64,7 @@ public class MainUI : MonoBehaviour
     [FoldoutGroup("References")] public GameObject Player;
     [FoldoutGroup("References")] public SpawnIndicator SpawnIndicator;
     [FoldoutGroup("References")] public ContextMenuUI ContextMenuUI;
+    [FoldoutGroup("References")] public WindowConfirmPrompt ConfirmPromptUI;
     [FoldoutGroup("References")] public GameObject postProcessUI;
 
     [FoldoutGroup("Tooltips")] public TestingPurposes.UIElementScreenPosTest screenPosChecker;
