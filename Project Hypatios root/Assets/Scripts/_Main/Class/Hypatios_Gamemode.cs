@@ -19,6 +19,7 @@ public class Hypatios_Gamemode : ScriptableObject
     public bool isGauntlet = false;
     public bool randomizedSeed = false;
     public bool allowTipsAndHints = true;
+    public bool allowAchievementNotify = true;
     public bool canSaveGame = false; //for tutorial and gauntlet
 
 }

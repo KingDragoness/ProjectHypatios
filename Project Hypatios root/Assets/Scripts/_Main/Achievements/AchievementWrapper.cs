@@ -145,7 +145,11 @@ public class AchievementWrapper : MonoBehaviour
 
         Hypatios.Game.TryAdd_EverUsed(achievementSO.GetID());
         //show achievement UI
-        Hypatios.UI.AchievementNotify_UI.TriggerNotification(achievementSO);
+
+        if (Hypatios.Game.currentGamemode.allowAchievementNotify)
+        {
+            Hypatios.UI.AchievementNotify_UI.TriggerNotification(achievementSO);
+        }
     }
 
     public bool HasAchievementTriggered(AchievementSO achievementSO)

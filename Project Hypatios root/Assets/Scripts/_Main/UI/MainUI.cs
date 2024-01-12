@@ -27,7 +27,8 @@ public class MainUI : MonoBehaviour
         kThanidLab,
         MobiusNet,
         LevelMap,
-        MachineOfMadness
+        MachineOfMadness,
+        HypatiosMap //hypatios chamber map (sewers, intermezzo, all chambers; no WIRED level)
     }
 
     public bool disableInput = false;

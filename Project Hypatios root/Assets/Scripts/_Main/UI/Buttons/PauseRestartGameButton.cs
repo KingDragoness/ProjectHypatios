@@ -13,6 +13,7 @@ public class PauseRestartGameButton : MonoBehaviour
         None,
         Trivias,
         Inventory,
+        Map,
         Status,
         Statistics,
         Settings
@@ -21,6 +22,7 @@ public class PauseRestartGameButton : MonoBehaviour
     [FoldoutGroup("References")] public Button restartButton;
     [FoldoutGroup("References")] public TooltipTrigger tooltipRestart;
     [FoldoutGroup("References")] public GameObject menu_Inventory;
+    [FoldoutGroup("References")] public GameObject menu_Map;
     [FoldoutGroup("References")] public GameObject menu_Status;
     [FoldoutGroup("References")] public GameObject menu_Statistics;
     [FoldoutGroup("References")] public GameObject menu_Settings;
@@ -63,6 +65,15 @@ public class PauseRestartGameButton : MonoBehaviour
         else
         {
             menu_Inventory.gameObject.SetActive(true);
+        }
+
+        if (currentPauseMenu != PauseMenuType.Map)
+        {
+            menu_Map.gameObject.SetActive(false);
+        }
+        else
+        {
+            menu_Map.gameObject.SetActive(true);
         }
 
         if (currentPauseMenu != PauseMenuType.Status)

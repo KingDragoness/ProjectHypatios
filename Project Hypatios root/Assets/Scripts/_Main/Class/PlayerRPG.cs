@@ -11,6 +11,8 @@ public class PlayerRPG : MonoBehaviour
     public Sprite spriteIcon_Equip;
     public Sprite spriteIcon_Consume;
     public Sprite spriteIcon_Favorite;
+    public Sprite spriteIcon_Read;
+
 
     public void UseItem(HypatiosSave.ItemDataSave itemData)
     {
@@ -472,7 +474,7 @@ public class PlayerRPG : MonoBehaviour
         {
             if (itemClass.category == ItemInventory.Category.Normal && itemClass.IsReadable())
             {
-                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, $"Read {itemClass.GetDisplayText()}");
+                ContextCommandElement ce_GenericUse = new ContextCommandElement(Command_UseItem, $"Read {itemClass.GetDisplayText()}", spriteIcon_Read);
                 ce_GenericUse.param = param;
                 listCommands.Add(ce_GenericUse);
 
