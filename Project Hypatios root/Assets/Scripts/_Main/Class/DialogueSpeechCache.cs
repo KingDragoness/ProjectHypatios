@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Video;
 
 [System.Serializable]
 public class CutsceneDialogCache
@@ -32,11 +33,12 @@ public class DialogueSpeechCache
     public int priority = 0;
     public int ID = 0;
     public Sprite charPortrait = null;
+    public VideoClip videoClip;
     public AudioClip audioClip = null;
     public UnityEvent dialogEvent;
 
     public DialogueSpeechCache(string dialogue, string speakerName, float timer1, Sprite charPortrait = null, AudioClip audioClip = null, int priority = 0
-        , bool _isImportant = false, UnityEvent _dialogEvent = null, int _ID = 0)
+        , bool _isImportant = false, UnityEvent _dialogEvent = null, int _ID = 0, VideoClip _videoClip = null)
     {
         this.dialogue = dialogue;
         this.speakerName = speakerName;
@@ -47,5 +49,6 @@ public class DialogueSpeechCache
         this.priority = priority;
         this.dialogEvent = _dialogEvent;
         this.ID = _ID;
+        this.videoClip = _videoClip;
     }
 }

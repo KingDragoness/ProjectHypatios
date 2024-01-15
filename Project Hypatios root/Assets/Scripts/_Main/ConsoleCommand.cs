@@ -1217,6 +1217,7 @@ public class ConsoleCommand : MonoBehaviour
         {
             var MainUI1 = MainUI.Instance;
             Hypatios.Dialogue.SkipConversation();
+            Hypatios.NewDialogue.SkipConversation();
         }
         catch
         {

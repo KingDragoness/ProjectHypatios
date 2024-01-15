@@ -157,7 +157,7 @@ public class DisplayHighscores : MonoBehaviour
     private void GenerateDialogueEntries()
     {
         var listAllConversations = new List<DialogueSpeechCache>();
-        listAllConversations.AddRange(Hypatios.Dialogue.AllDialogueHistory);
+        listAllConversations.AddRange(Hypatios.NewDialogue.AllDialogueHistory);
         foreach (var button in pooledDialogueButtons)
         {
             if (button != null)

@@ -122,9 +122,15 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     //Full set
     public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
-        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null, int _ID = 0)
+        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null, int _ID = 0, UnityEngine.Video.VideoClip _videoClip = null)
     {
-        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent, _ID);
+        if (Hypatios.Game.DEBUG_UseNewDialogueSystem)
+        {
+            Hypatios.NewDialogue.QueueDialogue(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, shouldOverride, entryEvent, _ID, _videoClip);
+            return;
+        }
+
+        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent, _ID, _videoClip);
 
         if (shouldOverride == false)
         {
@@ -207,7 +213,7 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     private bool CustomAilment_Dialogue(DialogueSpeechCache originalDialogue)
     {
-        DialogueSpeechCache dialogueSpeech = new DialogueSpeechCache(originalDialogue.dialogue, originalDialogue.speakerName, originalDialogue.timer1, originalDialogue.charPortrait, originalDialogue.audioClip, originalDialogue.priority, originalDialogue.isImportant, originalDialogue.dialogEvent, originalDialogue.ID);
+        DialogueSpeechCache dialogueSpeech = new DialogueSpeechCache(originalDialogue.dialogue, originalDialogue.speakerName, originalDialogue.timer1, originalDialogue.charPortrait, originalDialogue.audioClip, originalDialogue.priority, originalDialogue.isImportant, originalDialogue.dialogEvent, originalDialogue.ID, originalDialogue.videoClip);
         bool anyAilment = false;
 
         if (Hypatios.Player.GetStatusEffectGroup(ailmentNoSpeak) && originalDialogue.speakerName == speaker.name)

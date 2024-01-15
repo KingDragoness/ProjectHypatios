@@ -404,6 +404,9 @@ public class Hypatios : MonoBehaviour
     private DialogueSubtitleUI _dialogue;
 
     [SerializeField]
+    private NewDialogueUI _newDialogue;
+
+    [SerializeField]
     private cameraScript _mainCameraScript;
 
     [SerializeField]
@@ -438,6 +441,7 @@ public class Hypatios : MonoBehaviour
     public static MainUI UI { get => Instance._ui; }
     public static Camera MainCamera { get => Instance._mainCamera; }
     public static DialogueSubtitleUI Dialogue { get => Instance._dialogue; }
+    public static NewDialogueUI NewDialogue { get => Instance._newDialogue; }
     public static cameraScript MainCameraScript { get => Instance._mainCameraScript; }
     public static DynamicObjectPool ObjectPool { get => Instance._dynamicObjectPool; }
     public static EnemyContainer Enemy { get => Instance._enemyContainer; }

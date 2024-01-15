@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Video;
 using Sirenix.OdinInspector;
 
 public class Interact_MultiDialoguesTrigger : MonoBehaviour
@@ -86,6 +87,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
         foreach (var dialog in allDialogues)
         {
             Sprite portrait = null;
+            VideoClip videoClip = null;
 
             if (dialog.portraitSpeaker == null)
             {
@@ -94,6 +96,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
             else
             {
                 portrait = dialog.portraitSpeaker.portraitSprite;
+                videoClip = dialog.portraitSpeaker.portraitVideo;
             }
 
             Hypatios.Dialogue.QueueDialogue(dialog.Dialogue_Content,
@@ -104,7 +107,8 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 isImportant: isImportant,
                 shouldOverride: shouldOverride, 
                 entryEvent: dialog.OnDialogTriggered,
-                _ID: ID1);
+                _ID: ID1,
+                _videoClip: videoClip);
                 
         }
         if (shouldOverride) Hypatios.Dialogue.ForceDisplay();
@@ -122,6 +126,7 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
         objectPrefab1.TriggerMessage();
         Destroy(objectPrefab1, 1f);
     }
+
 
     public void ManualTriggeredCheck()
     {

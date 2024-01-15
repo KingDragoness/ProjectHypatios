@@ -62,6 +62,7 @@ public class FPSMainScript : MonoBehaviour
     public bool DEBUG_ShowAllParadox = false;
     public bool DEBUG_ShowAllSaves = false;
     public bool DEBUG_UnlockAllParadox = false;
+    public bool DEBUG_UseNewDialogueSystem = false;
 
     public static bool LoadFromSaveFile = false;
     public static bool LoadFromMachineMadness = false;
