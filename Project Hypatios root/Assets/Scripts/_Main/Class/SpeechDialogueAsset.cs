@@ -22,18 +22,12 @@ public class SpeechDialogueAsset : ScriptableObject
 
 
     [ListDrawerSettings(DraggableItems = true, Expanded = false, ShowPaging = false, ShowItemCount = false)] public List<EntryDialogue> entryDialogues = new List<EntryDialogue>();
-    public bool cannotWhenTalkingToOther = false;
-    public bool isImportant = true;
 
 
     [Button("Trigger Message")]
     public void TriggerMessage()
     {
 
-        if (Hypatios.Dialogue.IsTalking() && cannotWhenTalkingToOther)
-        {
-            return;
-        }
 
         foreach (var dialog in entryDialogues)
         {
@@ -52,9 +46,9 @@ public class SpeechDialogueAsset : ScriptableObject
                 dialog.dialogSpeaker.name,
                 dialog.Dialogue_Timer,
                 portrait,
-                dialog.dialogAudioClip, priorityLevel: 100,
-                isImportant: isImportant,
-                false);
+                dialog.dialogAudioClip,
+                false,
+                dontQueue: true);
 
         }
 

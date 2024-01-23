@@ -84,7 +84,7 @@ public class Interact_SubwayTrain : MonoBehaviour
 
         if (currentDestination == null)
         {
-            Hypatios.Dialogue.QueueDialogue("Please select a destination first.", "SYSTEM", 4f);
+            Hypatios.Dialogue.QueueDialogue("Please select a destination first.", "SYSTEM", 4f, dontQueue: true);
             return;
         }
 

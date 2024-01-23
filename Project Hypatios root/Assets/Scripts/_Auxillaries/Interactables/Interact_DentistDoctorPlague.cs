@@ -36,7 +36,7 @@ public class Interact_DentistDoctorPlague : MonoBehaviour
 
         if (priceList.price > Hypatios.Game.SoulPoint)
         {
-            Hypatios.Dialogue.QueueDialogue($"Not enough souls!", "SYSTEM", 5f); 
+            DeadDialogue.PromptNotifyMessage_Mod($"Not enough souls!", 5f); 
             return;
         }
 

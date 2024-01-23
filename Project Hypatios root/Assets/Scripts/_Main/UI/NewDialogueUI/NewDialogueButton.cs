@@ -7,19 +7,12 @@ using Sirenix.OdinInspector;
 
 public class NewDialogueButton : MonoBehaviour
 {
-    
-    public enum ButtonType
-    {
-        Message,
-        Timer,
-        RespondHotkey,
-        ResponseSelection
-    }
 
-    public ButtonType type;
-    [ShowIf("type", ButtonType.Message)] public Text text_Message;
-    [ShowIf("type", ButtonType.Timer)] public Slider slider_timer;
-    [ShowIf("type", ButtonType.ResponseSelection)] public Text text_ResponseSelect;
+
+    public DialogCommandEntry.Type type;
+    [ShowIf("type", DialogCommandEntry.Type.Message)] public Text text_Message;
+    [ShowIf("type", DialogCommandEntry.Type.Timer)] public Slider slider_timer;
+    [ShowIf("type", DialogCommandEntry.Type.ResponseSelection)] public Text text_ResponseSelect;
     public CanvasGroup cg;
 
     private float timeToClose = 1f;

@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Heer is 'army' in German. Etres Vivants meant 'living beings'
     in French. We an army of living beings.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
@@ -95,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Right...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -151,17 +153,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions:
+  - {fileID: 2704419433809442301}
+  - {fileID: 1252719204799822114}
+  - {fileID: 365296581438666349}
+  - {fileID: 5506730692911990805}
+  - {fileID: 3548863083225914119}
   ActivatingArea:
   - {fileID: 6137219061834780904}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!1 &6352190151482802801
 GameObject:
@@ -206,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: This is a stark contrast to Mobius Corps. Those who work here
     are privileged, mediocre people who had obeyed to conformity.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
@@ -258,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: This organization and the people here aims for the protection
     of living being. But honestly it's only for providing safe haven for people that
     had been casted out from society.
@@ -311,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: What is 'Heer Etres Vivants' meant?
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}

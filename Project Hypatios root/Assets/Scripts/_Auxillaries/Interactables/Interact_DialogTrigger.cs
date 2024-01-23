@@ -87,7 +87,7 @@ public class Interact_DialogTrigger : MonoBehaviour
 
 
 
-        Hypatios.Dialogue.QueueDialogue(Dialogue_Content, dialogSpeaker.name, Dialogue_Timer, portrait, dialogAudioClip, isImportant: _isImportant);
+        Hypatios.Dialogue.QueueDialogue(Dialogue_Content, dialogSpeaker.name, Dialogue_Timer, portrait, dialogAudioClip);
         OnSpeechBubble?.Invoke();
 
         alreadyTriggered = true;

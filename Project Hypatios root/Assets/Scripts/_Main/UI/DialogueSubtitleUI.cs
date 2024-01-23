@@ -68,6 +68,8 @@ public class DialogueSubtitleUI : MonoBehaviour
             {
                 if (continueButton.activeSelf == false) continueButton.gameObject.SetActive(true);
 
+                //15/01/2024 HOLY SHIT this is TRASH
+                //
                 //Hard-coded; any dialogue without sprite will not be able
                 //to pause even in Auto-Dialogue
                 if (_currentDialogueList[0].charPortrait != null) notAllowNextDisplay = true;
@@ -122,38 +124,20 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     //Full set
     public void QueueDialogue(string dialogue, string speakerName, float timer1, Sprite charPortrait = null,
-        AudioClip audioClip = null, int priorityLevel = -1, bool isImportant = false, bool shouldOverride = false, UnityEvent entryEvent = null, int _ID = 0, UnityEngine.Video.VideoClip _videoClip = null)
+        AudioClip audioClip = null, bool shouldOverride = false, UnityEvent entryEvent = null, UnityEngine.Video.VideoClip _videoClip = null, bool dontQueue = false)
     {
+        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, entryEvent, _videoClip);
+
         if (Hypatios.Game.DEBUG_UseNewDialogueSystem)
         {
-            Hypatios.NewDialogue.QueueDialogue(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, shouldOverride, entryEvent, _ID, _videoClip);
+            Hypatios.NewDialogue.QueueDialogue(dialogue1, dontQueue: dontQueue);
             return;
         }
 
-        DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialogue, speakerName, timer1, charPortrait, audioClip, priorityLevel, isImportant, entryEvent, _ID, _videoClip);
 
         if (shouldOverride == false)
         {
-            if (_currentDialogueList.Count != 0)
-            {
-                if (!_currentDialogueList[0].isImportant && dialogue1.isImportant)
-                {
-                    OverrideDialogue(dialogue1);
-                }
-                else if (_currentDialogueList[0].isImportant && !dialogue1.isImportant && dialogue1.priority < 0)
-                {
-                    //EnqueueDialogue(dialogue1);
-                }
-                else if (_currentDialogueList[0].isImportant)
-                {
-                    EnqueueDialogue(dialogue1);
-                }
-            }
-            else
-            {
-                EnqueueDialogue(dialogue1);
-
-            }
+           
         }
         else
         {
@@ -213,7 +197,7 @@ public class DialogueSubtitleUI : MonoBehaviour
 
     private bool CustomAilment_Dialogue(DialogueSpeechCache originalDialogue)
     {
-        DialogueSpeechCache dialogueSpeech = new DialogueSpeechCache(originalDialogue.dialogue, originalDialogue.speakerName, originalDialogue.timer1, originalDialogue.charPortrait, originalDialogue.audioClip, originalDialogue.priority, originalDialogue.isImportant, originalDialogue.dialogEvent, originalDialogue.ID, originalDialogue.videoClip);
+        DialogueSpeechCache dialogueSpeech = new DialogueSpeechCache(originalDialogue);
         bool anyAilment = false;
 
         if (Hypatios.Player.GetStatusEffectGroup(ailmentNoSpeak) && originalDialogue.speakerName == speaker.name)
