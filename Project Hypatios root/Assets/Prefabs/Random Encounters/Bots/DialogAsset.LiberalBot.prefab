@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: '*beep boop* Liberal Bot.'
   dialogSpeaker: {fileID: 11400000, guid: 53082830286d19048bc3ca547dffcf4b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: a3b03916725393e47b04bd02169ef17e, type: 2}
@@ -94,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Huh...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -149,17 +151,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 6137219061834780904}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!1 &2575905009386837604
 GameObject:
@@ -204,6 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: "if (News.today.HasNews(spacePiracy) == true)\n{\tnpc.Microblog(\"Enact
     gun and weapon control, NOW\")\t}"
   dialogSpeaker: {fileID: 11400000, guid: 53082830286d19048bc3ca547dffcf4b, type: 2}
@@ -256,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: "if (totalitarianParty.DoAnything() == true)\n{ \tnpc.Say(\"Resist
     the fascist party!\")\t}"
   dialogSpeaker: {fileID: 11400000, guid: 53082830286d19048bc3ca547dffcf4b, type: 2}
