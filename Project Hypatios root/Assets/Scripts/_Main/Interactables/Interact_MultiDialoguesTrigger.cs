@@ -136,6 +136,47 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
 
     }
 
+    public List<DialogueSpeechCache> GenerateCacheDialogues()
+    {
+        List<DialogueSpeechCache> allDialogues = new List<DialogueSpeechCache>();
+        List<MultiDialogues_SingleSpeech> dialogueNodes = new List<MultiDialogues_SingleSpeech>();
+
+        foreach (var i in allDialogueActions.FindAll(x => x is MultiDialogues_SingleSpeech))
+        {
+            dialogueNodes.Add(i as MultiDialogues_SingleSpeech);
+        }
+
+        foreach (var dialog in dialogueNodes)
+        {
+            Sprite portrait = null;
+            VideoClip videoClip = null;
+
+            if (dialog.portraitSpeaker == null)
+            {
+                portrait = dialog.dialogSpeaker.defaultSprite;
+            }
+            else
+            {
+                portrait = dialog.portraitSpeaker.portraitSprite;
+                videoClip = dialog.portraitSpeaker.portraitVideo;
+            }
+
+            DialogueSpeechCache dialogue1 = new DialogueSpeechCache(dialog.Dialogue_Content,
+                dialog.dialogSpeaker.name,
+                dialog.Dialogue_Timer,
+                portrait,
+                dialog.dialogAudioClip,
+                _dialogEvent: dialog.OnDialogTriggered,
+                _videoClip: videoClip);
+
+            allDialogues.Add(dialogue1);
+        }
+
+        return allDialogues;
+
+    }
+
+
     [Button("Trigger from Prefab")]
     public void TriggerMessage_Prefab()
     {

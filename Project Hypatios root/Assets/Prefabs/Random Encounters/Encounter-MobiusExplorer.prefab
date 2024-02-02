@@ -142,6 +142,10 @@ MonoBehaviour:
     itemNeeded: {fileID: 0}
     itemCount: 1
     flagEvent: {fileID: 0}
+    dontTriggerFlag: 0
+    ailment: {fileID: 0}
+    statEntry: {fileID: 0}
+    statValueTarget: 10
   - conditionType: 21
     trivia: {fileID: 0}
     switchCondition: {fileID: 0}
@@ -159,6 +163,10 @@ MonoBehaviour:
     itemNeeded: {fileID: 0}
     itemCount: 1
     flagEvent: {fileID: 0}
+    dontTriggerFlag: 0
+    ailment: {fileID: 0}
+    statEntry: {fileID: 0}
+    statValueTarget: 10
   conditionForTrue: 2
   OnTriggerStart:
     m_PersistentCalls:
@@ -262,9 +270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Target spotted. Prepare to launch negative-kThanid injection.
   dialogSpeaker: {fileID: 11400000, guid: 9daf63cc8d016794ca2c73dc3a24f934, type: 2}
-  portraitSpeaker: {fileID: 0}
+  portraitSpeaker: {fileID: 11400000, guid: 5ac67bec9f9646f43b05281e31a70c60, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 4.5
   OnDialogTriggered:
@@ -344,6 +353,10 @@ MonoBehaviour:
     itemNeeded: {fileID: 0}
     itemCount: 1
     flagEvent: {fileID: 0}
+    dontTriggerFlag: 0
+    ailment: {fileID: 0}
+    statEntry: {fileID: 0}
+    statValueTarget: 10
   conditionForTrue: 0
   OnTriggerStart:
     m_PersistentCalls:
@@ -449,6 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: What the-
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -569,19 +583,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues:
-  - {fileID: 3205968754690964225}
-  - {fileID: 3205968754378139294}
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 3205968754585812794}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 0
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!54 &3205968754585812799
 Rigidbody:
@@ -642,9 +655,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Explorer reporting.
   dialogSpeaker: {fileID: 11400000, guid: 9daf63cc8d016794ca2c73dc3a24f934, type: 2}
-  portraitSpeaker: {fileID: 0}
+  portraitSpeaker: {fileID: 11400000, guid: 5ac67bec9f9646f43b05281e31a70c60, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 3
   OnDialogTriggered:
@@ -693,6 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Damnit.
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -744,6 +759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: "That\u2019s a Mobius Explorer. It can cast spells like slowing
     down your movement. You need to bring it down."
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
@@ -796,9 +812,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Target spotted. Prepare to launch negative-kThanid injection.
   dialogSpeaker: {fileID: 11400000, guid: 9daf63cc8d016794ca2c73dc3a24f934, type: 2}
-  portraitSpeaker: {fileID: 0}
+  portraitSpeaker: {fileID: 11400000, guid: 5ac67bec9f9646f43b05281e31a70c60, type: 2}
   dialogAudioClip: {fileID: 0}
   Dialogue_Timer: 4.5
   OnDialogTriggered:
@@ -924,19 +941,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues:
-  - {fileID: 0}
-  - {fileID: 0}
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 4367917611525620978}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 0
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!54 &3432805136113412654
 Rigidbody:
@@ -997,6 +1013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Oh not again.
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}

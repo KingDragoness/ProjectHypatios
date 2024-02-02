@@ -271,6 +271,12 @@ public class NewDialogueUI : MonoBehaviour
             QueueDialogue(newDialogue);
             GoToNextEntry();
         }
+        else if (node.isContinuing == false)
+        {
+            WipeAllEntry();
+
+            InitiateConversation(node.newConversation, true);
+        }
         //still need to implement the branching, new dialogue
 
 

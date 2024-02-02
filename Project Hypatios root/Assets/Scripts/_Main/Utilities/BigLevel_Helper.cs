@@ -76,6 +76,7 @@ public class BigLevel_Helper : MonoBehaviour
 
     [TableList]
     public List<LevelPart> alllevelParts = new List<LevelPart>();
+    public List<Conditioner> allConditioners = new List<Conditioner>();
     public List<GameObject> allNavigationStaticGOs = new List<GameObject>();
     [Space]
     public bool enableAllByStart = false;
@@ -150,15 +151,32 @@ public class BigLevel_Helper : MonoBehaviour
     }
 
     [FoldoutGroup("Quick tools")]
-    [Button("Close ATVRegion Gizmos")]
-    public void DisableGizmosATV()
+    [Button("Check All Missing Mixer")]
+    public void CheckMixer()
     {
-        var ActivatorRegions = FindObjectsOfType<ActivatorRegion>();
+        var audioSources = Resources.FindObjectsOfTypeAll<AudioSource>();
 
-        foreach (var atvreg in ActivatorRegions)
+        foreach (var atvreg in audioSources)
         {
-            atvreg.DEBUG_DrawGizmos = false;
+            if (atvreg.outputAudioMixerGroup == null)
+            {
+                Debug.Log($"Missing: {atvreg.gameObject.name} ");
+            }
         }
     }
 
+
+    [FoldoutGroup("Quick tools")]
+    [Button("Collect Conditioners and Triggers")]
+    public void CollectConditionAndTrigger()
+    {
+        var conditioners = Object.FindSceneObjectsOfType(typeof (Conditioner));
+
+        allConditioners.Clear();
+
+        foreach (var cd in conditioners)
+        {
+            allConditioners.Add(cd as Conditioner);
+        }
+    }
 }
