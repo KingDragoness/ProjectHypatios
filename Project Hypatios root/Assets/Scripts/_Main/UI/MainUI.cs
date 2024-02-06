@@ -381,7 +381,7 @@ public class MainUI : MonoBehaviour
                 }
             }
 
-            if (CurrentUI == UIMode.Crafting | CurrentUI == UIMode.kThanidLab | CurrentUI == UIMode.Paradox | CurrentUI == UIMode.Weapon | CurrentUI == UIMode.Shop | CurrentUI == UIMode.Cinematic
+            if (CurrentUI == UIMode.Crafting | CurrentUI == UIMode.kThanidLab | CurrentUI == UIMode.Paradox | CurrentUI == UIMode.Weapon | CurrentUI == UIMode.Shop 
                 | CurrentUI == UIMode.FreecamMode | CurrentUI == UIMode.MobiusNet)
             {
                 isIdlePlayer = true;
@@ -404,13 +404,27 @@ public class MainUI : MonoBehaviour
                 Hypatios.Player.Health.enabled = false;
                 soundManagerScript.instance.Pause("running");
             }
+            else if (current_UI == UIMode.Cinematic)
+            {
+                Camera_Main.gameObject.SetActive(true);
+                Camera_Cutscene.gameObject.SetActive(false); //FUCK CUTSCENE
+                Hypatios.Player.disableInput = true;
+                Hypatios.Player.disableInput_CameraAllowed = true;
+                Hypatios.Player.enabled = false;
+                if (Hypatios.Player.isVehicleMode == false) Hypatios.Player.rb.isKinematic = false; else Hypatios.Player.rb.isKinematic = true;
+                Hypatios.Player.Weapon.gameObject.EnableGameobject(false);
+                soundManagerScript.instance.Pause("running");
+
+            }
             else if (Hypatios.Player.Health.isDead == false)
             {
                 Camera_Main.gameObject.SetActive(true);
                 Camera_Cutscene.gameObject.SetActive(false);
                 Hypatios.Player.disableInput = false;
+                Hypatios.Player.disableInput_CameraAllowed = false;
                 Hypatios.Player.enabled = true;
                 if (Hypatios.Player.isVehicleMode == false) Hypatios.Player.rb.isKinematic = false; else Hypatios.Player.rb.isKinematic = true; //THIS IS FUCKING STUPID
+                Hypatios.Player.Weapon.gameObject.EnableGameobject(true);
                 Hypatios.Player.Health.enabled = true;
             }
 

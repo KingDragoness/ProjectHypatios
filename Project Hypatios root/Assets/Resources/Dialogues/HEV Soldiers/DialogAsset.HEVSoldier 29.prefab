@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Demagogue politicians, took advantage by 'aligning' themselves
-    with the 'small people'. Populist policies enacted for popularity.
+  parentMultiDialogues: {fileID: 0}
+  Dialogue_Content: By being in mediocrity, you are accepting the status quo and
+    if the status quo is a shitty position, you will find fate is unfair.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -99,19 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues:
-  - {fileID: 0}
-  - {fileID: 0}
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 6137219061834780904}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
+  ignoreTrigger: 0
   alreadyTriggered: 0
 --- !u!1 &3709819099037308305
 GameObject:
@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: Proclaiming self as 'small people', is victim mentality. Inferior
-    mentality that destroys will to resist and forces people to be obedient.
+  parentMultiDialogues: {fileID: 0}
+  Dialogue_Content: A weak must appears strong or else it will die in mediocrity.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -208,8 +208,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dialogue_Content: It is all power grab contest. All these radicalized people only
-    do is to make their leader rich, powerful and famous.
+  parentMultiDialogues: {fileID: 0}
+  Dialogue_Content: Resist from being shaped, being dictated for we are. One must
+    not being pushed down constantly and break the barriers.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
   dialogAudioClip: {fileID: 0}
@@ -260,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: ...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}

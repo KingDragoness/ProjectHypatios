@@ -19,6 +19,13 @@ public class CutsceneObject : MonoBehaviour
     CutsceneDialogueUI cutsceneUI;
     private CinemachineBlendDefinition.Style defaultBlendStyle;
 
+    private List<CinemachineVirtualCamera> allVCs = new List<CinemachineVirtualCamera>();
+
+    private void Awake()
+    {
+        allVCs = GetComponentsInChildren<CinemachineVirtualCamera>(true).ToList();
+    }
+
     private void Start()
     {
         cutsceneUI = MainUI.Instance.cutsceneUI;
@@ -34,6 +41,17 @@ public class CutsceneObject : MonoBehaviour
         if (isPlaying == false)
         {
             return;
+        }
+
+        //Fuck Hypatios Cutscene
+        foreach(var vc in allVCs)
+        {
+            vc.transform.position = Hypatios.MainCamera.transform.position;
+            vc.transform.rotation = Hypatios.MainCamera.transform.rotation;
+            vc.m_Lens.FieldOfView = Hypatios.MainCamera.fieldOfView;
+            vc.m_Lens.Dutch = 0f;
+            vc.LookAt = null;
+            vc.Follow = null;
         }
 
         if (!cutsceneUI.allowContinue)

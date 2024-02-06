@@ -46,6 +46,8 @@ public class CutsceneDialogueUI : MonoBehaviour
         {
             continueButton.gameObject.SetActive(false);
         }
+
+
     }
 
     #region Open Functions
@@ -107,7 +109,7 @@ public class CutsceneDialogueUI : MonoBehaviour
         }
         else TypeThisDialogue(dialogEntry.dialogue);
 
-        text_SpeakerName.text = dialogEntry.speakerName;
+        text_SpeakerName.text = dialogEntry.speakerName.ToUpper();
         dialogEntry.dialogEvent?.Invoke();
 
         bool greyLeftPortrait = true;

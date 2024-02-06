@@ -165,6 +165,16 @@ public class cameraScript : MonoBehaviour
             x += externalX * Time.deltaTime;
             y += externalX * Time.deltaTime;
         }
+        else if (Hypatios.Player.disableInput == true && Hypatios.Player.disableInput_CameraAllowed == true)
+        {
+            var moveVector = Hypatios.Input.Look.ReadValue<Vector2>();
+            if (Gamepad.current != null) moveVector += AimAssist();
+
+            x = moveVector.x * 5f * modifiedSensitivity * Time.deltaTime;
+            y = moveVector.y * 5f * modifiedSensitivity * Time.deltaTime;
+            x += externalX * Time.deltaTime;
+            y += externalX * Time.deltaTime;
+        }
         else
         {
             x = 0;

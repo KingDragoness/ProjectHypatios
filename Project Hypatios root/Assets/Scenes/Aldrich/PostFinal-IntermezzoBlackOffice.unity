@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: What the- where are you?
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: b923054afc853c5428fd06cf811d9dcf, type: 2}
@@ -478,6 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: ...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -3482,6 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: "Time vortex makes one\u2019s eye blind."
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -4896,14 +4899,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 329172288}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
@@ -5323,6 +5326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Hi. I'm Elena.
   dialogSpeaker: {fileID: 11400000, guid: 971c62161e89d1049882b88448540a14, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: a0468523d5077494dbf1bdb97f5a21f6, type: 2}
@@ -7385,6 +7389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: I can't talk much. You just have to complete the run.
   dialogSpeaker: {fileID: 11400000, guid: 971c62161e89d1049882b88448540a14, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: a0468523d5077494dbf1bdb97f5a21f6, type: 2}
@@ -7875,6 +7880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Might explain what am I doing here?
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -8817,6 +8823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Then get inside. You will get some fresh air inside the office.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
@@ -13128,6 +13135,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 110595681, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 110595681, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842744725, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1853704945, guid: bbec7d86000fe814bbac5d2d2e841787, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -13487,6 +13506,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 3992815149198372805, guid: bbec7d86000fe814bbac5d2d2e841787,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -190.49007
+      objectReference: {fileID: 0}
     - target: {fileID: 3992815149204962840, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -13525,7 +13549,7 @@ PrefabInstance:
     - target: {fileID: 4050697858461747656, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.00000071525574
       objectReference: {fileID: 0}
     - target: {fileID: 4050697858461747656, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
@@ -13540,17 +13564,17 @@ PrefabInstance:
     - target: {fileID: 4050697858461747656, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4050697858461747656, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4050697858461747656, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4050697858461747657, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
@@ -13560,7 +13584,7 @@ PrefabInstance:
     - target: {fileID: 4050697858461747657, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
       propertyPath: far clip plane
-      value: 400
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4050697858461747657, guid: bbec7d86000fe814bbac5d2d2e841787,
         type: 3}
@@ -22460,6 +22484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: "Get used it. I have experienced it thousands of time from the
     Kaiser\u2019s abuse."
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
@@ -27162,14 +27187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 913160298}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
@@ -28069,6 +28094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: I guess I'm on my own now.
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: b923054afc853c5428fd06cf811d9dcf, type: 2}
@@ -28282,7 +28308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 987782291}
   OnDialogueTriggered:
@@ -28322,7 +28348,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
@@ -39688,6 +39714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: I'm talking through the speakers.
   dialogSpeaker: {fileID: 11400000, guid: 971c62161e89d1049882b88448540a14, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: a0468523d5077494dbf1bdb97f5a21f6, type: 2}
@@ -40267,7 +40294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 1457609283}
   OnDialogueTriggered:
@@ -40285,7 +40312,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
@@ -48106,14 +48133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b2a850261d39a409af269dfaf7308d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allDialogues: []
+  allDialogueActions: []
   ActivatingArea:
   - {fileID: 1588017858}
   OnDialogueTriggered:
     m_PersistentCalls:
       m_Calls: []
   shouldOverride: 0
-  isImportant: 1
+  dontQueue: 0
   player: {fileID: 0}
   AutoScanDialogues: 1
   DEBUG_DrawGizmos: 1
@@ -50064,6 +50091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Right...
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -58935,6 +58963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Area cleared. Moving to position.
   dialogSpeaker: {fileID: 11400000, guid: fa2bc2f7a1744f94b908b65a85ea0dbb, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: ef5d090a7dad96e44a6a6d541e761258, type: 2}
@@ -59348,6 +59377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Thousands?!
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -60054,6 +60084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: What? Hey-
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -60534,6 +60565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: The smoke is very thick... I can barely breathe the air.
   dialogSpeaker: {fileID: 11400000, guid: 924efbb92e9638a489720d1906535b5b, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: d1bd7abe500710a4db2d3f2bebb4956f, type: 2}
@@ -61220,6 +61252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alllevelParts:
   - sceneObject: {fileID: 1480316680}
+  allConditioners: []
   allNavigationStaticGOs:
   - {fileID: 1476873625}
   - {fileID: 1680395964}
@@ -61661,6 +61694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d98a1f6a6a3b38944bbdce4753777327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentMultiDialogues: {fileID: 0}
   Dialogue_Content: Here's the Vault Keys. You will need it to open the final door.
   dialogSpeaker: {fileID: 11400000, guid: f5c5fa12cdea5b745addc755efd317c4, type: 2}
   portraitSpeaker: {fileID: 11400000, guid: 9314063c1a6c3ed41921aa49c22dd175, type: 2}
