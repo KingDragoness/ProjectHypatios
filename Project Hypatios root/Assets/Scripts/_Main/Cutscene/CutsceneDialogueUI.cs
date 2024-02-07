@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
 using Sirenix.OdinInspector;
+using UnityEngine.Video;
 
 public class CutsceneDialogueUI : MonoBehaviour
 {
@@ -23,6 +24,13 @@ public class CutsceneDialogueUI : MonoBehaviour
     [FoldoutGroup("Conversation")] public string dialogText;
     [FoldoutGroup("Conversation")] public bool allowContinue = false;
 
+    [FoldoutGroup("Speakerfeed")] public GameObject speakerVideoFeed;
+    [FoldoutGroup("Speakerfeed")] public GameObject videoFeed_NoiseTransition;
+    [FoldoutGroup("Speakerfeed")] public Image image_SpeakerFeed;
+    [FoldoutGroup("Speakerfeed")] public VideoPlayer speakerFeedPlayer;
+    [FoldoutGroup("Speakerfeed")] public VideoClip fallbackClip;
+    public Animator portraitAnimator;
+
 
     [TextArea(3,4)]
     [FoldoutGroup("DEBUG")] public string DEBUG_TextToType = "It would be an interesting proposition.";
@@ -34,6 +42,21 @@ public class CutsceneDialogueUI : MonoBehaviour
     public void Debug_TestText()
     {
         TypeThisDialogue(DEBUG_TextToType);
+    }
+
+    private void Start()
+    {
+        ResetCutscene();
+    }
+
+    private void OnEnable()
+    {
+    }
+
+    public void ResetCutscene()
+    {
+        portraitAnimator.SetBool("Close", true);
+        speakerVideoFeed.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -66,6 +89,7 @@ public class CutsceneDialogueUI : MonoBehaviour
 
     public void ShowPortrait(DialogSpeaker dialogSpeaker, PortraitSpeaker portrait, bool isLeft = false)
     {
+        //This is not used anymore
         if (isLeft)
         {
             leftSpeaker = dialogSpeaker;
@@ -78,6 +102,34 @@ public class CutsceneDialogueUI : MonoBehaviour
             if (portrait != null) portrait_Right.sprite = portrait.portraitSprite; else portrait_Right.sprite = null;
             portrait_Right.enabled = true;
         }
+
+        if (portrait.portraitVideo != null)
+        {
+            speakerVideoFeed.gameObject.SetActive(true);
+            portraitAnimator.SetBool("Close", false);
+
+            image_SpeakerFeed.gameObject.EnableGameobject(true);
+
+            if (speakerFeedPlayer.clip != portrait.portraitVideo)
+            {
+                videoFeed_NoiseTransition.gameObject.EnableGameobject(true);
+            }
+
+            speakerFeedPlayer.clip = portrait.portraitVideo;
+            speakerFeedPlayer.Play();
+        }
+        else
+        {
+
+
+            if (speakerFeedPlayer.clip != portrait.portraitVideo)
+            {
+                videoFeed_NoiseTransition.gameObject.EnableGameobject(true);
+            }
+
+            image_SpeakerFeed.gameObject.EnableGameobject(false);
+        }
+
     }
 
     public void HidePortrait(DialogSpeaker dialogSpeaker)

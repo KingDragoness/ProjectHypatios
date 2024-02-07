@@ -46,12 +46,13 @@ public class CutsceneObject : MonoBehaviour
         //Fuck Hypatios Cutscene
         foreach(var vc in allVCs)
         {
-            vc.transform.position = Hypatios.MainCamera.transform.position;
-            vc.transform.rotation = Hypatios.MainCamera.transform.rotation;
-            vc.m_Lens.FieldOfView = Hypatios.MainCamera.fieldOfView;
-            vc.m_Lens.Dutch = 0f;
-            vc.LookAt = null;
-            vc.Follow = null;
+            vc.gameObject.SetActive(false);
+            //vc.transform.position = Hypatios.MainCamera.transform.position;
+            //vc.transform.rotation = Hypatios.MainCamera.transform.rotation;
+            //vc.m_Lens.FieldOfView = Hypatios.MainCamera.fieldOfView;
+            //vc.m_Lens.Dutch = 0f;
+            //vc.LookAt = null;
+            //vc.Follow = null;
         }
 
         if (!cutsceneUI.allowContinue)
@@ -173,6 +174,7 @@ public class CutsceneObject : MonoBehaviour
             vc.gameObject.SetActive(false);
 
         cutsceneUI.cutsceneCamera.m_DefaultBlend.m_Style = defaultBlendStyle;
+        cutsceneUI.ResetCutscene();
         isPlaying = false;
     }
 }
