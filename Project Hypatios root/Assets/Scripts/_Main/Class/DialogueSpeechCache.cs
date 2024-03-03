@@ -77,8 +77,9 @@ public class DialogueSpeechCache
     public VideoClip videoClip;
     public AudioClip audioClip = null;
     public UnityEvent dialogEvent;
+    public DialogSpeaker dialogSpeakerAsset;
 
-    public DialogueSpeechCache(string dialogue, string speakerName, float timer1, Sprite charPortrait = null, AudioClip audioClip = null, UnityEvent _dialogEvent = null, VideoClip _videoClip = null)
+    public DialogueSpeechCache(string dialogue, string speakerName, float timer1, Sprite charPortrait = null, AudioClip audioClip = null, UnityEvent _dialogEvent = null, VideoClip _videoClip = null, DialogSpeaker _dialogSpeakerAsset = null)
     {
         this.dialogue = dialogue;
         this.speakerName = speakerName;
@@ -88,6 +89,7 @@ public class DialogueSpeechCache
         this.dialogEvent = _dialogEvent;
         this.ID = Hypatios.TimeTick;
         this.videoClip = _videoClip;
+        this.dialogSpeakerAsset = _dialogSpeakerAsset;
     }
 
     public DialogueSpeechCache(DialogueSpeechCache origin)
@@ -100,5 +102,6 @@ public class DialogueSpeechCache
         this.dialogEvent = origin.dialogEvent;
         this.ID = Hypatios.TimeTick;
         this.videoClip = origin.videoClip;
+        this.dialogSpeakerAsset = origin.dialogSpeakerAsset;
     }
 }

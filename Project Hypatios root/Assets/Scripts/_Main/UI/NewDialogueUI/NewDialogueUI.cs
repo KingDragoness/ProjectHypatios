@@ -23,6 +23,7 @@ public class NewDialogueUI : MonoBehaviour
     public DialogSpeaker Speaker_ALDRICH;
     [SerializeField] private Interact_MultiDialoguesTrigger currentMultiDialogue;
     [Space]
+    [FoldoutGroup("Special-Aldrich")] public BaseStatusEffectObject ailmentNoSpeak;
     [FoldoutGroup("Speakerfeed")] public GameObject speakerVideoFeed;
     [FoldoutGroup("Speakerfeed")] public GameObject videoFeed_NoiseTransition;
     [FoldoutGroup("Speakerfeed")] public Image image_SpeakerFeed;
@@ -380,6 +381,8 @@ public class NewDialogueUI : MonoBehaviour
 
     #region Generate Buttons
 
+    private DialogSpeaker _prevDialogSpeaker;
+
     private void Receive_Message(DialogueSpeechCache dialogueSpeech)
     {
 
@@ -431,14 +434,45 @@ public class NewDialogueUI : MonoBehaviour
             }
 
         }
+        else
+        {
 
+            if (Hypatios.Player.GetStatusEffectGroup(ailmentNoSpeak))
+            {
+                buttonPrefab.text_Message.text = $"<b>{dialogueSpeech.speakerName}</b>: ...";
+                timer = 3;
+            }
+        }
+
+        _prevDialogSpeaker = dialogueSpeech.dialogSpeakerAsset;
         AllDialogueHistory.Add(dialogueSpeech);
 
+    }
+
+    private void LoadIdleSpeaker()
+    {
+        if (_prevDialogSpeaker.idlePortraitVideo == null)
+        {
+            return;
+        }
+
+        if (speakerFeedPlayer.clip != _prevDialogSpeaker.idlePortraitVideo)
+        {
+            videoFeed_NoiseTransition.gameObject.EnableGameobject(true);
+        }
+
+        speakerFeedPlayer.clip = _prevDialogSpeaker.idlePortraitVideo;
+        speakerFeedPlayer.Play();
     }
 
     private void CreateButton_Hotkey()
     {
         var buttonPrefab = Instantiate(button_HotkeyRespond, pivot_Content);
+
+        if (_prevDialogSpeaker != null)
+        {
+            LoadIdleSpeaker();
+        }
 
         buttonPrefab.gameObject.SetActive(true);
         allDialogueButtons.Add(buttonPrefab);

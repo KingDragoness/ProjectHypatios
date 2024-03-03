@@ -46,8 +46,9 @@ public class MultiDialogues_SingleSpeech : MultiDialogue_Action
             portraitSpeaker.portraitSprite,
             audioClip: dialogAudioClip,
             _dialogEvent: OnDialogTriggered,
-            _videoClip: portraitSpeaker.portraitVideo);
-        newEntry.dialogueCache = dialogue1;
+            _videoClip: portraitSpeaker.portraitVideo,
+            _dialogSpeakerAsset: dialogSpeaker);
+            newEntry.dialogueCache = dialogue1;
 
         return newEntry;
 

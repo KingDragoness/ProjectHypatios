@@ -167,7 +167,8 @@ public class Interact_MultiDialoguesTrigger : MonoBehaviour
                 portrait,
                 dialog.dialogAudioClip,
                 _dialogEvent: dialog.OnDialogTriggered,
-                _videoClip: videoClip);
+                _videoClip: videoClip,
+                dialog.dialogSpeaker);
 
             allDialogues.Add(dialogue1);
         }
