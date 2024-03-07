@@ -24,8 +24,10 @@ public class MinigunWeapon : GunScript
     private bool isRevving = false;
     private bool initialized = false;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         isFiring = false;
         isRevving = false;
         if (initialized) RefreshWeaponStat();

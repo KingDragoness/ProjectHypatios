@@ -29,8 +29,9 @@ public class MachineMadnessWeapon : GunScript
         Instance = this;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         _timeHolding = 0f;
         anim_RotatorKeyInitiate.SetBool(false);
     }

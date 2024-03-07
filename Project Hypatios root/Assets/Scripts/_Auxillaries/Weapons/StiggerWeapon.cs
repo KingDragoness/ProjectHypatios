@@ -17,8 +17,10 @@ public class StiggerWeapon : GunScript
     private float _timeCharge = 0f;
     private float _originalDamage = 0f;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         _originalDamage = damage;
         bulletSparks = spark_NormalBullet;
     }

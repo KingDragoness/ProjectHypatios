@@ -14,8 +14,10 @@ public class FlamethrowerWeapon : GunScript
 
     private float cooldownDamage = 0.1f; //Prevent overloading memory
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         isFiring = false;
         fireParticle.Stop();
         currentHit = new RaycastHit();

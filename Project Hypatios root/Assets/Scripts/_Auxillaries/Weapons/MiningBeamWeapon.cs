@@ -13,8 +13,10 @@ public class MiningBeamWeapon : GunScript
 
     private float cooldownDamage = 0.25f; //Prevent overloading memory
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         isFiring = false;
     }
 

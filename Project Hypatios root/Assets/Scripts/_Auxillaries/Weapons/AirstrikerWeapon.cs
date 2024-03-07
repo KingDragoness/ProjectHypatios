@@ -29,8 +29,10 @@ public class AirstrikerWeapon : GunScript
     private bool hasInitialized = false;
     [SerializeField] private bool isLocking = false;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         if (hasInitialized)
         {
             pingStrike.gameObject.SetActive(true);

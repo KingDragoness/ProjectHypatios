@@ -73,8 +73,10 @@ public class SentryPDAWeapon : GunScript
         base.Start();
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         if (Fortification_GhostSentry.Instance != null)
             currentSentryGun = Fortification_GhostSentry.Instance;
 

@@ -37,8 +37,10 @@ public class KanonelektromagnetWeapon : GunScript
         HandleBarrelGun();
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         hudScript = MainGameHUDScript.Instance;
         CrosshairChange(currentMode);
     }

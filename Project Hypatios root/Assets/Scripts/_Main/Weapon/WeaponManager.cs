@@ -248,8 +248,8 @@ public class WeaponManager : MonoBehaviour
         {
             if (currentGunHeld != null)
             {
-                currentGunHeld.isReloading = false;
-                currentGunHeld.curReloadTime = currentGunHeld.ReloadTime;
+                //currentGunHeld.isReloading = false;
+                //currentGunHeld.curReloadTime = currentGunHeld.ReloadTime;
                 currentGunHeld.isScoping = false;
             }
 
@@ -357,6 +357,9 @@ public class WeaponManager : MonoBehaviour
 
         foreach (var weapon in CurrentlyHeldWeapons)
         {
+            var gunScript = weapon as GunScript;
+
+
             if (i == selectedWeapon)
             {
                 MainGameHUDScript hudScript = MainGameHUDScript.Instance;
@@ -368,7 +371,6 @@ public class WeaponManager : MonoBehaviour
                 weapon.anim = weapon.GetComponent<Animator>();
                 weapon.crosshairHit = hudScript.crosshairHit;
 
-                var gunScript = weapon as GunScript;
 
                 currentWeaponHeld = weapon;
 
@@ -382,6 +384,10 @@ public class WeaponManager : MonoBehaviour
             }
             else
             {
+
+         
+
+
                 weapon.gameObject.SetActive(false);
             }
             i++;

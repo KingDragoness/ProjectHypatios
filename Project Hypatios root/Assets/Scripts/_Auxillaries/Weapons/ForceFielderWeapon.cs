@@ -18,8 +18,10 @@ public class ForceFielderWeapon : GunScript
     private float fieldReadyTimer = 5f;
     private bool isReadyField = false;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
 
         AmmoRefresh();
     }

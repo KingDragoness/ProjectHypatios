@@ -91,6 +91,12 @@ public class GunScript : BaseWeaponScript
         
     }
 
+    public virtual void OnEnable()
+    {
+        isReloading = false;
+        curReloadTime = ReloadTime;
+    }
+
     // Update is called once per frame
     public virtual void Update()
     {

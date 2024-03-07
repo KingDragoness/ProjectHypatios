@@ -15,8 +15,10 @@ public class ForceShielderWeapon : GunScript
     [FoldoutGroup("Force Shielder")] public Transform attachTarget;
     [FoldoutGroup("Force Shielder")] public damageReceiver damageReceiver;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         isFiring = false;
         shieldProtect.transform.SetParent(null);
     }
