@@ -247,7 +247,7 @@ public class NewDialogueUI : MonoBehaviour
         }
 
         var node = currentCommandEntry.branches[index];
-        DialogueSpeechCache newDialogue = new DialogueSpeechCache(node.respondDialogue, Speaker_ALDRICH.name, 0.02f);
+        DialogueSpeechCache newDialogue = new DialogueSpeechCache(node.respondDialogue, Speaker_ALDRICH.name, 0.02f, _dialogEvent: node.onDialogueTrigger);
 
         bool isLast = false;
 
@@ -647,7 +647,7 @@ public class NewDialogueUI : MonoBehaviour
         //IF single speech, continue the conversation.
         DialogCommandEntry newEntry = new DialogCommandEntry(DialogCommandEntry.Type.ResponseSelection);
 
-        newEntry.branches.Add(new DialogCommandEntry.Branch(isContinuing: true, respondDialogue: node.Dialogue_Content, newConversation: null));
+        newEntry.branches.Add(new DialogCommandEntry.Branch(isContinuing: true, respondDialogue: node.Dialogue_Content, newConversation: null, _dialogueTriggerEvent: node.OnDialogTriggered));
         EnqueueEntry(newEntry);
 
     }

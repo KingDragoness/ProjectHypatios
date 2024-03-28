@@ -43,13 +43,15 @@ public class DialogCommandEntry
     {
         public bool isContinuing = false;
         public string respondDialogue = "What is this Machine of Madness thing?";
+        [FoldoutGroup("")] public UnityEvent onDialogueTrigger;
         public Interact_MultiDialoguesTrigger newConversation;
 
-        public Branch(bool isContinuing, string respondDialogue, Interact_MultiDialoguesTrigger newConversation)
+        public Branch(bool isContinuing, string respondDialogue, Interact_MultiDialoguesTrigger newConversation, UnityEvent _dialogueTriggerEvent = null)
         {
             this.isContinuing = isContinuing;
             this.respondDialogue = respondDialogue;
             this.newConversation = newConversation;
+            this.onDialogueTrigger = _dialogueTriggerEvent;
         }
     }
 
