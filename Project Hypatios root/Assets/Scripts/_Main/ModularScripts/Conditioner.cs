@@ -22,6 +22,7 @@ public class Conditioner : MonoBehaviour
         Flags,
         SwitchNotCompleted,
         Stats,
+        Increments,
         ItemOwned = 100,
         Ailment = 110
     }
@@ -31,6 +32,14 @@ public class Conditioner : MonoBehaviour
         OR,
         NOT,
         AND
+    }
+
+
+    public enum IncrementCondition
+    {
+        EQUAL,
+        LESSTHAN,
+        MORETHAN
     }
 
     public static bool IsWIREDChamber()
@@ -65,6 +74,9 @@ public class Conditioner : MonoBehaviour
         [ShowIf("conditionType", ConditionType.Ailment)] public BaseStatusEffectObject ailment;
         [ShowIf("conditionType", ConditionType.Stats)] public BaseStatValue statEntry;
         [ShowIf("conditionType", ConditionType.Stats)] public int statValueTarget = 10;
+        [ShowIf("conditionType", ConditionType.Increments)] public IncrementCondition incrementCondition;
+        [ShowIf("conditionType", ConditionType.Increments)] public IncrementCounter incrementCounter;
+        [ShowIf("conditionType", ConditionType.Increments)] public int count = 1;
 
 
         public bool IsTriviaConditioner => conditionType == ConditionType.TriviaCompleted || conditionType == ConditionType.TriviaNotCompleted;
@@ -164,6 +176,30 @@ public class Conditioner : MonoBehaviour
                 if (statValue.value_int >= statValueTarget)
                 {
                     return true;
+                }
+            }
+            else if (conditionType == ConditionType.Increments)
+            {
+                if (incrementCondition == IncrementCondition.EQUAL)
+                {
+                    if (incrementCounter.CurrentCount == count)
+                    {
+                        return true;
+                    }
+                }
+                if (incrementCondition == IncrementCondition.MORETHAN)
+                {
+                    if (incrementCounter.CurrentCount > count)
+                    {
+                        return true;
+                    }
+                }
+                if (incrementCondition == IncrementCondition.LESSTHAN)
+                {
+                    if (incrementCounter.CurrentCount < count)
+                    {
+                        return true;
+                    }
                 }
             }
 
